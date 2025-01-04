@@ -1,4 +1,5 @@
-import BunApp, { type Config } from './app/bun'
+import App from '@latechforce/engine'
+import { drivers, integrations } from '@latechforce/engine/bun'
 import { join } from 'path'
 import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
@@ -8,7 +9,7 @@ import { NotionIntegration } from '@infrastructure/integrations/mocks/bun/Notion
 import { QontoIntegration } from '@infrastructure/integrations/mocks/bun/QontoIntegration'
 import { PappersIntegration } from '@infrastructure/integrations/mocks/bun/PappersIntegration'
 import type { DatabaseConfig } from '@domain/services/Database'
-import type { StartedApp } from '@latechforce/engine'
+import type { Config, StartedApp } from '@latechforce/engine'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -50,6 +51,7 @@ type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> 
   | WithDriverInput<D>
   | WithIntegrationInput<I>
   | (WithDriverInput<D> & WithIntegrationInput<I>)
+  | {}
 
 type Request = {
   get: (url: string) => Promise<any>
@@ -58,6 +60,12 @@ type Request = {
 type TestApp = {
   start: (_: Config) => Promise<StartedApp>
   stop: () => Promise<void>
+}
+
+export class BunApp extends App {
+  constructor() {
+    super({ drivers, integrations: integrations.mocks })
+  }
 }
 
 export class IntegrationTest {
@@ -97,20 +105,28 @@ export class IntegrationTest {
       integrations: CombineOutputs<I>
     }) => void
   ): void {
-    let message = 'with'
-    if ('drivers' in options && options.drivers.length > 0) {
-      message += ` ${options.drivers.join(', ')} driver(s)`
-    }
+    let message = ''
     if (
       'drivers' in options &&
       options.drivers.length > 0 &&
       'integrations' in options &&
       options.integrations.length > 0
     ) {
-      message += ' and'
-    }
-    if ('integrations' in options && options.integrations.length > 0) {
-      message += ` ${'integrations' in options && options.integrations.join(', ')} integration(s)`
+      message += ' with'
+      if ('drivers' in options && options.drivers.length > 0) {
+        message += ` ${options.drivers.join(', ')} driver(s)`
+      }
+      if (
+        'drivers' in options &&
+        options.drivers.length > 0 &&
+        'integrations' in options &&
+        options.integrations.length > 0
+      ) {
+        message += ' and'
+      }
+      if ('integrations' in options && options.integrations.length > 0) {
+        message += ` ${'integrations' in options && options.integrations.join(', ')} integration(s)`
+      }
     }
 
     this.tester.describe(message, () => {
