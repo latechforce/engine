@@ -12,7 +12,7 @@ interface Notification {
 }
 
 export class SQLiteDatabaseDriver implements IDatabaseDriver {
-  private _db: Database
+  public db: Database
   private _interval?: Timer
   private _onNotification: ((event: EventNotificationDto) => void)[] = []
 
@@ -21,11 +21,11 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     const db = new Database(url, { create: true, strict: true })
     db.run('PRAGMA journal_mode = WAL')
     db.run('PRAGMA foreign_keys = ON')
-    this._db = db
+    this.db = db
   }
 
   connect = async (): Promise<void> => {
-    this._db.run(`
+    this.db.run(`
       CREATE TABLE IF NOT EXISTS _notifications (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         payload TEXT,
@@ -33,12 +33,12 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
       );
     `)
     const emitNotification = () => {
-      const notifications = this._db
+      const notifications = this.db
         .query<Notification, []>('SELECT * FROM _notifications WHERE processed = 0')
         .all()
 
       for (const { payload, id } of notifications) {
-        this._db.prepare('UPDATE _notifications SET processed = 1 WHERE id = ?').run(id)
+        this.db.prepare('UPDATE _notifications SET processed = 1 WHERE id = ?').run(id)
         const { record_id, table, action } = JSON.parse(payload)
         this._onNotification.forEach((callback) =>
           callback({ notification: { record_id, table, action }, event: 'notification' })
@@ -51,18 +51,18 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
 
   disconnect = async (): Promise<void> => {
     if (this._interval) clearInterval(this._interval)
-    this._db.close()
+    this.db.close()
   }
 
   exec = async (query: string): Promise<void> => {
-    this._db.run(query)
+    this.db.run(query)
   }
 
   query = async <T>(
     text: string,
     values: (string | number | Buffer | Date)[]
   ): Promise<{ rows: T[]; rowCount: number }> => {
-    const stmt = this._db.prepare(text)
+    const stmt = this.db.prepare(text)
     const isSelect = text.trim().toUpperCase().startsWith('SELECT')
     const parsedValues = values.map((value) => {
       if (value instanceof Date) {
@@ -80,7 +80,7 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
   }
 
   table = (table: ITable) => {
-    return new SQLiteDatabaseTableDriver(table, this._db)
+    return new SQLiteDatabaseTableDriver(table, this.db)
   }
 
   on = (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => {
@@ -91,7 +91,7 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
 
   setupTriggers = async (tables: string[]) => {
     for (const table of tables) {
-      this._db.run(`
+      this.db.run(`
         -- Trigger for INSERT
         CREATE TRIGGER IF NOT EXISTS after_insert_${table}_trigger
         AFTER INSERT ON ${table}

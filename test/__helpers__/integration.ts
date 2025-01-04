@@ -56,6 +56,7 @@ type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> 
 type Request = {
   get: (url: string) => Promise<any>
   post: (url: string, body: unknown) => Promise<any>
+  patch: (url: string, body: unknown) => Promise<any>
 }
 type TestApp = {
   start: (_: Config) => Promise<StartedApp>
@@ -93,6 +94,18 @@ export class IntegrationTest {
             return error
           })
       },
+      patch: async (url: string, body: unknown) => {
+        return fetch(url, {
+          method: 'PATCH',
+          body: JSON.stringify(body),
+          headers: { 'Content-Type': 'application/json' },
+        })
+          .then((res) => res.json())
+          .catch((error) => {
+            console.error(error)
+            return error
+          })
+      },
     }
   }
 
@@ -105,95 +118,69 @@ export class IntegrationTest {
       integrations: CombineOutputs<I>
     }) => void
   ): void {
-    let message = ''
-    if (
-      'drivers' in options &&
-      options.drivers.length > 0 &&
-      'integrations' in options &&
-      options.integrations.length > 0
-    ) {
-      message += ' with'
-      if ('drivers' in options && options.drivers.length > 0) {
-        message += ` ${options.drivers.join(', ')} driver(s)`
-      }
-      if (
-        'drivers' in options &&
-        options.drivers.length > 0 &&
-        'integrations' in options &&
-        options.integrations.length > 0
-      ) {
-        message += ' and'
-      }
-      if ('integrations' in options && options.integrations.length > 0) {
-        message += ` ${'integrations' in options && options.integrations.join(', ')} integration(s)`
-      }
+    const drivers: any = {}
+    const integrations: any = {}
+    const extendsConfig: Partial<Config> = {}
+    const app: TestApp = {
+      start: async (_: Config): Promise<StartedApp> => {
+        throw new Error('App must be initialized before starting')
+      },
+      stop: async (): Promise<void> => {
+        throw new Error('App must be initialized before stopping')
+      },
     }
 
-    this.tester.describe(message, () => {
-      const drivers: any = {}
-      const integrations: any = {}
-      const extendsConfig: Partial<Config> = {}
-      const app: TestApp = {
-        start: async (_: Config): Promise<StartedApp> => {
-          throw new Error('App must be initialized before starting')
-        },
-        stop: async (): Promise<void> => {
-          throw new Error('App must be initialized before stopping')
-        },
+    this.tester.beforeEach(async () => {
+      if ('drivers' in options && options.drivers?.includes('Database')) {
+        const url = join(process.cwd(), 'tmp', `database-${nanoid()}.db`)
+        await fs.ensureFile(url)
+        const config: DatabaseConfig = { driver: 'SQLite', url }
+        const database = new DatabaseDriver(config)
+        drivers.database = database
+        extendsConfig.database = config
+      }
+      if ('drivers' in options && options.drivers?.includes('Storage')) {
+        if (!drivers.database) {
+          throw new Error('Database must be initialized before Storage')
+        }
+        drivers.storage = new StorageDriver(drivers.database)
+      }
+      if ('integrations' in options && options.integrations?.includes('Notion')) {
+        integrations.notion = new NotionIntegration()
+      }
+      if ('integrations' in options && options.integrations?.includes('Qonto')) {
+        integrations.qonto = new QontoIntegration()
+      }
+      if ('integrations' in options && options.integrations?.includes('Pappers')) {
+        integrations.pappers = new PappersIntegration()
       }
 
-      this.tester.beforeEach(async () => {
-        if ('drivers' in options && options.drivers?.includes('Database')) {
-          const url = join(process.cwd(), 'tmp', `database-${nanoid()}.db`)
-          await fs.ensureFile(url)
-          const config: DatabaseConfig = { driver: 'SQLite', url }
-          const database = new DatabaseDriver(config)
-          drivers.database = database
-          extendsConfig.database = config
-        }
-        if ('drivers' in options && options.drivers?.includes('Storage')) {
-          if (!drivers.database) {
-            throw new Error('Database must be initialized before Storage')
-          }
-          drivers.storage = new StorageDriver(drivers.database)
-        }
-        if ('integrations' in options && options.integrations?.includes('Notion')) {
-          integrations.notion = new NotionIntegration()
-        }
-        if ('integrations' in options && options.integrations?.includes('Qonto')) {
-          integrations.qonto = new QontoIntegration()
-        }
-        if ('integrations' in options && options.integrations?.includes('Pappers')) {
-          integrations.pappers = new PappersIntegration()
-        }
+      let startedApp: StartedApp | undefined
+      app.start = async (config: Config) => {
+        startedApp = await new BunApp().start({ ...config, ...extendsConfig })
+        return startedApp
+      }
+      app.stop = async () => {
+        await startedApp?.stop()
+      }
+    })
 
-        let startedApp: StartedApp | undefined
-        app.start = async (config: Config) => {
-          startedApp = await new BunApp().start({ ...config, ...extendsConfig })
-          return startedApp
-        }
-        app.stop = async () => {
-          await startedApp?.stop()
-        }
-      })
+    this.tester.afterEach(async () => {
+      await app.stop()
+      if (
+        'drivers' in options &&
+        options.drivers?.includes('Database') &&
+        extendsConfig.database?.url
+      ) {
+        await fs.remove(extendsConfig.database.url)
+      }
+    })
 
-      this.tester.afterEach(async () => {
-        await app.stop()
-        if (
-          'drivers' in options &&
-          options.drivers?.includes('Database') &&
-          extendsConfig.database?.url
-        ) {
-          await fs.remove(extendsConfig.database.url)
-        }
-      })
-
-      tests({
-        drivers,
-        integrations,
-        request: this.request,
-        app,
-      })
+    tests({
+      drivers,
+      integrations,
+      request: this.request,
+      app,
     })
   }
 }

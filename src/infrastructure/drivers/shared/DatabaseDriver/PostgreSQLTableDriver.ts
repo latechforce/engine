@@ -156,7 +156,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           if (column.table && column.tableField) {
             const values = `${column.table}_view.${column.tableField}`
             const formula = this._convertFormula(column.formula, values)
-            const manyToManyTableName = this._getManyToManyTableName(column.table)
+            const manyToManyTableName = this._getManyToManyTableName(column)
             if (!joins.includes(manyToManyTableName)) {
               joins += ` LEFT JOIN ${manyToManyTableName} ON ${this.name}.id = ${manyToManyTableName}.${this.name}_id`
               joins += ` LEFT JOIN ${column.table}_view ON ${manyToManyTableName}.${column.table}_id = ${column.table}_view.id`
@@ -170,7 +170,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
             return `CAST(${expandedFormula} AS ${column.type.toUpperCase()}) AS "${column.name}"`
           }
         } else if (column.type === 'TEXT[]' && column.table) {
-          return `(SELECT ARRAY_AGG("${column.table}_id") FROM ${this._getManyToManyTableName(column.table)} WHERE "${this.name}_id" = ${this.name}.id) AS "${column.name}"`
+          return `(SELECT ARRAY_AGG("${column.table}_id") FROM ${this._getManyToManyTableName(column)} WHERE "${this.name}_id" = ${this.name}.id) AS "${column.name}"`
         } else {
           return `${this.name}.${column.name} AS "${column.name}"`
         }
@@ -187,62 +187,58 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   }
 
   insert = async <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
+    const client = await this._db.connect()
     try {
-      const { created_at, fields, id } = record
-      const preprocessedFields = this._preprocess<T>(fields)
-      const { staticColumns, manyToManyColumns } = this._splitFields({
-        id,
-        created_at,
-        ...preprocessedFields,
-      })
-      const keys = Object.keys(staticColumns)
-      const values = Object.values(staticColumns)
-      const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ')
-      const query = `INSERT INTO ${this.name} (${keys.join(', ')}) VALUES (${placeholders}) RETURNING *`
-      await this._db.query(query, values)
-      if (manyToManyColumns) {
-        await this._insertManyToManyColumns(record.id, manyToManyColumns)
-      }
+      client.query('BEGIN')
+      await this._insert<T>(client, record)
+      client.query('COMMIT')
     } catch (e) {
+      client.query('ROLLBACK')
       this._throwError(e)
+    } finally {
+      client.release()
     }
   }
 
   insertMany = async <T extends RecordFields>(records: RecordFieldsToCreateDto<T>[]) => {
+    const client = await this._db.connect()
     try {
-      for (const record of records) await this.insert<T>(record)
+      client.query('BEGIN')
+      for (const record of records) await this._insert<T>(client, record)
+      client.query('COMMIT')
     } catch (e) {
+      client.query('ROLLBACK')
       this._throwError(e)
+    } finally {
+      client.release()
     }
   }
 
   update = async <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>) => {
+    const client = await this._db.connect()
     try {
-      const { id, updated_at, fields } = record
-      const preprocessedFields = this._preprocess<T>(fields)
-      const { staticColumns, manyToManyColumns } = this._splitFields({
-        id,
-        updated_at,
-        ...preprocessedFields,
-      })
-      const keys = Object.keys(staticColumns)
-      const values = Object.values(staticColumns)
-      const setString = keys.map((key, i) => `${key} = $${i + 1}`).join(', ')
-      const query = `UPDATE ${this.name} SET ${setString} WHERE id = $${keys.length + 1} RETURNING *`
-      await this._db.query(query, [...values, record.id])
-      if (manyToManyColumns) {
-        await this._updateManyToManyColumns(record.id, manyToManyColumns)
-      }
+      client.query('BEGIN')
+      await this._update<T>(client, record)
+      client.query('COMMIT')
     } catch (e) {
+      client.query('ROLLBACK')
       this._throwError(e)
+    } finally {
+      client.release()
     }
   }
 
   updateMany = async <T extends RecordFields>(records: RecordFieldsToUpdateDto<T>[]) => {
+    const client = await this._db.connect()
     try {
-      for (const record of records) await this.update<T>(record)
+      client.query('BEGIN')
+      for (const record of records) await this._update<T>(client, record)
+      client.query('COMMIT')
     } catch (e) {
+      client.query('ROLLBACK')
       this._throwError(e)
+    } finally {
+      client.release()
     }
   }
 
@@ -286,6 +282,48 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     return result.rows.map(this._postprocess<T>)
   }
 
+  private _insert = async <T extends RecordFields>(
+    client: pg.PoolClient,
+    record: RecordFieldsToCreateDto<T>
+  ) => {
+    const { created_at, fields, id } = record
+    const preprocessedFields = this._preprocess<T>(fields)
+    const { staticColumns, manyToManyColumns } = this._splitFields({
+      id,
+      created_at,
+      ...preprocessedFields,
+    })
+    const keys = Object.keys(staticColumns)
+    const values = Object.values(staticColumns)
+    const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ')
+    const query = `INSERT INTO ${this.name} (${keys.join(', ')}) VALUES (${placeholders}) RETURNING *`
+    await client.query(query, values)
+    if (Object.keys(manyToManyColumns).length > 0) {
+      await this._insertManyToManyColumns(client, record.id, manyToManyColumns)
+    }
+  }
+
+  private _update = async <T extends RecordFields>(
+    client: pg.PoolClient,
+    record: RecordFieldsToUpdateDto<T>
+  ) => {
+    const { id, updated_at, fields } = record
+    const preprocessedFields = this._preprocess<T>(fields)
+    const { staticColumns, manyToManyColumns } = this._splitFields({
+      id,
+      updated_at,
+      ...preprocessedFields,
+    })
+    const keys = Object.keys(staticColumns)
+    const values = Object.values(staticColumns)
+    const setString = keys.map((key, i) => `${key} = $${i + 1}`).join(', ')
+    const query = `UPDATE ${this.name} SET ${setString} WHERE id = $${keys.length + 1} RETURNING *`
+    await client.query(query, [...values, record.id])
+    if (Object.keys(manyToManyColumns).length > 0) {
+      await this._updateManyToManyColumns(client, record.id, manyToManyColumns)
+    }
+  }
+
   private _buildColumnsQuery = (columns: Column[]) => {
     const columnsQueries = []
     const references = []
@@ -308,20 +346,32 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     return columnsQueries.join(', ')
   }
 
-  private _getManyToManyTableName = (tableName: string) => {
-    return [this.name, tableName].sort().join('_')
+  private _slugify = (text: string) => {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+  }
+
+  private _getManyToManyTableName = (column: Column) => {
+    return [this.name, column.table].sort().join('_') + '_' + this._slugify(column.name)
   }
 
   private _createManyToManyTables = async () => {
-    for (const field of this.columns) {
-      if (field.type === 'TEXT[]' && field.table) {
-        const manyToManyTableName = this._getManyToManyTableName(field.table)
+    for (const column of this.columns) {
+      if (column.type === 'TEXT[]' && column.table) {
+        const manyToManyTableName = this._getManyToManyTableName(column)
         const query = `
           CREATE TABLE IF NOT EXISTS ${manyToManyTableName} (
             "${this.name}_id" TEXT NOT NULL,
-            "${field.table}_id" TEXT NOT NULL,
+            "${column.table}_id" TEXT NOT NULL,
             FOREIGN KEY ("${this.name}_id") REFERENCES ${this.name}(id),
-            FOREIGN KEY ("${field.table}_id") REFERENCES ${field.table}(id)
+            FOREIGN KEY ("${column.table}_id") REFERENCES ${column.table}(id)
           )
         `
         await this._db.query(query)
@@ -344,35 +394,37 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   }
 
   private _insertManyToManyColumns = async (
+    client: pg.PoolClient,
     recordId: string,
     manyToManyColumns: { [key: string]: string[] }
   ) => {
-    for (const [fieldName, ids] of Object.entries(manyToManyColumns)) {
-      const field = this.columns.find((f) => f.name === fieldName)
-      const tableName = field?.table
+    for (const [columnName, ids] of Object.entries(manyToManyColumns)) {
+      const column = this.columns.find((f) => f.name === columnName)
+      const tableName = column?.table
       if (!tableName) throw new Error('Table name not found.')
-      const manyToManyTableName = this._getManyToManyTableName(tableName)
+      const manyToManyTableName = this._getManyToManyTableName(column)
       for (const id of ids) {
         const query = `INSERT INTO ${manyToManyTableName} ("${this.name}_id", "${tableName}_id") VALUES ($1, $2)`
-        await this._db.query(query, [recordId, id])
+        await client.query(query, [recordId, id])
       }
     }
   }
 
   private _updateManyToManyColumns = async (
+    client: pg.PoolClient,
     recordId: string,
     manyToManyColumns: { [key: string]: string[] }
   ) => {
-    for (const [fieldName, ids] of Object.entries(manyToManyColumns)) {
-      const field = this.columns.find((f) => f.name === fieldName)
-      const tableName = field?.table
+    for (const [columnName, ids] of Object.entries(manyToManyColumns)) {
+      const column = this.columns.find((f) => f.name === columnName)
+      const tableName = column?.table
       if (!tableName) throw new Error('Table name not found.')
-      const manyToManyTableName = this._getManyToManyTableName(tableName)
+      const manyToManyTableName = this._getManyToManyTableName(column)
       const deleteQuery = `DELETE FROM ${manyToManyTableName} WHERE "${this.name}_id" = $1`
-      await this._db.query(deleteQuery, [recordId])
+      await client.query(deleteQuery, [recordId])
       for (const id of ids) {
         const query = `INSERT INTO ${manyToManyTableName} ("${this.name}_id", "${tableName}_id") VALUES ($1, $2)`
-        await this._db.query(query, [recordId, id])
+        await client.query(query, [recordId, id])
       }
     }
   }
@@ -416,12 +468,25 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   }
 
   private _postprocess = <T extends RecordFields>(row: Row): PersistedRecordFieldsDto<T> => {
-    const { id, created_at, updated_at, ...fields } = row
+    const { id, created_at, updated_at, ...columnsToProcess } = row
+    const fields = Object.keys(columnsToProcess).reduce((acc: RecordFields, key) => {
+      const value = row[key]
+      const field = this.fields.find((f) => f.name === key)
+      if (!field) throw new Error(`Field "${key}" not found`)
+      switch (field.type) {
+        case 'MultipleLinkedRecord':
+          acc[key] = value ? String(value).split(',') : []
+          break
+        default:
+          acc[key] = value
+      }
+      return acc
+    }, columnsToProcess) as T
     return {
       id,
       created_at,
       updated_at,
-      fields: fields as T,
+      fields,
     }
   }
 
@@ -591,19 +656,14 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   }
 
   private _throwError = (error: unknown) => {
-    if (
-      error &&
-      typeof error === 'object' &&
-      'code' in error &&
-      'detail' in error &&
-      typeof error.code === 'string' &&
-      typeof error.detail === 'string'
-    ) {
-      if (error.code === '23503') {
-        throw new Error(error.detail)
+    if (error instanceof Error) {
+      if (error.message.includes('unique constraint')) {
+        throw new Error('Record id already exists')
+      }
+      if (error.message.includes('foreign key constraint')) {
+        throw new Error('Invalid linked record')
       }
     }
-    console.error(error)
     throw error
   }
 }

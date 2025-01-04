@@ -29,7 +29,7 @@ new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, dri
 
     it('should migrate an existing table with a new field', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name', 'description'])
+      const config = getFirstTableConfig(['name', 'long_text'])
       await drivers.database.table(getFirstTableConfig(['name']).tables[0]).create()
 
       // WHEN
@@ -138,12 +138,11 @@ new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, dri
       const { url } = await app.start(config)
 
       // WHEN
-      const response = await request.post(`${url}/api/table/${config.tables[0].name}`, {
+      const { record } = await request.post(`${url}/api/table/${config.tables[0].name}`, {
         name: 'John',
       })
 
       // THEN
-      const { record } = response
       expect(record).toBeDefined()
       expect(record.id).toBeDefined()
       expect(record.fields.name).toBe('John')

@@ -4,9 +4,9 @@ import { getFirstTableConfig } from '@test/config'
 
 new IntegrationTest(Tester).with({}, ({ app, request }) => {
   describe('on start', () => {
-    it('should create a table with a single line text', async () => {
+    it('should create a table with a checkbox', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name'])
+      const config = getFirstTableConfig(['checkbox'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -17,19 +17,19 @@ new IntegrationTest(Tester).with({}, ({ app, request }) => {
   })
 
   describe('on POST', () => {
-    it('should create a record with a single line text', async () => {
+    it('should create a record with a checkbox', async () => {
       // GIVEN
-      const name = 'John Doe'
-      const config = getFirstTableConfig(['name'])
+      const checkbox = true
+      const config = getFirstTableConfig(['checkbox'])
       const { url } = await app.start(config)
 
       // WHEN
       const { record } = await request.post(`${url}/api/table/${config.tables[0].name}`, {
-        name,
+        checkbox,
       })
 
       // THEN
-      expect(record.fields.name).toBe(name)
+      expect(record.fields.checkbox).toBe(checkbox)
     })
   })
 })

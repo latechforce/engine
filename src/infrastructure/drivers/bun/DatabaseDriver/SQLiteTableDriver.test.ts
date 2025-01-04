@@ -1,25 +1,18 @@
-import { Database } from 'bun:sqlite'
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
-import type { IDatabaseTableDriver } from '@adapter/spi/drivers/DatabaseTableSpi'
 import { testDatabaseTableDriver } from '../../shared/DatabaseDriver/DatabaseTableDriverTest'
 import BunTester from 'bun:test'
+import { getFirstAndSecondTableConfig } from '@test/config'
+import { SQLiteDatabaseDriver } from './SQLiteDriver'
 
-const setup = async (): Promise<IDatabaseTableDriver> => {
+const setup = async () => {
   // GIVEN
-  const db = new Database()
-  const bunTable = new SQLiteDatabaseTableDriver(
-    {
-      name: 'table_1',
-      fields: [
-        {
-          name: 'name',
-          type: 'SingleLineText',
-        },
-      ],
-    },
-    db
-  )
-  return bunTable
+  const sqliteDatabase = new SQLiteDatabaseDriver({ url: ':memory:', driver: 'SQLite' })
+  const {
+    tables: [firstTableConfig, secondTableConfig],
+  } = getFirstAndSecondTableConfig(['name', 'multiple_linked_record'])
+  const firstTable = new SQLiteDatabaseTableDriver(firstTableConfig, sqliteDatabase.db)
+  const secondTable = new SQLiteDatabaseTableDriver(secondTableConfig, sqliteDatabase.db)
+  return { firstTable, secondTable }
 }
 
 testDatabaseTableDriver(BunTester, setup)

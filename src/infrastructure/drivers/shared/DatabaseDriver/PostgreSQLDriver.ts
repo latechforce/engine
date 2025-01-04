@@ -6,7 +6,7 @@ import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
 import type { ITable } from '@domain/interfaces/ITable'
 
 export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
-  private _db: pg.Pool
+  public db: pg.Pool
   private _client?: pg.PoolClient
   private _interval?: Timer
 
@@ -19,29 +19,29 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
       client.on('error', () => {})
       client.setTypeParser(NUMERIC_OID, (value) => parseFloat(value))
     })
-    this._db = pool
+    this.db = pool
   }
 
   connect = async (): Promise<void> => {
-    this._client = await this._db.connect()
+    this._client = await this.db.connect()
   }
 
   disconnect = async (): Promise<void> => {
     if (this._interval) clearInterval(this._interval)
     if (this._client) this._client.release()
-    await this._db.end()
+    await this.db.end()
   }
 
   exec = async (query: string): Promise<void> => {
     if (this._client && query.includes('LISTEN')) await this._client.query(query)
-    else await this._db.query(query)
+    else await this.db.query(query)
   }
 
   query = async <T>(
     text: string,
     values: (string | number | Buffer | Date)[]
   ): Promise<{ rows: T[]; rowCount: number }> => {
-    const { rows, rowCount } = await this._db.query(text, values).catch(async (error) => {
+    const { rows, rowCount } = await this.db.query(text, values).catch(async (error) => {
       if (!error.message.includes('does not exist') && !values.includes('__pgboss__send-it'))
         throw error
       return { rows: [], rowCount: 0 }
@@ -50,7 +50,7 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
   }
 
   table = (table: ITable) => {
-    return new PostgreSQLDatabaseTableDriver(table, this._db)
+    return new PostgreSQLDatabaseTableDriver(table, this.db)
   }
 
   on = (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => {
@@ -64,13 +64,13 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
           callback({ message, event: 'error' })
         })
     }
-    this._db.on('error', ({ message }) => {
+    this.db.on('error', ({ message }) => {
       callback({ message, event: 'error' })
     })
   }
 
   setupTriggers = async (tables: string[]) => {
-    await this._db.query(`
+    await this.db.query(`
       CREATE OR REPLACE FUNCTION notify_trigger_func() RETURNS trigger AS $$
       BEGIN
         IF TG_OP = 'INSERT' THEN
@@ -88,7 +88,7 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
       $$ LANGUAGE plpgsql;
     `)
     for (const table of tables) {
-      await this._db.query(`
+      await this.db.query(`
         DO $$
         DECLARE
             trigger_name text;

@@ -1,4 +1,4 @@
-import { deleteFilesRecursively, log, onBunErrors } from '../helpers'
+import { log, onBunErrors } from '../helpers'
 
 log('Start building server...')
 
@@ -54,8 +54,6 @@ const entrypoints: string[] = [
   'bun.js',
   'node.js',
 ]
-
-await deleteFilesRecursively('dist', '.js', ['public'])
 
 const { success, logs } = await Bun.build({
   target: 'node',

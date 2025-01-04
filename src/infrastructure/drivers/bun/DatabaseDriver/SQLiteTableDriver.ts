@@ -163,7 +163,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
           if (column.table && column.tableField) {
             const values = `${column.table}_view.${column.tableField}`
             const formula = this._convertFormula(column.formula, values)
-            const manyToManyTableName = this._getManyToManyTableName(column.table)
+            const manyToManyTableName = this._getManyToManyTableName(column)
             if (!joins.includes(manyToManyTableName)) {
               joins += ` LEFT JOIN ${manyToManyTableName} ON ${this.name}.id = ${manyToManyTableName}.${this.name}_id`
               joins += ` LEFT JOIN ${column.table}_view ON ${manyToManyTableName}.${column.table}_id = ${column.table}_view.id`
@@ -177,7 +177,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
             return `CAST(${expandedFormula} AS ${column.type}) AS "${column.name}"`
           }
         } else if (column.type === 'TEXT[]' && column.table) {
-          return `(SELECT GROUP_CONCAT("${column.table}_id") FROM ${this._getManyToManyTableName(column.table)} WHERE "${this.name}_id" = ${this.name}.id) AS "${column.name}"`
+          return `(SELECT GROUP_CONCAT("${column.table}_id") FROM ${this._getManyToManyTableName(column)} WHERE "${this.name}_id" = ${this.name}.id) AS "${column.name}"`
         } else {
           return `${this.name}.${column.name} AS "${column.name}"`
         }
@@ -195,52 +195,44 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
 
   insert = async <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
     try {
-      const { id, created_at, fields } = record
-      const { staticColumns, manyToManyColumns } = this._splitColumns({ id, created_at, ...fields })
-      const preprocessedFields = this._preprocess(staticColumns)
-      const keys = Object.keys(preprocessedFields)
-      const values = Object.values(preprocessedFields)
-      const placeholders = keys.map(() => `?`).join(', ')
-      const query = `INSERT INTO ${this.name} (${keys.join(', ')}) VALUES (${placeholders})`
-      this._db.prepare(query).run(...values)
-      if (manyToManyColumns) {
-        await this._insertManyToManyColumns(record.id, manyToManyColumns)
-      }
+      this._db.exec('BEGIN TRANSACTION')
+      await this._insert<T>(record)
+      this._db.exec('COMMIT')
     } catch (e) {
+      this._db.exec('ROLLBACK')
       this._throwError(e)
     }
   }
 
   insertMany = async <T extends RecordFields>(records: RecordFieldsToCreateDto<T>[]) => {
     try {
-      for (const record of records) await this.insert<T>(record)
+      this._db.exec('BEGIN TRANSACTION')
+      for (const record of records) await this._insert<T>(record)
+      this._db.exec('COMMIT')
     } catch (e) {
+      this._db.exec('ROLLBACK')
       this._throwError(e)
     }
   }
 
   update = async <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>) => {
     try {
-      const { id, updated_at, fields } = record
-      const { staticColumns, manyToManyColumns } = this._splitColumns({ id, updated_at, ...fields })
-      const preprocessedFields = this._preprocess(staticColumns)
-      const keys = Object.keys(preprocessedFields)
-      const values = Object.values(preprocessedFields)
-      const setString = keys.map((key) => `${key} = ?`).join(', ')
-      const query = `UPDATE ${this.name} SET ${setString} WHERE id = ?`
-      this._db.prepare(query).run(...values, record.id)
-      if (manyToManyColumns) {
-        await this._updateManyToManyColumns(record.id, manyToManyColumns)
-      }
+      this._db.exec('BEGIN TRANSACTION')
+      await this._update<T>(record)
+      this._db.exec('COMMIT')
     } catch (e) {
+      this._db.exec('ROLLBACK')
       this._throwError(e)
     }
   }
 
   updateMany = async <T extends RecordFields>(records: RecordFieldsToUpdateDto<T>[]) => {
     try {
-      for (const record of records) await this.update<T>(record)
+      this._db.exec('BEGIN TRANSACTION')
+      for (const record of records) await this._update<T>(record)
+      this._db.exec('COMMIT')
     } catch (e) {
+      this._db.exec('ROLLBACK')
       this._throwError(e)
     }
   }
@@ -283,6 +275,34 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     return records.map(this._postprocess<T>)
   }
 
+  private _insert = async <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
+    const { id, created_at, fields } = record
+    const { staticColumns, manyToManyColumns } = this._splitColumns({ id, created_at, ...fields })
+    const preprocessedFields = this._preprocess(staticColumns)
+    const keys = Object.keys(preprocessedFields)
+    const values = Object.values(preprocessedFields)
+    const placeholders = keys.map(() => `?`).join(', ')
+    const query = `INSERT INTO ${this.name} (${keys.join(', ')}) VALUES (${placeholders})`
+    this._db.prepare(query).run(...values)
+    if (Object.keys(manyToManyColumns).length > 0) {
+      await this._insertManyToManyColumns(record.id, manyToManyColumns)
+    }
+  }
+
+  private _update = async <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>) => {
+    const { id, updated_at, fields } = record
+    const { staticColumns, manyToManyColumns } = this._splitColumns({ id, updated_at, ...fields })
+    const preprocessedFields = this._preprocess(staticColumns)
+    const keys = Object.keys(preprocessedFields)
+    const values = Object.values(preprocessedFields)
+    const setString = keys.map((key) => `${key} = ?`).join(', ')
+    const query = `UPDATE ${this.name} SET ${setString} WHERE id = ?`
+    this._db.prepare(query).run(...values, record.id)
+    if (Object.keys(manyToManyColumns).length > 0) {
+      await this._updateManyToManyColumns(record.id, manyToManyColumns)
+    }
+  }
+
   private _buildColumnsQuery = (columns: Column[]) => {
     const columnsQueries = []
     const references = []
@@ -305,14 +325,26 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     return columnsQueries.join(', ')
   }
 
-  private _getManyToManyTableName = (tableName: string) => {
-    return [this.name, tableName].sort().join('_')
+  private _slugify = (text: string) => {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+  }
+
+  private _getManyToManyTableName = (column: Column) => {
+    return [this.name, column.table].sort().join('_') + '_' + this._slugify(column.name)
   }
 
   private _createManyToManyTables = async () => {
     for (const column of this.columns) {
       if (column.type === 'TEXT[]' && column.table) {
-        const manyToManyTableName = this._getManyToManyTableName(column.table)
+        const manyToManyTableName = this._getManyToManyTableName(column)
         const query = `
           CREATE TABLE IF NOT EXISTS ${manyToManyTableName} (
             "${this.name}_id" TEXT NOT NULL,
@@ -320,7 +352,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
             FOREIGN KEY ("${this.name}_id") REFERENCES ${this.name}(id),
             FOREIGN KEY ("${column.table}_id") REFERENCES ${column.table}(id)
           )
-        `
+        `.trim()
         this._db.exec(query)
       }
     }
@@ -352,9 +384,9 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       const column = this.columns.find((f) => f.name === columnName)
       const tableName = column?.table
       if (!tableName) throw new Error('Table name not found.')
-      const manyToManyTableName = this._getManyToManyTableName(tableName)
+      const manyToManyTableName = this._getManyToManyTableName(column)
       for (const id of ids) {
-        const query = `INSERT INTO ${manyToManyTableName} ("${this.name}_id", "${tableName}_id") VALUES (?, ?)`
+        const query = `INSERT INTO  ${manyToManyTableName} ("${this.name}_id", "${tableName}_id") VALUES (?, ?)`
         this._db.prepare(query).run(recordId, id)
       }
     }
@@ -368,11 +400,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       const column = this.columns.find((f) => f.name === columnName)
       const tableName = column?.table
       if (!tableName) throw new Error('Table name not found.')
-      const manyToManyTableName = this._getManyToManyTableName(tableName)
-      const deleteQuery = `DELETE FROM ${manyToManyTableName} WHERE "${this.name}_id" = ?`
+      const manyToManyTableName = this._getManyToManyTableName(column)
+      const deleteQuery = `DELETE FROM  ${manyToManyTableName} WHERE "${this.name}_id" = ?`
       this._db.prepare(deleteQuery).run(recordId)
       for (const id of ids) {
-        const query = `INSERT INTO ${manyToManyTableName} ("${this.name}_id", "${tableName}_id") VALUES (?, ?)`
+        const query = `INSERT INTO  ${manyToManyTableName} ("${this.name}_id", "${tableName}_id") VALUES (?, ?)`
         this._db.prepare(query).run(recordId, id)
       }
     }
@@ -420,14 +452,20 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     const { id, created_at, updated_at, ...columnsToProcess } = row
     const fields = Object.keys(columnsToProcess).reduce((acc: RecordFields, key) => {
       const value = row[key]
-      const column = this.columns.find((f) => f.name === key)
-      if (value === undefined || value === null) return acc
-      if (column?.type === 'TIMESTAMP') {
-        acc[key] = new Date(Number(value))
-      } else if (column?.type === 'TEXT[]' && typeof value === 'string') {
-        acc[key] = value.split(',')
-      } else if (column?.type === 'BOOLEAN') {
-        acc[key] = value === 1
+      const field = this.fields.find((f) => f.name === key)
+      if (!field) throw new Error(`Field "${key}" not found`)
+      switch (field.type) {
+        case 'DateTime':
+          acc[key] = new Date(Number(value))
+          break
+        case 'MultipleLinkedRecord':
+          acc[key] = value ? String(value).split(',') : []
+          break
+        case 'Checkbox':
+          acc[key] = value === 1
+          break
+        default:
+          acc[key] = value
       }
       return acc
     }, columnsToProcess) as T
@@ -591,7 +629,14 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
   }
 
   private _throwError = (error: unknown) => {
-    console.error(error)
+    if (error instanceof Error) {
+      if (error.message.includes('UNIQUE constraint failed')) {
+        throw new Error('Record id already exists')
+      }
+      if (error.message.includes('FOREIGN KEY constraint failed')) {
+        throw new Error('Invalid linked record')
+      }
+    }
     throw error
   }
 }

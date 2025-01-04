@@ -4,9 +4,9 @@ import { getFirstTableConfig } from '@test/config'
 
 new IntegrationTest(Tester).with({}, ({ app, request }) => {
   describe('on start', () => {
-    it('should create a table with a single line text', async () => {
+    it('should create a table with a number ', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name'])
+      const config = getFirstTableConfig(['number'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -17,19 +17,19 @@ new IntegrationTest(Tester).with({}, ({ app, request }) => {
   })
 
   describe('on POST', () => {
-    it('should create a record with a single line text', async () => {
+    it('should create a record with a number', async () => {
       // GIVEN
-      const name = 'John Doe'
-      const config = getFirstTableConfig(['name'])
+      const number = 10
+      const config = getFirstTableConfig(['number'])
       const { url } = await app.start(config)
 
       // WHEN
       const { record } = await request.post(`${url}/api/table/${config.tables[0].name}`, {
-        name,
+        number,
       })
 
       // THEN
-      expect(record.fields.name).toBe(name)
+      expect(record.fields.number).toBe(number)
     })
   })
 })
