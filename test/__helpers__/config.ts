@@ -85,6 +85,26 @@ const fullConfig: Config = {
           type: 'MultipleLinkedRecord',
           table: 'second_table',
         },
+        {
+          name: 'text_rollup',
+          type: 'Rollup',
+          multipleLinkedRecord: 'multiple_linked_record',
+          linkedRecordField: 'name',
+          formula: "CONCAT(values, ', ')",
+          output: {
+            type: 'SingleLineText',
+          },
+        },
+        {
+          name: 'number_rollup',
+          type: 'Rollup',
+          multipleLinkedRecord: 'multiple_linked_record',
+          linkedRecordField: 'number',
+          formula: 'SUM(values)',
+          output: {
+            type: 'Number',
+          },
+        },
       ],
     },
     {
@@ -93,6 +113,10 @@ const fullConfig: Config = {
         {
           name: 'name',
           type: 'SingleLineText',
+        },
+        {
+          name: 'number',
+          type: 'Number',
         },
       ],
     },
@@ -114,6 +138,8 @@ type FirstTableFieldName =
   | 'single_select'
   | 'single_linked_record'
   | 'multiple_linked_record'
+  | 'text_rollup'
+  | 'number_rollup'
 
 export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
   name: string

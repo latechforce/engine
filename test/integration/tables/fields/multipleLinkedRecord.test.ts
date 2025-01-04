@@ -46,7 +46,7 @@ new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, dri
       expect(record.fields.multiple_linked_record).toStrictEqual(['1', '2'])
     })
 
-    it.only('should not create a record with a bad multiple linked record id', async () => {
+    it('should not create a record with a bad multiple linked record id', async () => {
       // GIVEN
       const config = getFirstAndSecondTableConfig(['name', 'multiple_linked_record'])
       const { url } = await app.start(config)
@@ -60,8 +60,6 @@ new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, dri
         name: 'Row 1',
         multiple_linked_record: ['1', '3'],
       })
-
-      console.log(error)
 
       // THEN
       expect(error).toStrictEqual({

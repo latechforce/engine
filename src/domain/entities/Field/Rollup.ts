@@ -36,7 +36,7 @@ export class RollupField extends BaseField {
       ...super.config,
       type: 'Rollup',
       formula: this.formula,
-      multipleLinkedRecord: this.table,
+      multipleLinkedRecord: this.multipleLinkedRecord.name,
       linkedRecordField: this.linkedRecordField,
       output: this.output.config,
     }

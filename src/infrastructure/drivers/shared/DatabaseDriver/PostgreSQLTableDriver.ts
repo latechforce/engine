@@ -65,7 +65,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
         type: 'DateTime',
       },
     ]
-    this.columns = this._convertFieldsToColumns(this.fields)
+    this.columns = this.fields.map(this._convertFieldToColumn)
   }
 
   exists = async () => {
@@ -150,26 +150,27 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     let joins = ''
     const exists = await this.viewExists()
     if (exists) throw new Error(`View "${this.viewName}" already exists`)
-    const columns = this.columns
-      .map((column) => {
-        if (column.formula) {
-          if (column.table && column.tableField) {
-            const values = `${column.table}_view.${column.tableField}`
-            const formula = this._convertFormula(column.formula, values)
-            const manyToManyTableName = this._getManyToManyTableName(column)
-            if (!joins.includes(manyToManyTableName)) {
-              joins += ` LEFT JOIN ${manyToManyTableName} ON ${this.name}.id = ${manyToManyTableName}.${this.name}_id`
-              joins += ` LEFT JOIN ${column.table}_view ON ${manyToManyTableName}.${column.table}_id = ${column.table}_view.id`
-            }
-            return `CAST(${formula} AS ${column.type}) AS "${column.name}"`
-          } else {
-            const expandedFormula = this.columns.reduce((acc, f) => {
-              const regex = new RegExp(`\\b${f.name}\\b`, 'g')
-              return acc.replace(regex, f.formula ? `(${f.formula})` : `"${f.name}"`)
-            }, column.formula)
-            return `CAST(${expandedFormula} AS ${column.type.toUpperCase()}) AS "${column.name}"`
+    const columns = this.fields
+      .map((field) => {
+        const column = this._convertFieldToColumn(field)
+        if (field.type === 'Rollup') {
+          const linkedRecordField = this._getLinkedRecordField(field.multipleLinkedRecord)
+          const values = `${linkedRecordField.table}_view.${field.linkedRecordField}`
+          const formula = this._convertFormula(field.formula, values)
+          const linkedRecordColumn = this._convertFieldToColumn(linkedRecordField)
+          const manyToManyTableName = this._getManyToManyTableName(linkedRecordColumn)
+          if (!joins.includes(manyToManyTableName)) {
+            joins += ` LEFT JOIN ${manyToManyTableName} ON ${this.name}.id = ${manyToManyTableName}.${this.name}_id`
+            joins += ` LEFT JOIN ${linkedRecordField.table}_view ON ${manyToManyTableName}.${linkedRecordField.table}_id = ${linkedRecordField.table}_view.id`
           }
-        } else if (column.type === 'TEXT[]' && column.table) {
+          return `CAST(${formula} AS ${column.type}) AS "${column.name}"`
+        } else if (field.type === 'Formula') {
+          const expandedFormula = this.columns.reduce((acc, f) => {
+            const regex = new RegExp(`\\b${f.name}\\b`, 'g')
+            return acc.replace(regex, f.formula ? `(${f.formula})` : `"${f.name}"`)
+          }, field.formula)
+          return `CAST(${expandedFormula} AS ${column.type.toUpperCase()}) AS "${column.name}"`
+        } else if (field.type === 'MultipleLinkedRecord') {
           return `(SELECT ARRAY_AGG("${column.table}_id") FROM ${this._getManyToManyTableName(column)} WHERE "${this.name}_id" = ${this.name}.id) AS "${column.name}"`
         } else {
           return `${this.name}.${column.name} AS "${column.name}"`
@@ -354,8 +355,8 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
+      .replace(/\s+/g, '_')
+      .replace(/-+/g, '_')
   }
 
   private _getManyToManyTableName = (column: Column) => {
@@ -477,6 +478,13 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
         case 'MultipleLinkedRecord':
           acc[key] = value ? String(value).split(',') : []
           break
+        case 'Rollup':
+          if (field.output.type === 'Number') {
+            acc[key] = value ? Number(value) : 0
+          } else {
+            acc[key] = value
+          }
+          break
         default:
           acc[key] = value
       }
@@ -569,90 +577,86 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  private _convertFieldsToColumns = (fields: IField[]): Column[] => {
-    const columns: Column[] = []
-    for (const field of fields) {
-      const convertFieldToColumn = (field: IField): Column => {
-        const column = {
-          name: field.name,
-          required: field.required,
-          onMigration: field.onMigration,
-        }
-        let rollupTable: string | undefined
-        if (field.type === 'Rollup') {
-          const linkedRecord = fields.find((f) => f.name === field.multipleLinkedRecord)
-          if (!linkedRecord || linkedRecord.type !== 'MultipleLinkedRecord')
-            throw new Error('Linked record not found')
-          rollupTable = linkedRecord.table
-        }
-        switch (field.type) {
-          case 'SingleLineText':
-            return {
-              ...column,
-              type: 'TEXT',
-            }
-          case 'LongText':
-            return {
-              ...column,
-              type: 'TEXT',
-            }
-          case 'Email':
-            return {
-              ...column,
-              type: 'TEXT',
-            }
-          case 'DateTime':
-            return {
-              ...column,
-              type: 'TIMESTAMP',
-            }
-          case 'Number':
-            return {
-              ...column,
-              type: 'NUMERIC',
-            }
-          case 'Formula':
-            return {
-              ...column,
-              type: convertFieldToColumn({ name: field.name, ...field.output }).type,
-              formula: field.formula,
-            }
-          case 'Checkbox':
-            return {
-              ...column,
-              type: 'BOOLEAN',
-            }
-          case 'SingleSelect':
-            return {
-              ...column,
-              type: 'TEXT',
-              options: field.options,
-            }
-          case 'SingleLinkedRecord':
-            return {
-              ...column,
-              type: 'TEXT',
-              table: field.table,
-            }
-          case 'MultipleLinkedRecord':
-            return {
-              ...column,
-              type: 'TEXT[]',
-              table: field.table,
-            }
-          case 'Rollup':
-            return {
-              ...column,
-              type: convertFieldToColumn({ name: field.name, ...field.output }).type,
-              formula: field.formula,
-              table: rollupTable,
-              tableField: field.linkedRecordField,
-            }
-        }
-      }
-      columns.push(convertFieldToColumn(field))
+  private _getLinkedRecordField = (name: string) => {
+    const linkedRecord = this.fields.find((f) => f.name === name)
+    if (!linkedRecord || linkedRecord.type !== 'MultipleLinkedRecord')
+      throw new Error('Linked record not found')
+    return linkedRecord
+  }
+  private _convertFieldToColumn = (field: IField): Column => {
+    const column = {
+      name: field.name,
+      required: field.required,
+      onMigration: field.onMigration,
     }
-    return columns
+    let rollupTable: string | undefined
+    if (field.type === 'Rollup') {
+      rollupTable = this._getLinkedRecordField(field.multipleLinkedRecord).table
+    }
+    switch (field.type) {
+      case 'SingleLineText':
+        return {
+          ...column,
+          type: 'TEXT',
+        }
+      case 'LongText':
+        return {
+          ...column,
+          type: 'TEXT',
+        }
+      case 'Email':
+        return {
+          ...column,
+          type: 'TEXT',
+        }
+      case 'DateTime':
+        return {
+          ...column,
+          type: 'TIMESTAMP',
+        }
+      case 'Number':
+        return {
+          ...column,
+          type: 'NUMERIC',
+        }
+      case 'Formula':
+        return {
+          ...column,
+          type: this._convertFieldToColumn({ name: field.name, ...field.output }).type,
+          formula: field.formula,
+        }
+      case 'Checkbox':
+        return {
+          ...column,
+          type: 'BOOLEAN',
+        }
+      case 'SingleSelect':
+        return {
+          ...column,
+          type: 'TEXT',
+          options: field.options,
+        }
+      case 'SingleLinkedRecord':
+        return {
+          ...column,
+          type: 'TEXT',
+          table: field.table,
+        }
+      case 'MultipleLinkedRecord':
+        return {
+          ...column,
+          type: 'TEXT[]',
+          table: field.table,
+        }
+      case 'Rollup':
+        return {
+          ...column,
+          type: this._convertFieldToColumn({ name: field.name, ...field.output }).type,
+          formula: field.formula,
+          table: rollupTable,
+          tableField: field.linkedRecordField,
+        }
+    }
   }
 
   private _throwError = (error: unknown) => {

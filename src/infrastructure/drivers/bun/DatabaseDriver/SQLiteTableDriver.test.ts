@@ -9,7 +9,7 @@ const setup = async () => {
   const sqliteDatabase = new SQLiteDatabaseDriver({ url: ':memory:', driver: 'SQLite' })
   const {
     tables: [firstTableConfig, secondTableConfig],
-  } = getFirstAndSecondTableConfig(['name', 'multiple_linked_record'])
+  } = getFirstAndSecondTableConfig(['name', 'multiple_linked_record', 'number_rollup'])
   const firstTable = new SQLiteDatabaseTableDriver(firstTableConfig, sqliteDatabase.db)
   const secondTable = new SQLiteDatabaseTableDriver(secondTableConfig, sqliteDatabase.db)
   return { firstTable, secondTable }

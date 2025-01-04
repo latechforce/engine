@@ -4,7 +4,7 @@ import BunTester from 'bun:test'
 
 const {
   tables: [, secondTableConfig],
-} = getFirstAndSecondTableConfig(['name', 'multiple_linked_record'])
+} = getFirstAndSecondTableConfig(['name', 'multiple_linked_record', 'number_rollup'])
 
 export function testDatabaseTableDriver(
   { describe, beforeAll, afterAll, it, expect }: typeof BunTester,
@@ -181,7 +181,7 @@ export function testDatabaseTableDriver(
       // THEN
       expect(row).toStrictEqual({
         id: '1',
-        fields: { name: 'John Doe', multiple_linked_record: [] },
+        fields: { name: 'John Doe', multiple_linked_record: [], number_rollup: 0 },
         created_at: date,
         updated_at: date,
       })
@@ -237,7 +237,7 @@ export function testDatabaseTableDriver(
       expect(rows).toStrictEqual([
         {
           id: '1',
-          fields: { name: 'John Doe', multiple_linked_record: [] },
+          fields: { name: 'John Doe', multiple_linked_record: [], number_rollup: 0 },
           created_at: date,
           updated_at: date,
         },
