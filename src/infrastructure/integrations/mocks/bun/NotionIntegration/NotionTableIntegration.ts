@@ -7,12 +7,12 @@ import type { SQLiteDatabaseTableDriver } from '@infrastructure/drivers/bun/Data
 import type { PersistedRecordFieldsDto } from '@adapter/spi/dtos/RecordDto'
 import { nanoid } from 'nanoid'
 import type { RecordFields } from '@domain/entities/Record'
-import type { FieldDto } from '@adapter/spi/dtos/FieldDto'
+import type { IField } from '@domain/interfaces/IField'
 
 export class NotionTableIntegration implements INotionTableIntegration {
   readonly id: string
   readonly name: string
-  private _properties: FieldDto[]
+  private _properties: IField[]
 
   constructor(
     private _db: SQLiteDatabaseTableDriver,
@@ -35,7 +35,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     await this._db.createView()
   }
 
-  migrate = async (properties: FieldDto[]) => {
+  migrate = async (properties: IField[]) => {
     await this.migrate(properties)
   }
 
@@ -110,27 +110,27 @@ export class NotionTableIntegration implements INotionTableIntegration {
         continue
       }
       switch (property.type) {
-        case 'TEXT':
+        case 'SingleLineText':
           fields[key] = value ? String(value) : null
           break
-        case 'TIMESTAMP':
+        case 'DateTime':
           if (typeof value === 'number') fields[key] = new Date(value)
           else fields[key] = value as Date
           break
-        case 'NUMERIC':
+        case 'Number':
           fields[key] = value ? Number(value) : null
           break
-        case 'BOOLEAN':
+        case 'Checkbox':
           fields[key] = value === 'false' || value === '0' ? false : Boolean(value)
           break
-        case 'TEXT[]':
+        /*case 'TEXT[]':
           if (!Array.isArray(value)) throw new Error(`Invalid property value: ${value}`)
           if (property.table) {
             fields[key] = value ? (value as string[]) : []
           } else {
             fields[key] = JSON.stringify(value || []) as string
           }
-          break
+          break*/
         default:
           throw new Error(`Invalid property type: ${property.type}`)
       }
@@ -146,25 +146,25 @@ export class NotionTableIntegration implements INotionTableIntegration {
       const property = this._properties.find((p) => p.name === key)
       if (!property) throw new Error(`Property "${key}" does not exist`)
       switch (property.type) {
-        case 'TEXT':
+        case 'SingleLineText':
           page[key] = value ?? null
           break
-        case 'TIMESTAMP':
+        case 'DateTime':
           page[key] = value ? new Date(value as number) : null
           break
-        case 'NUMERIC':
+        case 'Number':
           page[key] = value ?? null
           break
-        case 'BOOLEAN':
+        case 'Checkbox':
           page[key] = value ?? false
           break
-        case 'TEXT[]':
+        /*case 'TEXT[]':
           if (property.table) {
             page[key] = value ? (value as string[]) : []
           } else {
             page[key] = value ? JSON.parse(String(value)) : []
           }
-          break
+          break*/
         default:
           throw new Error(`Invalid property type: ${property.type}`)
       }

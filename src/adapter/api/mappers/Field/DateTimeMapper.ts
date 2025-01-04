@@ -1,4 +1,4 @@
-import type { IDateTimeField } from '@adapter/api/configs/Field/DateTime'
+import type { IDateTimeField } from '@domain/interfaces/IField/IDateTime'
 import { DateTimeField } from '@domain/entities/Field/DateTime'
 
 export class DateTimeFieldMapper {

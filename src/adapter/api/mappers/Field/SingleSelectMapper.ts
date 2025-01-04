@@ -1,5 +1,5 @@
 import { SingleSelectField } from '@domain/entities/Field/SingleSelect'
-import type { ISingleSelectField } from '@adapter/api/configs/Field/SingleSelect'
+import type { ISingleSelectField } from '@domain/interfaces/IField/ISingleSelect'
 
 export class SingleSelectFieldMapper {
   static toEntity = (config: ISingleSelectField): SingleSelectField => {

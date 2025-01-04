@@ -3,7 +3,7 @@ import type { DatabaseConfig, DatabaseEventType } from '@domain/services/Databas
 import type { EventDto } from '@adapter/spi/dtos/EventDto'
 import { SQLiteDatabaseDriver } from './SQLiteDriver'
 import { PostgreSQLDatabaseDriver } from '@infrastructure/drivers/shared/DatabaseDriver/PostgreSQLDriver'
-import type { FieldDto } from '@adapter/spi/dtos/FieldDto'
+import type { ITable } from '@domain/interfaces/ITable'
 
 export class DatabaseDriver implements IDatabaseDriver {
   private _db: SQLiteDatabaseDriver | PostgreSQLDatabaseDriver
@@ -41,8 +41,8 @@ export class DatabaseDriver implements IDatabaseDriver {
     return this._db.query(text, values)
   }
 
-  table(name: string, fields: FieldDto[] = []) {
-    return this._db.table(name, fields)
+  table = (table: ITable) => {
+    return this._db.table(table)
   }
 
   on = (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => {

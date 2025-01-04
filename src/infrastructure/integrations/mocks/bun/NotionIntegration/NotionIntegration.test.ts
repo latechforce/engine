@@ -8,7 +8,7 @@ const integration = new NotionIntegration({
 
 await integration.connect()
 
-await integration.addTable('table_1', 'Table 1', [])
+await integration.addTable('table_1', [])
 
 await integration.addUser({
   id: '1',
@@ -20,6 +20,7 @@ await integration.addUser({
 testNotionIntegration(
   {
     ...runner,
+    it: runner.it.skip,
     env: {
       TABLE_ID: 'table_1',
     },

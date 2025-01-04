@@ -1,6 +1,6 @@
 import { RollupField } from '@domain/entities/Field/Rollup'
-import type { IRollupField } from '@adapter/api/configs/Field/Rollup'
-import type { IField } from '@adapter/api/configs/Field'
+import type { IRollupField } from '@domain/interfaces/IField/IRollup'
+import type { IField } from '@domain/interfaces/IField'
 import { FieldMapper } from '.'
 import { ConfigError } from '@domain/entities/Error/Config'
 import { MultipleLinkedRecordFieldMapper } from './MultipleLinkedRecordMapper'
@@ -8,11 +8,11 @@ import { MultipleLinkedRecordFieldMapper } from './MultipleLinkedRecordMapper'
 export class RollupFieldMapper {
   static toEntity = (config: IRollupField, fields: IField[]): RollupField => {
     const { name, output, ...res } = config
-    const outputEntity = FieldMapper.toEntity({ ...output, name }, fields)
+    const outputEntity = FieldMapper.toOutputEntity({ ...output, name })
     const multipleLinkedRecordField = fields.find(
       (field) => field.name === config.multipleLinkedRecord
     )
-    if (!multipleLinkedRecordField || multipleLinkedRecordField.field !== 'MultipleLinkedRecord') {
+    if (!multipleLinkedRecordField || multipleLinkedRecordField.type !== 'MultipleLinkedRecord') {
       throw new ConfigError({
         entity: 'Field',
         name: config.name,

@@ -179,10 +179,6 @@
         "ICheckboxField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "Checkbox",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -197,11 +193,15 @@
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "Checkbox",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
-                "name"
+                "name",
+                "type"
             ],
             "type": "object"
         },
@@ -380,10 +380,6 @@
         "IDateTimeField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "DateTime",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -398,21 +394,21 @@
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "DateTime",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
-                "name"
+                "name",
+                "type"
             ],
             "type": "object"
         },
         "IEmailField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "Email",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -427,19 +423,20 @@
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "Email",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
-                "name"
+                "name",
+                "type"
             ],
             "type": "object"
         },
         "IField": {
             "anyOf": [
-                {
-                    "$ref": "#/definitions/ICheckboxField"
-                },
                 {
                     "$ref": "#/definitions/IDateTimeField"
                 },
@@ -450,13 +447,19 @@
                     "$ref": "#/definitions/ILongTextField"
                 },
                 {
-                    "$ref": "#/definitions/INumberField"
-                },
-                {
                     "$ref": "#/definitions/ISingleLineTextField"
                 },
                 {
+                    "$ref": "#/definitions/INumberField"
+                },
+                {
                     "$ref": "#/definitions/IFormulaField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleSelectField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleLinkedRecordField"
                 },
                 {
                     "$ref": "#/definitions/IMultipleLinkedRecordField"
@@ -465,20 +468,13 @@
                     "$ref": "#/definitions/IRollupField"
                 },
                 {
-                    "$ref": "#/definitions/ISingleLinkedRecordField"
-                },
-                {
-                    "$ref": "#/definitions/ISingleSelectField"
+                    "$ref": "#/definitions/ICheckboxField"
                 }
             ]
         },
         "IFormulaField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "Formula",
-                    "type": "string"
-                },
                 "formula": {
                     "type": "string"
                 },
@@ -495,17 +491,21 @@
                     "type": "object"
                 },
                 "output": {
-                    "$ref": "#/definitions/Omit<IDateTimeField|ILongTextField|INumberField|ISingleLineTextField,\"name\">"
+                    "$ref": "#/definitions/IOutputField"
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "Formula",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
                 "formula",
                 "name",
-                "output"
+                "output",
+                "type"
             ],
             "type": "object"
         },
@@ -560,10 +560,6 @@
         "ILongTextField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "LongText",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -578,21 +574,21 @@
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "LongText",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
-                "name"
+                "name",
+                "type"
             ],
             "type": "object"
         },
         "IMultipleLinkedRecordField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "MultipleLinkedRecord",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -610,22 +606,22 @@
                 },
                 "table": {
                     "type": "string"
+                },
+                "type": {
+                    "const": "MultipleLinkedRecord",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
                 "name",
-                "table"
+                "table",
+                "type"
             ],
             "type": "object"
         },
         "INumberField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "Number",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -640,11 +636,45 @@
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "Number",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
-                "name"
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IOutputField": {
+            "additionalProperties": false,
+            "properties": {
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "enum": [
+                        "DateTime",
+                        "LongText",
+                        "Number",
+                        "SingleLineText"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
             ],
             "type": "object"
         },
@@ -725,10 +755,6 @@
         "IRollupField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "Rollup",
-                    "type": "string"
-                },
                 "formula": {
                     "type": "string"
                 },
@@ -751,19 +777,23 @@
                     "type": "object"
                 },
                 "output": {
-                    "$ref": "#/definitions/Omit<IDateTimeField|ILongTextField|INumberField|ISingleLineTextField,\"name\">"
+                    "$ref": "#/definitions/IOutputField"
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "Rollup",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
                 "formula",
                 "linkedRecordField",
                 "multipleLinkedRecord",
                 "name",
-                "output"
+                "output",
+                "type"
             ],
             "type": "object"
         },
@@ -882,10 +912,6 @@
         "ISingleLineTextField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "SingleLineText",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -900,21 +926,21 @@
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "SingleLineText",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
-                "name"
+                "name",
+                "type"
             ],
             "type": "object"
         },
         "ISingleLinkedRecordField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "SingleLinkedRecord",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -932,22 +958,22 @@
                 },
                 "table": {
                     "type": "string"
+                },
+                "type": {
+                    "const": "SingleLinkedRecord",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
                 "name",
-                "table"
+                "table",
+                "type"
             ],
             "type": "object"
         },
         "ISingleSelectField": {
             "additionalProperties": false,
             "properties": {
-                "field": {
-                    "const": "SingleSelect",
-                    "type": "string"
-                },
                 "name": {
                     "type": "string"
                 },
@@ -968,12 +994,16 @@
                 },
                 "required": {
                     "type": "boolean"
+                },
+                "type": {
+                    "const": "SingleSelect",
+                    "type": "string"
                 }
             },
             "required": [
-                "field",
                 "name",
-                "options"
+                "options",
+                "type"
             ],
             "type": "object"
         },
@@ -1313,36 +1343,6 @@
             },
             "required": [
                 "token"
-            ],
-            "type": "object"
-        },
-        "Omit<IDateTimeField|ILongTextField|INumberField|ISingleLineTextField,\"name\">": {
-            "additionalProperties": false,
-            "properties": {
-                "field": {
-                    "enum": [
-                        "DateTime",
-                        "LongText",
-                        "Number",
-                        "SingleLineText"
-                    ],
-                    "type": "string"
-                },
-                "onMigration": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "replace": {
-                            "type": "string"
-                        }
-                    },
-                    "type": "object"
-                },
-                "required": {
-                    "type": "boolean"
-                }
-            },
-            "required": [
-                "field"
             ],
             "type": "object"
         },

@@ -2,9 +2,9 @@ import type { Table } from '@domain/entities/Table'
 import { DatabaseTable, type IDatabaseTableSpi } from './DatabaseTable'
 import type { Logger } from './Logger'
 import type { RealtimeEvent } from './Realtime'
-import type { Field } from '@domain/entities/Field'
 import type { Monitor } from './Monitor'
 import type { IdGenerator } from './IdGenerator'
+import type { ITable } from '@domain/interfaces/ITable'
 
 export type DatabaseDriverName = 'PostgreSQL' | 'SQLite'
 
@@ -32,7 +32,7 @@ export type DatabaseQuery = <T>(
 export type DatabaseExec = (query: string) => Promise<void>
 
 export interface IDatabaseSpi {
-  table: (name: string, fields: Field[]) => IDatabaseTableSpi
+  table: (table: ITable) => IDatabaseTableSpi
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   exec: DatabaseExec
@@ -54,8 +54,8 @@ export class Database {
     this.driver = driver
   }
 
-  table = (name: string, fields: Field[]): DatabaseTable => {
-    return new DatabaseTable(this._spi, this._services, { name, fields })
+  table = (config: ITable): DatabaseTable => {
+    return new DatabaseTable(this._spi, this._services, config)
   }
 
   connect = async () => {
@@ -122,10 +122,10 @@ export class Database {
       visit(table, visited, stack)
     }
     for (const table of [...sortedTables].reverse()) {
-      await this.table(table.name, table.fields).dropView()
+      await this.table(table.config).dropView()
     }
     for (const table of sortedTables) {
-      const tableDb = this.table(table.name, table.fields)
+      const tableDb = this.table(table.config)
       const exists = await tableDb.exists()
       if (exists) {
         await tableDb.migrate()
@@ -134,7 +134,7 @@ export class Database {
       }
     }
     for (const table of sortedTables) {
-      await this.table(table.name, table.fields).createView()
+      await this.table(table.config).createView()
     }
   }
 

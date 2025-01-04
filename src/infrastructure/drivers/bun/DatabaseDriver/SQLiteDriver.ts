@@ -3,7 +3,7 @@ import type { IDatabaseDriver } from '@adapter/spi/drivers/DatabaseSpi'
 import type { DatabaseConfig, DatabaseEventType } from '@domain/services/Database'
 import type { EventDto, EventNotificationDto } from '@adapter/spi/dtos/EventDto'
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
-import type { FieldDto } from '@adapter/spi/dtos/FieldDto'
+import type { ITable } from '@domain/interfaces/ITable'
 
 interface Notification {
   id: number
@@ -79,8 +79,8 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     }
   }
 
-  table = (name: string, fields: FieldDto[]) => {
-    return new SQLiteDatabaseTableDriver(name, fields, this._db)
+  table = (table: ITable) => {
+    return new SQLiteDatabaseTableDriver(table, this._db)
   }
 
   on = (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => {

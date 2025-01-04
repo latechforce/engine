@@ -1,7 +1,15 @@
-import { BaseField, type BaseFieldParams } from './base'
+import type { ICheckboxField } from '@domain/interfaces/IField/ICheckbox'
+import { BaseField, type IBaseField } from './base'
 
 export class CheckboxField extends BaseField {
-  constructor(params: BaseFieldParams) {
-    super(params)
+  constructor(config: IBaseField) {
+    super(config)
+  }
+
+  get config(): ICheckboxField {
+    return {
+      ...super.config,
+      type: 'Checkbox',
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Automation } from '@domain/entities/Automation'
-import type { IAutomation } from '../configs/Automation'
+import type { IAutomation } from '../../../domain/interfaces/IAutomation'
 import {
   ActionMapper,
   type ActionMapperServices,

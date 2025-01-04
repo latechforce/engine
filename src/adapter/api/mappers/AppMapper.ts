@@ -1,5 +1,5 @@
 import { StoppedApp } from '@domain/entities/App/Stopped'
-import type { Config } from '@adapter/api/configs'
+import type { Config } from '@domain/interfaces'
 import type { Drivers } from '@adapter/spi/drivers'
 import { TableMapper } from './TableMapper'
 import { AutomationMapper } from './AutomationMapper'

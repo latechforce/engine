@@ -12,10 +12,10 @@ import type {
   RecordFieldsToCreate,
   RecordFieldsToUpdate,
 } from '@domain/entities/Record'
-import type { FieldDto } from '../dtos/FieldDto'
+import type { IField } from '@domain/interfaces/IField'
 
 export interface IDatabaseTableDriver {
-  fields: FieldDto[]
+  fields: IField[]
   exists: () => Promise<boolean>
   create: () => Promise<void>
   dropView: () => Promise<void>

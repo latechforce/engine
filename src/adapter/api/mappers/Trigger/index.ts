@@ -1,4 +1,4 @@
-import type { ITrigger } from '@adapter/api/configs/Trigger'
+import type { ITrigger } from '@domain/interfaces/ITrigger'
 import type { Trigger } from '@domain/entities/Trigger'
 import type { Queue } from '@domain/services/Queue'
 import type { Realtime } from '@domain/services/Realtime'

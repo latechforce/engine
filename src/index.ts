@@ -4,14 +4,14 @@ import App from '@adapter/api'
 import type { Drivers } from '@adapter/spi/drivers'
 import type { Integrations } from '@adapter/spi/integrations'
 
-export type { Config } from '@adapter/api/configs'
-export type { IAutomation as Automation } from '@adapter/api/configs/Automation'
-export type { IAction as Action } from '@adapter/api/configs/Action'
-export type { ITrigger as Trigger } from '@adapter/api/configs/Trigger'
-export type { ITable as Table } from '@adapter/api/configs/Table'
-export type { IField as Field } from '@adapter/api/configs/Field'
+export type { Config } from '@domain/interfaces'
+export type { IAutomation as Automation } from '@domain/interfaces/IAutomation'
+export type { IAction as Action } from '@domain/interfaces/IAction'
+export type { ITrigger as Trigger } from '@domain/interfaces/ITrigger'
+export type { ITable as Table } from '@domain/interfaces/ITable'
+export type { IField as Field } from '@domain/interfaces/IField'
 export type { FilterConfig as Filter } from '@domain/entities/Filter'
-export type { IBucket as Bucket } from '@adapter/api/configs/Bucket'
+export type { IBucket as Bucket } from '@domain/interfaces/IBucket'
 // export type { IPage as Page } from '@adapter/api/configs/Page'
 // export type { IComponent as Component } from '@adapter/api/configs/Component'
 // export type { IHead as Head } from '@adapter/api/configs/Head'
@@ -27,7 +27,7 @@ export type {
   TunnelConfig as Tunnel,
   // AuthConfig as Auth,
   // ThemeConfig as Theme,
-} from '@adapter/api/configs/Services'
+} from '@domain/interfaces/IServices'
 export type {
   CodeRunnerContext,
   CodeRunnerContextServicesDatabase as DatabaseIntegration,

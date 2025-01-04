@@ -57,6 +57,7 @@ type Request = {
 }
 type TestApp = {
   start: (_: Config) => Promise<StartedApp>
+  stop: () => Promise<void>
 }
 
 export class IntegrationTest {
@@ -120,6 +121,9 @@ export class IntegrationTest {
         start: async (_: Config): Promise<StartedApp> => {
           throw new Error('App must be initialized before starting')
         },
+        stop: async (): Promise<void> => {
+          throw new Error('App must be initialized before stopping')
+        },
       }
 
       this.tester.beforeEach(async () => {
@@ -147,12 +151,18 @@ export class IntegrationTest {
           integrations.pappers = new PappersIntegration()
         }
 
+        let startedApp: StartedApp | undefined
         app.start = async (config: Config) => {
-          return new BunApp().start({ ...config, ...extendsConfig })
+          startedApp = await new BunApp().start({ ...config, ...extendsConfig })
+          return startedApp
+        }
+        app.stop = async () => {
+          await startedApp?.stop()
         }
       })
 
       this.tester.afterEach(async () => {
+        await app.stop()
         if (
           'drivers' in options &&
           options.drivers?.includes('Database') &&

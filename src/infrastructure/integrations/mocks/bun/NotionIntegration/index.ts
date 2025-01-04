@@ -5,7 +5,7 @@ import type { NotionUserDto } from '@adapter/spi/dtos/NotionUserDto'
 import { SQLiteDatabaseDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteDriver'
 import { SQLiteDatabaseTableDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
 import type { RecordFields } from '@domain/entities/Record'
-import type { FieldDto } from '@adapter/spi/dtos/FieldDto'
+import type { IField } from '@domain/interfaces/IField'
 
 export interface TableObject extends RecordFields {
   title: string
@@ -29,30 +29,36 @@ export class NotionIntegration implements INotionIntegration {
 
   connect = async () => {
     await this._db.connect()
-    this._tables = this._db.table('tables', [
-      {
-        name: 'title',
-        type: 'TEXT',
-      },
-      {
-        name: 'properties',
-        type: 'TEXT',
-      },
-    ])
-    this._users = this._db.table('users', [
-      {
-        name: 'email',
-        type: 'TEXT',
-      },
-      {
-        name: 'name',
-        type: 'TEXT',
-      },
-      {
-        name: 'avatarUrl',
-        type: 'TEXT',
-      },
-    ])
+    this._tables = this._db.table({
+      name: 'tables',
+      fields: [
+        {
+          name: 'title',
+          type: 'SingleLineText',
+        },
+        {
+          name: 'properties',
+          type: 'LongText',
+        },
+      ],
+    })
+    this._users = this._db.table({
+      name: 'users',
+      fields: [
+        {
+          name: 'email',
+          type: 'SingleLineText',
+        },
+        {
+          name: 'name',
+          type: 'SingleLineText',
+        },
+        {
+          name: 'avatarUrl',
+          type: 'SingleLineText',
+        },
+      ],
+    })
     await this._tables.create()
     await this._tables.createView()
     await this._users.create()
@@ -71,9 +77,15 @@ export class NotionIntegration implements INotionIntegration {
     if (!table) {
       throw new Error('Table not found')
     }
-    const { properties } = table.fields
+    const { properties, title } = table.fields
     const fields = JSON.parse(String(properties))
-    const notionTable = new NotionTableIntegration(this._db.table(id, fields), table)
+    const notionTable = new NotionTableIntegration(
+      this._db.table({
+        name: title,
+        fields,
+      }),
+      table
+    )
     const exist = await notionTable.exists()
     if (!exist) {
       await notionTable.create()
@@ -92,10 +104,10 @@ export class NotionIntegration implements INotionIntegration {
     }))
   }
 
-  addTable = async (id: string, title: string, properties: FieldDto[]) => {
+  addTable = async (id: string, properties: IField[]) => {
     await this._tablesOrThrow().insert<TableObject>({
       id,
-      fields: { title, properties: JSON.stringify(properties) },
+      fields: { title: id, properties: JSON.stringify(properties) },
       created_at: new Date(),
     })
     return this.getTable(id)

@@ -23,6 +23,7 @@ import { MultipleLinkedRecordField } from '../Field/MultipleLinkedRecord'
 import { FilterMapper, filterSchema, type FilterConfig } from '../Filter'
 import type { Monitor } from '@domain/services/Monitor'
 import type { Record, RecordFieldsConfig } from '../Record'
+import type { ITable } from '@domain/interfaces/ITable'
 
 interface TableConfig {
   name: string
@@ -61,8 +62,15 @@ export class Table {
     this.fields = fields
     this.path = `/api/table/${this.name}`
     this.recordPath = `${this.path}/:id`
-    this.db = database.table(this.name, this.fields)
+    this.db = database.table(this.config)
     this._validateData = schemaValidator.validate
+  }
+
+  get config(): ITable {
+    return {
+      name: this.name,
+      fields: this.fields.map((field) => field.config),
+    }
   }
 
   init = async () => {

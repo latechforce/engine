@@ -1,4 +1,4 @@
-import type { IBucket } from '@adapter/api/configs/Bucket'
+import type { IBucket } from '@domain/interfaces/IBucket'
 import type { Server } from '@domain/services/Server'
 import type { IdGenerator } from '@domain/services/IdGenerator'
 import type { TemplateCompiler } from '@domain/services/TemplateCompiler'

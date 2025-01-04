@@ -1,7 +1,15 @@
-import { BaseField, type BaseFieldParams } from './base'
+import type { ILongTextField } from '@domain/interfaces/IField/ILongText'
+import { BaseField, type IBaseField } from './base'
 
 export class LongTextField extends BaseField {
-  constructor(params: BaseFieldParams) {
-    super(params)
+  constructor(config: IBaseField) {
+    super(config)
+  }
+
+  get config(): ILongTextField {
+    return {
+      ...super.config,
+      type: 'LongText',
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Table } from '@domain/entities/Table'
-import type { ITable } from '@adapter/api/configs/Table'
+import type { ITable } from '@domain/interfaces/ITable'
 import { FieldMapper } from './Field'
 import type { Server } from '@domain/services/Server'
 import type { Database } from '@domain/services/Database'

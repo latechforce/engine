@@ -29,7 +29,7 @@ import {
   CreateXlsxFromTemplateSpreadsheetActionMapper,
   type CreateXlsxFromTemplateSpreadsheetActionMapperServices,
 } from './spreadsheet/CreateXlsxFromTemplateMapper'
-import type { IAction } from '@adapter/api/configs/Action'
+import type { IAction } from '@domain/interfaces/IAction'
 import { ReadRecordDatabaseActionMapper } from './database/ReadRecordMapper'
 import {
   GetCompanyPappersActionMapper,

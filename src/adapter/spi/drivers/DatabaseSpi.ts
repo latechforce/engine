@@ -9,14 +9,12 @@ import type {
 } from '@domain/services/Database'
 import type { EventDto } from '../dtos/EventDto'
 import { EventMapper } from '../mappers/EventMapper'
-import type { FieldDto } from '../dtos/FieldDto'
-import type { Field } from '@domain/entities/Field'
-import { FieldMapper } from '../mappers/FieldMapper'
+import type { ITable } from '@domain/interfaces/ITable'
 
 export interface IDatabaseDriver {
   connect: () => Promise<void>
   disconnect: () => Promise<void>
-  table: (name: string, fields: FieldDto[]) => IDatabaseTableDriver
+  table: (table: ITable) => IDatabaseTableDriver
   exec: DatabaseExec
   query: DatabaseQuery
   on: (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => void
@@ -26,9 +24,8 @@ export interface IDatabaseDriver {
 export class DatabaseSpi implements IDatabaseSpi {
   constructor(private _driver: IDatabaseDriver) {}
 
-  table = (name: string, fields: Field[]) => {
-    const fieldsDto = FieldMapper.toManyDto(fields)
-    const databaseTableDriver = this._driver.table(name, fieldsDto)
+  table = (table: ITable) => {
+    const databaseTableDriver = this._driver.table(table)
     return new DatabaseTableSpi(databaseTableDriver)
   }
 

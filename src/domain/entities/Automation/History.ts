@@ -32,7 +32,10 @@ export class AutomationHistory {
   ]
 
   constructor(private _services: AutomationHistoryServices) {
-    this._table = this._services.database.table('_automations.histories', this._fields)
+    this._table = this._services.database.table({
+      name: '_automations.histories',
+      fields: this._fields.map((field) => field.config),
+    })
   }
 
   init = async () => {

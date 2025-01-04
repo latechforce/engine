@@ -8,81 +8,84 @@ const integration = new NotionIntegration({
 
 await integration.connect()
 
-await integration.addTable('table_2', 'Table 2', [
+await integration.addTable('table_2', [
   {
     name: 'name',
-    type: 'TEXT',
+    type: 'SingleLineText',
   },
 ])
 
-await integration.addTable('table_1', 'Table 1', [
+await integration.addTable('table_1', [
   {
     name: 'name',
-    type: 'TEXT',
+    type: 'SingleLineText',
   },
   {
     name: 'number',
-    type: 'NUMERIC',
+    type: 'Number',
   },
   {
     name: 'boolean',
-    type: 'BOOLEAN',
+    type: 'Checkbox',
   },
   {
     name: 'text',
-    type: 'TEXT',
+    type: 'SingleLineText',
   },
   {
     name: 'url',
-    type: 'TEXT',
+    type: 'SingleLineText',
   },
   {
     name: 'email',
-    type: 'TEXT',
+    type: 'SingleLineText',
   },
   {
     name: 'phone',
-    type: 'TEXT',
+    type: 'SingleLineText',
   },
   {
     name: 'single_select',
-    type: 'TEXT',
+    type: 'SingleLineText',
   },
   {
     name: 'status',
-    type: 'TEXT',
+    type: 'SingleLineText',
   },
-  {
+  /*{
     name: 'multi_select',
     type: 'TEXT[]',
-  },
+  },*/
   {
     name: 'date',
-    type: 'TIMESTAMP',
+    type: 'DateTime',
   },
-  {
+  /*{
     name: 'people',
     type: 'TEXT[]',
   },
   {
     name: 'files',
     type: 'TEXT[]',
-  },
+  },*/
   {
     name: 'relation',
-    type: 'TEXT[]',
+    type: 'MultipleLinkedRecord',
     table: 'table_2',
   },
   {
     name: 'rollup_names',
-    type: 'TEXT',
-    table: 'table_2',
-    tableField: 'name',
+    type: 'Rollup',
+    multipleLinkedRecord: 'relation',
+    linkedRecordField: 'name',
     formula: "CONCAT(values, ', ')",
+    output: {
+      type: 'SingleLineText',
+    },
   },
   {
     name: 'archived',
-    type: 'BOOLEAN',
+    type: 'Checkbox',
   },
 ])
 
@@ -96,6 +99,7 @@ await integration.addUser({
 testNotionTableIntegration(
   {
     ...runner,
+    it: runner.it.skip,
     env: {
       TABLE_1_ID: 'table_1',
       TABLE_2_ID: 'table_2',

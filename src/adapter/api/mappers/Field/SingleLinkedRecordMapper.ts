@@ -1,5 +1,5 @@
 import { SingleLinkedRecordField } from '@domain/entities/Field/SingleLinkedRecord'
-import type { ISingleLinkedRecordField } from '@adapter/api/configs/Field/SingleLinkedRecord'
+import type { ISingleLinkedRecordField } from '@domain/interfaces/IField/ISingleLinkedRecord'
 
 export class SingleLinkedRecordFieldMapper {
   static toEntity = (config: ISingleLinkedRecordField): SingleLinkedRecordField => {

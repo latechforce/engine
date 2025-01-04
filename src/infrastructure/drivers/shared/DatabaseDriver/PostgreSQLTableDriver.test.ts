@@ -1,7 +1,7 @@
 import pg from 'pg'
 import BunTester from 'bun:test'
 import type { IDatabaseTableDriver } from '@adapter/spi/drivers/DatabaseTableSpi'
-import { testDatabaseTableDriver } from './test'
+import { testDatabaseTableDriver } from './DatabaseTableDriverTest'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
 import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql'
 
@@ -19,13 +19,15 @@ const setup = async (): Promise<IDatabaseTableDriver> => {
     client.setTypeParser(NUMERIC_OID, (value) => parseFloat(value))
   })
   const postgreSQLTable = new PostgreSQLDatabaseTableDriver(
-    'table_1',
-    [
-      {
-        name: 'name',
-        type: 'TEXT',
-      },
-    ],
+    {
+      name: 'table_1',
+      fields: [
+        {
+          name: 'name',
+          type: 'SingleLineText',
+        },
+      ],
+    },
     db
   )
   await db.connect()

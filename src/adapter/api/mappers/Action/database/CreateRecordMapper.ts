@@ -1,4 +1,4 @@
-import type { ICreateRecordDatabaseAction } from '@adapter/api/configs/Action/database/CreateRecord'
+import type { ICreateRecordDatabaseAction } from '@domain/interfaces/IAction/database/ICreateRecord'
 import {
   CreateRecordDatabaseAction,
   type CreateRecordDatabaseActionServices,

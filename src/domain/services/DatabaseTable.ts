@@ -1,17 +1,12 @@
 import type { IDatabaseSpi } from './Database'
 import type { Filter } from '../entities/Filter'
-import type { Field } from '@domain/entities/Field'
 import type { Record, RecordFieldsToCreate, RecordFieldsToUpdate } from '@domain/entities/Record'
 import type { Logger } from '@domain/services/Logger'
 import { IsTextFilter } from '@domain/entities/Filter/text/Is'
 import { OrFilter } from '@domain/entities/Filter/Or'
 import type { RecordFields, UpdateRecordFields } from '@domain/entities/Record'
 import type { IdGenerator } from './IdGenerator'
-
-export interface DatabaseTableConfig {
-  name: string
-  fields: Field[]
-}
+import type { ITable } from '@domain/interfaces/ITable'
 
 export interface DatabaseTableServices {
   logger: Logger
@@ -42,12 +37,11 @@ export class DatabaseTable {
   constructor(
     spi: IDatabaseSpi,
     private _services: DatabaseTableServices,
-    config: DatabaseTableConfig
+    config: ITable
   ) {
-    const { name, fields } = config
-    this._table = spi.table(name, fields)
+    this._table = spi.table(config)
     this._logger = _services.logger
-    this._name = name
+    this._name = config.name
   }
 
   exists = async () => {
