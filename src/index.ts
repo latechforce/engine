@@ -12,21 +12,12 @@ export type { ITable as Table } from '@domain/interfaces/ITable'
 export type { IField as Field } from '@domain/interfaces/IField'
 export type { FilterConfig as Filter } from '@domain/entities/Filter'
 export type { IBucket as Bucket } from '@domain/interfaces/IBucket'
-// export type { IPage as Page } from '@adapter/api/configs/Page'
-// export type { IComponent as Component } from '@adapter/api/configs/Component'
-// export type { IHead as Head } from '@adapter/api/configs/Head'
-// export type { IEvent as Event } from '@adapter/api/configs/Event'
-// export type { IExpect as Expect } from '@adapter/api/configs/Expect'
-// export type { ITest as Test } from '@adapter/api/configs/Test'
 export type {
   DatabaseConfig as Database,
-  MailerConfig as Mailer,
   LoggersConfig as Loggers,
   MonitorsConfig as Monitors,
   ServerConfig as Server,
   TunnelConfig as Tunnel,
-  // AuthConfig as Auth,
-  // ThemeConfig as Theme,
 } from '@domain/interfaces/IServices'
 export type {
   CodeRunnerContext,

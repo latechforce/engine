@@ -7,7 +7,6 @@ import {
   type PlaywrightWorkerOptions,
   type TestType,
 } from '@playwright/test'
-import Logger from '@test/drivers/logger'
 import env from '@test/env'
 import type { TestRunnerIntegration } from './runner'
 import App from '@latechforce/engine'
@@ -26,13 +25,6 @@ export type Test = TestType<
 
 export const test: Test = base.extend({
   page: async ({ page }, use) => {
-    const logger = new Logger()
-    page.on('pageerror', async (exception) => {
-      logger.debug(`page error: ${exception.message}`)
-    })
-    page.on('console', async (msg) => {
-      logger.debug(`page console: ${msg.text()}`)
-    })
     await use(page)
   },
 })

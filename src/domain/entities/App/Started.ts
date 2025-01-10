@@ -39,11 +39,6 @@ export class StartedApp extends BaseApp {
     return codeCompiler.getServices()
   }
 
-  get mailer() {
-    if (!this._isTest) throw new Error('mailer is only available in test mode')
-    return this._services.mailer
-  }
-
   get queue() {
     if (!this._isTest) throw new Error('queue is only available in test mode')
     return this._services.queue
@@ -54,11 +49,10 @@ export class StartedApp extends BaseApp {
       throw new Error(`App is not running, current status is ${this._status}`)
     const { graceful = true } = options || {}
     this._setStatus('stopping')
-    const { server, database, queue, mailer } = this._services
+    const { server, database, queue } = this._services
     const { notion } = this._integrations
     await server.stop(async () => {
       await notion.stopPolling()
-      await mailer.close()
       await queue.stop({ graceful })
       await database.disconnect()
     })

@@ -1,6 +1,10 @@
 import { Database } from 'bun:sqlite'
 import type { IDatabaseDriver } from '@adapter/spi/drivers/DatabaseSpi'
-import type { DatabaseConfig, DatabaseEventType } from '@domain/services/Database'
+import type {
+  DatabaseConfig,
+  DatabaseDriverName,
+  DatabaseEventType,
+} from '@domain/services/Database'
 import type { EventDto, EventNotificationDto } from '@adapter/spi/dtos/EventDto'
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
 import type { ITable } from '@domain/interfaces/ITable'
@@ -13,6 +17,7 @@ interface Notification {
 
 export class SQLiteDatabaseDriver implements IDatabaseDriver {
   public db: Database
+  public driver: DatabaseDriverName = 'SQLite'
   private _interval?: Timer
   private _onNotification: ((event: EventNotificationDto) => void)[] = []
 

@@ -45,7 +45,7 @@ export class StoppedApp extends BaseApp {
     if (this._status !== 'stopped')
       throw new Error(`App is not stopped, current status is ${this._status}`)
     this._setStatus('starting')
-    const { server, database, queue, storage, mailer, realtime, logger, monitor } = this._services
+    const { server, database, queue, storage, realtime, logger, monitor } = this._services
     const { tables } = this._entities
     const { notion } = this._integrations
     await database.connect()
@@ -53,7 +53,6 @@ export class StoppedApp extends BaseApp {
     await queue.start()
     await storage.connect()
     await storage.migrate()
-    await mailer.verify()
     await realtime.setup()
     await notion.startPolling()
     await server.start()

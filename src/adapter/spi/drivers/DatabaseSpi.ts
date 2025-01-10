@@ -1,5 +1,6 @@
 import { DatabaseTableSpi, type IDatabaseTableDriver } from './DatabaseTableSpi'
 import type {
+  DatabaseDriverName,
   DatabaseErrorEvent,
   DatabaseEventType,
   DatabaseExec,
@@ -12,6 +13,7 @@ import { EventMapper } from '../mappers/EventMapper'
 import type { ITable } from '@domain/interfaces/ITable'
 
 export interface IDatabaseDriver {
+  driver: DatabaseDriverName
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   table: (table: ITable) => IDatabaseTableDriver

@@ -12,23 +12,6 @@ import {
   type CreateRecordDatabaseActionMapperEntities,
   type CreateRecordDatabaseActionMapperServices,
 } from './database/CreateRecordMapper'
-import {
-  CreateDocxFromTemplateDocumentActionMapper,
-  type CreateDocxFromTemplateDocumentActionMapperEntities,
-  type CreateDocxFromTemplateDocumentActionMapperServices,
-} from './document/CreateDocxFromTemplateMapper'
-import {
-  SendEmailMailerActionMapper,
-  type SendEmailMailerActionMapperServices,
-} from './mailer/SendEmailMapper'
-import {
-  CreatePdfFromXlsxSpreadsheetActionMapper,
-  type CreatePdfFromXlsxSpreadsheetActionMapperServices,
-} from './spreadsheet/CreatePdfFromXlsxMapper'
-import {
-  CreateXlsxFromTemplateSpreadsheetActionMapper,
-  type CreateXlsxFromTemplateSpreadsheetActionMapperServices,
-} from './spreadsheet/CreateXlsxFromTemplateMapper'
 import type { IAction } from '@domain/interfaces/IAction'
 import { ReadRecordDatabaseActionMapper } from './database/ReadRecordMapper'
 import {
@@ -45,15 +28,10 @@ import {
 } from './notion/UpdatePage'
 
 export type ActionMapperServices = CreateRecordDatabaseActionMapperServices &
-  SendEmailMailerActionMapperServices &
   RunJavascriptCodeActionMapperServices &
-  RunTypescriptCodeActionMapperServices &
-  CreateDocxFromTemplateDocumentActionMapperServices &
-  CreateXlsxFromTemplateSpreadsheetActionMapperServices &
-  CreatePdfFromXlsxSpreadsheetActionMapperServices
+  RunTypescriptCodeActionMapperServices
 
-export type ActionMapperEntities = CreateRecordDatabaseActionMapperEntities &
-  CreateDocxFromTemplateDocumentActionMapperEntities
+export type ActionMapperEntities = CreateRecordDatabaseActionMapperEntities
 
 export type ActionMapperIntegrations = GetCompanyPappersActionMapperIntegrations &
   CreateClientQontoActionMapperIntegrations &
@@ -69,18 +47,13 @@ export class ActionMapper {
     const { action } = config
     const {
       idGenerator,
-      mailer,
       templateCompiler,
       javascriptCompiler,
       typescriptCompiler,
-      browser,
-      documentLoader,
-      spreadsheetLoader,
-      fileSystem,
       logger,
       monitor,
     } = services
-    const { tables, buckets } = entities
+    const { tables } = entities
     const { pappers, qonto, notion } = integrations
     if (action === 'CreateRecord')
       return CreateRecordDatabaseActionMapper.toEntity(
@@ -94,14 +67,6 @@ export class ActionMapper {
         { templateCompiler, logger, monitor },
         { tables }
       )
-    if (action === 'SendEmail')
-      return SendEmailMailerActionMapper.toEntity(config, {
-        mailer,
-        templateCompiler,
-        idGenerator,
-        logger,
-        monitor,
-      })
     if (action === 'RunJavascript')
       return RunJavascriptCodeActionMapper.toEntity(config, {
         templateCompiler,
@@ -116,45 +81,6 @@ export class ActionMapper {
         logger,
         monitor,
       })
-    if (action === 'CreateDocxFromTemplate')
-      return CreateDocxFromTemplateDocumentActionMapper.toEntity(
-        config,
-        {
-          templateCompiler,
-          documentLoader,
-          idGenerator,
-          fileSystem,
-          logger,
-          monitor,
-        },
-        { buckets }
-      )
-    if (action === 'CreateXlsxFromTemplate')
-      return CreateXlsxFromTemplateSpreadsheetActionMapper.toEntity(
-        config,
-        {
-          templateCompiler,
-          spreadsheetLoader,
-          idGenerator,
-          fileSystem,
-          logger,
-          monitor,
-        },
-        { buckets }
-      )
-    if (action === 'CreatePdfFromXlsx')
-      return CreatePdfFromXlsxSpreadsheetActionMapper.toEntity(
-        config,
-        {
-          templateCompiler,
-          spreadsheetLoader,
-          browser,
-          idGenerator,
-          logger,
-          monitor,
-        },
-        { buckets }
-      )
     if (action === 'GetCompany')
       return GetCompanyPappersActionMapper.toEntity(
         config,

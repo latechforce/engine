@@ -6,10 +6,11 @@ import type { ITable } from '@domain/interfaces/ITable'
 
 export class DatabaseDriver implements IDatabaseDriver {
   private _db: PostgreSQLDatabaseDriver
+  public driver: DatabaseConfig['driver']
 
   constructor(config: DatabaseConfig) {
-    const { driver } = config
-    switch (driver) {
+    this.driver = config.driver
+    switch (this.driver) {
       case 'SQLite':
         throw new Error('You have to import the SQLite driver from Bun or Node modules')
       case 'PostgreSQL':

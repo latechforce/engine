@@ -23,9 +23,9 @@ type IntegrationType = 'Notion' | 'Qonto' | 'Pappers'
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
 type WithDriverOutput<D extends DriverType> = D extends 'Database'
-  ? { database: DatabaseDriver }
+  ? DatabaseDriver
   : D extends 'Storage'
-    ? { storage: StorageDriver }
+    ? StorageDriver
     : never
 
 // Generic definitions for integrations
@@ -114,7 +114,9 @@ export class IntegrationTest {
     tests: (helper: {
       app: TestApp
       request: Request
-      drivers: D extends (infer U)[] ? (U extends DriverType ? WithDriverOutput<U> : never) : {}
+      drivers: D extends (infer U)[]
+        ? { [K in U & DriverType as Lowercase<K>]: WithDriverOutput<K> }
+        : {}
       integrations: CombineOutputs<I>
     }) => void
   ): void {
@@ -131,30 +133,33 @@ export class IntegrationTest {
     }
 
     this.tester.beforeEach(async () => {
-      if ('drivers' in options && options.drivers?.includes('Database')) {
-        const url = join(process.cwd(), 'tmp', `database-${nanoid()}.db`)
-        await fs.ensureFile(url)
-        const config: DatabaseConfig = { driver: 'SQLite', url }
-        const database = new DatabaseDriver(config)
-        drivers.database = database
-        extendsConfig.database = config
-      }
-      if ('drivers' in options && options.drivers?.includes('Storage')) {
-        if (!drivers.database) {
-          throw new Error('Database must be initialized before Storage')
+      if ('drivers' in options) {
+        if (options.drivers.includes('Database')) {
+          const url = join(process.cwd(), 'tmp', `database-${nanoid()}.db`)
+          await fs.ensureFile(url)
+          const config: DatabaseConfig = { driver: 'SQLite', url }
+          const database = new DatabaseDriver(config)
+          drivers.database = database
+          extendsConfig.database = config
         }
-        drivers.storage = new StorageDriver(drivers.database)
+        if (options.drivers.includes('Storage')) {
+          if (!drivers.database) {
+            throw new Error('Database must be initialized before Storage')
+          }
+          drivers.storage = new StorageDriver(drivers.database)
+        }
       }
-      if ('integrations' in options && options.integrations?.includes('Notion')) {
-        integrations.notion = new NotionIntegration()
+      if ('integrations' in options) {
+        if (options.integrations.includes('Notion')) {
+          integrations.notion = new NotionIntegration()
+        }
+        if (options.integrations.includes('Qonto')) {
+          integrations.qonto = new QontoIntegration()
+        }
+        if (options.integrations.includes('Pappers')) {
+          integrations.pappers = new PappersIntegration()
+        }
       }
-      if ('integrations' in options && options.integrations?.includes('Qonto')) {
-        integrations.qonto = new QontoIntegration()
-      }
-      if ('integrations' in options && options.integrations?.includes('Pappers')) {
-        integrations.pappers = new PappersIntegration()
-      }
-
       let startedApp: StartedApp | undefined
       app.start = async (config: Config) => {
         startedApp = await new BunApp().start({ ...config, ...extendsConfig })

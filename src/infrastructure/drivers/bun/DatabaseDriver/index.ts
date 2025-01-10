@@ -7,10 +7,11 @@ import type { ITable } from '@domain/interfaces/ITable'
 
 export class DatabaseDriver implements IDatabaseDriver {
   private _db: SQLiteDatabaseDriver | PostgreSQLDatabaseDriver
+  public driver: DatabaseConfig['driver']
 
   constructor(config: DatabaseConfig) {
-    const { driver } = config
-    switch (driver) {
+    this.driver = config.driver
+    switch (this.driver) {
       case 'SQLite':
         this._db = new SQLiteDatabaseDriver(config)
         break

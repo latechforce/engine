@@ -7,18 +7,13 @@ import { ServerMapper } from './Services/ServerMapper'
 import { IdGeneratorMapper } from './Services/IdGeneratorMapper'
 import { TemplateCompilerMapper } from './Services/TemplateCompilerMapper'
 import { LoggerMapper } from './Services/LoggerMapper'
-import { MailerMapper } from './Services/MailerMapper'
 import { DatabaseMapper } from './Services/DatabaseMapper'
 import { QueueMapper } from './Services/QueueMapper'
 import { RealtimeMapper } from './Services/RealtimeMapper'
 import { SchemaValidatorMapper } from './Services/SchemaValidatorMapper'
 import { CodeCompilerMapper } from './Services/CodeCompilerMapper'
-import { BrowserMapper } from './Services/BrowserMapper'
-import { FileSystemMapper } from './Services/FileSystemMapper'
 import { StorageMapper } from './Services/StorageMapper'
 import { BucketMapper } from './BucketMapper'
-import { SpreadsheetLoaderMapper } from './Services/SpreadsheetLoaderMapper'
-import { DocumentLoaderMapper } from './Services/DocumentLoaderMapper'
 import { MonitorMapper } from './Services/MonitorMapper'
 import { NotionMapper } from './Integration/NotionMapper'
 import type { Integrations } from '@adapter/spi/integrations'
@@ -35,19 +30,14 @@ export class AppMapper {
     const tunnel = TunnelMapper.toService(drivers, config.tunnel)
     const server = ServerMapper.toService(drivers, config.server, { logger, monitor, tunnel })
     const idGenerator = IdGeneratorMapper.toService(drivers)
-    const fileSystem = FileSystemMapper.toService(drivers)
     const fetcher = FetcherMapper.toService(drivers)
     const schemaValidator = SchemaValidatorMapper.toService(drivers)
     const templateCompiler = TemplateCompilerMapper.toService(drivers)
-    const browser = BrowserMapper.toService(drivers)
     const database = DatabaseMapper.toService(drivers, config.database, {
       logger,
       monitor,
       idGenerator,
     })
-    const mailer = MailerMapper.toService(drivers, config.mailer, { logger })
-    const spreadsheetLoader = SpreadsheetLoaderMapper.toService(drivers, { templateCompiler })
-    const documentLoader = DocumentLoaderMapper.toService(drivers, { templateCompiler })
     const queue = QueueMapper.toService(drivers, { logger, database, monitor })
     const storage = StorageMapper.toService(drivers, { logger, database })
     const buckets = BucketMapper.toManyEntities(config.buckets, {
@@ -95,18 +85,13 @@ export class AppMapper {
         server,
         idGenerator,
         templateCompiler,
-        mailer,
         schemaValidator,
         javascriptCompiler,
         typescriptCompiler,
-        browser,
-        fileSystem,
-        spreadsheetLoader,
-        documentLoader,
         monitor,
         database,
       },
-      { tables, buckets },
+      { tables },
       { notion, pappers, qonto }
     )
     return new StoppedApp(
@@ -118,7 +103,6 @@ export class AppMapper {
         logger,
         database,
         queue,
-        mailer,
         realtime,
         storage,
         monitor,

@@ -1,4 +1,5 @@
 import type { Config } from '@domain/interfaces'
+import type { IBucket } from '@domain/interfaces/IBucket'
 import type { ITable } from '@domain/interfaces/ITable'
 
 const fullConfig: Config = {
@@ -121,6 +122,11 @@ const fullConfig: Config = {
       ],
     },
   ],
+  buckets: [
+    {
+      name: 'first_bucket',
+    },
+  ],
 }
 
 type FirstTableFieldName =
@@ -178,5 +184,19 @@ export function getFirstAndSecondTableConfig(fields: FirstTableFieldName[] = ['n
       },
       secondTable,
     ],
+  }
+}
+
+export function getFirstBucketConfig(): {
+  name: string
+  buckets: IBucket[]
+} {
+  const firstBucket = fullConfig.buckets?.find((bucket) => bucket.name === 'first_bucket')
+  if (!firstBucket) {
+    throw new Error('First Bucket not found')
+  }
+  return {
+    name: 'First Bucket',
+    buckets: [firstBucket],
   }
 }

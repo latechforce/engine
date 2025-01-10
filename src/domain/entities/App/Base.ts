@@ -5,7 +5,6 @@ import type { Table } from '../Table'
 import type { Bucket } from '../Bucket'
 import type { Automation } from '../Automation'
 import type { Queue } from '@domain/services/Queue'
-import type { Mailer } from '@domain/services/Mailer'
 import type { Realtime } from '@domain/services/Realtime'
 import type { Storage } from '@domain/services/Storage'
 import type { Monitor } from '@domain/services/Monitor'
@@ -21,7 +20,6 @@ export interface AppServices {
   server: Server
   database: Database
   queue: Queue
-  mailer: Mailer
   realtime: Realtime
   storage: Storage
   monitor: Monitor
