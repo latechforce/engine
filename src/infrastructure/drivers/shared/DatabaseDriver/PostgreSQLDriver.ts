@@ -44,7 +44,7 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
 
   query = async <T>(
     text: string,
-    values: (string | number | Buffer | Date)[]
+    values: (string | number | Buffer | Date)[] = []
   ): Promise<{ rows: T[]; rowCount: number }> => {
     const { rows, rowCount } = await this.db.query(text, values).catch(async (error) => {
       if (!error.message.includes('does not exist') && !values.includes('__pgboss__send-it'))

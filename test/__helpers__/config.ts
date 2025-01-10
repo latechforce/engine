@@ -1,9 +1,87 @@
 import type { Config } from '@domain/interfaces'
+import type { IAutomation } from '@domain/interfaces/IAutomation'
 import type { IBucket } from '@domain/interfaces/IBucket'
 import type { ITable } from '@domain/interfaces/ITable'
 
 const fullConfig: Config = {
   name: 'App',
+  automations: [
+    {
+      name: 'ApiCalled',
+      trigger: {
+        service: 'Http',
+        event: 'ApiCalled',
+        path: 'run',
+      },
+      actions: [],
+    },
+    {
+      name: 'ApiCalledWithReturnedValue',
+      trigger: {
+        service: 'Http',
+        event: 'ApiCalled',
+        path: 'run',
+        output: {
+          value: 'hello',
+        },
+      },
+      actions: [],
+    },
+    {
+      name: 'ApiCalledWithError',
+      trigger: {
+        service: 'Http',
+        event: 'ApiCalled',
+        path: 'run',
+      },
+      actions: [
+        {
+          name: 'throwError',
+          service: 'Code',
+          action: 'RunJavascript',
+          code: String(function () {
+            throw new Error('Test error')
+          }),
+        },
+      ],
+    },
+    {
+      name: 'ApiCalledWithTextInput',
+      trigger: {
+        service: 'Http',
+        event: 'ApiCalled',
+        path: 'run',
+        input: {
+          type: 'object',
+          properties: {
+            text: {
+              type: 'string',
+            },
+          },
+          required: ['text'],
+        },
+      },
+      actions: [],
+    },
+    {
+      name: 'WebhookCalled',
+      trigger: {
+        service: 'Http',
+        event: 'WebhookCalled',
+        path: 'run',
+      },
+      actions: [],
+    },
+    {
+      name: 'FirstTableRecordCreated',
+      trigger: {
+        service: 'Database',
+        event: 'RecordCreated',
+        table: 'first_table',
+      },
+      actions: [],
+    },
+  ],
   tables: [
     {
       name: 'first_table',
@@ -77,6 +155,11 @@ const fullConfig: Config = {
           options: ['Red', 'Blue', 'Green'],
         },
         {
+          name: 'multiple_select',
+          type: 'MultipleSelect',
+          options: ['Red', 'Blue', 'Green'],
+        },
+        {
           name: 'single_linked_record',
           type: 'SingleLinkedRecord',
           table: 'second_table',
@@ -95,6 +178,10 @@ const fullConfig: Config = {
           output: {
             type: 'SingleLineText',
           },
+        },
+        {
+          name: 'multiple_attachment',
+          type: 'MultipleAttachment',
         },
         {
           name: 'number_rollup',
@@ -129,6 +216,14 @@ const fullConfig: Config = {
   ],
 }
 
+type AutomationName =
+  | 'ApiCalled'
+  | 'ApiCalledWithReturnedValue'
+  | 'ApiCalledWithError'
+  | 'ApiCalledWithTextInput'
+  | 'FirstTableRecordCreated'
+  | 'WebhookCalled'
+
 type FirstTableFieldName =
   | 'name'
   | 'name_before_migration'
@@ -142,6 +237,8 @@ type FirstTableFieldName =
   | 'text_formula'
   | 'text_formula_reference'
   | 'single_select'
+  | 'multiple_select'
+  | 'multiple_attachment'
   | 'single_linked_record'
   | 'multiple_linked_record'
   | 'text_rollup'
@@ -198,5 +295,19 @@ export function getFirstBucketConfig(): {
   return {
     name: 'First Bucket',
     buckets: [firstBucket],
+  }
+}
+
+export function getAutomationConfig(name: AutomationName): {
+  name: string
+  automations: IAutomation[]
+} {
+  const automation = fullConfig.automations?.find((automation) => automation.name === name)
+  if (!automation) {
+    throw new Error('First Bucket not found')
+  }
+  return {
+    name,
+    automations: [automation],
   }
 }

@@ -27,7 +27,7 @@ export type DatabaseNotificationEvent = RealtimeEvent
 
 export type DatabaseQuery = <T>(
   text: string,
-  values: (string | number | Buffer | Date)[]
+  values?: (string | number | Buffer | Date)[]
 ) => Promise<{ rows: T[]; rowCount: number }>
 export type DatabaseExec = (query: string) => Promise<void>
 
@@ -150,7 +150,7 @@ export class Database {
     }
   }
 
-  query = async <T>(text: string, values: (string | number | Buffer | Date)[]) => {
+  query = async <T>(text: string, values: (string | number | Buffer | Date)[] = []) => {
     const { logger, monitor } = this._services
     try {
       return this._spi.query<T>(text, values)

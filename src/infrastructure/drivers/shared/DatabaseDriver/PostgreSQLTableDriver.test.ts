@@ -15,7 +15,12 @@ const setup = async () => {
   await postgresDatabase.connect()
   const {
     tables: [firstTableConfig, secondTableConfig],
-  } = getFirstAndSecondTableConfig(['name', 'multiple_linked_record', 'number_rollup'])
+  } = getFirstAndSecondTableConfig([
+    'name',
+    'multiple_linked_record',
+    'number_rollup',
+    'multiple_select',
+  ])
   const firstTable = new PostgreSQLDatabaseTableDriver(firstTableConfig, postgresDatabase.db)
   const secondTable = new PostgreSQLDatabaseTableDriver(secondTableConfig, postgresDatabase.db)
   return { firstTable, secondTable }

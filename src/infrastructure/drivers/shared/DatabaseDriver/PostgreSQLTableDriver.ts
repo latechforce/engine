@@ -334,7 +334,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       if (column.name === 'id') {
         query += ' PRIMARY KEY'
       } else if (column.options) {
-        query += ` CHECK ("${column.name}" IN ('${column.options.join("', '")}'))`
+        if (column.type === 'TEXT') {
+          query += ` CHECK ("${column.name}" IN ('${column.options.join("', '")}'))`
+        } else if (column.type === 'TEXT[]') {
+          query += ` CHECK (array_length("${column.name}", 1) = 0 OR "${column.name}" <@ ARRAY['${column.options.join("', '")}'])`
+        }
       } else if (column.table) {
         references.push(`FOREIGN KEY ("${column.name}") REFERENCES ${column.table}(id)`)
       }
@@ -456,12 +460,16 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   private _preprocess = <T extends RecordFields>(record: Partial<T>): RecordFields => {
     return Object.keys(record).reduce((acc: RecordFields, key) => {
       const value = record[key]
-      const column = this.columns.find((f) => f.name === key)
+      const field = this.fields.find((f) => f.name === key)
       if (value === undefined || value === null) return acc
       if (key in acc) {
-        if (column?.type === 'TIMESTAMP') {
+        if (field?.type === 'DateTime') {
           if (value instanceof Date) acc[key] = value
           else acc[key] = new Date(String(value))
+        } else if (field?.type === 'MultipleSelect' && Array.isArray(value)) {
+          acc[key] = '{' + value.join(',') + '}'
+        } else if (field?.type === 'MultipleAttachment' && Array.isArray(value)) {
+          acc[key] = JSON.stringify(value)
         }
       }
       return acc
@@ -477,6 +485,12 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       switch (field.type) {
         case 'MultipleLinkedRecord':
           acc[key] = value ? String(value).split(',') : []
+          break
+        case 'MultipleSelect':
+          acc[key] = value ? String(value).split(',') : []
+          break
+        case 'MultipleAttachment':
+          acc[key] = value ? JSON.parse(String(value)) : []
           break
         case 'Rollup':
           if (field.output.type === 'Number') {
@@ -636,6 +650,12 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           type: 'TEXT',
           options: field.options,
         }
+      case 'MultipleSelect':
+        return {
+          ...column,
+          type: 'TEXT[]',
+          options: field.options,
+        }
       case 'SingleLinkedRecord':
         return {
           ...column,
@@ -647,6 +667,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           ...column,
           type: 'TEXT[]',
           table: field.table,
+        }
+      case 'MultipleAttachment':
+        return {
+          ...column,
+          type: 'TEXT',
         }
       case 'Rollup':
         return {

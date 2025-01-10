@@ -43,7 +43,7 @@ export class DatabaseSpi implements IDatabaseSpi {
     await this._driver.exec(query)
   }
 
-  query = async <T>(text: string, values: (string | number | Buffer | Date)[]) => {
+  query = async <T>(text: string, values: (string | number | Buffer | Date)[] = []) => {
     return this._driver.query<T>(text, values)
   }
 

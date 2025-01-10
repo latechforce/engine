@@ -15,6 +15,8 @@ import type { DateTimeField } from '@domain/entities/Field/DateTime'
 import type { LongTextField } from '@domain/entities/Field/LongText'
 import type { NumberField } from '@domain/entities/Field/Number'
 import type { SingleLineTextField } from '@domain/entities/Field/SingleLineText'
+import { MultipleSelectFieldMapper } from './MultipleSelectMapper'
+import { MultipleAttachmentFieldMapper } from './MultipleAttachmentMapper'
 
 export class FieldMapper {
   static toEntity(config: IField, fields: IField[]): Field {
@@ -34,10 +36,14 @@ export class FieldMapper {
         return FormulaFieldMapper.toEntity(config)
       case 'SingleSelect':
         return SingleSelectFieldMapper.toEntity(config)
+      case 'MultipleSelect':
+        return MultipleSelectFieldMapper.toEntity(config)
       case 'SingleLinkedRecord':
         return SingleLinkedRecordFieldMapper.toEntity(config)
       case 'MultipleLinkedRecord':
         return MultipleLinkedRecordFieldMapper.toEntity(config)
+      case 'MultipleAttachment':
+        return MultipleAttachmentFieldMapper.toEntity(config)
       case 'Rollup':
         return RollupFieldMapper.toEntity(config, fields)
       case 'Checkbox':

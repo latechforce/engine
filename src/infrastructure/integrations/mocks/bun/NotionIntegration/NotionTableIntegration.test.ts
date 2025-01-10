@@ -46,28 +46,32 @@ await integration.addTable('table_1', [
   },
   {
     name: 'single_select',
-    type: 'SingleLineText',
+    type: 'SingleSelect',
+    options: ['2', '1'],
   },
   {
     name: 'status',
-    type: 'SingleLineText',
+    type: 'SingleSelect',
+    options: ['Pas commencé', 'En cours', 'Terminé'],
   },
-  /*{
+  {
     name: 'multi_select',
-    type: 'TEXT[]',
-  },*/
+    type: 'MultipleSelect',
+    options: ['4', '3', '2', '1'],
+  },
   {
     name: 'date',
     type: 'DateTime',
   },
-  /*{
+  {
     name: 'people',
-    type: 'TEXT[]',
+    type: 'MultipleSelect',
+    options: ['1', '2'],
   },
   {
     name: 'files',
-    type: 'TEXT[]',
-  },*/
+    type: 'MultipleAttachment',
+  },
   {
     name: 'relation',
     type: 'MultipleLinkedRecord',
@@ -99,7 +103,6 @@ await integration.addUser({
 testNotionTableIntegration(
   {
     ...runner,
-    it: runner.it.skip,
     env: {
       TABLE_1_ID: 'table_1',
       TABLE_2_ID: 'table_2',

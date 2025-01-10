@@ -55,8 +55,8 @@ type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> 
 
 type Request = {
   get: (url: string) => Promise<any>
-  post: (url: string, body: unknown) => Promise<any>
-  patch: (url: string, body: unknown) => Promise<any>
+  post: (url: string, body?: unknown) => Promise<any>
+  patch: (url: string, body?: unknown) => Promise<any>
 }
 type TestApp = {
   start: (_: Config) => Promise<StartedApp>
@@ -82,7 +82,7 @@ export class IntegrationTest {
             return error
           })
       },
-      post: async (url: string, body: unknown) => {
+      post: async (url: string, body: unknown = {}) => {
         return fetch(url, {
           method: 'POST',
           body: JSON.stringify(body),
@@ -94,7 +94,7 @@ export class IntegrationTest {
             return error
           })
       },
-      patch: async (url: string, body: unknown) => {
+      patch: async (url: string, body: unknown = {}) => {
         return fetch(url, {
           method: 'PATCH',
           body: JSON.stringify(body),

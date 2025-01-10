@@ -1,12 +1,10 @@
-import { test, expect, env, NodeApp } from '@test/fixtures'
-import { type Config } from '@latechforce/engine'
-import { testTable } from 'test/e2e/integrations/notion'
-import Database from '@test/drivers/database'
+import Tester, { expect, describe, it } from 'bun:test'
+import { IntegrationTest } from '@test/integration'
+import { getAutomationConfig } from '@test/config'
 
-test.slow()
-
-Database.SQLite(test, async (dbConfig) => {
-  test('should start an automation when a Notion page is created in a table', async () => {
+new IntegrationTest(Tester).with({}, ({ app, request }) => {
+  describe('on POST', () => {
+  it('should start an automation when a Notion page is created in a table', async () => {
     // GIVEN
     const database = new Database(dbConfig)
     const config: Config = {

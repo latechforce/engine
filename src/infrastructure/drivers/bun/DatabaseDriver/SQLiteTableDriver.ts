@@ -46,10 +46,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     config: ITable,
     private _db: Database
   ) {
-    this.name = config.name
-    this.viewName = `${config.name}_view`
-    const [schema, table] = this.name.includes('.') ? this.name.split('.') : ['public', this.name]
+    const [schema, table] = config.name.includes('.')
+      ? config.name.split('.')
+      : ['public', config.name]
     this.name = schema === 'public' ? table : `${schema}_${table}`
+    this.viewName = `${this.name}_view`
     this.fields = [
       ...config.fields,
       {
@@ -432,14 +433,20 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         key
       ) => {
         const value = record[key]
-        const column = this.columns.find((f) => f.name === key)
+        const field = this.fields.find((f) => f.name === key)
         if (value === undefined || value === null) {
           acc[key] = null
-        } else if (column?.type === 'TIMESTAMP') {
+        } else if (field?.type === 'DateTime') {
           if (value instanceof Date) acc[key] = value.getTime()
           else acc[key] = new Date(String(value)).getTime()
-        } else if (column?.type === 'BOOLEAN') {
+        } else if (field?.type === 'Checkbox') {
           acc[key] = value ? 1 : 0
+        } else if (field?.type === 'MultipleLinkedRecord') {
+          acc[key] = JSON.stringify(value)
+        } else if (field?.type === 'MultipleSelect') {
+          acc[key] = JSON.stringify(value)
+        } else if (field?.type === 'MultipleAttachment') {
+          acc[key] = JSON.stringify(value)
         } else {
           acc[key] = value as string | number | boolean
         }
@@ -457,13 +464,19 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       if (!field) throw new Error(`Field "${key}" not found`)
       switch (field.type) {
         case 'DateTime':
-          acc[key] = new Date(Number(value))
+          acc[key] = value ? new Date(Number(value)) : null
           break
         case 'MultipleLinkedRecord':
           acc[key] = value ? String(value).split(',') : []
           break
+        case 'MultipleAttachment':
+          acc[key] = value ? JSON.parse(String(value)) : []
+          break
         case 'Checkbox':
           acc[key] = value === 1
+          break
+        case 'MultipleSelect':
+          acc[key] = value ? JSON.parse(String(value)) : []
           break
         case 'Rollup':
           if (field.output.type === 'Number') {
@@ -610,6 +623,12 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
           type: 'TEXT',
           options: field.options,
         }
+      case 'MultipleSelect':
+        return {
+          ...column,
+          type: 'TEXT[]',
+          options: field.options,
+        }
       case 'SingleLinkedRecord':
         return {
           ...column,
@@ -621,6 +640,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
           ...column,
           type: 'TEXT[]',
           table: field.table,
+        }
+      case 'MultipleAttachment':
+        return {
+          ...column,
+          type: 'TEXT',
         }
       case 'Rollup':
         return {

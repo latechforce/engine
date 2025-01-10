@@ -104,7 +104,7 @@ export function testDatabaseTableDriver(
       // WHEN
       await firstTable.insert({
         id: '1',
-        fields: { name: 'John' },
+        fields: { name: 'John', multiple_select: ['Red', 'Blue'] },
         created_at: date,
       })
     })
@@ -181,7 +181,12 @@ export function testDatabaseTableDriver(
       // THEN
       expect(row).toStrictEqual({
         id: '1',
-        fields: { name: 'John Doe', multiple_linked_record: [], number_rollup: 0 },
+        fields: {
+          name: 'John Doe',
+          multiple_linked_record: [],
+          number_rollup: 0,
+          multiple_select: ['Red', 'Blue'],
+        },
         created_at: date,
         updated_at: date,
       })
@@ -237,7 +242,12 @@ export function testDatabaseTableDriver(
       expect(rows).toStrictEqual([
         {
           id: '1',
-          fields: { name: 'John Doe', multiple_linked_record: [], number_rollup: 0 },
+          fields: {
+            name: 'John Doe',
+            multiple_linked_record: [],
+            number_rollup: 0,
+            multiple_select: ['Red', 'Blue'],
+          },
           created_at: date,
           updated_at: date,
         },

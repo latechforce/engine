@@ -20,7 +20,6 @@ await integration.addUser({
 testNotionIntegration(
   {
     ...runner,
-    it: runner.it.skip,
     env: {
       TABLE_ID: 'table_1',
     },

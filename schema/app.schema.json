@@ -91,12 +91,6 @@
         "IAction": {
             "anyOf": [
                 {
-                    "$ref": "#/definitions/ICreateDocxFromTemplateDocumentAction"
-                },
-                {
-                    "$ref": "#/definitions/ICreateXlsxFromTemplateSpreadsheetAction"
-                },
-                {
                     "$ref": "#/definitions/ICreateRecordDatabaseAction"
                 },
                 {
@@ -106,13 +100,7 @@
                     "$ref": "#/definitions/IRunTypescriptCodeAction"
                 },
                 {
-                    "$ref": "#/definitions/ISendEmailMailerAction"
-                },
-                {
                     "$ref": "#/definitions/IReadRecordDatabaseAction"
-                },
-                {
-                    "$ref": "#/definitions/ICreatePdfFromXlsxSpreadsheetAction"
                 },
                 {
                     "$ref": "#/definitions/IGetCompanyPappersAction"
@@ -231,82 +219,6 @@
             ],
             "type": "object"
         },
-        "ICreateDocxFromTemplateDocumentAction": {
-            "additionalProperties": false,
-            "properties": {
-                "action": {
-                    "const": "CreateDocxFromTemplate",
-                    "type": "string"
-                },
-                "bucket": {
-                    "type": "string"
-                },
-                "fileName": {
-                    "type": "string"
-                },
-                "input": {
-                    "$ref": "#/definitions/TemplateObject"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "service": {
-                    "const": "Document",
-                    "type": "string"
-                },
-                "templatePath": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "action",
-                "bucket",
-                "fileName",
-                "input",
-                "name",
-                "service",
-                "templatePath"
-            ],
-            "type": "object"
-        },
-        "ICreatePdfFromXlsxSpreadsheetAction": {
-            "additionalProperties": false,
-            "properties": {
-                "action": {
-                    "const": "CreatePdfFromXlsx",
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "pdfBucket": {
-                    "type": "string"
-                },
-                "pdfFileName": {
-                    "type": "string"
-                },
-                "service": {
-                    "const": "Spreadsheet",
-                    "type": "string"
-                },
-                "xlsxBucket": {
-                    "type": "string"
-                },
-                "xlsxFileId": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "action",
-                "name",
-                "pdfBucket",
-                "pdfFileName",
-                "service",
-                "xlsxBucket",
-                "xlsxFileId"
-            ],
-            "type": "object"
-        },
         "ICreateRecordDatabaseAction": {
             "additionalProperties": false,
             "properties": {
@@ -337,43 +249,6 @@
                 "name",
                 "service",
                 "table"
-            ],
-            "type": "object"
-        },
-        "ICreateXlsxFromTemplateSpreadsheetAction": {
-            "additionalProperties": false,
-            "properties": {
-                "action": {
-                    "const": "CreateXlsxFromTemplate",
-                    "type": "string"
-                },
-                "bucket": {
-                    "type": "string"
-                },
-                "fileName": {
-                    "type": "string"
-                },
-                "input": {
-                    "$ref": "#/definitions/TemplateObject"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "service": {
-                    "const": "Spreadsheet",
-                    "type": "string"
-                },
-                "templatePath": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "action",
-                "bucket",
-                "fileName",
-                "name",
-                "service",
-                "templatePath"
             ],
             "type": "object"
         },
@@ -469,6 +344,12 @@
                 },
                 {
                     "$ref": "#/definitions/ICheckboxField"
+                },
+                {
+                    "$ref": "#/definitions/IMultipleSelectField"
+                },
+                {
+                    "$ref": "#/definitions/IMultipleAttachmentField"
                 }
             ]
         },
@@ -586,6 +467,35 @@
             ],
             "type": "object"
         },
+        "IMultipleAttachmentField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "MultipleAttachment",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
         "IMultipleLinkedRecordField": {
             "additionalProperties": false,
             "properties": {
@@ -615,6 +525,42 @@
             "required": [
                 "name",
                 "table",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IMultipleSelectField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "options": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "MultipleSelect",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "options",
                 "type"
             ],
             "type": "object"
@@ -864,48 +810,6 @@
                 "code",
                 "name",
                 "service"
-            ],
-            "type": "object"
-        },
-        "ISendEmailMailerAction": {
-            "additionalProperties": false,
-            "properties": {
-                "action": {
-                    "const": "SendEmail",
-                    "type": "string"
-                },
-                "from": {
-                    "type": "string"
-                },
-                "html": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "service": {
-                    "const": "Mailer",
-                    "type": "string"
-                },
-                "subject": {
-                    "type": "string"
-                },
-                "text": {
-                    "type": "string"
-                },
-                "to": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "action",
-                "from",
-                "html",
-                "name",
-                "service",
-                "subject",
-                "text",
-                "to"
             ],
             "type": "object"
         },
@@ -1256,37 +1160,6 @@
             ],
             "type": "object"
         },
-        "MailerConfig": {
-            "additionalProperties": false,
-            "properties": {
-                "from": {
-                    "type": "string"
-                },
-                "host": {
-                    "type": "string"
-                },
-                "pass": {
-                    "type": "string"
-                },
-                "port": {
-                    "type": "string"
-                },
-                "secure": {
-                    "type": "boolean"
-                },
-                "user": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "from",
-                "host",
-                "pass",
-                "port",
-                "user"
-            ],
-            "type": "object"
-        },
         "MonitorConfig": {
             "anyOf": [
                 {
@@ -1532,9 +1405,6 @@
                 "$ref": "#/definitions/LoggerConfig"
             },
             "type": "array"
-        },
-        "mailer": {
-            "$ref": "#/definitions/MailerConfig"
         },
         "monitors": {
             "items": {

@@ -9,6 +9,8 @@ import type { SingleLinkedRecordField } from './SingleLinkedRecord'
 import type { MultipleLinkedRecordField } from './MultipleLinkedRecord'
 import type { RollupField } from './Rollup'
 import type { CheckboxField } from './Checkbox'
+import type { MultipleSelectField } from './MultipleSelect'
+import type { MultipleAttachmentField } from './MultipleAttachment'
 
 export type Field =
   | EmailField
@@ -22,3 +24,5 @@ export type Field =
   | MultipleLinkedRecordField
   | RollupField
   | CheckboxField
+  | MultipleSelectField
+  | MultipleAttachmentField

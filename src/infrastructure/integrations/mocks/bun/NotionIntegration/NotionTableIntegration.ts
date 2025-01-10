@@ -50,9 +50,13 @@ export class NotionTableIntegration implements INotionTableIntegration {
   }
 
   insertMany = async <T extends NotionTablePageProperties>(pages: T[]) => {
-    const pagesInserted: NotionTablePageDto<T>[] = []
-    for (const page of pages) pagesInserted.push(await this.insert(page))
-    return pagesInserted
+    const pagesToInsert = pages.map((page) => ({
+      id: nanoid(),
+      fields: this._preprocess(page),
+      created_at: new Date(),
+    }))
+    await this._db.insertMany(pagesToInsert)
+    return Promise.all(pagesToInsert.map((page) => this.retrieve<T>(page.id)))
   }
 
   update = async <T extends NotionTablePageProperties>(id: string, page: Partial<T>) => {
@@ -68,9 +72,13 @@ export class NotionTableIntegration implements INotionTableIntegration {
   updateMany = async <T extends NotionTablePageProperties>(
     pages: { id: string; page: Partial<T> }[]
   ) => {
-    const pagesUpdated: Promise<NotionTablePageDto<T>>[] = []
-    for (const { id, page } of pages) pagesUpdated.push(this.update(id, page))
-    return Promise.all(pagesUpdated)
+    const pagesToUpdate = pages.map(({ id, page }) => ({
+      id,
+      fields: this._preprocess(page),
+      updated_at: new Date(),
+    }))
+    await this._db.updateMany(pagesToUpdate)
+    return Promise.all(pagesToUpdate.map((page) => this.retrieve<T>(page.id)))
   }
 
   retrieve = async <T extends NotionTablePageProperties>(id: string) => {
@@ -120,17 +128,27 @@ export class NotionTableIntegration implements INotionTableIntegration {
         case 'Number':
           fields[key] = value ? Number(value) : null
           break
+        case 'SingleSelect':
+          fields[key] = value ? String(value) : null
+          break
+        case 'MultipleSelect':
+          fields[key] = value ? (value as string[]) : []
+          break
+        case 'MultipleAttachment':
+          if (!Array.isArray(value)) throw new Error(`Invalid property value: ${value}`)
+          fields[key] = JSON.stringify(value)
+          break
         case 'Checkbox':
           fields[key] = value === 'false' || value === '0' ? false : Boolean(value)
           break
-        /*case 'TEXT[]':
+        case 'MultipleLinkedRecord':
           if (!Array.isArray(value)) throw new Error(`Invalid property value: ${value}`)
           if (property.table) {
             fields[key] = value ? (value as string[]) : []
           } else {
             fields[key] = JSON.stringify(value || []) as string
           }
-          break*/
+          break
         default:
           throw new Error(`Invalid property type: ${property.type}`)
       }
@@ -158,13 +176,25 @@ export class NotionTableIntegration implements INotionTableIntegration {
         case 'Checkbox':
           page[key] = value ?? false
           break
-        /*case 'TEXT[]':
+        case 'SingleSelect':
+          page[key] = value ?? null
+          break
+        case 'MultipleSelect':
+          page[key] = value ? (value as string[]) : []
+          break
+        case 'MultipleLinkedRecord':
           if (property.table) {
             page[key] = value ? (value as string[]) : []
           } else {
             page[key] = value ? JSON.parse(String(value)) : []
           }
-          break*/
+          break
+        case 'MultipleAttachment':
+          page[key] = typeof value === 'string' ? JSON.parse(value) : []
+          break
+        case 'Rollup':
+          page[key] = value ?? null
+          break
         default:
           throw new Error(`Invalid property type: ${property.type}`)
       }

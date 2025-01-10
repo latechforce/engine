@@ -63,7 +63,7 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
 
   query = async <T>(
     text: string,
-    values: (string | number | Buffer | Date)[]
+    values: (string | number | Buffer | Date)[] = []
   ): Promise<{ rows: T[]; rowCount: number }> => {
     const stmt = this.db.prepare(text)
     const isSelect = text.trim().toUpperCase().startsWith('SELECT')

@@ -41,7 +41,7 @@ export class DatabaseDriver implements IDatabaseDriver {
 
   query = async <T>(
     text: string,
-    values: (string | number | Buffer | Date)[]
+    values: (string | number | Buffer | Date)[] = []
   ): Promise<{ rows: T[]; rowCount: number }> => {
     return this._db.query(text, values)
   }
