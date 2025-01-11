@@ -46,11 +46,11 @@ new IntegrationTest(Tester).with({}, ({ app, request }) => {
 
     // THEN
     expect(error).toStrictEqual({
-      instancePath: '/multiple_select',
+      instancePath: '/multiple_select/0',
       keyword: 'enum',
       message: 'must be equal to one of the allowed values',
       params: { allowedValues: ['Red', 'Blue', 'Green'] },
-      schemaPath: '#/properties/multiple_select/enum',
+      schemaPath: '#/properties/multiple_select/items/enum',
     })
   })
 })

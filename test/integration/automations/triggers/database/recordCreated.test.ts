@@ -3,8 +3,8 @@ import { IntegrationTest } from '@test/integration'
 import { getAutomationConfig, getFirstTableConfig } from '@test/config'
 
 new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, drivers }) => {
-  describe('on start', () => {
-    it('should start an automation when a record is created', async () => {
+  describe('on record created', () => {
+    it('should start an automation', async () => {
       // GIVEN
       const config = {
         ...getFirstTableConfig(),

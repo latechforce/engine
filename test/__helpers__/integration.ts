@@ -10,6 +10,8 @@ import { QontoIntegration } from '@infrastructure/integrations/mocks/bun/QontoIn
 import { PappersIntegration } from '@infrastructure/integrations/mocks/bun/PappersIntegration'
 import type { DatabaseConfig } from '@domain/services/Database'
 import type { Config, StartedApp } from '@latechforce/engine'
+import type { NotionConfig } from '@domain/integrations/Notion'
+import env from './env'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -31,21 +33,12 @@ type WithDriverOutput<D extends DriverType> = D extends 'Database'
 // Generic definitions for integrations
 type WithIntegrationInput<I extends IntegrationType[]> = { integrations: I }
 type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
-  ? { notion: NotionIntegration }
+  ? NotionIntegration
   : I extends 'Qonto'
-    ? { qonto: QontoIntegration }
+    ? QontoIntegration
     : I extends 'Pappers'
-      ? { pappers: PappersIntegration }
+      ? PappersIntegration
       : never
-
-// Combine multiple outputs
-type CombineOutputs<Keys extends IntegrationType[]> = Keys extends [infer First, ...infer Rest]
-  ? First extends IntegrationType
-    ? Rest extends IntegrationType[]
-      ? WithIntegrationOutput<First> & CombineOutputs<Rest>
-      : WithIntegrationOutput<First>
-    : never
-  : {}
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -117,7 +110,9 @@ export class IntegrationTest {
       drivers: D extends (infer U)[]
         ? { [K in U & DriverType as Lowercase<K>]: WithDriverOutput<K> }
         : {}
-      integrations: CombineOutputs<I>
+      integrations: I extends (infer V)[]
+        ? { [J in V & IntegrationType as Lowercase<J>]: WithIntegrationOutput<J> }
+        : {}
     }) => void
   ): void {
     const drivers: any = {}
@@ -150,8 +145,14 @@ export class IntegrationTest {
         }
       }
       if ('integrations' in options) {
+        extendsConfig.integrations = {}
         if (options.integrations.includes('Notion')) {
-          integrations.notion = new NotionIntegration()
+          const config: NotionConfig = {
+            token: env.TEST_NOTION_TOKEN,
+            pollingInterval: 1,
+          }
+          integrations.notion = new NotionIntegration(config)
+          extendsConfig.integrations.notion = config
         }
         if (options.integrations.includes('Qonto')) {
           integrations.qonto = new QontoIntegration()
@@ -162,6 +163,13 @@ export class IntegrationTest {
       }
       let startedApp: StartedApp | undefined
       app.start = async (config: Config) => {
+        if (integrations.notion) {
+          await integrations.notion.connect()
+          for (const table of config.tables || []) {
+            console.log('table', table)
+            await integrations.notion.addTable(table.name, table.fields)
+          }
+        }
         startedApp = await new BunApp().start({ ...config, ...extendsConfig })
         return startedApp
       }

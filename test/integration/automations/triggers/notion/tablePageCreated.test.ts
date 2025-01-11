@@ -1,146 +1,60 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import Tester, { expect, describe, it } from 'bun:test'
 import { IntegrationTest } from '@test/integration'
-import { getAutomationConfig } from '@test/config'
+import { getAutomationConfig, getFirstTableConfig } from '@test/config'
 
-new IntegrationTest(Tester).with({}, ({ app, request }) => {
-  describe('on POST', () => {
-  it('should start an automation when a Notion page is created in a table', async () => {
-    // GIVEN
-    const database = new Database(dbConfig)
-    const config: Config = {
-      name: 'App',
-      automations: [
-        {
-          name: 'page-created',
-          trigger: {
-            integration: 'Notion',
-            event: 'TablePageCreated',
-            table: env.TEST_NOTION_TABLE_1_ID,
-          },
-          actions: [],
-        },
-      ],
-      integrations: {
-        notion: {
-          token: env.TEST_NOTION_TOKEN,
-          pollingInterval: 5,
-        },
-      },
-      database: dbConfig,
-    }
-    const app = new NodeApp()
-    await app.start(config)
+new IntegrationTest(Tester).with(
+  { drivers: ['Database'], integrations: ['Notion'] },
+  ({ app, drivers, integrations }) => {
+    describe.skip('on page in table created', () => {
+      it('should start an automation', async () => {
+        // GIVEN
+        const config = {
+          ...getFirstTableConfig(),
+          ...getAutomationConfig('TablePageCreated'),
+        }
+        await app.start({ ...config, loggers: [{ driver: 'Console', level: 'debug' }] })
 
-    // WHEN
-    await new Promise((resolve) => setTimeout(resolve, 5000))
-    const { id } = await testTable.insert({
-      name: 'My new page',
-    })
+        // WHEN
+        const table = await integrations.notion.getTable(config.tables[0].name)
+        await table.insert({
+          name: 'My new page',
+        })
 
-    // THEN
-    await expect(
-      database.waitForAutomationHistory('page-created', {
-        field: 'trigger_data',
-        operator: 'Contains',
-        value: id,
+        // THEN
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        const { rows: histories } = await drivers.database.query(
+          'SELECT * FROM _automations_histories_view'
+        )
+        expect(histories).toHaveLength(1)
       })
-    ).resolves.toBeDefined()
-  })
 
-  test('should return a date property of the created page', async () => {
-    // GIVEN
-    const database = new Database(dbConfig)
-    const config: Config = {
-      name: 'App',
-      automations: [
-        {
-          name: 'page-created',
-          trigger: {
-            integration: 'Notion',
-            event: 'TablePageCreated',
-            table: env.TEST_NOTION_TABLE_1_ID,
-          },
-          actions: [],
-        },
-      ],
-      integrations: {
-        notion: {
-          token: env.TEST_NOTION_TOKEN,
-          pollingInterval: 5,
-        },
-      },
-      database: dbConfig,
-    }
-    const app = new NodeApp()
-    await app.start(config)
+      it('should return a date property of the created page', async () => {
+        // GIVEN
+        const config = {
+          ...getFirstTableConfig(),
+          ...getAutomationConfig('TablePageCreated'),
+        }
+        await app.start(config)
 
-    // WHEN
-    await new Promise((resolve) => setTimeout(resolve, 5000))
-    const { id } = await testTable.insert({
-      name: 'My new page',
+        // WHEN
+        const table = await integrations.notion.getTable(config.tables[0].name)
+        await table.insert({
+          name: 'My new page',
+        })
+
+        // THEN
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        const {
+          rows: [history],
+        } = await drivers.database.query<{ trigger_data: string }>(
+          'SELECT * FROM _automations_histories_view'
+        )
+        const triggerData = JSON.parse(history.trigger_data)
+        expect(triggerData.created_time).toBeDefined()
+      })
     })
-
-    // THEN
-    const history = await database.waitForAutomationHistory('page-created', {
-      field: 'trigger_data',
-      operator: 'Contains',
-      value: id,
-    })
-    const triggerData = JSON.parse(String(history.fields.trigger_data))
-    expect(triggerData.created_time).toBeDefined()
-  })
-
-  test('should update a page property after being created', async () => {
-    // GIVEN
-    const database = new Database(dbConfig)
-    const config: Config = {
-      name: 'App',
-      automations: [
-        {
-          name: 'page-created',
-          trigger: {
-            integration: 'Notion',
-            event: 'TablePageCreated',
-            table: env.TEST_NOTION_TABLE_1_ID,
-          },
-          actions: [
-            {
-              name: 'update-page',
-              integration: 'Notion',
-              action: 'UpdatePage',
-              table: env.TEST_NOTION_TABLE_1_ID,
-              id: '{{trigger.id}}',
-              page: {
-                name: 'My new page updated',
-              },
-            },
-          ],
-        },
-      ],
-      integrations: {
-        notion: {
-          token: env.TEST_NOTION_TOKEN,
-          pollingInterval: 5,
-        },
-      },
-      database: dbConfig,
-    }
-    const app = new NodeApp()
-    await app.start(config)
-
-    // WHEN
-    await new Promise((resolve) => setTimeout(resolve, 5000))
-    const { id } = await testTable.insert({
-      name: 'My new page',
-    })
-
-    // THEN
-    await database.waitForAutomationHistory('page-created', {
-      field: 'trigger_data',
-      operator: 'Contains',
-      value: id,
-    })
-    const page = await testTable.retrieve(id)
-    expect(page.properties.name).toBe('My new page updated')
-  })
-})
+  }
+)

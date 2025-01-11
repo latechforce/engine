@@ -24,6 +24,7 @@ import { FilterMapper, filterSchema, type FilterConfig } from '../Filter'
 import type { Monitor } from '@domain/services/Monitor'
 import type { Record, RecordFieldsConfig } from '../Record'
 import type { ITable } from '@domain/interfaces/ITable'
+import { MultipleSelectField } from '../Field/MultipleSelect'
 
 interface TableConfig {
   name: string
@@ -221,6 +222,15 @@ export class Table {
           schema.properties[field.name] = {
             type: 'string',
             enum: field.options,
+          }
+        }
+        if (field instanceof MultipleSelectField) {
+          schema.properties[field.name] = {
+            type: 'array',
+            items: {
+              type: 'string',
+              enum: field.options,
+            },
           }
         }
         if (

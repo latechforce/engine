@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { test, expect, NodeApp } from '@test/fixtures'
 import { type Config } from '@latechforce/engine'
 import Database from '@test/drivers/database'

@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import { test, expect, env, NodeApp } from '@test/fixtures'
 import { type CodeRunnerContext, type Config } from '@latechforce/engine'
 import { integration as notion } from 'test/e2e/integrations/notion'
