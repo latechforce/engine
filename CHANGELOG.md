@@ -1,3 +1,10 @@
+# [0.36.0](https://github.com/latechforce/engine/compare/v0.35.0...v0.36.0) (2025-01-11)
+
+
+### Features
+
+* **App:** remove useless features ([ca8fb5c](https://github.com/latechforce/engine/commit/ca8fb5ca17b2c45ca0ddb3467190ab1182936e93))
+
 # [0.35.0](https://github.com/latechforce/engine/compare/v0.34.59...v0.35.0) (2025-01-02)
 
 
