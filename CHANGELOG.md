@@ -1,3 +1,10 @@
+## [0.36.1](https://github.com/latechforce/engine/compare/v0.36.0...v0.36.1) (2025-01-13)
+
+
+### Bug Fixes
+
+* **package:** remove useless pacakges ([9f39234](https://github.com/latechforce/engine/commit/9f3923459903ea702b92f7e15a0e43cee0d5b5af))
+
 # [0.36.0](https://github.com/latechforce/engine/compare/v0.35.0...v0.36.0) (2025-01-11)
 
 
