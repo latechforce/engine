@@ -54,7 +54,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "@elastic/elasticsearch": "^7.17.14",
+    "@elastic/elasticsearch": "^8.17.0",
     "@ngrok/ngrok": "^1.4.1",
     "@notionhq/client": "^2.2.15",
     "@sentry/node": "^8.48.0",
