@@ -1,23 +1,20 @@
 ## [0.36.1](https://github.com/latechforce/engine/compare/v0.36.0...v0.36.1) (2025-01-13)
 
-
 ### Bug Fixes
 
-* **package:** remove useless pacakges ([9f39234](https://github.com/latechforce/engine/commit/9f3923459903ea702b92f7e15a0e43cee0d5b5af))
+- **package:** remove useless pacakges ([9f39234](https://github.com/latechforce/engine/commit/9f3923459903ea702b92f7e15a0e43cee0d5b5af))
 
 # [0.36.0](https://github.com/latechforce/engine/compare/v0.35.0...v0.36.0) (2025-01-11)
 
-
 ### Features
 
-* **App:** remove useless features ([ca8fb5c](https://github.com/latechforce/engine/commit/ca8fb5ca17b2c45ca0ddb3467190ab1182936e93))
+- **App:** remove useless features ([ca8fb5c](https://github.com/latechforce/engine/commit/ca8fb5ca17b2c45ca0ddb3467190ab1182936e93))
 
 # [0.35.0](https://github.com/latechforce/engine/compare/v0.34.59...v0.35.0) (2025-01-02)
 
-
 ### Features
 
-* **App:** can use Node or Bun drivers in app ([2a7e072](https://github.com/latechforce/engine/commit/2a7e0720a7a8592c4d269ef668627f741def9318))
+- **App:** can use Node or Bun drivers in app ([2a7e072](https://github.com/latechforce/engine/commit/2a7e0720a7a8592c4d269ef668627f741def9318))
 
 ## [0.34.59](https://github.com/latechforce/engine/compare/v0.34.58...v0.34.59) (2024-12-30)
 

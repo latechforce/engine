@@ -4,6 +4,8 @@ import App from '@adapter/api'
 import type { Drivers } from '@adapter/spi/drivers'
 import type { Integrations } from '@adapter/spi/integrations'
 
+export { mocks } from '@infrastructure/integrations/mocks'
+
 export type { Config } from '@domain/interfaces'
 export type { IAutomation as Automation } from '@domain/interfaces/IAutomation'
 export type { IAction as Action } from '@domain/interfaces/IAction'
@@ -41,7 +43,7 @@ export {
 export type { AppIntegrations } from '@domain/entities/App/Base'
 export type { StartedApp } from '@domain/entities/App/Started'
 export type { StoppedApp } from '@domain/entities/App/Stopped'
-export { packages } from '@infrastructure/drivers/shared/CodeCompilerDriver/JavascriptRunnerDriver'
+export { packages } from '@infrastructure/drivers/CodeCompilerDriver/JavascriptRunnerDriver'
 
 export default class extends App {
   constructor(options?: { drivers?: Partial<Drivers>; integrations?: Partial<Integrations> }) {

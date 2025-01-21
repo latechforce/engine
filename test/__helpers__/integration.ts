@@ -1,15 +1,13 @@
-import App from '@latechforce/engine'
-import { drivers, integrations } from '@latechforce/engine/bun'
 import { join } from 'path'
 import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
-import { DatabaseDriver } from '@infrastructure/drivers/bun/DatabaseDriver'
-import { StorageDriver } from '@infrastructure/drivers/shared/StorageDriver'
-import { NotionIntegration } from '@infrastructure/integrations/mocks/bun/NotionIntegration'
-import { QontoIntegration } from '@infrastructure/integrations/mocks/bun/QontoIntegration'
-import { PappersIntegration } from '@infrastructure/integrations/mocks/bun/PappersIntegration'
+import { DatabaseDriver } from '@infrastructure/drivers/DatabaseDriver'
+import { StorageDriver } from '@infrastructure/drivers/StorageDriver'
+import { NotionIntegration } from '@infrastructure/integrations/notion/NotionIntegration.mock'
+import { QontoIntegration } from '@infrastructure/integrations/qonto/QontoIntegration.mock'
+import { PappersIntegration } from '@infrastructure/integrations/pappers/PappersIntegration.mock'
 import type { DatabaseConfig } from '@domain/services/Database'
-import type { Config, StartedApp } from '@latechforce/engine'
+import App, { mocks, type Config, type StartedApp } from '../../src'
 import type { NotionConfig } from '@domain/integrations/Notion'
 import env from './env'
 
@@ -56,9 +54,9 @@ type TestApp = {
   stop: () => Promise<void>
 }
 
-export class BunApp extends App {
+export class MockedApp extends App {
   constructor() {
-    super({ drivers, integrations: integrations.mocks })
+    super({ integrations: mocks })
   }
 }
 
@@ -170,7 +168,7 @@ export class IntegrationTest {
             await integrations.notion.addTable(table.name, table.fields)
           }
         }
-        startedApp = await new BunApp().start({ ...config, ...extendsConfig })
+        startedApp = await new MockedApp().start({ ...config, ...extendsConfig })
         return startedApp
       }
       app.stop = async () => {
