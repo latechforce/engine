@@ -1,6 +1,6 @@
 import type { IDatabaseTableDriver } from '@adapter/spi/drivers/DatabaseTableSpi'
 import { getFirstAndSecondTableConfig } from '@test/config'
-import BunTester from 'bun:test'
+import type BunTester from 'bun:test'
 
 const {
   tables: [, secondTableConfig],

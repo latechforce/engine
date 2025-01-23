@@ -1,18 +1,11 @@
 import BunTester from 'bun:test'
 import { testDatabaseTableDriver } from './DatabaseTableDriverTest'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
-import { PostgreSqlContainer, StartedPostgreSqlContainer } from '@testcontainers/postgresql'
 import { getFirstAndSecondTableConfig } from '@test/config'
-import { PostgreSQLDatabaseDriver } from './PostgreSQLDriver'
-
-let container: StartedPostgreSqlContainer
+import { setupPostgres, teardownPostgres } from './PostgreSQLDriverTestSetup'
 
 const setup = async () => {
-  // GIVEN
-  container = await new PostgreSqlContainer().start()
-  const url = container.getConnectionUri()
-  const postgresDatabase = new PostgreSQLDatabaseDriver({ url, driver: 'PostgreSQL' })
-  await postgresDatabase.connect()
+  const postgresDatabase = await setupPostgres()
   const {
     tables: [firstTableConfig, secondTableConfig],
   } = getFirstAndSecondTableConfig([
@@ -26,8 +19,4 @@ const setup = async () => {
   return { firstTable, secondTable }
 }
 
-const teardown = async () => {
-  await container.stop()
-}
-
-testDatabaseTableDriver(BunTester, setup, teardown)
+testDatabaseTableDriver(BunTester, setup, teardownPostgres)
