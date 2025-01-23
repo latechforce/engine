@@ -1,3 +1,17 @@
+# [0.37.0](https://github.com/latechforce/engine/compare/v0.36.1...v0.37.0) (2025-01-23)
+
+
+### Bug Fixes
+
+* **Database:** fix Postgres start for tests ([5997f7b](https://github.com/latechforce/engine/commit/5997f7b60412cbdaf300e20e6febb8521d7bc12f))
+* **Database:** manage better error on creating view ([58bccab](https://github.com/latechforce/engine/commit/58bccab62a8b016646dfc99100ee348ba9db629d))
+* **Database:** TESTCONTAINERS_RYUK_DISABLED=true env ([6a56c69](https://github.com/latechforce/engine/commit/6a56c6955e6459a3c17850c8ffc0d1a707d36ef0))
+
+
+### Features
+
+* **Engine:** refactor for Bun exclusive support ([791550a](https://github.com/latechforce/engine/commit/791550ae1e34673f0990c0eccf75b14b8b9e5a0b))
+
 ## [0.36.1](https://github.com/latechforce/engine/compare/v0.36.0...v0.36.1) (2025-01-13)
 
 ### Bug Fixes
