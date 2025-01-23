@@ -1,12 +1,11 @@
 import { test, expect } from 'bun:test'
-import { drivers } from '@infrastructure/drivers/bun'
 import { mocks } from '@infrastructure/integrations/bun/mocks'
-import App from '.'
+import App from './bun'
 
 test('should instanciate an App', async () => {
-  expect(new App({ drivers })).toBeDefined()
+  expect(new App()).toBeDefined()
 })
 
 test('should instanciate an App with mocked integrations', async () => {
-  expect(new App({ drivers, integrations: mocks })).toBeDefined()
+  expect(new App({ integrations: mocks })).toBeDefined()
 })

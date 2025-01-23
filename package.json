@@ -2,15 +2,16 @@
   "name": "@latechforce/engine",
   "description": "Generate web app with a configuration file",
   "version": "0.36.1",
-  "main": "dist/index.ts",
-  "module": "dist/index.ts",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
   "types": "src/index.ts",
   "type": "module",
   "author": "Thomas JEANNEAU",
   "license": "BSL 1.1",
   "exports": {
-    ".": "./dist/index.ts",
-    "./instrument": "./dist/infrastructure/instrument/index.ts",
+    ".": "./src/index.ts",
+    "./bun": "./src/bun.ts",
+    "./instrument": "./src/infrastructure/instrument/index.ts",
     "./schema/*": "./schema/*"
   },
   "files": [
@@ -32,17 +33,18 @@
     "format": "bunx prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "lint": "bunx eslint . --fix",
     "build": "bunx typescript-json-schema ./tsconfig.json AppSchema --out ./schema/app.schema.json --required --noExtraProps --strictNullChecks",
-    "test": "bun test src test --bail",
-    "test:unit": "bun test src --bail",
-    "test:integration": "bun test test --bail",
+    "test": "bun test --bail --timeout 20000",
+    "test:unit": "bun test src/adapter src/domain --bail",
+    "test:integration": "bun test src/infrastructure --bail --timeout 20000",
+    "test:e2e": "bun test test/ --bail",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.17.14",
     "@ngrok/ngrok": "^1.4.1",
     "@notionhq/client": "^2.2.15",
-    "@sentry/node": "^8.50.0",
-    "@sentry/profiling-node": "^8.50.0",
+    "@sentry/node": "^8.51.0",
+    "@sentry/profiling-node": "^8.51.0",
     "@types/lodash": "^4.17.14",
     "airtable": "^0.12.2",
     "ajv": "^8.17.1",
@@ -77,17 +79,15 @@
     "@types/bun": "latest",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
-    "@types/debug": "^4.1.12",
     "@types/eslint__js": "^8.42.3",
     "@types/express": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.10.7",
+    "@types/node": "^22.10.9",
     "@types/pg": "^8.11.10",
     "@types/smtp-server": "^3.5.10",
     "@types/xml2js": "^0.4.14",
-    "dotenv": "^16.4.7",
     "eslint": "^9.18.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.4.2",
     "semantic-release": "^24.2.1",
@@ -98,7 +98,7 @@
     "typescript": "^5.6.3"
   },
   "engines": {
-    "bun": "1.1.43"
+    "bun": "1.2.0"
   },
   "config": {
     "commitizen": {

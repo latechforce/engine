@@ -1,10 +1,10 @@
-import { drivers } from '@infrastructure/drivers'
-import { integrations } from '@infrastructure/integrations'
+import { drivers } from '@infrastructure/drivers/common'
+import { integrations } from '@infrastructure/integrations/common'
 import App from '@adapter/api'
 import type { Drivers } from '@adapter/spi/drivers'
 import type { Integrations } from '@adapter/spi/integrations'
-
-export { mocks } from '@infrastructure/integrations/mocks'
+import type { IDatabaseDriver } from '@adapter/spi/drivers/DatabaseSpi'
+import type { DatabaseConfig } from '@domain/services/Database'
 
 export type { Config } from '@domain/interfaces'
 export type { IAutomation as Automation } from '@domain/interfaces/IAutomation'
@@ -43,10 +43,12 @@ export {
 export type { AppIntegrations } from '@domain/entities/App/Base'
 export type { StartedApp } from '@domain/entities/App/Started'
 export type { StoppedApp } from '@domain/entities/App/Stopped'
-export { packages } from '@infrastructure/drivers/CodeCompilerDriver/JavascriptRunnerDriver'
 
 export default class extends App {
-  constructor(options?: { drivers?: Partial<Drivers>; integrations?: Partial<Integrations> }) {
+  constructor(options: {
+    drivers: Partial<Drivers> & { database: (config: DatabaseConfig) => IDatabaseDriver }
+    integrations?: Partial<Integrations>
+  }) {
     const customDrivers = options?.drivers ?? {}
     const customIntegrations = options?.integrations ?? {}
     super({ ...drivers, ...customDrivers }, { ...integrations, ...customIntegrations })

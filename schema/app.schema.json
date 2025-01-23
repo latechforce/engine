@@ -313,6 +313,9 @@
         "IField": {
             "anyOf": [
                 {
+                    "$ref": "#/definitions/ICheckboxField"
+                },
+                {
                     "$ref": "#/definitions/IDateTimeField"
                 },
                 {
@@ -322,34 +325,31 @@
                     "$ref": "#/definitions/ILongTextField"
                 },
                 {
-                    "$ref": "#/definitions/ISingleLineTextField"
+                    "$ref": "#/definitions/INumberField"
                 },
                 {
-                    "$ref": "#/definitions/INumberField"
+                    "$ref": "#/definitions/ISingleLineTextField"
                 },
                 {
                     "$ref": "#/definitions/IFormulaField"
                 },
                 {
-                    "$ref": "#/definitions/ISingleSelectField"
-                },
-                {
-                    "$ref": "#/definitions/ISingleLinkedRecordField"
+                    "$ref": "#/definitions/IMultipleAttachmentField"
                 },
                 {
                     "$ref": "#/definitions/IMultipleLinkedRecordField"
                 },
                 {
-                    "$ref": "#/definitions/IRollupField"
-                },
-                {
-                    "$ref": "#/definitions/ICheckboxField"
-                },
-                {
                     "$ref": "#/definitions/IMultipleSelectField"
                 },
                 {
-                    "$ref": "#/definitions/IMultipleAttachmentField"
+                    "$ref": "#/definitions/IRollupField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleLinkedRecordField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleSelectField"
                 }
             ]
         },

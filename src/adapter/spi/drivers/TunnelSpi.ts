@@ -1,5 +1,5 @@
 import type { ITunnelSpi } from '@domain/services/Tunnel'
-import type { NgrokIntegration } from '@infrastructure/integrations/ngrok/NgrokIntegration'
+import type { NgrokIntegration } from '@infrastructure/integrations/common/ngrok/NgrokIntegration'
 
 export interface TunnelDriverIntegrations {
   ngrok: NgrokIntegration
