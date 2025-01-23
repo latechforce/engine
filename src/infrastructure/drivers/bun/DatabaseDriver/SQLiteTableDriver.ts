@@ -147,52 +147,50 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     await this._createManyToManyTables()
   }
 
-  viewExists = async () => {
-    const result = this._db
-      .prepare(`SELECT name FROM sqlite_master WHERE type='view' AND name = ?`)
-      .all(this.viewName)
-    return result.length > 0
-  }
-
   createView = async () => {
-    let joins = ''
-    const exists = await this.viewExists()
-    if (exists) throw new Error(`View "${this.viewName}" already exists`)
-    const columns = this.fields
-      .map((field) => {
-        const column = this._convertFieldToColumn(field)
-        if (field.type === 'Rollup') {
-          const linkedRecordField = this._getLinkedRecordField(field.multipleLinkedRecord)
-          const values = `${linkedRecordField.table}_view.${field.linkedRecordField}`
-          const formula = this._convertFormula(field.formula, values)
-          const linkedRecordColumn = this._convertFieldToColumn(linkedRecordField)
-          const manyToManyTableName = this._getManyToManyTableName(linkedRecordColumn)
-          if (!joins.includes(manyToManyTableName)) {
-            joins += ` LEFT JOIN ${manyToManyTableName} ON ${this.name}.id = ${manyToManyTableName}.${this.name}_id`
-            joins += ` LEFT JOIN ${linkedRecordField.table}_view ON ${manyToManyTableName}.${linkedRecordField.table}_id = ${linkedRecordField.table}_view.id`
+    try {
+      this._db.exec('BEGIN TRANSACTION')
+      this._db.exec(`DROP VIEW IF EXISTS ${this.viewName}`)
+      let joins = ''
+      const columns = this.fields
+        .map((field) => {
+          const column = this._convertFieldToColumn(field)
+          if (field.type === 'Rollup') {
+            const linkedRecordField = this._getLinkedRecordField(field.multipleLinkedRecord)
+            const values = `${linkedRecordField.table}_view.${field.linkedRecordField}`
+            const formula = this._convertFormula(field.formula, values)
+            const linkedRecordColumn = this._convertFieldToColumn(linkedRecordField)
+            const manyToManyTableName = this._getManyToManyTableName(linkedRecordColumn)
+            if (!joins.includes(manyToManyTableName)) {
+              joins += ` LEFT JOIN ${manyToManyTableName} ON ${this.name}.id = ${manyToManyTableName}.${this.name}_id`
+              joins += ` LEFT JOIN ${linkedRecordField.table}_view ON ${manyToManyTableName}.${linkedRecordField.table}_id = ${linkedRecordField.table}_view.id`
+            }
+            return `CAST(${formula} AS ${column.type}) AS "${column.name}"`
+          } else if (field.type === 'Formula') {
+            const expandedFormula = this.columns.reduce((acc, f) => {
+              const regex = new RegExp(`\\b${f.name}\\b`, 'g')
+              return acc.replace(regex, f.formula ? `(${f.formula})` : `"${f.name}"`)
+            }, field.formula)
+            return `CAST(${expandedFormula} AS ${column.type}) AS "${column.name}"`
+          } else if (field.type === 'MultipleLinkedRecord') {
+            return `(SELECT GROUP_CONCAT("${column.table}_id") FROM ${this._getManyToManyTableName(column)} WHERE "${this.name}_id" = ${this.name}.id) AS "${column.name}"`
+          } else {
+            return `${this.name}.${column.name} AS "${column.name}"`
           }
-          return `CAST(${formula} AS ${column.type}) AS "${column.name}"`
-        } else if (field.type === 'Formula') {
-          const expandedFormula = this.columns.reduce((acc, f) => {
-            const regex = new RegExp(`\\b${f.name}\\b`, 'g')
-            return acc.replace(regex, f.formula ? `(${f.formula})` : `"${f.name}"`)
-          }, field.formula)
-          return `CAST(${expandedFormula} AS ${column.type}) AS "${column.name}"`
-        } else if (field.type === 'MultipleLinkedRecord') {
-          return `(SELECT GROUP_CONCAT("${column.table}_id") FROM ${this._getManyToManyTableName(column)} WHERE "${this.name}_id" = ${this.name}.id) AS "${column.name}"`
-        } else {
-          return `${this.name}.${column.name} AS "${column.name}"`
-        }
-      })
-      .join(', ')
-    let query = `CREATE VIEW ${this.viewName} AS SELECT ${columns} FROM ${this.name}`
-    if (joins) query += joins + ` GROUP BY ${this.name}.id`
-    this._db.exec(query)
+        })
+        .join(', ')
+      let query = `CREATE VIEW ${this.viewName} AS SELECT ${columns} FROM ${this.name}`
+      if (joins) query += joins + ` GROUP BY ${this.name}.id`
+      this._db.exec(query)
+      this._db.exec('COMMIT')
+    } catch (e) {
+      this._db.exec('ROLLBACK')
+      this._throwError(e)
+    }
   }
 
   dropView = async () => {
-    const query = `DROP VIEW IF EXISTS ${this.viewName}`
-    this._db.exec(query)
+    this._db.exec(`DROP VIEW IF EXISTS ${this.viewName}`)
   }
 
   insert = async <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {

@@ -6,11 +6,11 @@ La Tech Force Engine is a API to generate web app, fast and easy. With a configu
 
 ### Pre-requisites
 
-You should have Node.js 22 or higher installed on your machine.
+You should have Bun 1.2 or higher installed on your machine.
 
 ### Installation
 
-In a node project, install the engine with bun:
+In a Bun project, install the engine with Bun:
 
 ```
 bun install @latechforce/engine
@@ -23,7 +23,8 @@ bun install @latechforce/engine
 Create a new file `index.ts` with the following content:
 
 ```ts
-import App, { type Config, type CodeRunnerContext } from '@latechforce/engine'
+import type { Config, CodeRunnerContext } from '@latechforce/engine'
+import BunEngine from '@latechforce/engine/bun'
 
 const config: Config = {
   name: 'App',
@@ -63,9 +64,9 @@ const config: Config = {
   ],
 }
 
-const { url } = await new NodeApp().start(config)
+const startedApp = await new BunEngine().start(config)
 
-const response = await fetch(url + '/api/automation/hello-name', {
+const response = await fetch(startedApp.url + '/api/automation/hello-name', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

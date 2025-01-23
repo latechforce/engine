@@ -91,11 +91,9 @@ export function testDatabaseTableDriver(
       expect(secondTable.createView()).resolves
     })
 
-    it('should not create a view if already exist', async () => {
+    it('should create create a view if already exist', async () => {
       // THEN
-      expect(secondTable.createView()).rejects.toThrowError(
-        `View "${secondTableConfig.name}_view" already exists`
-      )
+      expect(secondTable.createView()).resolves
     })
   })
 
