@@ -1,0 +1,126 @@
+import { describe, it, expect, beforeEach, mock } from 'bun:test'
+import { OrFilter } from '@domain/entities/Filter/Or'
+import { OnOrAfterDateFilter } from '@domain/entities/Filter/date/OnOrAfter'
+import { AirtableTable, type IAirtableTableSpi } from './AirtableTable'
+
+let spi: IAirtableTableSpi
+let airtableTable: AirtableTable
+
+beforeEach(() => {
+  // GIVEN
+  spi = {
+    id: 'table-id',
+    name: 'Test Table',
+    insert: mock(),
+    insertMany: mock(),
+    update: mock(),
+    updateMany: mock(),
+    retrieve: mock(),
+    archive: mock(),
+    list: mock(),
+  }
+  airtableTable = new AirtableTable(spi)
+})
+
+describe('insert', () => {
+  it('should call SPI insert', async () => {
+    // GIVEN
+    const record = { title: 'Test Record' }
+
+    // WHEN
+    await airtableTable.insert(record)
+
+    // THEN
+    expect(spi.insert).toHaveBeenCalledWith(record)
+  })
+})
+
+describe('insertMany', () => {
+  it('should call SPI insertMany', async () => {
+    // GIVEN
+    const records = [{ title: 'Record 1' }, { title: 'Record 2' }]
+
+    // WHEN
+    await airtableTable.insertMany(records)
+
+    // THEN
+    expect(spi.insertMany).toHaveBeenCalledWith(records)
+  })
+})
+
+describe('update', () => {
+  it('should call SPI update', async () => {
+    // GIVEN
+    const id = 'record-id'
+    const record = { title: 'Updated Title' }
+
+    // WHEN
+    await airtableTable.update(id, record)
+
+    // THEN
+    expect(spi.update).toHaveBeenCalledWith(id, record)
+  })
+})
+
+describe('updateMany', () => {
+  it('should call SPI updateMany ', async () => {
+    // GIVEN
+    const records = [
+      { id: '1', fields: { title: 'Record 1' } },
+      { id: '2', fields: { title: 'Record 2' } },
+    ]
+
+    // WHEN
+    await airtableTable.updateMany(records)
+
+    // THEN
+    expect(spi.updateMany).toHaveBeenCalledWith(records)
+  })
+})
+
+describe('retrieve', () => {
+  it('should call SPI retrieve with the given ID', async () => {
+    // GIVEN
+    const id = 'record-id'
+
+    // WHEN
+    await airtableTable.retrieve(id)
+
+    // THEN
+    expect(spi.retrieve).toHaveBeenCalledWith(id)
+  })
+})
+
+describe('archive', () => {
+  it('should call SPI archive with the given ID', async () => {
+    // GIVEN
+    const id = 'record-id'
+
+    // WHEN
+    await airtableTable.archive(id)
+
+    // THEN
+    expect(spi.archive).toHaveBeenCalledWith(id)
+  })
+})
+
+describe('list', () => {
+  it('should call SPI list without a filter', async () => {
+    // WHEN
+    await airtableTable.list()
+
+    // THEN
+    expect(spi.list).toHaveBeenCalledWith(undefined)
+  })
+
+  it('should call SPI list with a filter', async () => {
+    // GIVEN
+    const filter = new OrFilter([new OnOrAfterDateFilter('created_time', '2023-01-01T00:00:00Z')])
+
+    // WHEN
+    await airtableTable.list(filter)
+
+    // THEN
+    expect(spi.list).toHaveBeenCalledWith(filter)
+  })
+})

@@ -16,6 +16,7 @@ type Tester = {
   describe: (message: string, tests: () => void) => void
   beforeEach: (fn: () => Promise<void>) => void
   afterEach: (fn: () => Promise<void>) => void
+  afterAll: (fn: () => Promise<void>) => void
 }
 
 type DriverType = 'Database' | 'Storage'
@@ -179,13 +180,10 @@ export class IntegrationTest {
 
     this.tester.afterEach(async () => {
       await app.stop()
-      if (
-        'drivers' in options &&
-        options.drivers?.includes('Database') &&
-        extendsConfig.database?.url
-      ) {
-        await fs.remove(extendsConfig.database.url)
-      }
+    })
+
+    this.tester.afterAll(async () => {
+      await fs.emptyDir(join(process.cwd(), 'tmp'))
     })
 
     tests({

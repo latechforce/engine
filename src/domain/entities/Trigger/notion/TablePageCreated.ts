@@ -41,7 +41,7 @@ export class TablePageCreatedNotionTrigger implements BaseTrigger {
     await queue.add(automation, {
       ...page.properties,
       id: page.id,
-      created_time: page.created_time,
+      createdTime: page.createdTime,
     })
   }
 }
