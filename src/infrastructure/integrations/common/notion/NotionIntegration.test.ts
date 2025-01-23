@@ -1,14 +1,9 @@
 import env from '@test/env'
-import { Client } from '@notionhq/client'
 import { testNotionIntegration } from './NotionIntegrationTest'
 import { NotionIntegration } from './NotionIntegration'
 import BunTester from 'bun:test'
 
-const { TEST_NOTION_TOKEN, TEST_NOTION_TABLE_1_ID } = env
-
-export const notion = new Client({
-  auth: TEST_NOTION_TOKEN,
-})
+const { TEST_NOTION_TABLE_1_ID } = env
 
 export const integration = new NotionIntegration({
   token: env.TEST_NOTION_TOKEN,

@@ -1,26 +1,27 @@
 import type { FilterDto } from '@domain/entities/Filter'
-import type { NotionTablePageDto } from '@adapter/spi/dtos/NotionTablePageDto'
-import type { INotionTableIntegration } from '@adapter/spi/integrations/NotionTableSpi'
-import { type NotionTablePageProperties } from '@domain/integrations/Notion/NotionTablePage'
-import type { TableObject } from './NotionIntegration.mock'
-import type { SQLiteDatabaseTableDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
+import { type AirtableTableRecordFields } from '@domain/integrations/Airtable/AirtableTableRecord'
+import type { IAirtableTableIntegration } from '@adapter/spi/integrations/AirtableTableSpi'
+import type { UpdateAirtableTableRecord } from '@domain/integrations/Airtable/AirtableTable'
+import type { TableObject } from './AirtableIntegration.mock'
+import type { AirtableTableRecordDto } from '@adapter/spi/dtos/AirtableTableRecordDto'
 import type { PersistedRecordFieldsDto } from '@adapter/spi/dtos/RecordDto'
+import type { SQLiteDatabaseTableDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
+import type { IField } from '@domain/interfaces/IField'
 import { nanoid } from 'nanoid'
 import type { RecordFields } from '@domain/entities/Record'
-import type { IField } from '@domain/interfaces/IField'
 
-export class NotionTableIntegration implements INotionTableIntegration {
+export class AirtableTableIntegration implements IAirtableTableIntegration {
   readonly id: string
   readonly name: string
-  private _properties: IField[]
+  private _fields: IField[]
 
   constructor(
     private _db: SQLiteDatabaseTableDriver,
     _table: PersistedRecordFieldsDto<TableObject>
   ) {
     this.id = _table.id
-    this.name = _table.fields.title
-    this._properties = JSON.parse(_table.fields.properties)
+    this.name = _table.fields.name
+    this._fields = JSON.parse(_table.fields.fields)
   }
 
   exists = async () => {
@@ -35,28 +36,28 @@ export class NotionTableIntegration implements INotionTableIntegration {
     await this._db.createView()
   }
 
-  insert = async <T extends NotionTablePageProperties>(page: T) => {
+  insert = async <T extends AirtableTableRecordFields>(record: T) => {
     const id = nanoid()
     await this._db.insert({
       id,
-      fields: this._preprocess(page),
+      fields: this._preprocess(record),
       created_at: new Date(),
     })
     return this.retrieve<T>(id)
   }
 
-  insertMany = async <T extends NotionTablePageProperties>(pages: T[]) => {
-    const pagesToInsert = pages.map((page) => ({
+  insertMany = async <T extends AirtableTableRecordFields>(records: T[]) => {
+    const pagesToInsert = records.map((record) => ({
       id: nanoid(),
-      fields: this._preprocess(page),
+      fields: this._preprocess(record),
       created_at: new Date(),
     }))
     await this._db.insertMany(pagesToInsert)
     return Promise.all(pagesToInsert.map((page) => this.retrieve<T>(page.id)))
   }
 
-  update = async <T extends NotionTablePageProperties>(id: string, page: Partial<T>) => {
-    const fields = this._preprocess(page)
+  update = async <T extends AirtableTableRecordFields>(id: string, record: Partial<T>) => {
+    const fields = this._preprocess(record)
     await this._db.update({
       id,
       fields,
@@ -65,50 +66,44 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return this.retrieve<T>(id)
   }
 
-  updateMany = async <T extends NotionTablePageProperties>(
-    pages: { id: string; page: Partial<T> }[]
+  updateMany = async <T extends AirtableTableRecordFields>(
+    pages: UpdateAirtableTableRecord<T>[]
   ) => {
-    const pagesToUpdate = pages.map(({ id, page }) => ({
+    const pagesToUpdate = pages.map(({ id, fields }) => ({
       id,
-      fields: this._preprocess(page),
+      fields: this._preprocess(fields),
       updated_at: new Date(),
     }))
     await this._db.updateMany(pagesToUpdate)
     return Promise.all(pagesToUpdate.map((page) => this.retrieve<T>(page.id)))
   }
 
-  retrieve = async <T extends NotionTablePageProperties>(id: string) => {
+  retrieve = async <T extends AirtableTableRecordFields>(id: string) => {
     const record = await this._db.readById(id)
     if (!record) throw new Error(`Record not found: ${id}`)
     return this._postprocess<T>(record)
   }
 
-  archive = async (id: string) => {
-    await this._db.update({
-      id,
-      fields: {
-        archived: true,
-      },
-      updated_at: new Date(),
-    })
+  delete = async (id: string) => {
+    await this._db.delete(id)
   }
 
-  archiveMany = async (ids: string[]) => {
-    const pagesArchived: Promise<void>[] = []
-    for (const id of ids) pagesArchived.push(this.archive(id))
-    return Promise.all(pagesArchived)
+  deleteMany = async (ids: string[]) => {
+    const recordToDelete: Promise<void>[] = []
+    for (const id of ids) recordToDelete.push(this.delete(id))
+    return Promise.all(recordToDelete)
   }
 
-  list = async <T extends NotionTablePageProperties>(filter?: FilterDto) => {
+  list = async <T extends AirtableTableRecordFields>(filter?: FilterDto) => {
     const records = await this._db.list(filter)
     return records.map((record) => this._postprocess<T>(record))
   }
 
-  _preprocess = (page: NotionTablePageProperties): RecordFields => {
+  _preprocess = (record: AirtableTableRecordFields): RecordFields => {
     const fields: RecordFields = {}
-    for (const [key, value] of Object.entries(page)) {
-      const property = this._properties.find((p) => p.name === key)
-      if (!property) throw new Error(`Property "${key}" does not exist`)
+    for (const [key, value] of Object.entries(record)) {
+      const property = this._fields.find((p) => p.name === key)
+      if (!property) throw new Error(`Field "${key}" does not exist`)
       if (value === undefined || value === null) {
         fields[key] = null
         continue
@@ -152,44 +147,44 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return fields
   }
 
-  _postprocess = <T extends NotionTablePageProperties>(
+  _postprocess = <T extends AirtableTableRecordFields>(
     record: PersistedRecordFieldsDto<RecordFields>
-  ): NotionTablePageDto<T> => {
-    const page: RecordFields = {}
+  ): AirtableTableRecordDto<T> => {
+    const fields: RecordFields = {}
     for (const [key, value] of Object.entries(record.fields)) {
-      const property = this._properties.find((p) => p.name === key)
-      if (!property) throw new Error(`Property "${key}" does not exist`)
+      const property = this._fields.find((p) => p.name === key)
+      if (!property) throw new Error(`Field "${key}" does not exist`)
       switch (property.type) {
         case 'SingleLineText':
-          page[key] = value ?? null
+          fields[key] = value ?? null
           break
         case 'DateTime':
-          page[key] = value ? new Date(value as number) : null
+          fields[key] = value ? new Date(value as number) : null
           break
         case 'Number':
-          page[key] = value ?? null
+          fields[key] = value ?? null
           break
         case 'Checkbox':
-          page[key] = value ?? false
+          fields[key] = value ?? false
           break
         case 'SingleSelect':
-          page[key] = value ?? null
+          fields[key] = value ?? null
           break
         case 'MultipleSelect':
-          page[key] = value ? (value as string[]) : []
+          fields[key] = value ? (value as string[]) : []
           break
         case 'MultipleLinkedRecord':
           if (property.table) {
-            page[key] = value ? (value as string[]) : []
+            fields[key] = value ? (value as string[]) : []
           } else {
-            page[key] = value ? JSON.parse(String(value)) : []
+            fields[key] = value ? JSON.parse(String(value)) : []
           }
           break
         case 'MultipleAttachment':
-          page[key] = typeof value === 'string' ? JSON.parse(value) : []
+          fields[key] = typeof value === 'string' ? JSON.parse(value) : []
           break
         case 'Rollup':
-          page[key] = value ?? null
+          fields[key] = value ?? null
           break
         default:
           throw new Error(`Invalid property type: ${property.type}`)
@@ -197,10 +192,8 @@ export class NotionTableIntegration implements INotionTableIntegration {
     }
     return {
       id: record.id,
-      properties: page as T,
+      fields: fields as T,
       created_time: record.created_at.toISOString(),
-      last_edited_time: record.updated_at?.toISOString() ?? record.created_at.toISOString(),
-      archived: record.fields.archived ? Boolean(record.fields.archived) : false,
     }
   }
 }

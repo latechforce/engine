@@ -2,6 +2,7 @@ import { AirtableTable, type IAirtableTableSpi } from './AirtableTable'
 
 export interface AirtableConfig {
   apiKey: string
+  baseId: string
 }
 
 export interface IAirtableSpi {

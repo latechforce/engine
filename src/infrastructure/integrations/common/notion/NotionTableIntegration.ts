@@ -438,7 +438,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     const property = this._database.properties[field]
 
     if (!property && field !== 'created_time' && field !== 'last_edited_time') {
-      throw new Error(`Property "${field}" does not exist`)
+      throw new Error(`Field "${field}" does not exist`)
     }
 
     switch (operator) {

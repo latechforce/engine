@@ -9,14 +9,14 @@ let airtableTable: AirtableTable
 beforeEach(() => {
   // GIVEN
   spi = {
-    id: 'table-id',
-    name: 'Test Table',
+    id: 'tableid',
+    name: 'Table Name',
     insert: mock(),
     insertMany: mock(),
     update: mock(),
     updateMany: mock(),
     retrieve: mock(),
-    archive: mock(),
+    delete: mock(),
     list: mock(),
   }
   airtableTable = new AirtableTable(spi)
@@ -91,16 +91,16 @@ describe('retrieve', () => {
   })
 })
 
-describe('archive', () => {
+describe('delete', () => {
   it('should call SPI archive with the given ID', async () => {
     // GIVEN
     const id = 'record-id'
 
     // WHEN
-    await airtableTable.archive(id)
+    await airtableTable.delete(id)
 
     // THEN
-    expect(spi.archive).toHaveBeenCalledWith(id)
+    expect(spi.delete).toHaveBeenCalledWith(id)
   })
 })
 

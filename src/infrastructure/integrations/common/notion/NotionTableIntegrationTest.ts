@@ -648,7 +648,7 @@ export function testNotionTableIntegration(
         })
 
       // THEN
-      await expect(call()).rejects.toThrow('Property "invalid" does not exist')
+      await expect(call()).rejects.toThrow('Field "invalid" does not exist')
     })
 
     it('should list pages in a table with a Is filter on a formula', async () => {

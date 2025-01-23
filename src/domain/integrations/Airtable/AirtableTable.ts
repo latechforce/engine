@@ -22,7 +22,7 @@ export interface IAirtableTableSpi {
   ) => Promise<AirtableTableRecord<T>[]>
   retrieve: <T extends AirtableTableRecordFields>(id: string) => Promise<AirtableTableRecord<T>>
   list: <T extends AirtableTableRecordFields>(filter?: Filter) => Promise<AirtableTableRecord<T>[]>
-  archive: (id: string) => Promise<void>
+  delete: (id: string) => Promise<void>
 }
 
 export class AirtableTable {
@@ -61,8 +61,8 @@ export class AirtableTable {
     return this._spi.retrieve<T>(id)
   }
 
-  archive = async (id: string) => {
-    return this._spi.archive(id)
+  delete = async (id: string) => {
+    return this._spi.delete(id)
   }
 
   list = async <T extends AirtableTableRecordFields>(filter?: Filter) => {

@@ -515,10 +515,10 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       })
       return { conditions: conditions.join(' OR '), values }
     }
-    const { operator, field } = filter
-    const property = this.fields.find((f) => f.name === field)
-    if (!property && field !== 'created_time' && field !== 'last_edited_time') {
-      throw new Error(`Property "${field}" does not exist`)
+    const { operator } = filter
+    const field = this.fields.find((f) => f.name === filter.field)
+    if (!field && filter.field !== 'created_time' && filter.field !== 'last_edited_time') {
+      throw new Error(`Field "${filter.field}" does not exist`)
     }
     switch (operator) {
       case 'Is':

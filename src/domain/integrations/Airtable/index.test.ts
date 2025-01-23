@@ -7,7 +7,7 @@ let airtable: Airtable
 
 beforeEach(() => {
   // GIVEN
-  config = { apiKey: '1234' }
+  config = { apiKey: '1234', baseId: '1234' }
   spi = {
     getConfig: mock(() => config),
     getTable: mock(),
