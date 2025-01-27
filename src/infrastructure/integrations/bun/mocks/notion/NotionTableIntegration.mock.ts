@@ -5,9 +5,11 @@ import { type NotionTablePageProperties } from '@domain/integrations/Notion/Noti
 import type { TableObject } from './NotionIntegration.mock'
 import type { SQLiteDatabaseTableDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
 import type { PersistedRecordFieldsDto } from '@adapter/spi/dtos/RecordDto'
-import { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '@domain/entities/Record'
 import type { IField } from '@domain/interfaces/IField'
+import type { NotionUserDto } from '@adapter/spi/dtos/NotionUserDto'
+import type { ITable } from '@domain/interfaces/ITable'
 
 export class NotionTableIntegration implements INotionTableIntegration {
   readonly id: string
@@ -36,7 +38,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
   }
 
   insert = async <T extends NotionTablePageProperties>(page: T) => {
-    const id = nanoid()
+    const id = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')(21)
     await this._db.insert({
       id,
       fields: this._preprocess(page),
@@ -47,7 +49,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
 
   insertMany = async <T extends NotionTablePageProperties>(pages: T[]) => {
     const pagesToInsert = pages.map((page) => ({
-      id: nanoid(),
+      id: customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')(21),
       fields: this._preprocess(page),
       created_at: new Date(),
     }))
@@ -203,4 +205,102 @@ export class NotionTableIntegration implements INotionTableIntegration {
       archived: record.fields.archived ? Boolean(record.fields.archived) : false,
     }
   }
+}
+
+export const sampleTable1: ITable = {
+  name: 'table_1',
+  fields: [
+    {
+      name: 'name',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'number',
+      type: 'Number',
+    },
+    {
+      name: 'boolean',
+      type: 'Checkbox',
+    },
+    {
+      name: 'text',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'url',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'email',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'phone',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'single_select',
+      type: 'SingleSelect',
+      options: ['2', '1'],
+    },
+    {
+      name: 'status',
+      type: 'SingleSelect',
+      options: ['Pas commencé', 'En cours', 'Terminé'],
+    },
+    {
+      name: 'multi_select',
+      type: 'MultipleSelect',
+      options: ['4', '3', '2', '1'],
+    },
+    {
+      name: 'date',
+      type: 'DateTime',
+    },
+    {
+      name: 'people',
+      type: 'MultipleSelect',
+      options: ['1', '2'],
+    },
+    {
+      name: 'files',
+      type: 'MultipleAttachment',
+    },
+    {
+      name: 'relation',
+      type: 'MultipleLinkedRecord',
+      table: 'table_2',
+    },
+    {
+      name: 'rollup_names',
+      type: 'Rollup',
+      multipleLinkedRecord: 'relation',
+      linkedRecordField: 'name',
+      formula: "CONCAT(values, ', ')",
+      output: {
+        type: 'SingleLineText',
+      },
+    },
+    {
+      name: 'archived',
+      type: 'Checkbox',
+    },
+  ],
+}
+
+export const sampleTable2: ITable = {
+  name: 'table_2',
+  fields: [
+    {
+      name: 'name',
+      type: 'SingleLineText',
+    },
+  ],
+}
+
+export const sampleUser: NotionUserDto = {
+  id: '1',
+  email: 'test@test.com',
+  name: 'test',
+  avatarUrl: 'test',
 }

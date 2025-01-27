@@ -1,104 +1,16 @@
 import { NotionIntegration } from './NotionIntegration.mock'
 import { testNotionTableIntegration } from '@infrastructure/integrations/common/notion/NotionTableIntegrationTest'
 import BunTester from 'bun:test'
+import { sampleTable2, sampleTable1, sampleUser } from './NotionTableIntegration.mock'
 
 const integration = new NotionIntegration({
-  token: 'test',
+  token: 'file:./tmp/notionTable.db',
 })
 
 await integration.connect()
-
-await integration.addTable('table_2', [
-  {
-    name: 'name',
-    type: 'SingleLineText',
-  },
-])
-
-await integration.addTable('table_1', [
-  {
-    name: 'name',
-    type: 'SingleLineText',
-  },
-  {
-    name: 'number',
-    type: 'Number',
-  },
-  {
-    name: 'boolean',
-    type: 'Checkbox',
-  },
-  {
-    name: 'text',
-    type: 'SingleLineText',
-  },
-  {
-    name: 'url',
-    type: 'SingleLineText',
-  },
-  {
-    name: 'email',
-    type: 'SingleLineText',
-  },
-  {
-    name: 'phone',
-    type: 'SingleLineText',
-  },
-  {
-    name: 'single_select',
-    type: 'SingleSelect',
-    options: ['2', '1'],
-  },
-  {
-    name: 'status',
-    type: 'SingleSelect',
-    options: ['Pas commencé', 'En cours', 'Terminé'],
-  },
-  {
-    name: 'multi_select',
-    type: 'MultipleSelect',
-    options: ['4', '3', '2', '1'],
-  },
-  {
-    name: 'date',
-    type: 'DateTime',
-  },
-  {
-    name: 'people',
-    type: 'MultipleSelect',
-    options: ['1', '2'],
-  },
-  {
-    name: 'files',
-    type: 'MultipleAttachment',
-  },
-  {
-    name: 'relation',
-    type: 'MultipleLinkedRecord',
-    table: 'table_2',
-  },
-  {
-    name: 'rollup_names',
-    type: 'Rollup',
-    multipleLinkedRecord: 'relation',
-    linkedRecordField: 'name',
-    formula: "CONCAT(values, ', ')",
-    output: {
-      type: 'SingleLineText',
-    },
-  },
-  {
-    name: 'archived',
-    type: 'Checkbox',
-  },
-])
-
-await integration.addUser({
-  id: '1',
-  email: 'test@test.com',
-  name: 'test',
-  avatarUrl: 'test',
-})
+await integration.addTable(sampleTable2.name, sampleTable2.fields)
+await integration.addTable(sampleTable1.name, sampleTable1.fields)
+await integration.addUser(sampleUser)
 
 testNotionTableIntegration(BunTester, integration, {
   TABLE_1_ID: 'table_1',

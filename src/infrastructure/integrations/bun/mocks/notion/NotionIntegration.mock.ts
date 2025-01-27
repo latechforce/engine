@@ -24,7 +24,10 @@ export class NotionIntegration implements INotionIntegration {
   private _users?: SQLiteDatabaseTableDriver
 
   constructor(private _config?: NotionConfig) {
-    this._db = new SQLiteDatabaseDriver({ url: ':memory:', driver: 'SQLite' })
+    this._db = new SQLiteDatabaseDriver({
+      url: _config?.token ?? 'file::memory:?cache=shared',
+      driver: 'SQLite',
+    })
   }
 
   connect = async () => {
@@ -59,10 +62,14 @@ export class NotionIntegration implements INotionIntegration {
         },
       ],
     })
-    await this._tables.create()
-    await this._tables.createView()
-    await this._users.create()
-    await this._users.createView()
+    if (!(await this._tables.exists())) {
+      await this._tables.create()
+      await this._tables.createView()
+    }
+    if (!(await this._users.exists())) {
+      await this._users.create()
+      await this._users.createView()
+    }
   }
 
   getConfig = () => {
@@ -73,7 +80,8 @@ export class NotionIntegration implements INotionIntegration {
   }
 
   getTable = async (id: string) => {
-    const table = await this._tablesOrThrow().readById<TableObject>(id)
+    const tables = await this._tablesOrThrow()
+    const table = await tables.readById<TableObject>(id)
     if (!table) {
       throw new Error('Table not found')
     }
@@ -95,8 +103,9 @@ export class NotionIntegration implements INotionIntegration {
   }
 
   listAllUsers = async (): Promise<NotionUserDto[]> => {
-    const users = await this._usersOrThrow().list<UserObject>()
-    return users.map((user) => ({
+    const users = await this._usersOrThrow()
+    const list = await users.list<UserObject>()
+    return list.map((user) => ({
       id: user.id,
       email: user.fields.email,
       name: user.fields.name || '',
@@ -105,7 +114,8 @@ export class NotionIntegration implements INotionIntegration {
   }
 
   addTable = async (id: string, properties: IField[]) => {
-    await this._tablesOrThrow().insert<TableObject>({
+    const tables = await this._tablesOrThrow()
+    await tables.insert<TableObject>({
       id,
       fields: { title: id, properties: JSON.stringify(properties) },
       created_at: new Date(),
@@ -114,7 +124,8 @@ export class NotionIntegration implements INotionIntegration {
   }
 
   addUser = async (user: NotionUserDto) => {
-    await this._usersOrThrow().insert<UserObject>({
+    const users = await this._usersOrThrow()
+    await users.insert<UserObject>({
       id: user.id,
       fields: {
         email: user.email,
@@ -125,16 +136,22 @@ export class NotionIntegration implements INotionIntegration {
     })
   }
 
-  _tablesOrThrow = () => {
+  _tablesOrThrow = async () => {
     if (!this._tables) {
-      throw new Error('Tables table not set')
+      await this.connect()
+      if (!this._tables) {
+        throw new Error('Tables table not found')
+      }
     }
     return this._tables
   }
 
-  _usersOrThrow = () => {
+  _usersOrThrow = async () => {
     if (!this._users) {
-      throw new Error('Users table not set')
+      await this.connect()
+      if (!this._users) {
+        throw new Error('Users table not found')
+      }
     }
     return this._users
   }

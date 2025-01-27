@@ -7,10 +7,19 @@ import { DatabaseDriver } from '@infrastructure/drivers/bun/DatabaseDriver'
 import { StorageDriver } from '@infrastructure/drivers/common/StorageDriver'
 import { NotionIntegration } from '@infrastructure/integrations/bun/mocks/notion/NotionIntegration.mock'
 import { QontoIntegration } from '@infrastructure/integrations/bun/mocks/qonto/QontoIntegration.mock'
-import { PappersIntegration } from '@infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
+import {
+  PappersIntegration,
+  sampleCompany,
+} from '@infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
 import type { DatabaseConfig } from '@domain/services/Database'
 import type { NotionConfig } from '@domain/integrations/Notion'
-import env from './env'
+import {
+  sampleTable1,
+  sampleTable2,
+  sampleUser,
+} from '@infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
+import type { QontoConfig } from '@domain/integrations/Qonto'
+import type { PappersConfig } from '@domain/integrations/Pappers'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -147,29 +156,38 @@ export class IntegrationTest {
       if ('integrations' in options) {
         extendsConfig.integrations = {}
         if (options.integrations.includes('Notion')) {
+          const url = join(process.cwd(), 'tmp', `notion-${nanoid()}.db`)
+          await fs.ensureFile(url)
           const config: NotionConfig = {
-            token: env.TEST_NOTION_TOKEN,
+            token: url,
             pollingInterval: 1,
           }
           integrations.notion = new NotionIntegration(config)
           extendsConfig.integrations.notion = config
+          await integrations.notion.addTable(sampleTable1.name, sampleTable1.fields)
+          await integrations.notion.addTable(sampleTable2.name, sampleTable2.fields)
+          await integrations.notion.addUser(sampleUser)
         }
         if (options.integrations.includes('Qonto')) {
-          integrations.qonto = new QontoIntegration()
+          const config: QontoConfig = {
+            environment: 'production',
+            organisationSlug: 'test',
+            secretKey: 'test',
+          }
+          integrations.qonto = new QontoIntegration(config)
+          extendsConfig.integrations.qonto = config
         }
         if (options.integrations.includes('Pappers')) {
+          const config: PappersConfig = {
+            apiKey: 'test',
+          }
           integrations.pappers = new PappersIntegration()
+          extendsConfig.integrations.pappers = config
+          await integrations.pappers.addCompany(sampleCompany)
         }
       }
       let startedApp: StartedApp | undefined
       app.start = async (config: Config) => {
-        if (integrations.notion) {
-          await integrations.notion.connect()
-          for (const table of config.tables || []) {
-            console.log('table', table)
-            await integrations.notion.addTable(table.name, table.fields)
-          }
-        }
         startedApp = await new MockedApp().start({ ...config, ...extendsConfig })
         return startedApp
       }

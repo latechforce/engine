@@ -30,6 +30,7 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
   }
 
   connect = async (): Promise<void> => {
+    if (this._interval) clearInterval(this._interval)
     this.db.run(`
       CREATE TABLE IF NOT EXISTS _notifications (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,19 +39,24 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
       );
     `)
     const emitNotification = () => {
-      const notifications = this.db
-        .query<Notification, []>('SELECT * FROM _notifications WHERE processed = 0')
-        .all()
+      try {
+        const notifications = this.db
+          .query<Notification, []>('SELECT * FROM _notifications WHERE processed = 0')
+          .all()
 
-      for (const { payload, id } of notifications) {
-        this.db.prepare('UPDATE _notifications SET processed = 1 WHERE id = ?').run(id)
-        const { record_id, table, action } = JSON.parse(payload)
-        this._onNotification.forEach((callback) =>
-          callback({ notification: { record_id, table, action }, event: 'notification' })
-        )
+        for (const { payload, id } of notifications) {
+          this.db.prepare('UPDATE _notifications SET processed = 1 WHERE id = ?').run(id)
+          const { record_id, table, action } = JSON.parse(payload)
+          this._onNotification.forEach((callback) =>
+            callback({ notification: { record_id, table, action }, event: 'notification' })
+          )
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          clearInterval(this._interval)
+        }
       }
     }
-
     this._interval = setInterval(emitNotification, 500)
   }
 

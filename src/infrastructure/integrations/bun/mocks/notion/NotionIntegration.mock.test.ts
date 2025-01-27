@@ -3,7 +3,7 @@ import { testNotionIntegration } from '@infrastructure/integrations/common/notio
 import BunTester from 'bun:test'
 
 const integration = new NotionIntegration({
-  token: 'test',
+  token: 'file:./tmp/notion.db',
 })
 
 await integration.connect()
