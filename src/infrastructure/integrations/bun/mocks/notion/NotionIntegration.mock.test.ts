@@ -4,14 +4,14 @@ import BunTester from 'bun:test'
 import { join } from 'path'
 import fs from 'fs-extra'
 
+await fs.ensureFile(join(process.cwd(), 'tmp', 'notion.db'))
+
 const integration = new NotionIntegration({
   token: 'file:./tmp/notion.db',
 })
 
 await integration.connect()
-
 await integration.addTable('table_1', [])
-
 await integration.addUser({
   id: '1',
   email: 'test@test.com',

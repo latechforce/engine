@@ -5,6 +5,8 @@ import { sampleTable2, sampleTable1, sampleUser } from './NotionTableIntegration
 import { join } from 'path'
 import fs from 'fs-extra'
 
+await fs.ensureFile(join(process.cwd(), 'tmp', 'notionTable.db'))
+
 const integration = new NotionIntegration({
   token: 'file:./tmp/notionTable.db',
 })
