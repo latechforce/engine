@@ -23,7 +23,6 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
 
   constructor(config: DatabaseConfig) {
     const { url } = config
-    console.log('url', url)
     const db = new Database(url, { create: true, strict: true })
     db.run('PRAGMA journal_mode = WAL')
     db.run('PRAGMA foreign_keys = ON')
