@@ -67,7 +67,7 @@
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
+    "@eslint/js": "^9.19.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/exec": "^6.0.3",
@@ -82,11 +82,11 @@
     "@types/eslint__js": "^8.42.3",
     "@types/express": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.10.9",
-    "@types/pg": "^8.11.10",
+    "@types/node": "^22.10.10",
+    "@types/pg": "^8.11.11",
     "@types/smtp-server": "^3.5.10",
     "@types/xml2js": "^0.4.14",
-    "eslint": "^9.18.0",
+    "eslint": "^9.19.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.4.2",
