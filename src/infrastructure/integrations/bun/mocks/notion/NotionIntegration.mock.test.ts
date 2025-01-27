@@ -10,7 +10,6 @@ const integration = new NotionIntegration({
   token: 'file:./tmp/notion.db',
 })
 
-await integration.connect()
 await integration.addTable('table_1', [])
 await integration.addUser({
   id: '1',
