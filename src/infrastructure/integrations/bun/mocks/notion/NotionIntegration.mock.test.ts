@@ -4,10 +4,12 @@ import BunTester from 'bun:test'
 import { join } from 'path'
 import fs from 'fs-extra'
 
-await fs.ensureFile(join(process.cwd(), 'tmp', 'notion.db'))
+const path = join(process.cwd(), 'tmp', 'notion.db')
+
+await fs.ensureFile(path)
 
 const integration = new NotionIntegration({
-  token: 'file:./tmp/notion.db',
+  token: 'file:' + path,
 })
 
 await integration.addTable('table_1', [])
@@ -19,9 +21,9 @@ await integration.addUser({
 })
 
 const teardown = async () => {
-  await fs.remove(join(process.cwd(), 'tmp', 'notion.db'))
-  await fs.remove(join(process.cwd(), 'tmp', 'notion.db-shm'))
-  await fs.remove(join(process.cwd(), 'tmp', 'notion.db-wal'))
+  await fs.remove(path)
+  await fs.remove(path + '-shm')
+  await fs.remove(path + '-wal')
 }
 
 testNotionIntegration(

@@ -8,8 +8,6 @@ import type {
 import type { EventDto, EventNotificationDto } from '@adapter/spi/dtos/EventDto'
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
 import type { ITable } from '@domain/interfaces/ITable'
-import fs from 'fs-extra'
-import { dirname } from 'path'
 
 interface Notification {
   id: number
@@ -25,11 +23,6 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
 
   constructor(config: DatabaseConfig) {
     const { url } = config
-    if (url.includes('file:')) {
-      const path = url.replace('file:', '')
-      const dbDir = dirname(path)
-      fs.ensureDirSync(dbDir)
-    }
     const db = new Database(url, { create: true, strict: true })
     db.run('PRAGMA journal_mode = WAL')
     db.run('PRAGMA foreign_keys = ON')
@@ -50,7 +43,6 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
         const notifications = this.db
           .query<Notification, []>('SELECT * FROM _notifications WHERE processed = 0')
           .all()
-
         for (const { payload, id } of notifications) {
           this.db.prepare('UPDATE _notifications SET processed = 1 WHERE id = ?').run(id)
           const { record_id, table, action } = JSON.parse(payload)
