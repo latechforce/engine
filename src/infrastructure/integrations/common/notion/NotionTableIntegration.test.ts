@@ -1,7 +1,7 @@
 import env from '@test/env'
 import { testNotionTableIntegration } from './NotionTableIntegrationTest'
-import { cleanTestTable, integration } from './NotionIntegration.test'
 import BunTester from 'bun:test'
+import { cleanTestTable, integration } from './NotionIntegrationTest'
 
 testNotionTableIntegration(
   BunTester,

@@ -206,5 +206,58 @@ export const airtableTableSample1: ITable = {
       name: 'name',
       type: 'SingleLineText',
     },
+    {
+      name: 'number',
+      type: 'Number',
+    },
+    {
+      name: 'boolean',
+      type: 'Checkbox',
+    },
+    {
+      name: 'text',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'url',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'email',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'phone',
+      type: 'SingleLineText',
+    },
+    {
+      name: 'single_select',
+      type: 'SingleSelect',
+      options: ['2', '1'],
+    },
+    {
+      name: 'status',
+      type: 'SingleSelect',
+      options: ['Pas commencé', 'En cours', 'Terminé'],
+    },
+    {
+      name: 'multi_select',
+      type: 'MultipleSelect',
+      options: ['4', '3', '2', '1'],
+    },
+    {
+      name: 'date',
+      type: 'DateTime',
+    },
+  ],
+}
+
+export const airtableTableSample2: ITable = {
+  name: 'table_2',
+  fields: [
+    {
+      name: 'name',
+      type: 'SingleLineText',
+    },
   ],
 }
