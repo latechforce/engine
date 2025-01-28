@@ -1,3 +1,10 @@
+## [0.37.3](https://github.com/latechforce/engine/compare/v0.37.2...v0.37.3) (2025-01-28)
+
+
+### Bug Fixes
+
+* **package:** add build for Bun ([5e43a19](https://github.com/latechforce/engine/commit/5e43a19372793e247a0aefc5100e4bf3d467c96c))
+
 ## [0.37.2](https://github.com/latechforce/engine/compare/v0.37.1...v0.37.2) (2025-01-28)
 
 
