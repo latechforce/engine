@@ -1,3 +1,10 @@
+## [0.37.5](https://github.com/latechforce/engine/compare/v0.37.4...v0.37.5) (2025-01-28)
+
+
+### Bug Fixes
+
+* **Express:** remove Sentry for express ([1683440](https://github.com/latechforce/engine/commit/168344074a7d1bd1f6cfbdd7c6193bb53502ff6d))
+
 ## [0.37.4](https://github.com/latechforce/engine/compare/v0.37.3...v0.37.4) (2025-01-28)
 
 
