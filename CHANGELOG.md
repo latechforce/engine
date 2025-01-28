@@ -1,3 +1,10 @@
+## [0.37.6](https://github.com/latechforce/engine/compare/v0.37.5...v0.37.6) (2025-01-28)
+
+
+### Bug Fixes
+
+* **Types:** add Airtable types export ([0e8ad38](https://github.com/latechforce/engine/commit/0e8ad38921e8583e917b80c90bac13d1785fdea7))
+
 ## [0.37.5](https://github.com/latechforce/engine/compare/v0.37.4...v0.37.5) (2025-01-28)
 
 
