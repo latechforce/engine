@@ -1,7 +1,7 @@
 import type { MonitorsConfig } from '/domain/services/Monitor'
 import type { IMonitorDriver } from '/adapter/spi/drivers/MonitorSpi'
 import { SentryDriver } from './SentryDriver'
-import { ConsoleDriver } from './ConsoleDriver'
+import { ConsoleDriver } from '../../common/MonitorDriver/ConsoleDriver'
 
 export class MonitorDriver implements IMonitorDriver {
   private _monitors: (SentryDriver | ConsoleDriver)[] = []

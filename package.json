@@ -11,7 +11,7 @@
   "exports": {
     ".": "./dist/index.js",
     "./bun": "./dist/bun.js",
-    "./instrument": "./dist/infrastructure/instrument/index.js",
+    "./bun/instrument": "./dist/infrastructure/instrument/bun/index.js",
     "./schema/*": "./schema/*"
   },
   "files": [
@@ -35,20 +35,20 @@
     "clean": "rm -rf dist",
     "build:schema": "bunx typescript-json-schema ./tsconfig.json AppSchema --out ./schema/app.schema.json --required --noExtraProps --strictNullChecks",
     "build:types": "bunx tsc --project script/tsconfig.json && bun script/fix-types-paths.ts",
-    "build:engine": "bun build --entrypoints ./src/index.ts ./src/bun.ts ./src/infrastructure/instrument/index.ts --outdir ./dist --target bun --packages external",
+    "build:engine": "bun build --entrypoints ./src/index.ts ./src/bun.ts ./src/infrastructure/instrument/bun/index.ts --outdir ./dist --target bun --packages external",
     "build": "bun run build:engine && bun run build:types",
     "test": "bun test --bail --timeout 20000",
     "test:unit": "bun test src/adapter src/domain --bail",
     "test:integration": "bun test src/infrastructure --bail --timeout 20000",
     "test:e2e": "bun test test/ --bail",
+    "test:coverage": "bun test --bail --timeout 20000 --coverage",
     "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.17.14",
     "@ngrok/ngrok": "^1.4.1",
     "@notionhq/client": "^2.2.15",
-    "@sentry/node": "^8.51.0",
-    "@sentry/profiling-node": "^8.51.0",
+    "@sentry/bun": "^8.51.0",
     "@types/lodash": "^4.17.15",
     "airtable": "^0.12.2",
     "ajv": "^8.17.1",

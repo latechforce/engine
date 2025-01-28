@@ -5,6 +5,8 @@ import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type { DatabaseConfig } from '/domain/services/Database'
+import type { MonitorsConfig } from './domain/services/Monitor'
+import type { IMonitorDriver } from './adapter/spi/drivers/MonitorSpi'
 
 export type { Config } from '/domain/interfaces'
 export type { IAutomation as Automation } from '/domain/interfaces/IAutomation'
@@ -46,7 +48,10 @@ export type { StoppedApp } from '/domain/entities/App/Stopped'
 
 export default class extends App {
   constructor(options: {
-    drivers: Partial<Drivers> & { database: (config: DatabaseConfig) => IDatabaseDriver }
+    drivers: Partial<Drivers> & {
+      database: (config: DatabaseConfig) => IDatabaseDriver
+      monitor: (config: MonitorsConfig) => IMonitorDriver
+    }
     integrations?: Partial<Integrations>
   }) {
     const customDrivers = options?.drivers ?? {}
