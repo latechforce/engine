@@ -1,7 +1,7 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '@test/integration'
-import type { CodeRunnerContext } from '@domain/services/CodeRunner'
-import type { ITable } from '@domain/interfaces/ITable'
+import { IntegrationTest, type Config } from '../../../../../../src/infrastructure/test/integration'
+import type { CodeRunnerContext } from '/domain/services/CodeRunner'
+import type { ITable } from '/domain/interfaces/ITable'
 
 new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, drivers }) => {
   describe('on POST', () => {

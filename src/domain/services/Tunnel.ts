@@ -1,4 +1,4 @@
-import type { NgrokConfig } from '@domain/integrations/Ngrok'
+import type { NgrokConfig } from '/domain/integrations/Ngrok'
 
 export interface TunnelNgrokConfig extends NgrokConfig {
   integration: 'Ngrok'

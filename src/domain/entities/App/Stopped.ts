@@ -1,4 +1,4 @@
-import type { ConfigError } from '@domain/entities/Error/Config'
+import type { ConfigError } from '/domain/entities/Error/Config'
 import {
   BaseApp,
   type AppConfig,

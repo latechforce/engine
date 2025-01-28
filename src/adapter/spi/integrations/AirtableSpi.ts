@@ -1,8 +1,8 @@
 import {
   AirtableTableSpi,
   type IAirtableTableIntegration,
-} from '@adapter/spi/integrations/AirtableTableSpi'
-import type { IAirtableSpi, AirtableConfig } from '@domain/integrations/Airtable'
+} from '/adapter/spi/integrations/AirtableTableSpi'
+import type { IAirtableSpi, AirtableConfig } from '/domain/integrations/Airtable'
 
 export interface IAirtableIntegration {
   getConfig: () => AirtableConfig

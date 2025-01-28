@@ -1,6 +1,6 @@
-import { NgrokIntegration } from '@infrastructure/integrations/common/ngrok/NgrokIntegration'
+import { NgrokIntegration } from '/infrastructure/integrations/common/ngrok/NgrokIntegration'
 import { testNgrokIntegration } from './NgrokIntegrationTest'
-import env from '@test/env'
+import env from '../../../test/env'
 import BunTester from 'bun:test'
 
 const integration = new NgrokIntegration({

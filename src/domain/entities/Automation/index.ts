@@ -1,12 +1,12 @@
-import type { Logger } from '@domain/services/Logger'
+import type { Logger } from '/domain/services/Logger'
 import type { Action } from '../Action'
 import type { Trigger } from '../Trigger'
 import { AutomationContext } from './Context'
-import type { ConfigError } from '@domain/entities/Error/Config'
-import type { Monitor } from '@domain/services/Monitor'
-import type { IdGenerator } from '@domain/services/IdGenerator'
+import type { ConfigError } from '/domain/entities/Error/Config'
+import type { Monitor } from '/domain/services/Monitor'
+import type { IdGenerator } from '/domain/services/IdGenerator'
 import { AutomationHistory } from './History'
-import type { Database } from '@domain/services/Database'
+import type { Database } from '/domain/services/Database'
 
 interface AutomationConfig {
   name: string

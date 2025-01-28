@@ -1,5 +1,5 @@
-import type { INgrokIntegration } from '@adapter/spi/integrations/NgrokSpi'
-import type { NgrokConfig } from '@domain/integrations/Ngrok'
+import type { INgrokIntegration } from '/adapter/spi/integrations/NgrokSpi'
+import type { NgrokConfig } from '/domain/integrations/Ngrok'
 import { Database } from 'bun:sqlite'
 
 export class NgrokIntegration implements INgrokIntegration {

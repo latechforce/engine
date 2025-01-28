@@ -1,6 +1,6 @@
-import type { IQueueDriver } from '@adapter/spi/drivers/QueueSpi'
-import type { QueueConfig } from '@domain/services/Queue'
-import type { JobDto } from '@adapter/spi/dtos/JobDto'
+import type { IQueueDriver } from '/adapter/spi/drivers/QueueSpi'
+import type { QueueConfig } from '/domain/services/Queue'
+import type { JobDto } from '/adapter/spi/dtos/JobDto'
 import { v4 as uuidv4 } from 'uuid'
 import { EventEmitter } from 'events'
 

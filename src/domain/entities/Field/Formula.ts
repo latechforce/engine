@@ -1,4 +1,4 @@
-import type { IFormulaField } from '@domain/interfaces/IField/IFormula'
+import type { IFormulaField } from '/domain/interfaces/IField/IFormula'
 import { BaseField, type IBaseField } from './base'
 import type { DateTimeField } from './DateTime'
 import type { LongTextField } from './LongText'

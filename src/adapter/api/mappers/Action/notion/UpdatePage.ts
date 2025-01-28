@@ -3,7 +3,7 @@ import {
   type UpdatePageNotionActionConfig,
   type UpdatePageNotionActionServices,
   type UpdatePageNotionActionIntegrations,
-} from '@domain/entities/Action/notion/UpdatePage'
+} from '/domain/entities/Action/notion/UpdatePage'
 
 export type UpdatePageNotionActionMapperServices = UpdatePageNotionActionServices
 

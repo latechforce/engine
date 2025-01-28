@@ -1,4 +1,4 @@
-import type { MonitorSentryConfig } from '@domain/services/Monitor'
+import type { MonitorSentryConfig } from '/domain/services/Monitor'
 import * as Sentry from '@sentry/node'
 import { nodeProfilingIntegration } from '@sentry/profiling-node'
 

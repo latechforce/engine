@@ -1,6 +1,6 @@
-import type { IAirtableIntegration } from '@adapter/spi/integrations/AirtableSpi'
+import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import { AirtableTableIntegration } from './AirtableTableIntegration'
-import type { AirtableConfig } from '@domain/integrations/Airtable'
+import type { AirtableConfig } from '/domain/integrations/Airtable'
 import Airtable from 'airtable'
 import axios, { type AxiosInstance } from 'axios'
 

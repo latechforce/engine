@@ -1,5 +1,5 @@
-import type { IQontoIntegration } from '@adapter/spi/integrations/QontoSpi'
-import type { QontoCreateClient } from '@domain/integrations/Qonto'
+import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
+import type { QontoCreateClient } from '/domain/integrations/Qonto'
 import type BunTester from 'bun:test'
 
 export function testQontoIntegration(

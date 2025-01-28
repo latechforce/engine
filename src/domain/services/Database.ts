@@ -1,10 +1,10 @@
-import type { Table } from '@domain/entities/Table'
+import type { Table } from '/domain/entities/Table'
 import { DatabaseTable, type IDatabaseTableSpi } from './DatabaseTable'
 import type { Logger } from './Logger'
 import type { RealtimeEvent } from './Realtime'
 import type { Monitor } from './Monitor'
 import type { IdGenerator } from './IdGenerator'
-import type { ITable } from '@domain/interfaces/ITable'
+import type { ITable } from '/domain/interfaces/ITable'
 
 export type DatabaseDriverName = 'PostgreSQL' | 'SQLite'
 

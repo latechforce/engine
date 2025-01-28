@@ -1,4 +1,4 @@
-import type { IStorageSpi } from '@domain/services/Storage'
+import type { IStorageSpi } from '/domain/services/Storage'
 import { StorageBucketSpi, type IStorageBucketDriver } from './StorageBucketSpi'
 
 export interface IStorageDriver {

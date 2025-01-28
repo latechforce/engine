@@ -1,7 +1,7 @@
 import type {
   CodeRunnerContextIntegrations,
   CodeRunnerContextServices,
-} from '@domain/services/CodeRunner'
+} from '/domain/services/CodeRunner'
 import {
   BaseApp,
   type AppConfig,

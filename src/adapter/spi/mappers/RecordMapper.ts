@@ -1,5 +1,5 @@
 import type { PersistedRecordFieldsDto } from '../dtos/RecordDto'
-import { Record, type RecordFields } from '@domain/entities/Record'
+import { Record, type RecordFields } from '/domain/entities/Record'
 
 export class RecordMapper {
   static toEntity = <T extends RecordFields>(record: PersistedRecordFieldsDto<T>) => {

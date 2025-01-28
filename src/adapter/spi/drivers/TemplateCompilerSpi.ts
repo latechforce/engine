@@ -1,4 +1,4 @@
-import type { ITemplateCompilerSpi } from '@domain/services/TemplateCompiler'
+import type { ITemplateCompilerSpi } from '/domain/services/TemplateCompiler'
 import { TemplateSpi, type ITemplateDriver } from './TemplateSpi'
 
 export interface ITemplateCompilerDriver {

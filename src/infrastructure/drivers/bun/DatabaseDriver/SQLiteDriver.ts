@@ -1,13 +1,13 @@
 import { Database } from 'bun:sqlite'
-import type { IDatabaseDriver } from '@adapter/spi/drivers/DatabaseSpi'
+import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type {
   DatabaseConfig,
   DatabaseDriverName,
   DatabaseEventType,
-} from '@domain/services/Database'
-import type { EventDto, EventNotificationDto } from '@adapter/spi/dtos/EventDto'
+} from '/domain/services/Database'
+import type { EventDto, EventNotificationDto } from '/adapter/spi/dtos/EventDto'
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
-import type { ITable } from '@domain/interfaces/ITable'
+import type { ITable } from '/domain/interfaces/ITable'
 
 interface Notification {
   id: number

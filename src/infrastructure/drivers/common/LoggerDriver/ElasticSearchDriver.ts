@@ -1,4 +1,4 @@
-import type { LoggerElasticSearchConfig } from '@domain/services/Logger'
+import type { LoggerElasticSearchConfig } from '/domain/services/Logger'
 import { createLogger, format } from 'winston'
 import { Client } from '@elastic/elasticsearch'
 import { ElasticsearchTransport } from 'winston-elasticsearch'

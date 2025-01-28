@@ -1,4 +1,4 @@
-import { NotionUser } from '@domain/integrations/Notion/NotionUser'
+import { NotionUser } from '/domain/integrations/Notion/NotionUser'
 import type { NotionUserDto } from '../dtos/NotionUserDto'
 
 export class NotionUserMapper {

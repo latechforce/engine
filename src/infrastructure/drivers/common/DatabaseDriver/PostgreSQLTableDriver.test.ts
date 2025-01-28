@@ -1,7 +1,7 @@
 import BunTester from 'bun:test'
 import { testDatabaseTableDriver } from './DatabaseTableDriverTest'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
-import { getFirstAndSecondTableConfig } from '@test/config'
+import { getFirstAndSecondTableConfig } from '../../../test/config'
 import { setupPostgres, teardownPostgres } from './PostgreSQLDriverTestSetup'
 
 const setup = async () => {

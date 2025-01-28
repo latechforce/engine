@@ -1,13 +1,13 @@
 import pg from 'pg'
-import type { IDatabaseDriver } from '@adapter/spi/drivers/DatabaseSpi'
+import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type {
   DatabaseConfig,
   DatabaseDriverName,
   DatabaseEventType,
-} from '@domain/services/Database'
-import type { EventDto } from '@adapter/spi/dtos/EventDto'
+} from '/domain/services/Database'
+import type { EventDto } from '/adapter/spi/dtos/EventDto'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
-import type { ITable } from '@domain/interfaces/ITable'
+import type { ITable } from '/domain/interfaces/ITable'
 
 export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
   public db: pg.Pool

@@ -1,5 +1,5 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '@test/integration'
+import { IntegrationTest, type Config } from '../../../../src/infrastructure/test/integration'
 
 new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, drivers }) => {
   describe('on POST', () => {

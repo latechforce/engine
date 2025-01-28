@@ -1,6 +1,6 @@
-import type { Drivers } from '@adapter/spi/drivers'
-import { ServerSpi } from '@adapter/spi/drivers/ServerSpi'
-import { Server, type ServerConfig, type ServerServices } from '@domain/services/Server'
+import type { Drivers } from '/adapter/spi/drivers'
+import { ServerSpi } from '/adapter/spi/drivers/ServerSpi'
+import { Server, type ServerConfig, type ServerServices } from '/domain/services/Server'
 
 export class ServerMapper {
   static toService(drivers: Drivers, config: ServerConfig = {}, services: ServerServices) {

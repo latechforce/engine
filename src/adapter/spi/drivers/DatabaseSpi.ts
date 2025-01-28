@@ -7,10 +7,10 @@ import type {
   DatabaseNotificationEvent,
   DatabaseQuery,
   IDatabaseSpi,
-} from '@domain/services/Database'
+} from '/domain/services/Database'
 import type { EventDto } from '../dtos/EventDto'
 import { EventMapper } from '../mappers/EventMapper'
-import type { ITable } from '@domain/interfaces/ITable'
+import type { ITable } from '/domain/interfaces/ITable'
 
 export interface IDatabaseDriver {
   driver: DatabaseDriverName

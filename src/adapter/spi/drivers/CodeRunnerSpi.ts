@@ -2,7 +2,7 @@ import type {
   ICodeRunnerSpi,
   CodeRunnerContextServices,
   CodeRunnerContextIntegrations,
-} from '@domain/services/CodeRunner'
+} from '/domain/services/CodeRunner'
 
 export interface ICodeRunnerDriver {
   run: (

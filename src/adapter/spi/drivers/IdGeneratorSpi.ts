@@ -1,4 +1,4 @@
-import type { IIdGeneratorSpi } from '@domain/services/IdGenerator'
+import type { IIdGeneratorSpi } from '/domain/services/IdGenerator'
 
 export interface IIdGeneratorDriver {
   generate(length: number, chars: string): string

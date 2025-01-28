@@ -12,14 +12,14 @@ import { type IMonitorDriver } from './MonitorSpi'
 import { type ITunnelDriver } from './TunnelSpi'
 import { type IFetcherDriver } from './FetcherSpi'
 
-import { type ServerConfig } from '@domain/services/Server'
-import { type DatabaseConfig } from '@domain/services/Database'
-import { type QueueConfig } from '@domain/services/Queue'
-import { type MonitorsConfig } from '@domain/services/Monitor'
-import { type LoggersConfig } from '@domain/services/Logger'
-import { type CodeCompilerConfig } from '@domain/services/CodeCompiler'
-import { type TunnelConfig } from '@domain/services/Tunnel'
-import type { StorageConfig } from '@domain/services/Storage'
+import { type ServerConfig } from '/domain/services/Server'
+import { type DatabaseConfig } from '/domain/services/Database'
+import { type QueueConfig } from '/domain/services/Queue'
+import { type MonitorsConfig } from '/domain/services/Monitor'
+import { type LoggersConfig } from '/domain/services/Logger'
+import { type CodeCompilerConfig } from '/domain/services/CodeCompiler'
+import { type TunnelConfig } from '/domain/services/Tunnel'
+import type { StorageConfig } from '/domain/services/Storage'
 
 export interface Drivers {
   tunnel: (config?: TunnelConfig) => ITunnelDriver

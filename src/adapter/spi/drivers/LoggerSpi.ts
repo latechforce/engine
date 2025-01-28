@@ -1,4 +1,4 @@
-import type { ILoggerSpi } from '@domain/services/Logger'
+import type { ILoggerSpi } from '/domain/services/Logger'
 
 export interface ILoggerDriver {
   init: () => Promise<void>

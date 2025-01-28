@@ -1,4 +1,4 @@
-import type { IQueueSpi } from '@domain/services/Queue'
+import type { IQueueSpi } from '/domain/services/Queue'
 
 export interface IQueueDriver {
   onError: (callback: (error: Error) => void) => void

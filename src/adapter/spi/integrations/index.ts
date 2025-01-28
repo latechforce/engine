@@ -1,8 +1,8 @@
-import type { NotionConfig } from '@domain/integrations/Notion'
-import type { PappersConfig } from '@domain/integrations/Pappers'
-import type { QontoConfig } from '@domain/integrations/Qonto'
-import type { NgrokConfig } from '@domain/integrations/Ngrok'
-import type { AirtableConfig } from '@domain/integrations/Airtable'
+import type { NotionConfig } from '/domain/integrations/Notion'
+import type { PappersConfig } from '/domain/integrations/Pappers'
+import type { QontoConfig } from '/domain/integrations/Qonto'
+import type { NgrokConfig } from '/domain/integrations/Ngrok'
+import type { AirtableConfig } from '/domain/integrations/Airtable'
 
 import type { IPappersIntegration } from './PappersSpi'
 import type { INotionIntegration } from './NotionSpi'

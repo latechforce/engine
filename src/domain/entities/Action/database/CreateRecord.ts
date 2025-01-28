@@ -1,10 +1,10 @@
 import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
 import type { Table } from '../../Table'
-import { Template, type TemplateObjectCompiled } from '@domain/services/Template'
-import { TemplateCompiler } from '@domain/services/TemplateCompiler'
-import type { IdGenerator } from '@domain/services/IdGenerator'
-import type { Record } from '@domain/entities/Record'
+import { Template, type TemplateObjectCompiled } from '/domain/services/Template'
+import { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import type { IdGenerator } from '/domain/services/IdGenerator'
+import type { Record } from '/domain/entities/Record'
 
 export interface CreateRecordDatabaseActionConfig extends BaseActionConfig {
   fields: { [key: string]: string }

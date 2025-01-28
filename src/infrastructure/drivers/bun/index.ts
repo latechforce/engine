@@ -1,5 +1,5 @@
-import type { Drivers } from '@adapter/spi/drivers'
-import type { DatabaseConfig } from '@domain/services/Database'
+import type { Drivers } from '/adapter/spi/drivers'
+import type { DatabaseConfig } from '/domain/services/Database'
 
 import { DatabaseDriver } from './DatabaseDriver'
 

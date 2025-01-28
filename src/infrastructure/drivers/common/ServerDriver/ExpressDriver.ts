@@ -6,12 +6,12 @@ import * as Sentry from '@sentry/node'
 import http, { Server as HttpServer } from 'http'
 import net from 'net'
 import { join } from 'path'
-import type { IServerDriver } from '@adapter/spi/drivers/ServerSpi'
-import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '@adapter/spi/dtos/RequestDto'
-import type { ServerConfig } from '@domain/services/Server'
-import type { Response } from '@domain/entities/Response'
-import { RedirectResponse } from '@domain/entities/Response/Redirect'
-import { StreamResponse } from '@domain/entities/Response/Stream'
+import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
+import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '/adapter/spi/dtos/RequestDto'
+import type { ServerConfig } from '/domain/services/Server'
+import type { Response } from '/domain/entities/Response'
+import { RedirectResponse } from '/domain/entities/Response/Redirect'
+import { StreamResponse } from '/domain/entities/Response/Stream'
 
 const dirname = new URL('.', import.meta.url).pathname
 

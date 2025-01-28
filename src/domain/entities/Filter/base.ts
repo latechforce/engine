@@ -1,4 +1,4 @@
-import type { JSONSchema } from '@domain/services/SchemaValidator'
+import type { JSONSchema } from '/domain/services/SchemaValidator'
 
 export type BaseFilterProps = {
   field: string

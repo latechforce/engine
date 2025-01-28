@@ -1,4 +1,4 @@
-import type { ICheckboxField } from '@domain/interfaces/IField/ICheckbox'
+import type { ICheckboxField } from '/domain/interfaces/IField/ICheckbox'
 import { BaseField, type IBaseField } from './base'
 
 export class CheckboxField extends BaseField {

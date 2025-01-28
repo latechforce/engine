@@ -1,4 +1,4 @@
-import type { IEmailField } from '@domain/interfaces/IField/IEmail'
+import type { IEmailField } from '/domain/interfaces/IField/IEmail'
 import { BaseField, type IBaseField } from './base'
 
 export class EmailField extends BaseField {

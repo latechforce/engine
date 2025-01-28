@@ -1,8 +1,8 @@
-import type { IDatabaseDriver } from '@adapter/spi/drivers/DatabaseSpi'
-import type { DatabaseConfig, DatabaseEventType } from '@domain/services/Database'
-import type { EventDto } from '@adapter/spi/dtos/EventDto'
-import { PostgreSQLDatabaseDriver } from '@infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriver'
-import type { ITable } from '@domain/interfaces/ITable'
+import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
+import type { DatabaseConfig, DatabaseEventType } from '/domain/services/Database'
+import type { EventDto } from '/adapter/spi/dtos/EventDto'
+import { PostgreSQLDatabaseDriver } from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriver'
+import type { ITable } from '/domain/interfaces/ITable'
 import { SQLiteDatabaseDriver } from './SQLiteDriver'
 
 export class DatabaseDriver implements IDatabaseDriver {

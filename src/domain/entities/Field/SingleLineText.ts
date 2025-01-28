@@ -1,4 +1,4 @@
-import type { ISingleLineTextField } from '@domain/interfaces/IField/ISingleLineText'
+import type { ISingleLineTextField } from '/domain/interfaces/IField/ISingleLineText'
 import { BaseField, type IBaseField } from './base'
 
 export class SingleLineTextField extends BaseField {

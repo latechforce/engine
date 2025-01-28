@@ -1,4 +1,4 @@
-import env from '@test/env'
+import env from '../../../test/env'
 import { cleanTestTable, integration, testAirtableIntegration } from './AirtableIntegrationTest'
 import BunTester from 'bun:test'
 

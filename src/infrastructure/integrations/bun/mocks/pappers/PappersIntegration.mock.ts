@@ -1,5 +1,5 @@
-import type { IPappersIntegration } from '@adapter/spi/integrations/PappersSpi'
-import type { PappersConfig, PappersEntreprise } from '@domain/integrations/Pappers'
+import type { IPappersIntegration } from '/adapter/spi/integrations/PappersSpi'
+import type { PappersConfig, PappersEntreprise } from '/domain/integrations/Pappers'
 import { Database } from 'bun:sqlite'
 
 export class PappersIntegration implements IPappersIntegration {

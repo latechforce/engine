@@ -1,4 +1,4 @@
-import type { IIdGeneratorDriver } from '@adapter/spi/drivers/IdGeneratorSpi'
+import type { IIdGeneratorDriver } from '/adapter/spi/drivers/IdGeneratorSpi'
 import { customAlphabet } from 'nanoid'
 
 export class IdGeneratorDriver implements IIdGeneratorDriver {

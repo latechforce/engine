@@ -1,4 +1,4 @@
-import type { JSONSchema, ISchemaValidatorSpi } from '@domain/services/SchemaValidator'
+import type { JSONSchema, ISchemaValidatorSpi } from '/domain/services/SchemaValidator'
 import type { SchemaErrorDto } from '../dtos/ErrorDto'
 import { ErrorMapper } from '../mappers/ErrorMapper'
 

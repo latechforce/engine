@@ -1,10 +1,10 @@
-import type { ICodeRunnerDriver } from '@adapter/spi/drivers/CodeRunnerSpi'
+import type { ICodeRunnerDriver } from '/adapter/spi/drivers/CodeRunnerSpi'
 import type {
   CodeRunnerContext,
   CodeRunnerContextIntegrations,
   CodeRunnerContextPackages,
   CodeRunnerContextServices,
-} from '@domain/services/CodeRunner'
+} from '/domain/services/CodeRunner'
 import vm from 'node:vm'
 
 // Packages

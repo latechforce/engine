@@ -3,7 +3,7 @@ import {
   type CreateClientQontoActionConfig,
   type CreateClientQontoActionServices,
   type CreateClientQontoActionIntegrations,
-} from '@domain/entities/Action/qonto/CreateClient'
+} from '/domain/entities/Action/qonto/CreateClient'
 
 export type CreateClientQontoActionMapperServices = CreateClientQontoActionServices
 

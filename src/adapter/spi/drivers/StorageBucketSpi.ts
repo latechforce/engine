@@ -1,6 +1,6 @@
-import type { IStorageBucketSpi } from '@domain/services/StorageBucket'
+import type { IStorageBucketSpi } from '/domain/services/StorageBucket'
 import type { FileDto } from '../dtos/FileDto'
-import type { CreatedFile } from '@domain/entities/File/Created'
+import type { CreatedFile } from '/domain/entities/File/Created'
 import { FileMapper } from '../mappers/FileMapper'
 
 export interface IStorageBucketDriver {

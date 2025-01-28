@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '@test/integration'
-import { getAutomationConfig } from '@test/config'
+import { IntegrationTest } from '../../../../src/infrastructure/test/integration'
+import { getAutomationConfig } from '../../../../src/infrastructure/test/config'
 
 new IntegrationTest(Tester).with({}, ({ app, request }) => {
   describe('on POST', () => {

@@ -1,9 +1,9 @@
-import type { ICreateRecordDatabaseAction } from '@domain/interfaces/IAction/database/ICreateRecord'
+import type { ICreateRecordDatabaseAction } from '/domain/interfaces/IAction/database/ICreateRecord'
 import {
   CreateRecordDatabaseAction,
   type CreateRecordDatabaseActionServices,
   type CreateRecordDatabaseActionEntities,
-} from '@domain/entities/Action/database/CreateRecord'
+} from '/domain/entities/Action/database/CreateRecord'
 
 export type CreateRecordDatabaseActionMapperServices = CreateRecordDatabaseActionServices
 

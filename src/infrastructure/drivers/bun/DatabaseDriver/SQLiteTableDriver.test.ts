@@ -1,7 +1,7 @@
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
 import { testDatabaseTableDriver } from '../../common/DatabaseDriver/DatabaseTableDriverTest'
 import BunTester from 'bun:test'
-import { getFirstAndSecondTableConfig } from '@test/config'
+import { getFirstAndSecondTableConfig } from '../../../test/config'
 import { SQLiteDatabaseDriver } from './SQLiteDriver'
 
 const setup = async () => {

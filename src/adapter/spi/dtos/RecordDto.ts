@@ -3,7 +3,7 @@ import type {
   RecordFields,
   RecordFieldsToCreate,
   RecordFieldsToUpdate,
-} from '@domain/entities/Record'
+} from '/domain/entities/Record'
 
 export type PersistedRecordFieldsDto<T extends RecordFields> = PersistedRecordFields<T>
 export type RecordFieldsToCreateDto<T extends RecordFields> = RecordFieldsToCreate<T>

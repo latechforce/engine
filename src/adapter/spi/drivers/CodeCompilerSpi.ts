@@ -1,4 +1,4 @@
-import type { ICodeCompilerSpi } from '@domain/services/CodeCompiler'
+import type { ICodeCompilerSpi } from '/domain/services/CodeCompiler'
 import { type ICodeRunnerDriver, CodeRunnerSpi } from './CodeRunnerSpi'
 
 export interface ICodeCompilerDriver {

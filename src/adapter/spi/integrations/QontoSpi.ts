@@ -3,7 +3,7 @@ import type {
   QontoConfig,
   QontoCreateClient,
   QontoClient,
-} from '@domain/integrations/Qonto'
+} from '/domain/integrations/Qonto'
 
 export interface IQontoIntegration {
   getConfig: () => QontoConfig

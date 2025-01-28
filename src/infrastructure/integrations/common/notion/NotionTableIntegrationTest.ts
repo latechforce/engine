@@ -1,8 +1,8 @@
 import { nanoid } from 'nanoid'
 import { parse } from 'date-fns'
-import type { INotionIntegration } from '@adapter/spi/integrations/NotionSpi'
+import type { INotionIntegration } from '/adapter/spi/integrations/NotionSpi'
 import type BunTester from 'bun:test'
-import type { INotionTableIntegration } from '@adapter/spi/integrations/NotionTableSpi'
+import type { INotionTableIntegration } from '/adapter/spi/integrations/NotionTableSpi'
 
 export function testNotionTableIntegration(
   { describe, it, expect, afterAll, beforeAll }: typeof BunTester,

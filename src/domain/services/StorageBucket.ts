@@ -1,7 +1,7 @@
-import type { PersistedFile } from '@domain/entities/File/Persisted'
+import type { PersistedFile } from '/domain/entities/File/Persisted'
 import type { Logger } from './Logger'
-import type { CreatedFile } from '@domain/entities/File/Created'
-import type { IStorageSpi } from '@domain/services/Storage'
+import type { CreatedFile } from '/domain/entities/File/Created'
+import type { IStorageSpi } from '/domain/services/Storage'
 
 export interface StorageBucketConfig {
   name: string

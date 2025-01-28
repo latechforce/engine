@@ -1,4 +1,4 @@
-import type { PappersEntreprise, IPappersSpi, PappersConfig } from '@domain/integrations/Pappers'
+import type { PappersEntreprise, IPappersSpi, PappersConfig } from '/domain/integrations/Pappers'
 
 export interface IPappersIntegration {
   getConfig: () => PappersConfig

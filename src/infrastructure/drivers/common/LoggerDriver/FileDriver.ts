@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston'
 import { BaseLoggerDriver } from './base'
-import type { LoggerFileConfig } from '@domain/services/Logger'
+import type { LoggerFileConfig } from '/domain/services/Logger'
 
 export class FileDriver extends BaseLoggerDriver {
   constructor(config: LoggerFileConfig) {

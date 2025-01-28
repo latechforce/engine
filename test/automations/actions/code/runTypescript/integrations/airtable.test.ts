@@ -1,7 +1,7 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '@test/integration'
-import type { CodeRunnerContext } from '@domain/services/CodeRunner'
-import { airtableTableSample1 } from '@infrastructure/integrations/bun/mocks/airtable/AirtableTableIntegration.mock'
+import { IntegrationTest, type Config } from '../../../../../../src/infrastructure/test/integration'
+import type { CodeRunnerContext } from '/domain/services/CodeRunner'
+import { airtableTableSample1 } from '/infrastructure/integrations/bun/mocks/airtable/AirtableTableIntegration.mock'
 
 new IntegrationTest(Tester).with(
   { integrations: ['Airtable'] },

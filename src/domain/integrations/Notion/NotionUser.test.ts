@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'bun:test'
-import { NotionUser } from '@domain/integrations/Notion/NotionUser'
+import { NotionUser } from '/domain/integrations/Notion/NotionUser'
 
 let user: NotionUser
 

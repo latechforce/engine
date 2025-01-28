@@ -1,6 +1,6 @@
-import type { Record } from '@domain/entities/Record'
-import type { Queue } from '@domain/services/Queue'
-import type { Realtime } from '@domain/services/Realtime'
+import type { Record } from '/domain/entities/Record'
+import type { Queue } from '/domain/services/Queue'
+import type { Realtime } from '/domain/services/Realtime'
 import type { BaseTrigger, BaseTriggerConfig } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
 

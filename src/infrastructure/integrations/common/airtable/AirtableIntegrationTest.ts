@@ -1,5 +1,5 @@
-import type { IAirtableIntegration } from '@adapter/spi/integrations/AirtableSpi'
-import env from '@test/env'
+import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
+import env from '../../../test/env'
 import type BunTester from 'bun:test'
 import { AirtableIntegration } from './AirtableIntegration'
 

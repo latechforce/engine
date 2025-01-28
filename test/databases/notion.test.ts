@@ -1,6 +1,6 @@
 /*
 import { test, expect } from 'bun:test'
-import BunApp, { type Config } from '@test/app/bun'
+import BunApp, { type Config } from '/test/app/bun'
 
 test('should start an app with a notion database', async () => {
   // GIVEN

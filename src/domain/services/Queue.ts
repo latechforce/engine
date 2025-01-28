@@ -1,6 +1,6 @@
 import type { DatabaseExec, DatabaseQuery, DatabaseDriverName, Database } from './Database'
 import type { Logger } from './Logger'
-import type { AutomationContext } from '@domain/entities/Automation/Context'
+import type { AutomationContext } from '/domain/entities/Automation/Context'
 import type { Monitor } from './Monitor'
 
 export interface QueueConfig {

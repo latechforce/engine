@@ -1,4 +1,4 @@
-import type { IMultipleAttachmentField } from '@domain/interfaces/IField/IMultipleAttachment'
+import type { IMultipleAttachmentField } from '/domain/interfaces/IField/IMultipleAttachment'
 import { BaseField, type IBaseField } from './base'
 
 interface MultipleAttachmentFieldParams extends IBaseField {}

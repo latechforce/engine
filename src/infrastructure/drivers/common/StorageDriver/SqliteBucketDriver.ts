@@ -1,6 +1,6 @@
-import type { StorageConfig } from '@domain/services/Storage'
-import type { IStorageBucketDriver } from '@adapter/spi/drivers/StorageBucketSpi'
-import type { FileDto } from '@adapter/spi/dtos/FileDto'
+import type { StorageConfig } from '/domain/services/Storage'
+import type { IStorageBucketDriver } from '/adapter/spi/drivers/StorageBucketSpi'
+import type { FileDto } from '/adapter/spi/dtos/FileDto'
 
 export class SqliteBucketDriver implements IStorageBucketDriver {
   private _nameWithSchema: string

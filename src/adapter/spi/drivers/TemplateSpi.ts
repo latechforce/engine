@@ -1,4 +1,4 @@
-import type { ITemplateSpi } from '@domain/services/Template'
+import type { ITemplateSpi } from '/domain/services/Template'
 
 export interface ITemplateDriver {
   fill: (data: { [key: string]: unknown }) => string

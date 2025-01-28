@@ -1,5 +1,5 @@
-import type { IQueueDriver } from '@adapter/spi/drivers/QueueSpi'
-import type { QueueConfig } from '@domain/services/Queue'
+import type { IQueueDriver } from '/adapter/spi/drivers/QueueSpi'
+import type { QueueConfig } from '/domain/services/Queue'
 import PgBoss from 'pg-boss'
 
 export class PostgresDriver implements IQueueDriver {

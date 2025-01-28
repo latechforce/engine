@@ -1,4 +1,4 @@
-import { Realtime, type RealtimeServices, type RealtimeEntities } from '@domain/services/Realtime'
+import { Realtime, type RealtimeServices, type RealtimeEntities } from '/domain/services/Realtime'
 
 export class RealtimeMapper {
   static toService(services: RealtimeServices, entities: RealtimeEntities): Realtime {

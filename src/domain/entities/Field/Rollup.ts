@@ -1,4 +1,4 @@
-import type { IRollupField } from '@domain/interfaces/IField/IRollup'
+import type { IRollupField } from '/domain/interfaces/IField/IRollup'
 import { BaseField, type IBaseField } from './base'
 import type { DateTimeField } from './DateTime'
 import type { LongTextField } from './LongText'

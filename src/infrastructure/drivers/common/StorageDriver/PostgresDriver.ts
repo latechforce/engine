@@ -1,5 +1,5 @@
-import type { StorageConfig } from '@domain/services/Storage'
-import type { IStorageDriver } from '@adapter/spi/drivers/StorageSpi'
+import type { StorageConfig } from '/domain/services/Storage'
+import type { IStorageDriver } from '/adapter/spi/drivers/StorageSpi'
 import { PostgresBucketDriver } from './PostgresBucketDriver'
 
 export class PostgresDriver implements IStorageDriver {

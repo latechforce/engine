@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, mock } from 'bun:test'
-import { OrFilter } from '@domain/entities/Filter/Or'
-import { OnOrAfterDateFilter } from '@domain/entities/Filter/date/OnOrAfter'
+import { OrFilter } from '/domain/entities/Filter/Or'
+import { OnOrAfterDateFilter } from '/domain/entities/Filter/date/OnOrAfter'
 import { AirtableTable, type IAirtableTableSpi } from './AirtableTable'
 
 let spi: IAirtableTableSpi

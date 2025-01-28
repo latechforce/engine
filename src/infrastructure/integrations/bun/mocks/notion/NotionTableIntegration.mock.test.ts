@@ -1,4 +1,4 @@
-import { testNotionTableIntegration } from '@infrastructure/integrations/common/notion/NotionTableIntegrationTest'
+import { testNotionTableIntegration } from '/infrastructure/integrations/common/notion/NotionTableIntegrationTest'
 import BunTester from 'bun:test'
 import { integration } from './NotionIntegrationTest'
 

@@ -1,4 +1,4 @@
-import type { RunTypescriptCodeActionConfig } from '@domain/entities/Action/code/RunTypescript'
+import type { RunTypescriptCodeActionConfig } from '/domain/entities/Action/code/RunTypescript'
 
 export interface IRunTypescriptCodeAction extends RunTypescriptCodeActionConfig {
   service: 'Code'

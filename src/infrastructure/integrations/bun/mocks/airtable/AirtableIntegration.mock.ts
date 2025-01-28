@@ -1,10 +1,10 @@
-import type { IAirtableIntegration } from '@adapter/spi/integrations/AirtableSpi'
+import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import { AirtableTableIntegration } from './AirtableTableIntegration.mock'
-import type { AirtableConfig } from '@domain/integrations/Airtable'
-import { SQLiteDatabaseDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteDriver'
-import type { SQLiteDatabaseTableDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
-import type { RecordFields } from '@domain/entities/Record'
-import type { IField } from '@domain/interfaces/IField'
+import type { AirtableConfig } from '/domain/integrations/Airtable'
+import { SQLiteDatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteDriver'
+import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
+import type { RecordFields } from '/domain/entities/Record'
+import type { IField } from '/domain/interfaces/IField'
 
 export interface TableObject extends RecordFields {
   name: string

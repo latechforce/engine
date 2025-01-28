@@ -1,7 +1,7 @@
-import type { Queue } from '@domain/services/Queue'
-import type { Server } from '@domain/services/Server'
-import { JsonResponse } from '@domain/entities/Response/Json'
-import type { PostRequest } from '@domain/entities/Request/Post'
+import type { Queue } from '/domain/services/Queue'
+import type { Server } from '/domain/services/Server'
+import { JsonResponse } from '/domain/entities/Response/Json'
+import type { PostRequest } from '/domain/entities/Request/Post'
 import type { BaseTrigger, BaseTriggerConfig } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
 

@@ -1,12 +1,12 @@
-import type { Drivers } from '@adapter/spi/drivers'
-import { CodeCompilerSpi } from '@adapter/spi/drivers/CodeCompilerSpi'
+import type { Drivers } from '/adapter/spi/drivers'
+import { CodeCompilerSpi } from '/adapter/spi/drivers/CodeCompilerSpi'
 import {
   CodeCompiler,
   type CodeCompilerEntities,
   type CodeCompilerConfig,
   type CodeCompilerIntegrations,
   type CodeCompilerServices,
-} from '@domain/services/CodeCompiler'
+} from '/domain/services/CodeCompiler'
 
 export class CodeCompilerMapper {
   static toService(

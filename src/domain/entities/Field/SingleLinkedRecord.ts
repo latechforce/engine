@@ -1,4 +1,4 @@
-import type { ISingleLinkedRecordField } from '@domain/interfaces/IField/ISingleLinkedRecord'
+import type { ISingleLinkedRecordField } from '/domain/interfaces/IField/ISingleLinkedRecord'
 import { BaseField, type IBaseField } from './base'
 
 interface SingleLinkedRecordFieldConfig extends IBaseField {

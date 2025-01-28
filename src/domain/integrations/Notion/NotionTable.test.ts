@@ -2,9 +2,9 @@ import { describe, it, expect, beforeEach, mock } from 'bun:test'
 import { NotionTable } from './NotionTable'
 import type { INotionTableSpi, NotionTableServices } from './NotionTable'
 import type { NotionConfig } from '.'
-import type { Bucket } from '@domain/entities/Bucket'
-import { OrFilter } from '@domain/entities/Filter/Or'
-import { OnOrAfterDateFilter } from '@domain/entities/Filter/date/OnOrAfter'
+import type { Bucket } from '/domain/entities/Bucket'
+import { OrFilter } from '/domain/entities/Filter/Or'
+import { OnOrAfterDateFilter } from '/domain/entities/Filter/date/OnOrAfter'
 
 let spi: INotionTableSpi
 let services: NotionTableServices

@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '@test/integration'
-import type { CodeRunnerContext } from '@domain/services/CodeRunner'
+import { IntegrationTest, type Config } from '../../../../../src/infrastructure/test/integration'
+import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
 import { join } from 'path'

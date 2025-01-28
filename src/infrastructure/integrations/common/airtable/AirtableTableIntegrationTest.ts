@@ -1,8 +1,8 @@
 import { nanoid } from 'nanoid'
 import { parse } from 'date-fns'
-import type { IAirtableIntegration } from '@adapter/spi/integrations/AirtableSpi'
+import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import type BunTester from 'bun:test'
-import type { IAirtableTableIntegration } from '@adapter/spi/integrations/AirtableTableSpi'
+import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
 
 export function testAirtableTableIntegration(
   { describe, it, expect, afterAll, beforeAll }: typeof BunTester,

@@ -1,5 +1,5 @@
-import type { ITunnelDriver } from '@adapter/spi/drivers/TunnelSpi'
-import type { TunnelConfig } from '@domain/services/Tunnel'
+import type { ITunnelDriver } from '/adapter/spi/drivers/TunnelSpi'
+import type { TunnelConfig } from '/domain/services/Tunnel'
 import { NgrokDriver } from './NgrokDriver'
 import { DefaultDriver } from './DefaultDriver'
 

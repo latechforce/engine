@@ -1,4 +1,4 @@
-import type { IdGenerator } from '@domain/services/IdGenerator'
+import type { IdGenerator } from '/domain/services/IdGenerator'
 import { BaseFile } from './base'
 
 export interface CreatedFileConfig {

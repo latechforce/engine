@@ -1,9 +1,9 @@
-import type { Database } from '@domain/services/Database'
-import type { DatabaseTable } from '@domain/services/DatabaseTable'
+import type { Database } from '/domain/services/Database'
+import type { DatabaseTable } from '/domain/services/DatabaseTable'
 import { SingleLineTextField } from '../Field/SingleLineText'
 import { LongTextField } from '../Field/LongText'
 import type { Field } from '../Field'
-import type { IdGenerator } from '@domain/services/IdGenerator'
+import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { RecordFields } from '../Record'
 
 export interface AutomationHistoryRecord extends RecordFields {

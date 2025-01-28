@@ -1,10 +1,10 @@
-import { type Filter, type FilterDto } from '@domain/entities/Filter'
+import { type Filter, type FilterDto } from '/domain/entities/Filter'
 import type {
   INotionTableSpi,
   UpdateNotionTablePageProperties,
-} from '@domain/integrations/Notion/NotionTable'
+} from '/domain/integrations/Notion/NotionTable'
 import { FilterMapper } from '../mappers/FilterMapper'
-import type { NotionTablePageProperties } from '@domain/integrations/Notion/NotionTablePage'
+import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
 import { NotionTablePageMapper } from '../mappers/NotionTablePageMapper'
 import type { NotionTablePageDto } from '../dtos/NotionTablePageDto'
 

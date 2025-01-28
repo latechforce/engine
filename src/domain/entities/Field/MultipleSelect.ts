@@ -1,4 +1,4 @@
-import type { IMultipleSelectField } from '@domain/interfaces/IField/IMultipleSelect'
+import type { IMultipleSelectField } from '/domain/interfaces/IField/IMultipleSelect'
 import { BaseField, type IBaseField } from './base'
 
 interface MultipleSelectFieldParams extends IBaseField {

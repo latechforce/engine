@@ -1,6 +1,6 @@
 import { QontoIntegration } from './QontoIntegration'
 import { testQontoIntegration } from './QontoIntegrationTest'
-import env from '@test/env'
+import env from '../../../test/env'
 import BunTester from 'bun:test'
 
 const { TEST_QONTO_ORGANISATION_SLUG, TEST_QONTO_SECRET_KEY, TEST_QONTO_STAGING_TOKEN } = env

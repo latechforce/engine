@@ -1,5 +1,5 @@
 import http from 'http'
-import type { INgrokIntegration } from '@adapter/spi/integrations/NgrokSpi'
+import type { INgrokIntegration } from '/adapter/spi/integrations/NgrokSpi'
 import type BunTester from 'bun:test'
 
 export function testNgrokIntegration(

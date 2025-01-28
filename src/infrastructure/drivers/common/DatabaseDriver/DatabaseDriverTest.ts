@@ -1,5 +1,5 @@
-import type { IDatabaseDriver } from '@adapter/spi/drivers/DatabaseSpi'
-import { getFirstTableConfig } from '@test/config'
+import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
+import { getFirstTableConfig } from '../../../test/config'
 import type BunTester from 'bun:test'
 
 export function testDatabaseDriver(

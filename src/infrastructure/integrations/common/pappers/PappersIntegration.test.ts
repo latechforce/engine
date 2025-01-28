@@ -1,6 +1,6 @@
-import { PappersIntegration } from '@infrastructure/integrations/common/pappers/PappersIntegration'
-import { testPappersIntegration } from '@infrastructure/integrations/common/pappers/PappersIntegrationTest'
-import env from '@test/env'
+import { PappersIntegration } from '/infrastructure/integrations/common/pappers/PappersIntegration'
+import { testPappersIntegration } from '/infrastructure/integrations/common/pappers/PappersIntegrationTest'
+import env from '../../../test/env'
 import BunTester from 'bun:test'
 
 const { TEST_PAPPERS_API_KEY } = env

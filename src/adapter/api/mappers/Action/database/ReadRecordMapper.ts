@@ -3,7 +3,7 @@ import {
   type ReadRecordDatabaseActionConfig,
   type ReadRecordDatabaseActionEntities,
   type ReadRecordDatabaseActionServices,
-} from '@domain/entities/Action/database/ReadRecord'
+} from '/domain/entities/Action/database/ReadRecord'
 
 export class ReadRecordDatabaseActionMapper {
   static toEntity = (

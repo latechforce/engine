@@ -1,4 +1,4 @@
-import type { ISingleSelectField } from '@domain/interfaces/IField/ISingleSelect'
+import type { ISingleSelectField } from '/domain/interfaces/IField/ISingleSelect'
 import { BaseField, type IBaseField } from './base'
 
 interface SingleSelectFieldParams extends IBaseField {

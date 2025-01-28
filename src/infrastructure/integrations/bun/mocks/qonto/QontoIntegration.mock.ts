@@ -1,5 +1,5 @@
-import type { QontoClient, QontoCreateClient, QontoConfig } from '@domain/integrations/Qonto'
-import type { IQontoIntegration } from '@adapter/spi/integrations/QontoSpi'
+import type { QontoClient, QontoCreateClient, QontoConfig } from '/domain/integrations/Qonto'
+import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
 import { Database } from 'bun:sqlite'
 
 export class QontoIntegration implements IQontoIntegration {

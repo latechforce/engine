@@ -1,4 +1,4 @@
-import type { IMonitorDriver } from '@adapter/spi/drivers/MonitorSpi'
+import type { IMonitorDriver } from '/adapter/spi/drivers/MonitorSpi'
 import * as Sentry from '@sentry/node'
 
 export class SentryDriver implements IMonitorDriver {

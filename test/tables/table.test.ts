@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '@test/integration'
-import { getFirstTableConfig } from '@test/config'
+import { IntegrationTest } from '../../src/infrastructure/test/integration'
+import { getFirstTableConfig } from '../../src/infrastructure/test/config'
 
 new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, drivers }) => {
   describe('on start', () => {

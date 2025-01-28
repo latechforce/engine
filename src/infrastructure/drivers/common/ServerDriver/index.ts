@@ -1,7 +1,7 @@
-import type { IServerDriver } from '@adapter/spi/drivers/ServerSpi'
-import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '@adapter/spi/dtos/RequestDto'
-import type { ServerConfig } from '@domain/services/Server'
-import type { Response } from '@domain/entities/Response'
+import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
+import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '/adapter/spi/dtos/RequestDto'
+import type { ServerConfig } from '/domain/services/Server'
+import type { Response } from '/domain/entities/Response'
 import { ExpressDriver } from './ExpressDriver'
 
 export class ServerDriver implements IServerDriver {

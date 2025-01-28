@@ -1,21 +1,21 @@
-import type { Table } from '@domain/entities/Table'
-import type { FilterConfig } from '@domain/entities/Filter'
-import type { Notion } from '@domain/integrations/Notion'
+import type { Table } from '/domain/entities/Table'
+import type { FilterConfig } from '/domain/entities/Filter'
+import type { Notion } from '/domain/integrations/Notion'
 import {
   NotionTablePage,
   type NotionTablePageProperties,
-} from '@domain/integrations/Notion/NotionTablePage'
-import type { Record, UpdateRecordFields } from '@domain/entities/Record'
-import { Logger } from '@domain/services/Logger'
-import type { NotionUser } from '@domain/integrations/Notion/NotionUser'
-import type { RecordFields } from '@domain/entities/Record'
-import type { UpdateNotionTablePageProperties } from '@domain/integrations/Notion/NotionTable'
-import type { Airtable } from '@domain/integrations/Airtable'
+} from '/domain/integrations/Notion/NotionTablePage'
+import type { Record, UpdateRecordFields } from '/domain/entities/Record'
+import { Logger } from '/domain/services/Logger'
+import type { NotionUser } from '/domain/integrations/Notion/NotionUser'
+import type { RecordFields } from '/domain/entities/Record'
+import type { UpdateNotionTablePageProperties } from '/domain/integrations/Notion/NotionTable'
+import type { Airtable } from '/domain/integrations/Airtable'
 import type {
   AirtableTableRecord,
   AirtableTableRecordFields,
-} from '@domain/integrations/Airtable/AirtableTableRecord'
-import type { UpdateAirtableTableRecord } from '@domain/integrations/Airtable/AirtableTable'
+} from '/domain/integrations/Airtable/AirtableTableRecord'
+import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
 
 export interface ICodeRunnerSpi {
   run: (

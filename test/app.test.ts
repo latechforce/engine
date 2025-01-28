@@ -1,5 +1,5 @@
 import { it, expect, describe } from 'bun:test'
-import { MockedApp, type Config } from '@test/integration'
+import { MockedApp, type Config } from '../src/infrastructure/test/integration'
 
 describe('start', () => {
   it('should throw an error if config is empty', async () => {

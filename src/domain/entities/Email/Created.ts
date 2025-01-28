@@ -1,4 +1,4 @@
-import { IdGenerator } from '@domain/services/IdGenerator'
+import { IdGenerator } from '/domain/services/IdGenerator'
 import { BaseEmail, type EmailFields } from './base'
 
 type CreatedEmailConfig = Omit<EmailFields, 'id'>

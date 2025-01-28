@@ -1,4 +1,4 @@
-import type { Filter } from '@domain/entities/Filter'
+import type { Filter } from '/domain/entities/Filter'
 import type { AirtableTableRecord, AirtableTableRecordFields } from './AirtableTableRecord'
 
 export type UpdateAirtableTableRecord<T extends AirtableTableRecordFields> = {

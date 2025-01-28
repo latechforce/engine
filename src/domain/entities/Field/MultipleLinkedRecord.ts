@@ -1,4 +1,4 @@
-import type { IMultipleLinkedRecordField } from '@domain/interfaces/IField/IMultipleLinkedRecord'
+import type { IMultipleLinkedRecordField } from '/domain/interfaces/IField/IMultipleLinkedRecord'
 import { BaseField, type IBaseField } from './base'
 
 interface MultipleLinkedRecordFieldConfig extends IBaseField {

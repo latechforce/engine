@@ -1,8 +1,8 @@
 import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
-import { Template } from '@domain/services/Template'
-import type { TemplateCompiler } from '@domain/services/TemplateCompiler'
-import type { PappersEntreprise, Pappers } from '@domain/integrations/Pappers'
+import { Template } from '/domain/services/Template'
+import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import type { PappersEntreprise, Pappers } from '/domain/integrations/Pappers'
 
 export interface GetCompanyPappersActionConfig extends BaseActionConfig {
   siret: string

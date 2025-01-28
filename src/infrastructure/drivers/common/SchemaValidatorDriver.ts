@@ -1,8 +1,8 @@
 import Ajv from 'ajv'
 import fs from 'fs-extra'
 import { join } from 'path'
-import type { ISchemaValidatorDriver } from '@adapter/spi/drivers/SchemaValidatorSpi'
-import type { JSONSchema } from '@domain/services/SchemaValidator'
+import type { ISchemaValidatorDriver } from '/adapter/spi/drivers/SchemaValidatorSpi'
+import type { JSONSchema } from '/domain/services/SchemaValidator'
 
 const dirname = new URL('.', import.meta.url).pathname
 

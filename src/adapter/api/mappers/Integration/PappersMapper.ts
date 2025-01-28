@@ -1,6 +1,6 @@
-import type { Integrations } from '@adapter/spi/integrations'
-import { PappersSpi } from '@adapter/spi/integrations/PappersSpi'
-import { Pappers, type PappersConfig } from '@domain/integrations/Pappers'
+import type { Integrations } from '/adapter/spi/integrations'
+import { PappersSpi } from '/adapter/spi/integrations/PappersSpi'
+import { Pappers, type PappersConfig } from '/domain/integrations/Pappers'
 
 export class PappersMapper {
   static toIntegration(integrations: Integrations, config?: PappersConfig): Pappers {

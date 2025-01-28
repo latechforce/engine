@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '@test/integration'
-import { getFirstBucketConfig } from '@test/config'
+import { IntegrationTest } from '../../src/infrastructure/test/integration'
+import { getFirstBucketConfig } from '../../src/infrastructure/test/config'
 
 new IntegrationTest(Tester).with(
   { drivers: ['Database', 'Storage', 'SpreadsheetLoader'] },

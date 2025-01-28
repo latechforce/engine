@@ -1,14 +1,14 @@
 import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
-import type { CodeRunner } from '@domain/services/CodeRunner'
-import type { CodeCompiler } from '@domain/services/CodeCompiler'
+import type { CodeRunner } from '/domain/services/CodeRunner'
+import type { CodeCompiler } from '/domain/services/CodeCompiler'
 import {
   Template,
   type TemplateObject,
   type TemplateObjectCompiled,
   type TemplateObjectFilled,
-} from '@domain/services/Template'
-import type { TemplateCompiler } from '@domain/services/TemplateCompiler'
+} from '/domain/services/Template'
+import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 
 export interface RunTypescriptCodeActionConfig extends BaseActionConfig {
   code: string

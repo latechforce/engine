@@ -2,8 +2,11 @@
 // @ts-nocheck
 
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '@test/integration'
-import { getAutomationConfig, getFirstTableConfig } from '@test/config'
+import { IntegrationTest } from '../../../../src/infrastructure/test/integration'
+import {
+  getAutomationConfig,
+  getFirstTableConfig,
+} from '../../../../src/infrastructure/test/config'
 
 new IntegrationTest(Tester).with(
   { drivers: ['Database'], integrations: ['Notion'] },

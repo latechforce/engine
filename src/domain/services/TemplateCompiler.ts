@@ -1,4 +1,4 @@
-import type { TemplateSpi } from '@adapter/spi/drivers/TemplateSpi'
+import type { TemplateSpi } from '/adapter/spi/drivers/TemplateSpi'
 import {
   isTemplateBooleanValue,
   isTemplateJsonValue,

@@ -1,4 +1,4 @@
-import type { INumberField } from '@domain/interfaces/IField/INumber'
+import type { INumberField } from '/domain/interfaces/IField/INumber'
 import { BaseField, type IBaseField } from './base'
 
 export class NumberField extends BaseField {

@@ -1,4 +1,4 @@
-import type { IFileSystemSpi } from '@domain/services/FileSystem'
+import type { IFileSystemSpi } from '/domain/services/FileSystem'
 
 export interface IFileSystemDriver {
   exists: (path: string) => boolean

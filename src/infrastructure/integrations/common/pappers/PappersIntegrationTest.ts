@@ -1,4 +1,4 @@
-import type { IPappersIntegration } from '@adapter/spi/integrations/PappersSpi'
+import type { IPappersIntegration } from '/adapter/spi/integrations/PappersSpi'
 import type BunTester from 'bun:test'
 
 export function testPappersIntegration(

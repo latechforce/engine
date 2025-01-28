@@ -1,9 +1,9 @@
-import type { NotionTableSpi } from '@adapter/spi/integrations/NotionTableSpi'
+import type { NotionTableSpi } from '/adapter/spi/integrations/NotionTableSpi'
 import { NotionTable, type NotionTableServices } from './NotionTable'
-import { Bucket } from '@domain/entities/Bucket'
-import type { Storage } from '@domain/services/Storage'
-import type { Server } from '@domain/services/Server'
-import type { TemplateCompiler } from '@domain/services/TemplateCompiler'
+import { Bucket } from '/domain/entities/Bucket'
+import type { Storage } from '/domain/services/Storage'
+import type { Server } from '/domain/services/Server'
+import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type { NotionUser } from './NotionUser'
 
 export interface NotionConfig {

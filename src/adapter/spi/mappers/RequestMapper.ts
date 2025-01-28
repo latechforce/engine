@@ -1,9 +1,9 @@
-import { DeleteRequest } from '@domain/entities/Request/Delete'
+import { DeleteRequest } from '/domain/entities/Request/Delete'
 import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '../dtos/RequestDto'
-import { GetRequest } from '@domain/entities/Request/Get'
-import { PatchRequest } from '@domain/entities/Request/Patch'
-import { PostRequest } from '@domain/entities/Request/Post'
-import type { Request } from '@domain/entities/Request'
+import { GetRequest } from '/domain/entities/Request/Get'
+import { PatchRequest } from '/domain/entities/Request/Patch'
+import { PostRequest } from '/domain/entities/Request/Post'
+import type { Request } from '/domain/entities/Request'
 
 export class RequestMapper {
   static toService = (dto: RequestDto): Request => {

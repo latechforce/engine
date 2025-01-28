@@ -1,6 +1,6 @@
-import type { Drivers } from '@adapter/spi/drivers'
-import { QueueSpi } from '@adapter/spi/drivers/QueueSpi'
-import { Queue, type QueueServices } from '@domain/services/Queue'
+import type { Drivers } from '/adapter/spi/drivers'
+import { QueueSpi } from '/adapter/spi/drivers/QueueSpi'
+import { Queue, type QueueServices } from '/domain/services/Queue'
 
 export class QueueMapper {
   static toService(drivers: Drivers, services: QueueServices): Queue {

@@ -1,4 +1,4 @@
-import env from '@test/env'
+import env from '../../../test/env'
 import { cleanTestTable, integration, testNotionIntegration } from './NotionIntegrationTest'
 import BunTester from 'bun:test'
 

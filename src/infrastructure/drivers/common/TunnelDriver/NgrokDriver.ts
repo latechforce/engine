@@ -1,7 +1,7 @@
-import type { ITunnelDriver } from '@adapter/spi/drivers/TunnelSpi'
-import type { INgrokIntegration } from '@adapter/spi/integrations/NgrokSpi'
-import type { NgrokConfig } from '@domain/integrations/Ngrok'
-import { NgrokIntegration } from '@infrastructure/integrations/common/ngrok/NgrokIntegration'
+import type { ITunnelDriver } from '/adapter/spi/drivers/TunnelSpi'
+import type { INgrokIntegration } from '/adapter/spi/integrations/NgrokSpi'
+import type { NgrokConfig } from '/domain/integrations/Ngrok'
+import { NgrokIntegration } from '/infrastructure/integrations/common/ngrok/NgrokIntegration'
 
 export class NgrokDriver implements ITunnelDriver {
   private _ngrok: INgrokIntegration

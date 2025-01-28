@@ -3,7 +3,7 @@ import {
   type GetCompanyPappersActionConfig,
   type GetCompanyPappersActionServices,
   type GetCompanyPappersActionIntegrations,
-} from '@domain/entities/Action/pappers/GetCompany'
+} from '/domain/entities/Action/pappers/GetCompany'
 
 export type GetCompanyPappersActionMapperServices = GetCompanyPappersActionServices
 

@@ -1,14 +1,14 @@
 import pg from 'pg'
-import type { IDatabaseTableDriver } from '@adapter/spi/drivers/DatabaseTableSpi'
-import type { FilterDto } from '@domain/entities/Filter'
-import type { RecordFields, RecordFieldValue } from '@domain/entities/Record'
+import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
+import type { FilterDto } from '/domain/entities/Filter'
+import type { RecordFields, RecordFieldValue } from '/domain/entities/Record'
 import type {
   PersistedRecordFieldsDto,
   RecordFieldsToCreateDto,
   RecordFieldsToUpdateDto,
-} from '@adapter/spi/dtos/RecordDto'
-import type { ITable } from '@domain/interfaces/ITable'
-import type { IField } from '@domain/interfaces/IField'
+} from '/adapter/spi/dtos/RecordDto'
+import type { ITable } from '/domain/interfaces/ITable'
+import type { IField } from '/domain/interfaces/IField'
 
 interface ColumnInfo {
   name: string

@@ -1,4 +1,4 @@
-import type { IMonitorSpi } from '@domain/services/Monitor'
+import type { IMonitorSpi } from '/domain/services/Monitor'
 
 export interface IMonitorDriver {
   captureException: (error: Error) => void

@@ -1,6 +1,6 @@
-import type { Record } from '@domain/entities/Record'
+import type { Record } from '/domain/entities/Record'
 import type { Logger } from './Logger'
-import type { Table } from '@domain/entities/Table'
+import type { Table } from '/domain/entities/Table'
 import type { IdGenerator } from './IdGenerator'
 import type { Database } from './Database'
 

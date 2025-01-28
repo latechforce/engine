@@ -1,4 +1,4 @@
-import type { Action } from '@domain/entities/Action'
+import type { Action } from '/domain/entities/Action'
 import {
   RunJavascriptCodeActionMapper,
   type RunJavascriptCodeActionMapperServices,
@@ -12,7 +12,7 @@ import {
   type CreateRecordDatabaseActionMapperEntities,
   type CreateRecordDatabaseActionMapperServices,
 } from './database/CreateRecordMapper'
-import type { IAction } from '@domain/interfaces/IAction'
+import type { IAction } from '/domain/interfaces/IAction'
 import { ReadRecordDatabaseActionMapper } from './database/ReadRecordMapper'
 import {
   GetCompanyPappersActionMapper,

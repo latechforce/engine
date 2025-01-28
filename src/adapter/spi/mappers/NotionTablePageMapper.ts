@@ -1,7 +1,7 @@
 import {
   NotionTablePage,
   type NotionTablePageProperties,
-} from '@domain/integrations/Notion/NotionTablePage'
+} from '/domain/integrations/Notion/NotionTablePage'
 import type { NotionTablePageDto } from '../dtos/NotionTablePageDto'
 
 export class NotionTablePageMapper {

@@ -1,11 +1,11 @@
-import type { INotionIntegration } from '@adapter/spi/integrations/NotionSpi'
+import type { INotionIntegration } from '/adapter/spi/integrations/NotionSpi'
 import { NotionTableIntegration } from './NotionTableIntegration.mock'
-import type { NotionConfig } from '@domain/integrations/Notion'
-import type { NotionUserDto } from '@adapter/spi/dtos/NotionUserDto'
-import { SQLiteDatabaseDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteDriver'
-import { SQLiteDatabaseTableDriver } from '@infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
-import type { RecordFields } from '@domain/entities/Record'
-import type { IField } from '@domain/interfaces/IField'
+import type { NotionConfig } from '/domain/integrations/Notion'
+import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
+import { SQLiteDatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteDriver'
+import { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
+import type { RecordFields } from '/domain/entities/Record'
+import type { IField } from '/domain/interfaces/IField'
 
 export interface TableObject extends RecordFields {
   title: string

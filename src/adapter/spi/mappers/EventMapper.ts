@@ -1,4 +1,4 @@
-import type { DatabaseErrorEvent, DatabaseNotificationEvent } from '@domain/services/Database'
+import type { DatabaseErrorEvent, DatabaseNotificationEvent } from '/domain/services/Database'
 import type { EventErrorDto, EventNotificationDto } from '../dtos/EventDto'
 
 export class EventMapper {

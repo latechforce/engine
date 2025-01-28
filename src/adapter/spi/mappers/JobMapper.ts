@@ -1,8 +1,8 @@
-import type { Job } from '@domain/entities/Job'
+import type { Job } from '/domain/entities/Job'
 import type { JobDto } from '../dtos/JobDto'
-import { CompletedJob } from '@domain/entities/Job/Completed'
-import { FailedJob } from '@domain/entities/Job/Failed'
-import { CreatedJob } from '@domain/entities/Job/Created'
+import { CompletedJob } from '/domain/entities/Job/Completed'
+import { FailedJob } from '/domain/entities/Job/Failed'
+import { CreatedJob } from '/domain/entities/Job/Created'
 
 export class JobMapper {
   static toEntity = (dto: JobDto): Job => {

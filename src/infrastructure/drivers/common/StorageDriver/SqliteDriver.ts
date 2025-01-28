@@ -1,5 +1,5 @@
-import type { StorageConfig } from '@domain/services/Storage'
-import type { IStorageDriver } from '@adapter/spi/drivers/StorageSpi'
+import type { StorageConfig } from '/domain/services/Storage'
+import type { IStorageDriver } from '/adapter/spi/drivers/StorageSpi'
 import { SqliteBucketDriver } from './SqliteBucketDriver'
 
 export class SqliteDriver implements IStorageDriver {

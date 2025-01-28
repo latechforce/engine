@@ -1,5 +1,5 @@
 import { JavascriptCompilerDriver } from './JavascriptCompilerDriver'
-import type { ICodeCompilerDriver } from '@adapter/spi/drivers/CodeCompilerSpi'
+import type { ICodeCompilerDriver } from '/adapter/spi/drivers/CodeCompilerSpi'
 import ts from 'typescript'
 
 export class TypescriptCompilerDriver implements ICodeCompilerDriver {

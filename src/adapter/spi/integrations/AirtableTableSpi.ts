@@ -1,10 +1,10 @@
-import { type Filter, type FilterDto } from '@domain/entities/Filter'
+import { type Filter, type FilterDto } from '/domain/entities/Filter'
 import type {
   IAirtableTableSpi,
   UpdateAirtableTableRecord,
-} from '@domain/integrations/Airtable/AirtableTable'
+} from '/domain/integrations/Airtable/AirtableTable'
 import { FilterMapper } from '../mappers/FilterMapper'
-import type { AirtableTableRecordFields } from '@domain/integrations/Airtable/AirtableTableRecord'
+import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 import { AirtableTableRecordMapper } from '../mappers/AirtableTableRecordMapper'
 import type { AirtableTableRecordDto } from '../dtos/AirtableTableRecordDto'
 

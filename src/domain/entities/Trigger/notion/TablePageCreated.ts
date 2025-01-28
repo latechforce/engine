@@ -1,8 +1,8 @@
-import type { Queue } from '@domain/services/Queue'
+import type { Queue } from '/domain/services/Queue'
 import type { BaseTrigger, BaseTriggerConfig } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
-import type { Notion } from '@domain/integrations/Notion'
-import { NotionTablePage } from '@domain/integrations/Notion/NotionTablePage'
+import type { Notion } from '/domain/integrations/Notion'
+import { NotionTablePage } from '/domain/integrations/Notion/NotionTablePage'
 
 export interface TablePageCreatedNotionTriggerConfig extends BaseTriggerConfig {
   automation: string

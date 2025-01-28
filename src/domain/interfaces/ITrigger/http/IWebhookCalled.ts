@@ -1,4 +1,4 @@
-import type { WebhookCalledHttpTriggerConfig } from '@domain/entities/Trigger/http/WebhookCalled'
+import type { WebhookCalledHttpTriggerConfig } from '/domain/entities/Trigger/http/WebhookCalled'
 
 export interface IWebhookCalledHttpTrigger
   extends Omit<WebhookCalledHttpTriggerConfig, 'automation'> {

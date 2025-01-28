@@ -1,8 +1,8 @@
 import {
   NotionTableSpi,
   type INotionTableIntegration,
-} from '@adapter/spi/integrations/NotionTableSpi'
-import type { INotionSpi, NotionConfig } from '@domain/integrations/Notion'
+} from '/adapter/spi/integrations/NotionTableSpi'
+import type { INotionSpi, NotionConfig } from '/domain/integrations/Notion'
 import { NotionUserMapper } from '../mappers/NotionUserMapper'
 import type { NotionUserDto } from '../dtos/NotionUserDto'
 

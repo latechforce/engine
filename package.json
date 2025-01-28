@@ -2,22 +2,21 @@
   "name": "@latechforce/engine",
   "description": "Generate web app with a configuration file",
   "version": "0.37.2",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "author": "Thomas JEANNEAU",
   "license": "BSL 1.1",
   "exports": {
-    ".": "./src/index.ts",
-    "./bun": "./src/bun.ts",
-    "./instrument": "./src/infrastructure/instrument/index.ts",
+    ".": "./dist/index.js",
+    "./bun": "./dist/bun.js",
+    "./instrument": "./dist/infrastructure/instrument/index.js",
     "./schema/*": "./schema/*"
   },
   "files": [
-    "src/**/*",
-    "schema/*",
-    "tsconfig.json"
+    "dist/**/*",
+    "schema/*"
   ],
   "repository": {
     "type": "git",
@@ -33,7 +32,11 @@
   "scripts": {
     "format": "bunx prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "lint": "bunx eslint . --fix",
-    "build": "bunx typescript-json-schema ./tsconfig.json AppSchema --out ./schema/app.schema.json --required --noExtraProps --strictNullChecks",
+    "clean": "rm -rf dist",
+    "build:schema": "bunx typescript-json-schema ./tsconfig.json AppSchema --out ./schema/app.schema.json --required --noExtraProps --strictNullChecks",
+    "build:types": "bunx tsc --project script/tsconfig.json && bun script/fix-types-paths.ts",
+    "build:engine": "bun build --entrypoints ./src/index.ts ./src/bun.ts ./src/infrastructure/instrument/index.ts --outdir ./dist --target bun --packages external",
+    "build": "bun run build:engine && bun run build:types",
     "test": "bun test --bail --timeout 20000",
     "test:unit": "bun test src/adapter src/domain --bail",
     "test:integration": "bun test src/infrastructure --bail --timeout 20000",
@@ -84,7 +87,6 @@
     "@types/eslint__js": "^8.42.3",
     "@types/express": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.12.0",
     "@types/pg": "^8.11.11",
     "@types/smtp-server": "^3.5.10",
     "@types/xml2js": "^0.4.14",

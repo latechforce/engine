@@ -1,4 +1,4 @@
-import type { IFileSystemDriver } from '@adapter/spi/drivers/FileSystemSpi'
+import type { IFileSystemDriver } from '/adapter/spi/drivers/FileSystemSpi'
 import fs from 'fs-extra'
 
 export class FileSystemDriver implements IFileSystemDriver {

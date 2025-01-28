@@ -3,7 +3,7 @@ import {
   type TablePageCreatedNotionTriggerConfig,
   type TablePageCreatedNotionTriggerIntegrations,
   type TablePageCreatedNotionTriggerServices,
-} from '@domain/entities/Trigger/notion/TablePageCreated'
+} from '/domain/entities/Trigger/notion/TablePageCreated'
 
 export class TablePageCreatedNotionTriggerMapper {
   static toEntity = (

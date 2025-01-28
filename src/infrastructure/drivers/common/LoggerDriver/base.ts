@@ -1,4 +1,4 @@
-import type { ILoggerDriver } from '@adapter/spi/drivers/LoggerSpi'
+import type { ILoggerDriver } from '/adapter/spi/drivers/LoggerSpi'
 import { type Logger } from 'winston'
 
 export class BaseLoggerDriver implements ILoggerDriver {

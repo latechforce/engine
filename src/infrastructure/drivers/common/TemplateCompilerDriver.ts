@@ -1,4 +1,4 @@
-import type { ITemplateCompilerDriver } from '@adapter/spi/drivers/TemplateCompilerSpi'
+import type { ITemplateCompilerDriver } from '/adapter/spi/drivers/TemplateCompilerSpi'
 import Handlebars from 'handlebars'
 import { TemplateDriver } from './TemplateDriver'
 import { parse, format } from 'date-fns'

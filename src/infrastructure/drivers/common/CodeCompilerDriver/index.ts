@@ -1,5 +1,5 @@
-import type { ICodeCompilerDriver } from '@adapter/spi/drivers/CodeCompilerSpi'
-import type { CodeCompilerConfig } from '@domain/services/CodeCompiler'
+import type { ICodeCompilerDriver } from '/adapter/spi/drivers/CodeCompilerSpi'
+import type { CodeCompilerConfig } from '/domain/services/CodeCompiler'
 import { JavascriptCompilerDriver } from './JavascriptCompilerDriver'
 import { TypescriptCompilerDriver } from './TypescriptCompilerDriver'
 

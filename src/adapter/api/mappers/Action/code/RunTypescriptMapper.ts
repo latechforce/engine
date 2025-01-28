@@ -2,7 +2,7 @@ import {
   RunTypescriptCodeAction,
   type RunTypescriptCodeActionConfig,
   type RunTypescriptCodeActionServices,
-} from '@domain/entities/Action/code/RunTypescript'
+} from '/domain/entities/Action/code/RunTypescript'
 
 export type RunTypescriptCodeActionMapperServices = RunTypescriptCodeActionServices
 

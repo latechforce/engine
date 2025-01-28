@@ -1,13 +1,13 @@
 import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
-import type { TemplateCompiler } from '@domain/services/TemplateCompiler'
-import type { QontoCreateClient, QontoClient, Qonto } from '@domain/integrations/Qonto'
+import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import type { QontoCreateClient, QontoClient, Qonto } from '/domain/integrations/Qonto'
 import {
   Template,
   type ConvertToTemplateObject,
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
-} from '@domain/services/Template'
+} from '/domain/services/Template'
 
 type QontoCreateClientAsTemplateObject = ConvertToTemplateObject<QontoCreateClient>
 type QontoCreateClientAsTemplateObjectCompiled = ConvertToTemplateObjectCompiled<QontoCreateClient>

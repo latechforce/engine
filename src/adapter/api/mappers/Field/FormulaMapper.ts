@@ -1,5 +1,5 @@
-import { FormulaField } from '@domain/entities/Field/Formula'
-import type { IFormulaField } from '@domain/interfaces/IField/IFormula'
+import { FormulaField } from '/domain/entities/Field/Formula'
+import type { IFormulaField } from '/domain/interfaces/IField/IFormula'
 import { FieldMapper } from '.'
 
 export class FormulaFieldMapper {

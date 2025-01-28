@@ -1,6 +1,6 @@
-import type { Integrations } from '@adapter/spi/integrations'
-import { QontoSpi } from '@adapter/spi/integrations/QontoSpi'
-import { Qonto, type QontoConfig } from '@domain/integrations/Qonto'
+import type { Integrations } from '/adapter/spi/integrations'
+import { QontoSpi } from '/adapter/spi/integrations/QontoSpi'
+import { Qonto, type QontoConfig } from '/domain/integrations/Qonto'
 
 export class QontoMapper {
   static toIntegration(integrations: Integrations, config?: QontoConfig): Qonto {

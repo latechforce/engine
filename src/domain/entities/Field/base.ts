@@ -1,4 +1,4 @@
-import type { IBaseField } from '@domain/interfaces/IField/base'
+import type { IBaseField } from '/domain/interfaces/IField/base'
 
 export type { IBaseField }
 

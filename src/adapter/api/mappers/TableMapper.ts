@@ -1,12 +1,12 @@
-import { Table } from '@domain/entities/Table'
-import type { ITable } from '@domain/interfaces/ITable'
+import { Table } from '/domain/entities/Table'
+import type { ITable } from '/domain/interfaces/ITable'
 import { FieldMapper } from './Field'
-import type { Server } from '@domain/services/Server'
-import type { Database } from '@domain/services/Database'
-import type { IdGenerator } from '@domain/services/IdGenerator'
-import type { TemplateCompiler } from '@domain/services/TemplateCompiler'
-import type { SchemaValidator } from '@domain/services/SchemaValidator'
-import type { Monitor } from '@domain/services/Monitor'
+import type { Server } from '/domain/services/Server'
+import type { Database } from '/domain/services/Database'
+import type { IdGenerator } from '/domain/services/IdGenerator'
+import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import type { SchemaValidator } from '/domain/services/SchemaValidator'
+import type { Monitor } from '/domain/services/Monitor'
 
 export interface TableMapperServices {
   server: Server

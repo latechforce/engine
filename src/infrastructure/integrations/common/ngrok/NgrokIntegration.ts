@@ -1,5 +1,5 @@
-import type { INgrokIntegration } from '@adapter/spi/integrations/NgrokSpi'
-import type { NgrokConfig } from '@domain/integrations/Ngrok'
+import type { INgrokIntegration } from '/adapter/spi/integrations/NgrokSpi'
+import type { NgrokConfig } from '/domain/integrations/Ngrok'
 import ngrok from '@ngrok/ngrok'
 
 export class NgrokIntegration implements INgrokIntegration {

@@ -1,10 +1,10 @@
-import type { FilterDto } from '@domain/entities/Filter'
-import type { NotionTablePageDto } from '@adapter/spi/dtos/NotionTablePageDto'
-import type { INotionTableIntegration } from '@adapter/spi/integrations/NotionTableSpi'
+import type { FilterDto } from '/domain/entities/Filter'
+import type { NotionTablePageDto } from '/adapter/spi/dtos/NotionTablePageDto'
+import type { INotionTableIntegration } from '/adapter/spi/integrations/NotionTableSpi'
 import {
   type NotionTablePageProperties,
   type NotionTablePagePropertyValue,
-} from '@domain/integrations/Notion/NotionTablePage'
+} from '/domain/integrations/Notion/NotionTablePage'
 import { Client } from '@notionhq/client'
 import type {
   CreatePageParameters,

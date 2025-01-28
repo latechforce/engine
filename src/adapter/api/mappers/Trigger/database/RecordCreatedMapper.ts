@@ -2,7 +2,7 @@ import {
   RecordCreatedDatabaseTrigger,
   type RecordCreatedDatabaseTriggerConfig,
   type RecordCreatedDatabaseTriggerServices,
-} from '@domain/entities/Trigger/database/RecordCreated'
+} from '/domain/entities/Trigger/database/RecordCreated'
 
 export class RecordCreatedDatabaseTriggerMapper {
   static toEntity = (

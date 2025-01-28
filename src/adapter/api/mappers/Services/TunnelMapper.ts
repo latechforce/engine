@@ -1,6 +1,6 @@
-import type { Drivers } from '@adapter/spi/drivers'
-import { TunnelSpi } from '@adapter/spi/drivers/TunnelSpi'
-import { Tunnel, type TunnelConfig } from '@domain/services/Tunnel'
+import type { Drivers } from '/adapter/spi/drivers'
+import { TunnelSpi } from '/adapter/spi/drivers/TunnelSpi'
+import { Tunnel, type TunnelConfig } from '/domain/services/Tunnel'
 
 export class TunnelMapper {
   static toService(drivers: Drivers, config?: TunnelConfig): Tunnel {

@@ -1,4 +1,4 @@
-import { testNgrokIntegration } from '@infrastructure/integrations/common/ngrok/NgrokIntegrationTest'
+import { testNgrokIntegration } from '/infrastructure/integrations/common/ngrok/NgrokIntegrationTest'
 import { NgrokIntegration } from './NgrokIntegration.mock'
 import BunTester from 'bun:test'
 

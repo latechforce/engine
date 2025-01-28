@@ -1,7 +1,7 @@
-import type { INotionIntegration } from '@adapter/spi/integrations/NotionSpi'
+import type { INotionIntegration } from '/adapter/spi/integrations/NotionSpi'
 import type BunTester from 'bun:test'
 import { NotionIntegration } from './NotionIntegration'
-import env from '@test/env'
+import env from '../../../test/env'
 
 export const integration = new NotionIntegration({
   token: env.TEST_NOTION_TOKEN,

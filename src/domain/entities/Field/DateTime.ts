@@ -1,4 +1,4 @@
-import type { IDateTimeField } from '@domain/interfaces/IField/IDateTime'
+import type { IDateTimeField } from '/domain/interfaces/IField/IDateTime'
 import { BaseField, type IBaseField } from './base'
 
 export class DateTimeField extends BaseField {

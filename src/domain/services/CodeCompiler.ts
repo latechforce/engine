@@ -1,5 +1,5 @@
-import { type FilterConfig, FilterMapper } from '@domain/entities/Filter'
-import type { NotionTablePageProperties } from '@domain/integrations/Notion/NotionTablePage'
+import { type FilterConfig, FilterMapper } from '/domain/entities/Filter'
+import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
 import { CodeRunner } from './CodeRunner'
 import type {
   ICodeRunnerSpi,
@@ -11,10 +11,10 @@ import type {
   CodeRunnerContextServicesLogger,
   CodeRunnerServices,
 } from './CodeRunner'
-import type { RecordFields, UpdateRecordFields } from '@domain/entities/Record'
-import type { UpdateNotionTablePageProperties } from '@domain/integrations/Notion/NotionTable'
-import type { AirtableTableRecordFields } from '@domain/integrations/Airtable/AirtableTableRecord'
-import type { UpdateAirtableTableRecord } from '@domain/integrations/Airtable/AirtableTable'
+import type { RecordFields, UpdateRecordFields } from '/domain/entities/Record'
+import type { UpdateNotionTablePageProperties } from '/domain/integrations/Notion/NotionTable'
+import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
+import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
 
 export type CodeCompilerServices = CodeRunnerServices
 

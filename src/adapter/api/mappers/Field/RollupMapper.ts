@@ -1,8 +1,8 @@
-import { RollupField } from '@domain/entities/Field/Rollup'
-import type { IRollupField } from '@domain/interfaces/IField/IRollup'
-import type { IField } from '@domain/interfaces/IField'
+import { RollupField } from '/domain/entities/Field/Rollup'
+import type { IRollupField } from '/domain/interfaces/IField/IRollup'
+import type { IField } from '/domain/interfaces/IField'
 import { FieldMapper } from '.'
-import { ConfigError } from '@domain/entities/Error/Config'
+import { ConfigError } from '/domain/entities/Error/Config'
 import { MultipleLinkedRecordFieldMapper } from './MultipleLinkedRecordMapper'
 
 export class RollupFieldMapper {

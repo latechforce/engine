@@ -1,7 +1,7 @@
-import type { Server } from '@domain/services/Server'
-import { JsonResponse } from '@domain/entities/Response/Json'
-import type { PostRequest } from '@domain/entities/Request/Post'
-import type { JSONSchema, SchemaValidator } from '@domain/services/SchemaValidator'
+import type { Server } from '/domain/services/Server'
+import { JsonResponse } from '/domain/entities/Response/Json'
+import type { PostRequest } from '/domain/entities/Request/Post'
+import type { JSONSchema, SchemaValidator } from '/domain/services/SchemaValidator'
 import type { SchemaError } from '../../Error/Schema'
 import { AutomationContext } from '../../Automation/Context'
 import type { BaseTrigger, BaseTriggerConfig } from '../base'
@@ -9,9 +9,9 @@ import {
   Template,
   type TemplateObject,
   type TemplateObjectCompiled,
-} from '@domain/services/Template'
-import type { TemplateCompiler } from '@domain/services/TemplateCompiler'
-import type { Monitor } from '@domain/services/Monitor'
+} from '/domain/services/Template'
+import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import type { Monitor } from '/domain/services/Monitor'
 
 export interface ApiCalledHttpTriggerConfig extends BaseTriggerConfig {
   path: string

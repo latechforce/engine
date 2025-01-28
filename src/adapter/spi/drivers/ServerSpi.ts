@@ -1,12 +1,12 @@
-import type { GetRequest } from '@domain/entities/Request/Get'
-import type { PostRequest } from '@domain/entities/Request/Post'
-import type { Response } from '@domain/entities/Response'
-import type { IServerSpi } from '@domain/services/Server'
+import type { GetRequest } from '/domain/entities/Request/Get'
+import type { PostRequest } from '/domain/entities/Request/Post'
+import type { Response } from '/domain/entities/Response'
+import type { IServerSpi } from '/domain/services/Server'
 import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '../dtos/RequestDto'
 import { RequestMapper } from '../mappers/RequestMapper'
-import type { PatchRequest } from '@domain/entities/Request/Patch'
-import type { DeleteRequest } from '@domain/entities/Request/Delete'
-import type { Request } from '@domain/entities/Request'
+import type { PatchRequest } from '/domain/entities/Request/Patch'
+import type { DeleteRequest } from '/domain/entities/Request/Delete'
+import type { Request } from '/domain/entities/Request'
 
 export interface IServerDriver {
   start(): Promise<number>

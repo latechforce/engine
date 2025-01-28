@@ -1,7 +1,7 @@
 import type { Logger } from './Logger'
 import { StorageBucket } from './StorageBucket'
 import type { Database, DatabaseDriverName, DatabaseExec, DatabaseQuery } from './Database'
-import type { StorageBucketSpi } from '@adapter/spi/drivers/StorageBucketSpi'
+import type { StorageBucketSpi } from '/adapter/spi/drivers/StorageBucketSpi'
 
 export interface StorageConfig {
   driver: DatabaseDriverName

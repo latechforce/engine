@@ -1,6 +1,6 @@
 import { test, expect } from 'bun:test'
-import { drivers } from '@infrastructure/drivers/bun'
-import { mocks } from '@infrastructure/integrations/bun/mocks'
+import { drivers } from '/infrastructure/drivers/bun'
+import { mocks } from '/infrastructure/integrations/bun/mocks'
 import App from '.'
 
 test('should instanciate an App', async () => {

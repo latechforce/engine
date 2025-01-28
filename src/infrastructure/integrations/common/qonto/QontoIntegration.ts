@@ -1,5 +1,5 @@
-import type { IQontoIntegration } from '@adapter/spi/integrations/QontoSpi'
-import type { QontoClient, QontoConfig, QontoCreateClient } from '@domain/integrations/Qonto'
+import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
+import type { QontoClient, QontoConfig, QontoCreateClient } from '/domain/integrations/Qonto'
 import axios, { type AxiosInstance } from 'axios'
 
 export class QontoIntegration implements IQontoIntegration {
