@@ -13,6 +13,8 @@ import type {
 } from './CodeRunner'
 import type { RecordFields, UpdateRecordFields } from '@domain/entities/Record'
 import type { UpdateNotionTablePageProperties } from '@domain/integrations/Notion/NotionTable'
+import type { AirtableTableRecordFields } from '@domain/integrations/Airtable/AirtableTableRecord'
+import type { UpdateAirtableTableRecord } from '@domain/integrations/Airtable/AirtableTable'
 
 export type CodeCompilerServices = CodeRunnerServices
 
@@ -93,7 +95,7 @@ export class CodeCompiler {
   }
 
   getIntegrations = (): CodeRunnerContextIntegrations => {
-    const { notion } = this._integrations
+    const { notion, airtable } = this._integrations
     return {
       notion: {
         getTable: async <T extends NotionTablePageProperties>(id: string) => {
@@ -128,6 +130,38 @@ export class CodeCompiler {
         },
         listAllUsers: async () => {
           return notion.listAllUsers()
+        },
+      },
+      airtable: {
+        getTable: async <T extends AirtableTableRecordFields>(id: string) => {
+          const table = await airtable.getTable(id)
+          if (!table) {
+            throw new Error(`CodeRunner: Airtable table "${id}" not found`)
+          }
+          return {
+            insert: async (data: T) => {
+              return table.insert<T>(data)
+            },
+            insertMany: async (data: T[]) => {
+              return table.insertMany<T>(data)
+            },
+            update: async (id: string, data: Partial<T>) => {
+              return table.update<T>(id, data)
+            },
+            updateMany: async (data: UpdateAirtableTableRecord<T>[]) => {
+              return table.updateMany<T>(data)
+            },
+            retrieve: async (id: string) => {
+              return table.retrieve<T>(id)
+            },
+            list: async (filterConfig?: FilterConfig) => {
+              const filter = filterConfig ? FilterMapper.toEntity(filterConfig) : undefined
+              return table.list<T>(filter)
+            },
+            delete: async (id: string) => {
+              return table.delete(id)
+            },
+          }
         },
       },
     }

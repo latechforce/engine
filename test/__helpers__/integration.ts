@@ -14,12 +14,15 @@ import {
 import type { DatabaseConfig } from '@domain/services/Database'
 import type { NotionConfig } from '@domain/integrations/Notion'
 import {
-  sampleTable1,
-  sampleTable2,
-  sampleUser,
+  notionTableSample1,
+  notionTableSample2,
+  notionUserSample,
 } from '@infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
 import type { QontoConfig } from '@domain/integrations/Qonto'
 import type { PappersConfig } from '@domain/integrations/Pappers'
+import { AirtableIntegration } from '@infrastructure/integrations/bun/mocks/airtable/AirtableIntegration.mock'
+import type { AirtableConfig } from '@domain/integrations/Airtable'
+import { airtableTableSample1 } from '@infrastructure/integrations/bun/mocks/airtable/AirtableTableIntegration.mock'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -29,7 +32,7 @@ type Tester = {
 }
 
 type DriverType = 'Database' | 'Storage'
-type IntegrationType = 'Notion' | 'Qonto' | 'Pappers'
+type IntegrationType = 'Notion' | 'Qonto' | 'Pappers' | 'Airtable'
 
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
@@ -43,11 +46,13 @@ type WithDriverOutput<D extends DriverType> = D extends 'Database'
 type WithIntegrationInput<I extends IntegrationType[]> = { integrations: I }
 type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
   ? NotionIntegration
-  : I extends 'Qonto'
-    ? QontoIntegration
-    : I extends 'Pappers'
-      ? PappersIntegration
-      : never
+  : I extends 'Airtable'
+    ? AirtableIntegration
+    : I extends 'Qonto'
+      ? QontoIntegration
+      : I extends 'Pappers'
+        ? PappersIntegration
+        : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -164,9 +169,23 @@ export class IntegrationTest {
           }
           integrations.notion = new NotionIntegration(config)
           extendsConfig.integrations.notion = config
-          await integrations.notion.addTable(sampleTable1.name, sampleTable1.fields)
-          await integrations.notion.addTable(sampleTable2.name, sampleTable2.fields)
-          await integrations.notion.addUser(sampleUser)
+          await integrations.notion.addTable(notionTableSample1.name, notionTableSample1.fields)
+          await integrations.notion.addTable(notionTableSample2.name, notionTableSample2.fields)
+          await integrations.notion.addUser(notionUserSample)
+        }
+        if (options.integrations.includes('Airtable')) {
+          const url = join(process.cwd(), 'tmp', `airtable-${nanoid()}.db`)
+          await fs.ensureFile(url)
+          const config: AirtableConfig = {
+            apiKey: url,
+            baseId: 'test',
+          }
+          integrations.airtable = new AirtableIntegration(config)
+          extendsConfig.integrations.airtable = config
+          await integrations.airtable.addTable(
+            airtableTableSample1.name,
+            airtableTableSample1.fields
+          )
         }
         if (options.integrations.includes('Qonto')) {
           const config: QontoConfig = {

@@ -10,6 +10,12 @@ import { Logger } from '@domain/services/Logger'
 import type { NotionUser } from '@domain/integrations/Notion/NotionUser'
 import type { RecordFields } from '@domain/entities/Record'
 import type { UpdateNotionTablePageProperties } from '@domain/integrations/Notion/NotionTable'
+import type { Airtable } from '@domain/integrations/Airtable'
+import type {
+  AirtableTableRecord,
+  AirtableTableRecordFields,
+} from '@domain/integrations/Airtable/AirtableTableRecord'
+import type { UpdateAirtableTableRecord } from '@domain/integrations/Airtable/AirtableTable'
 
 export interface ICodeRunnerSpi {
   run: (
@@ -67,8 +73,27 @@ export interface CodeRunnerContextIntegrationsNotion {
   listAllUsers: () => Promise<NotionUser[]>
 }
 
+export interface CodeRunnerContextIntegrationsAirtableTable<
+  T extends AirtableTableRecordFields = AirtableTableRecordFields,
+> {
+  insert: (data: T) => Promise<AirtableTableRecord<T>>
+  insertMany: (data: T[]) => Promise<AirtableTableRecord<T>[]>
+  update: (id: string, data: Partial<T>) => Promise<AirtableTableRecord<T>>
+  updateMany: (data: UpdateAirtableTableRecord<T>[]) => Promise<AirtableTableRecord<T>[]>
+  retrieve: (id: string) => Promise<AirtableTableRecord<T> | undefined>
+  list: (filter?: FilterConfig) => Promise<AirtableTableRecord<T>[]>
+  delete: (id: string) => Promise<void>
+}
+
+export interface CodeRunnerContextIntegrationsAirtable {
+  getTable: <T extends AirtableTableRecordFields = AirtableTableRecordFields>(
+    id: string
+  ) => Promise<CodeRunnerContextIntegrationsAirtableTable<T>>
+}
+
 export interface CodeRunnerContextIntegrations {
   notion: CodeRunnerContextIntegrationsNotion
+  airtable: CodeRunnerContextIntegrationsAirtable
 }
 
 export interface CodeRunnerContextPackages {
@@ -76,6 +101,7 @@ export interface CodeRunnerContextPackages {
   dateFns: typeof import('date-fns')
   googleapis: typeof import('googleapis')
   Airtable: typeof import('airtable')
+  Notion: typeof import('@notionhq/client').Client
   axios: typeof import('axios').default
   https: typeof import('https')
   crypto: typeof import('crypto')
@@ -100,6 +126,7 @@ export interface CodeRunnerEntities {
 
 export interface CodeRunnerIntegrations {
   notion: Notion
+  airtable: Airtable
 }
 
 export class CodeRunner {

@@ -207,7 +207,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
   }
 }
 
-export const sampleTable1: ITable = {
+export const notionTableSample1: ITable = {
   name: 'table_1',
   fields: [
     {
@@ -288,7 +288,7 @@ export const sampleTable1: ITable = {
   ],
 }
 
-export const sampleTable2: ITable = {
+export const notionTableSample2: ITable = {
   name: 'table_2',
   fields: [
     {
@@ -298,7 +298,7 @@ export const sampleTable2: ITable = {
   ],
 }
 
-export const sampleUser: NotionUserDto = {
+export const notionUserSample: NotionUserDto = {
   id: '1',
   email: 'test@test.com',
   name: 'test',

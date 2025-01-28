@@ -264,5 +264,89 @@ new IntegrationTest(Tester).with({}, ({ app, request }) => {
       // THEN
       expect(response.exist).toBeTruthy()
     })
+
+    it('should run a Typescript code with Notion package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        automations: [
+          {
+            name: 'notion',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'notion',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { Notion },
+                  } = context
+                  return { exist: !!new Notion() }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/notion`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with Airtable package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        automations: [
+          {
+            name: 'airtable',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'airtable',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { Airtable },
+                  } = context
+                  return { exist: !!Airtable.base }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/airtable`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
   })
 })

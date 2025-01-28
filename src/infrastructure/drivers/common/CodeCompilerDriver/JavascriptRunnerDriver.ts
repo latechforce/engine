@@ -16,12 +16,14 @@ import axios from 'axios'
 import https from 'https'
 import crypto from 'crypto'
 import lodash from 'lodash'
+import { Client as Notion } from '@notionhq/client'
 
 export const packages: CodeRunnerContextPackages = {
   xml2js,
   dateFns,
   googleapis,
   Airtable,
+  Notion,
   axios,
   https,
   crypto,

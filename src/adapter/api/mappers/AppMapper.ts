@@ -21,6 +21,7 @@ import { PappersMapper } from './Integration/PappersMapper'
 import { QontoMapper } from './Integration/QontoMapper'
 import { TunnelMapper } from './Services/TunnelMapper'
 import { FetcherMapper } from './Services/FetcherMapper'
+import { AirtableMapper } from './Integration/AirtableMapper'
 
 export class AppMapper {
   static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
@@ -60,20 +61,21 @@ export class AppMapper {
       { idGenerator, logger, storage, server, templateCompiler, fetcher },
       config.integrations?.notion
     )
+    const airtable = AirtableMapper.toIntegration(integrations, config.integrations?.airtable)
     const pappers = PappersMapper.toIntegration(integrations, config.integrations?.pappers)
     const qonto = QontoMapper.toIntegration(integrations, config.integrations?.qonto)
     const javascriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger },
       { tables },
-      { notion },
+      { notion, airtable },
       { language: 'JavaScript' }
     )
     const typescriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger },
       { tables },
-      { notion },
+      { notion, airtable },
       { language: 'TypeScript' }
     )
     const automations = AutomationMapper.toManyEntities(

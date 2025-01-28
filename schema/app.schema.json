@@ -2,6 +2,22 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "definitions": {
+        "AirtableConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": {
+                    "type": "string"
+                },
+                "baseId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "apiKey",
+                "baseId"
+            ],
+            "type": "object"
+        },
         "BucketConfig": {
             "additionalProperties": false,
             "properties": {
@@ -419,6 +435,9 @@
         "IIntegrations": {
             "additionalProperties": false,
             "properties": {
+                "airtable": {
+                    "$ref": "#/definitions/AirtableConfig"
+                },
                 "notion": {
                     "$ref": "#/definitions/NotionConfig"
                 },

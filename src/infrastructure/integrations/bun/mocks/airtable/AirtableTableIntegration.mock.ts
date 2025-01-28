@@ -9,6 +9,7 @@ import type { SQLiteDatabaseTableDriver } from '@infrastructure/drivers/bun/Data
 import type { IField } from '@domain/interfaces/IField'
 import { nanoid } from 'nanoid'
 import type { RecordFields } from '@domain/entities/Record'
+import type { ITable } from '@domain/interfaces/ITable'
 
 export class AirtableTableIntegration implements IAirtableTableIntegration {
   readonly id: string
@@ -196,4 +197,14 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
       created_time: record.created_at.toISOString(),
     }
   }
+}
+
+export const airtableTableSample1: ITable = {
+  name: 'table_1',
+  fields: [
+    {
+      name: 'name',
+      type: 'SingleLineText',
+    },
+  ],
 }

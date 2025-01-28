@@ -16,7 +16,7 @@ export class AirtableIntegration implements IAirtableIntegration {
   private _tables?: SQLiteDatabaseTableDriver
 
   constructor(private _config?: AirtableConfig) {
-    this._db = new SQLiteDatabaseDriver({ url: ':memory:', driver: 'SQLite' })
+    this._db = new SQLiteDatabaseDriver({ url: _config?.apiKey ?? ':memory:', driver: 'SQLite' })
   }
 
   connect = async () => {
@@ -34,8 +34,10 @@ export class AirtableIntegration implements IAirtableIntegration {
         },
       ],
     })
-    await this._tables.create()
-    await this._tables.createView()
+    if (!(await this._tables.exists())) {
+      await this._tables.create()
+      await this._tables.createView()
+    }
   }
 
   getConfig = (): AirtableConfig => {
@@ -46,7 +48,8 @@ export class AirtableIntegration implements IAirtableIntegration {
   }
 
   getTable = async (id: string) => {
-    const table = await this._tablesOrThrow().readById<TableObject>(id)
+    const tables = await this._tablesOrThrow()
+    const table = await tables.readById<TableObject>(id)
     if (!table) {
       throw new Error('Table not found')
     }
@@ -68,7 +71,8 @@ export class AirtableIntegration implements IAirtableIntegration {
   }
 
   addTable = async (id: string, fields: IField[]) => {
-    await this._tablesOrThrow().insert<TableObject>({
+    const tables = await this._tablesOrThrow()
+    await tables.insert<TableObject>({
       id,
       fields: { name: id, fields: JSON.stringify(fields) },
       created_at: new Date(),
@@ -76,9 +80,12 @@ export class AirtableIntegration implements IAirtableIntegration {
     return this.getTable(id)
   }
 
-  _tablesOrThrow = () => {
+  _tablesOrThrow = async () => {
     if (!this._tables) {
-      throw new Error('Tables table not set')
+      await this.connect()
+      if (!this._tables) {
+        throw new Error('Tables table not set')
+      }
     }
     return this._tables
   }
