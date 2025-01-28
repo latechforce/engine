@@ -1,3 +1,10 @@
+## [0.37.4](https://github.com/latechforce/engine/compare/v0.37.3...v0.37.4) (2025-01-28)
+
+
+### Bug Fixes
+
+* **Sentry:** replace Node Sentry by Bun ([6ca7da8](https://github.com/latechforce/engine/commit/6ca7da8483be18e6443dc517c8dddda1f0eed3c4))
+
 ## [0.37.3](https://github.com/latechforce/engine/compare/v0.37.2...v0.37.3) (2025-01-28)
 
 
