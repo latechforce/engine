@@ -1,3 +1,10 @@
+## [0.37.7](https://github.com/latechforce/engine/compare/v0.37.6...v0.37.7) (2025-01-28)
+
+
+### Bug Fixes
+
+* **Airtable:** add IsAfter and IsBefore filters ([fae0b4a](https://github.com/latechforce/engine/commit/fae0b4a4a867a973ff1f9e086d691ef85c086fdf))
+
 ## [0.37.6](https://github.com/latechforce/engine/compare/v0.37.5...v0.37.6) (2025-01-28)
 
 
