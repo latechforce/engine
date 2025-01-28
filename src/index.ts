@@ -37,6 +37,11 @@ export {
 } from '/domain/integrations/Notion/NotionTablePage'
 export type { NotionUser } from '/domain/integrations/Notion/NotionUser'
 export {
+  AirtableTableRecord,
+  type AirtableTableRecordFields,
+  type AirtableTableRecordFieldValue,
+} from '/domain/integrations/Airtable/AirtableTableRecord'
+export {
   Record as DatabaseTableRecord,
   type RecordFields as DatabaseTableRecordFields,
   type RecordFieldValue as DatabaseTableRecordFieldValue,
