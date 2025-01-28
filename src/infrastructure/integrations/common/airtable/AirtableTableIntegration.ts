@@ -217,6 +217,12 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
           `Operator "${operator}" is not supported for field type "${fieldSchema.type}"`
         )
       }
+      case 'IsBefore': {
+        return `IS_BEFORE({${field}}, "${filter.value}")`
+      }
+      case 'IsAfter': {
+        return `IS_AFTER({${field}}, "${filter.value}")`
+      }
       case 'OnOrAfter': {
         throw new Error(
           `Operator "${operator}" is not supported for field type "${fieldSchema.type}"`

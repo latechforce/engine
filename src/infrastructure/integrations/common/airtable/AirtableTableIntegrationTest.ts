@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { parse } from 'date-fns'
+import { addDays, format, parse, subDays } from 'date-fns'
 import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import type BunTester from 'bun:test'
 import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
@@ -501,7 +501,7 @@ export function testAirtableTableIntegration(
         })
 
       // THEN
-      await expect(call()).rejects.toThrow('Field "invalid" does not exist')
+      expect(call()).rejects.toThrow('Field "invalid" does not exist')
     })
 
     it('should list records in a table with a Is filter on a formula', async () => {
@@ -518,6 +518,106 @@ export function testAirtableTableIntegration(
 
       // THEN
       expect(records).toHaveLength(1)
+    })
+
+    it('should list records in a table with a IsAfter filter on a formula', async () => {
+      // GIVEN
+      const record = await table1.insert({ date: new Date().toISOString() })
+      const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
+
+      // WHEN
+      const records = await table1.list({
+        and: [
+          {
+            field: 'id',
+            operator: 'Is',
+            value: record.id,
+          },
+          {
+            field: 'date',
+            operator: 'IsAfter',
+            value: yesterday,
+          },
+        ],
+      })
+
+      // THEN
+      expect(records).toHaveLength(1)
+    })
+
+    it('should not list records in a table with a IsAfter filter on a formula', async () => {
+      // GIVEN
+      const record = await table1.insert({ date: new Date().toISOString() })
+      const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
+
+      // WHEN
+      const records = await table1.list({
+        and: [
+          {
+            field: 'id',
+            operator: 'Is',
+            value: record.id,
+          },
+          {
+            field: 'date',
+            operator: 'IsAfter',
+            value: tomorrow,
+          },
+        ],
+      })
+
+      // THEN
+      expect(records).toHaveLength(0)
+    })
+
+    it('should list records in a table with a IsBefore filter on a formula', async () => {
+      // GIVEN
+      const record = await table1.insert({ date: new Date().toISOString() })
+      const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
+
+      // WHEN
+      const records = await table1.list({
+        and: [
+          {
+            field: 'id',
+            operator: 'Is',
+            value: record.id,
+          },
+          {
+            field: 'date',
+            operator: 'IsBefore',
+            value: tomorrow,
+          },
+        ],
+      })
+
+      // THEN
+      expect(records).toHaveLength(1)
+    })
+
+    it('should not list records in a table with a IsBefore filter on a formula', async () => {
+      // GIVEN
+      const record = await table1.insert({ date: new Date().toISOString() })
+      const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
+
+      // WHEN
+      const records = await table1.list({
+        and: [
+          {
+            field: 'id',
+            operator: 'Is',
+            value: record.id,
+          },
+          {
+            field: 'date',
+            operator: 'IsBefore',
+            value: yesterday,
+          },
+        ],
+      })
+
+      // THEN
+      expect(records).toHaveLength(0)
     })
   })
 

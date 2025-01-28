@@ -543,8 +543,18 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         }
       case 'OnOrAfter':
         return {
-          conditions: `"${filter.field}" >= datetime(?)`,
-          values: [filter.value],
+          conditions: `"${filter.field}" >= ?`,
+          values: [new Date(filter.value).getTime()],
+        }
+      case 'IsAfter':
+        return {
+          conditions: `"${filter.field}" > ?`,
+          values: [new Date(filter.value).getTime()],
+        }
+      case 'IsBefore':
+        return {
+          conditions: `"${filter.field}" < ?`,
+          values: [new Date(filter.value).getTime()],
         }
       case 'IsFalse':
         return {
