@@ -1,3 +1,12 @@
+## [0.37.2](https://github.com/latechforce/engine/compare/v0.37.1...v0.37.2) (2025-01-28)
+
+
+### Bug Fixes
+
+* **Airtable:** add Airtable in Typescript action ([9ef4a50](https://github.com/latechforce/engine/commit/9ef4a50e3af491f669427458d2a0f481e2f7223c))
+* **CI:** fix Airtable tests ([7e24732](https://github.com/latechforce/engine/commit/7e247323b3bf4e6d5fce09add7dbb00621831ae6))
+* **tsconfig:** add tsconfig in package ([20dc192](https://github.com/latechforce/engine/commit/20dc1926a8f5b01eee2b8fc9d5f01828a3d9c40f))
+
 ## [0.37.1](https://github.com/latechforce/engine/compare/v0.37.0...v0.37.1) (2025-01-27)
 
 ### Bug Fixes
