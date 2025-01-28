@@ -1,29 +1,26 @@
 ## [0.37.1](https://github.com/latechforce/engine/compare/v0.37.0...v0.37.1) (2025-01-27)
 
-
 ### Bug Fixes
 
-* **(CI:** fix path for Notion db ([ae842da](https://github.com/latechforce/engine/commit/ae842dac3bb41a04d097dbb93f5dd50892b2c6dd))
-* **CI:** create dir if not exist ([4bc632a](https://github.com/latechforce/engine/commit/4bc632a35f02fc37d194d56da02d9f782f9664b3))
-* **Notion:** add Notion e2e tests with mocks ([9435121](https://github.com/latechforce/engine/commit/9435121922dd712d7c01bcea4e90bc15720131f9))
-* **Notion:** can repeat tests ([5f2d9ce](https://github.com/latechforce/engine/commit/5f2d9cef7ad9604e07bf9eb66c4a21debb19ce7b))
-* **Notion:** fix broken tests on CI ([ba474ce](https://github.com/latechforce/engine/commit/ba474ce204ce274a7bfe8d02b828df9eaff634d5))
-* **Notion:** fix broken tests on CI ([0b5dc83](https://github.com/latechforce/engine/commit/0b5dc83416227cb2e54d3841e6b61c8420c0b8b9))
-* **packages:** add minipass ([b767e3d](https://github.com/latechforce/engine/commit/b767e3d22af835364009bf8f0c58baa20c7f8c87))
+- **(CI:** fix path for Notion db ([ae842da](https://github.com/latechforce/engine/commit/ae842dac3bb41a04d097dbb93f5dd50892b2c6dd))
+- **CI:** create dir if not exist ([4bc632a](https://github.com/latechforce/engine/commit/4bc632a35f02fc37d194d56da02d9f782f9664b3))
+- **Notion:** add Notion e2e tests with mocks ([9435121](https://github.com/latechforce/engine/commit/9435121922dd712d7c01bcea4e90bc15720131f9))
+- **Notion:** can repeat tests ([5f2d9ce](https://github.com/latechforce/engine/commit/5f2d9cef7ad9604e07bf9eb66c4a21debb19ce7b))
+- **Notion:** fix broken tests on CI ([ba474ce](https://github.com/latechforce/engine/commit/ba474ce204ce274a7bfe8d02b828df9eaff634d5))
+- **Notion:** fix broken tests on CI ([0b5dc83](https://github.com/latechforce/engine/commit/0b5dc83416227cb2e54d3841e6b61c8420c0b8b9))
+- **packages:** add minipass ([b767e3d](https://github.com/latechforce/engine/commit/b767e3d22af835364009bf8f0c58baa20c7f8c87))
 
 # [0.37.0](https://github.com/latechforce/engine/compare/v0.36.1...v0.37.0) (2025-01-23)
 
-
 ### Bug Fixes
 
-* **Database:** fix Postgres start for tests ([5997f7b](https://github.com/latechforce/engine/commit/5997f7b60412cbdaf300e20e6febb8521d7bc12f))
-* **Database:** manage better error on creating view ([58bccab](https://github.com/latechforce/engine/commit/58bccab62a8b016646dfc99100ee348ba9db629d))
-* **Database:** TESTCONTAINERS_RYUK_DISABLED=true env ([6a56c69](https://github.com/latechforce/engine/commit/6a56c6955e6459a3c17850c8ffc0d1a707d36ef0))
-
+- **Database:** fix Postgres start for tests ([5997f7b](https://github.com/latechforce/engine/commit/5997f7b60412cbdaf300e20e6febb8521d7bc12f))
+- **Database:** manage better error on creating view ([58bccab](https://github.com/latechforce/engine/commit/58bccab62a8b016646dfc99100ee348ba9db629d))
+- **Database:** TESTCONTAINERS_RYUK_DISABLED=true env ([6a56c69](https://github.com/latechforce/engine/commit/6a56c6955e6459a3c17850c8ffc0d1a707d36ef0))
 
 ### Features
 
-* **Engine:** refactor for Bun exclusive support ([791550a](https://github.com/latechforce/engine/commit/791550ae1e34673f0990c0eccf75b14b8b9e5a0b))
+- **Engine:** refactor for Bun exclusive support ([791550a](https://github.com/latechforce/engine/commit/791550ae1e34673f0990c0eccf75b14b8b9e5a0b))
 
 ## [0.36.1](https://github.com/latechforce/engine/compare/v0.36.0...v0.36.1) (2025-01-13)
 

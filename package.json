@@ -46,7 +46,7 @@
     "@notionhq/client": "^2.2.15",
     "@sentry/node": "^8.51.0",
     "@sentry/profiling-node": "^8.51.0",
-    "@types/lodash": "^4.17.14",
+    "@types/lodash": "^4.17.15",
     "airtable": "^0.12.2",
     "ajv": "^8.17.1",
     "axios": "^1.7.9",
@@ -77,14 +77,14 @@
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
-    "@testcontainers/postgresql": "^10.17.1",
+    "@testcontainers/postgresql": "^10.17.2",
     "@types/bun": "latest",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
     "@types/eslint__js": "^8.42.3",
     "@types/express": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
-    "@types/node": "^22.10.10",
+    "@types/node": "^22.12.0",
     "@types/pg": "^8.11.11",
     "@types/smtp-server": "^3.5.10",
     "@types/xml2js": "^0.4.14",
@@ -93,14 +93,14 @@
     "eslint-plugin-prettier": "^5.2.3",
     "prettier": "^3.4.2",
     "semantic-release": "^24.2.1",
-    "typescript-eslint": "^8.21.0",
+    "typescript-eslint": "^8.22.0",
     "typescript-json-schema": "^0.65.1"
   },
   "peerDependencies": {
     "typescript": "^5.5.4"
   },
   "engines": {
-    "bun": "1.2.0"
+    "bun": "1.2.1"
   },
   "config": {
     "commitizen": {
