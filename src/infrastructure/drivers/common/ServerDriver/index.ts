@@ -31,10 +31,6 @@ export class ServerDriver implements IServerDriver {
     await this._server.notFound(handler)
   }
 
-  afterAllRoutes = async () => {
-    await this._server.afterAllRoutes()
-  }
-
   start = async (retry = 0): Promise<number> => {
     return this._server.start(retry)
   }

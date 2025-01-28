@@ -2,7 +2,6 @@ import express, { type Express } from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
-import * as Sentry from '@sentry/node'
 import http, { Server as HttpServer } from 'http'
 import net from 'net'
 import { join } from 'path'
@@ -97,10 +96,6 @@ export class ExpressDriver implements IServerDriver {
       const response = await handler(requestDto)
       this._returnResponse(res, req, { ...response, status: 404 })
     })
-  }
-
-  afterAllRoutes = async () => {
-    if (this._config.monitors?.includes('Sentry')) Sentry.setupExpressErrorHandler(this._express)
   }
 
   start = async (retry = 0, basePort?: number): Promise<number> => {

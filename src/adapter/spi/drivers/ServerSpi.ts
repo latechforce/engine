@@ -16,7 +16,6 @@ export interface IServerDriver {
   patch(path: string, handler: (request: PatchDto) => Promise<Response>): Promise<void>
   delete(path: string, handler: (request: DeleteDto) => Promise<Response>): Promise<void>
   notFound(handler: (request: RequestDto) => Promise<Response>): Promise<void>
-  afterAllRoutes(): Promise<void>
 }
 
 export class ServerSpi implements IServerSpi {
@@ -55,10 +54,6 @@ export class ServerSpi implements IServerSpi {
       const request = RequestMapper.toService(requestDto)
       return handler(request)
     })
-  }
-
-  afterAllRoutes = async () => {
-    await this._driver.afterAllRoutes()
   }
 
   start = async () => {

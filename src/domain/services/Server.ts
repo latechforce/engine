@@ -32,7 +32,6 @@ export interface IServerSpi {
   patch: (path: string, handler: (request: PatchRequest) => Promise<Response>) => Promise<void>
   delete: (path: string, handler: (request: DeleteRequest) => Promise<Response>) => Promise<void>
   notFound: (handler: (request: Request) => Promise<Response>) => Promise<void>
-  afterAllRoutes: () => Promise<void>
 }
 
 export class Server {
@@ -61,7 +60,6 @@ export class Server {
     await this.get('/health', async () => new JsonResponse({ success: true }))
     await callback()
     await this.notFound()
-    await this._spi.afterAllRoutes()
   }
 
   get = async (path: string, handler: (request: GetRequest) => Promise<Response>) => {
