@@ -16,7 +16,8 @@
   },
   "files": [
     "src/**/*",
-    "schema/*"
+    "schema/*",
+    "tsconfig.json"
   ],
   "repository": {
     "type": "git",
