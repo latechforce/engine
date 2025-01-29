@@ -10,6 +10,7 @@ import type {
   CodeRunnerContextServicesDatabase,
   CodeRunnerContextServicesLogger,
   CodeRunnerServices,
+  CodeRunnerContextServicesFetcher,
 } from './CodeRunner'
 import type { RecordFields, UpdateRecordFields } from '/domain/entities/Record'
 import type { UpdateNotionTablePageProperties } from '/domain/integrations/Notion/NotionTable'
@@ -91,7 +92,12 @@ export class CodeCompiler {
         this._services.logger.debug(message, metadata)
       },
     }
-    return { database, logger }
+    const fetcher: CodeRunnerContextServicesFetcher = {
+      get: (url: string) => {
+        return this._services.fetcher.get(url)
+      },
+    }
+    return { database, logger, fetcher }
   }
 
   getIntegrations = (): CodeRunnerContextIntegrations => {

@@ -16,6 +16,7 @@ import type {
   AirtableTableRecordFields,
 } from '/domain/integrations/Airtable/AirtableTableRecord'
 import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
+import type { Fetcher } from './Fetcher'
 
 export interface ICodeRunnerSpi {
   run: (
@@ -49,9 +50,14 @@ export interface CodeRunnerContextServicesLogger {
   debug: (message: string, metadata?: object) => void
 }
 
+export interface CodeRunnerContextServicesFetcher {
+  get: (url: string) => Promise<Response>
+}
+
 export interface CodeRunnerContextServices {
   database: CodeRunnerContextServicesDatabase
   logger: CodeRunnerContextServicesLogger
+  fetcher: CodeRunnerContextServicesFetcher
 }
 
 export interface CodeRunnerContextIntegrationsNotionTable<
@@ -118,6 +124,7 @@ export interface CodeRunnerContext<I extends object = {}> {
 
 export interface CodeRunnerServices {
   logger: Logger
+  fetcher: Fetcher
 }
 
 export interface CodeRunnerEntities {
