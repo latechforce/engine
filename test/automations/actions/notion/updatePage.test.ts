@@ -1,10 +1,20 @@
-import Tester, { expect, describe, it } from 'bun:test'
+import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Helpers, type Config } from '/test/bun'
-import { notionTableSample1 } from '/infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
+import {
+  notionTableSample1,
+  notionTableSample2,
+  notionUserSample,
+} from '/infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
 
 const helpers = new Helpers(Tester)
 
 helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integrations }) => {
+  beforeEach(async () => {
+    await integrations.notion.addTable(notionTableSample1.name, notionTableSample1.fields)
+    await integrations.notion.addTable(notionTableSample2.name, notionTableSample2.fields)
+    await integrations.notion.addUser(notionUserSample)
+  })
+
   describe('on POST', () => {
     it('should update a page', async () => {
       // GIVEN
