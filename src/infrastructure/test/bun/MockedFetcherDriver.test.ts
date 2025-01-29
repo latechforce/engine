@@ -23,9 +23,10 @@ describe('get', () => {
       await fetcher.get('https://example.com/api/unknown')
     } catch (error) {
       expect(error).toBeInstanceOf(Error)
-      expect(error.message).toBe(
-        'No matching endpoint found for URL: https://example.com/api/unknown'
-      )
+      if (error instanceof Error)
+        expect(error.message).toBe(
+          'No matching endpoint found for URL: https://example.com/api/unknown'
+        )
     }
   })
 })
