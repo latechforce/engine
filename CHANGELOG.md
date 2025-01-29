@@ -1,3 +1,11 @@
+## [0.37.8](https://github.com/latechforce/engine/compare/v0.37.7...v0.37.8) (2025-01-29)
+
+
+### Bug Fixes
+
+* **Notion:** fix broken Notion test ([864ee49](https://github.com/latechforce/engine/commit/864ee49ed5c603eb68fe90e5f38944ef21ff8943))
+* **Test:** export test Helpers ([5172995](https://github.com/latechforce/engine/commit/51729952bd24815a256aa7aa98aa0307c8a9c07c))
+
 ## [0.37.7](https://github.com/latechforce/engine/compare/v0.37.6...v0.37.7) (2025-01-28)
 
 
