@@ -15,6 +15,7 @@ import type {
 import type { IField } from '/domain/interfaces/IField'
 
 export interface IDatabaseTableDriver {
+  name: string
   fields: IField[]
   exists: () => Promise<boolean>
   create: () => Promise<void>

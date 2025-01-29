@@ -145,8 +145,8 @@ export class Helpers {
           drivers.storage = new StorageDriver(drivers.database)
         }
       }
+      extendsConfig.integrations = {}
       if ('integrations' in options) {
-        extendsConfig.integrations = {}
         if (options.integrations.includes('Notion')) {
           const url = join(process.cwd(), 'tmp', `notion-${nanoid()}.db`)
           await fs.ensureFile(url)

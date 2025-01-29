@@ -5,6 +5,7 @@ import { SQLiteDatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver
 import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
+import slugify from 'slugify'
 
 export interface TableObject extends RecordFields {
   name: string
@@ -47,17 +48,18 @@ export class AirtableIntegration implements IAirtableIntegration {
     return this._config
   }
 
-  getTable = async (id: string) => {
+  getTable = async (tableName: string) => {
+    const id = this._slugifyName(tableName)
     const tables = await this._tablesOrThrow()
     const table = await tables.readById<TableObject>(id)
     if (!table) {
       throw new Error('Table not found')
     }
-    const { fields: jsonFields, name } = table.fields
+    const { fields: jsonFields } = table.fields
     const fields = JSON.parse(String(jsonFields))
     const airtableTable = new AirtableTableIntegration(
       this._db.table({
-        name: name,
+        name: id,
         fields,
       }),
       table
@@ -70,14 +72,19 @@ export class AirtableIntegration implements IAirtableIntegration {
     return airtableTable
   }
 
-  addTable = async (id: string, fields: IField[]) => {
+  addTable = async (name: string, fields: IField[]) => {
     const tables = await this._tablesOrThrow()
+    const id = this._slugifyName(name)
     await tables.insert<TableObject>({
       id,
-      fields: { name: id, fields: JSON.stringify(fields) },
+      fields: { name, fields: JSON.stringify(fields) },
       created_at: new Date(),
     })
-    return this.getTable(id)
+    return this.getTable(name)
+  }
+
+  _slugifyName = (name: string) => {
+    return slugify(name, { lower: true, replacement: '_' })
   }
 
   _tablesOrThrow = async () => {
