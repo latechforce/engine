@@ -1,3 +1,11 @@
+## [0.37.9](https://github.com/latechforce/engine/compare/v0.37.8...v0.37.9) (2025-01-29)
+
+
+### Bug Fixes
+
+* **export:** merge test export in bun export ([47a061e](https://github.com/latechforce/engine/commit/47a061e695839816d8c75888ac97e0f23f4c3d7c))
+* **packages:** fix test bun export with duplicated mocks export ([4fb528a](https://github.com/latechforce/engine/commit/4fb528aa451a69795daa72e0c10279f524ae89a3))
+
 ## [0.37.8](https://github.com/latechforce/engine/compare/v0.37.7...v0.37.8) (2025-01-29)
 
 
