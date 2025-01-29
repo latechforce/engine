@@ -1,4 +1,5 @@
-import App, { mocks } from '../../../bun'
+import App from '../../../bun'
+import { mocks } from '/infrastructure/integrations/bun/mocks'
 
 export class MockedApp extends App {
   constructor() {

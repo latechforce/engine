@@ -4,9 +4,6 @@ import App from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
 
-export { mocks } from '/infrastructure/integrations/bun/mocks'
-export { Helpers, MockedApp } from './infrastructure/test/bun'
-
 export default class extends App {
   constructor(options?: { drivers?: Partial<Drivers>; integrations?: Partial<Integrations> }) {
     const customDrivers = options?.drivers ?? {}
