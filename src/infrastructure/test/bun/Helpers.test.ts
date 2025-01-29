@@ -46,6 +46,15 @@ helpers.testWithMockedApp({ drivers: ['Database', 'Storage'] }, ({ drivers }) =>
 })
 
 // GIVEN
+helpers.testWithMockedApp({ drivers: ['Fetcher'] }, ({ drivers }) => {
+  // WHEN
+  test('should have a Fetcher driver', () => {
+    // THEN
+    expect(drivers.fetcher).toBeDefined()
+  })
+})
+
+// GIVEN
 helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ integrations }) => {
   // WHEN
   test('should have a Airtable integration', () => {

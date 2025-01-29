@@ -14,6 +14,7 @@ import type { PappersConfig } from '/domain/integrations/Pappers'
 import { AirtableIntegration } from '/infrastructure/integrations/bun/mocks/airtable/AirtableIntegration.mock'
 import type { AirtableConfig } from '/domain/integrations/Airtable'
 import { MockedApp } from './MockedApp'
+import { MockedFetcherDriver } from './MockedFetcherDriver'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -22,7 +23,7 @@ type Tester = {
   afterAll: (fn: () => Promise<void>) => void
 }
 
-type DriverType = 'Database' | 'Storage'
+type DriverType = 'Database' | 'Storage' | 'Fetcher'
 type IntegrationType = 'Notion' | 'Qonto' | 'Pappers' | 'Airtable'
 
 // Generic definitions for drivers
@@ -31,7 +32,9 @@ type WithDriverOutput<D extends DriverType> = D extends 'Database'
   ? DatabaseDriver
   : D extends 'Storage'
     ? StorageDriver
-    : never
+    : D extends 'Fetcher'
+      ? MockedFetcherDriver
+      : never
 
 // Generic definitions for integrations
 type WithIntegrationInput<I extends IntegrationType[]> = { integrations: I }
@@ -144,6 +147,10 @@ export class Helpers {
           }
           drivers.storage = new StorageDriver(drivers.database)
         }
+        if (options.drivers.includes('Fetcher')) {
+          const fetcher = new MockedFetcherDriver()
+          drivers.fetcher = fetcher
+        }
       }
       extendsConfig.integrations = {}
       if ('integrations' in options) {
@@ -186,7 +193,11 @@ export class Helpers {
       }
       let startedApp: StartedApp | undefined
       app.start = async (config: Config) => {
-        startedApp = await new MockedApp().start({ ...config, ...extendsConfig })
+        startedApp = await new MockedApp({
+          drivers: {
+            fetcher: () => drivers.fetcher,
+          },
+        }).start({ ...config, ...extendsConfig })
         return startedApp
       }
       app.stop = async () => {

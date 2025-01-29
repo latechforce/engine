@@ -49,7 +49,7 @@
     "@elastic/elasticsearch": "^7.17.14",
     "@ngrok/ngrok": "^1.4.1",
     "@notionhq/client": "^2.2.15",
-    "@sentry/bun": "^8.51.0",
+    "@sentry/bun": "^8.52.0",
     "@types/lodash": "^4.17.15",
     "airtable": "^0.12.2",
     "ajv": "^8.17.1",

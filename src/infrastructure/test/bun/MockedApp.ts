@@ -1,17 +1,19 @@
 import App from '../../../bun'
-import { MockedFetcherDriver } from './MockedFetcherDriver'
-import { drivers } from '/infrastructure/drivers/bun'
+import type { Drivers } from '/adapter/spi/drivers'
+import { drivers as allDrivers } from '/infrastructure/drivers/bun'
 import { mocks } from '/infrastructure/integrations/bun/mocks'
 
-export const mockedFetcher = new MockedFetcherDriver()
+type Options = {
+  drivers?: Partial<Drivers>
+}
 
 export class MockedApp extends App {
-  constructor() {
+  constructor({ drivers = {} }: Options = {}) {
     super({
       integrations: mocks,
       drivers: {
+        ...allDrivers,
         ...drivers,
-        fetcher: () => mockedFetcher,
       },
     })
   }

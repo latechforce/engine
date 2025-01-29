@@ -1,5 +1,6 @@
 import { test, expect } from 'bun:test'
-import { MockedApp, mockedFetcher } from './MockedApp'
+import { MockedApp } from './MockedApp'
+import { MockedFetcherDriver } from './MockedFetcherDriver'
 
 test('should instanciate a MockedApp', async () => {
   // WHEN
@@ -11,7 +12,12 @@ test('should instanciate a MockedApp', async () => {
 
 test('should return a mocked response from fetcher', async () => {
   // GIVEN
-  const mockedApp = new MockedApp()
+  const mockedFetcher = new MockedFetcherDriver()
+  const mockedApp = new MockedApp({
+    drivers: {
+      fetcher: () => mockedFetcher,
+    },
+  })
   const { services } = await mockedApp.start({ name: 'Test' })
   mockedFetcher.addEndpoint('GET', 'https://example.com/api/test', () => {
     return new Response('Test Response', { status: 200 })
