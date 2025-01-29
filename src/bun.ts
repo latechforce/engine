@@ -5,8 +5,7 @@ import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
 
 export { mocks } from '/infrastructure/integrations/bun/mocks'
-export { NotionTablePage } from '/domain/integrations/Notion/NotionTablePage'
-export { Record as DatabaseTableRecord } from '/domain/entities/Record'
+export { Helpers, MockedApp } from './infrastructure/test/bun'
 
 export default class extends App {
   constructor(options?: { drivers?: Partial<Drivers>; integrations?: Partial<Integrations> }) {
