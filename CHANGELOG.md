@@ -1,3 +1,11 @@
+## [0.37.11](https://github.com/latechforce/engine/compare/v0.37.10...v0.37.11) (2025-01-29)
+
+
+### Bug Fixes
+
+* **Fetcher:** add green test: should return a mocked response from fetcher ([a118248](https://github.com/latechforce/engine/commit/a1182486d334000f9dc37aba69ecc238c3ba5c7c))
+* **Typescript:** fix error ([22fb9ee](https://github.com/latechforce/engine/commit/22fb9eed0adf9b6d97c51849acaba3163a297592))
+
 ## [0.37.10](https://github.com/latechforce/engine/compare/v0.37.9...v0.37.10) (2025-01-29)
 
 
