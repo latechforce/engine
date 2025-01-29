@@ -1,8 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '../../src/infrastructure/test/integration'
-import { getFirstBucketConfig } from '../../src/infrastructure/test/config'
+import { Helpers } from '/test/bun'
+import { getFirstBucketConfig } from '/test/config'
 
-new IntegrationTest(Tester).with(
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp(
   { drivers: ['Database', 'Storage', 'SpreadsheetLoader'] },
   ({ app, drivers }) => {
     describe('on start', () => {

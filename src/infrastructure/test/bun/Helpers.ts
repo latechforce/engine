@@ -1,5 +1,4 @@
-import App, { mocks } from '../../bun'
-import type { Config, StartedApp } from '../..'
+import type { Config, StartedApp } from '../../..'
 import { join } from 'path'
 import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
@@ -7,22 +6,14 @@ import { DatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver'
 import { StorageDriver } from '/infrastructure/drivers/common/StorageDriver'
 import { NotionIntegration } from '/infrastructure/integrations/bun/mocks/notion/NotionIntegration.mock'
 import { QontoIntegration } from '/infrastructure/integrations/bun/mocks/qonto/QontoIntegration.mock'
-import {
-  PappersIntegration,
-  sampleCompany,
-} from '/infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
+import { PappersIntegration } from '/infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
 import type { DatabaseConfig } from '/domain/services/Database'
 import type { NotionConfig } from '/domain/integrations/Notion'
-import {
-  notionTableSample1,
-  notionTableSample2,
-  notionUserSample,
-} from '/infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
 import type { QontoConfig } from '/domain/integrations/Qonto'
 import type { PappersConfig } from '/domain/integrations/Pappers'
 import { AirtableIntegration } from '/infrastructure/integrations/bun/mocks/airtable/AirtableIntegration.mock'
 import type { AirtableConfig } from '/domain/integrations/Airtable'
-import { airtableTableSample1 } from '/infrastructure/integrations/bun/mocks/airtable/AirtableTableIntegration.mock'
+import { MockedApp } from './MockedApp'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -70,13 +61,7 @@ type TestApp = {
   stop: () => Promise<void>
 }
 
-export class MockedApp extends App {
-  constructor() {
-    super({ integrations: mocks })
-  }
-}
-
-export class IntegrationTest {
+export class Helpers {
   constructor(private tester: Tester) {}
 
   get request(): Request {
@@ -89,11 +74,12 @@ export class IntegrationTest {
             return error
           })
       },
-      post: async (url: string, body: unknown = {}) => {
+      post: async (url: string, body: unknown = {}, options: RequestInit = {}) => {
         return fetch(url, {
           method: 'POST',
           body: JSON.stringify(body),
           headers: { 'Content-Type': 'application/json' },
+          ...options,
         })
           .then((res) => res.json())
           .catch((error) => {
@@ -101,11 +87,12 @@ export class IntegrationTest {
             return error
           })
       },
-      patch: async (url: string, body: unknown = {}) => {
+      patch: async (url: string, body: unknown = {}, options: RequestInit = {}) => {
         return fetch(url, {
           method: 'PATCH',
           body: JSON.stringify(body),
           headers: { 'Content-Type': 'application/json' },
+          ...options,
         })
           .then((res) => res.json())
           .catch((error) => {
@@ -116,7 +103,7 @@ export class IntegrationTest {
     }
   }
 
-  with<D extends DriverType[] = [], I extends IntegrationType[] = []>(
+  testWithMockedApp<D extends DriverType[] = [], I extends IntegrationType[] = []>(
     options: WithOptions<D, I>,
     tests: (helper: {
       app: TestApp
@@ -169,9 +156,6 @@ export class IntegrationTest {
           }
           integrations.notion = new NotionIntegration(config)
           extendsConfig.integrations.notion = config
-          await integrations.notion.addTable(notionTableSample1.name, notionTableSample1.fields)
-          await integrations.notion.addTable(notionTableSample2.name, notionTableSample2.fields)
-          await integrations.notion.addUser(notionUserSample)
         }
         if (options.integrations.includes('Airtable')) {
           const url = join(process.cwd(), 'tmp', `airtable-${nanoid()}.db`)
@@ -182,10 +166,6 @@ export class IntegrationTest {
           }
           integrations.airtable = new AirtableIntegration(config)
           extendsConfig.integrations.airtable = config
-          await integrations.airtable.addTable(
-            airtableTableSample1.name,
-            airtableTableSample1.fields
-          )
         }
         if (options.integrations.includes('Qonto')) {
           const config: QontoConfig = {
@@ -202,7 +182,6 @@ export class IntegrationTest {
           }
           integrations.pappers = new PappersIntegration()
           extendsConfig.integrations.pappers = config
-          await integrations.pappers.addCompany(sampleCompany)
         }
       }
       let startedApp: StartedApp | undefined
@@ -231,5 +210,3 @@ export class IntegrationTest {
     })
   }
 }
-
-export type { Config }

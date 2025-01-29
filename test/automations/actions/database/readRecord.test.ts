@@ -1,7 +1,9 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '../../../../src/infrastructure/test/integration'
+import { Helpers, type Config } from '/test/bun'
 
-new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, drivers }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should read a record in database', async () => {
       // GIVEN

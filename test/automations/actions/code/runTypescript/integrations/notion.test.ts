@@ -1,9 +1,21 @@
-import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '../../../../../../src/infrastructure/test/integration'
+import Tester, { expect, describe, it, beforeEach } from 'bun:test'
+import { Helpers, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
-import { notionTableSample1 } from '/infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
+import {
+  notionTableSample1,
+  notionTableSample2,
+  notionUserSample,
+} from '/infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
 
-new IntegrationTest(Tester).with({ integrations: ['Notion'] }, ({ app, request, integrations }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integrations }) => {
+  beforeEach(async () => {
+    await integrations.notion.addTable(notionTableSample1.name, notionTableSample1.fields)
+    await integrations.notion.addTable(notionTableSample2.name, notionTableSample2.fields)
+    await integrations.notion.addUser(notionUserSample)
+  })
+
   describe('on POST', () => {
     it('should run a Typescript code with a Notion database page insert', async () => {
       // GIVEN

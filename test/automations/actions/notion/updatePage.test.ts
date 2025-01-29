@@ -1,8 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '../../../../src/infrastructure/test/integration'
+import { Helpers, type Config } from '/test/bun'
 import { notionTableSample1 } from '/infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
 
-new IntegrationTest(Tester).with({ integrations: ['Notion'] }, ({ app, request, integrations }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integrations }) => {
   describe('on POST', () => {
     it('should update a page', async () => {
       // GIVEN

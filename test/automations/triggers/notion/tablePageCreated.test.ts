@@ -2,13 +2,12 @@
 // @ts-nocheck
 
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '../../../../src/infrastructure/test/integration'
-import {
-  getAutomationConfig,
-  getFirstTableConfig,
-} from '../../../../src/infrastructure/test/config'
+import { Helpers } from '/test/bun'
+import { getAutomationConfig, getFirstTableConfig } from '/test/config'
 
-new IntegrationTest(Tester).with(
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp(
   { drivers: ['Database'], integrations: ['Notion'] },
   ({ app, drivers, integrations }) => {
     describe.skip('on page in table created', () => {

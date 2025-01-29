@@ -1,7 +1,14 @@
-import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '../../../../src/infrastructure/test/integration'
+import Tester, { expect, describe, it, beforeEach } from 'bun:test'
+import { Helpers, type Config } from '/test/bun'
+import { pappersCompanySample } from '/infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
 
-new IntegrationTest(Tester).with({ integrations: ['Pappers'] }, ({ app, request }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({ integrations: ['Pappers'] }, ({ app, request, integrations }) => {
+  beforeEach(async () => {
+    await integrations.pappers.addCompany(pappersCompanySample)
+  })
+
   describe('on POST', () => {
     it('should get a company', async () => {
       // GIVEN

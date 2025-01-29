@@ -1,8 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '../../../src/infrastructure/test/integration'
-import { getFirstAndSecondTableConfig } from '../../../src/infrastructure/test/config'
+import { Helpers } from '/test/bun'
+import { getFirstAndSecondTableConfig } from '/test/config'
 
-new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, drivers }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers }) => {
   describe('on start', () => {
     it('should create a table with a text rollup', async () => {
       // GIVEN

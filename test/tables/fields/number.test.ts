@@ -1,8 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '../../../src/infrastructure/test/integration'
-import { getFirstTableConfig } from '../../../src/infrastructure/test/config'
+import { Helpers } from '/test/bun'
+import { getFirstTableConfig } from '/test/config'
 
-new IntegrationTest(Tester).with({}, ({ app, request }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({}, ({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a number ', async () => {
       // GIVEN

@@ -1,8 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '../../../../../src/infrastructure/test/integration'
+import { Helpers, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 
-new IntegrationTest(Tester).with({}, ({ app, request }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({}, ({ app, request }) => {
   describe('on POST', () => {
     it('should run a Typescript code with the date-fns package', async () => {
       // GIVEN

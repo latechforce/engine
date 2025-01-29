@@ -1,11 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '../../../../src/infrastructure/test/integration'
-import {
-  getAutomationConfig,
-  getFirstTableConfig,
-} from '../../../../src/infrastructure/test/config'
+import { Helpers } from '/test/bun'
+import { getAutomationConfig, getFirstTableConfig } from '/test/config'
 
-new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, drivers }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, drivers }) => {
   describe('on record created', () => {
     it('should start an automation', async () => {
       // GIVEN

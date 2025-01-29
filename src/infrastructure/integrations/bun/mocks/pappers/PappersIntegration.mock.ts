@@ -46,7 +46,7 @@ export class PappersIntegration implements IPappersIntegration {
   }
 }
 
-export const sampleCompany: PappersEntreprise = {
+export const pappersCompanySample: PappersEntreprise = {
   siren: '44306184100047',
   siren_formate: '123 456 789',
   opposition_utilisation_commerciale: false,

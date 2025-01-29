@@ -1,7 +1,9 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest, type Config } from '../../../../src/infrastructure/test/integration'
+import { Helpers, type Config } from '/test/bun'
 
-new IntegrationTest(Tester).with({ integrations: ['Qonto'] }, ({ app, request }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({ integrations: ['Qonto'] }, ({ app, request }) => {
   describe('on POST', () => {
     it('should create a client', async () => {
       // GIVEN

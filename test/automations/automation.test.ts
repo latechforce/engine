@@ -1,8 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { IntegrationTest } from '../../src/infrastructure/test/integration'
-import { getAutomationConfig } from '../../src/infrastructure/test/config'
+import { Helpers } from '/test/bun'
+import { getAutomationConfig } from '/test/config'
 
-new IntegrationTest(Tester).with({ drivers: ['Database'] }, ({ app, request, drivers }) => {
+const helpers = new Helpers(Tester)
+
+helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should create an automation history', async () => {
       // GIVEN
