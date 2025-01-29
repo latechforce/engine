@@ -1,3 +1,10 @@
+## [0.37.12](https://github.com/latechforce/engine/compare/v0.37.11...v0.37.12) (2025-01-29)
+
+
+### Bug Fixes
+
+* **Helpers:** add fetcher driver ([9d4e2bc](https://github.com/latechforce/engine/commit/9d4e2bc7c694be7647b3f997f59c7f9fcb299fa7))
+
 ## [0.37.11](https://github.com/latechforce/engine/compare/v0.37.10...v0.37.11) (2025-01-29)
 
 
