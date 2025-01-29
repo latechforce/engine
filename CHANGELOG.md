@@ -1,3 +1,10 @@
+## [0.37.10](https://github.com/latechforce/engine/compare/v0.37.9...v0.37.10) (2025-01-29)
+
+
+### Bug Fixes
+
+* **Airtable:** add green test: should return a table with a name containing spaces ([dc44e33](https://github.com/latechforce/engine/commit/dc44e33cd558b8b31ce0d50474f7b323d9987339))
+
 ## [0.37.9](https://github.com/latechforce/engine/compare/v0.37.8...v0.37.9) (2025-01-29)
 
 
