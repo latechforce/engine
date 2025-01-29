@@ -1,3 +1,10 @@
+## [0.37.13](https://github.com/latechforce/engine/compare/v0.37.12...v0.37.13) (2025-01-29)
+
+
+### Bug Fixes
+
+* **MockedFetcherDriver:** update green test: should execute an endpoint that starts with the given URL ([8e50649](https://github.com/latechforce/engine/commit/8e5064960f914fb929fe11819e942359d48f756d))
+
 ## [0.37.12](https://github.com/latechforce/engine/compare/v0.37.11...v0.37.12) (2025-01-29)
 
 
