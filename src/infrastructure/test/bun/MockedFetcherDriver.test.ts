@@ -35,11 +35,11 @@ describe('addEndpoint', () => {
   it('should execute an endpoint that starts with the given URL', async () => {
     const fetcher = new MockedFetcherDriver()
 
-    fetcher.addEndpoint('GET', 'https://example.com/api/resource/123', () => {
+    fetcher.addEndpoint('GET', 'https://example.com/api/resource', () => {
       return new Response('Resource Found', { status: 200 })
     })
 
-    const response = await fetcher.get('https://example.com/api/resource')
+    const response = await fetcher.get('https://example.com/api/resource/123')
     const text = await response.text()
 
     expect(response.status).toBe(200)

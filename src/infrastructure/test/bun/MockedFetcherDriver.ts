@@ -7,7 +7,7 @@ export class MockedFetcherDriver implements IFetcherDriver {
 
   get = async (url: string) => {
     const matchingUrl = Object.keys(this._endpoints.GET).find((endpoint) =>
-      endpoint.startsWith(url)
+      url.startsWith(endpoint)
     )
     if (matchingUrl) {
       return this._endpoints.GET[matchingUrl](new Request(url, { method: 'GET' }))
