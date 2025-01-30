@@ -73,6 +73,6 @@ describe('stop', () => {
     const response = await fetch(startedApp.url).catch((err) => err)
 
     // THEN
-    expect(response.message).toContain('Unable to connect.')
+    expect(response.code).toContain('ConnectionRefused')
   })
 })

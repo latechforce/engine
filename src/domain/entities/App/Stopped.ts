@@ -83,7 +83,6 @@ export class StoppedApp extends BaseApp {
         startedApp.onClose('UNCAUGHT_REJECTION')
       })
     }
-    this._setStatus('started')
     logger.info(`🚀 app "${this.name}" started at ${startedApp.url}`)
     return startedApp
   }

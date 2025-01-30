@@ -41,6 +41,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({}),
       })
 
       // THEN
@@ -61,7 +62,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       expect(response.success).toBeTruthy()
     })
 
-    it('should return an invalid body  error', async () => {
+    it('should return an invalid body error', async () => {
       // GIVEN
       const config = getAutomationConfig('ApiCalledWithTextInput')
       const { url } = await app.start(config)
@@ -72,6 +73,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({}),
       })
 
       // THEN

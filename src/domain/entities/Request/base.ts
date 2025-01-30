@@ -2,7 +2,7 @@ export type BaseRequestParams = {
   path: string
   baseUrl?: string
   headers?: { [key: string]: string }
-  query?: { [key: string]: string }
+  query?: { [key: string]: string | undefined }
   params?: { [key: string]: string }
 }
 
@@ -10,7 +10,7 @@ export class BaseRequest {
   public path: string
   public baseUrl: string
   public headers?: { [key: string]: string }
-  public query: { [key: string]: string }
+  public query: { [key: string]: string | undefined }
   public params: { [key: string]: string }
 
   constructor(params: BaseRequestParams) {
