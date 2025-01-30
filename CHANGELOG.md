@@ -1,3 +1,10 @@
+## [0.37.14](https://github.com/latechforce/engine/compare/v0.37.13...v0.37.14) (2025-01-30)
+
+
+### Bug Fixes
+
+* **Server:** replace Express by Elysia ([8c2b7d7](https://github.com/latechforce/engine/commit/8c2b7d79b47532dff47830c9785a74e57663d920))
+
 ## [0.37.13](https://github.com/latechforce/engine/compare/v0.37.12...v0.37.13) (2025-01-29)
 
 
