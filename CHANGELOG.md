@@ -1,3 +1,11 @@
+## [0.37.15](https://github.com/latechforce/engine/compare/v0.37.14...v0.37.15) (2025-01-31)
+
+
+### Bug Fixes
+
+* **Airtable:** update green test for using dates as string ([b07d2c0](https://github.com/latechforce/engine/commit/b07d2c0ab45f6d08b184577eda4c519877cbbd38))
+* **packages:** update ([2476ac9](https://github.com/latechforce/engine/commit/2476ac96d99fb0d6b5038837dc1ebc3b496bc369))
+
 ## [0.37.14](https://github.com/latechforce/engine/compare/v0.37.13...v0.37.14) (2025-01-30)
 
 
