@@ -1,3 +1,10 @@
+## [0.37.17](https://github.com/latechforce/engine/compare/v0.37.16...v0.37.17) (2025-01-31)
+
+
+### Bug Fixes
+
+* **Console:** remove JSON.stringify metadata ([a3d181b](https://github.com/latechforce/engine/commit/a3d181bf122d151ad91fa31c3a73be50fdec662a))
+
 ## [0.37.16](https://github.com/latechforce/engine/compare/v0.37.15...v0.37.16) (2025-01-31)
 
 
