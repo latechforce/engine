@@ -1,3 +1,10 @@
+## [0.37.18](https://github.com/latechforce/engine/compare/v0.37.17...v0.37.18) (2025-01-31)
+
+
+### Bug Fixes
+
+* **Airtable:** return null value for not supported fields ([cc69864](https://github.com/latechforce/engine/commit/cc69864a90463bb6ccbcd5a2b78d6f518a2142d9))
+
 ## [0.37.17](https://github.com/latechforce/engine/compare/v0.37.16...v0.37.17) (2025-01-31)
 
 
