@@ -1,11 +1,11 @@
 import type { IFetcherDriver } from '/adapter/spi/drivers/FetcherSpi'
 
 export class FetcherDriver implements IFetcherDriver {
-  get = (url: string) => {
+  get = async (url: string) => {
     return fetch(url)
   }
 
-  post = (url: string, body: object) => {
+  post = async (url: string, body: object = {}) => {
     return fetch(url, {
       method: 'POST',
       headers: {

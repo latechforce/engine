@@ -1,6 +1,6 @@
 export interface IFetcherSpi {
   get: (path: string) => Promise<Response>
-  post: (path: string, body: object) => Promise<Response>
+  post: (path: string, body?: object) => Promise<Response>
 }
 
 export class Fetcher {
@@ -10,7 +10,7 @@ export class Fetcher {
     return this._spi.get(url)
   }
 
-  post = (url: string, body: object): Promise<Response> => {
+  post = (url: string, body?: object): Promise<Response> => {
     return this._spi.post(url, body)
   }
 }

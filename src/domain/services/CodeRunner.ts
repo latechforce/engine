@@ -52,6 +52,7 @@ export interface CodeRunnerContextServicesLogger {
 
 export interface CodeRunnerContextServicesFetcher {
   get: (url: string) => Promise<Response>
+  post: (url: string, body: object) => Promise<Response>
 }
 
 export interface CodeRunnerContextServices {

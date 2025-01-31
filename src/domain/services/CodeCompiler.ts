@@ -96,6 +96,9 @@ export class CodeCompiler {
       get: (url: string) => {
         return this._services.fetcher.get(url)
       },
+      post: (url: string, body: object) => {
+        return this._services.fetcher.post(url, body)
+      },
     }
     return { database, logger, fetcher }
   }
