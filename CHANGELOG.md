@@ -1,3 +1,10 @@
+## [0.37.19](https://github.com/latechforce/engine/compare/v0.37.18...v0.37.19) (2025-01-31)
+
+
+### Bug Fixes
+
+* **package:** readd splitting on build ([4549183](https://github.com/latechforce/engine/commit/454918306d1ed1fe2712b13d378540cd2d0e8adf))
+
 ## [0.37.18](https://github.com/latechforce/engine/compare/v0.37.17...v0.37.18) (2025-01-31)
 
 
