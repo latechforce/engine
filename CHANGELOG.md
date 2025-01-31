@@ -1,3 +1,12 @@
+## [0.37.16](https://github.com/latechforce/engine/compare/v0.37.15...v0.37.16) (2025-01-31)
+
+
+### Bug Fixes
+
+* **Fecther:** add green test: should make a POST request with correct headers and body ([80a8303](https://github.com/latechforce/engine/commit/80a8303b9498b1151a96079b6538194013f63195))
+* **Fetcher:** add green test: should run a Typescript code with a fetcher get ([a215d61](https://github.com/latechforce/engine/commit/a215d6137b8a86e355e757313a5f26f40f93addd))
+* **Fetcher:** fix broken tests ([51a58de](https://github.com/latechforce/engine/commit/51a58de964288927eed8d86e08d8b1f5f500c296))
+
 ## [0.37.15](https://github.com/latechforce/engine/compare/v0.37.14...v0.37.15) (2025-01-31)
 
 
