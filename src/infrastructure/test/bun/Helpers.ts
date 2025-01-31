@@ -119,6 +119,7 @@ export class Helpers {
         : {}
     }) => void
   ): void {
+    const files: string[] = []
     const drivers: any = {}
     const integrations: any = {}
     const extendsConfig: Partial<Config> = {}
@@ -136,6 +137,7 @@ export class Helpers {
         if (options.drivers.includes('Database')) {
           const url = join(process.cwd(), 'tmp', `database-${nanoid()}.db`)
           await fs.ensureFile(url)
+          files.push(url)
           const config: DatabaseConfig = { driver: 'SQLite', url }
           const database = new DatabaseDriver(config)
           drivers.database = database
@@ -157,6 +159,7 @@ export class Helpers {
         if (options.integrations.includes('Notion')) {
           const url = join(process.cwd(), 'tmp', `notion-${nanoid()}.db`)
           await fs.ensureFile(url)
+          files.push(url)
           const config: NotionConfig = {
             token: url,
             pollingInterval: 1,
@@ -167,6 +170,7 @@ export class Helpers {
         if (options.integrations.includes('Airtable')) {
           const url = join(process.cwd(), 'tmp', `airtable-${nanoid()}.db`)
           await fs.ensureFile(url)
+          files.push(url)
           const config: AirtableConfig = {
             apiKey: url,
             baseId: 'test',
@@ -198,7 +202,7 @@ export class Helpers {
         return startedApp
       }
       app.stop = async () => {
-        await startedApp?.stop()
+        if (startedApp) await startedApp.stop()
       }
     })
 
@@ -207,7 +211,9 @@ export class Helpers {
     })
 
     this.tester.afterAll(async () => {
-      await fs.emptyDir(join(process.cwd(), 'tmp'))
+      for (const file of files) {
+        await fs.remove(file)
+      }
     })
 
     tests({

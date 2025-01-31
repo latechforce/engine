@@ -99,7 +99,7 @@ export class ElysiaDriver implements IServerDriver {
   }
 
   stop = async (): Promise<void> => {
-    this._app.stop()
+    await this._app.stop()
   }
 
   private _findRandomAvailablePort(
