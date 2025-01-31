@@ -176,7 +176,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
             ) {
               return value
             }
-            throw new Error(`Field "${field.name}" has an unsupported type "${typeof value}"`)
+            return null
         }
       }
       fields[field.name] = getPropertyValue(field)
