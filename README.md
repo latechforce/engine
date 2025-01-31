@@ -1,6 +1,6 @@
-# La Tech Force Engine - Web App Generator
+# La Tech Force Engine - Backend Generator
 
-La Tech Force Engine is a API to generate web app, fast and easy. With a configuration file, you can create a full stack application.
+La Tech Force Engine is a API to generate a backend, fast and easy. With a configuration file, you can create a full backend.
 
 ## Getting Started
 
@@ -24,7 +24,7 @@ Create a new file `index.ts` with the following content:
 
 ```ts
 import type { Config, CodeRunnerContext } from '@latechforce/engine'
-import BunEngine from '@latechforce/engine/bun'
+import App from '@latechforce/engine/bun'
 
 const config: Config = {
   name: 'App',
@@ -64,7 +64,7 @@ const config: Config = {
   ],
 }
 
-const startedApp = await new BunEngine().start(config)
+const startedApp = await new App().start(config)
 
 const response = await fetch(startedApp.url + '/api/automation/hello-name', {
   method: 'POST',
