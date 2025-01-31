@@ -38,7 +38,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
   }
 
   insert = async <T extends NotionTablePageProperties>(page: T) => {
-    const id = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')(21)
+    const id = this._getId()
     await this._db.insert({
       id,
       fields: this._preprocess(page),
@@ -49,7 +49,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
 
   insertMany = async <T extends NotionTablePageProperties>(pages: T[]) => {
     const pagesToInsert = pages.map((page) => ({
-      id: customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')(21),
+      id: this._getId(),
       fields: this._preprocess(page),
       created_at: new Date(),
     }))
@@ -106,7 +106,11 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return records.map((record) => this._postprocess<T>(record))
   }
 
-  _preprocess = (page: NotionTablePageProperties): RecordFields => {
+  private _getId = () => {
+    return customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')(21)
+  }
+
+  private _preprocess = (page: NotionTablePageProperties): RecordFields => {
     const fields: RecordFields = {}
     for (const [key, value] of Object.entries(page)) {
       const property = this._properties.find((p) => p.name === key)
@@ -154,7 +158,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return fields
   }
 
-  _postprocess = <T extends NotionTablePageProperties>(
+  private _postprocess = <T extends NotionTablePageProperties>(
     record: PersistedRecordFieldsDto<RecordFields>
   ): NotionTablePageDto<T> => {
     const page: RecordFields = {}

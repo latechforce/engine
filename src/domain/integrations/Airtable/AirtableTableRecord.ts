@@ -8,7 +8,6 @@ export type AirtableTableRecordFieldValue =
   | string
   | number
   | boolean
-  | Date
   | AirtableTableRecordFieldValue[]
   | AirtableTableRecordFieldFile[]
   | null
@@ -18,7 +17,7 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
   constructor(
     readonly id: string,
     readonly fields: T,
-    readonly createdTime: Date
+    readonly createdTime: string
   ) {}
 
   getTitle(name: string): string | null {
@@ -67,8 +66,8 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     return this._getPropertyAsBoolean(name)
   }
 
-  getDateFormula(name: string): Date | null {
-    return this._getPropertyAsDate(name)
+  getDateFormula(name: string): string | null {
+    return this._getPropertyAsString(name)
   }
 
   getLastEditedBy(name: string): string {
@@ -77,8 +76,8 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     return value
   }
 
-  getLastEditedTime(name: string): Date {
-    const value = this._getPropertyAsDate(name)
+  getLastEditedTime(name: string): string {
+    const value = this._getPropertyAsString(name)
     if (!value) throw new Error('Field "lastEditedTime" should not be null')
     return value
   }
@@ -127,8 +126,8 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     return this._getPropertyAsStringArray(name)[0] || null
   }
 
-  getDateRollup(name: string): Date | null {
-    return this._getPropertyAsDate(name)
+  getDateRollup(name: string): string | null {
+    return this._getPropertyAsString(name)
   }
 
   getNumberRollup(name: string): number | null {

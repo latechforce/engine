@@ -26,7 +26,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
 
   insert = async <T extends AirtableTableRecordFields>(record: T) => {
     const fields = this._preprocessFields(record)
-    const insertedRecord = await this._api.create(fields)
+    const insertedRecord = await this._api.create(fields, { typecast: true })
     return this._postprocessRecord<T>(insertedRecord)
   }
 
@@ -37,7 +37,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
       const recordsFields = chunk.map((fields) => ({
         fields: this._preprocessFields(fields),
       }))
-      recordsToInsert.push(this._api.create(recordsFields))
+      recordsToInsert.push(this._api.create(recordsFields, { typecast: true }))
     }
     const insertedRecords = await Promise.all(recordsToInsert)
     return insertedRecords.flat().map((record) => this._postprocessRecord<T>(record))
@@ -45,7 +45,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
 
   update = async <T extends AirtableTableRecordFields>(id: string, record: Partial<T>) => {
     const fields = this._preprocessFields(record)
-    const updatedRecord = await this._api.update(id, fields)
+    const updatedRecord = await this._api.update(id, fields, { typecast: true })
     return this._postprocessRecord<T>(updatedRecord)
   }
 
@@ -59,7 +59,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
         id,
         fields: this._preprocessFields(fields),
       }))
-      recordsToUpdate.push(this._api.update(recordsFields))
+      recordsToUpdate.push(this._api.update(recordsFields, { typecast: true }))
     }
     const updatedRecord = await Promise.all(recordsToUpdate)
     return updatedRecord.flat().map((record) => this._postprocessRecord<T>(record))
@@ -107,6 +107,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
             if (typeof value === 'number') return value
             if (typeof value === 'string') return parseFloat(value)
             return null
+          case 'dateTime':
           case 'date':
             if (value instanceof Date) {
               return formatISO(value, { representation: 'complete' })
@@ -165,7 +166,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
             throw new Error('Field "multipleCollaborators" should have an email property')
           case 'dateTime':
           case 'date':
-            if (value && typeof value === 'string') return new Date(value)
+            if (value && typeof value === 'string') return value
             throw new Error('Field "date" should be a string')
           default:
             if (

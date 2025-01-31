@@ -8,7 +8,7 @@ beforeEach(() => {
     title: 'Test Title',
     checkbox: true,
     createdBy: 'Creator',
-    createdTime: new Date('2023-01-01T00:00:00Z'),
+    createdTime: '2023-01-01T00:00:00Z',
     email: 'test@example.com',
     files: [
       { name: 'file1', url: 'https://example.com/file1' },
@@ -22,23 +22,19 @@ beforeEach(() => {
     stringFormula: 'Formula String',
     numberFormula: 100,
     booleanFormula: false,
-    dateFormula: new Date('2023-02-01T00:00:00Z'),
+    dateFormula: '2023-02-01T00:00:00Z',
     lastEditedBy: 'Editor',
-    lastEditedTime: new Date('2023-01-03T00:00:00Z'),
+    lastEditedTime: '2023-01-03T00:00:00Z',
     stringArrayRollup: ['string1', 'string2', 'string3'],
     numberArrayRollup: [1, 2, 3],
     booleanArrayRollup: [true, false, true],
     numberRollup: 1,
-    dateRollup: new Date('2023-02-01T00:00:00Z'),
+    dateRollup: '2023-02-01T00:00:00Z',
     status: 'In Progress',
     url: 'https://example.com',
   }
 
-  airtableTableRecord = new AirtableTableRecord(
-    'pageid',
-    mockProperties,
-    new Date('2023-01-01T00:00:00Z')
-  )
+  airtableTableRecord = new AirtableTableRecord('pageid', mockProperties, '2023-01-01T00:00:00Z')
 })
 
 describe('id', () => {
@@ -137,7 +133,7 @@ describe('getBooleanFormula', () => {
 describe('getDateFormula', () => {
   it('should return date formula as a Date object', () => {
     const formula = airtableTableRecord.getDateFormula('dateFormula')
-    expect(formula).toEqual(new Date('2023-02-01T00:00:00Z'))
+    expect(formula).toEqual('2023-02-01T00:00:00Z')
   })
 })
 
@@ -158,7 +154,7 @@ describe('getLastEditedBy', () => {
 describe('getLastEditedTime', () => {
   it('should return last edited time as a Date object and not null', () => {
     const lastEditedTime = airtableTableRecord.getLastEditedTime('lastEditedTime')
-    expect(lastEditedTime).toEqual(new Date('2023-01-03T00:00:00Z'))
+    expect(lastEditedTime).toEqual('2023-01-03T00:00:00Z')
   })
 
   it('should throw an error if lastEditedTime is null', () => {
@@ -247,7 +243,7 @@ describe('getSingleStringRollup', () => {
 describe('getDateRollup', () => {
   it('should return the first date rollup as a Date object', () => {
     const dateRollup = airtableTableRecord.getDateRollup('dateRollup')
-    expect(dateRollup).toEqual(new Date('2023-02-01T00:00:00Z'))
+    expect(dateRollup).toEqual('2023-02-01T00:00:00Z')
   })
 
   it('should return null if there is no date rollup', () => {

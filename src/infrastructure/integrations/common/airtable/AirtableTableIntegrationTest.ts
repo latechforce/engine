@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import { addDays, format, parse, subDays } from 'date-fns'
+import { addDays, format, subDays } from 'date-fns'
 import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import type BunTester from 'bun:test'
 import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
@@ -196,13 +196,13 @@ export function testAirtableTableIntegration(
 
     it('should insert a record in a table with a date field', async () => {
       // GIVEN
-      const date = new Date(2018, 8, 22, 15, 0, 0)
+      const date = new Date(2018, 8, 22, 15, 0, 0).toISOString()
 
       // WHEN
       const record = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date?.toString()).toBe(date.toString())
+      expect(record.fields.date).toBe(date)
     })
 
     it('should insert a record in a table with a date field from a date string', async () => {
@@ -213,9 +213,7 @@ export function testAirtableTableIntegration(
       const record = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date as unknown as Date).toStrictEqual(
-        parse(date, 'yyyy-MM-dd', new Date())
-      )
+      expect(record.fields.date).toBe('2018-09-22T00:00:00.000Z')
     })
 
     it('should insert a record in a table with a date field from a date and time string', async () => {
@@ -226,9 +224,7 @@ export function testAirtableTableIntegration(
       const record = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date as unknown as Date).toStrictEqual(
-        parse(date, "yyyy-MM-dd'T'HH:mm:ss", new Date())
-      )
+      expect(record.fields.date).toBe('2018-09-22T15:00:00.000Z')
     })
 
     it('should insert a record in a table with a date field from a date, time and milliseconds string', async () => {
@@ -239,9 +235,7 @@ export function testAirtableTableIntegration(
       const record = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date as unknown as Date).toStrictEqual(
-        parse(date, "yyyy-MM-dd'T'HH:mm:ss.SSSX", new Date())
-      )
+      expect(record.fields.date).toBe('2018-09-22T15:00:00.000Z')
     })
 
     it('should insert a record in a table with a date field from a timestamp', async () => {
@@ -253,7 +247,7 @@ export function testAirtableTableIntegration(
       const record = await table1.insert({ date: timestamp })
 
       // THEN
-      expect(record.fields.date?.toString()).toBe(date.toString())
+      expect(String(record.fields.date)).toBe(date.toISOString())
     })
 
     it('should insert a record in a table with a date field and a null value', async () => {
@@ -372,19 +366,19 @@ export function testAirtableTableIntegration(
 
     it('should update a record in a table with a date field', async () => {
       // GIVEN
-      const { id } = await table1.insert({ date: new Date(2000) })
-      const date = new Date(2018, 8, 22, 15, 0, 0)
+      const { id } = await table1.insert({ date: '2000-01-01T00:00:00' })
+      const date = new Date(2018, 8, 22, 15, 0, 0).toISOString()
 
       // WHEN
       const record = await table1.update(id, { date })
 
       // THEN
-      expect(record.fields.date?.toString()).toBe(date.toString())
+      expect(record.fields.date).toBe(date)
     })
 
     it('should update a record in a table with a date field and a null value', async () => {
       // GIVEN
-      const { id } = await table1.insert({ date: new Date(2000) })
+      const { id } = await table1.insert({ date: '2000-01-01T00:00:00' })
       const date = null
 
       // WHEN

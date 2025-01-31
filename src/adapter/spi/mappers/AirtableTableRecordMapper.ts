@@ -11,7 +11,7 @@ export class AirtableTableRecordMapper {
     return new AirtableTableRecord(
       tableRecordDto.id,
       tableRecordDto.fields,
-      new Date(tableRecordDto.created_time)
+      tableRecordDto.created_time
     )
   }
 

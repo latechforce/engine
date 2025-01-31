@@ -7,7 +7,7 @@ import type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableReco
 import type { PersistedRecordFieldsDto } from '/adapter/spi/dtos/RecordDto'
 import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
 import type { IField } from '/domain/interfaces/IField'
-import { nanoid } from 'nanoid'
+import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '/domain/entities/Record'
 import type { ITable } from '/domain/interfaces/ITable'
 
@@ -38,7 +38,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
   }
 
   insert = async <T extends AirtableTableRecordFields>(record: T) => {
-    const id = nanoid()
+    const id = this._getId()
     await this._db.insert({
       id,
       fields: this._preprocess(record),
@@ -49,7 +49,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
 
   insertMany = async <T extends AirtableTableRecordFields>(records: T[]) => {
     const pagesToInsert = records.map((record) => ({
-      id: nanoid(),
+      id: this._getId(),
       fields: this._preprocess(record),
       created_at: new Date(),
     }))
@@ -100,7 +100,13 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     return records.map((record) => this._postprocess<T>(record))
   }
 
-  _preprocess = (record: AirtableTableRecordFields): RecordFields => {
+  private _getId = () => {
+    return (
+      'rec' + customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')(21)
+    )
+  }
+
+  private _preprocess = (record: AirtableTableRecordFields): RecordFields => {
     const fields: RecordFields = {}
     for (const [key, value] of Object.entries(record)) {
       const property = this._fields.find((p) => p.name === key)
@@ -114,8 +120,8 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
           fields[key] = value ? String(value) : null
           break
         case 'DateTime':
-          if (typeof value === 'number') fields[key] = new Date(value)
-          else fields[key] = value as Date
+          if (typeof value === 'number') fields[key] = new Date(value).toISOString()
+          else fields[key] = value ? String(value) : null
           break
         case 'Number':
           fields[key] = value ? Number(value) : null
@@ -148,7 +154,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     return fields
   }
 
-  _postprocess = <T extends AirtableTableRecordFields>(
+  private _postprocess = <T extends AirtableTableRecordFields>(
     record: PersistedRecordFieldsDto<RecordFields>
   ): AirtableTableRecordDto<T> => {
     const fields: RecordFields = {}
@@ -160,7 +166,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
           fields[key] = value ?? null
           break
         case 'DateTime':
-          fields[key] = value ? new Date(value as number) : null
+          fields[key] = value ? new Date(value as number).toISOString() : null
           break
         case 'Number':
           fields[key] = value ?? null
