@@ -8,8 +8,8 @@ export class ConsoleDriver extends BaseLoggerDriver {
       format: format.combine(
         format.colorize(),
         format.timestamp(),
-        format.printf(({ timestamp, level, message, ...res }) => {
-          return `${timestamp} [${level}]: ${message} ${Object.keys(res).length ? JSON.stringify(res, null, 2) : ''}`
+        format.printf(({ timestamp, level, message }) => {
+          return `${timestamp} [${level}]: ${message}`
         })
       ),
       transports: [new transports.Console(config)],
