@@ -1,3 +1,10 @@
+## [0.37.20](https://github.com/latechforce/engine/compare/v0.37.19...v0.37.20) (2025-02-01)
+
+
+### Bug Fixes
+
+* **Airtable:** add green test: should insert a record in a table with a date field from a date, time and milliseconds string without Z ([58c93e3](https://github.com/latechforce/engine/commit/58c93e35bca58ccae4230df87f2b49303473635f))
+
 ## [0.37.19](https://github.com/latechforce/engine/compare/v0.37.18...v0.37.19) (2025-01-31)
 
 
