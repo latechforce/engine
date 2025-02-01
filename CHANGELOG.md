@@ -1,3 +1,10 @@
+## [0.37.22](https://github.com/latechforce/engine/compare/v0.37.21...v0.37.22) (2025-02-01)
+
+
+### Bug Fixes
+
+* **pacakges:** add types for packages in prod ([1e64412](https://github.com/latechforce/engine/commit/1e64412027e00349c7c481bdb231c93b33ee8f27))
+
 ## [0.37.21](https://github.com/latechforce/engine/compare/v0.37.20...v0.37.21) (2025-02-01)
 
 
