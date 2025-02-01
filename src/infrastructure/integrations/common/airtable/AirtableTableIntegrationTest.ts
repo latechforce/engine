@@ -227,6 +227,17 @@ export function testAirtableTableIntegration(
       expect(record.fields.date).toBe('2018-09-22T15:00:00.000Z')
     })
 
+    it('should insert a record in a table with a date field from a date, time and milliseconds string without Z', async () => {
+      // GIVEN
+      const date = '2018-09-22T15:00:00.000'
+
+      // WHEN
+      const record = await table1.insert({ date })
+
+      // THEN
+      expect(record.fields.date).toBe('2018-09-22T15:00:00.000Z')
+    })
+
     it('should insert a record in a table with a date field from a date, time and milliseconds string', async () => {
       // GIVEN
       const date = '2018-09-22T15:00:00.000Z'

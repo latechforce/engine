@@ -116,8 +116,12 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
               return formatISO(new Date(value), { representation: 'complete' })
             }
             if (typeof value === 'string') {
-              if (value.includes('T') && value.includes('Z')) {
+              if (value.includes('T') && value.includes('.') && value.includes('Z')) {
                 return formatISO(parse(value, "yyyy-MM-dd'T'HH:mm:ss.SSSX", new Date()), {
+                  representation: 'complete',
+                })
+              } else if (value.includes('T') && value.includes('.')) {
+                return formatISO(parse(value, "yyyy-MM-dd'T'HH:mm:ss.SSS", new Date()), {
                   representation: 'complete',
                 })
               } else if (value.includes('T')) {
