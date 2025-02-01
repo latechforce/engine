@@ -1,3 +1,11 @@
+## [0.37.23](https://github.com/latechforce/engine/compare/v0.37.22...v0.37.23) (2025-02-01)
+
+
+### Bug Fixes
+
+* **CI:** update version ([052a806](https://github.com/latechforce/engine/commit/052a8060a6b2b001538d923a4ad7ce12cb90e8cb))
+* **packages:** add green test: should run a Typescript code with the date-fns/locale package ([3a73199](https://github.com/latechforce/engine/commit/3a731999dd62c500834331e725e62a9dbbcfb9ad))
+
 ## [0.37.22](https://github.com/latechforce/engine/compare/v0.37.21...v0.37.22) (2025-02-01)
 
 ### Bug Fixes
