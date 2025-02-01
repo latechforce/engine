@@ -38,7 +38,7 @@
     "build:types": "bunx tsc --project script/tsconfig.json && bun script/fix-types-paths.ts",
     "build:engine": "bun build --entrypoints ./src/index.ts ./src/bun.ts ./src/infrastructure/instrument/bun/index.ts ./src/infrastructure/test/bun/index.ts --outdir ./dist --target bun --packages external --splitting",
     "build": "bun run build:engine && bun run build:types",
-    "test": "bun test --bail --timeout 20000 --rerun-each 3",
+    "test": "bun test --bail --timeout 20000",
     "test:unit": "bun test src/adapter src/domain --bail",
     "test:integration": "bun test src/infrastructure --bail --timeout 20000",
     "test:e2e": "bun test test/ --bail",
