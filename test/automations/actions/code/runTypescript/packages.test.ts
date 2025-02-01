@@ -47,6 +47,49 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       expect(response.date).toBe('2024-09-01')
     })
 
+    it('should run a Typescript code with the date-fns/locale package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        automations: [
+          {
+            name: 'getDateLocale',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-date-locale',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { dateFnsLocale },
+                  } = context
+                  const exist = !!dateFnsLocale.fr
+                  return { exist }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-date-locale`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
     it('should run a Typescript code with xml2js package', async () => {
       // GIVEN
       const config: Config = {

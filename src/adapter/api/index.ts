@@ -43,10 +43,10 @@ export default class {
   private _validateConfigOrThrow = async (config: Config): Promise<StoppedApp> => {
     const stoppedApp = AppMapper.toEntity(this._drivers, this._integrations, config)
     await stoppedApp.logger.init()
-    stoppedApp.logger.info('✅ config schema is valid')
+    stoppedApp.logger.debug('✅ config schema is valid')
     const errors = await stoppedApp.validateConfig()
     if (errors.length > 0) throw new Error(JSON.stringify(errors, null, 2))
-    stoppedApp.logger.info('✅ config dependancies are valids')
+    stoppedApp.logger.debug('✅ config dependancies are valids')
     return stoppedApp
   }
 

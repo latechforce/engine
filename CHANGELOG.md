@@ -1,157 +1,136 @@
 ## [0.37.22](https://github.com/latechforce/engine/compare/v0.37.21...v0.37.22) (2025-02-01)
 
-
 ### Bug Fixes
 
-* **pacakges:** add types for packages in prod ([1e64412](https://github.com/latechforce/engine/commit/1e64412027e00349c7c481bdb231c93b33ee8f27))
+- **pacakges:** add types for packages in prod ([1e64412](https://github.com/latechforce/engine/commit/1e64412027e00349c7c481bdb231c93b33ee8f27))
 
 ## [0.37.21](https://github.com/latechforce/engine/compare/v0.37.20...v0.37.21) (2025-02-01)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** add green test: should run a Typescript code with papaparse package ([d85446e](https://github.com/latechforce/engine/commit/d85446e1b3ffaa61af42b268a77f8d880d572f15))
+- **RunTypescript:** add green test: should run a Typescript code with papaparse package ([d85446e](https://github.com/latechforce/engine/commit/d85446e1b3ffaa61af42b268a77f8d880d572f15))
 
 ## [0.37.20](https://github.com/latechforce/engine/compare/v0.37.19...v0.37.20) (2025-02-01)
 
-
 ### Bug Fixes
 
-* **Airtable:** add green test: should insert a record in a table with a date field from a date, time and milliseconds string without Z ([58c93e3](https://github.com/latechforce/engine/commit/58c93e35bca58ccae4230df87f2b49303473635f))
+- **Airtable:** add green test: should insert a record in a table with a date field from a date, time and milliseconds string without Z ([58c93e3](https://github.com/latechforce/engine/commit/58c93e35bca58ccae4230df87f2b49303473635f))
 
 ## [0.37.19](https://github.com/latechforce/engine/compare/v0.37.18...v0.37.19) (2025-01-31)
 
-
 ### Bug Fixes
 
-* **package:** readd splitting on build ([4549183](https://github.com/latechforce/engine/commit/454918306d1ed1fe2712b13d378540cd2d0e8adf))
+- **package:** readd splitting on build ([4549183](https://github.com/latechforce/engine/commit/454918306d1ed1fe2712b13d378540cd2d0e8adf))
 
 ## [0.37.18](https://github.com/latechforce/engine/compare/v0.37.17...v0.37.18) (2025-01-31)
 
-
 ### Bug Fixes
 
-* **Airtable:** return null value for not supported fields ([cc69864](https://github.com/latechforce/engine/commit/cc69864a90463bb6ccbcd5a2b78d6f518a2142d9))
+- **Airtable:** return null value for not supported fields ([cc69864](https://github.com/latechforce/engine/commit/cc69864a90463bb6ccbcd5a2b78d6f518a2142d9))
 
 ## [0.37.17](https://github.com/latechforce/engine/compare/v0.37.16...v0.37.17) (2025-01-31)
 
-
 ### Bug Fixes
 
-* **Console:** remove JSON.stringify metadata ([a3d181b](https://github.com/latechforce/engine/commit/a3d181bf122d151ad91fa31c3a73be50fdec662a))
+- **Console:** remove JSON.stringify metadata ([a3d181b](https://github.com/latechforce/engine/commit/a3d181bf122d151ad91fa31c3a73be50fdec662a))
 
 ## [0.37.16](https://github.com/latechforce/engine/compare/v0.37.15...v0.37.16) (2025-01-31)
 
-
 ### Bug Fixes
 
-* **Fecther:** add green test: should make a POST request with correct headers and body ([80a8303](https://github.com/latechforce/engine/commit/80a8303b9498b1151a96079b6538194013f63195))
-* **Fetcher:** add green test: should run a Typescript code with a fetcher get ([a215d61](https://github.com/latechforce/engine/commit/a215d6137b8a86e355e757313a5f26f40f93addd))
-* **Fetcher:** fix broken tests ([51a58de](https://github.com/latechforce/engine/commit/51a58de964288927eed8d86e08d8b1f5f500c296))
+- **Fecther:** add green test: should make a POST request with correct headers and body ([80a8303](https://github.com/latechforce/engine/commit/80a8303b9498b1151a96079b6538194013f63195))
+- **Fetcher:** add green test: should run a Typescript code with a fetcher get ([a215d61](https://github.com/latechforce/engine/commit/a215d6137b8a86e355e757313a5f26f40f93addd))
+- **Fetcher:** fix broken tests ([51a58de](https://github.com/latechforce/engine/commit/51a58de964288927eed8d86e08d8b1f5f500c296))
 
 ## [0.37.15](https://github.com/latechforce/engine/compare/v0.37.14...v0.37.15) (2025-01-31)
 
-
 ### Bug Fixes
 
-* **Airtable:** update green test for using dates as string ([b07d2c0](https://github.com/latechforce/engine/commit/b07d2c0ab45f6d08b184577eda4c519877cbbd38))
-* **packages:** update ([2476ac9](https://github.com/latechforce/engine/commit/2476ac96d99fb0d6b5038837dc1ebc3b496bc369))
+- **Airtable:** update green test for using dates as string ([b07d2c0](https://github.com/latechforce/engine/commit/b07d2c0ab45f6d08b184577eda4c519877cbbd38))
+- **packages:** update ([2476ac9](https://github.com/latechforce/engine/commit/2476ac96d99fb0d6b5038837dc1ebc3b496bc369))
 
 ## [0.37.14](https://github.com/latechforce/engine/compare/v0.37.13...v0.37.14) (2025-01-30)
 
-
 ### Bug Fixes
 
-* **Server:** replace Express by Elysia ([8c2b7d7](https://github.com/latechforce/engine/commit/8c2b7d79b47532dff47830c9785a74e57663d920))
+- **Server:** replace Express by Elysia ([8c2b7d7](https://github.com/latechforce/engine/commit/8c2b7d79b47532dff47830c9785a74e57663d920))
 
 ## [0.37.13](https://github.com/latechforce/engine/compare/v0.37.12...v0.37.13) (2025-01-29)
 
-
 ### Bug Fixes
 
-* **MockedFetcherDriver:** update green test: should execute an endpoint that starts with the given URL ([8e50649](https://github.com/latechforce/engine/commit/8e5064960f914fb929fe11819e942359d48f756d))
+- **MockedFetcherDriver:** update green test: should execute an endpoint that starts with the given URL ([8e50649](https://github.com/latechforce/engine/commit/8e5064960f914fb929fe11819e942359d48f756d))
 
 ## [0.37.12](https://github.com/latechforce/engine/compare/v0.37.11...v0.37.12) (2025-01-29)
 
-
 ### Bug Fixes
 
-* **Helpers:** add fetcher driver ([9d4e2bc](https://github.com/latechforce/engine/commit/9d4e2bc7c694be7647b3f997f59c7f9fcb299fa7))
+- **Helpers:** add fetcher driver ([9d4e2bc](https://github.com/latechforce/engine/commit/9d4e2bc7c694be7647b3f997f59c7f9fcb299fa7))
 
 ## [0.37.11](https://github.com/latechforce/engine/compare/v0.37.10...v0.37.11) (2025-01-29)
 
-
 ### Bug Fixes
 
-* **Fetcher:** add green test: should return a mocked response from fetcher ([a118248](https://github.com/latechforce/engine/commit/a1182486d334000f9dc37aba69ecc238c3ba5c7c))
-* **Typescript:** fix error ([22fb9ee](https://github.com/latechforce/engine/commit/22fb9eed0adf9b6d97c51849acaba3163a297592))
+- **Fetcher:** add green test: should return a mocked response from fetcher ([a118248](https://github.com/latechforce/engine/commit/a1182486d334000f9dc37aba69ecc238c3ba5c7c))
+- **Typescript:** fix error ([22fb9ee](https://github.com/latechforce/engine/commit/22fb9eed0adf9b6d97c51849acaba3163a297592))
 
 ## [0.37.10](https://github.com/latechforce/engine/compare/v0.37.9...v0.37.10) (2025-01-29)
 
-
 ### Bug Fixes
 
-* **Airtable:** add green test: should return a table with a name containing spaces ([dc44e33](https://github.com/latechforce/engine/commit/dc44e33cd558b8b31ce0d50474f7b323d9987339))
+- **Airtable:** add green test: should return a table with a name containing spaces ([dc44e33](https://github.com/latechforce/engine/commit/dc44e33cd558b8b31ce0d50474f7b323d9987339))
 
 ## [0.37.9](https://github.com/latechforce/engine/compare/v0.37.8...v0.37.9) (2025-01-29)
 
-
 ### Bug Fixes
 
-* **export:** merge test export in bun export ([47a061e](https://github.com/latechforce/engine/commit/47a061e695839816d8c75888ac97e0f23f4c3d7c))
-* **packages:** fix test bun export with duplicated mocks export ([4fb528a](https://github.com/latechforce/engine/commit/4fb528aa451a69795daa72e0c10279f524ae89a3))
+- **export:** merge test export in bun export ([47a061e](https://github.com/latechforce/engine/commit/47a061e695839816d8c75888ac97e0f23f4c3d7c))
+- **packages:** fix test bun export with duplicated mocks export ([4fb528a](https://github.com/latechforce/engine/commit/4fb528aa451a69795daa72e0c10279f524ae89a3))
 
 ## [0.37.8](https://github.com/latechforce/engine/compare/v0.37.7...v0.37.8) (2025-01-29)
 
-
 ### Bug Fixes
 
-* **Notion:** fix broken Notion test ([864ee49](https://github.com/latechforce/engine/commit/864ee49ed5c603eb68fe90e5f38944ef21ff8943))
-* **Test:** export test Helpers ([5172995](https://github.com/latechforce/engine/commit/51729952bd24815a256aa7aa98aa0307c8a9c07c))
+- **Notion:** fix broken Notion test ([864ee49](https://github.com/latechforce/engine/commit/864ee49ed5c603eb68fe90e5f38944ef21ff8943))
+- **Test:** export test Helpers ([5172995](https://github.com/latechforce/engine/commit/51729952bd24815a256aa7aa98aa0307c8a9c07c))
 
 ## [0.37.7](https://github.com/latechforce/engine/compare/v0.37.6...v0.37.7) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **Airtable:** add IsAfter and IsBefore filters ([fae0b4a](https://github.com/latechforce/engine/commit/fae0b4a4a867a973ff1f9e086d691ef85c086fdf))
+- **Airtable:** add IsAfter and IsBefore filters ([fae0b4a](https://github.com/latechforce/engine/commit/fae0b4a4a867a973ff1f9e086d691ef85c086fdf))
 
 ## [0.37.6](https://github.com/latechforce/engine/compare/v0.37.5...v0.37.6) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **Types:** add Airtable types export ([0e8ad38](https://github.com/latechforce/engine/commit/0e8ad38921e8583e917b80c90bac13d1785fdea7))
+- **Types:** add Airtable types export ([0e8ad38](https://github.com/latechforce/engine/commit/0e8ad38921e8583e917b80c90bac13d1785fdea7))
 
 ## [0.37.5](https://github.com/latechforce/engine/compare/v0.37.4...v0.37.5) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **Express:** remove Sentry for express ([1683440](https://github.com/latechforce/engine/commit/168344074a7d1bd1f6cfbdd7c6193bb53502ff6d))
+- **Express:** remove Sentry for express ([1683440](https://github.com/latechforce/engine/commit/168344074a7d1bd1f6cfbdd7c6193bb53502ff6d))
 
 ## [0.37.4](https://github.com/latechforce/engine/compare/v0.37.3...v0.37.4) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **Sentry:** replace Node Sentry by Bun ([6ca7da8](https://github.com/latechforce/engine/commit/6ca7da8483be18e6443dc517c8dddda1f0eed3c4))
+- **Sentry:** replace Node Sentry by Bun ([6ca7da8](https://github.com/latechforce/engine/commit/6ca7da8483be18e6443dc517c8dddda1f0eed3c4))
 
 ## [0.37.3](https://github.com/latechforce/engine/compare/v0.37.2...v0.37.3) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **package:** add build for Bun ([5e43a19](https://github.com/latechforce/engine/commit/5e43a19372793e247a0aefc5100e4bf3d467c96c))
+- **package:** add build for Bun ([5e43a19](https://github.com/latechforce/engine/commit/5e43a19372793e247a0aefc5100e4bf3d467c96c))
 
 ## [0.37.2](https://github.com/latechforce/engine/compare/v0.37.1...v0.37.2) (2025-01-28)
 
-
 ### Bug Fixes
 
-* **Airtable:** add Airtable in Typescript action ([9ef4a50](https://github.com/latechforce/engine/commit/9ef4a50e3af491f669427458d2a0f481e2f7223c))
-* **CI:** fix Airtable tests ([7e24732](https://github.com/latechforce/engine/commit/7e247323b3bf4e6d5fce09add7dbb00621831ae6))
-* **tsconfig:** add tsconfig in package ([20dc192](https://github.com/latechforce/engine/commit/20dc1926a8f5b01eee2b8fc9d5f01828a3d9c40f))
+- **Airtable:** add Airtable in Typescript action ([9ef4a50](https://github.com/latechforce/engine/commit/9ef4a50e3af491f669427458d2a0f481e2f7223c))
+- **CI:** fix Airtable tests ([7e24732](https://github.com/latechforce/engine/commit/7e247323b3bf4e6d5fce09add7dbb00621831ae6))
+- **tsconfig:** add tsconfig in package ([20dc192](https://github.com/latechforce/engine/commit/20dc1926a8f5b01eee2b8fc9d5f01828a3d9c40f))
 
 ## [0.37.1](https://github.com/latechforce/engine/compare/v0.37.0...v0.37.1) (2025-01-27)
 

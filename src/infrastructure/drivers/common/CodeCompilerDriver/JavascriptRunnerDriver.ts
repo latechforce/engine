@@ -10,6 +10,7 @@ import vm from 'node:vm'
 // Packages
 import xml2js from 'xml2js'
 import * as dateFns from 'date-fns'
+import * as dateFnsLocale from 'date-fns/locale'
 import googleapis from 'googleapis'
 import Airtable from 'airtable'
 import axios from 'axios'
@@ -22,6 +23,7 @@ import papaparse from 'papaparse'
 export const packages: CodeRunnerContextPackages = {
   xml2js,
   dateFns,
+  dateFnsLocale,
   googleapis,
   Airtable,
   Notion,
