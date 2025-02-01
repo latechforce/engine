@@ -17,6 +17,7 @@ import https from 'https'
 import crypto from 'crypto'
 import lodash from 'lodash'
 import { Client as Notion } from '@notionhq/client'
+import papaparse from 'papaparse'
 
 export const packages: CodeRunnerContextPackages = {
   xml2js,
@@ -28,6 +29,7 @@ export const packages: CodeRunnerContextPackages = {
   https,
   crypto,
   lodash,
+  papaparse,
 }
 
 const globalContext = {

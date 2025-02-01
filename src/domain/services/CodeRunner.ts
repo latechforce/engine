@@ -113,6 +113,7 @@ export interface CodeRunnerContextPackages {
   https: typeof import('https')
   crypto: typeof import('crypto')
   lodash: typeof import('lodash')
+  papaparse: typeof import('papaparse')
 }
 
 export interface CodeRunnerContext<I extends object = {}> {
