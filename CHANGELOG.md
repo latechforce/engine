@@ -1,3 +1,10 @@
+## [0.37.21](https://github.com/latechforce/engine/compare/v0.37.20...v0.37.21) (2025-02-01)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with papaparse package ([d85446e](https://github.com/latechforce/engine/commit/d85446e1b3ffaa61af42b268a77f8d880d572f15))
+
 ## [0.37.20](https://github.com/latechforce/engine/compare/v0.37.19...v0.37.20) (2025-02-01)
 
 
