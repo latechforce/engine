@@ -1,3 +1,12 @@
+## [0.37.25](https://github.com/latechforce/engine/compare/v0.37.24...v0.37.25) (2025-02-03)
+
+
+### Bug Fixes
+
+* **MockedApp:** fix red test: should return a mocked response from fetcher ([1970ba0](https://github.com/latechforce/engine/commit/1970ba05cf1a25b04107b74cb09713504bbdb643))
+* **Schema:** update Config ([0236bf6](https://github.com/latechforce/engine/commit/0236bf65bb227d648d484027b17568d60a90fd4b))
+* **Server:** add green test: should return a swagger OpenAPI with a custom title ([e23fdd8](https://github.com/latechforce/engine/commit/e23fdd8addfa000d3e1e69dda0947d0a2d57e241))
+
 ## [0.37.24](https://github.com/latechforce/engine/compare/v0.37.23...v0.37.24) (2025-02-03)
 
 
