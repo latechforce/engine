@@ -51,7 +51,9 @@ export function testServerDriver(
     driver.notFound(async () => new JsonResponse({ message: 'Not found' }, 404))
 
     port = await driver.start()
-    browser = await puppeteer.launch()
+    browser = await puppeteer.launch({
+      args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+    })
     page = await browser.newPage()
   })
 
