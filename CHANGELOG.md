@@ -1,3 +1,11 @@
+## [0.37.24](https://github.com/latechforce/engine/compare/v0.37.23...v0.37.24) (2025-02-03)
+
+
+### Bug Fixes
+
+* **packages:** update ([ff0b958](https://github.com/latechforce/engine/commit/ff0b9583b675a802d88e569422d898dfb6c056cb))
+* **Server:** add green test: should return a swagger OpenAPI json ([8fc5672](https://github.com/latechforce/engine/commit/8fc56724dec0ce48b7ab7f16cb499a92de06b60d))
+
 ## [0.37.23](https://github.com/latechforce/engine/compare/v0.37.22...v0.37.23) (2025-02-01)
 
 
