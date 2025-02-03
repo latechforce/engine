@@ -9,6 +9,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'readRecord',

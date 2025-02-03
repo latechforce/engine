@@ -5,6 +5,7 @@ import type { ITable } from '/domain/interfaces/ITable'
 
 const fullConfig: Config = {
   name: 'App',
+  version: '1.0.0',
   automations: [
     {
       name: 'ApiCalled',
@@ -246,6 +247,7 @@ type FirstTableFieldName =
 
 export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
   name: string
+  version: string
   tables: ITable[]
 } {
   const firstTable = fullConfig.tables?.find((table) => table.name === 'first_table')
@@ -254,6 +256,7 @@ export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
   }
   return {
     name: 'First Table',
+    version: '1.0.0',
     tables: [
       {
         ...firstTable,
@@ -265,6 +268,7 @@ export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
 
 export function getFirstAndSecondTableConfig(fields: FirstTableFieldName[] = ['name']): {
   name: string
+  version: string
   tables: ITable[]
 } {
   const firstTable = fullConfig.tables?.find((table) => table.name === 'first_table')
@@ -274,6 +278,7 @@ export function getFirstAndSecondTableConfig(fields: FirstTableFieldName[] = ['n
   }
   return {
     name: 'First and Second Table',
+    version: '1.0.0',
     tables: [
       {
         ...firstTable,
@@ -286,6 +291,7 @@ export function getFirstAndSecondTableConfig(fields: FirstTableFieldName[] = ['n
 
 export function getFirstBucketConfig(): {
   name: string
+  version: string
   buckets: IBucket[]
 } {
   const firstBucket = fullConfig.buckets?.find((bucket) => bucket.name === 'first_bucket')
@@ -294,12 +300,14 @@ export function getFirstBucketConfig(): {
   }
   return {
     name: 'First Bucket',
+    version: '1.0.0',
     buckets: [firstBucket],
   }
 }
 
 export function getAutomationConfig(name: AutomationName): {
   name: string
+  version: string
   automations: IAutomation[]
 } {
   const automation = fullConfig.automations?.find((automation) => automation.name === name)
@@ -308,6 +316,7 @@ export function getAutomationConfig(name: AutomationName): {
   }
   return {
     name,
+    version: '1.0.0',
     automations: [automation],
   }
 }

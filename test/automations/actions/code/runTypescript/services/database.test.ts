@@ -12,6 +12,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -69,6 +70,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [{ name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }],
         automations: [
           {
@@ -127,6 +129,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -193,6 +196,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -263,6 +267,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -327,6 +332,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -387,6 +393,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -444,6 +451,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'age', type: 'Number' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -503,6 +511,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'valid', type: 'Checkbox' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [{ name: 'users', fields: [{ name: 'valid', type: 'Checkbox' }] }],
         automations: [
           {
@@ -562,6 +571,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'birthdate', type: 'DateTime' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -620,6 +630,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -674,6 +685,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -727,6 +739,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         tables: [table],
         automations: [
           {

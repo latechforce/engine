@@ -20,6 +20,7 @@ helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integra
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'updatePage',

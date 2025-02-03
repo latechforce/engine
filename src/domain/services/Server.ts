@@ -10,6 +10,8 @@ import type { Monitor, MonitorDrivers } from './Monitor'
 import type { Tunnel } from './Tunnel'
 
 export interface ServerConfig {
+  appName: string
+  appVersion: string
   port?: string | number
   baseUrl?: string
   sslCert?: string

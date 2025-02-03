@@ -15,6 +15,7 @@ helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ app, request, integ
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'createUser',
@@ -76,6 +77,7 @@ helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ app, request, integ
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'updateUser',
@@ -143,6 +145,7 @@ helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ app, request, integ
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'readUser',
@@ -204,6 +207,7 @@ helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ app, request, integ
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'deleteUser',
@@ -265,6 +269,7 @@ helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ app, request, integ
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'listUsers',
@@ -339,6 +344,7 @@ helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ app, request, integ
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'readField',

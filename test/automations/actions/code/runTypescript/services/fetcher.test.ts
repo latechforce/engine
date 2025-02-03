@@ -13,6 +13,7 @@ helpers.testWithMockedApp({ drivers: ['Fetcher'] }, ({ app, request, drivers }) 
       })
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'fetcherGet',
@@ -51,6 +52,7 @@ helpers.testWithMockedApp({ drivers: ['Fetcher'] }, ({ app, request, drivers }) 
       })
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'fetcherPost',

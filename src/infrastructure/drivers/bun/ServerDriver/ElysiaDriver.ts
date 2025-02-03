@@ -13,9 +13,27 @@ export class ElysiaDriver implements IServerDriver {
   constructor(private _config: ServerConfig) {
     this._app = new Elysia()
       .use(cors())
-      .use(swagger())
+      .use(
+        swagger({
+          path: '/api/swagger',
+          documentation: {
+            info: {
+              title: _config.appName + ' - Swagger Documentation',
+              version: _config.appVersion,
+            },
+          },
+        })
+      )
       .onRequest(({ set }) => {
-        set.headers['Content-Security-Policy'] = "default-src 'self'"
+        set.headers['Content-Security-Policy'] =
+          "default-src 'self'; " +
+          "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " +
+          "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " +
+          "img-src 'self' data:; " +
+          "font-src 'self' https://cdnjs.cloudflare.com; " +
+          "connect-src 'self' https://cdn.jsdelivr.net; " +
+          "object-src 'none'; " +
+          "frame-ancestors 'none';"
         set.headers['X-Content-Type-Options'] = 'nosniff'
         set.headers['X-Frame-Options'] = 'DENY'
         set.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'

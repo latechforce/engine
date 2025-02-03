@@ -18,6 +18,7 @@ describe('start', () => {
     // GIVEN
     const config: Config = {
       name: 'App',
+      version: '1.0.0',
     }
     const app = new MockedApp()
 
@@ -32,6 +33,7 @@ describe('start', () => {
     // GIVEN
     const config: Config = {
       name: 'App',
+      version: '1.0.0',
       server: { port: '6543' },
     }
     const app = new MockedApp()
@@ -47,6 +49,7 @@ describe('start', () => {
     // GIVEN
     const config: Config = {
       name: 'App',
+      version: '1.0.0',
     }
     const app = new MockedApp()
     const { url } = await app.start(config)
@@ -64,6 +67,7 @@ describe('stop', () => {
     // GIVEN
     const config: Config = {
       name: 'App',
+      version: '1.0.0',
     }
     const app = new MockedApp()
     const startedApp = await app.start(config)

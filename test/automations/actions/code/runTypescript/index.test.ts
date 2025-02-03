@@ -13,6 +13,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'hello-name',
@@ -63,6 +64,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'hello-name',
@@ -118,6 +120,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getEnv',
@@ -162,6 +165,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       fs.ensureFileSync(filename)
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getEnv',
@@ -211,6 +215,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getTimestamp',
@@ -251,6 +256,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getIsArray',
@@ -291,6 +297,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getIsNumber',
@@ -331,6 +338,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getIsBoolean',
@@ -371,6 +379,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getURLSearchParams',

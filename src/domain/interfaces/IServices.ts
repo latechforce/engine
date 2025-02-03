@@ -7,7 +7,7 @@ import type { TunnelConfig } from '/domain/services/Tunnel'
 export type { DatabaseConfig, LoggersConfig, MonitorsConfig, ServerConfig, TunnelConfig }
 
 export type IServices = {
-  server?: ServerConfig
+  server?: Omit<ServerConfig, 'appName' | 'appVersion'>
   database?: DatabaseConfig
   monitors?: MonitorsConfig
   loggers?: LoggersConfig

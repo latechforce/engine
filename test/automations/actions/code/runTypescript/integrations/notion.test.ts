@@ -21,6 +21,7 @@ helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integra
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'createUser',
@@ -82,6 +83,7 @@ helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integra
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'updateUser',
@@ -149,6 +151,7 @@ helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integra
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'readUser',
@@ -210,6 +213,7 @@ helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integra
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'readUser',
@@ -271,6 +275,7 @@ helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integra
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'listUsers',
@@ -347,6 +352,7 @@ helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integra
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'readProperty',
@@ -407,6 +413,7 @@ helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integra
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'listUsers',

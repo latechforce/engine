@@ -37,8 +37,20 @@ export function testServerDriver(
       expect(data.message).toBe('Not found')
     })
 
+    it('should return a swagger OpenAPI', async () => {
+      const res = await fetch(`http://localhost:${port}/api/swagger`)
+      expect(res.status).toBe(200)
+    })
+
+    it('should return a swagger OpenAPI with a custom title', async () => {
+      const res = await fetch(`http://localhost:${port}/api/swagger`)
+      const data = await res.text()
+      const title = data.match(/<title>(.*?)<\/title>/)
+      expect(title?.[1]).toBe('Test Title - Swagger Documentation')
+    })
+
     it('should return a swagger OpenAPI json', async () => {
-      const res = await fetch(`http://localhost:${port}/swagger/json`)
+      const res = await fetch(`http://localhost:${port}/api/swagger/json`)
       const data = await res.json()
       expect(res.status).toBe(200)
       expect(data.openapi).toBe('3.0.3')

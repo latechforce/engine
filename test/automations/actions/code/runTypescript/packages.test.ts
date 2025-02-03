@@ -10,6 +10,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getDate',
@@ -51,6 +52,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'getDateLocale',
@@ -94,6 +96,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'parseXml',
@@ -146,6 +149,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'axios',
@@ -188,6 +192,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'https',
@@ -230,6 +235,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'crypto',
@@ -272,6 +278,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'lodash',
@@ -314,6 +321,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'notion',
@@ -356,6 +364,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'airtable',
@@ -399,6 +408,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
     // GIVEN
     const config: Config = {
       name: 'App',
+      version: '1.0.0',
       automations: [
         {
           name: 'papaparse',

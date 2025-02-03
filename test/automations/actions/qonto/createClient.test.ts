@@ -9,6 +9,7 @@ helpers.testWithMockedApp({ integrations: ['Qonto'] }, ({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
+        version: '1.0.0',
         automations: [
           {
             name: 'createClient',
