@@ -3,7 +3,6 @@ import type { Trigger } from '/domain/entities/Trigger'
 import type { Queue } from '/domain/services/Queue'
 import type { Realtime } from '/domain/services/Realtime'
 import type { Server } from '/domain/services/Server'
-import type { SchemaValidator } from '/domain/services/SchemaValidator'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type { Monitor } from '/domain/services/Monitor'
 import type { Notion } from '/domain/integrations/Notion'
@@ -14,13 +13,14 @@ import { TablePageCreatedNotionTriggerMapper } from './notion/TablePageCreatedMa
 
 type TriggerMapperConfig = ITrigger & {
   automation: string
+  summary?: string
+  description?: string
 }
 
 export interface TriggerMapperServices {
   server: Server
   queue: Queue
   realtime: Realtime
-  schemaValidator: SchemaValidator
   templateCompiler: TemplateCompiler
   monitor: Monitor
 }

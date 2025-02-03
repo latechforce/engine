@@ -1,8 +1,7 @@
 import type { Server, ServerMethodOptionsAuth } from '/domain/services/Server'
 import { JsonResponse } from '/domain/entities/Response/Json'
 import type { PostRequest } from '/domain/entities/Request/Post'
-import type { JSONSchema, SchemaValidator } from '/domain/services/SchemaValidator'
-import type { SchemaError } from '../../Error/Schema'
+import type { JSONSchema, JSONSchemaProperties } from '/domain/services/SchemaValidator'
 import { AutomationContext } from '../../Automation/Context'
 import type { BaseTrigger, BaseTriggerConfig } from '../base'
 import {
@@ -18,17 +17,17 @@ export interface ApiCalledHttpTriggerConfig extends BaseTriggerConfig {
   input?: JSONSchema
   output?: TemplateObject
   auth?: ServerMethodOptionsAuth
+  summary?: string
+  description?: string
 }
 
 export interface ApiCalledHttpTriggerServices {
   server: Server
-  schemaValidator: SchemaValidator
   templateCompiler: TemplateCompiler
   monitor: Monitor
 }
 
 export class ApiCalledHttpTrigger implements BaseTrigger {
-  private _validateData: (json: unknown, schema: JSONSchema) => SchemaError[]
   private _output?: TemplateObjectCompiled
 
   constructor(
@@ -36,8 +35,7 @@ export class ApiCalledHttpTrigger implements BaseTrigger {
     private _services: ApiCalledHttpTriggerServices
   ) {
     const { output } = this._config
-    const { schemaValidator, templateCompiler } = this._services
-    this._validateData = schemaValidator.validate
+    const { templateCompiler } = this._services
     this._output = output ? templateCompiler.compileObject(output) : undefined
   }
 
@@ -48,8 +46,21 @@ export class ApiCalledHttpTrigger implements BaseTrigger {
 
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {
     const { server } = this._services
+    const outputProperties = this._getOutputProperties()
     await server.post(this.path, (request: PostRequest) => this.post(request, run), {
       auth: this._config.auth,
+      body: this._config.input,
+      response: {
+        type: 'object',
+        properties: outputProperties,
+        required: Object.keys(outputProperties),
+        additionalProperties: false,
+      },
+      detail: {
+        summary: this._config.summary,
+        description: this._config.description,
+        tags: ['Automation'],
+      },
     })
   }
 
@@ -61,12 +72,7 @@ export class ApiCalledHttpTrigger implements BaseTrigger {
       if (!input) {
         context = await run({ path, baseUrl, headers, query, params })
       } else {
-        if (this._validateDataType<object>(body, input)) {
-          context = await run({ body, path, baseUrl, headers, query, params })
-        } else {
-          const [error] = this._validateData(body, input)
-          return new JsonResponse({ error }, 400)
-        }
+        context = await run({ body, path, baseUrl, headers, query, params })
       }
       if (context.status === 'failed') {
         return new JsonResponse({ error: context.error }, 400)
@@ -84,7 +90,25 @@ export class ApiCalledHttpTrigger implements BaseTrigger {
     }
   }
 
-  private _validateDataType = <T>(data: unknown, schema: JSONSchema): data is T => {
-    return this._validateData(data, schema).length === 0
+  private _getOutputProperties = (): JSONSchemaProperties => {
+    const { output } = this._config
+    if (!output) {
+      return {
+        success: { type: 'boolean' },
+      }
+    }
+    return Object.keys(output).reduce((res: JSONSchemaProperties, key) => {
+      const value = output ? output[key] : undefined
+      if (!value || typeof value === 'string') {
+        res[key] = { type: 'string' }
+      } else if ('number' in value) {
+        res[key] = { type: 'number' }
+      } else if ('boolean' in value) {
+        res[key] = { type: 'boolean' }
+      } else if ('json' in value) {
+        res[key] = { type: 'object' }
+      }
+      return res
+    }, {})
   }
 }

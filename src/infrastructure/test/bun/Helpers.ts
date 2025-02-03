@@ -79,9 +79,9 @@ export class Helpers {
       },
       post: async (url: string, body: unknown = {}, options: RequestInit = {}) => {
         return fetch(url, {
+          ...options,
           method: 'POST',
           body: JSON.stringify(body),
-          ...options,
           headers: { 'Content-Type': 'application/json', ...(options.headers ?? {}) },
         })
           .then((res) => res.json())
@@ -92,10 +92,9 @@ export class Helpers {
       },
       patch: async (url: string, body: unknown = {}, options: RequestInit = {}) => {
         return fetch(url, {
+          ...options,
           method: 'PATCH',
           body: JSON.stringify(body),
-          ...options,
-
           headers: { 'Content-Type': 'application/json', ...(options.headers ?? {}) },
         })
           .then((res) => res.json())

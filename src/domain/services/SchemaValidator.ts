@@ -2,11 +2,13 @@ import type { SchemaError } from '/domain/entities/Error/Schema'
 
 type JSONSchemaType = 'string' | 'number' | 'boolean' | 'array' | 'object'
 
+export interface JSONSchemaProperties {
+  [key: string]: JSONSchema
+}
+
 export interface JSONSchema {
   type?: JSONSchemaType
-  properties?: {
-    [key: string]: JSONSchema
-  }
+  properties?: JSONSchemaProperties
   enum?: string[]
   items?: JSONSchema
   required?: string[]

@@ -9,6 +9,8 @@ export interface WebhookCalledHttpTriggerConfig extends BaseTriggerConfig {
   automation: string
   path: string
   auth?: ServerMethodOptionsAuth
+  summary?: string
+  description?: string
 }
 
 export interface WebhookCalledHttpTriggerServices {
@@ -30,7 +32,22 @@ export class WebhookCalledHttpTrigger implements BaseTrigger {
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {
     const { automation } = this._config
     const { server, queue } = this._services
-    await server.post(this.path, this.post, { auth: this._config.auth })
+    await server.post(this.path, this.post, {
+      auth: this._config.auth,
+      response: {
+        type: 'object',
+        properties: {
+          success: { type: 'boolean' },
+        },
+        required: ['success'],
+        additionalProperties: false,
+      },
+      detail: {
+        summary: this._config.summary,
+        description: this._config.description,
+        tags: ['Webhook'],
+      },
+    })
     queue.job(automation, run)
   }
 

@@ -36,7 +36,6 @@ export class AutomationMapper {
       idGenerator,
       templateCompiler,
       realtime,
-      schemaValidator,
       javascriptCompiler,
       typescriptCompiler,
       monitor,
@@ -44,12 +43,16 @@ export class AutomationMapper {
     } = services
     const { notion, pappers, qonto } = integrations
     const trigger = TriggerMapper.toEntity(
-      { ...config.trigger, automation: config.name },
+      {
+        ...config.trigger,
+        automation: config.name,
+        summary: config.summary,
+        description: config.description,
+      },
       {
         server,
         queue,
         realtime,
-        schemaValidator,
         templateCompiler,
         monitor,
       },

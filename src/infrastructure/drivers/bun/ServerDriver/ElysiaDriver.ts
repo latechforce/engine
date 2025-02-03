@@ -1,4 +1,4 @@
-import { Elysia } from 'elysia'
+import { Elysia, t, type TSchema } from 'elysia'
 import { swagger } from '@elysiajs/swagger'
 import { cors } from '@elysiajs/cors'
 import net from 'net'
@@ -7,6 +7,18 @@ import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '/adapter/
 import type { ServerConfig, ServerMethodOptions } from '/domain/services/Server'
 import type { Response as EngineResponse } from '/domain/entities/Response'
 import { JsonResponse } from '/domain/entities/Response/Json'
+import type { JSONSchema } from '/domain/services/SchemaValidator'
+
+export type SwaggerSchema = {
+  body?: TSchema
+  response?: TSchema
+  detail?: {
+    tags?: ('Automation' | 'Webhook' | 'Table')[]
+    security?: {
+      apiKey: []
+    }[]
+  }
+}
 
 export class ElysiaDriver implements IServerDriver {
   private _app: Elysia
@@ -16,10 +28,10 @@ export class ElysiaDriver implements IServerDriver {
       .use(cors())
       .use(
         swagger({
-          path: '/api/swagger',
+          path: '/api/docs',
           documentation: {
             info: {
-              title: _config.appName + ' - Swagger Documentation',
+              title: _config.appName + ' - API Documentation',
               version: _config.appVersion,
               description: _config.appDescription,
             },
@@ -32,6 +44,11 @@ export class ElysiaDriver implements IServerDriver {
                 },
               },
             },
+            tags: [
+              { name: 'Automation', description: 'Automations API' },
+              { name: 'Webhook', description: 'Webhooks API' },
+              { name: 'Table', description: 'Tables API' },
+            ],
           },
         })
       )
@@ -57,12 +74,16 @@ export class ElysiaDriver implements IServerDriver {
     handler: (getDto: GetDto) => Promise<EngineResponse>,
     options: ServerMethodOptions
   ): Promise<void> => {
-    this._app.get(path, async ({ request, query, params }) => {
-      const authFailed = this._verifyAuth(options, request)
-      if (authFailed) return authFailed
-      const getDto: GetDto = { path, query, params, baseUrl: '', headers: {}, method: 'GET' }
-      return this._formatResponse(await handler(getDto))
-    })
+    this._app.get(
+      path,
+      async ({ request, query, params }) => {
+        const authFailed = this._verifyAuth(options, request)
+        if (authFailed) return authFailed
+        const getDto: GetDto = { path, query, params, baseUrl: '', headers: {}, method: 'GET' }
+        return this._formatResponse(await handler(getDto))
+      },
+      this._preprocessDoc(options)
+    )
   }
 
   post = async (
@@ -70,20 +91,24 @@ export class ElysiaDriver implements IServerDriver {
     handler: (postDto: PostDto) => Promise<EngineResponse>,
     options: ServerMethodOptions
   ): Promise<void> => {
-    this._app.post(path, async ({ request, query, params, body }) => {
-      const authFailed = this._verifyAuth(options, request)
-      if (authFailed) return authFailed
-      const postDto: PostDto = {
-        path,
-        query,
-        params,
-        body,
-        baseUrl: '',
-        headers: {},
-        method: 'POST',
-      }
-      return this._formatResponse(await handler(postDto))
-    })
+    this._app.post(
+      path,
+      async ({ request, query, params, body }) => {
+        const authFailed = this._verifyAuth(options, request)
+        if (authFailed) return authFailed
+        const postDto: PostDto = {
+          path,
+          query,
+          params,
+          body,
+          baseUrl: '',
+          headers: {},
+          method: 'POST',
+        }
+        return this._formatResponse(await handler(postDto))
+      },
+      this._preprocessDoc(options)
+    )
   }
 
   patch = async (
@@ -91,20 +116,24 @@ export class ElysiaDriver implements IServerDriver {
     handler: (patchDto: PatchDto) => Promise<EngineResponse>,
     options: ServerMethodOptions
   ): Promise<void> => {
-    this._app.patch(path, async ({ request, query, params, body }) => {
-      const authFailed = this._verifyAuth(options, request)
-      if (authFailed) return authFailed
-      const patchDto: PatchDto = {
-        path,
-        query,
-        params,
-        body,
-        baseUrl: '',
-        headers: {},
-        method: 'PATCH',
-      }
-      return this._formatResponse(await handler(patchDto))
-    })
+    this._app.patch(
+      path,
+      async ({ request, query, params, body }) => {
+        const authFailed = this._verifyAuth(options, request)
+        if (authFailed) return authFailed
+        const patchDto: PatchDto = {
+          path,
+          query,
+          params,
+          body,
+          baseUrl: '',
+          headers: {},
+          method: 'PATCH',
+        }
+        return this._formatResponse(await handler(patchDto))
+      },
+      this._preprocessDoc(options)
+    )
   }
 
   delete = async (
@@ -112,19 +141,23 @@ export class ElysiaDriver implements IServerDriver {
     handler: (deleteDto: DeleteDto) => Promise<EngineResponse>,
     options: ServerMethodOptions
   ): Promise<void> => {
-    this._app.delete(path, async ({ request, query, params }) => {
-      const authFailed = this._verifyAuth(options, request)
-      if (authFailed) return authFailed
-      const deleteDto: DeleteDto = {
-        path,
-        query,
-        params,
-        baseUrl: '',
-        headers: {},
-        method: 'DELETE',
-      }
-      return this._formatResponse(await handler(deleteDto))
-    })
+    this._app.delete(
+      path,
+      async ({ request, query, params }) => {
+        const authFailed = this._verifyAuth(options, request)
+        if (authFailed) return authFailed
+        const deleteDto: DeleteDto = {
+          path,
+          query,
+          params,
+          baseUrl: '',
+          headers: {},
+          method: 'DELETE',
+        }
+        return this._formatResponse(await handler(deleteDto))
+      },
+      this._preprocessDoc(options)
+    )
   }
 
   notFound = async (
@@ -169,10 +202,62 @@ export class ElysiaDriver implements IServerDriver {
     }
   }
 
-  private _findRandomAvailablePort(
+  private _preprocessDoc = (options: ServerMethodOptions): Partial<SwaggerSchema> => {
+    const { auth, body, response, detail = {} } = options
+    const doc: Partial<SwaggerSchema> = { detail }
+    if (auth) {
+      if (auth === 'ApiKey' && doc.detail) {
+        doc.detail.security = [{ apiKey: [] }]
+      }
+    }
+    if (body) {
+      doc.body = this._convertJSONSchemaToTSchema(body)
+    }
+    if (response) {
+      doc.response = this._convertJSONSchemaToTSchema(response)
+    }
+    return doc
+  }
+
+  private _convertJSONSchemaToTSchema(schema: JSONSchema): TSchema {
+    if (!schema.type) {
+      throw new Error('Invalid schema: type is required')
+    }
+    switch (schema.type) {
+      case 'string':
+        return schema.enum
+          ? t.Enum(schema.enum.reduce((acc, val) => ({ ...acc, [val]: val }), {}))
+          : t.String()
+      case 'number':
+        return t.Number()
+      case 'boolean':
+        return t.Boolean()
+      case 'array':
+        return schema.items
+          ? t.Array(this._convertJSONSchemaToTSchema(schema.items))
+          : t.Array(t.Any())
+      case 'object': {
+        const properties = schema.properties
+          ? Object.entries(schema.properties).reduce(
+              (acc, [key, propSchema]) => {
+                acc[key] = this._convertJSONSchemaToTSchema(propSchema)
+                return acc
+              },
+              {} as Record<string, TSchema>
+            )
+          : {}
+
+        return t.Object(properties, { required: schema.required || [] })
+      }
+      default:
+        throw new Error(`Unsupported schema type: ${schema.type}`)
+    }
+  }
+
+  private _findRandomAvailablePort = (
     minPort: number = 1024,
     maxPort: number = 65535
-  ): Promise<number> {
+  ): Promise<number> => {
     return new Promise((resolve) => {
       const port = Math.floor(Math.random() * (maxPort - minPort + 1)) + minPort
       const server = net.createServer()

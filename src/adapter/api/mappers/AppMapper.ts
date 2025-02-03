@@ -91,7 +91,6 @@ export class AppMapper {
         server,
         idGenerator,
         templateCompiler,
-        schemaValidator,
         javascriptCompiler,
         typescriptCompiler,
         monitor,

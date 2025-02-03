@@ -8,8 +8,10 @@ import type { IdGenerator } from '/domain/services/IdGenerator'
 import { AutomationHistory } from './History'
 import type { Database } from '/domain/services/Database'
 
-interface AutomationConfig {
+export interface AutomationConfig {
   name: string
+  summary?: string
+  description?: string
 }
 
 interface AutomationServices {

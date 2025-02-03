@@ -170,7 +170,13 @@
                     },
                     "type": "array"
                 },
+                "description": {
+                    "type": "string"
+                },
                 "name": {
+                    "type": "string"
+                },
+                "summary": {
                     "type": "string"
                 },
                 "trigger": {
@@ -1054,10 +1060,7 @@
                     "type": "array"
                 },
                 "properties": {
-                    "additionalProperties": {
-                        "$ref": "#/definitions/JSONSchema"
-                    },
-                    "type": "object"
+                    "$ref": "#/definitions/JSONSchemaProperties"
                 },
                 "required": {
                     "items": {
@@ -1075,6 +1078,12 @@
                     ],
                     "type": "string"
                 }
+            },
+            "type": "object"
+        },
+        "JSONSchemaProperties": {
+            "additionalProperties": {
+                "$ref": "#/definitions/JSONSchema"
             },
             "type": "object"
         },
