@@ -24,7 +24,7 @@ export class StoppedApp extends BaseApp {
     const { tables, automations, buckets } = this._entities
     const { notion } = this._integrations
     await server.init(async () => {
-      await notion.init()
+      if (this._config.integrations?.notion) await notion.init()
       for (const table of tables) await table.init()
       for (const automation of automations) await automation.init()
       for (const bucket of buckets) await bucket.init()

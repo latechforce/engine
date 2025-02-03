@@ -10,9 +10,11 @@ import type { Storage } from '/domain/services/Storage'
 import type { Monitor } from '/domain/services/Monitor'
 import type { Notion } from '/domain/integrations/Notion'
 import type { CodeCompiler } from '/domain/services/CodeCompiler'
+import type { IIntegrations } from '/domain/interfaces/IIntegrations'
 
 export interface AppConfig {
   name: string
+  integrations?: IIntegrations
 }
 
 export interface AppServices {

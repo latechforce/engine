@@ -45,7 +45,7 @@ describe('start', () => {
     expect(url).toBe('http://localhost:6543')
   })
 
-  it('should check the app running status through /health endpoint', async () => {
+  it('should check the app running status through /api/health endpoint', async () => {
     // GIVEN
     const config: Config = {
       name: 'App',
@@ -55,7 +55,7 @@ describe('start', () => {
     const { url } = await app.start(config)
 
     // WHEN
-    const { success } = await fetch(url + '/health').then((res) => res.json())
+    const { success } = await fetch(url + '/api/health').then((res) => res.json())
 
     // THEN
     expect(success).toBe(true)

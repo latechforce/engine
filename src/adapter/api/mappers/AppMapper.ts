@@ -103,6 +103,7 @@ export class AppMapper {
     return new StoppedApp(
       {
         name,
+        integrations: config.integrations,
       },
       {
         server,

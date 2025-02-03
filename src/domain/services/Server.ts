@@ -59,7 +59,7 @@ export class Server {
   init = async (callback: () => Promise<void>) => {
     const { logger } = this._services
     logger.debug('initializing server routes...')
-    await this.get('/health', async () => new JsonResponse({ success: true }))
+    await this.get('/api/health', async () => new JsonResponse({ success: true }))
     await callback()
     await this.notFound()
   }

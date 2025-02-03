@@ -37,7 +37,7 @@ export class Notion {
   }
 
   init = async () => {
-    const name = '_notion_table_page_files'
+    const name = 'notion_files'
     this._bucket = new Bucket({ name }, this._services)
     await this._bucket.init()
   }
