@@ -1,3 +1,16 @@
+## [0.37.26](https://github.com/latechforce/engine/compare/v0.37.25...v0.37.26) (2025-02-03)
+
+
+### Bug Fixes
+
+* **ApiCalled:** fix red test: should return an invalid body error ([24d6336](https://github.com/latechforce/engine/commit/24d63360679e36ed5e320b342691167f224d15dd))
+* **Bucket:** add green test: should not create a notion bucket if there is no config ([ac437dc](https://github.com/latechforce/engine/commit/ac437dc4e75fa56bf493efd705129040309899d4))
+* **Server:** add green test: should failed to GET requests with ApiKey authentification and wrong key ([dad61e0](https://github.com/latechforce/engine/commit/dad61e04b900d1093245895c1807095bd9a13ada))
+* **Server:** add green test: should return a swagger OpenAPI with a custom description ([ae6c774](https://github.com/latechforce/engine/commit/ae6c774ba367f05335690afb92b6b9e7a6aab51b))
+* **Server:** add green test: should return a swagger OpenAPI with a custom detail summary ([0da9e38](https://github.com/latechforce/engine/commit/0da9e3836429b2599279472377a5bbba00efe183))
+* **Server:** fix red test with puppeteer ([a43f7ff](https://github.com/latechforce/engine/commit/a43f7ff719f390e62d6dff083481b7edc63c1b76))
+* **WebhookCalled:** change base endpoint from /automation to /webhook ([97c283e](https://github.com/latechforce/engine/commit/97c283e063333a85c7a575538c9c390b8e8d1353))
+
 ## [0.37.25](https://github.com/latechforce/engine/compare/v0.37.24...v0.37.25) (2025-02-03)
 
 
