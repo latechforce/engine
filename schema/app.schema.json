@@ -132,6 +132,10 @@
         "IApiCalledHttpTrigger": {
             "additionalProperties": false,
             "properties": {
+                "auth": {
+                    "const": "ApiKey",
+                    "type": "string"
+                },
                 "event": {
                     "const": "ApiCalled",
                     "type": "string"
@@ -1005,6 +1009,10 @@
         "IWebhookCalledHttpTrigger": {
             "additionalProperties": false,
             "properties": {
+                "auth": {
+                    "const": "ApiKey",
+                    "type": "string"
+                },
                 "event": {
                     "const": "WebhookCalled",
                     "type": "string"
@@ -1238,9 +1246,15 @@
             ],
             "type": "object"
         },
-        "Omit<ServerConfig,\"appName\"|\"appVersion\">": {
+        "Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">": {
             "additionalProperties": false,
             "properties": {
+                "apiKeys": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
                 "baseUrl": {
                     "type": "string"
                 },
@@ -1416,6 +1430,9 @@
         "database": {
             "$ref": "#/definitions/DatabaseConfig"
         },
+        "description": {
+            "type": "string"
+        },
         "integrations": {
             "$ref": "#/definitions/IIntegrations"
         },
@@ -1435,7 +1452,7 @@
             "type": "string"
         },
         "server": {
-            "$ref": "#/definitions/Omit<ServerConfig,\"appName\"|\"appVersion\">"
+            "$ref": "#/definitions/Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">"
         },
         "tables": {
             "items": {

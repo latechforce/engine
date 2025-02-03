@@ -17,5 +17,37 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // THEN
       expect(response.success).toBeTruthy()
     })
+
+    it('should not run an automation with auth', async () => {
+      // GIVEN
+      const config = getAutomationConfig('WebhookCalledWithApiKeyAuth')
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/webhook/run`)
+
+      // THEN
+      expect(response.error).toBe('Unauthorized: Invalid API Key')
+    })
+
+    it('should run an automation with auth', async () => {
+      // GIVEN
+      const config = getAutomationConfig('WebhookCalledWithApiKeyAuth')
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(
+        `${url}/api/webhook/run`,
+        {},
+        {
+          headers: {
+            'x-api-key': 'test-key',
+          },
+        }
+      )
+
+      // THEN
+      expect(response.success).toBeTruthy()
+    })
   })
 })

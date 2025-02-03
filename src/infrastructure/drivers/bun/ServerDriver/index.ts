@@ -1,6 +1,6 @@
 import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
 import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '/adapter/spi/dtos/RequestDto'
-import type { ServerConfig } from '/domain/services/Server'
+import type { ServerConfig, ServerMethodOptions } from '/domain/services/Server'
 import type { Response } from '/domain/entities/Response'
 import { ElysiaDriver } from './ElysiaDriver'
 
@@ -11,20 +11,36 @@ export class ServerDriver implements IServerDriver {
     this._server = new ElysiaDriver(config)
   }
 
-  get = async (path: string, handler: (getDto: GetDto) => Promise<Response>) => {
-    await this._server.get(path, handler)
+  get = async (
+    path: string,
+    handler: (getDto: GetDto) => Promise<Response>,
+    options: ServerMethodOptions
+  ) => {
+    await this._server.get(path, handler, options)
   }
 
-  post = async (path: string, handler: (postDto: PostDto) => Promise<Response>) => {
-    await this._server.post(path, handler)
+  post = async (
+    path: string,
+    handler: (postDto: PostDto) => Promise<Response>,
+    options: ServerMethodOptions
+  ) => {
+    await this._server.post(path, handler, options)
   }
 
-  patch = async (path: string, handler: (patchDto: PatchDto) => Promise<Response>) => {
-    await this._server.patch(path, handler)
+  patch = async (
+    path: string,
+    handler: (patchDto: PatchDto) => Promise<Response>,
+    options: ServerMethodOptions
+  ) => {
+    await this._server.patch(path, handler, options)
   }
 
-  delete = async (path: string, handler: (deleteDto: DeleteDto) => Promise<Response>) => {
-    await this._server.delete(path, handler)
+  delete = async (
+    path: string,
+    handler: (deleteDto: DeleteDto) => Promise<Response>,
+    options: ServerMethodOptions
+  ) => {
+    await this._server.delete(path, handler, options)
   }
 
   notFound = async (handler: (requestDto: RequestDto) => Promise<Response>) => {

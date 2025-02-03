@@ -17,6 +17,16 @@ const fullConfig: Config = {
       actions: [],
     },
     {
+      name: 'ApiCalledWithApiKeyAuth',
+      trigger: {
+        service: 'Http',
+        event: 'ApiCalled',
+        path: 'run',
+        auth: 'ApiKey',
+      },
+      actions: [],
+    },
+    {
       name: 'ApiCalledWithReturnedValue',
       trigger: {
         service: 'Http',
@@ -70,6 +80,16 @@ const fullConfig: Config = {
         service: 'Http',
         event: 'WebhookCalled',
         path: 'run',
+      },
+      actions: [],
+    },
+    {
+      name: 'WebhookCalledWithApiKeyAuth',
+      trigger: {
+        service: 'Http',
+        event: 'WebhookCalled',
+        path: 'run',
+        auth: 'ApiKey',
       },
       actions: [],
     },
@@ -219,11 +239,13 @@ const fullConfig: Config = {
 
 type AutomationName =
   | 'ApiCalled'
+  | 'ApiCalledWithApiKeyAuth'
   | 'ApiCalledWithReturnedValue'
   | 'ApiCalledWithError'
   | 'ApiCalledWithTextInput'
   | 'FirstTableRecordCreated'
   | 'WebhookCalled'
+  | 'WebhookCalledWithApiKeyAuth'
 
 type FirstTableFieldName =
   | 'name'
@@ -309,6 +331,9 @@ export function getAutomationConfig(name: AutomationName): {
   name: string
   version: string
   automations: IAutomation[]
+  server: {
+    apiKeys: string[]
+  }
 } {
   const automation = fullConfig.automations?.find((automation) => automation.name === name)
   if (!automation) {
@@ -318,5 +343,8 @@ export function getAutomationConfig(name: AutomationName): {
     name,
     version: '1.0.0',
     automations: [automation],
+    server: {
+      apiKeys: ['test-key'],
+    },
   }
 }

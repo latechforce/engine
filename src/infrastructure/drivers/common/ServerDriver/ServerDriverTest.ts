@@ -12,10 +12,22 @@ export function testServerDriver(
   let page: Page
 
   beforeAll(async () => {
-    driver.get('/test-get', async () => new JsonResponse({ message: 'GET success' }))
-    driver.post('/test-post', async () => new JsonResponse({ message: 'POST success' }, 201))
-    driver.patch('/test-patch', async () => new JsonResponse({ message: 'PATCH success' }))
-    driver.delete('/test-delete', async () => new JsonResponse({}, 204))
+    driver.get('/test-get', async () => new JsonResponse({ message: 'GET success' }), {})
+    driver.get('/test-auth-get', async () => new JsonResponse({ message: 'GET success' }), {
+      auth: 'ApiKey',
+    })
+    driver.post('/test-post', async () => new JsonResponse({ message: 'POST success' }, 201), {})
+    driver.post('/test-auth-post', async () => new JsonResponse({ message: 'POST success' }, 201), {
+      auth: 'ApiKey',
+    })
+    driver.patch('/test-patch', async () => new JsonResponse({ message: 'PATCH success' }), {})
+    driver.patch('/test-auth-patch', async () => new JsonResponse({ message: 'PATCH success' }), {
+      auth: 'ApiKey',
+    })
+    driver.delete('/test-delete', async () => new JsonResponse({}, 204), {})
+    driver.delete('/test-auth-delete', async () => new JsonResponse({}, 204), {
+      auth: 'ApiKey',
+    })
     driver.notFound(async () => new JsonResponse({ message: 'Not found' }, 404))
 
     port = await driver.start()
@@ -31,6 +43,31 @@ export function testServerDriver(
   describe('get', () => {
     it('should respond to GET requests', async () => {
       const res = await fetch(`http://localhost:${port}/test-get`)
+      const data = await res.json()
+      expect(res.status).toBe(200)
+      expect(data.message).toBe('GET success')
+    })
+
+    it('should failed to GET requests with ApiKey authentification', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-get`)
+      const data = await res.json()
+      expect(res.status).toBe(401)
+      expect(data.error).toBe('Unauthorized: Invalid API Key')
+    })
+
+    it('should failed to GET requests with ApiKey authentification and wrong key', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-get`, {
+        headers: { 'x-api-key': 'invalid-key' },
+      })
+      const data = await res.json()
+      expect(res.status).toBe(401)
+      expect(data.error).toBe('Unauthorized: Invalid API Key')
+    })
+
+    it('should succeed to GET requests with ApiKey authentification', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-get`, {
+        headers: { 'x-api-key': 'test-key' },
+      })
       const data = await res.json()
       expect(res.status).toBe(200)
       expect(data.message).toBe('GET success')
@@ -92,6 +129,23 @@ export function testServerDriver(
       expect(res.status).toBe(201)
       expect(data.message).toBe('POST success')
     })
+
+    it('should failed to POST requests with ApiKey authentification', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-post`, { method: 'POST' })
+      const data = await res.json()
+      expect(res.status).toBe(401)
+      expect(data.error).toBe('Unauthorized: Invalid API Key')
+    })
+
+    it('should succeed to POST requests with ApiKey authentification', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-post`, {
+        method: 'POST',
+        headers: { 'x-api-key': 'test-key' },
+      })
+      const data = await res.json()
+      expect(res.status).toBe(201)
+      expect(data.message).toBe('POST success')
+    })
   })
 
   describe('patch', () => {
@@ -101,11 +155,43 @@ export function testServerDriver(
       expect(res.status).toBe(200)
       expect(data.message).toBe('PATCH success')
     })
+
+    it('should failed to PATCH requests with ApiKey authentification', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-patch`, { method: 'PATCH' })
+      const data = await res.json()
+      expect(res.status).toBe(401)
+      expect(data.error).toBe('Unauthorized: Invalid API Key')
+    })
+
+    it('should succeed to PATCH requests with ApiKey authentification', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-patch`, {
+        method: 'PATCH',
+        headers: { 'x-api-key': 'test-key' },
+      })
+      const data = await res.json()
+      expect(res.status).toBe(200)
+      expect(data.message).toBe('PATCH success')
+    })
   })
 
   describe('delete', () => {
     it('should respond to DELETE requests', async () => {
       const res = await fetch(`http://localhost:${port}/test-delete`, { method: 'DELETE' })
+      expect(res.status).toBe(204)
+    })
+
+    it('should failed to DELETE requests with ApiKey authentification', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-delete`, { method: 'DELETE' })
+      const data = await res.json()
+      expect(res.status).toBe(401)
+      expect(data.error).toBe('Unauthorized: Invalid API Key')
+    })
+
+    it('should succeed to DELETE requests with ApiKey authentification', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-delete`, {
+        method: 'DELETE',
+        headers: { 'x-api-key': 'test-key' },
+      })
       expect(res.status).toBe(204)
     })
   })

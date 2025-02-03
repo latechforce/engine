@@ -8,6 +8,7 @@ const serverConfig = {
   appName: 'Test Title',
   appVersion: '1.0.0',
   appDescription: 'Test Description',
+  apiKeys: ['test-key'],
 }
 
 const integration = new ElysiaDriver(serverConfig)

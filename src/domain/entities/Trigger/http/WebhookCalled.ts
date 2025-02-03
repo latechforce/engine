@@ -1,5 +1,5 @@
 import type { Queue } from '/domain/services/Queue'
-import type { Server } from '/domain/services/Server'
+import type { Server, ServerMethodOptionsAuth } from '/domain/services/Server'
 import { JsonResponse } from '/domain/entities/Response/Json'
 import type { PostRequest } from '/domain/entities/Request/Post'
 import type { BaseTrigger, BaseTriggerConfig } from '../base'
@@ -8,6 +8,7 @@ import type { AutomationContext } from '../../Automation/Context'
 export interface WebhookCalledHttpTriggerConfig extends BaseTriggerConfig {
   automation: string
   path: string
+  auth?: ServerMethodOptionsAuth
 }
 
 export interface WebhookCalledHttpTriggerServices {
@@ -29,7 +30,7 @@ export class WebhookCalledHttpTrigger implements BaseTrigger {
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {
     const { automation } = this._config
     const { server, queue } = this._services
-    await server.post(this.path, this.post)
+    await server.post(this.path, this.post, { auth: this._config.auth })
     queue.job(automation, run)
   }
 

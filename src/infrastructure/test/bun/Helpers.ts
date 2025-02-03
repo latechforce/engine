@@ -55,9 +55,9 @@ type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> 
   | {}
 
 type Request = {
-  get: (url: string) => Promise<any>
-  post: (url: string, body?: unknown) => Promise<any>
-  patch: (url: string, body?: unknown) => Promise<any>
+  get: (url: string, options?: RequestInit) => Promise<any>
+  post: (url: string, body?: unknown, options?: RequestInit) => Promise<any>
+  patch: (url: string, body?: unknown, options?: RequestInit) => Promise<any>
 }
 type TestApp = {
   start: (_: Config) => Promise<StartedApp>
@@ -69,8 +69,8 @@ export class Helpers {
 
   get request(): Request {
     return {
-      get: async (url: string) => {
-        return fetch(url)
+      get: async (url: string, options: RequestInit = {}) => {
+        return fetch(url, options)
           .then((res) => res.json())
           .catch((error) => {
             console.error(error)
@@ -81,8 +81,8 @@ export class Helpers {
         return fetch(url, {
           method: 'POST',
           body: JSON.stringify(body),
-          headers: { 'Content-Type': 'application/json' },
           ...options,
+          headers: { 'Content-Type': 'application/json', ...(options.headers ?? {}) },
         })
           .then((res) => res.json())
           .catch((error) => {
@@ -94,8 +94,9 @@ export class Helpers {
         return fetch(url, {
           method: 'PATCH',
           body: JSON.stringify(body),
-          headers: { 'Content-Type': 'application/json' },
           ...options,
+
+          headers: { 'Content-Type': 'application/json', ...(options.headers ?? {}) },
         })
           .then((res) => res.json())
           .catch((error) => {

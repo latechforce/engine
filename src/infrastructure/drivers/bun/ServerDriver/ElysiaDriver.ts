@@ -1,11 +1,12 @@
 import { Elysia } from 'elysia'
 import { swagger } from '@elysiajs/swagger'
 import { cors } from '@elysiajs/cors'
+import net from 'net'
 import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
 import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '/adapter/spi/dtos/RequestDto'
-import type { ServerConfig } from '/domain/services/Server'
-import type { Response } from '/domain/entities/Response'
-import net from 'net'
+import type { ServerConfig, ServerMethodOptions } from '/domain/services/Server'
+import type { Response as EngineResponse } from '/domain/entities/Response'
+import { JsonResponse } from '/domain/entities/Response/Json'
 
 export class ElysiaDriver implements IServerDriver {
   private _app: Elysia
@@ -21,6 +22,15 @@ export class ElysiaDriver implements IServerDriver {
               title: _config.appName + ' - Swagger Documentation',
               version: _config.appVersion,
               description: _config.appDescription,
+            },
+            components: {
+              securitySchemes: {
+                api_key: {
+                  type: 'apiKey',
+                  name: 'x-api-key',
+                  in: 'header',
+                },
+              },
             },
           },
         })
@@ -42,15 +52,27 @@ export class ElysiaDriver implements IServerDriver {
       })
   }
 
-  get = async (path: string, handler: (getDto: GetDto) => Promise<Response>): Promise<void> => {
-    this._app.get(path, async ({ query, params }) => {
+  get = async (
+    path: string,
+    handler: (getDto: GetDto) => Promise<EngineResponse>,
+    options: ServerMethodOptions
+  ): Promise<void> => {
+    this._app.get(path, async ({ request, query, params }) => {
+      const authFailed = this._verifyAuth(options, request)
+      if (authFailed) return authFailed
       const getDto: GetDto = { path, query, params, baseUrl: '', headers: {}, method: 'GET' }
       return this._formatResponse(await handler(getDto))
     })
   }
 
-  post = async (path: string, handler: (postDto: PostDto) => Promise<Response>): Promise<void> => {
-    this._app.post(path, async ({ query, params, body }) => {
+  post = async (
+    path: string,
+    handler: (postDto: PostDto) => Promise<EngineResponse>,
+    options: ServerMethodOptions
+  ): Promise<void> => {
+    this._app.post(path, async ({ request, query, params, body }) => {
+      const authFailed = this._verifyAuth(options, request)
+      if (authFailed) return authFailed
       const postDto: PostDto = {
         path,
         query,
@@ -66,9 +88,12 @@ export class ElysiaDriver implements IServerDriver {
 
   patch = async (
     path: string,
-    handler: (patchDto: PatchDto) => Promise<Response>
+    handler: (patchDto: PatchDto) => Promise<EngineResponse>,
+    options: ServerMethodOptions
   ): Promise<void> => {
-    this._app.patch(path, async ({ query, params, body }) => {
+    this._app.patch(path, async ({ request, query, params, body }) => {
+      const authFailed = this._verifyAuth(options, request)
+      if (authFailed) return authFailed
       const patchDto: PatchDto = {
         path,
         query,
@@ -84,9 +109,12 @@ export class ElysiaDriver implements IServerDriver {
 
   delete = async (
     path: string,
-    handler: (deleteDto: DeleteDto) => Promise<Response>
+    handler: (deleteDto: DeleteDto) => Promise<EngineResponse>,
+    options: ServerMethodOptions
   ): Promise<void> => {
-    this._app.delete(path, async ({ query, params }) => {
+    this._app.delete(path, async ({ request, query, params }) => {
+      const authFailed = this._verifyAuth(options, request)
+      if (authFailed) return authFailed
       const deleteDto: DeleteDto = {
         path,
         query,
@@ -99,7 +127,9 @@ export class ElysiaDriver implements IServerDriver {
     })
   }
 
-  notFound = async (handler: (requestDto: RequestDto) => Promise<Response>): Promise<void> => {
+  notFound = async (
+    handler: (requestDto: RequestDto) => Promise<EngineResponse>
+  ): Promise<void> => {
     this._app.onError(async ({ path, query, params }) => {
       const requestDto: RequestDto = {
         path,
@@ -125,6 +155,20 @@ export class ElysiaDriver implements IServerDriver {
     await this._app.stop()
   }
 
+  private _verifyAuth = (options: ServerMethodOptions = {}, request: Request) => {
+    const { auth } = options
+    if (auth) {
+      if (auth === 'ApiKey') {
+        const apiKey = request.headers.get('x-api-key')
+        if (!apiKey || !this._config.apiKeys?.includes(apiKey)) {
+          return this._formatResponse(
+            new JsonResponse({ error: 'Unauthorized: Invalid API Key' }, 401)
+          )
+        }
+      }
+    }
+  }
+
   private _findRandomAvailablePort(
     minPort: number = 1024,
     maxPort: number = 65535
@@ -141,7 +185,7 @@ export class ElysiaDriver implements IServerDriver {
     })
   }
 
-  private _formatResponse = (response: Response) => {
+  private _formatResponse = (response: EngineResponse) => {
     return new Response(response.body, {
       status: response.status,
       headers: response.headers,

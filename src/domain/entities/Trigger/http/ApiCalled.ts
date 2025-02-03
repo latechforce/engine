@@ -1,4 +1,4 @@
-import type { Server } from '/domain/services/Server'
+import type { Server, ServerMethodOptionsAuth } from '/domain/services/Server'
 import { JsonResponse } from '/domain/entities/Response/Json'
 import type { PostRequest } from '/domain/entities/Request/Post'
 import type { JSONSchema, SchemaValidator } from '/domain/services/SchemaValidator'
@@ -17,6 +17,7 @@ export interface ApiCalledHttpTriggerConfig extends BaseTriggerConfig {
   path: string
   input?: JSONSchema
   output?: TemplateObject
+  auth?: ServerMethodOptionsAuth
 }
 
 export interface ApiCalledHttpTriggerServices {
@@ -47,7 +48,9 @@ export class ApiCalledHttpTrigger implements BaseTrigger {
 
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {
     const { server } = this._services
-    await server.post(this.path, (request: PostRequest) => this.post(request, run))
+    await server.post(this.path, (request: PostRequest) => this.post(request, run), {
+      auth: this._config.auth,
+    })
   }
 
   post = async (request: PostRequest, run: (data: object) => Promise<AutomationContext>) => {
