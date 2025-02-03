@@ -25,13 +25,13 @@ import { AirtableMapper } from './Integration/AirtableMapper'
 
 export class AppMapper {
   static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
-    const { name, version } = config
+    const { name, version, description } = config
     const monitor = MonitorMapper.toService(drivers, config.monitors)
     const logger = LoggerMapper.toService(drivers, config.loggers)
     const tunnel = TunnelMapper.toService(drivers, config.tunnel)
     const server = ServerMapper.toService(
       drivers,
-      { ...config.server, appName: name, appVersion: version },
+      { ...config.server, appName: name, appVersion: version, appDescription: description },
       { logger, monitor, tunnel }
     )
     const idGenerator = IdGeneratorMapper.toService(drivers)

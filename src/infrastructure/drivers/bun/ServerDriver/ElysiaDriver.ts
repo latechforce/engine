@@ -20,6 +20,7 @@ export class ElysiaDriver implements IServerDriver {
             info: {
               title: _config.appName + ' - Swagger Documentation',
               version: _config.appVersion,
+              description: _config.appDescription,
             },
           },
         })

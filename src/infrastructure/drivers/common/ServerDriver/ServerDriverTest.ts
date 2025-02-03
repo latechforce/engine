@@ -1,12 +1,15 @@
 import type BunTester from 'bun:test'
 import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
 import { JsonResponse } from '/domain/entities/Response/Json'
+import puppeteer, { Browser, Page } from 'puppeteer'
 
 export function testServerDriver(
   { describe, beforeAll, afterAll, it, expect }: typeof BunTester,
   driver: IServerDriver
 ) {
   let port: number
+  let browser: Browser
+  let page: Page
 
   beforeAll(async () => {
     driver.get('/test-get', async () => new JsonResponse({ message: 'GET success' }))
@@ -16,10 +19,13 @@ export function testServerDriver(
     driver.notFound(async () => new JsonResponse({ message: 'Not found' }, 404))
 
     port = await driver.start()
+    browser = await puppeteer.launch()
+    page = await browser.newPage()
   })
 
   afterAll(async () => {
     await driver.stop()
+    await browser.close()
   })
 
   describe('get', () => {
@@ -47,6 +53,24 @@ export function testServerDriver(
       const data = await res.text()
       const title = data.match(/<title>(.*?)<\/title>/)
       expect(title?.[1]).toBe('Test Title - Swagger Documentation')
+    })
+
+    it('should return a swagger OpenAPI with a custom version', async () => {
+      await page.goto(`http://localhost:${port}/api/swagger`)
+      expect(
+        await page.waitForFunction((text) => document.body.innerText.includes(text), {}, '1.0.0')
+      ).toBeTruthy()
+    })
+
+    it('should return a swagger OpenAPI with a custom description', async () => {
+      await page.goto(`http://localhost:${port}/api/swagger`)
+      expect(
+        await page.waitForFunction(
+          (text) => document.body.innerText.includes(text),
+          {},
+          'Test Description'
+        )
+      ).toBeTruthy()
     })
 
     it('should return a swagger OpenAPI json', async () => {

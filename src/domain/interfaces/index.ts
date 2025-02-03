@@ -7,6 +7,7 @@ import type { IIntegrations } from './IIntegrations'
 export interface Config extends IServices {
   name: string
   version: string
+  description?: string
   tables?: ITable[]
   buckets?: IBucket[]
   automations?: IAutomation[]

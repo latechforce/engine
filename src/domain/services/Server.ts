@@ -12,6 +12,7 @@ import type { Tunnel } from './Tunnel'
 export interface ServerConfig {
   appName: string
   appVersion: string
+  appDescription?: string
   port?: string | number
   baseUrl?: string
   sslCert?: string
