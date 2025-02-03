@@ -12,7 +12,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       const { url } = await app.start(config)
 
       // WHEN
-      const response = await request.post(`${url}/api/automation/run`)
+      const response = await request.post(`${url}/api/webhook/run`)
 
       // THEN
       expect(response.success).toBeTruthy()

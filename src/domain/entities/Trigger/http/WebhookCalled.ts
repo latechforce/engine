@@ -23,7 +23,7 @@ export class WebhookCalledHttpTrigger implements BaseTrigger {
 
   get path() {
     const { path } = this._config
-    return `/api/automation/${path}`
+    return `/api/webhook/${path}`
   }
 
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {
