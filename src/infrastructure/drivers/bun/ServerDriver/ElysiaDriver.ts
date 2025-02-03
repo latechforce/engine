@@ -1,4 +1,5 @@
 import { Elysia } from 'elysia'
+import { swagger } from '@elysiajs/swagger'
 import { cors } from '@elysiajs/cors'
 import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
 import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '/adapter/spi/dtos/RequestDto'
@@ -11,12 +12,15 @@ export class ElysiaDriver implements IServerDriver {
 
   constructor(private _config: ServerConfig) {
     this._app = new Elysia()
-    this._app.onRequest(({ set }) => {
-      set.headers['Content-Security-Policy'] = "default-src 'self'"
-      set.headers['X-Content-Type-Options'] = 'nosniff'
-      set.headers['X-Frame-Options'] = 'DENY'
-    })
-    this._app.use(cors())
+      .use(cors())
+      .use(swagger())
+      .onRequest(({ set }) => {
+        set.headers['Content-Security-Policy'] = "default-src 'self'"
+        set.headers['X-Content-Type-Options'] = 'nosniff'
+        set.headers['X-Frame-Options'] = 'DENY'
+        set.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
+        set.headers['Referrer-Policy'] = 'no-referrer'
+      })
   }
 
   get = async (path: string, handler: (getDto: GetDto) => Promise<Response>): Promise<void> => {

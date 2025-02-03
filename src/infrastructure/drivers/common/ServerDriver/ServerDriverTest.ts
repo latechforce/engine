@@ -36,6 +36,17 @@ export function testServerDriver(
       expect(res.status).toBe(404)
       expect(data.message).toBe('Not found')
     })
+
+    it('should return a swagger OpenAPI json', async () => {
+      const res = await fetch(`http://localhost:${port}/swagger/json`)
+      const data = await res.json()
+      expect(res.status).toBe(200)
+      expect(data.openapi).toBe('3.0.3')
+      expect(data.paths).toHaveProperty('/test-get')
+      expect(data.paths).toHaveProperty('/test-post')
+      expect(data.paths).toHaveProperty('/test-patch')
+      expect(data.paths).toHaveProperty('/test-delete')
+    })
   })
 
   describe('post', () => {

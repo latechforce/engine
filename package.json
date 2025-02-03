@@ -48,6 +48,7 @@
   "dependencies": {
     "@elastic/elasticsearch": "^7.17.14",
     "@elysiajs/cors": "^1.2.0",
+    "@elysiajs/swagger": "^1.2.0",
     "@ngrok/ngrok": "^1.4.1",
     "@notionhq/client": "^2.2.15",
     "@sentry/bun": "^8.53.0",
