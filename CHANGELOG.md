@@ -1,3 +1,10 @@
+## [0.37.27](https://github.com/latechforce/engine/compare/v0.37.26...v0.37.27) (2025-02-04)
+
+
+### Bug Fixes
+
+* **Template:** add green test: should run a TypeScript code with a string input ([64323da](https://github.com/latechforce/engine/commit/64323da59ba14ca5106385e8bb336c50cb62f854))
+
 ## [0.37.26](https://github.com/latechforce/engine/compare/v0.37.25...v0.37.26) (2025-02-03)
 
 
