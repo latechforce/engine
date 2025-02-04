@@ -158,7 +158,7 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       }
       const { url } = await app.start(config)
       const text =
-        '"RemittancePaybox";"Bank";"Site";"Rank";"ShopName";"IdPaybox";"Date";"TransactionId";"IdAppel";"DateOfIssue";"HourOfIssue";"DateOfExpiry";"Reference";"EmailCustomer";"Type";"Canal";"NumberOfAuthorization";"Amount";"Currency";"Entity";"Operator";"Country";"CountryIP";"CardType";"ThreeDSecureStatus";"ThreeDSecureEnrolled";"ThreeDSecureWarranted";"RefArchive";"0387513966";"004308";"5995444";"001";"SVV AGORASTORE";413564442;"2025-02-04";'
+        '"RemittancePaybox";"Bank";"Site";"Rank";"ShopName";"IdPaybox";"Date";"TransactionId";"IdAppel";"DateOfIssue";"HourOfIssue";"DateOfExpiry";"Reference";"EmailCustomer";"Type";"Canal";"NumberOfAuthorization";"Amount";"Currency";"Entity";"Operator";"Country";"CountryIP";"CardType";"ThreeDSecureStatus";"ThreeDSecureEnrolled";"ThreeDSecureWarranted";"RefArchive";"0387513966";"004308";"5995444";"001";413564442;"2025-02-04";'
 
       // WHEN
       const response = await request.post(`${url}/api/automation/hello-name`, {
