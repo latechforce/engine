@@ -18,7 +18,7 @@ export class TemplateCompilerDriver implements ITemplateCompilerDriver {
   compile = (text: string) => {
     const processedText = text.replace(/\{\{\s*([^{}\s][^{}]*[^{}\s]?)\s*\}\}/g, (_, variable) => {
       const hasHelper = /^\s*\w+\s/.test(variable.trim())
-      return hasHelper ? `{{${variable.trim()}}}` : `{{stringify ${variable.trim()}}}`
+      return hasHelper ? `{{${variable.trim()}}}` : `{{{stringify ${variable.trim()}}}}`
     })
     return new TemplateDriver(Handlebars.compile(processedText))
   }

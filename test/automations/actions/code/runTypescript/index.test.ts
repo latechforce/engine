@@ -116,6 +116,59 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       expect(data.message).toBe('Hello World!')
     })
 
+    it('should run a TypeScript code with a string input', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'hello-name',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'hello-name',
+              input: {
+                type: 'object',
+                properties: {
+                  text: { type: 'string' },
+                },
+                required: ['text'],
+              },
+              output: {
+                message: '{{runJavascriptCode.message}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                input: {
+                  text: '{{trigger.body.text}}',
+                },
+                code: String(async function (context: CodeRunnerContext<{ text: string }>) {
+                  const { text } = context.inputData
+                  return { message: text }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+      const text =
+        '"RemittancePaybox";"Bank";"Site";"Rank";"ShopName";"IdPaybox";"Date";"TransactionId";"IdAppel";"DateOfIssue";"HourOfIssue";"DateOfExpiry";"Reference";"EmailCustomer";"Type";"Canal";"NumberOfAuthorization";"Amount";"Currency";"Entity";"Operator";"Country";"CountryIP";"CardType";"ThreeDSecureStatus";"ThreeDSecureEnrolled";"ThreeDSecureWarranted";"RefArchive";"0387513966";"004308";"5995444";"001";"SVV AGORASTORE";413564442;"2025-02-04";'
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/hello-name`, {
+        text,
+      })
+
+      // THEN
+      expect(response.message).toBe(text)
+    })
+
     it('should run a Typescript code with env variable', async () => {
       // GIVEN
       const config: Config = {
