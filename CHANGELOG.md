@@ -1,3 +1,11 @@
+## [0.37.28](https://github.com/latechforce/engine/compare/v0.37.27...v0.37.28) (2025-02-07)
+
+
+### Bug Fixes
+
+* **Notion:** add green test: should add a table with real Notion table config ([39cd67d](https://github.com/latechforce/engine/commit/39cd67d6520c80eb315b367f2aa8d6a589b37640))
+* **Notion:** remove usless env var ([02520f1](https://github.com/latechforce/engine/commit/02520f1eb168a53829592c7902337e44a5996b1f))
+
 ## [0.37.27](https://github.com/latechforce/engine/compare/v0.37.26...v0.37.27) (2025-02-04)
 
 
