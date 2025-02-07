@@ -38,6 +38,7 @@ type Row = {
 
 export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   public name: string
+  public schemaName: string
   public viewName: string
   public fields: IField[] = []
   public columns: Column[]
@@ -47,6 +48,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     private _db: pg.Pool
   ) {
     this.name = config.name
+    this.schemaName = this.name
     this.viewName = `${config.name}_view`
     this.fields = [
       ...config.fields,

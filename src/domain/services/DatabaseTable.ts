@@ -14,6 +14,7 @@ export interface DatabaseTableServices {
 }
 
 export interface IDatabaseTableSpi {
+  schemaName: string
   exists: () => Promise<boolean>
   create: () => Promise<void>
   dropView: () => Promise<void>
@@ -30,6 +31,7 @@ export interface IDatabaseTableSpi {
 }
 
 export class DatabaseTable {
+  readonly schemaName: string
   private readonly _name: string
   private _table: IDatabaseTableSpi
   private _logger: Logger
@@ -42,6 +44,7 @@ export class DatabaseTable {
     this._table = spi.table(config)
     this._logger = _services.logger
     this._name = config.name
+    this.schemaName = this._table.schemaName
   }
 
   exists = async () => {

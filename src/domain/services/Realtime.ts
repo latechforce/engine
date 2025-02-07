@@ -53,7 +53,7 @@ export class Realtime {
   setup = async () => {
     this._services.logger.debug('setup realtime...')
     this._db.onNotification(this._onEvent)
-    await this._db.setupTriggers(this._tables.map((t) => t.name))
+    await this._db.setupTriggers(this._tables.map((t) => t.db.schemaName))
     if (this._db.driver === 'PostgreSQL') {
       await this._db.exec(`LISTEN realtime`)
     }

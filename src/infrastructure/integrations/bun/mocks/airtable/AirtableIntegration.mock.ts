@@ -49,7 +49,7 @@ export class AirtableIntegration implements IAirtableIntegration {
   }
 
   getTable = async (tableName: string) => {
-    const id = this._slugifyName(tableName)
+    const id = this._slugify(tableName)
     const tables = await this._tablesOrThrow()
     const table = await tables.readById<TableObject>(id)
     if (!table) {
@@ -74,7 +74,7 @@ export class AirtableIntegration implements IAirtableIntegration {
 
   addTable = async (name: string, fields: IField[]) => {
     const tables = await this._tablesOrThrow()
-    const id = this._slugifyName(name)
+    const id = this._slugify(name)
     await tables.insert<TableObject>({
       id,
       fields: { name, fields: JSON.stringify(fields) },
@@ -83,11 +83,11 @@ export class AirtableIntegration implements IAirtableIntegration {
     return this.getTable(name)
   }
 
-  _slugifyName = (name: string) => {
-    return slugify(name, { lower: true, replacement: '_' })
+  private _slugify = (name: string) => {
+    return slugify(name, { lower: true, replacement: '_', strict: true })
   }
 
-  _tablesOrThrow = async () => {
+  private _tablesOrThrow = async () => {
     if (!this._tables) {
       await this.connect()
       if (!this._tables) {

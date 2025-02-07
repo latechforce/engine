@@ -120,6 +120,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
         continue
       }
       switch (property.type) {
+        case 'Email':
         case 'SingleLineText':
           fields[key] = value ? String(value) : null
           break
@@ -166,6 +167,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
       const property = this._properties.find((p) => p.name === key)
       if (!property) throw new Error(`Property "${key}" does not exist`)
       switch (property.type) {
+        case 'Email':
         case 'SingleLineText':
           page[key] = value ?? null
           break
@@ -297,6 +299,20 @@ export const notionTableSample2: ITable = {
   fields: [
     {
       name: 'name',
+      type: 'SingleLineText',
+    },
+  ],
+}
+
+export const notionTableSample3: ITable = {
+  name: '1359911026ec80debaeec151ac33800b',
+  fields: [
+    {
+      name: 'Email de contact',
+      type: 'Email',
+    },
+    {
+      name: '[App] Nom',
       type: 'SingleLineText',
     },
   ],

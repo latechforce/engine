@@ -16,6 +16,7 @@ import type { IField } from '/domain/interfaces/IField'
 
 export interface IDatabaseTableDriver {
   name: string
+  schemaName: string
   fields: IField[]
   exists: () => Promise<boolean>
   create: () => Promise<void>
@@ -36,6 +37,10 @@ export interface IDatabaseTableDriver {
 
 export class DatabaseTableSpi implements IDatabaseTableSpi {
   constructor(private _driver: IDatabaseTableDriver) {}
+
+  get schemaName() {
+    return this._driver.schemaName
+  }
 
   exists = async () => {
     return this._driver.exists()

@@ -61,7 +61,7 @@ export class Table {
     const { fields } = entities
     this.name = name
     this.fields = fields
-    this.path = `/api/table/${this.name}`
+    this.path = `/api/table/${name}`
     this.recordPath = `${this.path}/:id`
     this.db = database.table(this.config)
     this._validateData = schemaValidator.validate

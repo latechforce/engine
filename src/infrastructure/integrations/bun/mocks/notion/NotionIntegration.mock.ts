@@ -6,6 +6,7 @@ import { SQLiteDatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver
 import { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
+import slugify from 'slugify'
 
 export interface TableObject extends RecordFields {
   title: string
@@ -79,17 +80,18 @@ export class NotionIntegration implements INotionIntegration {
     return this._config
   }
 
-  getTable = async (id: string) => {
+  getTable = async (tableName: string) => {
+    const id = this._slugify(tableName)
     const tables = await this._tablesOrThrow()
     const table = await tables.readById<TableObject>(id)
     if (!table) {
       throw new Error('Table not found')
     }
-    const { properties, title } = table.fields
+    const { properties } = table.fields
     const fields = JSON.parse(String(properties))
     const notionTable = new NotionTableIntegration(
       this._db.table({
-        name: title,
+        name: id,
         fields,
       }),
       table
@@ -113,14 +115,15 @@ export class NotionIntegration implements INotionIntegration {
     }))
   }
 
-  addTable = async (id: string, properties: IField[]) => {
+  addTable = async (name: string, properties: IField[]) => {
     const tables = await this._tablesOrThrow()
+    const id = this._slugify(name)
     await tables.insert<TableObject>({
       id,
-      fields: { title: id, properties: JSON.stringify(properties) },
+      fields: { title: name, properties: JSON.stringify(properties) },
       created_at: new Date(),
     })
-    return this.getTable(id)
+    return this.getTable(name)
   }
 
   addUser = async (user: NotionUserDto) => {
@@ -136,7 +139,11 @@ export class NotionIntegration implements INotionIntegration {
     })
   }
 
-  _tablesOrThrow = async () => {
+  private _slugify = (name: string) => {
+    return slugify(name, { lower: true, replacement: '_', strict: true })
+  }
+
+  private _tablesOrThrow = async () => {
     if (!this._tables) {
       await this.connect()
       if (!this._tables) {
@@ -146,7 +153,7 @@ export class NotionIntegration implements INotionIntegration {
     return this._tables
   }
 
-  _usersOrThrow = async () => {
+  private _usersOrThrow = async () => {
     if (!this._users) {
       await this.connect()
       if (!this._users) {
