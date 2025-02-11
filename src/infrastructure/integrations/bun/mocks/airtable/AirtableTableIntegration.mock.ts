@@ -110,7 +110,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     const fields: RecordFields = {}
     for (const [key, value] of Object.entries(record)) {
       const property = this._fields.find((p) => p.name === key)
-      if (!property) throw new Error(`Field "${key}" does not exist`)
+      if (!property) throw new Error(`Field "${key}" not found in schema`)
       if (value === undefined || value === null) {
         fields[key] = null
         continue

@@ -32,6 +32,18 @@ export function testAirtableTableIntegration(
       expect(record.id).toBeDefined()
     })
 
+    it('should throw an error if a field in not in the database schema', async () => {
+      // WHEN
+      const call = () =>
+        table1.insert({
+          name: nanoid(),
+          invalid: 'invalid',
+        })
+
+      // THEN
+      expect(call()).rejects.toThrow('Field "invalid" not found in schema')
+    })
+
     it('should insert a record in a table with a title field', async () => {
       // GIVEN
       const name = 'Hello World'
