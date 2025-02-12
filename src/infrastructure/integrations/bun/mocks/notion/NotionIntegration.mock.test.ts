@@ -16,7 +16,7 @@ describe('addTable', () => {
     const call = async () => {
       table = await integration.addTable(notionTableSample3.name, notionTableSample3.fields)
     }
-    
+
     // THEN
     expect(call()).resolves
   })
