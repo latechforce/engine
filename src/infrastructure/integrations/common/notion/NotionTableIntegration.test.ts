@@ -1,7 +1,7 @@
 import env from '../../../test/env'
 import { testNotionTableIntegration } from './NotionTableIntegrationTest'
 import BunTester from 'bun:test'
-import { cleanTestTable, integration } from './NotionIntegrationTest'
+import { cleanTestsTables, integration } from './NotionIntegrationTest'
 
 testNotionTableIntegration(
   BunTester,
@@ -11,5 +11,5 @@ testNotionTableIntegration(
     TABLE_2_ID: env.TEST_NOTION_TABLE_2_ID,
     TABLE_3_ID: env.TEST_NOTION_TABLE_3_ID,
   },
-  cleanTestTable
+  cleanTestsTables
 )

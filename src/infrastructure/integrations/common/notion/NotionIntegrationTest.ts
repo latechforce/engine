@@ -10,9 +10,15 @@ export const integration = new NotionIntegration({
 
 export const testTable = await integration.getTable(env.TEST_NOTION_TABLE_1_ID)
 
-export const cleanTestTable = async () => {
+export const cleanTestsTables = async () => {
   const pages = await testTable.list()
   await testTable.archiveMany(pages.map((page) => page.id))
+  const testTable2 = await integration.getTable(env.TEST_NOTION_TABLE_2_ID)
+  const pages2 = await testTable.list()
+  await testTable2.archiveMany(pages2.map((page) => page.id))
+  const testTable3 = await integration.getTable(env.TEST_NOTION_TABLE_3_ID)
+  const pages3 = await testTable.list()
+  await testTable3.archiveMany(pages3.map((page) => page.id))
 }
 
 export function testNotionIntegration(
