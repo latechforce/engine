@@ -1,3 +1,10 @@
+## [0.37.31](https://github.com/latechforce/engine/compare/v0.37.30...v0.37.31) (2025-02-12)
+
+
+### Bug Fixes
+
+* **Database:** add green test: should restart an app with a PostgreSQL database ([eaca124](https://github.com/latechforce/engine/commit/eaca12428e9e1fa7c43d3db048fc1c91d41d5229))
+
 ## [0.37.30](https://github.com/latechforce/engine/compare/v0.37.29...v0.37.30) (2025-02-12)
 
 
