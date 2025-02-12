@@ -14,6 +14,10 @@ Handlebars.registerHelper('formatDate', (value, inputFormat, outputFormat) => {
   return format(parsedDate, outputFormat)
 })
 
+Handlebars.registerHelper('lookup', function (obj, key) {
+  return obj[key]
+})
+
 export class TemplateCompilerDriver implements ITemplateCompilerDriver {
   compile = (text: string) => {
     const processedText = text.replace(/\{\{\s*([^{}\s][^{}]*[^{}\s]?)\s*\}\}/g, (_, variable) => {
