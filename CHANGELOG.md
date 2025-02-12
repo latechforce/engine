@@ -1,3 +1,11 @@
+## [0.37.30](https://github.com/latechforce/engine/compare/v0.37.29...v0.37.30) (2025-02-12)
+
+
+### Bug Fixes
+
+* **Database:** add green test: should create a database file in a folder that not exists ([d281d66](https://github.com/latechforce/engine/commit/d281d662d6120038726deb79911c1f23d1a11293))
+* **Notion:** add green test: should add a table with real Notion table config ([5533f61](https://github.com/latechforce/engine/commit/5533f615c83e39b1f64e59f252d3474e475dcdd3))
+
 ## [0.37.29](https://github.com/latechforce/engine/compare/v0.37.28...v0.37.29) (2025-02-12)
 
 ### Bug Fixes
