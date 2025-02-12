@@ -1,55 +1,49 @@
 ## [0.37.28](https://github.com/latechforce/engine/compare/v0.37.27...v0.37.28) (2025-02-07)
 
-
 ### Bug Fixes
 
-* **Notion:** add green test: should add a table with real Notion table config ([39cd67d](https://github.com/latechforce/engine/commit/39cd67d6520c80eb315b367f2aa8d6a589b37640))
-* **Notion:** remove usless env var ([02520f1](https://github.com/latechforce/engine/commit/02520f1eb168a53829592c7902337e44a5996b1f))
+- **Notion:** add green test: should add a table with real Notion table config ([39cd67d](https://github.com/latechforce/engine/commit/39cd67d6520c80eb315b367f2aa8d6a589b37640))
+- **Notion:** remove usless env var ([02520f1](https://github.com/latechforce/engine/commit/02520f1eb168a53829592c7902337e44a5996b1f))
 
 ## [0.37.27](https://github.com/latechforce/engine/compare/v0.37.26...v0.37.27) (2025-02-04)
 
-
 ### Bug Fixes
 
-* **Template:** add green test: should run a TypeScript code with a string input ([64323da](https://github.com/latechforce/engine/commit/64323da59ba14ca5106385e8bb336c50cb62f854))
+- **Template:** add green test: should run a TypeScript code with a string input ([64323da](https://github.com/latechforce/engine/commit/64323da59ba14ca5106385e8bb336c50cb62f854))
 
 ## [0.37.26](https://github.com/latechforce/engine/compare/v0.37.25...v0.37.26) (2025-02-03)
 
-
 ### Bug Fixes
 
-* **ApiCalled:** fix red test: should return an invalid body error ([24d6336](https://github.com/latechforce/engine/commit/24d63360679e36ed5e320b342691167f224d15dd))
-* **Bucket:** add green test: should not create a notion bucket if there is no config ([ac437dc](https://github.com/latechforce/engine/commit/ac437dc4e75fa56bf493efd705129040309899d4))
-* **Server:** add green test: should failed to GET requests with ApiKey authentification and wrong key ([dad61e0](https://github.com/latechforce/engine/commit/dad61e04b900d1093245895c1807095bd9a13ada))
-* **Server:** add green test: should return a swagger OpenAPI with a custom description ([ae6c774](https://github.com/latechforce/engine/commit/ae6c774ba367f05335690afb92b6b9e7a6aab51b))
-* **Server:** add green test: should return a swagger OpenAPI with a custom detail summary ([0da9e38](https://github.com/latechforce/engine/commit/0da9e3836429b2599279472377a5bbba00efe183))
-* **Server:** fix red test with puppeteer ([a43f7ff](https://github.com/latechforce/engine/commit/a43f7ff719f390e62d6dff083481b7edc63c1b76))
-* **WebhookCalled:** change base endpoint from /automation to /webhook ([97c283e](https://github.com/latechforce/engine/commit/97c283e063333a85c7a575538c9c390b8e8d1353))
+- **ApiCalled:** fix red test: should return an invalid body error ([24d6336](https://github.com/latechforce/engine/commit/24d63360679e36ed5e320b342691167f224d15dd))
+- **Bucket:** add green test: should not create a notion bucket if there is no config ([ac437dc](https://github.com/latechforce/engine/commit/ac437dc4e75fa56bf493efd705129040309899d4))
+- **Server:** add green test: should failed to GET requests with ApiKey authentification and wrong key ([dad61e0](https://github.com/latechforce/engine/commit/dad61e04b900d1093245895c1807095bd9a13ada))
+- **Server:** add green test: should return a swagger OpenAPI with a custom description ([ae6c774](https://github.com/latechforce/engine/commit/ae6c774ba367f05335690afb92b6b9e7a6aab51b))
+- **Server:** add green test: should return a swagger OpenAPI with a custom detail summary ([0da9e38](https://github.com/latechforce/engine/commit/0da9e3836429b2599279472377a5bbba00efe183))
+- **Server:** fix red test with puppeteer ([a43f7ff](https://github.com/latechforce/engine/commit/a43f7ff719f390e62d6dff083481b7edc63c1b76))
+- **WebhookCalled:** change base endpoint from /automation to /webhook ([97c283e](https://github.com/latechforce/engine/commit/97c283e063333a85c7a575538c9c390b8e8d1353))
 
 ## [0.37.25](https://github.com/latechforce/engine/compare/v0.37.24...v0.37.25) (2025-02-03)
 
-
 ### Bug Fixes
 
-* **MockedApp:** fix red test: should return a mocked response from fetcher ([1970ba0](https://github.com/latechforce/engine/commit/1970ba05cf1a25b04107b74cb09713504bbdb643))
-* **Schema:** update Config ([0236bf6](https://github.com/latechforce/engine/commit/0236bf65bb227d648d484027b17568d60a90fd4b))
-* **Server:** add green test: should return a swagger OpenAPI with a custom title ([e23fdd8](https://github.com/latechforce/engine/commit/e23fdd8addfa000d3e1e69dda0947d0a2d57e241))
+- **MockedApp:** fix red test: should return a mocked response from fetcher ([1970ba0](https://github.com/latechforce/engine/commit/1970ba05cf1a25b04107b74cb09713504bbdb643))
+- **Schema:** update Config ([0236bf6](https://github.com/latechforce/engine/commit/0236bf65bb227d648d484027b17568d60a90fd4b))
+- **Server:** add green test: should return a swagger OpenAPI with a custom title ([e23fdd8](https://github.com/latechforce/engine/commit/e23fdd8addfa000d3e1e69dda0947d0a2d57e241))
 
 ## [0.37.24](https://github.com/latechforce/engine/compare/v0.37.23...v0.37.24) (2025-02-03)
 
-
 ### Bug Fixes
 
-* **packages:** update ([ff0b958](https://github.com/latechforce/engine/commit/ff0b9583b675a802d88e569422d898dfb6c056cb))
-* **Server:** add green test: should return a swagger OpenAPI json ([8fc5672](https://github.com/latechforce/engine/commit/8fc56724dec0ce48b7ab7f16cb499a92de06b60d))
+- **packages:** update ([ff0b958](https://github.com/latechforce/engine/commit/ff0b9583b675a802d88e569422d898dfb6c056cb))
+- **Server:** add green test: should return a swagger OpenAPI json ([8fc5672](https://github.com/latechforce/engine/commit/8fc56724dec0ce48b7ab7f16cb499a92de06b60d))
 
 ## [0.37.23](https://github.com/latechforce/engine/compare/v0.37.22...v0.37.23) (2025-02-01)
 
-
 ### Bug Fixes
 
-* **CI:** update version ([052a806](https://github.com/latechforce/engine/commit/052a8060a6b2b001538d923a4ad7ce12cb90e8cb))
-* **packages:** add green test: should run a Typescript code with the date-fns/locale package ([3a73199](https://github.com/latechforce/engine/commit/3a731999dd62c500834331e725e62a9dbbcfb9ad))
+- **CI:** update version ([052a806](https://github.com/latechforce/engine/commit/052a8060a6b2b001538d923a4ad7ce12cb90e8cb))
+- **packages:** add green test: should run a Typescript code with the date-fns/locale package ([3a73199](https://github.com/latechforce/engine/commit/3a731999dd62c500834331e725e62a9dbbcfb9ad))
 
 ## [0.37.22](https://github.com/latechforce/engine/compare/v0.37.21...v0.37.22) (2025-02-01)
 
