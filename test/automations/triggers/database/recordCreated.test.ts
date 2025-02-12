@@ -10,7 +10,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, drivers }) => {
       // GIVEN
       const config = {
         ...getFirstTableConfig(),
-        ...getAutomationConfig('FirstTableRecordCreated'),
+        ...getAutomationConfig('FirstDatabaseTableRecordCreated'),
       }
       await app.start(config)
 

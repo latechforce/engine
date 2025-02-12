@@ -258,7 +258,8 @@ type AutomationName =
   | 'ApiCalledWithReturnedValue'
   | 'ApiCalledWithError'
   | 'ApiCalledWithTextInput'
-  | 'FirstTableRecordCreated'
+  | 'FirstDatabaseTableRecordCreated'
+  | 'FirstNotionTablePageCreated'
   | 'WebhookCalled'
   | 'WebhookCalledWithApiKeyAuth'
 
