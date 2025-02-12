@@ -521,7 +521,7 @@ export function testAirtableTableIntegration(
       expect(call()).rejects.toThrow('Field "invalid" does not exist')
     })
 
-    it('should list records in a table with a Is filter on a formula', async () => {
+    it('should list records in a table with a Is filter', async () => {
       // GIVEN
       const name = nanoid()
       const record = await table1.insert({ name })
@@ -537,7 +537,38 @@ export function testAirtableTableIntegration(
       expect(records).toHaveLength(1)
     })
 
-    it('should list records in a table with a IsAfter filter on a formula', async () => {
+    it('should list records in a table with multiple Is filters', async () => {
+      // GIVEN
+      const record1 = await table1.insert({ name: nanoid() })
+      const record2 = await table1.insert({ name: nanoid() })
+      const record3 = await table1.insert({ name: nanoid() })
+
+      // WHEN
+      const records = await table1.list({
+        or: [
+          {
+            field: 'id',
+            operator: 'Is',
+            value: record1.id,
+          },
+          {
+            field: 'id',
+            operator: 'Is',
+            value: record2.id,
+          },
+          {
+            field: 'id',
+            operator: 'Is',
+            value: record3.id,
+          },
+        ],
+      })
+
+      // THEN
+      expect(records).toHaveLength(3)
+    })
+
+    it('should list records in a table with a IsAfter filter', async () => {
       // GIVEN
       const record = await table1.insert({ date: new Date().toISOString() })
       const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
@@ -562,7 +593,7 @@ export function testAirtableTableIntegration(
       expect(records).toHaveLength(1)
     })
 
-    it('should not list records in a table with a IsAfter filter on a formula', async () => {
+    it('should not list records in a table with a IsAfter filter', async () => {
       // GIVEN
       const record = await table1.insert({ date: new Date().toISOString() })
       const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
@@ -587,7 +618,7 @@ export function testAirtableTableIntegration(
       expect(records).toHaveLength(0)
     })
 
-    it('should list records in a table with a IsBefore filter on a formula', async () => {
+    it('should list records in a table with a IsBefore filter', async () => {
       // GIVEN
       const record = await table1.insert({ date: new Date().toISOString() })
       const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
@@ -612,7 +643,7 @@ export function testAirtableTableIntegration(
       expect(records).toHaveLength(1)
     })
 
-    it('should not list records in a table with a IsBefore filter on a formula', async () => {
+    it('should not list records in a table with a IsBefore filter', async () => {
       // GIVEN
       const record = await table1.insert({ date: new Date().toISOString() })
       const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
