@@ -1,4 +1,5 @@
 import { Database } from 'bun:sqlite'
+import fs from 'fs-extra'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type {
   DatabaseConfig,
@@ -23,7 +24,8 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
 
   constructor(config: DatabaseConfig) {
     const { url } = config
-    const db = new Database(url, { create: true, strict: true })
+    if (/[\\/]/.test(url)) if (!fs.existsSync(url)) fs.ensureFileSync(url)
+    const db = new Database(url, { strict: true })
     db.run('PRAGMA journal_mode = WAL')
     db.run('PRAGMA foreign_keys = ON')
     this.db = db
