@@ -5,7 +5,7 @@ import {
   notionTableSample1,
   notionTableSample2,
   notionUserSample,
-} from '/infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
+} from '/infrastructure/integrations/bun/mocks/notion/NotionSamples'
 
 const helpers = new Helpers(Tester)
 

@@ -1,11 +1,8 @@
 import { testNotionIntegration } from '/infrastructure/integrations/common/notion/NotionIntegrationTest'
 import BunTester, { describe, it, expect } from 'bun:test'
 import { integration } from './NotionIntegrationTest'
-import {
-  NotionTableIntegration,
-  notionTableSample1,
-  notionTableSample3,
-} from './NotionTableIntegration.mock'
+import { notionTableSample1, notionTableSample3 } from './NotionSamples'
+import type { NotionTableIntegration } from './NotionTableIntegration.mock'
 
 testNotionIntegration(BunTester, integration, {
   TABLE_ID: notionTableSample1.name,

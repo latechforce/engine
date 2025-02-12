@@ -7,18 +7,20 @@ import type { INotionTableIntegration } from '/adapter/spi/integrations/NotionTa
 export function testNotionTableIntegration(
   { describe, it, expect, afterAll, beforeAll }: typeof BunTester,
   integration: INotionIntegration,
-  env: { TABLE_1_ID: string; TABLE_2_ID: string },
+  env: { TABLE_1_ID: string; TABLE_2_ID: string; TABLE_3_ID: string },
   teardown?: () => Promise<void>
 ) {
-  const { TABLE_1_ID, TABLE_2_ID } = env
+  const { TABLE_1_ID, TABLE_2_ID, TABLE_3_ID } = env
 
   if (teardown) afterAll(teardown)
 
   let table1: INotionTableIntegration
+  let table3: INotionTableIntegration
 
   beforeAll(async () => {
     // GIVEN
     table1 = await integration.getTable(TABLE_1_ID)
+    table3 = await integration.getTable(TABLE_3_ID)
   })
 
   describe('insert', () => {
@@ -105,6 +107,17 @@ export function testNotionTableIntegration(
 
       // THEN
       expect(page.properties.text).toBe(text)
+    })
+
+    it('should insert a page in a table with a text property named with specials characters', async () => {
+      // GIVEN
+      const name = 'App'
+
+      // WHEN
+      const page = await table3.insert({ ['[App] Nom']: name })
+
+      // THEN
+      expect(page.properties['[App] Nom']).toBe(name)
     })
 
     it('should insert a page in a table with an empty text property', async () => {

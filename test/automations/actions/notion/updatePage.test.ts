@@ -3,67 +3,119 @@ import { Helpers, type Config } from '/test/bun'
 import {
   notionTableSample1,
   notionTableSample2,
+  notionTableSample3,
   notionUserSample,
-} from '/infrastructure/integrations/bun/mocks/notion/NotionTableIntegration.mock'
+} from '/infrastructure/integrations/bun/mocks/notion/NotionSamples'
 
 const helpers = new Helpers(Tester)
 
-helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integrations }) => {
-  beforeEach(async () => {
-    await integrations.notion.addTable(notionTableSample1.name, notionTableSample1.fields)
-    await integrations.notion.addTable(notionTableSample2.name, notionTableSample2.fields)
-    await integrations.notion.addUser(notionUserSample)
-  })
+helpers.testWithMockedApp(
+  { drivers: ['Database'], integrations: ['Notion'] },
+  ({ app, request, integrations, drivers }) => {
+    beforeEach(async () => {
+      await integrations.notion.addTable(notionTableSample1.name, notionTableSample1.fields)
+      await integrations.notion.addTable(notionTableSample2.name, notionTableSample2.fields)
+      await integrations.notion.addTable(notionTableSample3.name, notionTableSample3.fields)
+      await integrations.notion.addUser(notionUserSample)
+    })
 
-  describe('on POST', () => {
-    it('should update a page', async () => {
-      // GIVEN
-      const config: Config = {
-        name: 'App',
-        version: '1.0.0',
-        automations: [
-          {
-            name: 'updatePage',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'update-page',
-              input: {
-                type: 'object',
-                properties: {
-                  id: {
-                    type: 'string',
+    describe('on POST', () => {
+      it('should update a page', async () => {
+        // GIVEN
+        const config: Config = {
+          name: 'App',
+          version: '1.0.0',
+          automations: [
+            {
+              name: 'updatePage',
+              trigger: {
+                service: 'Http',
+                event: 'ApiCalled',
+                path: 'update-page',
+                input: {
+                  type: 'object',
+                  properties: {
+                    id: {
+                      type: 'string',
+                    },
                   },
                 },
               },
-            },
-            actions: [
-              {
-                name: 'updatePage',
-                integration: 'Notion',
-                action: 'UpdatePage',
-                table: notionTableSample1.name,
-                id: '{{trigger.body.id}}',
-                page: {
-                  name: 'John Doe',
+              actions: [
+                {
+                  name: 'updatePage',
+                  integration: 'Notion',
+                  action: 'UpdatePage',
+                  table: notionTableSample1.name,
+                  id: '{{trigger.body.id}}',
+                  page: {
+                    name: 'John Doe',
+                  },
                 },
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-      const table = await integrations.notion.getTable(notionTableSample1.name)
-      const { id } = await table.insert({ name: 'John' })
+              ],
+            },
+          ],
+        }
+        const { url } = await app.start(config)
+        const table = await integrations.notion.getTable(notionTableSample1.name)
+        const { id } = await table.insert({ name: 'John' })
 
-      // WHEN
-      await request.post(`${url}/api/automation/update-page`, {
-        id,
+        // WHEN
+        await request.post(`${url}/api/automation/update-page`, {
+          id,
+        })
+
+        // THEN
+        const response = await table.retrieve(id)
+        expect(response.properties.name).toBe('John Doe')
       })
-
-      // THEN
-      const response = await table.retrieve(id)
-      expect(response.properties.name).toBe('John Doe')
     })
-  })
-})
+
+    describe('on Notion Table Page Created', () => {
+      it('should update a page with properties with specials characters', async () => {
+        // GIVEN
+        const config: Config = {
+          name: 'App',
+          version: '1.0.0',
+          automations: [
+            {
+              name: 'updatePage',
+              trigger: {
+                integration: 'Notion',
+                event: 'TablePageCreated',
+                table: notionTableSample3.name,
+              },
+              actions: [
+                {
+                  name: 'updatePage',
+                  integration: 'Notion',
+                  action: 'UpdatePage',
+                  table: notionTableSample3.name,
+                  id: '{{trigger.id}}',
+                  page: {
+                    '[App] Nom': '{{trigger["[App] Nom"]}} updated',
+                  },
+                },
+              ],
+            },
+          ],
+        }
+        const table = await integrations.notion.getTable(notionTableSample3.name)
+        await app.start(config)
+
+        // WHEN
+        await table.insert({ '[App] Nom"]': 'App' })
+
+        // THEN
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        const {
+          rows: [history],
+        } = await drivers.database.query<{ trigger_data: string }>(
+          'SELECT * FROM _automations_histories_view'
+        )
+        const triggerData = JSON.parse(history.trigger_data)
+        expect(triggerData['[App] Nom"]']).toBe('App updated')
+      })
+    })
+  }
+)

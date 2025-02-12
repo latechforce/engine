@@ -9,6 +9,7 @@ testNotionTableIntegration(
   {
     TABLE_1_ID: env.TEST_NOTION_TABLE_1_ID,
     TABLE_2_ID: env.TEST_NOTION_TABLE_2_ID,
+    TABLE_3_ID: env.TEST_NOTION_TABLE_3_ID,
   },
   cleanTestTable
 )
