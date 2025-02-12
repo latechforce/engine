@@ -1,5 +1,5 @@
 import BunTester from 'bun:test'
 import { testDatabaseDriver } from '/infrastructure/drivers/common/DatabaseDriver/DatabaseDriverTest'
-import { setupPostgres, teardownPostgres } from './PostgreSQLDriverTestSetup'
+import { getPostgresDatabase, teardownPostgres } from './PostgreSQLDriverTestSetup'
 
-testDatabaseDriver(BunTester, setupPostgres, teardownPostgres)
+testDatabaseDriver(BunTester, getPostgresDatabase, teardownPostgres)
