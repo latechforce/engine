@@ -1,3 +1,10 @@
+## [0.37.32](https://github.com/latechforce/engine/compare/v0.37.31...v0.37.32) (2025-02-12)
+
+
+### Bug Fixes
+
+* **Database:** add green test: should restart an app with a SQLite database and an automation ([9406dbf](https://github.com/latechforce/engine/commit/9406dbf3db5e4f05539acdde3af60593c1a5e2c1))
+
 ## [0.37.31](https://github.com/latechforce/engine/compare/v0.37.30...v0.37.31) (2025-02-12)
 
 
