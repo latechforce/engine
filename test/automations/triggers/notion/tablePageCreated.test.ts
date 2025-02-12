@@ -10,52 +10,86 @@ const helpers = new Helpers(Tester)
 helpers.testWithMockedApp(
   { drivers: ['Database'], integrations: ['Notion'] },
   ({ app, drivers, integrations }) => {
-    describe.skip('on page in table created', () => {
+    describe('on page in table created', () => {
       it('should start an automation', async () => {
         // GIVEN
         const config = {
           ...getFirstTableConfig(),
-          ...getAutomationConfig('TablePageCreated'),
+          ...getAutomationConfig('FirstNotionTablePageCreated'),
         }
-        await app.start({ ...config, loggers: [{ driver: 'Console', level: 'debug' }] })
+        const table = await integrations.notion.addTable(
+          config.tables[0].name,
+          config.tables[0].fields
+        )
+        await app.start(config)
 
         // WHEN
-        const table = await integrations.notion.getTable(config.tables[0].name)
         await table.insert({
           name: 'My new page',
         })
 
         // THEN
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+        await new Promise((resolve) => setTimeout(resolve, 2000))
         const { rows: histories } = await drivers.database.query(
           'SELECT * FROM _automations_histories_view'
         )
         expect(histories).toHaveLength(1)
       })
 
-      it('should return a date property of the created page', async () => {
+      it('should return the created time of the created page', async () => {
         // GIVEN
         const config = {
           ...getFirstTableConfig(),
-          ...getAutomationConfig('TablePageCreated'),
+          ...getAutomationConfig('FirstNotionTablePageCreated'),
         }
+        const table = await integrations.notion.addTable(
+          config.tables[0].name,
+          config.tables[0].fields
+        )
         await app.start(config)
 
         // WHEN
-        const table = await integrations.notion.getTable(config.tables[0].name)
         await table.insert({
           name: 'My new page',
         })
 
         // THEN
-        await new Promise((resolve) => setTimeout(resolve, 1000))
+        await new Promise((resolve) => setTimeout(resolve, 2000))
         const {
           rows: [history],
         } = await drivers.database.query<{ trigger_data: string }>(
           'SELECT * FROM _automations_histories_view'
         )
         const triggerData = JSON.parse(history.trigger_data)
-        expect(triggerData.created_time).toBeDefined()
+        expect(triggerData.createdTime).toBeDefined()
+      })
+
+      it('should return a property with specials characteres of the created page', async () => {
+        // GIVEN
+        const config = {
+          ...getFirstTableConfig(['Champs avec charactères (spéciaux)']),
+          ...getAutomationConfig('FirstNotionTablePageCreated'),
+        }
+        const table = await integrations.notion.addTable(
+          config.tables[0].name,
+          config.tables[0].fields
+        )
+        await app.start(config)
+
+        // WHEN
+        await table.insert({
+          'Champs avec charactères (spéciaux)': 'value',
+        })
+
+        // THEN
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+        const {
+          rows: [history],
+        } = await drivers.database.query<{ trigger_data: string }>(
+          'SELECT * FROM _automations_histories_view'
+        )
+        const triggerData = JSON.parse(history.trigger_data)
+        expect(triggerData['Champs avec charactères (spéciaux)']).toBe('value')
       })
     })
   }

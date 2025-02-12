@@ -56,9 +56,14 @@ export class StartedApp extends BaseApp {
       await queue.stop({ graceful })
       await database.disconnect()
     })
-    this._setStatus('stopped')
+    const stoppedApp = new StoppedApp(
+      this._config,
+      this._services,
+      this._entities,
+      this._integrations
+    )
     this.logger.info(`🛑 app "${this.name}" stopped`)
-    return new StoppedApp(this._config, this._services, this._entities, this._integrations)
+    return stoppedApp
   }
 
   onClose = async (signal: 'SIGTERM' | 'SIGINT' | 'UNCAUGHT_EXCEPTION' | 'UNCAUGHT_REJECTION') => {

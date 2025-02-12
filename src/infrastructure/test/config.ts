@@ -96,10 +96,19 @@ const fullConfig: Config = {
       actions: [],
     },
     {
-      name: 'FirstTableRecordCreated',
+      name: 'FirstDatabaseTableRecordCreated',
       trigger: {
         service: 'Database',
         event: 'RecordCreated',
+        table: 'first_table',
+      },
+      actions: [],
+    },
+    {
+      name: 'FirstNotionTablePageCreated',
+      trigger: {
+        integration: 'Notion',
+        event: 'TablePageCreated',
         table: 'first_table',
       },
       actions: [],
@@ -215,6 +224,10 @@ const fullConfig: Config = {
           output: {
             type: 'Number',
           },
+        },
+        {
+          name: 'Champs avec charactères (spéciaux)',
+          type: 'SingleLineText',
         },
       ],
     },
@@ -339,7 +352,7 @@ export function getAutomationConfig(name: AutomationName): {
 } {
   const automation = fullConfig.automations?.find((automation) => automation.name === name)
   if (!automation) {
-    throw new Error('First Bucket not found')
+    throw new Error('Automation not found')
   }
   return {
     name,
