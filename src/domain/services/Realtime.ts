@@ -53,7 +53,7 @@ export class Realtime {
   setup = async () => {
     this._services.logger.debug('setup realtime...')
     this._db.onNotification(this._onEvent)
-    await this._db.setupTriggers(this._tables.map((t) => t.db.schemaName))
+    await this._db.setupTriggers(this._tables.map((t) => t.db.nameWithSchema))
     if (this._db.driver === 'PostgreSQL') {
       await this._db.exec(`LISTEN realtime`)
     }
@@ -82,7 +82,9 @@ export class Realtime {
     this._services.logger.debug(
       `received event on table "${tableName}" with action "${action}" for record "${recordId}"`
     )
-    const table = this._tables.find((t) => t.name === tableName)
+    const table = this._tables.find(
+      (t) => t.db.nameWithSchema === tableName || t.db.name === tableName
+    )
     if (!table) throw new Error(`Table ${table} not found`)
     const record = await table.db.readById(recordId)
     if (!record) return

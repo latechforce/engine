@@ -31,7 +31,7 @@ helpers.testWithMockedApp(
         // THEN
         await new Promise((resolve) => setTimeout(resolve, 2000))
         const { rows: histories } = await drivers.database.query(
-          'SELECT * FROM _automations_histories_view'
+          'SELECT * FROM automations_histories_view'
         )
         expect(histories).toHaveLength(1)
       })
@@ -58,7 +58,7 @@ helpers.testWithMockedApp(
         const {
           rows: [history],
         } = await drivers.database.query<{ trigger_data: string }>(
-          'SELECT * FROM _automations_histories_view'
+          'SELECT * FROM automations_histories_view'
         )
         const triggerData = JSON.parse(history.trigger_data)
         expect(triggerData.createdTime).toBeDefined()
@@ -86,7 +86,7 @@ helpers.testWithMockedApp(
         const {
           rows: [history],
         } = await drivers.database.query<{ trigger_data: string }>(
-          'SELECT * FROM _automations_histories_view'
+          'SELECT * FROM automations_histories_view'
         )
         const triggerData = JSON.parse(history.trigger_data)
         expect(triggerData['Champs avec charactères (spéciaux)']).toBe('value')

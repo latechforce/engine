@@ -177,7 +177,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
       await drivers.database
         .table(table)
-        .insert({ id: '1', fields: { name: 'John' }, created_at: new Date() })
+        .insert({ id: '1', fields: { name: 'John' }, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/update-user`, {
@@ -246,10 +246,10 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
       await drivers.database
         .table(table)
-        .insert({ id: '1', fields: { name: 'John' }, created_at: new Date() })
+        .insert({ id: '1', fields: { name: 'John' }, created_at: new Date().toISOString() })
       await drivers.database
         .table(table)
-        .insert({ id: '2', fields: { name: 'John' }, created_at: new Date() })
+        .insert({ id: '2', fields: { name: 'John' }, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/update-users`, {
@@ -316,7 +316,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
       await drivers.database
         .table(table)
-        .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date() })
+        .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-user`, {
@@ -377,7 +377,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
       await drivers.database
         .table(table)
-        .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date() })
+        .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-user`, {
@@ -435,7 +435,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
       await drivers.database
         .table(table)
-        .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date() })
+        .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-name`, {
@@ -495,7 +495,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
       await drivers.database
         .table(table)
-        .insert({ id: '1', fields: { age: 35 }, created_at: new Date() })
+        .insert({ id: '1', fields: { age: 35 }, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-age`, {
@@ -555,7 +555,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
       await drivers.database
         .table(table)
-        .insert({ id: '1', fields: { valid: true }, created_at: new Date() })
+        .insert({ id: '1', fields: { valid: true }, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-valid`, {
@@ -614,7 +614,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const birthdate = new Date()
       await drivers.database
         .table(table)
-        .insert({ id: '1', fields: { birthdate }, created_at: new Date() })
+        .insert({ id: '1', fields: { birthdate }, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-birthdate`, {
@@ -663,9 +663,9 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       }
       const { url } = await app.start(config)
       await drivers.database.table(table).insertMany([
-        { id: '1', fields: { name: 'John Doe' }, created_at: new Date() },
-        { id: '2', fields: { name: 'John Wick' }, created_at: new Date() },
-        { id: '3', fields: { name: 'John Connor' }, created_at: new Date() },
+        { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
+        { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
       ])
 
       // WHEN
@@ -721,9 +721,9 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       }
       const { url } = await app.start(config)
       await drivers.database.table(table).insertMany([
-        { id: '1', fields: { name: 'John Doe' }, created_at: new Date() },
-        { id: '2', fields: { name: 'John Wick' }, created_at: new Date() },
-        { id: '3', fields: { name: 'John Connor' }, created_at: new Date() },
+        { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
+        { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
       ])
 
       // WHEN
@@ -775,9 +775,9 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       }
       const { url } = await app.start(config)
       await drivers.database.table(table).insertMany([
-        { id: '1', fields: { name: 'John Doe' }, created_at: new Date() },
-        { id: '2', fields: { name: 'John Wick' }, created_at: new Date() },
-        { id: '3', fields: { name: 'John Connor' }, created_at: new Date() },
+        { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
+        { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
       ])
 
       // WHEN

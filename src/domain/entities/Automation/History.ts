@@ -29,7 +29,8 @@ export class AutomationHistory {
 
   constructor(private _services: AutomationHistoryServices) {
     this._table = this._services.database.table({
-      name: '_automations.histories',
+      name: 'histories',
+      schema: 'automations',
       fields: this._fields.map((field) => field.config),
     })
   }

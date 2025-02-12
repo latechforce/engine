@@ -123,7 +123,7 @@ export class NotionIntegration implements INotionIntegration {
       await tables.insert<TableObject>({
         id,
         fields: { title: name, properties: JSON.stringify(properties) },
-        created_at: new Date(),
+        created_at: new Date().toISOString(),
       })
     return this.getTable(name)
   }
@@ -137,7 +137,7 @@ export class NotionIntegration implements INotionIntegration {
         name: user.name,
         avatarUrl: user.avatarUrl,
       },
-      created_at: new Date(),
+      created_at: new Date().toISOString(),
     })
   }
 

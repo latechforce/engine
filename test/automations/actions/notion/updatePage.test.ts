@@ -111,7 +111,7 @@ helpers.testWithMockedApp(
         const {
           rows: [history],
         } = await drivers.database.query<{ actions_data: string }>(
-          'SELECT * FROM _automations_histories_view'
+          'SELECT * FROM automations_histories_view'
         )
         const [actionData] = JSON.parse(history.actions_data)
         expect(actionData.output['[App] Nom']).toBe('App updated')

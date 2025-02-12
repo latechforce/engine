@@ -19,9 +19,13 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
     const { url } = config
     const NUMERIC_OID = 1700
     const pool = new pg.Pool({ connectionString: url })
-    pool.on('error', () => {})
+    pool.on('error', (error) => {
+      console.error(error)
+    })
     pool.on('connect', (client) => {
-      client.on('error', () => {})
+      client.on('error', (error) => {
+        console.error(error)
+      })
       client.setTypeParser(NUMERIC_OID, (value) => parseFloat(value))
     })
     this.db = pool
@@ -74,7 +78,7 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
     })
   }
 
-  setupTriggers = async (tables: string[]) => {
+  setupTriggers = async (tablesWithSchema: string[]) => {
     await this.db.query(`
       CREATE OR REPLACE FUNCTION notify_trigger_func() RETURNS trigger AS $$
       BEGIN
@@ -92,29 +96,29 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
       END;
       $$ LANGUAGE plpgsql;
     `)
-    for (const table of tables) {
+    for (const tableWithSchema of tablesWithSchema) {
+      const [schema, table] = tableWithSchema.split('.')
       await this.db.query(`
         DO $$
         DECLARE
             trigger_name text;
-            table_name text := '${table}';
         BEGIN
             -- Check and create trigger for AFTER INSERT
-            trigger_name := table_name || '_after_insert';
+            trigger_name := '${schema}_${table}_after_insert';
             IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = trigger_name) THEN
-                EXECUTE format('CREATE TRIGGER %I AFTER INSERT ON %I FOR EACH ROW EXECUTE FUNCTION notify_trigger_func();', trigger_name, table_name);
+                EXECUTE format('CREATE TRIGGER %I AFTER INSERT ON ${schema}.${table} FOR EACH ROW EXECUTE FUNCTION notify_trigger_func();', trigger_name);
             END IF;
         
             -- Check and create trigger for AFTER UPDATE
-            trigger_name := table_name || '_after_update';
+            trigger_name := '${schema}_${table}_after_update';
             IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = trigger_name) THEN
-                EXECUTE format('CREATE TRIGGER %I AFTER UPDATE ON %I FOR EACH ROW EXECUTE FUNCTION notify_trigger_func();', trigger_name, table_name);
+                EXECUTE format('CREATE TRIGGER %I AFTER UPDATE ON ${schema}.${table} FOR EACH ROW EXECUTE FUNCTION notify_trigger_func();', trigger_name);
             END IF;
         
             -- Check and create trigger for AFTER DELETE
-            trigger_name := table_name || '_after_delete';
+            trigger_name := '${schema}_${table}_after_delete';
             IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = trigger_name) THEN
-                EXECUTE format('CREATE TRIGGER %I AFTER DELETE ON %I FOR EACH ROW EXECUTE FUNCTION notify_trigger_func();', trigger_name, table_name);
+                EXECUTE format('CREATE TRIGGER %I AFTER DELETE ON ${schema}.${table} FOR EACH ROW EXECUTE FUNCTION notify_trigger_func();', trigger_name);
             END IF;
         END $$;
       `)

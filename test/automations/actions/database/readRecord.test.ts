@@ -52,7 +52,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
       await drivers.database
         .table({ name: 'records', fields: [] })
-        .insert({ id: '1', fields: {}, created_at: new Date() })
+        .insert({ id: '1', fields: {}, created_at: new Date().toISOString() })
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-record`, {

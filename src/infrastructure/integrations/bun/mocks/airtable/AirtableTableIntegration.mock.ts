@@ -42,7 +42,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     await this._db.insert({
       id,
       fields: this._preprocess(record),
-      created_at: new Date(),
+      created_at: new Date().toISOString(),
     })
     return this.retrieve<T>(id)
   }
@@ -51,7 +51,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     const pagesToInsert = records.map((record) => ({
       id: this._getId(),
       fields: this._preprocess(record),
-      created_at: new Date(),
+      created_at: new Date().toISOString(),
     }))
     await this._db.insertMany(pagesToInsert)
     return Promise.all(pagesToInsert.map((page) => this.retrieve<T>(page.id)))
@@ -62,7 +62,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     await this._db.update({
       id,
       fields,
-      updated_at: new Date(),
+      updated_at: new Date().toISOString(),
     })
     return this.retrieve<T>(id)
   }
@@ -73,7 +73,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     const pagesToUpdate = pages.map(({ id, fields }) => ({
       id,
       fields: this._preprocess(fields),
-      updated_at: new Date(),
+      updated_at: new Date().toISOString(),
     }))
     await this._db.updateMany(pagesToUpdate)
     return Promise.all(pagesToUpdate.map((page) => this.retrieve<T>(page.id)))
@@ -200,7 +200,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     return {
       id: record.id,
       fields: fields as T,
-      created_time: record.created_at.toISOString(),
+      created_time: record.created_at,
     }
   }
 }

@@ -15,14 +15,16 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, drivers }) => {
       await app.start(config)
 
       // WHEN
-      await drivers.database
-        .table(config.tables[0])
-        .insert({ id: '1', fields: { name: 'John' }, created_at: new Date() })
+      await drivers.database.table(config.tables[0]).insert({
+        id: '1',
+        fields: { name: 'John' },
+        created_at: new Date().toISOString(),
+      })
 
       // THEN
       await new Promise((resolve) => setTimeout(resolve, 1000))
       const { rows: histories } = await drivers.database.query(
-        'SELECT * FROM _automations_histories_view'
+        'SELECT * FROM automations_histories_view'
       )
       expect(histories).toHaveLength(1)
     })

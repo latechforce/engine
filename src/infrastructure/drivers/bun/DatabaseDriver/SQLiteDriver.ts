@@ -34,7 +34,7 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
   connect = async (): Promise<void> => {
     if (this._interval) clearInterval(this._interval)
     this.db.run(`
-      CREATE TABLE IF NOT EXISTS _notifications (
+      CREATE TABLE IF NOT EXISTS tables_notifications (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         payload TEXT,
         processed INTEGER DEFAULT 0
@@ -43,10 +43,10 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     const emitNotification = () => {
       try {
         const notifications = this.db
-          .query<Notification, []>('SELECT * FROM _notifications WHERE processed = 0')
+          .query<Notification, []>('SELECT * FROM tables_notifications WHERE processed = 0')
           .all()
         for (const { payload, id } of notifications) {
-          this.db.prepare('UPDATE _notifications SET processed = 1 WHERE id = ?').run(id)
+          this.db.prepare('UPDATE tables_notifications SET processed = 1 WHERE id = ?').run(id)
           const { record_id, table, action } = JSON.parse(payload)
           this._onNotification.forEach((callback) =>
             callback({ notification: { record_id, table, action }, event: 'notification' })
@@ -101,31 +101,31 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     }
   }
 
-  setupTriggers = async (tables: string[]) => {
-    for (const table of tables) {
+  setupTriggers = async (tablesWithSchema: string[]) => {
+    for (const tableWithSchema of tablesWithSchema) {
       this.db.run(`
         -- Trigger for INSERT
-        CREATE TRIGGER IF NOT EXISTS after_insert_${table}_trigger
-        AFTER INSERT ON ${table}
+        CREATE TRIGGER IF NOT EXISTS after_insert_${tableWithSchema}_trigger
+        AFTER INSERT ON ${tableWithSchema}
         BEGIN
-            INSERT INTO _notifications (payload)
-            VALUES (json_object('table', '${table}', 'action', 'INSERT', 'record_id', NEW.id));
+            INSERT INTO tables_notifications (payload)
+            VALUES (json_object('table', '${tableWithSchema}', 'action', 'INSERT', 'record_id', NEW.id));
         END;
         
         -- Trigger for UPDATE
-        CREATE TRIGGER IF NOT EXISTS after_update_${table}_trigger
-        AFTER UPDATE ON ${table}
+        CREATE TRIGGER IF NOT EXISTS after_update_${tableWithSchema}_trigger
+        AFTER UPDATE ON ${tableWithSchema}
         BEGIN
-            INSERT INTO _notifications (payload)
-            VALUES (json_object('table', '${table}', 'action', 'UPDATE', 'record_id', NEW.id));
+            INSERT INTO tables_notifications (payload)
+            VALUES (json_object('table', '${tableWithSchema}', 'action', 'UPDATE', 'record_id', NEW.id));
         END;
         
         -- Trigger for DELETE
-        CREATE TRIGGER IF NOT EXISTS after_delete_${table}_trigger
-        AFTER DELETE ON ${table}
+        CREATE TRIGGER IF NOT EXISTS after_delete_${tableWithSchema}_trigger
+        AFTER DELETE ON ${tableWithSchema}
         BEGIN
-            INSERT INTO _notifications (payload)
-            VALUES (json_object('table', '${table}', 'action', 'DELETE', 'record_id', OLD.id));
+            INSERT INTO tables_notifications (payload)
+            VALUES (json_object('table', '${tableWithSchema}', 'action', 'DELETE', 'record_id', OLD.id));
         END;
       `)
     }

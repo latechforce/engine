@@ -16,7 +16,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
 
       // THEN
       const { rows: histories } = await drivers.database.query(
-        'SELECT * FROM _automations_histories_view'
+        'SELECT * FROM automations_histories_view'
       )
       expect(histories).toHaveLength(1)
     })

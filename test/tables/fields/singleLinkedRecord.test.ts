@@ -23,9 +23,9 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const secondTable = drivers.database.table(config.tables[1])
       await secondTable.create()
       await secondTable.insertMany([
-        { id: '1', fields: { name: 'Row 1' }, created_at: new Date() },
-        { id: '2', fields: { name: 'Row 2' }, created_at: new Date() },
-        { id: '3', fields: { name: 'Row 3' }, created_at: new Date() },
+        { id: '1', fields: { name: 'Row 1' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'Row 2' }, created_at: new Date().toISOString() },
+        { id: '3', fields: { name: 'Row 3' }, created_at: new Date().toISOString() },
       ])
       const firstTable = drivers.database.table(config.tables[0])
       await firstTable.create()
@@ -33,10 +33,18 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
         {
           id: '1',
           fields: { name: 'Row 1', single_linked_record: '1' },
-          created_at: new Date(),
+          created_at: new Date().toISOString(),
         },
-        { id: '2', fields: { name: 'Row 2', single_linked_record: '2' }, created_at: new Date() },
-        { id: '3', fields: { name: 'Row 3', single_linked_record: '3' }, created_at: new Date() },
+        {
+          id: '2',
+          fields: { name: 'Row 2', single_linked_record: '2' },
+          created_at: new Date().toISOString(),
+        },
+        {
+          id: '3',
+          fields: { name: 'Row 3', single_linked_record: '3' },
+          created_at: new Date().toISOString(),
+        },
       ])
 
       // WHEN
@@ -62,7 +70,11 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       await firstTable.create()
       const secondTable = drivers.database.table(config.tables[1])
       await secondTable.create()
-      await secondTable.insert({ id: '1', fields: { name: 'Row 1' }, created_at: new Date() })
+      await secondTable.insert({
+        id: '1',
+        fields: { name: 'Row 1' },
+        created_at: new Date().toISOString(),
+      })
 
       // WHEN
       await app.start(config)
@@ -71,7 +83,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       await firstTable.insert({
         id: '1',
         fields: { name: 'Row 1', single_linked_record: '1' },
-        created_at: new Date(),
+        created_at: new Date().toISOString(),
       })
     })
   })
@@ -81,9 +93,11 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       // GIVEN
       const config = getFirstAndSecondTableConfig(['name', 'single_linked_record'])
       const { url } = await app.start(config)
-      await drivers.database
-        .table(config.tables[1])
-        .insert({ id: '1', fields: { name: 'Row 1' }, created_at: new Date() })
+      await drivers.database.table(config.tables[1]).insert({
+        id: '1',
+        fields: { name: 'Row 1' },
+        created_at: new Date().toISOString(),
+      })
 
       // WHEN
       const { record } = await request.post(`${url}/api/table/${config.tables[0].name}`, {

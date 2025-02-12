@@ -34,8 +34,8 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const config = getFirstAndSecondTableConfig(['name', 'multiple_linked_record'])
       const { url } = await app.start(config)
       await drivers.database.table(config.tables[1]).insertMany([
-        { id: '1', fields: { name: 'Row 1' }, created_at: new Date() },
-        { id: '2', fields: { name: 'Row 2' }, created_at: new Date() },
+        { id: '1', fields: { name: 'Row 1' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'Row 2' }, created_at: new Date().toISOString() },
       ])
 
       // WHEN
@@ -53,8 +53,8 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const config = getFirstAndSecondTableConfig(['name', 'multiple_linked_record'])
       const { url } = await app.start(config)
       await drivers.database.table(config.tables[1]).insertMany([
-        { id: '1', fields: { name: 'Row 1' }, created_at: new Date() },
-        { id: '2', fields: { name: 'Row 2' }, created_at: new Date() },
+        { id: '1', fields: { name: 'Row 1' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'Row 2' }, created_at: new Date().toISOString() },
       ])
 
       // WHEN
@@ -74,9 +74,9 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const config = getFirstAndSecondTableConfig(['multiple_linked_record'])
       const { url } = await app.start(config)
       await drivers.database.table(config.tables[1]).insertMany([
-        { id: '1', fields: { name: 'Row 1' }, created_at: new Date() },
-        { id: '2', fields: { name: 'Row 2' }, created_at: new Date() },
-        { id: '3', fields: { name: 'Row 3' }, created_at: new Date() },
+        { id: '1', fields: { name: 'Row 1' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'Row 2' }, created_at: new Date().toISOString() },
+        { id: '3', fields: { name: 'Row 3' }, created_at: new Date().toISOString() },
       ])
 
       // WHEN

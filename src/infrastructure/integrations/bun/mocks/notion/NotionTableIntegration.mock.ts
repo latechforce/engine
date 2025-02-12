@@ -40,7 +40,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     await this._db.insert({
       id,
       fields: this._preprocess(page),
-      created_at: new Date(),
+      created_at: new Date().toISOString(),
     })
     return this.retrieve<T>(id)
   }
@@ -49,7 +49,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     const pagesToInsert = pages.map((page) => ({
       id: this._getId(),
       fields: this._preprocess(page),
-      created_at: new Date(),
+      created_at: new Date().toISOString(),
     }))
     await this._db.insertMany(pagesToInsert)
     return Promise.all(pagesToInsert.map((page) => this.retrieve<T>(page.id)))
@@ -60,7 +60,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     await this._db.update({
       id,
       fields,
-      updated_at: new Date(),
+      updated_at: new Date().toISOString(),
     })
     return this.retrieve<T>(id)
   }
@@ -71,7 +71,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     const pagesToUpdate = pages.map(({ id, page }) => ({
       id,
       fields: this._preprocess(page),
-      updated_at: new Date(),
+      updated_at: new Date().toISOString(),
     }))
     await this._db.updateMany(pagesToUpdate)
     return Promise.all(pagesToUpdate.map((page) => this.retrieve<T>(page.id)))
@@ -89,7 +89,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
       fields: {
         archived: true,
       },
-      updated_at: new Date(),
+      updated_at: new Date().toISOString(),
     })
   }
 
@@ -204,8 +204,8 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return {
       id: record.id,
       properties: page as T,
-      created_time: record.created_at.toISOString(),
-      last_edited_time: record.updated_at?.toISOString() ?? record.created_at.toISOString(),
+      created_time: record.created_at,
+      last_edited_time: record.updated_at ?? record.created_at,
       archived: record.fields.archived ? Boolean(record.fields.archived) : false,
     }
   }

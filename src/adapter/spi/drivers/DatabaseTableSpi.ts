@@ -16,7 +16,8 @@ import type { IField } from '/domain/interfaces/IField'
 
 export interface IDatabaseTableDriver {
   name: string
-  schemaName: string
+  schema: string
+  nameWithSchema: string
   fields: IField[]
   exists: () => Promise<boolean>
   create: () => Promise<void>
@@ -38,8 +39,12 @@ export interface IDatabaseTableDriver {
 export class DatabaseTableSpi implements IDatabaseTableSpi {
   constructor(private _driver: IDatabaseTableDriver) {}
 
-  get schemaName() {
-    return this._driver.schemaName
+  get schema() {
+    return this._driver.schema
+  }
+
+  get nameWithSchema() {
+    return this._driver.nameWithSchema
   }
 
   exists = async () => {
@@ -63,19 +68,23 @@ export class DatabaseTableSpi implements IDatabaseTableSpi {
   }
 
   insert = async <T extends RecordFields>(record: RecordFieldsToCreate<T>) => {
-    await this._driver.insert(record)
+    const recordDto = RecordMapper.toCreateDto<T>(record)
+    await this._driver.insert(recordDto)
   }
 
   insertMany = async <T extends RecordFields>(records: RecordFieldsToCreate<T>[]) => {
-    await this._driver.insertMany(records)
+    const recordsDto = RecordMapper.toManyCreateDto<T>(records)
+    await this._driver.insertMany(recordsDto)
   }
 
   update = async <T extends RecordFields>(record: RecordFieldsToUpdate<T>) => {
-    await this._driver.update(record)
+    const recordDto = RecordMapper.toUpdateDto<T>(record)
+    await this._driver.update(recordDto)
   }
 
   updateMany = async <T extends RecordFields>(records: RecordFieldsToUpdate<T>[]) => {
-    await this._driver.updateMany(records)
+    const recordsDto = RecordMapper.toManyUpdateDto<T>(records)
+    await this._driver.updateMany(recordsDto)
   }
 
   delete = async (id: string) => {

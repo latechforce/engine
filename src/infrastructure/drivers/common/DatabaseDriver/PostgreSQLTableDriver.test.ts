@@ -3,9 +3,12 @@ import { testDatabaseTableDriver } from './DatabaseTableDriverTest'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
 import { getFirstAndSecondTableConfig } from '../../../test/config'
 import { getPostgresDatabase, teardownPostgres } from './PostgreSQLDriverTestSetup'
+import type { PostgreSQLDatabaseDriver } from './PostgreSQLDriver'
+
+let postgresDatabase: PostgreSQLDatabaseDriver
 
 const setup = async () => {
-  const postgresDatabase = await getPostgresDatabase()
+  postgresDatabase = await getPostgresDatabase()
   const {
     tables: [firstTableConfig, secondTableConfig],
   } = getFirstAndSecondTableConfig([
@@ -19,4 +22,9 @@ const setup = async () => {
   return { firstTable, secondTable }
 }
 
-testDatabaseTableDriver(BunTester, setup, teardownPostgres)
+const teardown = async () => {
+  await postgresDatabase.disconnect()
+  await teardownPostgres()
+}
+
+testDatabaseTableDriver(BunTester, setup, teardown)

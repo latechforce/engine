@@ -10,7 +10,8 @@ export class PostgresDriver implements IQueueDriver {
       db: {
         executeSql: async (text, values) => query(text, values),
       },
-      schema: 'queue',
+      schema: 'automations',
+      application_name: 'jobs',
     })
   }
 

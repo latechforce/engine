@@ -31,15 +31,17 @@ interface Column {
 
 type Row = {
   id: string
-  created_at: Date
-  updated_at?: Date
+  created_at: string
+  updated_at?: string
   [key: string]: RecordFieldValue
 }
 
 export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   public name: string
-  public schemaName: string
-  public viewName: string
+  public schema: string
+  public nameWithSchema: string
+  public view: string
+  public viewWithSchema: string
   public fields: IField[] = []
   public columns: Column[]
 
@@ -48,8 +50,10 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     private _db: pg.Pool
   ) {
     this.name = config.name
-    this.schemaName = this.name
-    this.viewName = `${config.name}_view`
+    this.schema = config.schema || 'public'
+    this.nameWithSchema = `${this.schema}.${this.name}`
+    this.view = `${this.name}_view`
+    this.viewWithSchema = `${this.schema}.${this.view}`
     this.fields = [
       ...config.fields,
       {
@@ -72,79 +76,100 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
 
   exists = async () => {
     const result = await this._db.query(
-      `SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_name = $1`,
-      [this.name]
+      `SELECT table_name FROM information_schema.tables WHERE table_schema = $1 AND table_name = $2`,
+      [this.schema, this.name]
     )
     return result.rows.length > 0
   }
 
   create = async () => {
-    const exists = await this.exists()
-    if (exists) throw new Error(`Table "${this.name}" already exists`)
-    const [schema, table] = this.name.includes('.') ? this.name.split('.') : ['public', this.name]
-    if (schema !== 'public') {
-      const createSchemaQuery = `CREATE SCHEMA IF NOT EXISTS ${schema}`
-      await this._db.query(createSchemaQuery)
+    const client = await this._db.connect()
+    try {
+      await client.query('BEGIN')
+      const exists = await this.exists()
+      if (exists) throw new Error(`Table "${this.name}" already exists`)
+      if (this.schema !== 'public') {
+        const createSchemaQuery = `CREATE SCHEMA IF NOT EXISTS ${this.schema}`
+        await client.query(createSchemaQuery)
+      }
+      const tableColumns = this._buildColumnsQuery(this.columns)
+      const tableQuery = `CREATE TABLE ${this.nameWithSchema} (${tableColumns})`
+      await client.query(tableQuery)
+      await this._createManyToManyTables(client)
+      await client.query('COMMIT')
+    } catch (error) {
+      await client.query('ROLLBACK')
+      this._throwError(error)
+    } finally {
+      client.release()
     }
-    const tableColumns = this._buildColumnsQuery(this.columns)
-    const tableQuery = `CREATE TABLE ${schema}.${table} (${tableColumns})`
-    await this._db.query(tableQuery)
-    await this._createManyToManyTables()
   }
 
   migrate = async () => {
-    const existingColumns = await this._getExistingColumns()
-    const staticColumns = this.columns.filter((column) => !this._isViewColumn(column))
-    const fieldsToAdd = staticColumns.filter(
-      (field) =>
-        !existingColumns.some(
+    const client = await this._db.connect()
+    try {
+      await client.query('BEGIN')
+      const existingColumns = await this._getExistingColumns(client)
+      const staticColumns = this.columns.filter((column) => !this._isViewColumn(column))
+      const fieldsToAdd = staticColumns.filter(
+        (field) =>
+          !existingColumns.some(
+            (column) =>
+              column.name === field.name ||
+              (field.onMigration && field.onMigration.replace === column.name)
+          )
+      )
+      const fieldsToAlter = staticColumns.filter((field) => {
+        const existingColumn = existingColumns.find(
           (column) =>
             column.name === field.name ||
             (field.onMigration && field.onMigration.replace === column.name)
         )
-    )
-    const fieldsToAlter = staticColumns.filter((field) => {
-      const existingColumn = existingColumns.find(
-        (column) =>
-          column.name === field.name ||
-          (field.onMigration && field.onMigration.replace === column.name)
-      )
-      if (!existingColumn) return false
-      return (
-        existingColumn.type !== field.type ||
-        existingColumn.notnull !== (field.required ? 1 : 0) ||
-        (field.onMigration && field.onMigration.replace)
-      )
-    })
-    for (const field of fieldsToAdd) {
-      const [column, reference] = this._buildColumnsQuery([field]).split(',')
-      const query = `ALTER TABLE ${this.name} ADD COLUMN ${column}`
-      this._db.query(query)
-      if (reference) {
-        this._db.query(`ALTER TABLE ${this.name} ADD CONSTRAINT fk_${field.name} ${reference}`)
-      }
-    }
-    for (const field of fieldsToAlter) {
-      if (field.onMigration && field.onMigration.replace) {
-        const existingColumnWithNewName = existingColumns.find(
-          (column) => column.name === field.name
+        if (!existingColumn) return false
+        return (
+          existingColumn.type !== field.type ||
+          existingColumn.notnull !== (field.required ? 1 : 0) ||
+          (field.onMigration && field.onMigration.replace)
         )
-        if (!existingColumnWithNewName) {
-          const renameQuery = `ALTER TABLE ${this.name} RENAME COLUMN ${field.onMigration.replace} TO ${field.name}`
-          await this._db.query(renameQuery)
+      })
+      for (const field of fieldsToAdd) {
+        const [column, reference] = this._buildColumnsQuery([field]).split(',')
+        const query = `ALTER TABLE ${this.nameWithSchema} ADD COLUMN ${column}`
+        await client.query(query)
+        if (reference) {
+          await client.query(
+            `ALTER TABLE ${this.nameWithSchema} ADD CONSTRAINT fk_${field.name} ${reference}`
+          )
         }
       }
-      const query = `ALTER TABLE ${this.name} ALTER COLUMN ${field.name} TYPE ${field.type}`
-      await this._db.query(query)
+      for (const field of fieldsToAlter) {
+        if (field.onMigration && field.onMigration.replace) {
+          const existingColumnWithNewName = existingColumns.find(
+            (column) => column.name === field.name
+          )
+          if (!existingColumnWithNewName) {
+            const renameQuery = `ALTER TABLE ${this.nameWithSchema} RENAME COLUMN ${field.onMigration.replace} TO ${field.name}`
+            await client.query(renameQuery)
+          }
+        }
+        const query = `ALTER TABLE ${this.nameWithSchema} ALTER COLUMN ${field.name} TYPE ${field.type}`
+        await client.query(query)
+      }
+      await this._createManyToManyTables(client)
+      await client.query('COMMIT')
+    } catch (error) {
+      await client.query('ROLLBACK')
+      this._throwError(error)
+    } finally {
+      client.release()
     }
-    await this._createManyToManyTables()
   }
 
   createView = async () => {
     const client = await this._db.connect()
     try {
       await client.query('BEGIN')
-      await client.query(`DROP VIEW IF EXISTS ${this.viewName} CASCADE`)
+      await client.query(`DROP VIEW IF EXISTS ${this.view} CASCADE`)
       let joins = ''
       const columns = this.fields
         .map((field) => {
@@ -173,30 +198,30 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           }
         })
         .join(', ')
-      let query = `CREATE VIEW ${this.viewName} AS SELECT ${columns} FROM ${this.name}`
+      let query = `CREATE VIEW ${this.viewWithSchema} AS SELECT ${columns} FROM ${this.nameWithSchema} AS ${this.name}`
       if (joins) query += joins + ` GROUP BY ${this.name}.id`
       await client.query(query)
       await client.query('COMMIT')
     } catch (error) {
       await client.query('ROLLBACK')
-      throw error
+      this._throwError(error)
     } finally {
       client.release()
     }
   }
 
   dropView = async () => {
-    await this._db.query(`DROP VIEW IF EXISTS ${this.viewName} CASCADE`)
+    await this._db.query(`DROP VIEW IF EXISTS ${this.viewWithSchema} CASCADE`)
   }
 
   insert = async <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
     const client = await this._db.connect()
     try {
-      client.query('BEGIN')
+      await client.query('BEGIN')
       await this._insert<T>(client, record)
-      client.query('COMMIT')
+      await client.query('COMMIT')
     } catch (e) {
-      client.query('ROLLBACK')
+      await client.query('ROLLBACK')
       this._throwError(e)
     } finally {
       client.release()
@@ -206,11 +231,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   insertMany = async <T extends RecordFields>(records: RecordFieldsToCreateDto<T>[]) => {
     const client = await this._db.connect()
     try {
-      client.query('BEGIN')
+      await client.query('BEGIN')
       for (const record of records) await this._insert<T>(client, record)
-      client.query('COMMIT')
+      await client.query('COMMIT')
     } catch (e) {
-      client.query('ROLLBACK')
+      await client.query('ROLLBACK')
       this._throwError(e)
     } finally {
       client.release()
@@ -220,11 +245,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   update = async <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>) => {
     const client = await this._db.connect()
     try {
-      client.query('BEGIN')
+      await client.query('BEGIN')
       await this._update<T>(client, record)
-      client.query('COMMIT')
+      await client.query('COMMIT')
     } catch (e) {
-      client.query('ROLLBACK')
+      await client.query('ROLLBACK')
       this._throwError(e)
     } finally {
       client.release()
@@ -234,11 +259,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   updateMany = async <T extends RecordFields>(records: RecordFieldsToUpdateDto<T>[]) => {
     const client = await this._db.connect()
     try {
-      client.query('BEGIN')
+      await client.query('BEGIN')
       for (const record of records) await this._update<T>(client, record)
-      client.query('COMMIT')
+      await client.query('COMMIT')
     } catch (e) {
-      client.query('ROLLBACK')
+      await client.query('ROLLBACK')
       this._throwError(e)
     } finally {
       client.release()
@@ -248,7 +273,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   delete = async (id: string) => {
     try {
       const values = [id]
-      const query = `DELETE FROM ${this.name} WHERE id = $1`
+      const query = `DELETE FROM ${this.nameWithSchema} WHERE id = $1`
       await this._db.query(query, values)
     } catch (e) {
       this._throwError(e)
@@ -258,14 +283,14 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   read = async <T extends RecordFields>(filter: FilterDto) => {
     const { conditions, values } = this._convertFilterToConditions(filter)
     if (!conditions) return
-    const query = `SELECT * FROM ${this.viewName} WHERE ${conditions} LIMIT 1`
+    const query = `SELECT * FROM ${this.viewWithSchema} WHERE ${conditions} LIMIT 1`
     const result = await this._db.query<Row>(query, values)
     if (result.rows.length === 0) return
     return this._postprocess<T>(result.rows[0])
   }
 
   readById = async <T extends RecordFields>(id: string) => {
-    const query = `SELECT * FROM ${this.viewName} WHERE id = $1`
+    const query = `SELECT * FROM ${this.viewWithSchema} WHERE id = $1`
     const result = await this._db.query<Row>(query, [id])
     if (result.rows.length === 0) return
     return this._postprocess<T>(result.rows[0])
@@ -276,11 +301,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       ? this._convertFilterToConditions(filter)
       : { conditions: '', values: [] }
     if (!conditions) {
-      const query = `SELECT * FROM ${this.viewName}`
+      const query = `SELECT * FROM ${this.viewWithSchema}`
       const result = await this._db.query<Row>(query)
       return result.rows.map(this._postprocess<T>)
     }
-    const query = `SELECT * FROM ${this.viewName} WHERE ${conditions}`
+    const query = `SELECT * FROM ${this.viewWithSchema} WHERE ${conditions}`
     const result = await this._db.query<Row>(query, values)
     return result.rows.map(this._postprocess<T>)
   }
@@ -299,7 +324,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     const keys = Object.keys(staticColumns)
     const values = Object.values(staticColumns)
     const placeholders = keys.map((_, i) => `$${i + 1}`).join(', ')
-    const query = `INSERT INTO ${this.name} (${keys.join(', ')}) VALUES (${placeholders}) RETURNING *`
+    const query = `INSERT INTO ${this.nameWithSchema} (${keys.join(', ')}) VALUES (${placeholders}) RETURNING *`
     await client.query(query, values)
     if (Object.keys(manyToManyColumns).length > 0) {
       await this._insertManyToManyColumns(client, record.id, manyToManyColumns)
@@ -320,7 +345,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     const keys = Object.keys(staticColumns)
     const values = Object.values(staticColumns)
     const setString = keys.map((key, i) => `${key} = $${i + 1}`).join(', ')
-    const query = `UPDATE ${this.name} SET ${setString} WHERE id = $${keys.length + 1} RETURNING *`
+    const query = `UPDATE ${this.nameWithSchema} SET ${setString} WHERE id = $${keys.length + 1} RETURNING *`
     await client.query(query, [...values, record.id])
     if (Object.keys(manyToManyColumns).length > 0) {
       await this._updateManyToManyColumns(client, record.id, manyToManyColumns)
@@ -342,7 +367,9 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           query += ` CHECK (array_length("${column.name}", 1) = 0 OR "${column.name}" <@ ARRAY['${column.options.join("', '")}'])`
         }
       } else if (column.table) {
-        references.push(`FOREIGN KEY ("${column.name}") REFERENCES ${column.table}(id)`)
+        references.push(
+          `FOREIGN KEY ("${column.name}") REFERENCES ${this.schema}.${column.table}(id)`
+        )
       }
       if (column.required) {
         query += ' NOT NULL'
@@ -366,10 +393,10 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   }
 
   private _getManyToManyTableName = (column: Column) => {
-    return [this.name, column.table].sort().join('_') + '_' + this._slugify(column.name)
+    return [this.nameWithSchema, column.table].sort().join('_') + '_' + this._slugify(column.name)
   }
 
-  private _createManyToManyTables = async () => {
+  private _createManyToManyTables = async (client: pg.PoolClient) => {
     for (const column of this.columns) {
       if (column.type === 'TEXT[]' && column.table) {
         const manyToManyTableName = this._getManyToManyTableName(column)
@@ -377,11 +404,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           CREATE TABLE IF NOT EXISTS ${manyToManyTableName} (
             "${this.name}_id" TEXT NOT NULL,
             "${column.table}_id" TEXT NOT NULL,
-            FOREIGN KEY ("${this.name}_id") REFERENCES ${this.name}(id),
-            FOREIGN KEY ("${column.table}_id") REFERENCES ${column.table}(id)
+            FOREIGN KEY ("${this.name}_id") REFERENCES ${this.nameWithSchema}(id),
+            FOREIGN KEY ("${column.table}_id") REFERENCES ${this.schema}.${column.table}(id)
           )
         `
-        await this._db.query(query)
+        await client.query(query)
       }
     }
   }
@@ -451,10 +478,10 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     return formula.replace(/\bvalues\b/g, values)
   }
 
-  private _getExistingColumns = async (): Promise<ColumnInfo[]> => {
-    const result = await this._db.query(
-      `SELECT column_name as name, data_type as type, is_nullable as notnull FROM information_schema.columns WHERE table_schema = 'public' AND table_name = $1`,
-      [this.name]
+  private _getExistingColumns = async (client: pg.PoolClient): Promise<ColumnInfo[]> => {
+    const result = await client.query(
+      `SELECT column_name as name, data_type as type, is_nullable as notnull FROM information_schema.columns WHERE table_schema = $1 AND table_name = $2`,
+      [this.schema, this.name]
     )
     return result.rows
   }
@@ -485,6 +512,9 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       const field = this.fields.find((f) => f.name === key)
       if (!field) throw new Error(`Field "${key}" not found`)
       switch (field.type) {
+        case 'DateTime':
+          acc[key] = value instanceof Date ? value.toISOString() : value
+          break
         case 'MultipleLinkedRecord':
           acc[key] = value ? String(value).split(',') : []
           break
@@ -508,8 +538,8 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     }, columnsToProcess) as T
     return {
       id,
-      created_at,
-      updated_at,
+      created_at: new Date(created_at).toISOString(),
+      updated_at: updated_at ? new Date(updated_at).toISOString() : undefined,
       fields,
     }
   }

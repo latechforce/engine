@@ -15,6 +15,7 @@ export function testDatabaseDriver(
   })
 
   afterAll(async () => {
+    await database.disconnect()
     if (teardown) await teardown()
   })
 

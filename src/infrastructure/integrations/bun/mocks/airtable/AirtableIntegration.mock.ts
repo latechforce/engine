@@ -78,7 +78,7 @@ export class AirtableIntegration implements IAirtableIntegration {
     await tables.insert<TableObject>({
       id,
       fields: { name, fields: JSON.stringify(fields) },
-      created_at: new Date(),
+      created_at: new Date().toISOString(),
     })
     return this.getTable(name)
   }

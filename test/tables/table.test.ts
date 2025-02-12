@@ -49,7 +49,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       await table.insert({
         id: '1',
         fields: { name_before_migration: 'test' },
-        created_at: new Date(),
+        created_at: new Date().toISOString(),
       })
 
       // WHEN
@@ -69,7 +69,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       await table.insert({
         id: '1',
         fields: { name_after_migration: 'test' },
-        created_at: new Date(),
+        created_at: new Date().toISOString(),
       })
 
       // WHEN
@@ -85,9 +85,9 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const table = drivers.database.table(config.tables[0])
       await table.create()
       await table.insertMany([
-        { id: '1', fields: { name: 'John' }, created_at: new Date() },
-        { id: '2', fields: { name: 'Paul' }, created_at: new Date() },
-        { id: '3', fields: { name: 'Ringo' }, created_at: new Date() },
+        { id: '1', fields: { name: 'John' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'Paul' }, created_at: new Date().toISOString() },
+        { id: '3', fields: { name: 'Ringo' }, created_at: new Date().toISOString() },
       ])
 
       // WHEN
@@ -121,6 +121,7 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
 
       // WHEN
+
       await request.post(`${url}/api/table/${config.tables[0].name}`, {
         name: 'John',
       })

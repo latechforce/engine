@@ -14,7 +14,8 @@ export interface DatabaseTableServices {
 }
 
 export interface IDatabaseTableSpi {
-  schemaName: string
+  schema: string
+  nameWithSchema: string
   exists: () => Promise<boolean>
   create: () => Promise<void>
   dropView: () => Promise<void>
@@ -31,8 +32,9 @@ export interface IDatabaseTableSpi {
 }
 
 export class DatabaseTable {
-  readonly schemaName: string
-  private readonly _name: string
+  readonly name: string
+  readonly schema: string
+  readonly nameWithSchema: string
   private _table: IDatabaseTableSpi
   private _logger: Logger
 
@@ -43,8 +45,9 @@ export class DatabaseTable {
   ) {
     this._table = spi.table(config)
     this._logger = _services.logger
-    this._name = config.name
-    this.schemaName = this._table.schemaName
+    this.name = config.name
+    this.schema = this._table.schema
+    this.nameWithSchema = this._table.nameWithSchema
   }
 
   exists = async () => {
@@ -52,28 +55,28 @@ export class DatabaseTable {
   }
 
   create = async () => {
-    this._logger.debug(`creating "${this._name}"...`)
+    this._logger.debug(`creating "${this.name}" in schema "${this.schema}"...`)
     await this._table.create()
   }
 
   dropView = async () => {
-    this._logger.debug(`dropping view "${this._name}"...`)
+    this._logger.debug(`dropping view "${this.name}" in schema "${this.schema}"...`)
     await this._table.dropView()
   }
 
   migrate = async () => {
-    this._logger.debug(`migrating "${this._name}"...`)
+    this._logger.debug(`migrating "${this.name}" in schema "${this.schema}"...`)
     await this._table.migrate()
   }
 
   createView = async () => {
-    this._logger.debug(`creating view "${this._name}"...`)
+    this._logger.debug(`creating view "${this.name}" in schema "${this.schema}"...`)
     await this._table.createView()
   }
 
   insert = async <T extends RecordFields>(record: T) => {
     const { idGenerator, logger } = this._services
-    logger.debug(`insert in table "${this._name}"`, record)
+    logger.debug(`insert in table "${this.name}" in schema "${this.schema}"`, record)
     const id = idGenerator.forRecord()
     const created_at = new Date()
     await this._table.insert<T>({ fields: record, id, created_at })
@@ -82,7 +85,7 @@ export class DatabaseTable {
 
   insertMany = async <T extends RecordFields>(records: T[]) => {
     const { idGenerator, logger } = this._services
-    logger.debug(`insert many in table "${this._name}"`, records)
+    logger.debug(`insert many in table "${this.name}" in schema "${this.schema}"`, records)
     const recordsWithId = records.map((fields) => {
       const id = idGenerator.forRecord()
       const created_at = new Date()
@@ -94,7 +97,7 @@ export class DatabaseTable {
   }
 
   update = async <T extends RecordFields>(id: string, record: Partial<T>) => {
-    this._logger.debug(`update in table "${this._name}"`, record)
+    this._logger.debug(`update in table "${this.name}" in schema "${this.schema}"`, record)
     const updated_at = new Date()
     await this._table.update<T>({ fields: record, id, updated_at })
     return this.readByIdOrThrow<T>(id)
@@ -102,7 +105,7 @@ export class DatabaseTable {
 
   updateMany = async <T extends RecordFields>(records: UpdateRecordFields<T>[]) => {
     this._logger.debug(
-      `update many in table "${this._name}"`,
+      `update many in table "${this.name}" in schema "${this.schema}"`,
       records.map((r) => r.fields)
     )
     const updated_at = new Date()
@@ -114,28 +117,29 @@ export class DatabaseTable {
   }
 
   delete = async (id: string) => {
-    this._logger.debug(`delete in table "${this._name}"`, { id })
+    this._logger.debug(`delete in table "${this.name}" in schema "${this.schema}"`, { id })
     await this._table.delete(id)
   }
 
   read = async <T extends RecordFields>(filter: Filter) => {
-    this._logger.debug(`read in table "${this._name}"`, filter)
+    this._logger.debug(`read in table "${this.name}" in schema "${this.schema}"`, filter)
     return this._table.read<T>(filter)
   }
 
   readById = async <T extends RecordFields>(id: string) => {
-    this._logger.debug(`read in table "${this._name}"`, { id })
+    this._logger.debug(`read in table "${this.name}" in schema "${this.schema}"`, { id })
     return this._table.readById<T>(id)
   }
 
   readByIdOrThrow = async <T extends RecordFields>(id: string) => {
     const record = await this.readById<T>(id)
-    if (!record) throw new Error(`record "${id}" not found in table "${this._name}"`)
+    if (!record)
+      throw new Error(`record "${id}" not found in table "${this.name}" in schema "${this.schema}"`)
     return record
   }
 
   list = async <T extends RecordFields>(filter?: Filter) => {
-    this._logger.debug(`list in table "${this._name}"`, filter)
+    this._logger.debug(`list in table "${this.name}" in schema "${this.schema}"`, filter)
     return this._table.list<T>(filter)
   }
 }

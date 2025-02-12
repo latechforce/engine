@@ -16,7 +16,8 @@ export function testDatabaseTableDriver(
 ) {
   let firstTable: IDatabaseTableDriver
   let secondTable: IDatabaseTableDriver
-  const date = new Date()
+  const created_at = new Date().toISOString()
+  const updated_at = new Date().toISOString()
 
   beforeAll(async () => {
     const tables = await setup()
@@ -29,10 +30,6 @@ export function testDatabaseTableDriver(
   })
 
   describe('create', () => {
-    afterAll(async () => {
-      await firstTable.create()
-    })
-
     it('should create a table', async () => {
       // THEN
       await secondTable.create()
@@ -79,21 +76,27 @@ export function testDatabaseTableDriver(
         type: 'DateTime',
       })
     })
+
+    it('should create a table that has another table dependency', async () => {
+      // THEN
+      await firstTable.create()
+    })
   })
 
   describe('createView', () => {
-    afterAll(async () => {
-      await firstTable.createView()
-    })
-
     it('should create a view', async () => {
       // THEN
-      expect(secondTable.createView()).resolves
+      await secondTable.createView()
     })
 
     it('should create create a view if already exist', async () => {
       // THEN
-      expect(secondTable.createView()).resolves
+      await secondTable.createView()
+    })
+
+    it('should create a view that has another table dependency', async () => {
+      // THEN
+      await firstTable.createView()
     })
   })
 
@@ -103,7 +106,7 @@ export function testDatabaseTableDriver(
       await firstTable.insert({
         id: '1',
         fields: { name: 'John', multiple_select: ['Red', 'Blue'] },
-        created_at: date,
+        created_at,
       })
     })
 
@@ -113,7 +116,7 @@ export function testDatabaseTableDriver(
         firstTable.insert({
           id: '1',
           fields: { name: 'John' },
-          created_at: date,
+          created_at,
         })
 
       // THEN
@@ -126,7 +129,7 @@ export function testDatabaseTableDriver(
         firstTable.insert({
           id: '2',
           fields: { multiple_linked_record: ['1'] },
-          created_at: date,
+          created_at,
         })
 
       // THEN
@@ -138,7 +141,7 @@ export function testDatabaseTableDriver(
       await secondTable.insert({
         id: '1',
         fields: { name: 'Row 1' },
-        created_at: date,
+        created_at,
       })
 
       // WHEN
@@ -146,7 +149,7 @@ export function testDatabaseTableDriver(
         .insert({
           id: '2',
           fields: { multiple_linked_record: ['1', '2'] },
-          created_at: date,
+          created_at,
         })
         .catch(() => {})
 
@@ -162,7 +165,7 @@ export function testDatabaseTableDriver(
       await firstTable.update({
         id: '1',
         fields: { name: 'John Doe' },
-        updated_at: date,
+        updated_at,
       })
     })
   })
@@ -185,8 +188,8 @@ export function testDatabaseTableDriver(
           number_rollup: 0,
           multiple_select: ['Red', 'Blue'],
         },
-        created_at: date,
-        updated_at: date,
+        created_at,
+        updated_at,
       })
     })
 
@@ -246,8 +249,8 @@ export function testDatabaseTableDriver(
             number_rollup: 0,
             multiple_select: ['Red', 'Blue'],
           },
-          created_at: date,
-          updated_at: date,
+          created_at,
+          updated_at,
         },
       ])
     })

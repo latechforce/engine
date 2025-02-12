@@ -30,13 +30,13 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
   })
 
   describe('on POST', () => {
-    it('should create a record with a rollup as a number', async () => {
+    it.only('should create a record with a rollup as a number', async () => {
       // GIVEN
       const config = getFirstAndSecondTableConfig(['multiple_linked_record', 'number_rollup'])
       const { url } = await app.start(config)
       await drivers.database.table(config.tables[1]).insertMany([
-        { id: '1', fields: { number: 5 }, created_at: new Date() },
-        { id: '2', fields: { number: 5 }, created_at: new Date() },
+        { id: '1', fields: { number: 5 }, created_at: new Date().toISOString() },
+        { id: '2', fields: { number: 5 }, created_at: new Date().toISOString() },
       ])
 
       // WHEN
@@ -53,8 +53,8 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const config = getFirstAndSecondTableConfig(['multiple_linked_record', 'text_rollup'])
       const { url } = await app.start(config)
       await drivers.database.table(config.tables[1]).insertMany([
-        { id: '1', fields: { name: 'John' }, created_at: new Date() },
-        { id: '2', fields: { name: 'Jean' }, created_at: new Date() },
+        { id: '1', fields: { name: 'John' }, created_at: new Date().toISOString() },
+        { id: '2', fields: { name: 'Jean' }, created_at: new Date().toISOString() },
       ])
 
       // WHEN
@@ -75,8 +75,16 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       ])
       const { url } = await app.start(config)
       await drivers.database.table(config.tables[1]).insertMany([
-        { id: '1', fields: { name: 'Row 1', number: 5 }, created_at: new Date() },
-        { id: '2', fields: { name: 'Row 2', number: 5 }, created_at: new Date() },
+        {
+          id: '1',
+          fields: { name: 'Row 1', number: 5 },
+          created_at: new Date().toISOString(),
+        },
+        {
+          id: '2',
+          fields: { name: 'Row 2', number: 5 },
+          created_at: new Date().toISOString(),
+        },
       ])
 
       // WHEN

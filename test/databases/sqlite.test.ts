@@ -1,22 +1,21 @@
 import { describe, it, beforeEach, afterEach } from 'bun:test'
 import { MockedApp, type Config } from '/test/bun'
-import {
-  setupPostgres,
-  teardownPostgres,
-} from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriverTestSetup'
+import { nanoid } from 'nanoid'
+import fs from 'fs-extra'
 
 describe('on start', () => {
   let url: string
 
   beforeEach(async () => {
-    url = await setupPostgres()
+    url = `./tmp/sqlite-${nanoid()}.db`
+    await fs.ensureFile(url)
   })
 
   afterEach(async () => {
-    await teardownPostgres()
+    await fs.unlink(url)
   })
 
-  it('should start an app with a PostgreSQL database', async () => {
+  it('should start an app with a SQLite database', async () => {
     // GIVEN
     const config: Config = {
       name: 'App',
@@ -33,7 +32,7 @@ describe('on start', () => {
         },
       ],
       database: {
-        driver: 'PostgreSQL',
+        driver: 'SQLite',
         url,
       },
     }
@@ -46,7 +45,7 @@ describe('on start', () => {
     await startedApp.stop()
   })
 
-  it('should restart an app with a PostgreSQL database', async () => {
+  it('should restart an app with a SQLite database', async () => {
     // GIVEN
     const config: Config = {
       name: 'App',
@@ -63,7 +62,7 @@ describe('on start', () => {
         },
       ],
       database: {
-        driver: 'PostgreSQL',
+        driver: 'SQLite',
         url,
       },
     }
@@ -78,7 +77,7 @@ describe('on start', () => {
     await restartedApp.stop()
   })
 
-  it('should start an app with a PostgreSQL database and an automation', async () => {
+  it('should start an app with a SQLite database and an automation', async () => {
     // GIVEN
     const config: Config = {
       name: 'App',
@@ -106,7 +105,7 @@ describe('on start', () => {
         },
       ],
       database: {
-        driver: 'PostgreSQL',
+        driver: 'SQLite',
         url,
       },
     }
@@ -119,7 +118,7 @@ describe('on start', () => {
     await startedApp.stop()
   })
 
-  it('should restart an app with a PostgreSQL database and an automation', async () => {
+  it('should restart an app with a SQLite database and an automation', async () => {
     // GIVEN
     const config: Config = {
       name: 'App',
@@ -147,7 +146,7 @@ describe('on start', () => {
         },
       ],
       database: {
-        driver: 'PostgreSQL',
+        driver: 'SQLite',
         url,
       },
     }

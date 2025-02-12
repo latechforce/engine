@@ -30,7 +30,7 @@ export class SqliteDriver implements IQueueDriver {
 
   start = async (): Promise<void> => {
     const createTableQuery = `
-      CREATE TABLE IF NOT EXISTS _jobs (
+      CREATE TABLE IF NOT EXISTS automations_jobs (
         id TEXT PRIMARY KEY,
         name TEXT,
         data TEXT,
@@ -53,7 +53,7 @@ export class SqliteDriver implements IQueueDriver {
     const { retry = 0 } = option || {}
     const id = uuidv4()
     const insertQuery = `
-      INSERT INTO _jobs (id, name, data, state, retrycount)
+      INSERT INTO automations_jobs (id, name, data, state, retrycount)
       VALUES (?, ?, ?, 'created', ?)
     `
     await this._query(insertQuery, [id, job, JSON.stringify(data), retry])
@@ -66,7 +66,7 @@ export class SqliteDriver implements IQueueDriver {
   ) => {
     const interval = setInterval(async () => {
       const selectQuery = `
-        SELECT * FROM _jobs
+        SELECT * FROM automations_jobs
         WHERE name = ? AND state IN ('created', 'retry')
         LIMIT 1
       `
@@ -76,7 +76,7 @@ export class SqliteDriver implements IQueueDriver {
       if (job) {
         try {
           const updateActiveQuery = `
-            UPDATE _jobs
+            UPDATE automations_jobs
             SET state = 'active', retrycount = ?
             WHERE id = ?
           `
@@ -84,7 +84,7 @@ export class SqliteDriver implements IQueueDriver {
           const data = JSON.parse(job.data)
           await callback(job.id, data)
           const updateCompletedQuery = `
-            UPDATE _jobs
+            UPDATE automations_jobs
             SET state = 'completed', retrycount = 0
             WHERE id = ?
           `
@@ -97,14 +97,14 @@ export class SqliteDriver implements IQueueDriver {
           console.error(error)
           if (job.retryCount > 0) {
             const updateRetryQuery = `
-              UPDATE _jobs
+              UPDATE automations_jobs
               SET state = 'retry', retrycount = ?
               WHERE id = ?
             `
             await this._query(updateRetryQuery, [job.retryCount - 1, job.id])
           } else {
             const updateFailedQuery = `
-              UPDATE _jobs
+              UPDATE automations_jobs
               SET state = 'failed', retrycount = 0
               WHERE id = ?
             `
@@ -123,7 +123,7 @@ export class SqliteDriver implements IQueueDriver {
     const waiterPromise = new Promise<boolean>((resolve) => {
       const interval = setInterval(async () => {
         const selectQuery = `
-          SELECT * FROM _jobs
+          SELECT * FROM automations_jobs
           WHERE name = ? AND state IN ('created', 'retry')
           LIMIT 1
         `
