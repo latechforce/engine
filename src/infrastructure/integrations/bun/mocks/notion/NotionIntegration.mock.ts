@@ -118,11 +118,13 @@ export class NotionIntegration implements INotionIntegration {
   addTable = async (name: string, properties: IField[]) => {
     const tables = await this._tablesOrThrow()
     const id = this._slugify(name)
-    await tables.insert<TableObject>({
-      id,
-      fields: { title: name, properties: JSON.stringify(properties) },
-      created_at: new Date(),
-    })
+    const table = await tables.readById<TableObject>(id)
+    if (!table)
+      await tables.insert<TableObject>({
+        id,
+        fields: { title: name, properties: JSON.stringify(properties) },
+        created_at: new Date(),
+      })
     return this.getTable(name)
   }
 
