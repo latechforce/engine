@@ -1,3 +1,18 @@
+## [0.37.29](https://github.com/latechforce/engine/compare/v0.37.28...v0.37.29) (2025-02-12)
+
+
+### Bug Fixes
+
+* **Airtable:** add green test: should throw an error if a field in not in the database schema ([4faf8c7](https://github.com/latechforce/engine/commit/4faf8c73575e8cc3a4b91fd5bda9a07cce1ef933))
+* **CI:** add new env var ([4dbbd97](https://github.com/latechforce/engine/commit/4dbbd97d61c6b10cb543dc99dea73c6fdfe87aad))
+* **Database:** fix broken test: should start an automation ([79742f6](https://github.com/latechforce/engine/commit/79742f616b993c29af08b08578b58058ed721853))
+* **Notion:** add green test: should insert a page in a table with a text property named with specials characters ([37116a8](https://github.com/latechforce/engine/commit/37116a86308320d89f420b8a3fa59cfd2bfdb007))
+* **Notion:** add green test: should return a property with specials characteres of the created page ([745ae0e](https://github.com/latechforce/engine/commit/745ae0e4321c95059462703ba6decca7761782d7))
+* **Notion:** add green test: should update a page with properties with specials characters ([7d96265](https://github.com/latechforce/engine/commit/7d96265a0f430b4d1c36e29f31b30f7d73c5aab3))
+* **Notion:** clean all tables after tests ([ea3dc31](https://github.com/latechforce/engine/commit/ea3dc31afb38cb56139f334ce0dac9dc2adadb67))
+* **Notion:** fix broken tests ([9cd071d](https://github.com/latechforce/engine/commit/9cd071d8a90c37c34fabcd3f3e6d08c1981a3847))
+* **Notion:** remove useless tests ([4caef0a](https://github.com/latechforce/engine/commit/4caef0ab70bbda99f436dd7af8818db5329dbe27))
+
 ## [0.37.28](https://github.com/latechforce/engine/compare/v0.37.27...v0.37.28) (2025-02-07)
 
 
