@@ -1,1286 +1,1488 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "additionalProperties": false,
-  "definitions": {
-    "AirtableConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "apiKey": {
-          "type": "string"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "definitions": {
+        "AirtableConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": {
+                    "type": "string"
+                },
+                "baseId": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "apiKey",
+                "baseId"
+            ],
+            "type": "object"
         },
-        "baseId": {
-          "type": "string"
+        "BucketConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name"
+            ],
+            "type": "object"
+        },
+        "ConvertToTemplateObject<QontoCreateClient>": {
+            "additionalProperties": false,
+            "properties": {
+                "address": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "billing_address": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "city": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "country_code": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "currency": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "delivery_address": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "email": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "first_name": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "last_name": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "locale": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "name": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "tax_identification_number": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "type": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "vat_number": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "zip_code": {
+                    "$ref": "#/definitions/TemplateValue"
+                }
+            },
+            "type": "object"
+        },
+        "DatabaseConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "$ref": "#/definitions/DatabaseDriverName"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "driver",
+                "url"
+            ],
+            "type": "object"
+        },
+        "DatabaseDriverName": {
+            "enum": [
+                "PostgreSQL",
+                "SQLite"
+            ],
+            "type": "string"
+        },
+        "IAction": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/ICreateRecordDatabaseAction"
+                },
+                {
+                    "$ref": "#/definitions/IRunJavascriptCodeAction"
+                },
+                {
+                    "$ref": "#/definitions/IRunTypescriptCodeAction"
+                },
+                {
+                    "$ref": "#/definitions/IReadRecordDatabaseAction"
+                },
+                {
+                    "$ref": "#/definitions/IGetCompanyPappersAction"
+                },
+                {
+                    "$ref": "#/definitions/ICreateClientQontoAction"
+                },
+                {
+                    "$ref": "#/definitions/IUpdatePageNotionAction"
+                }
+            ]
+        },
+        "IApiCalledHttpTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "auth": {
+                    "const": "ApiKey",
+                    "type": "string"
+                },
+                "event": {
+                    "const": "ApiCalled",
+                    "type": "string"
+                },
+                "input": {
+                    "$ref": "#/definitions/JSONSchema"
+                },
+                "output": {
+                    "$ref": "#/definitions/TemplateObject"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Http",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "path",
+                "service"
+            ],
+            "type": "object"
+        },
+        "IAutomation": {
+            "additionalProperties": false,
+            "properties": {
+                "actions": {
+                    "items": {
+                        "$ref": "#/definitions/IAction"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "trigger": {
+                    "$ref": "#/definitions/ITrigger"
+                }
+            },
+            "required": [
+                "actions",
+                "name",
+                "trigger"
+            ],
+            "type": "object"
+        },
+        "ICheckboxField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Checkbox",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ICreateClientQontoAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "CreateClient",
+                    "type": "string"
+                },
+                "client": {
+                    "$ref": "#/definitions/ConvertToTemplateObject<QontoCreateClient>"
+                },
+                "integration": {
+                    "const": "Qonto",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "client",
+                "integration",
+                "name"
+            ],
+            "type": "object"
+        },
+        "ICreateRecordDatabaseAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "CreateRecord",
+                    "type": "string"
+                },
+                "fields": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Database",
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "fields",
+                "name",
+                "service",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IDateTimeField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "DateTime",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IEmailField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Email",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IField": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/ICheckboxField"
+                },
+                {
+                    "$ref": "#/definitions/IDateTimeField"
+                },
+                {
+                    "$ref": "#/definitions/IEmailField"
+                },
+                {
+                    "$ref": "#/definitions/ILongTextField"
+                },
+                {
+                    "$ref": "#/definitions/INumberField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleLineTextField"
+                },
+                {
+                    "$ref": "#/definitions/IFormulaField"
+                },
+                {
+                    "$ref": "#/definitions/IMultipleAttachmentField"
+                },
+                {
+                    "$ref": "#/definitions/IMultipleLinkedRecordField"
+                },
+                {
+                    "$ref": "#/definitions/IMultipleSelectField"
+                },
+                {
+                    "$ref": "#/definitions/IRollupField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleLinkedRecordField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleSelectField"
+                }
+            ]
+        },
+        "IFormulaField": {
+            "additionalProperties": false,
+            "properties": {
+                "formula": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "output": {
+                    "$ref": "#/definitions/IOutputField"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Formula",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "formula",
+                "name",
+                "output",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IGetCompanyPappersAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "GetCompany",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Pappers",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "siret": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "integration",
+                "name",
+                "siret"
+            ],
+            "type": "object"
+        },
+        "IIntegrations": {
+            "additionalProperties": false,
+            "properties": {
+                "airtable": {
+                    "$ref": "#/definitions/AirtableConfig"
+                },
+                "notion": {
+                    "$ref": "#/definitions/NotionConfig"
+                },
+                "pappers": {
+                    "$ref": "#/definitions/PappersConfig"
+                },
+                "qonto": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/QontoSandboxConfig"
+                        },
+                        {
+                            "$ref": "#/definitions/QontoProductionConfig"
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "ILongTextField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "LongText",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IMultipleAttachmentField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "MultipleAttachment",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IMultipleLinkedRecordField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "table": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "MultipleLinkedRecord",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "table",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IMultipleSelectField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "options": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "MultipleSelect",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "options",
+                "type"
+            ],
+            "type": "object"
+        },
+        "INumberField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Number",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IOutputField": {
+            "additionalProperties": false,
+            "properties": {
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "enum": [
+                        "DateTime",
+                        "LongText",
+                        "Number",
+                        "SingleLineText"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "type": "object"
+        },
+        "IPageCreatedNotionTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "event": {
+                    "const": "TablePageCreated",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Notion",
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "integration",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IReadRecordDatabaseAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "ReadRecord",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Database",
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "id",
+                "name",
+                "service",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IRecordCreatedDatabaseTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "event": {
+                    "const": "RecordCreated",
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Database",
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "service",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IRollupField": {
+            "additionalProperties": false,
+            "properties": {
+                "formula": {
+                    "type": "string"
+                },
+                "linkedRecordField": {
+                    "type": "string"
+                },
+                "multipleLinkedRecord": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "output": {
+                    "$ref": "#/definitions/IOutputField"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Rollup",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "formula",
+                "linkedRecordField",
+                "multipleLinkedRecord",
+                "name",
+                "output",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IRunJavascriptCodeAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "RunJavascript",
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "env": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "input": {
+                    "$ref": "#/definitions/TemplateObject"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Code",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "code",
+                "name",
+                "service"
+            ],
+            "type": "object"
+        },
+        "IRunTypescriptCodeAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "RunTypescript",
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "env": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "input": {
+                    "$ref": "#/definitions/TemplateObject"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Code",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "code",
+                "name",
+                "service"
+            ],
+            "type": "object"
+        },
+        "ISingleLineTextField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "SingleLineText",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ISingleLinkedRecordField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "table": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SingleLinkedRecord",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "table",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ISingleSelectField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "options": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "SingleSelect",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "options",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ITable": {
+            "additionalProperties": false,
+            "properties": {
+                "fields": {
+                    "items": {
+                        "$ref": "#/definitions/IField"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "fields",
+                "name"
+            ],
+            "type": "object"
+        },
+        "ITrigger": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/IApiCalledHttpTrigger"
+                },
+                {
+                    "$ref": "#/definitions/IRecordCreatedDatabaseTrigger"
+                },
+                {
+                    "$ref": "#/definitions/IWebhookCalledHttpTrigger"
+                },
+                {
+                    "$ref": "#/definitions/IPageCreatedNotionTrigger"
+                }
+            ]
+        },
+        "IUpdatePageNotionAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "UpdatePage",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Notion",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "page": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "id",
+                "integration",
+                "name",
+                "page",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IWebhookCalledHttpTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "auth": {
+                    "const": "ApiKey",
+                    "type": "string"
+                },
+                "event": {
+                    "const": "WebhookCalled",
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Http",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "path",
+                "service"
+            ],
+            "type": "object"
+        },
+        "JSONSchema": {
+            "additionalProperties": false,
+            "properties": {
+                "additionalProperties": {
+                    "type": "boolean"
+                },
+                "enum": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "items": {
+                    "$ref": "#/definitions/JSONSchema"
+                },
+                "oneOf": {
+                    "items": {
+                        "$ref": "#/definitions/JSONSchema"
+                    },
+                    "type": "array"
+                },
+                "properties": {
+                    "$ref": "#/definitions/JSONSchemaProperties"
+                },
+                "required": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "type": {
+                    "enum": [
+                        "array",
+                        "boolean",
+                        "number",
+                        "object",
+                        "string"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "JSONSchemaProperties": {
+            "additionalProperties": {
+                "$ref": "#/definitions/JSONSchema"
+            },
+            "type": "object"
+        },
+        "LoggerConfig": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/LoggerElasticSearchConfig"
+                },
+                {
+                    "$ref": "#/definitions/LoggerConsoleConfig"
+                },
+                {
+                    "$ref": "#/definitions/LoggerFileConfig"
+                }
+            ]
+        },
+        "LoggerConsoleConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "Console",
+                    "type": "string"
+                },
+                "level": {
+                    "enum": [
+                        "debug",
+                        "error",
+                        "http",
+                        "info",
+                        "silly",
+                        "verbose",
+                        "warn"
+                    ],
+                    "type": "string"
+                },
+                "silent": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "driver"
+            ],
+            "type": "object"
+        },
+        "LoggerElasticSearchConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "ElasticSearch",
+                    "type": "string"
+                },
+                "index": {
+                    "type": "string"
+                },
+                "level": {
+                    "enum": [
+                        "debug",
+                        "error",
+                        "http",
+                        "info",
+                        "silly",
+                        "verbose",
+                        "warn"
+                    ],
+                    "type": "string"
+                },
+                "silent": {
+                    "type": "boolean"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "driver",
+                "index",
+                "url"
+            ],
+            "type": "object"
+        },
+        "LoggerFileConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "File",
+                    "type": "string"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "level": {
+                    "enum": [
+                        "debug",
+                        "error",
+                        "http",
+                        "info",
+                        "silly",
+                        "verbose",
+                        "warn"
+                    ],
+                    "type": "string"
+                },
+                "silent": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "driver",
+                "filename"
+            ],
+            "type": "object"
+        },
+        "MonitorConfig": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/MonitorSentryConfig"
+                },
+                {
+                    "$ref": "#/definitions/MonitorConsoleConfig"
+                }
+            ]
+        },
+        "MonitorConsoleConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "Console",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "driver"
+            ],
+            "type": "object"
+        },
+        "MonitorSentryConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "Sentry",
+                    "type": "string"
+                },
+                "dsn": {
+                    "type": "string"
+                },
+                "environment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "driver",
+                "dsn",
+                "environment"
+            ],
+            "type": "object"
+        },
+        "NotionConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "pollingInterval": {
+                    "type": "number"
+                },
+                "token": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "token"
+            ],
+            "type": "object"
+        },
+        "Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKeys": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "baseUrl": {
+                    "type": "string"
+                },
+                "env": {
+                    "type": "string"
+                },
+                "monitors": {
+                    "items": {
+                        "enum": [
+                            "Console",
+                            "Sentry"
+                        ],
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "port": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "sslCert": {
+                    "type": "string"
+                },
+                "sslKey": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "PappersConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "apiKey"
+            ],
+            "type": "object"
+        },
+        "QontoProductionConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "environment": {
+                    "const": "production",
+                    "type": "string"
+                },
+                "organisationSlug": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "environment",
+                "organisationSlug",
+                "secretKey"
+            ],
+            "type": "object"
+        },
+        "QontoSandboxConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "environment": {
+                    "const": "sandbox",
+                    "type": "string"
+                },
+                "organisationSlug": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string"
+                },
+                "stagingToken": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "environment",
+                "organisationSlug",
+                "secretKey",
+                "stagingToken"
+            ],
+            "type": "object"
+        },
+        "TemplateObject": {
+            "additionalProperties": {
+                "$ref": "#/definitions/TemplateValue"
+            },
+            "type": "object"
+        },
+        "TemplateValue": {
+            "anyOf": [
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "number": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "number"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "boolean": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "boolean"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "json": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "json"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "$ref": "#/definitions/TemplateObject"
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        },
+        "TunnelNgrokConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "authToken": {
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Ngrok",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "authToken",
+                "integration"
+            ],
+            "type": "object"
         }
-      },
-      "required": ["apiKey", "baseId"],
-      "type": "object"
     },
-    "BucketConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": ["name"],
-      "type": "object"
-    },
-    "ConvertToTemplateObject<QontoCreateClient>": {
-      "additionalProperties": false,
-      "properties": {
-        "address": {
-          "$ref": "#/definitions/TemplateValue"
+    "properties": {
+        "automations": {
+            "items": {
+                "$ref": "#/definitions/IAutomation"
+            },
+            "type": "array"
         },
-        "billing_address": {
-          "$ref": "#/definitions/TemplateValue"
+        "buckets": {
+            "items": {
+                "$ref": "#/definitions/BucketConfig"
+            },
+            "type": "array"
         },
-        "city": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "country_code": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "currency": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "delivery_address": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "email": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "first_name": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "last_name": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "locale": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "name": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "tax_identification_number": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "type": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "vat_number": {
-          "$ref": "#/definitions/TemplateValue"
-        },
-        "zip_code": {
-          "$ref": "#/definitions/TemplateValue"
-        }
-      },
-      "type": "object"
-    },
-    "DatabaseConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "$ref": "#/definitions/DatabaseDriverName"
-        },
-        "url": {
-          "type": "string"
-        }
-      },
-      "required": ["driver", "url"],
-      "type": "object"
-    },
-    "DatabaseDriverName": {
-      "enum": ["PostgreSQL", "SQLite"],
-      "type": "string"
-    },
-    "IAction": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/ICreateRecordDatabaseAction"
-        },
-        {
-          "$ref": "#/definitions/IRunJavascriptCodeAction"
-        },
-        {
-          "$ref": "#/definitions/IRunTypescriptCodeAction"
-        },
-        {
-          "$ref": "#/definitions/IReadRecordDatabaseAction"
-        },
-        {
-          "$ref": "#/definitions/IGetCompanyPappersAction"
-        },
-        {
-          "$ref": "#/definitions/ICreateClientQontoAction"
-        },
-        {
-          "$ref": "#/definitions/IUpdatePageNotionAction"
-        }
-      ]
-    },
-    "IApiCalledHttpTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "auth": {
-          "const": "ApiKey",
-          "type": "string"
-        },
-        "event": {
-          "const": "ApiCalled",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/definitions/JSONSchema"
-        },
-        "output": {
-          "$ref": "#/definitions/TemplateObject"
-        },
-        "path": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Http",
-          "type": "string"
-        }
-      },
-      "required": ["event", "path", "service"],
-      "type": "object"
-    },
-    "IAutomation": {
-      "additionalProperties": false,
-      "properties": {
-        "actions": {
-          "items": {
-            "$ref": "#/definitions/IAction"
-          },
-          "type": "array"
+        "database": {
+            "$ref": "#/definitions/DatabaseConfig"
         },
         "description": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "summary": {
-          "type": "string"
-        },
-        "trigger": {
-          "$ref": "#/definitions/ITrigger"
-        }
-      },
-      "required": ["actions", "name", "trigger"],
-      "type": "object"
-    },
-    "ICheckboxField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Checkbox",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "ICreateClientQontoAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "CreateClient",
-          "type": "string"
-        },
-        "client": {
-          "$ref": "#/definitions/ConvertToTemplateObject<QontoCreateClient>"
-        },
-        "integration": {
-          "const": "Qonto",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "client", "integration", "name"],
-      "type": "object"
-    },
-    "ICreateRecordDatabaseAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "CreateRecord",
-          "type": "string"
-        },
-        "fields": {
-          "additionalProperties": {
             "type": "string"
-          },
-          "type": "object"
         },
-        "name": {
-          "type": "string"
+        "integrations": {
+            "$ref": "#/definitions/IIntegrations"
         },
-        "service": {
-          "const": "Database",
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "fields", "name", "service", "table"],
-      "type": "object"
-    },
-    "IDateTimeField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "DateTime",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IEmailField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Email",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IField": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/ICheckboxField"
-        },
-        {
-          "$ref": "#/definitions/IDateTimeField"
-        },
-        {
-          "$ref": "#/definitions/IEmailField"
-        },
-        {
-          "$ref": "#/definitions/ILongTextField"
-        },
-        {
-          "$ref": "#/definitions/INumberField"
-        },
-        {
-          "$ref": "#/definitions/ISingleLineTextField"
-        },
-        {
-          "$ref": "#/definitions/IFormulaField"
-        },
-        {
-          "$ref": "#/definitions/IMultipleAttachmentField"
-        },
-        {
-          "$ref": "#/definitions/IMultipleLinkedRecordField"
-        },
-        {
-          "$ref": "#/definitions/IMultipleSelectField"
-        },
-        {
-          "$ref": "#/definitions/IRollupField"
-        },
-        {
-          "$ref": "#/definitions/ISingleLinkedRecordField"
-        },
-        {
-          "$ref": "#/definitions/ISingleSelectField"
-        }
-      ]
-    },
-    "IFormulaField": {
-      "additionalProperties": false,
-      "properties": {
-        "formula": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "output": {
-          "$ref": "#/definitions/IOutputField"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Formula",
-          "type": "string"
-        }
-      },
-      "required": ["formula", "name", "output", "type"],
-      "type": "object"
-    },
-    "IGetCompanyPappersAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "GetCompany",
-          "type": "string"
-        },
-        "integration": {
-          "const": "Pappers",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "siret": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "integration", "name", "siret"],
-      "type": "object"
-    },
-    "IIntegrations": {
-      "additionalProperties": false,
-      "properties": {
-        "airtable": {
-          "$ref": "#/definitions/AirtableConfig"
-        },
-        "notion": {
-          "$ref": "#/definitions/NotionConfig"
-        },
-        "pappers": {
-          "$ref": "#/definitions/PappersConfig"
-        },
-        "qonto": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/QontoSandboxConfig"
+        "loggers": {
+            "items": {
+                "$ref": "#/definitions/LoggerConfig"
             },
-            {
-              "$ref": "#/definitions/QontoProductionConfig"
-            }
-          ]
-        }
-      },
-      "type": "object"
-    },
-    "ILongTextField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "LongText",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IMultipleAttachmentField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "MultipleAttachment",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IMultipleLinkedRecordField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "table": {
-          "type": "string"
-        },
-        "type": {
-          "const": "MultipleLinkedRecord",
-          "type": "string"
-        }
-      },
-      "required": ["name", "table", "type"],
-      "type": "object"
-    },
-    "IMultipleSelectField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "options": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "MultipleSelect",
-          "type": "string"
-        }
-      },
-      "required": ["name", "options", "type"],
-      "type": "object"
-    },
-    "INumberField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Number",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IOutputField": {
-      "additionalProperties": false,
-      "properties": {
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "enum": ["DateTime", "LongText", "Number", "SingleLineText"],
-          "type": "string"
-        }
-      },
-      "required": ["type"],
-      "type": "object"
-    },
-    "IPageCreatedNotionTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "event": {
-          "const": "TablePageCreated",
-          "type": "string"
-        },
-        "integration": {
-          "const": "Notion",
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["event", "integration", "table"],
-      "type": "object"
-    },
-    "IReadRecordDatabaseAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "ReadRecord",
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Database",
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "id", "name", "service", "table"],
-      "type": "object"
-    },
-    "IRecordCreatedDatabaseTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "event": {
-          "const": "RecordCreated",
-          "type": "string"
-        },
-        "service": {
-          "const": "Database",
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["event", "service", "table"],
-      "type": "object"
-    },
-    "IRollupField": {
-      "additionalProperties": false,
-      "properties": {
-        "formula": {
-          "type": "string"
-        },
-        "linkedRecordField": {
-          "type": "string"
-        },
-        "multipleLinkedRecord": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "output": {
-          "$ref": "#/definitions/IOutputField"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Rollup",
-          "type": "string"
-        }
-      },
-      "required": [
-        "formula",
-        "linkedRecordField",
-        "multipleLinkedRecord",
-        "name",
-        "output",
-        "type"
-      ],
-      "type": "object"
-    },
-    "IRunJavascriptCodeAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "RunJavascript",
-          "type": "string"
-        },
-        "code": {
-          "type": "string"
-        },
-        "env": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "input": {
-          "$ref": "#/definitions/TemplateObject"
-        },
-        "name": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Code",
-          "type": "string"
-        }
-      },
-      "required": ["action", "code", "name", "service"],
-      "type": "object"
-    },
-    "IRunTypescriptCodeAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "RunTypescript",
-          "type": "string"
-        },
-        "code": {
-          "type": "string"
-        },
-        "env": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "input": {
-          "$ref": "#/definitions/TemplateObject"
-        },
-        "name": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Code",
-          "type": "string"
-        }
-      },
-      "required": ["action", "code", "name", "service"],
-      "type": "object"
-    },
-    "ISingleLineTextField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "SingleLineText",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "ISingleLinkedRecordField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "table": {
-          "type": "string"
-        },
-        "type": {
-          "const": "SingleLinkedRecord",
-          "type": "string"
-        }
-      },
-      "required": ["name", "table", "type"],
-      "type": "object"
-    },
-    "ISingleSelectField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "options": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "SingleSelect",
-          "type": "string"
-        }
-      },
-      "required": ["name", "options", "type"],
-      "type": "object"
-    },
-    "ITable": {
-      "additionalProperties": false,
-      "properties": {
-        "fields": {
-          "items": {
-            "$ref": "#/definitions/IField"
-          },
-          "type": "array"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": ["fields", "name"],
-      "type": "object"
-    },
-    "ITrigger": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/IApiCalledHttpTrigger"
-        },
-        {
-          "$ref": "#/definitions/IRecordCreatedDatabaseTrigger"
-        },
-        {
-          "$ref": "#/definitions/IWebhookCalledHttpTrigger"
-        },
-        {
-          "$ref": "#/definitions/IPageCreatedNotionTrigger"
-        }
-      ]
-    },
-    "IUpdatePageNotionAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "UpdatePage",
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "integration": {
-          "const": "Notion",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "page": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "id", "integration", "name", "page", "table"],
-      "type": "object"
-    },
-    "IWebhookCalledHttpTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "auth": {
-          "const": "ApiKey",
-          "type": "string"
-        },
-        "event": {
-          "const": "WebhookCalled",
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Http",
-          "type": "string"
-        }
-      },
-      "required": ["event", "path", "service"],
-      "type": "object"
-    },
-    "JSONSchema": {
-      "additionalProperties": false,
-      "properties": {
-        "additionalProperties": {
-          "type": "boolean"
-        },
-        "enum": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "items": {
-          "$ref": "#/definitions/JSONSchema"
-        },
-        "oneOf": {
-          "items": {
-            "$ref": "#/definitions/JSONSchema"
-          },
-          "type": "array"
-        },
-        "properties": {
-          "$ref": "#/definitions/JSONSchemaProperties"
-        },
-        "required": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "type": {
-          "enum": ["array", "boolean", "number", "object", "string"],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "JSONSchemaProperties": {
-      "additionalProperties": {
-        "$ref": "#/definitions/JSONSchema"
-      },
-      "type": "object"
-    },
-    "LoggerConfig": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/LoggerElasticSearchConfig"
-        },
-        {
-          "$ref": "#/definitions/LoggerConsoleConfig"
-        },
-        {
-          "$ref": "#/definitions/LoggerFileConfig"
-        }
-      ]
-    },
-    "LoggerConsoleConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "Console",
-          "type": "string"
-        },
-        "level": {
-          "enum": ["debug", "error", "http", "info", "silly", "verbose", "warn"],
-          "type": "string"
-        },
-        "silent": {
-          "type": "boolean"
-        }
-      },
-      "required": ["driver"],
-      "type": "object"
-    },
-    "LoggerElasticSearchConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "ElasticSearch",
-          "type": "string"
-        },
-        "index": {
-          "type": "string"
-        },
-        "level": {
-          "enum": ["debug", "error", "http", "info", "silly", "verbose", "warn"],
-          "type": "string"
-        },
-        "silent": {
-          "type": "boolean"
-        },
-        "url": {
-          "type": "string"
-        }
-      },
-      "required": ["driver", "index", "url"],
-      "type": "object"
-    },
-    "LoggerFileConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "File",
-          "type": "string"
-        },
-        "filename": {
-          "type": "string"
-        },
-        "level": {
-          "enum": ["debug", "error", "http", "info", "silly", "verbose", "warn"],
-          "type": "string"
-        },
-        "silent": {
-          "type": "boolean"
-        }
-      },
-      "required": ["driver", "filename"],
-      "type": "object"
-    },
-    "MonitorConfig": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/MonitorSentryConfig"
-        },
-        {
-          "$ref": "#/definitions/MonitorConsoleConfig"
-        }
-      ]
-    },
-    "MonitorConsoleConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "Console",
-          "type": "string"
-        }
-      },
-      "required": ["driver"],
-      "type": "object"
-    },
-    "MonitorSentryConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "Sentry",
-          "type": "string"
-        },
-        "dsn": {
-          "type": "string"
-        },
-        "environment": {
-          "type": "string"
-        }
-      },
-      "required": ["driver", "dsn", "environment"],
-      "type": "object"
-    },
-    "NotionConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "pollingInterval": {
-          "type": "number"
-        },
-        "token": {
-          "type": "string"
-        }
-      },
-      "required": ["token"],
-      "type": "object"
-    },
-    "Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">": {
-      "additionalProperties": false,
-      "properties": {
-        "apiKeys": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "baseUrl": {
-          "type": "string"
-        },
-        "env": {
-          "type": "string"
+            "type": "array"
         },
         "monitors": {
-          "items": {
-            "enum": ["Console", "Sentry"],
+            "items": {
+                "$ref": "#/definitions/MonitorConfig"
+            },
+            "type": "array"
+        },
+        "name": {
             "type": "string"
-          },
-          "type": "array"
         },
-        "port": {
-          "type": ["string", "number"]
+        "server": {
+            "$ref": "#/definitions/Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">"
         },
-        "sslCert": {
-          "type": "string"
+        "tables": {
+            "items": {
+                "$ref": "#/definitions/ITable"
+            },
+            "type": "array"
         },
-        "sslKey": {
-          "type": "string"
+        "tunnel": {
+            "$ref": "#/definitions/TunnelNgrokConfig"
+        },
+        "version": {
+            "type": "string"
         }
-      },
-      "type": "object"
     },
-    "PappersConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "apiKey": {
-          "type": "string"
-        }
-      },
-      "required": ["apiKey"],
-      "type": "object"
-    },
-    "QontoProductionConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "environment": {
-          "const": "production",
-          "type": "string"
-        },
-        "organisationSlug": {
-          "type": "string"
-        },
-        "secretKey": {
-          "type": "string"
-        }
-      },
-      "required": ["environment", "organisationSlug", "secretKey"],
-      "type": "object"
-    },
-    "QontoSandboxConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "environment": {
-          "const": "sandbox",
-          "type": "string"
-        },
-        "organisationSlug": {
-          "type": "string"
-        },
-        "secretKey": {
-          "type": "string"
-        },
-        "stagingToken": {
-          "type": "string"
-        }
-      },
-      "required": ["environment", "organisationSlug", "secretKey", "stagingToken"],
-      "type": "object"
-    },
-    "TemplateObject": {
-      "additionalProperties": {
-        "$ref": "#/definitions/TemplateValue"
-      },
-      "type": "object"
-    },
-    "TemplateValue": {
-      "anyOf": [
-        {
-          "additionalProperties": false,
-          "properties": {
-            "number": {
-              "type": "string"
-            }
-          },
-          "required": ["number"],
-          "type": "object"
-        },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "boolean": {
-              "type": "string"
-            }
-          },
-          "required": ["boolean"],
-          "type": "object"
-        },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "json": {
-              "type": "string"
-            }
-          },
-          "required": ["json"],
-          "type": "object"
-        },
-        {
-          "$ref": "#/definitions/TemplateObject"
-        },
-        {
-          "type": "string"
-        }
-      ]
-    },
-    "TunnelNgrokConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "authToken": {
-          "type": "string"
-        },
-        "integration": {
-          "const": "Ngrok",
-          "type": "string"
-        }
-      },
-      "required": ["authToken", "integration"],
-      "type": "object"
-    }
-  },
-  "properties": {
-    "automations": {
-      "items": {
-        "$ref": "#/definitions/IAutomation"
-      },
-      "type": "array"
-    },
-    "buckets": {
-      "items": {
-        "$ref": "#/definitions/BucketConfig"
-      },
-      "type": "array"
-    },
-    "database": {
-      "$ref": "#/definitions/DatabaseConfig"
-    },
-    "description": {
-      "type": "string"
-    },
-    "integrations": {
-      "$ref": "#/definitions/IIntegrations"
-    },
-    "loggers": {
-      "items": {
-        "$ref": "#/definitions/LoggerConfig"
-      },
-      "type": "array"
-    },
-    "monitors": {
-      "items": {
-        "$ref": "#/definitions/MonitorConfig"
-      },
-      "type": "array"
-    },
-    "name": {
-      "type": "string"
-    },
-    "server": {
-      "$ref": "#/definitions/Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">"
-    },
-    "tables": {
-      "items": {
-        "$ref": "#/definitions/ITable"
-      },
-      "type": "array"
-    },
-    "tunnel": {
-      "$ref": "#/definitions/TunnelNgrokConfig"
-    },
-    "version": {
-      "type": "string"
-    }
-  },
-  "required": ["name", "version"],
-  "type": "object"
+    "required": [
+        "name",
+        "version"
+    ],
+    "type": "object"
 }
+

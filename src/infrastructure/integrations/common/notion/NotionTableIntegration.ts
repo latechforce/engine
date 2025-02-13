@@ -355,7 +355,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
           case 'phone_number':
             return property.phone_number
           case 'relation':
-            return property.relation.map((relation) => relation.id)
+            return property.relation.map((relation) => relation.id.replace(/-/g, ''))
           case 'rollup':
             switch (property.rollup.type) {
               case 'array':

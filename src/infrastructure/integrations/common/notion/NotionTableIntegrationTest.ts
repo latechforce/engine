@@ -15,11 +15,13 @@ export function testNotionTableIntegration(
   if (teardown) afterAll(teardown)
 
   let table1: INotionTableIntegration
+  let table2: INotionTableIntegration
   let table3: INotionTableIntegration
 
   beforeAll(async () => {
     // GIVEN
     table1 = await integration.getTable(TABLE_1_ID)
+    table2 = await integration.getTable(TABLE_2_ID)
     table3 = await integration.getTable(TABLE_3_ID)
   })
 
@@ -316,6 +318,17 @@ export function testNotionTableIntegration(
 
       // THEN
       expect(page.properties.files).toStrictEqual(files)
+    })
+
+    it('should insert a page in a table with a relation', async () => {
+      // GIVEN
+      const record = await table2.insert({ name: 'John Doe' })
+
+      // WHEN
+      const page = await table1.insert({ relation: [record.id] })
+
+      // THEN
+      expect(page.properties.relation).toStrictEqual([record.id])
     })
   })
 
