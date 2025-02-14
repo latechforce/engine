@@ -1,3 +1,10 @@
+## [0.37.37](https://github.com/latechforce/engine/compare/v0.37.36...v0.37.37) (2025-02-14)
+
+
+### Bug Fixes
+
+* **Notion:** add typing for NotionTablePage functions ([031f346](https://github.com/latechforce/engine/commit/031f346727f6c8a654e14d5b2501849efd45336f))
+
 ## [0.37.36](https://github.com/latechforce/engine/compare/v0.37.35...v0.37.36) (2025-02-14)
 
 
