@@ -1,3 +1,14 @@
+## [0.37.35](https://github.com/latechforce/engine/compare/v0.37.34...v0.37.35) (2025-02-14)
+
+
+### Bug Fixes
+
+* **Fetcher:** fix broken tests ([cb86cbb](https://github.com/latechforce/engine/commit/cb86cbbeec8dd37e7fe0941fffca3d4b0099d96c))
+* **Fetcher:** fix broken tests ([f7a6c8c](https://github.com/latechforce/engine/commit/f7a6c8c3b9a98610d502ee7a63bdfbd6fbb526e5))
+* **Qonto:** add broken test ([12406cb](https://github.com/latechforce/engine/commit/12406cbd09eea824039e15aafc86af51302bfde5))
+* **Qonto:** add green test: should list client invoices ([f30113d](https://github.com/latechforce/engine/commit/f30113d2afbde2c13a44fbed0cb7320f7179771b))
+* **Qonto:** add green test: should run a Typescript code with a Qonto list client invoices ([44d5aa2](https://github.com/latechforce/engine/commit/44d5aa2c01c4f291c0cc47cb73203d03e83b853a))
+
 ## [0.37.34](https://github.com/latechforce/engine/compare/v0.37.33...v0.37.34) (2025-02-14)
 
 
