@@ -186,8 +186,8 @@ export type QontoCreateClientInvoice = {
   issue_date: string
   performance_date?: string
   due_date: string
-  status: 'draft' | 'unpaid'
-  number?: string
+  status?: 'draft' | 'unpaid'
+  number: string
   purchase_order?: string
   terms_and_conditions?: string
   header?: string
