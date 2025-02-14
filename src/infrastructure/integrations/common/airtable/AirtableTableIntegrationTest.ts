@@ -3,7 +3,7 @@ import { addDays, format, subDays } from 'date-fns'
 import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import type BunTester from 'bun:test'
 import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
-import type { AirtableTableSample1 } from '../../bun/mocks/airtable/AirtableSample'
+import type { AirtableTableSample1 } from '../../bun/mocks/airtable/AirtableTestSamples'
 
 export function testAirtableTableIntegration(
   { describe, it, expect, afterAll, beforeAll }: typeof BunTester,

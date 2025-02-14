@@ -27,7 +27,7 @@ export class NotionIntegration implements INotionIntegration {
 
   constructor(private _config?: NotionConfig) {
     this._db = new SQLiteDatabaseDriver({
-      url: _config?.token ?? 'file::memory:?cache=shared',
+      url: _config?.token ?? ':memory:',
       driver: 'SQLite',
     })
   }

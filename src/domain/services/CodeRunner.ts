@@ -17,6 +17,13 @@ import type {
 } from '/domain/integrations/Airtable/AirtableTableRecord'
 import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
 import type { Fetcher } from './Fetcher'
+import type {
+  QontoCreateClient,
+  QontoClient,
+  QontoCreateClientInvoice,
+  QontoClientInvoice,
+  Qonto,
+} from '../integrations/Qonto'
 
 export interface ICodeRunnerSpi {
   run: (
@@ -98,9 +105,16 @@ export interface CodeRunnerContextIntegrationsAirtable {
   ) => Promise<CodeRunnerContextIntegrationsAirtableTable<T>>
 }
 
+export interface CodeRunnerContextIntegrationsQonto {
+  createClient: (client: QontoCreateClient) => Promise<QontoClient>
+  createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
+  listClientInvoices: () => Promise<QontoClientInvoice[]>
+}
+
 export interface CodeRunnerContextIntegrations {
   notion: CodeRunnerContextIntegrationsNotion
   airtable: CodeRunnerContextIntegrationsAirtable
+  qonto: CodeRunnerContextIntegrationsQonto
 }
 
 export interface CodeRunnerContextPackages {
@@ -137,6 +151,7 @@ export interface CodeRunnerEntities {
 export interface CodeRunnerIntegrations {
   notion: Notion
   airtable: Airtable
+  qonto: Qonto
 }
 
 export class CodeRunner {

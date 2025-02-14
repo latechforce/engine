@@ -16,6 +16,7 @@ import type { RecordFields, UpdateRecordFields } from '/domain/entities/Record'
 import type { UpdateNotionTablePageProperties } from '/domain/integrations/Notion/NotionTable'
 import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
+import type { QontoCreateClient, QontoCreateClientInvoice } from '../integrations/Qonto'
 
 export type CodeCompilerServices = CodeRunnerServices
 
@@ -104,7 +105,7 @@ export class CodeCompiler {
   }
 
   getIntegrations = (): CodeRunnerContextIntegrations => {
-    const { notion, airtable } = this._integrations
+    const { notion, airtable, qonto } = this._integrations
     return {
       notion: {
         getTable: async <T extends NotionTablePageProperties = NotionTablePageProperties>(
@@ -175,6 +176,17 @@ export class CodeCompiler {
               return table.delete(id)
             },
           }
+        },
+      },
+      qonto: {
+        createClient: async (client: QontoCreateClient) => {
+          return qonto.createClient(client)
+        },
+        createClientInvoice: async (invoice: QontoCreateClientInvoice) => {
+          return qonto.createClientInvoice(invoice)
+        },
+        listClientInvoices: async () => {
+          return qonto.listClientInvoices()
         },
       },
     }

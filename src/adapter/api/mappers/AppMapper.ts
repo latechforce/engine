@@ -72,14 +72,14 @@ export class AppMapper {
       drivers,
       { logger, fetcher },
       { tables },
-      { notion, airtable },
+      { notion, airtable, qonto },
       { language: 'JavaScript' }
     )
     const typescriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger, fetcher },
       { tables },
-      { notion, airtable },
+      { notion, airtable, qonto },
       { language: 'TypeScript' }
     )
     const automations = AutomationMapper.toManyEntities(

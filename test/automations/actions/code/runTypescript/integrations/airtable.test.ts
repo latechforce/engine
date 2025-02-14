@@ -4,7 +4,7 @@ import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import {
   airtableTableSample1,
   type AirtableTableSample1,
-} from '/infrastructure/integrations/bun/mocks/airtable/AirtableSample'
+} from '/infrastructure/integrations/bun/mocks/airtable/AirtableTestSamples'
 
 const helpers = new Helpers(Tester)
 

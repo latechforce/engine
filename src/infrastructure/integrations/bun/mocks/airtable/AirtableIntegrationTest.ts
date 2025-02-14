@@ -4,7 +4,7 @@ import {
   airtableTableSample2,
   type AirtableTableSample1,
   type AirtableTableSample2,
-} from './AirtableSample'
+} from './AirtableTestSamples'
 
 export const integration = new AirtableIntegration({
   apiKey: ':memory:',

@@ -13,7 +13,7 @@ export class QontoIntegration implements IQontoIntegration {
   private db: Database
 
   constructor(private _config?: QontoConfig) {
-    this.db = new Database('file::memory:?cache=shared')
+    this.db = new Database(_config?.secretKey ?? ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS Clients (
         id TEXT PRIMARY KEY,

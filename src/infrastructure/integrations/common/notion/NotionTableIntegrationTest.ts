@@ -7,7 +7,7 @@ import type {
   NotionTableSample1,
   NotionTableSample2,
   NotionTableSample3,
-} from '../../bun/mocks/notion/NotionSamples'
+} from '../../bun/mocks/notion/NotionTestSamples'
 
 export function testNotionTableIntegration(
   { describe, it, expect, afterAll, beforeAll }: typeof BunTester,

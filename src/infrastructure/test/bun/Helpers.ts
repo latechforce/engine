@@ -55,9 +55,9 @@ type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> 
   | {}
 
 type Request = {
-  get: (url: string, options?: RequestInit) => Promise<any>
-  post: (url: string, body?: unknown, options?: RequestInit) => Promise<any>
-  patch: (url: string, body?: unknown, options?: RequestInit) => Promise<any>
+  get: <T = any>(url: string, options?: RequestInit) => Promise<T>
+  post: <T = any>(url: string, body?: unknown, options?: RequestInit) => Promise<T>
+  patch: <T = any>(url: string, body?: unknown, options?: RequestInit) => Promise<T>
 }
 type TestApp = {
   start: (_: Config) => Promise<StartedApp>
@@ -69,7 +69,7 @@ export class Helpers {
 
   get request(): Request {
     return {
-      get: async (url: string, options: RequestInit = {}) => {
+      get: async <T = any>(url: string, options: RequestInit = {}): Promise<T> => {
         return fetch(url, options)
           .then((res) => res.json())
           .catch((error) => {
@@ -77,7 +77,11 @@ export class Helpers {
             return error
           })
       },
-      post: async (url: string, body: unknown = {}, options: RequestInit = {}) => {
+      post: async <T = any>(
+        url: string,
+        body: unknown = {},
+        options: RequestInit = {}
+      ): Promise<T> => {
         return fetch(url, {
           ...options,
           method: 'POST',
@@ -90,7 +94,11 @@ export class Helpers {
             return error
           })
       },
-      patch: async (url: string, body: unknown = {}, options: RequestInit = {}) => {
+      patch: async <T = any>(
+        url: string,
+        body: unknown = {},
+        options: RequestInit = {}
+      ): Promise<T> => {
         return fetch(url, {
           ...options,
           method: 'PATCH',
@@ -179,10 +187,13 @@ export class Helpers {
           extendsConfig.integrations.airtable = config
         }
         if (options.integrations.includes('Qonto')) {
+          const url = join(process.cwd(), 'tmp', `qonto-${nanoid()}.db`)
+          await fs.ensureFile(url)
+          files.push(url)
           const config: QontoConfig = {
             environment: 'production',
             organisationSlug: 'test',
-            secretKey: 'test',
+            secretKey: url,
           }
           integrations.qonto = new QontoIntegration(config)
           extendsConfig.integrations.qonto = config

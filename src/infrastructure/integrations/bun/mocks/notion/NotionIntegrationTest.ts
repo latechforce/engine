@@ -7,7 +7,7 @@ import {
   type NotionTableSample1,
   type NotionTableSample2,
   type NotionTableSample3,
-} from './NotionSamples'
+} from './NotionTestSamples'
 
 export const integration = new NotionIntegration({
   token: ':memory:',
