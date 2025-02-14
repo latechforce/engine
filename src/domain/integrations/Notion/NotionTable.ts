@@ -27,29 +27,24 @@ export interface NotionTableServices {
   fetcher: Fetcher
 }
 
-export interface INotionTableSpi {
+export interface INotionTableSpi<T extends NotionTablePageProperties = NotionTablePageProperties> {
   id: string
   name: string
-  insert: <T extends NotionTablePageProperties>(page: T) => Promise<NotionTablePage<T>>
-  insertMany: <T extends NotionTablePageProperties>(pages: T[]) => Promise<NotionTablePage<T>[]>
-  update: <T extends NotionTablePageProperties>(
-    id: string,
-    page: Partial<T>
-  ) => Promise<NotionTablePage<T>>
-  updateMany: <T extends NotionTablePageProperties>(
-    pages: UpdateNotionTablePageProperties<T>[]
-  ) => Promise<NotionTablePage<T>[]>
-  retrieve: <T extends NotionTablePageProperties>(id: string) => Promise<NotionTablePage<T>>
+  insert: (page: T) => Promise<NotionTablePage<T>>
+  insertMany: (pages: T[]) => Promise<NotionTablePage<T>[]>
+  update: (id: string, page: Partial<T>) => Promise<NotionTablePage<T>>
+  updateMany: (pages: UpdateNotionTablePageProperties<T>[]) => Promise<NotionTablePage<T>[]>
+  retrieve: (id: string) => Promise<NotionTablePage<T>>
   archive: (id: string) => Promise<void>
-  list: <T extends NotionTablePageProperties>(filter?: Filter) => Promise<NotionTablePage<T>[]>
+  list: (filter?: Filter) => Promise<NotionTablePage<T>[]>
 }
 
-export class NotionTable {
+export class NotionTable<T extends NotionTablePageProperties = NotionTablePageProperties> {
   private _pollingTimer?: Timer
   private _listeners: Listener[] = []
 
   constructor(
-    private _spi: INotionTableSpi,
+    private _spi: INotionTableSpi<T>,
     private _services: NotionTableServices,
     private _config: NotionConfig,
     private _bucket: Bucket
@@ -99,27 +94,22 @@ export class NotionTable {
     return id
   }
 
-  insert = async <T extends NotionTablePageProperties>(page: T): Promise<NotionTablePage<T>> => {
+  insert = async (page: T): Promise<NotionTablePage<T>> => {
     const preprocessPage = await this._preprocessPage(page)
-    return this._spi.insert<T>(preprocessPage)
+    return this._spi.insert(preprocessPage)
   }
 
-  insertMany = async <T extends NotionTablePageProperties>(
-    pages: T[]
-  ): Promise<NotionTablePage<T>[]> => {
+  insertMany = async (pages: T[]): Promise<NotionTablePage<T>[]> => {
     const preprocessPages = await Promise.all(pages.map((page) => this._preprocessPage(page)))
-    return this._spi.insertMany<T>(preprocessPages)
+    return this._spi.insertMany(preprocessPages)
   }
 
-  update = async <T extends NotionTablePageProperties>(
-    id: string,
-    page: Partial<T>
-  ): Promise<NotionTablePage<T>> => {
+  update = async (id: string, page: Partial<T>): Promise<NotionTablePage<T>> => {
     const preprocessPage = await this._preprocessPage(page)
-    return this._spi.update<T>(id, preprocessPage)
+    return this._spi.update(id, preprocessPage)
   }
 
-  updateMany = async <T extends NotionTablePageProperties>(
+  updateMany = async (
     pages: UpdateNotionTablePageProperties<T>[]
   ): Promise<NotionTablePage<T>[]> => {
     const preprocessPages = await Promise.all(
@@ -128,19 +118,19 @@ export class NotionTable {
         return { id, page: preprocessPage }
       })
     )
-    return this._spi.updateMany<T>(preprocessPages)
+    return this._spi.updateMany(preprocessPages)
   }
 
-  retrieve = async <T extends NotionTablePageProperties>(id: string) => {
-    return this._spi.retrieve<T>(id)
+  retrieve = async (id: string) => {
+    return this._spi.retrieve(id)
   }
 
   archive = async (id: string) => {
     return this._spi.archive(id)
   }
 
-  list = async <T extends NotionTablePageProperties>(filter?: Filter) => {
-    return this._spi.list<T>(filter)
+  list = async (filter?: Filter) => {
+    return this._spi.list(filter)
   }
 
   private _preprocessPage = async <T>(page: T): Promise<T> => {

@@ -3,10 +3,13 @@ import {
   type IAirtableTableIntegration,
 } from '/adapter/spi/integrations/AirtableTableSpi'
 import type { IAirtableSpi, AirtableConfig } from '/domain/integrations/Airtable'
+import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 
 export interface IAirtableIntegration {
   getConfig: () => AirtableConfig
-  getTable: (id: string) => Promise<IAirtableTableIntegration>
+  getTable: <T extends AirtableTableRecordFields>(
+    id: string
+  ) => Promise<IAirtableTableIntegration<T>>
 }
 
 export class AirtableSpi implements IAirtableSpi {
@@ -16,8 +19,8 @@ export class AirtableSpi implements IAirtableSpi {
     return this._integration.getConfig()
   }
 
-  getTable = async (id: string) => {
-    const page = await this._integration.getTable(id)
-    return new AirtableTableSpi(page)
+  getTable = async <T extends AirtableTableRecordFields>(id: string) => {
+    const page = await this._integration.getTable<T>(id)
+    return new AirtableTableSpi<T>(page)
   }
 }

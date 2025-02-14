@@ -3,6 +3,7 @@ import { AirtableTableIntegration } from './AirtableTableIntegration'
 import type { AirtableConfig } from '/domain/integrations/Airtable'
 import Airtable from 'airtable'
 import axios, { type AxiosInstance } from 'axios'
+import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 
 export class AirtableIntegration implements IAirtableIntegration {
   private _airtable?: {
@@ -19,14 +20,16 @@ export class AirtableIntegration implements IAirtableIntegration {
     return this._config
   }
 
-  getTable = async (id: string) => {
+  getTable = async <T extends AirtableTableRecordFields = AirtableTableRecordFields>(
+    id: string
+  ) => {
     const api = this._api()
     const tablesSchema: AirtableBaseSchema = await api.meta.get('/').then((res) => res.data)
     const schema = tablesSchema.tables.find((table) => table.id === id || table.name === id)
     if (!schema) {
       throw new Error(`Table with id "${id}" not found`)
     }
-    return new AirtableTableIntegration(api.base(id), schema)
+    return new AirtableTableIntegration<T>(api.base(id), schema)
   }
 
   private _api = (): {

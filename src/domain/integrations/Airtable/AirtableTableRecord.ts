@@ -1,3 +1,7 @@
+export type ConvertToAirtableTableRecordFields<T> = {
+  [K in keyof T]: AirtableTableRecordFieldValue
+}
+
 export interface AirtableTableRecordFields {
   [key: string]: AirtableTableRecordFieldValue
 }

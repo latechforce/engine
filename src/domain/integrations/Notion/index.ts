@@ -5,6 +5,7 @@ import type { Storage } from '/domain/services/Storage'
 import type { Server } from '/domain/services/Server'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type { NotionUser } from './NotionUser'
+import type { NotionTablePageProperties } from './NotionTablePage'
 
 export interface NotionConfig {
   token: string
@@ -19,13 +20,14 @@ export interface NotionServices extends NotionTableServices {
 
 export interface INotionSpi {
   getConfig: () => NotionConfig
-  getTable: (id: string) => Promise<NotionTableSpi>
+  getTable: <T extends NotionTablePageProperties>(id: string) => Promise<NotionTableSpi<T>>
   listAllUsers: () => Promise<NotionUser[]>
 }
 
 export class Notion {
   private _bucket?: Bucket
-  private _tables: NotionTable[] = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private _tables = new Map<string, NotionTable<any>>()
 
   constructor(
     private _spi: INotionSpi,
@@ -43,25 +45,20 @@ export class Notion {
   }
 
   startPolling = async () => {
-    for (const table of this._tables) {
-      table.startPolling()
-    }
+    this._tables.forEach((table) => table.startPolling())
   }
 
   stopPolling = async () => {
-    for (const table of this._tables) {
-      table.stopPolling()
-    }
+    this._tables.forEach((table) => table.stopPolling())
   }
 
-  getTable = async (id: string): Promise<NotionTable> => {
-    let table = this._tables.find((table) => table.id === id)
-    if (table) return table
-    const spiTable = await this._spi.getTable(id)
+  getTable = async <T extends NotionTablePageProperties>(id: string): Promise<NotionTable<T>> => {
+    if (this._tables.has(id)) return this._tables.get(id) as NotionTable<T>
+    const spiTable = await this._spi.getTable<T>(id)
     if (!this._bucket) throw new Error('bucket not initialized')
-    table = new NotionTable(spiTable, this._services, this.getConfig(), this._bucket)
-    this._tables.push(table)
-    return table
+    const newTable = new NotionTable<T>(spiTable, this._services, this.getConfig(), this._bucket)
+    this._tables.set(id, newTable)
+    return newTable
   }
 
   listAllUsers = async (): Promise<NotionUser[]> => {

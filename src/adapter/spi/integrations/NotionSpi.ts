@@ -5,10 +5,11 @@ import {
 import type { INotionSpi, NotionConfig } from '/domain/integrations/Notion'
 import { NotionUserMapper } from '../mappers/NotionUserMapper'
 import type { NotionUserDto } from '../dtos/NotionUserDto'
+import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
 
 export interface INotionIntegration {
   getConfig: () => NotionConfig
-  getTable: (id: string) => Promise<INotionTableIntegration>
+  getTable: <T extends NotionTablePageProperties>(id: string) => Promise<INotionTableIntegration<T>>
   listAllUsers: () => Promise<NotionUserDto[]>
 }
 
@@ -19,9 +20,9 @@ export class NotionSpi implements INotionSpi {
     return this._integration.getConfig()
   }
 
-  getTable = async (id: string) => {
-    const page = await this._integration.getTable(id)
-    return new NotionTableSpi(page)
+  getTable = async <T extends NotionTablePageProperties>(id: string) => {
+    const page = await this._integration.getTable<T>(id)
+    return new NotionTableSpi<T>(page)
   }
 
   listAllUsers = async () => {

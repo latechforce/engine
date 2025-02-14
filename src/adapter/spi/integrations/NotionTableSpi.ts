@@ -8,27 +8,22 @@ import type { NotionTablePageProperties } from '/domain/integrations/Notion/Noti
 import { NotionTablePageMapper } from '../mappers/NotionTablePageMapper'
 import type { NotionTablePageDto } from '../dtos/NotionTablePageDto'
 
-export interface INotionTableIntegration {
+export interface INotionTableIntegration<
+  T extends NotionTablePageProperties = NotionTablePageProperties,
+> {
   id: string
   name: string
-  insert: <T extends NotionTablePageProperties>(page: T) => Promise<NotionTablePageDto<T>>
-  insertMany: <T extends NotionTablePageProperties>(pages: T[]) => Promise<NotionTablePageDto<T>[]>
-  update: <T extends NotionTablePageProperties>(
-    id: string,
-    page: Partial<T>
-  ) => Promise<NotionTablePageDto<T>>
-  updateMany: <T extends NotionTablePageProperties>(
-    pages: UpdateNotionTablePageProperties<T>[]
-  ) => Promise<NotionTablePageDto<T>[]>
-  retrieve: <T extends NotionTablePageProperties>(id: string) => Promise<NotionTablePageDto<T>>
+  insert: (page: T) => Promise<NotionTablePageDto<T>>
+  insertMany: (pages: T[]) => Promise<NotionTablePageDto<T>[]>
+  update: (id: string, page: Partial<T>) => Promise<NotionTablePageDto<T>>
+  updateMany: (pages: UpdateNotionTablePageProperties<T>[]) => Promise<NotionTablePageDto<T>[]>
+  retrieve: (id: string) => Promise<NotionTablePageDto<T>>
   archive: (id: string) => Promise<void>
-  list: <T extends NotionTablePageProperties>(
-    filter?: FilterDto
-  ) => Promise<NotionTablePageDto<T>[]>
+  list: (filter?: FilterDto) => Promise<NotionTablePageDto<T>[]>
 }
 
-export class NotionTableSpi implements INotionTableSpi {
-  constructor(private _integration: INotionTableIntegration) {}
+export class NotionTableSpi<T extends NotionTablePageProperties> implements INotionTableSpi<T> {
+  constructor(private _integration: INotionTableIntegration<T>) {}
 
   get id() {
     return this._integration.id
@@ -38,30 +33,28 @@ export class NotionTableSpi implements INotionTableSpi {
     return this._integration.name
   }
 
-  insert = async <T extends NotionTablePageProperties>(page: T) => {
+  insert = async (page: T) => {
     const dto = await this._integration.insert(page)
     return NotionTablePageMapper.toEntity<T>(dto)
   }
 
-  insertMany = async <T extends NotionTablePageProperties>(pages: T[]) => {
+  insertMany = async (pages: T[]) => {
     const dtos = await this._integration.insertMany(pages)
     return NotionTablePageMapper.toManyEntities<T>(dtos)
   }
 
-  update = async <T extends NotionTablePageProperties>(id: string, page: Partial<T>) => {
+  update = async (id: string, page: Partial<T>) => {
     const dto = await this._integration.update(id, page)
     return NotionTablePageMapper.toEntity<T>(dto)
   }
 
-  updateMany = async <T extends NotionTablePageProperties>(
-    pages: UpdateNotionTablePageProperties<T>[]
-  ) => {
+  updateMany = async (pages: UpdateNotionTablePageProperties<T>[]) => {
     const dtos = await this._integration.updateMany(pages)
     return NotionTablePageMapper.toManyEntities<T>(dtos)
   }
 
-  retrieve = async <T extends NotionTablePageProperties>(id: string) => {
-    const dto = await this._integration.retrieve<T>(id)
+  retrieve = async (id: string) => {
+    const dto = await this._integration.retrieve(id)
     return NotionTablePageMapper.toEntity<T>(dto)
   }
 
@@ -69,8 +62,8 @@ export class NotionTableSpi implements INotionTableSpi {
     return this._integration.archive(id)
   }
 
-  list = async <T extends NotionTablePageProperties>(filter?: Filter) => {
-    const dtos = await this._integration.list<T>(filter ? FilterMapper.toDto(filter) : undefined)
+  list = async (filter?: Filter) => {
+    const dtos = await this._integration.list(filter ? FilterMapper.toDto(filter) : undefined)
     return NotionTablePageMapper.toManyEntities<T>(dtos)
   }
 }

@@ -1,14 +1,14 @@
 import { testNotionIntegration } from '/infrastructure/integrations/common/notion/NotionIntegrationTest'
 import BunTester, { describe, it, expect } from 'bun:test'
 import { integration } from './NotionIntegrationTest'
-import { notionTableSample1, notionTableSample3 } from './NotionSamples'
+import { notionTableSample1, notionTableSample3, type NotionTableSample3 } from './NotionSamples'
 import type { NotionTableIntegration } from './NotionTableIntegration.mock'
 
 testNotionIntegration(BunTester, integration, {
   TABLE_ID: notionTableSample1.name,
 })
 
-let table: NotionTableIntegration
+let table: NotionTableIntegration<NotionTableSample3>
 
 describe('addTable', () => {
   it('should add a table with real Notion table config', async () => {

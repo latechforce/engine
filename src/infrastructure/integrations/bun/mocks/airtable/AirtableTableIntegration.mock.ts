@@ -9,9 +9,10 @@ import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/Data
 import type { IField } from '/domain/interfaces/IField'
 import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '/domain/entities/Record'
-import type { ITable } from '/domain/interfaces/ITable'
 
-export class AirtableTableIntegration implements IAirtableTableIntegration {
+export class AirtableTableIntegration<T extends AirtableTableRecordFields>
+  implements IAirtableTableIntegration<T>
+{
   readonly id: string
   readonly name: string
   private _fields: IField[]
@@ -37,52 +38,50 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     await this._db.createView()
   }
 
-  insert = async <T extends AirtableTableRecordFields>(record: T) => {
+  insert = async (record: T) => {
     const id = this._getId()
     await this._db.insert({
       id,
       fields: this._preprocess(record),
       created_at: new Date().toISOString(),
     })
-    return this.retrieve<T>(id)
+    return this.retrieve(id)
   }
 
-  insertMany = async <T extends AirtableTableRecordFields>(records: T[]) => {
+  insertMany = async (records: T[]) => {
     const pagesToInsert = records.map((record) => ({
       id: this._getId(),
       fields: this._preprocess(record),
       created_at: new Date().toISOString(),
     }))
     await this._db.insertMany(pagesToInsert)
-    return Promise.all(pagesToInsert.map((page) => this.retrieve<T>(page.id)))
+    return Promise.all(pagesToInsert.map((page) => this.retrieve(page.id)))
   }
 
-  update = async <T extends AirtableTableRecordFields>(id: string, record: Partial<T>) => {
+  update = async (id: string, record: Partial<T>) => {
     const fields = this._preprocess(record)
     await this._db.update({
       id,
       fields,
       updated_at: new Date().toISOString(),
     })
-    return this.retrieve<T>(id)
+    return this.retrieve(id)
   }
 
-  updateMany = async <T extends AirtableTableRecordFields>(
-    pages: UpdateAirtableTableRecord<T>[]
-  ) => {
+  updateMany = async (pages: UpdateAirtableTableRecord<T>[]) => {
     const pagesToUpdate = pages.map(({ id, fields }) => ({
       id,
       fields: this._preprocess(fields),
       updated_at: new Date().toISOString(),
     }))
     await this._db.updateMany(pagesToUpdate)
-    return Promise.all(pagesToUpdate.map((page) => this.retrieve<T>(page.id)))
+    return Promise.all(pagesToUpdate.map((page) => this.retrieve(page.id)))
   }
 
-  retrieve = async <T extends AirtableTableRecordFields>(id: string) => {
+  retrieve = async (id: string) => {
     const record = await this._db.readById(id)
     if (!record) throw new Error(`Record not found: ${id}`)
-    return this._postprocess<T>(record)
+    return this._postprocess(record)
   }
 
   delete = async (id: string) => {
@@ -95,9 +94,9 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     return Promise.all(recordToDelete)
   }
 
-  list = async <T extends AirtableTableRecordFields>(filter?: FilterDto) => {
+  list = async (filter?: FilterDto) => {
     const records = await this._db.list(filter)
-    return records.map((record) => this._postprocess<T>(record))
+    return records.map((record) => this._postprocess(record))
   }
 
   private _getId = () => {
@@ -106,7 +105,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     )
   }
 
-  private _preprocess = (record: AirtableTableRecordFields): RecordFields => {
+  private _preprocess = (record: Partial<T>): RecordFields => {
     const fields: RecordFields = {}
     for (const [key, value] of Object.entries(record)) {
       const property = this._fields.find((p) => p.name === key)
@@ -154,7 +153,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     return fields
   }
 
-  private _postprocess = <T extends AirtableTableRecordFields>(
+  private _postprocess = (
     record: PersistedRecordFieldsDto<RecordFields>
   ): AirtableTableRecordDto<T> => {
     const fields: RecordFields = {}
@@ -203,67 +202,4 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
       created_time: record.created_at,
     }
   }
-}
-
-export const airtableTableSample1: ITable = {
-  name: 'table_1',
-  fields: [
-    {
-      name: 'name',
-      type: 'SingleLineText',
-    },
-    {
-      name: 'number',
-      type: 'Number',
-    },
-    {
-      name: 'boolean',
-      type: 'Checkbox',
-    },
-    {
-      name: 'text',
-      type: 'SingleLineText',
-    },
-    {
-      name: 'url',
-      type: 'SingleLineText',
-    },
-    {
-      name: 'email',
-      type: 'SingleLineText',
-    },
-    {
-      name: 'phone',
-      type: 'SingleLineText',
-    },
-    {
-      name: 'single_select',
-      type: 'SingleSelect',
-      options: ['2', '1'],
-    },
-    {
-      name: 'status',
-      type: 'SingleSelect',
-      options: ['Pas commencé', 'En cours', 'Terminé'],
-    },
-    {
-      name: 'multi_select',
-      type: 'MultipleSelect',
-      options: ['4', '3', '2', '1'],
-    },
-    {
-      name: 'date',
-      type: 'DateTime',
-    },
-  ],
-}
-
-export const airtableTableSample2: ITable = {
-  name: 'table_2',
-  fields: [
-    {
-      name: 'name',
-      type: 'SingleLineText',
-    },
-  ],
 }

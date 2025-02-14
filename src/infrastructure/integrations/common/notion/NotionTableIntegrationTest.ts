@@ -3,6 +3,11 @@ import { parse } from 'date-fns'
 import type { INotionIntegration } from '/adapter/spi/integrations/NotionSpi'
 import type BunTester from 'bun:test'
 import type { INotionTableIntegration } from '/adapter/spi/integrations/NotionTableSpi'
+import type {
+  NotionTableSample1,
+  NotionTableSample2,
+  NotionTableSample3,
+} from '../../bun/mocks/notion/NotionSamples'
 
 export function testNotionTableIntegration(
   { describe, it, expect, afterAll, beforeAll }: typeof BunTester,
@@ -14,15 +19,15 @@ export function testNotionTableIntegration(
 
   if (teardown) afterAll(teardown)
 
-  let table1: INotionTableIntegration
-  let table2: INotionTableIntegration
-  let table3: INotionTableIntegration
+  let table1: INotionTableIntegration<NotionTableSample1>
+  let table2: INotionTableIntegration<NotionTableSample2>
+  let table3: INotionTableIntegration<NotionTableSample3>
 
   beforeAll(async () => {
     // GIVEN
-    table1 = await integration.getTable(TABLE_1_ID)
-    table2 = await integration.getTable(TABLE_2_ID)
-    table3 = await integration.getTable(TABLE_3_ID)
+    table1 = await integration.getTable<NotionTableSample1>(TABLE_1_ID)
+    table2 = await integration.getTable<NotionTableSample2>(TABLE_2_ID)
+    table3 = await integration.getTable<NotionTableSample3>(TABLE_3_ID)
   })
 
   describe('insert', () => {
@@ -337,10 +342,10 @@ export function testNotionTableIntegration(
       const record2 = await table2.insert({ name: 'Jane Doe' })
 
       // WHEN
-      const page = await table1.insert({ multiple_relation: [record1.id, record2.id] })
+      const page = await table1.insert({ multi_relation: [record1.id, record2.id] })
 
       // THEN
-      expect(page.properties.multiple_relation).toStrictEqual([record1.id, record2.id])
+      expect(page.properties.multi_relation).toStrictEqual([record1.id, record2.id])
     })
   })
 
@@ -710,7 +715,7 @@ export function testNotionTableIntegration(
       const table2 = await integration.getTable(TABLE_2_ID)
       const name = nanoid()
       const pageTable2 = await table2.insert({ name })
-      await table1.insert({ name: nanoid(), relation: [pageTable2.id] })
+      await table1.insert({ name: nanoid(), multi_relation: [pageTable2.id] })
 
       // WHEN
       const pages = await table1.list({

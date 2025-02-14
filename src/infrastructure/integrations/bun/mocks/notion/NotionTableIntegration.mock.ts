@@ -9,7 +9,9 @@ import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
 
-export class NotionTableIntegration implements INotionTableIntegration {
+export class NotionTableIntegration<T extends NotionTablePageProperties>
+  implements INotionTableIntegration<T>
+{
   readonly id: string
   readonly name: string
   private _properties: IField[]
@@ -35,52 +37,50 @@ export class NotionTableIntegration implements INotionTableIntegration {
     await this._db.createView()
   }
 
-  insert = async <T extends NotionTablePageProperties>(page: T) => {
+  insert = async (page: T) => {
     const id = this._getId()
     await this._db.insert({
       id,
       fields: this._preprocess(page),
       created_at: new Date().toISOString(),
     })
-    return this.retrieve<T>(id)
+    return this.retrieve(id)
   }
 
-  insertMany = async <T extends NotionTablePageProperties>(pages: T[]) => {
+  insertMany = async (pages: T[]) => {
     const pagesToInsert = pages.map((page) => ({
       id: this._getId(),
       fields: this._preprocess(page),
       created_at: new Date().toISOString(),
     }))
     await this._db.insertMany(pagesToInsert)
-    return Promise.all(pagesToInsert.map((page) => this.retrieve<T>(page.id)))
+    return Promise.all(pagesToInsert.map((page) => this.retrieve(page.id)))
   }
 
-  update = async <T extends NotionTablePageProperties>(id: string, page: Partial<T>) => {
+  update = async (id: string, page: Partial<T>) => {
     const fields = this._preprocess(page)
     await this._db.update({
       id,
       fields,
       updated_at: new Date().toISOString(),
     })
-    return this.retrieve<T>(id)
+    return this.retrieve(id)
   }
 
-  updateMany = async <T extends NotionTablePageProperties>(
-    pages: { id: string; page: Partial<T> }[]
-  ) => {
+  updateMany = async (pages: { id: string; page: Partial<T> }[]) => {
     const pagesToUpdate = pages.map(({ id, page }) => ({
       id,
       fields: this._preprocess(page),
       updated_at: new Date().toISOString(),
     }))
     await this._db.updateMany(pagesToUpdate)
-    return Promise.all(pagesToUpdate.map((page) => this.retrieve<T>(page.id)))
+    return Promise.all(pagesToUpdate.map((page) => this.retrieve(page.id)))
   }
 
-  retrieve = async <T extends NotionTablePageProperties>(id: string) => {
+  retrieve = async (id: string) => {
     const record = await this._db.readById(id)
     if (!record) throw new Error(`Record not found: ${id}`)
-    return this._postprocess<T>(record)
+    return this._postprocess(record)
   }
 
   archive = async (id: string) => {
@@ -99,16 +99,16 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return Promise.all(pagesArchived)
   }
 
-  list = async <T extends NotionTablePageProperties>(filter?: FilterDto) => {
+  list = async (filter?: FilterDto) => {
     const records = await this._db.list(filter)
-    return records.map((record) => this._postprocess<T>(record))
+    return records.map((record) => this._postprocess(record))
   }
 
   private _getId = () => {
     return customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')(21)
   }
 
-  private _preprocess = (page: NotionTablePageProperties): RecordFields => {
+  private _preprocess = (page: Partial<T>): RecordFields => {
     const fields: RecordFields = {}
     for (const [key, value] of Object.entries(page)) {
       const property = this._properties.find((p) => p.name === key)
@@ -161,7 +161,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return fields
   }
 
-  private _postprocess = <T extends NotionTablePageProperties>(
+  private _postprocess = (
     record: PersistedRecordFieldsDto<RecordFields>
   ): NotionTablePageDto<T> => {
     const page: RecordFields = {}

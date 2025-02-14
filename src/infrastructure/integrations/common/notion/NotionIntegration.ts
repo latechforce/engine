@@ -7,6 +7,7 @@ import type {
   PartialDatabaseObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints'
 import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
+import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
 
 export class NotionIntegration implements INotionIntegration {
   private _notion?: Client
@@ -20,14 +21,16 @@ export class NotionIntegration implements INotionIntegration {
     return this._config
   }
 
-  getTable = async (id: string) => {
+  getTable = async <T extends NotionTablePageProperties = NotionTablePageProperties>(
+    id: string
+  ) => {
     const api = this._api()
     const database = await this._retry(() =>
       api.databases.retrieve({
         database_id: id,
       })
     )
-    return new NotionTableIntegration(
+    return new NotionTableIntegration<T>(
       api,
       this._throwIfNotDatabaseObjectResponse(database),
       this._retry

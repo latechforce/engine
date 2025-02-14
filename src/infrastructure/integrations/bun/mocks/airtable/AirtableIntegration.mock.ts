@@ -6,6 +6,7 @@ import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/Data
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
 import slugify from 'slugify'
+import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 
 export interface TableObject extends RecordFields {
   name: string
@@ -48,7 +49,7 @@ export class AirtableIntegration implements IAirtableIntegration {
     return this._config
   }
 
-  getTable = async (tableName: string) => {
+  getTable = async <T extends AirtableTableRecordFields>(tableName: string) => {
     const id = this._slugify(tableName)
     const tables = await this._tablesOrThrow()
     const table = await tables.readById<TableObject>(id)
@@ -57,7 +58,7 @@ export class AirtableIntegration implements IAirtableIntegration {
     }
     const { fields: jsonFields } = table.fields
     const fields = JSON.parse(String(jsonFields))
-    const airtableTable = new AirtableTableIntegration(
+    const airtableTable = new AirtableTableIntegration<T>(
       this._db.table({
         name: id,
         fields,
@@ -72,7 +73,7 @@ export class AirtableIntegration implements IAirtableIntegration {
     return airtableTable
   }
 
-  addTable = async (name: string, fields: IField[]) => {
+  addTable = async <T extends AirtableTableRecordFields>(name: string, fields: IField[]) => {
     const tables = await this._tablesOrThrow()
     const id = this._slugify(name)
     await tables.insert<TableObject>({
@@ -80,7 +81,7 @@ export class AirtableIntegration implements IAirtableIntegration {
       fields: { name, fields: JSON.stringify(fields) },
       created_at: new Date().toISOString(),
     })
-    return this.getTable(name)
+    return this.getTable<T>(name)
   }
 
   private _slugify = (name: string) => {

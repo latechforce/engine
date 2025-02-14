@@ -3,6 +3,7 @@ import { addDays, format, subDays } from 'date-fns'
 import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import type BunTester from 'bun:test'
 import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
+import type { AirtableTableSample1 } from '../../bun/mocks/airtable/AirtableSample'
 
 export function testAirtableTableIntegration(
   { describe, it, expect, afterAll, beforeAll }: typeof BunTester,
@@ -14,11 +15,11 @@ export function testAirtableTableIntegration(
 
   if (teardown) afterAll(teardown)
 
-  let table1: IAirtableTableIntegration
+  let table1: IAirtableTableIntegration<AirtableTableSample1>
 
   beforeAll(async () => {
     // GIVEN
-    table1 = await integration.getTable(TABLE_1_ID)
+    table1 = await integration.getTable<AirtableTableSample1>(TABLE_1_ID)
   })
 
   describe('insert', () => {
@@ -37,6 +38,8 @@ export function testAirtableTableIntegration(
       const call = () =>
         table1.insert({
           name: nanoid(),
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-expect-error
           invalid: 'invalid',
         })
 

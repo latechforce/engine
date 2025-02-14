@@ -12,7 +12,9 @@ import type { AirtableField, AirtableBaseSchemaTable } from './AirtableIntegrati
 import { formatISO, parse } from 'date-fns'
 import type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
 
-export class AirtableTableIntegration implements IAirtableTableIntegration {
+export class AirtableTableIntegration<T extends AirtableTableRecordFields>
+  implements IAirtableTableIntegration<T>
+{
   readonly id: string
   readonly name: string
 
@@ -24,13 +26,13 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     this.name = this._api.name
   }
 
-  insert = async <T extends AirtableTableRecordFields>(record: T) => {
+  insert = async (record: T) => {
     const fields = this._preprocessFields(record)
     const insertedRecord = await this._api.create(fields, { typecast: true })
-    return this._postprocessRecord<T>(insertedRecord)
+    return this._postprocessRecord(insertedRecord)
   }
 
-  insertMany = async <T extends AirtableTableRecordFields>(records: T[]) => {
+  insertMany = async (records: T[]) => {
     const chunks = chunk(records, 10)
     const recordsToInsert = []
     for (const chunk of chunks) {
@@ -40,18 +42,16 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
       recordsToInsert.push(this._api.create(recordsFields, { typecast: true }))
     }
     const insertedRecords = await Promise.all(recordsToInsert)
-    return insertedRecords.flat().map((record) => this._postprocessRecord<T>(record))
+    return insertedRecords.flat().map((record) => this._postprocessRecord(record))
   }
 
-  update = async <T extends AirtableTableRecordFields>(id: string, record: Partial<T>) => {
+  update = async (id: string, record: Partial<T>) => {
     const fields = this._preprocessFields(record)
     const updatedRecord = await this._api.update(id, fields, { typecast: true })
-    return this._postprocessRecord<T>(updatedRecord)
+    return this._postprocessRecord(updatedRecord)
   }
 
-  updateMany = async <T extends AirtableTableRecordFields>(
-    records: UpdateAirtableTableRecord<T>[]
-  ) => {
+  updateMany = async (records: UpdateAirtableTableRecord<T>[]) => {
     const chunks = chunk(records, 10)
     const recordsToUpdate = []
     for (const chunk of chunks) {
@@ -62,12 +62,12 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
       recordsToUpdate.push(this._api.update(recordsFields, { typecast: true }))
     }
     const updatedRecord = await Promise.all(recordsToUpdate)
-    return updatedRecord.flat().map((record) => this._postprocessRecord<T>(record))
+    return updatedRecord.flat().map((record) => this._postprocessRecord(record))
   }
 
-  retrieve = async <T extends AirtableTableRecordFields>(id: string) => {
+  retrieve = async (id: string) => {
     const record = await this._api.find(id)
-    return this._postprocessRecord<T>(record)
+    return this._postprocessRecord(record)
   }
 
   delete = async (id: string) => {
@@ -83,13 +83,13 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     await Promise.all(recordsToDelete)
   }
 
-  list = async <T extends AirtableTableRecordFields>(filter?: FilterDto) => {
+  list = async (filter?: FilterDto) => {
     const query: QueryParams<FieldSet> = {}
     if (filter) {
       query.filterByFormula = this._convertFilter(filter)
     }
     const records = await this._api.select(query).all()
-    return records.map((record) => this._postprocessRecord<T>(record))
+    return records.map((record) => this._postprocessRecord(record))
   }
 
   private _preprocessFields = (fields: AirtableTableRecordFields): FieldSet => {
@@ -147,9 +147,7 @@ export class AirtableTableIntegration implements IAirtableTableIntegration {
     return recordFields
   }
 
-  private _postprocessRecord = <T extends AirtableTableRecordFields>(
-    record: Record<FieldSet>
-  ): AirtableTableRecordDto<T> => {
+  private _postprocessRecord = (record: Record<FieldSet>): AirtableTableRecordDto<T> => {
     const fields: AirtableTableRecordFields = {}
     for (const field of this._schema.fields) {
       const getPropertyValue = (field: AirtableField): AirtableTableRecordFieldValue => {

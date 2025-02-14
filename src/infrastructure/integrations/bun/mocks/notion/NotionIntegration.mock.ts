@@ -7,6 +7,7 @@ import { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseD
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
 import slugify from 'slugify'
+import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
 
 export interface TableObject extends RecordFields {
   title: string
@@ -80,7 +81,7 @@ export class NotionIntegration implements INotionIntegration {
     return this._config
   }
 
-  getTable = async (tableName: string) => {
+  getTable = async <T extends NotionTablePageProperties>(tableName: string) => {
     const id = this._slugify(tableName)
     const tables = await this._tablesOrThrow()
     const table = await tables.readById<TableObject>(id)
@@ -89,7 +90,7 @@ export class NotionIntegration implements INotionIntegration {
     }
     const { properties } = table.fields
     const fields = JSON.parse(String(properties))
-    const notionTable = new NotionTableIntegration(
+    const notionTable = new NotionTableIntegration<T>(
       this._db.table({
         name: id,
         fields,

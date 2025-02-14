@@ -1,6 +1,30 @@
 import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
+import type {
+  ConvertToNotionTablePageProperties,
+  NotionTablePagePropertyFile,
+} from '/domain/integrations/Notion/NotionTablePage'
 import type { ITable } from '/domain/interfaces/ITable'
 import env from '/infrastructure/test/env'
+
+export type NotionTableSample1 = ConvertToNotionTablePageProperties<{
+  name?: string | null
+  number?: number | string | null
+  boolean?: boolean | string | null
+  text?: string | null
+  url?: string | null
+  email?: string | null
+  phone?: string | null
+  single_select?: string | null
+  status?: string | null
+  multi_select?: string[]
+  date?: string | null | Date | number
+  people?: string[]
+  files?: NotionTablePagePropertyFile[]
+  single_relation?: string[]
+  multi_relation?: string[]
+  rollup_names?: string | null
+  archived?: boolean | null
+}>
 
 export const notionTableSample1: ITable = {
   name: 'table_1',
@@ -67,14 +91,14 @@ export const notionTableSample1: ITable = {
       table: 'table_2',
     },
     {
-      name: 'multiple_relation',
+      name: 'multi_relation',
       type: 'MultipleLinkedRecord',
       table: 'table_2',
     },
     {
       name: 'rollup_names',
       type: 'Rollup',
-      multipleLinkedRecord: 'multiple_relation',
+      multipleLinkedRecord: 'multi_relation',
       linkedRecordField: 'name',
       formula: "CONCAT(values, ', ')",
       output: {
@@ -88,6 +112,10 @@ export const notionTableSample1: ITable = {
   ],
 }
 
+export type NotionTableSample2 = ConvertToNotionTablePageProperties<{
+  name?: string
+}>
+
 export const notionTableSample2: ITable = {
   name: 'table_2',
   fields: [
@@ -97,6 +125,12 @@ export const notionTableSample2: ITable = {
     },
   ],
 }
+
+export type NotionTableSample3 = ConvertToNotionTablePageProperties<{
+  Titre?: string
+  'Email de contact'?: string
+  '[App] Nom'?: string
+}>
 
 export const notionTableSample3: ITable = {
   name: env.TEST_NOTION_TABLE_3_ID,

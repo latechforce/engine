@@ -107,30 +107,32 @@ export class CodeCompiler {
     const { notion, airtable } = this._integrations
     return {
       notion: {
-        getTable: async <T extends NotionTablePageProperties>(id: string) => {
-          const table = await notion.getTable(id)
+        getTable: async <T extends NotionTablePageProperties = NotionTablePageProperties>(
+          id: string
+        ) => {
+          const table = await notion.getTable<T>(id)
           if (!table) {
             throw new Error(`CodeRunner: Notion table "${id}" not found`)
           }
           return {
             insert: async (data: T) => {
-              return table.insert<T>(data)
+              return table.insert(data)
             },
             insertMany: async (data: T[]) => {
-              return table.insertMany<T>(data)
+              return table.insertMany(data)
             },
             update: async (id: string, data: Partial<T>) => {
-              return table.update<T>(id, data)
+              return table.update(id, data)
             },
             updateMany: async (data: UpdateNotionTablePageProperties<T>[]) => {
-              return table.updateMany<T>(data)
+              return table.updateMany(data)
             },
             retrieve: async (id: string) => {
-              return table.retrieve<T>(id)
+              return table.retrieve(id)
             },
             list: async (filterConfig?: FilterConfig) => {
               const filter = filterConfig ? FilterMapper.toEntity(filterConfig) : undefined
-              return table.list<T>(filter)
+              return table.list(filter)
             },
             archive: async (id: string) => {
               return table.archive(id)
@@ -142,30 +144,32 @@ export class CodeCompiler {
         },
       },
       airtable: {
-        getTable: async <T extends AirtableTableRecordFields>(id: string) => {
-          const table = await airtable.getTable(id)
+        getTable: async <T extends AirtableTableRecordFields = AirtableTableRecordFields>(
+          id: string
+        ) => {
+          const table = await airtable.getTable<T>(id)
           if (!table) {
             throw new Error(`CodeRunner: Airtable table "${id}" not found`)
           }
           return {
             insert: async (data: T) => {
-              return table.insert<T>(data)
+              return table.insert(data)
             },
             insertMany: async (data: T[]) => {
-              return table.insertMany<T>(data)
+              return table.insertMany(data)
             },
             update: async (id: string, data: Partial<T>) => {
-              return table.update<T>(id, data)
+              return table.update(id, data)
             },
             updateMany: async (data: UpdateAirtableTableRecord<T>[]) => {
-              return table.updateMany<T>(data)
+              return table.updateMany(data)
             },
             retrieve: async (id: string) => {
-              return table.retrieve<T>(id)
+              return table.retrieve(id)
             },
             list: async (filterConfig?: FilterConfig) => {
               const filter = filterConfig ? FilterMapper.toEntity(filterConfig) : undefined
-              return table.list<T>(filter)
+              return table.list(filter)
             },
             delete: async (id: string) => {
               return table.delete(id)

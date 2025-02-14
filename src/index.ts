@@ -36,12 +36,14 @@ export {
   NotionTablePage,
   type NotionTablePageProperties,
   type NotionTablePagePropertyValue,
+  type ConvertToNotionTablePageProperties,
 } from '/domain/integrations/Notion/NotionTablePage'
 export type { NotionUser } from '/domain/integrations/Notion/NotionUser'
 export {
   AirtableTableRecord,
   type AirtableTableRecordFields,
   type AirtableTableRecordFieldValue,
+  type ConvertToAirtableTableRecordFields,
 } from '/domain/integrations/Airtable/AirtableTableRecord'
 export {
   Record as DatabaseTableRecord,

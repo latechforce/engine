@@ -20,7 +20,9 @@ import type {
 } from '@notionhq/client/build/src/api-endpoints'
 import { format, parse, formatISO } from 'date-fns'
 
-export class NotionTableIntegration implements INotionTableIntegration {
+export class NotionTableIntegration<T extends NotionTablePageProperties>
+  implements INotionTableIntegration<T>
+{
   readonly id: string
   readonly name: string
 
@@ -33,7 +35,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     this.name = this._database.title.map((title) => title.plain_text).join('')
   }
 
-  insert = async <T extends NotionTablePageProperties>(page: T) => {
+  insert = async (page: T) => {
     const properties = this._preprocessProperties(page)
     const insertedPage = await this._retry(() =>
       this._api.pages.create({
@@ -43,16 +45,16 @@ export class NotionTableIntegration implements INotionTableIntegration {
         properties,
       })
     )
-    return this._postprocessPage<T>(this._throwIfNotPageObjectResponse(insertedPage))
+    return this._postprocessPage(this._throwIfNotPageObjectResponse(insertedPage))
   }
 
-  insertMany = async <T extends NotionTablePageProperties>(pages: T[]) => {
+  insertMany = async (pages: T[]) => {
     const pagesinserted: Promise<NotionTablePageDto<T>>[] = []
     for (const page of pages) pagesinserted.push(this.insert(page))
     return Promise.all(pagesinserted)
   }
 
-  update = async <T extends NotionTablePageProperties>(id: string, page: Partial<T>) => {
+  update = async (id: string, page: Partial<T>) => {
     const properties = this._preprocessProperties(page)
     const updatedPage = await this._retry(() =>
       this._api.pages.update({
@@ -60,20 +62,18 @@ export class NotionTableIntegration implements INotionTableIntegration {
         properties,
       })
     )
-    return this._postprocessPage<T>(this._throwIfNotPageObjectResponse(updatedPage))
+    return this._postprocessPage(this._throwIfNotPageObjectResponse(updatedPage))
   }
 
-  updateMany = async <T extends NotionTablePageProperties>(
-    pages: { id: string; page: Partial<T> }[]
-  ) => {
+  updateMany = async (pages: { id: string; page: Partial<T> }[]) => {
     const pagesUpdated: Promise<NotionTablePageDto<T>>[] = []
     for (const { id, page } of pages) pagesUpdated.push(this.update(id, page))
     return Promise.all(pagesUpdated)
   }
 
-  retrieve = async <T extends NotionTablePageProperties>(id: string) => {
+  retrieve = async (id: string) => {
     const page = await this._retry(() => this._api.pages.retrieve({ page_id: id }))
-    return this._postprocessPage<T>(this._throwIfNotPageObjectResponse(page))
+    return this._postprocessPage(this._throwIfNotPageObjectResponse(page))
   }
 
   archive = async (id: string) => {
@@ -91,7 +91,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return Promise.all(pagesArchived)
   }
 
-  list = async <T extends NotionTablePageProperties>(filter?: FilterDto) => {
+  list = async (filter?: FilterDto) => {
     const query: QueryDatabaseParameters = {
       database_id: this._database.id,
     }
@@ -110,12 +110,10 @@ export class NotionTableIntegration implements INotionTableIntegration {
       pages = pages.concat(response.results)
       cursor = response.has_more ? (response.next_cursor ?? undefined) : undefined
     } while (cursor)
-    return pages.map((page) => this._postprocessPage<T>(this._throwIfNotPageObjectResponse(page)))
+    return pages.map((page) => this._postprocessPage(this._throwIfNotPageObjectResponse(page)))
   }
 
-  private _preprocessProperties = (
-    properties: NotionTablePageProperties
-  ): CreatePageParameters['properties'] => {
+  private _preprocessProperties = (properties: Partial<T>): CreatePageParameters['properties'] => {
     const pageProperties: CreatePageParameters['properties'] = {}
     for (const key in properties) {
       const property = this._database.properties[key]
@@ -289,9 +287,7 @@ export class NotionTableIntegration implements INotionTableIntegration {
     return pageProperties
   }
 
-  private _postprocessPage = <T extends NotionTablePageProperties>(
-    page: PageObjectResponse
-  ): NotionTablePageDto<T> => {
+  private _postprocessPage = (page: PageObjectResponse): NotionTablePageDto<T> => {
     const properties: NotionTablePageProperties = {}
     for (const key in page.properties) {
       const property = page.properties[key]

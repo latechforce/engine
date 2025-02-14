@@ -1,6 +1,8 @@
-export interface NotionTablePageProperties {
-  [key: string]: NotionTablePagePropertyValue
+export type ConvertToNotionTablePageProperties<T> = {
+  [K in keyof T]: NotionTablePagePropertyValue
 }
+
+export type NotionTablePageProperties = Record<string, NotionTablePagePropertyValue>
 
 export type NotionTablePagePropertyFile = { name: string; url: string }
 
