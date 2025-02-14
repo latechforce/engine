@@ -1,10 +1,37 @@
 import { beforeEach, it, describe, expect } from 'bun:test'
-import { AirtableTableRecord } from './AirtableTableRecord'
+import { AirtableTableRecord, type AirtableTableRecordFieldFile } from './AirtableTableRecord'
 
-let airtableTableRecord: AirtableTableRecord
+type MockProperties = {
+  title: string
+  checkbox: boolean
+  createdBy: string | null
+  createdTime: string | null
+  email: string
+  files: AirtableTableRecordFieldFile[]
+  number: number
+  multiSelect: string[]
+  people: string[]
+  phone: string
+  relations: string[]
+  stringFormula: string
+  numberFormula: number
+  booleanFormula: boolean
+  dateFormula: string
+  lastEditedBy: string | null
+  lastEditedTime: string | null
+  stringArrayRollup: string[]
+  numberArrayRollup: number[]
+  booleanArrayRollup: boolean[]
+  numberRollup: number | null
+  dateRollup: string | null
+  status: string
+  url: string
+}
+
+let airtableTableRecord: AirtableTableRecord<MockProperties>
 
 beforeEach(() => {
-  const mockProperties = {
+  const mockProperties: MockProperties = {
     title: 'Test Title',
     checkbox: true,
     createdBy: 'Creator',
@@ -34,7 +61,11 @@ beforeEach(() => {
     url: 'https://example.com',
   }
 
-  airtableTableRecord = new AirtableTableRecord('pageid', mockProperties, '2023-01-01T00:00:00Z')
+  airtableTableRecord = new AirtableTableRecord<MockProperties>(
+    'pageid',
+    mockProperties,
+    '2023-01-01T00:00:00Z'
+  )
 })
 
 describe('id', () => {
@@ -51,6 +82,8 @@ describe('getTitle', () => {
   })
 
   it('should throw an error for non-existing property', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     expect(() => airtableTableRecord.getTitle('nonExisting')).toThrowError(
       'Field "nonExisting" does not exist'
     )

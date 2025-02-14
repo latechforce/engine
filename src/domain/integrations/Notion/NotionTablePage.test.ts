@@ -1,10 +1,38 @@
 import { beforeEach, it, describe, expect } from 'bun:test'
-import { NotionTablePage } from './NotionTablePage'
+import { NotionTablePage, type NotionTablePagePropertyFile } from './NotionTablePage'
 
-let notionTablePage: NotionTablePage
+type MockProperties = {
+  title: string
+  checkbox: boolean
+  createdBy: string | null
+  createdTime: Date | null
+  email: string
+  files: NotionTablePagePropertyFile[]
+  number: number
+  multiSelect: string[]
+  people: string[]
+  phone: string
+  relation: string[]
+  relations: string[]
+  stringFormula: string
+  numberFormula: number
+  booleanFormula: boolean
+  dateFormula: Date
+  lastEditedBy: string | null
+  lastEditedTime: Date | null
+  stringArrayRollup: string[]
+  numberArrayRollup: number[]
+  booleanArrayRollup: boolean[]
+  numberRollup: number | null
+  dateRollup: Date | null
+  status: string
+  url: string
+}
+
+let notionTablePage: NotionTablePage<MockProperties>
 
 beforeEach(() => {
-  const mockProperties = {
+  const mockProperties: MockProperties = {
     title: 'Test Title',
     checkbox: true,
     createdBy: 'Creator',
@@ -35,7 +63,7 @@ beforeEach(() => {
     url: 'https://example.com',
   }
 
-  notionTablePage = new NotionTablePage(
+  notionTablePage = new NotionTablePage<MockProperties>(
     'page-id',
     mockProperties,
     new Date('2023-01-01T00:00:00Z'),
@@ -58,6 +86,8 @@ describe('getTitle', () => {
   })
 
   it('should throw an error for non-existing property', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     expect(() => notionTablePage.getTitle('nonExisting')).toThrowError(
       'Property "nonExisting" does not exist'
     )

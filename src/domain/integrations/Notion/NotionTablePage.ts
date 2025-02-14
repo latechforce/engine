@@ -29,175 +29,175 @@ export class NotionTablePage<T extends NotionTablePageProperties = NotionTablePa
     this.id = id.replace(/-/g, '')
   }
 
-  getTitle(name: string): string | null {
+  getTitle(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getCheckbox(name: string): boolean {
+  getCheckbox(name: keyof T): boolean {
     return this._getPropertyAsBoolean(name)
   }
 
-  getCreatedBy(name: string): string {
+  getCreatedBy(name: keyof T): string {
     const value = this._getPropertyAsString(name)
     if (!value) throw new Error('Property "createdBy" should not be null')
     return value
   }
 
-  getCreatedTime(name: string): Date {
+  getCreatedTime(name: keyof T): Date {
     const value = this._getPropertyAsDate(name)
     if (!value) throw new Error('Property "createdTime" should not be null')
     return value
   }
 
-  getDate(name: string): Date | null {
+  getDate(name: keyof T): Date | null {
     return this._getPropertyAsDate(name)
   }
 
-  getEmail(name: string): string | null {
+  getEmail(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getFiles(name: string): NotionTablePagePropertyFile[] {
+  getFiles(name: keyof T): NotionTablePagePropertyFile[] {
     const value = this.properties[name]
     if (!NotionTablePage.isFilesProperty(value)) return []
     return value
   }
 
-  getStringFormula(name: string): string | null {
+  getStringFormula(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getNumberFormula(name: string): number | null {
+  getNumberFormula(name: keyof T): number | null {
     return this._getPropertyAsNumber(name)
   }
 
-  getBooleanFormula(name: string): boolean | null {
+  getBooleanFormula(name: keyof T): boolean | null {
     return this._getPropertyAsBoolean(name)
   }
 
-  getDateFormula(name: string): Date | null {
+  getDateFormula(name: keyof T): Date | null {
     return this._getPropertyAsDate(name)
   }
 
-  getLastEditedBy(name: string): string {
+  getLastEditedBy(name: keyof T): string {
     const value = this._getPropertyAsString(name)
     if (!value) throw new Error('Property "lastEditedBy" should not be null')
     return value
   }
 
-  getLastEditedTime(name: string): Date {
+  getLastEditedTime(name: keyof T): Date {
     const value = this._getPropertyAsDate(name)
     if (!value) throw new Error('Property "lastEditedTime" should not be null')
     return value
   }
 
-  getMultiSelect(name: string): string[] {
+  getMultiSelect(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
-  getNumber(name: string): number | null {
+  getNumber(name: keyof T): number | null {
     return this._getPropertyAsNumber(name)
   }
 
-  getPeople(name: string): string[] {
+  getPeople(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
-  getPhone(name: string): string | null {
+  getPhone(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getRelation(name: string): string | null {
+  getRelation(name: keyof T): string | null {
     return this._getPropertyAsStringArray(name)[0] || null
   }
 
-  getRelations(name: string): string[] {
+  getRelations(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
-  getSingleRelation(name: string): string | null {
+  getSingleRelation(name: keyof T): string | null {
     return this._getPropertyAsStringArray(name)[0] || null
   }
 
-  getStringArrayRollup(name: string): string[] {
+  getStringArrayRollup(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
-  getNumberArrayRollup(name: string): number[] {
+  getNumberArrayRollup(name: keyof T): number[] {
     const value = this.properties[name]
     if (!Array.isArray(value)) return []
     return value.every((item) => typeof item === 'number') ? value : []
   }
 
-  getBooleanArrayRollup(name: string): boolean[] {
+  getBooleanArrayRollup(name: keyof T): boolean[] {
     const value = this.properties[name]
     if (!Array.isArray(value)) return []
     return value.every((item) => typeof item === 'boolean') ? value : []
   }
 
-  getSingleStringRollup(name: string): string | null {
+  getSingleStringRollup(name: keyof T): string | null {
     return this._getPropertyAsStringArray(name)[0] || null
   }
 
-  getDateRollup(name: string): Date | null {
+  getDateRollup(name: keyof T): Date | null {
     return this._getPropertyAsDate(name)
   }
 
-  getNumberRollup(name: string): number | null {
+  getNumberRollup(name: keyof T): number | null {
     return this._getPropertyAsNumber(name)
   }
 
-  getRichText(name: string): string | null {
+  getRichText(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getSelect(name: string): string | null {
+  getSelect(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getUrl(name: string): string | null {
+  getUrl(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getStatus(name: string): string | null {
+  getStatus(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  private _getPropertyAsString(name: string): string | null {
+  private _getPropertyAsString(name: keyof T): string | null {
     if (!(name in this.properties)) {
-      throw new Error(`Property "${name}" does not exist`)
+      throw new Error(`Property "${String(name)}" does not exist`)
     }
     const value = this.properties[name]
     if (!value) return null
     return typeof value === 'string' ? value : value.toString()
   }
 
-  private _getPropertyAsStringArray(name: string): string[] {
+  private _getPropertyAsStringArray(name: keyof T): string[] {
     const value = this._checkIfPropertyExists(name)
     if (!NotionTablePage.isStringArrayProperty(value)) return []
     return value
   }
 
-  private _getPropertyAsDate(name: string): Date | null {
+  private _getPropertyAsDate(name: keyof T): Date | null {
     const value = this._checkIfPropertyExists(name)
     if (!value) return null
     return value instanceof Date ? value : new Date(value.toString())
   }
 
-  private _getPropertyAsNumber(name: string): number | null {
+  private _getPropertyAsNumber(name: keyof T): number | null {
     const value = this._checkIfPropertyExists(name)
     if (!value) return null
     return typeof value === 'number' ? value : parseFloat(value.toString())
   }
 
-  private _getPropertyAsBoolean(name: string): boolean {
+  private _getPropertyAsBoolean(name: keyof T): boolean {
     const value = this._checkIfPropertyExists(name)
     return typeof value === 'boolean' ? value : !!value
   }
 
-  private _checkIfPropertyExists(name: string): NotionTablePagePropertyValue {
+  private _checkIfPropertyExists(name: keyof T): NotionTablePagePropertyValue {
     if (!(name in this.properties)) {
-      throw new Error(`Property "${name}" does not exist`)
+      throw new Error(`Property "${String(name)}" does not exist`)
     }
     return this.properties[name]
   }

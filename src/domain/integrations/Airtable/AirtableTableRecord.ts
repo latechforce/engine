@@ -24,171 +24,171 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     readonly createdTime: string
   ) {}
 
-  getTitle(name: string): string | null {
+  getTitle(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getCheckbox(name: string): boolean {
+  getCheckbox(name: keyof T): boolean {
     return this._getPropertyAsBoolean(name)
   }
 
-  getCreatedBy(name: string): string {
+  getCreatedBy(name: keyof T): string {
     const value = this._getPropertyAsString(name)
     if (!value) throw new Error('Field "createdBy" should not be null')
     return value
   }
 
-  getCreatedTime(name: string): Date {
+  getCreatedTime(name: keyof T): Date {
     const value = this._getPropertyAsDate(name)
     if (!value) throw new Error('Field "createdTime" should not be null')
     return value
   }
 
-  getDate(name: string): Date | null {
+  getDate(name: keyof T): Date | null {
     return this._getPropertyAsDate(name)
   }
 
-  getEmail(name: string): string | null {
+  getEmail(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getFiles(name: string): AirtableTableRecordFieldFile[] {
+  getFiles(name: keyof T): AirtableTableRecordFieldFile[] {
     const value = this.fields[name]
     if (!AirtableTableRecord.isFilesProperty(value)) return []
     return value
   }
 
-  getStringFormula(name: string): string | null {
+  getStringFormula(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getNumberFormula(name: string): number | null {
+  getNumberFormula(name: keyof T): number | null {
     return this._getPropertyAsNumber(name)
   }
 
-  getBooleanFormula(name: string): boolean | null {
+  getBooleanFormula(name: keyof T): boolean | null {
     return this._getPropertyAsBoolean(name)
   }
 
-  getDateFormula(name: string): string | null {
+  getDateFormula(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getLastEditedBy(name: string): string {
+  getLastEditedBy(name: keyof T): string {
     const value = this._getPropertyAsString(name)
     if (!value) throw new Error('Field "lastEditedBy" should not be null')
     return value
   }
 
-  getLastEditedTime(name: string): string {
+  getLastEditedTime(name: keyof T): string {
     const value = this._getPropertyAsString(name)
     if (!value) throw new Error('Field "lastEditedTime" should not be null')
     return value
   }
 
-  getMultiSelect(name: string): string[] {
+  getMultiSelect(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
-  getNumber(name: string): number | null {
+  getNumber(name: keyof T): number | null {
     return this._getPropertyAsNumber(name)
   }
 
-  getPeople(name: string): string[] {
+  getPeople(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
-  getPhone(name: string): string | null {
+  getPhone(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getRelations(name: string): string[] {
+  getRelations(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
-  getSingleRelation(name: string): string | null {
+  getSingleRelation(name: keyof T): string | null {
     return this._getPropertyAsStringArray(name)[0] || null
   }
 
-  getStringArrayRollup(name: string): string[] {
+  getStringArrayRollup(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
-  getNumberArrayRollup(name: string): number[] {
+  getNumberArrayRollup(name: keyof T): number[] {
     const value = this.fields[name]
     if (!Array.isArray(value)) return []
     return value.every((item) => typeof item === 'number') ? value : []
   }
 
-  getBooleanArrayRollup(name: string): boolean[] {
+  getBooleanArrayRollup(name: keyof T): boolean[] {
     const value = this.fields[name]
     if (!Array.isArray(value)) return []
     return value.every((item) => typeof item === 'boolean') ? value : []
   }
 
-  getSingleStringRollup(name: string): string | null {
+  getSingleStringRollup(name: keyof T): string | null {
     return this._getPropertyAsStringArray(name)[0] || null
   }
 
-  getDateRollup(name: string): string | null {
+  getDateRollup(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getNumberRollup(name: string): number | null {
+  getNumberRollup(name: keyof T): number | null {
     return this._getPropertyAsNumber(name)
   }
 
-  getRichText(name: string): string | null {
+  getRichText(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getSelect(name: string): string | null {
+  getSelect(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getUrl(name: string): string | null {
+  getUrl(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getStatus(name: string): string | null {
+  getStatus(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  private _getPropertyAsString(name: string): string | null {
+  private _getPropertyAsString(name: keyof T): string | null {
     if (!(name in this.fields)) {
-      throw new Error(`Field "${name}" does not exist`)
+      throw new Error(`Field "${String(name)}" does not exist`)
     }
     const value = this.fields[name]
     if (!value) return null
     return typeof value === 'string' ? value : value.toString()
   }
 
-  private _getPropertyAsStringArray(name: string): string[] {
+  private _getPropertyAsStringArray(name: keyof T): string[] {
     const value = this._checkIfPropertyExists(name)
     if (!AirtableTableRecord.isStringArrayProperty(value)) return []
     return value
   }
 
-  private _getPropertyAsDate(name: string): Date | null {
+  private _getPropertyAsDate(name: keyof T): Date | null {
     const value = this._checkIfPropertyExists(name)
     if (!value) return null
     return value instanceof Date ? value : new Date(value.toString())
   }
 
-  private _getPropertyAsNumber(name: string): number | null {
+  private _getPropertyAsNumber(name: keyof T): number | null {
     const value = this._checkIfPropertyExists(name)
     if (!value) return null
     return typeof value === 'number' ? value : parseFloat(value.toString())
   }
 
-  private _getPropertyAsBoolean(name: string): boolean {
+  private _getPropertyAsBoolean(name: keyof T): boolean {
     const value = this._checkIfPropertyExists(name)
     return typeof value === 'boolean' ? value : !!value
   }
 
-  private _checkIfPropertyExists(name: string): AirtableTableRecordFieldValue {
+  private _checkIfPropertyExists(name: keyof T): AirtableTableRecordFieldValue {
     if (!(name in this.fields)) {
-      throw new Error(`Field "${name}" does not exist`)
+      throw new Error(`Field "${String(name)}" does not exist`)
     }
     return this.fields[name]
   }
