@@ -6,7 +6,7 @@ const integration = new QontoIntegration({
   environment: 'sandbox',
   stagingToken: 'test',
   organisationSlug: 'test',
-  secretKey: 'test',
+  secretKey: ':memory:',
 })
 
 testQontoIntegration(BunTester, integration)
