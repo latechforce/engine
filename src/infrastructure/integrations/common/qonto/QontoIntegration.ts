@@ -1,6 +1,12 @@
 import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
-import type { QontoClient, QontoConfig, QontoCreateClient } from '/domain/integrations/Qonto'
-import axios, { type AxiosInstance } from 'axios'
+import type {
+  QontoClient,
+  QontoClientInvoice,
+  QontoConfig,
+  QontoCreateClient,
+  QontoCreateClientInvoice,
+} from '/domain/integrations/Qonto'
+import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
 export class QontoIntegration implements IQontoIntegration {
   private _instance?: AxiosInstance
@@ -23,10 +29,33 @@ export class QontoIntegration implements IQontoIntegration {
     if (response.status === 200) {
       return response.data.client
     } else {
-      throw new Error(
-        `Error fetching data from Qonto ${this.getConfig().environment} API: ` +
-          JSON.stringify(response.data, null, 2)
-      )
+      return this._throwError(response)
+    }
+  }
+
+  createClientInvoice = async (invoice: QontoCreateClientInvoice): Promise<QontoClientInvoice> => {
+    const response = await this._api()
+      .post('/client_invoices', invoice)
+      .catch((error) => {
+        return error.response
+      })
+    if (response.status === 201) {
+      return response.data.client_invoice
+    } else {
+      return this._throwError(response)
+    }
+  }
+
+  listClientInvoices = async (): Promise<QontoClientInvoice[]> => {
+    const response = await this._api()
+      .get(`/client_invoices`)
+      .catch((error) => {
+        return error.response
+      })
+    if (response.status === 200) {
+      return response.data.client_invoices
+    } else {
+      return this._throwError(response)
     }
   }
 
@@ -57,5 +86,12 @@ export class QontoIntegration implements IQontoIntegration {
       }
     }
     return this._instance
+  }
+
+  private _throwError = (response: AxiosResponse) => {
+    const [{ status, code, detail, message }] = response.data.errors
+    throw new Error(
+      `${status} error "${code}" fetching data from Qonto ${this.getConfig().environment} API: ${message}${detail ? ', ' + detail : ''}`
+    )
   }
 }

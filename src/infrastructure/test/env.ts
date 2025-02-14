@@ -8,6 +8,7 @@ const {
   TEST_QONTO_ORGANISATION_SLUG,
   TEST_QONTO_SECRET_KEY,
   TEST_QONTO_STAGING_TOKEN,
+  TEST_QONTO_IBAN,
   TEST_NGROK_AUTH_TOKEN,
   TEST_AIRTABLE_API_KEY,
   TEST_AIRTABLE_BASE_ID,
@@ -26,6 +27,7 @@ if (!TEST_QONTO_ORGANISATION_SLUG)
   throw new Error('TEST_QONTO_ORGANISATION_SLUG env var is not defined')
 if (!TEST_QONTO_SECRET_KEY) throw new Error('TEST_QONTO_SECRET_KEY env var is not defined')
 if (!TEST_QONTO_STAGING_TOKEN) throw new Error('TEST_QONTO_STAGING_TOKEN env var is not defined')
+if (!TEST_QONTO_IBAN) throw new Error('TEST_QONTO_IBAN env var is not defined')
 if (!TEST_NGROK_AUTH_TOKEN) throw new Error('TEST_NGROK_AUTH_TOKEN env var is not defined')
 if (!TEST_AIRTABLE_API_KEY) throw new Error('TEST_AIRTABLE_API_KEY env var is not defined')
 if (!TEST_AIRTABLE_BASE_ID) throw new Error('TEST_AIRTABLE_BASE_ID env var is not defined')
@@ -42,6 +44,7 @@ const env = {
   TEST_QONTO_ORGANISATION_SLUG,
   TEST_QONTO_SECRET_KEY,
   TEST_QONTO_STAGING_TOKEN,
+  TEST_QONTO_IBAN,
   TEST_NGROK_AUTH_TOKEN,
   TEST_AIRTABLE_API_KEY,
   TEST_AIRTABLE_BASE_ID,

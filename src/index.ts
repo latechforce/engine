@@ -46,6 +46,12 @@ export {
   type ConvertToAirtableTableRecordFields,
 } from '/domain/integrations/Airtable/AirtableTableRecord'
 export {
+  type QontoCreateClient,
+  type QontoClient,
+  type QontoCreateClientInvoice,
+  type QontoClientInvoice,
+} from '/domain/integrations/Qonto'
+export {
   Record as DatabaseTableRecord,
   type RecordFields as DatabaseTableRecordFields,
   type RecordFieldValue as DatabaseTableRecordFieldValue,
