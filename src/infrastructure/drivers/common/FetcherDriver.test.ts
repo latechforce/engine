@@ -9,7 +9,7 @@ describe('get', () => {
     const data = await response.text()
 
     expect(response.status).toBe(200)
-    expect(data).toContain('This domain is for use in illustrative examples in documents.')
+    expect(data).toContain('La Tech Force')
   })
 })
 
@@ -19,7 +19,7 @@ describe('post', () => {
     const response = await fetcher.post('https://latechforce.com', requestBody)
     const data = await response.text()
 
-    expect(response.status).toBe(403)
-    expect(data).toContain('Access Denied')
+    expect(response.status).toBe(200)
+    expect(data).toContain('La Tech Force')
   })
 })
