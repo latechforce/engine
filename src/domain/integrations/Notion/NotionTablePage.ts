@@ -107,6 +107,10 @@ export class NotionTablePage<T extends NotionTablePageProperties = NotionTablePa
     return this._getPropertyAsString(name)
   }
 
+  getRelation(name: string): string | null {
+    return this._getPropertyAsStringArray(name)[0] || null
+  }
+
   getRelations(name: string): string[] {
     return this._getPropertyAsStringArray(name)
   }

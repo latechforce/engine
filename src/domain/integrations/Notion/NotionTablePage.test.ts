@@ -18,6 +18,7 @@ beforeEach(() => {
     multiSelect: ['option1', 'option2'],
     people: ['Person A', 'Person B'],
     phone: '123-456-7890',
+    relation: ['relation1'],
     relations: ['relation1', 'relation2'],
     stringFormula: 'Formula String',
     numberFormula: 100,
@@ -196,6 +197,13 @@ describe('getPhone', () => {
   it('should return phone as a string', () => {
     const phone = notionTablePage.getPhone('phone')
     expect(phone).toBe('123-456-7890')
+  })
+})
+
+describe('getRelation', () => {
+  it('should return relation as a string', () => {
+    const relation = notionTablePage.getRelation('relation')
+    expect(relation).toEqual('relation1')
   })
 })
 
