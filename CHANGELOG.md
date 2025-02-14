@@ -1,3 +1,13 @@
+## [0.37.33](https://github.com/latechforce/engine/compare/v0.37.32...v0.37.33) (2025-02-14)
+
+
+### Bug Fixes
+
+* **Airtable:** add green test: should list records in a table with multiple Is filters ([b4703fa](https://github.com/latechforce/engine/commit/b4703fa357bc40f7af8c7ce74384f73007ae46b5))
+* **Notion:** add green test: should insert a page in a table with a relation ([7135962](https://github.com/latechforce/engine/commit/7135962687c111c7361d89dde40ccfbe4d9a2071))
+* **Notion:** add green test: should insert a page in a table with a single relation ([8adf00a](https://github.com/latechforce/engine/commit/8adf00a1ee06ff39833d30d739ea98d1e7f5f3bf))
+* **Notion:** fix broken tests ([cf58388](https://github.com/latechforce/engine/commit/cf58388c81e18fd415e81598c585720eb981b66d))
+
 ## [0.37.32](https://github.com/latechforce/engine/compare/v0.37.31...v0.37.32) (2025-02-12)
 
 
