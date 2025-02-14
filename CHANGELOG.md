@@ -1,3 +1,10 @@
+## [0.37.36](https://github.com/latechforce/engine/compare/v0.37.35...v0.37.36) (2025-02-14)
+
+
+### Bug Fixes
+
+* **Notion:** add green test: should return relation as a string ([4bcac96](https://github.com/latechforce/engine/commit/4bcac96098a5de7521d44ac9c274289759c14d37))
+
 ## [0.37.35](https://github.com/latechforce/engine/compare/v0.37.34...v0.37.35) (2025-02-14)
 
 
