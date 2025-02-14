@@ -116,7 +116,7 @@ export class NotionIntegration implements INotionIntegration {
     }))
   }
 
-  addTable = async (name: string, properties: IField[]) => {
+  addTable = async <T extends NotionTablePageProperties>(name: string, properties: IField[]) => {
     const tables = await this._tablesOrThrow()
     const id = this._slugify(name)
     const table = await tables.readById<TableObject>(id)
@@ -126,7 +126,7 @@ export class NotionIntegration implements INotionIntegration {
         fields: { title: name, properties: JSON.stringify(properties) },
         created_at: new Date().toISOString(),
       })
-    return this.getTable(name)
+    return this.getTable<T>(name)
   }
 
   addUser = async (user: NotionUserDto) => {
