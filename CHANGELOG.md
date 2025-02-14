@@ -1,3 +1,10 @@
+## [0.37.34](https://github.com/latechforce/engine/compare/v0.37.33...v0.37.34) (2025-02-14)
+
+
+### Bug Fixes
+
+* **Notion:** add addTable typing ([aa1bb21](https://github.com/latechforce/engine/commit/aa1bb210add8452e489273e728598241363281d6))
+
 ## [0.37.33](https://github.com/latechforce/engine/compare/v0.37.32...v0.37.33) (2025-02-14)
 
 
