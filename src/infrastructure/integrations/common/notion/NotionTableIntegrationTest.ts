@@ -320,15 +320,27 @@ export function testNotionTableIntegration(
       expect(page.properties.files).toStrictEqual(files)
     })
 
-    it('should insert a page in a table with a relation', async () => {
+    it('should insert a page in a table with a single relation', async () => {
       // GIVEN
       const record = await table2.insert({ name: 'John Doe' })
 
       // WHEN
-      const page = await table1.insert({ relation: [record.id] })
+      const page = await table1.insert({ single_relation: [record.id] })
 
       // THEN
-      expect(page.properties.relation).toStrictEqual([record.id])
+      expect(page.properties.single_relation).toStrictEqual([record.id])
+    })
+
+    it('should insert a page in a table with a multiple relation', async () => {
+      // GIVEN
+      const record1 = await table2.insert({ name: 'John Doe' })
+      const record2 = await table2.insert({ name: 'Jane Doe' })
+
+      // WHEN
+      const page = await table1.insert({ multiple_relation: [record1.id, record2.id] })
+
+      // THEN
+      expect(page.properties.multiple_relation).toStrictEqual([record1.id, record2.id])
     })
   })
 

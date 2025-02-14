@@ -142,6 +142,10 @@ export class NotionTableIntegration implements INotionTableIntegration {
         case 'Checkbox':
           fields[key] = value === 'false' || value === '0' ? false : Boolean(value)
           break
+        case 'SingleLinkedRecord':
+          if (!Array.isArray(value)) throw new Error(`Invalid property value: ${value}`)
+          fields[key] = value.length > 0 ? String(value[0]) : null
+          break
         case 'MultipleLinkedRecord':
           if (!Array.isArray(value)) throw new Error(`Invalid property value: ${value}`)
           if (property.table) {
@@ -183,6 +187,9 @@ export class NotionTableIntegration implements INotionTableIntegration {
           break
         case 'MultipleSelect':
           page[key] = value ? (value as string[]) : []
+          break
+        case 'SingleLinkedRecord':
+          page[key] = value ? [String(value)] : []
           break
         case 'MultipleLinkedRecord':
           if (property.table) {

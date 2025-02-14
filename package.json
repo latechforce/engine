@@ -97,7 +97,7 @@
     "eslint": "^9.20.1",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
-    "prettier": "^3.5.0",
+    "prettier": "^3.5.1",
     "semantic-release": "^24.2.2",
     "typescript-eslint": "^8.24.0",
     "typescript-json-schema": "^0.65.1"

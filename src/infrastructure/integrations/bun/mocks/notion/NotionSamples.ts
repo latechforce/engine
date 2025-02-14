@@ -62,14 +62,19 @@ export const notionTableSample1: ITable = {
       type: 'MultipleAttachment',
     },
     {
-      name: 'relation',
+      name: 'single_relation',
+      type: 'SingleLinkedRecord',
+      table: 'table_2',
+    },
+    {
+      name: 'multiple_relation',
       type: 'MultipleLinkedRecord',
       table: 'table_2',
     },
     {
       name: 'rollup_names',
       type: 'Rollup',
-      multipleLinkedRecord: 'relation',
+      multipleLinkedRecord: 'multiple_relation',
       linkedRecordField: 'name',
       formula: "CONCAT(values, ', ')",
       output: {

@@ -591,7 +591,10 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
 
   private _getLinkedRecordField = (name: string) => {
     const linkedRecord = this.fields.find((f) => f.name === name)
-    if (!linkedRecord || linkedRecord.type !== 'MultipleLinkedRecord')
+    if (
+      !linkedRecord ||
+      (linkedRecord.type !== 'MultipleLinkedRecord' && linkedRecord.type !== 'SingleLinkedRecord')
+    )
       throw new Error('Linked record not found')
     return linkedRecord
   }
