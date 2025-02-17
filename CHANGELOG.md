@@ -1,3 +1,11 @@
+## [0.37.41](https://github.com/latechforce/engine/compare/v0.37.40...v0.37.41) (2025-02-17)
+
+
+### Bug Fixes
+
+* **Field:** add green test: should create a table with an url ([6153ec0](https://github.com/latechforce/engine/commit/6153ec0e21717f379c6889d60648a60c20b701d1))
+* **Schema:** improve loading ([16d29f0](https://github.com/latechforce/engine/commit/16d29f0a5f6aa0fc863bd5b279d6d32448bd15cb))
+
 ## [0.37.40](https://github.com/latechforce/engine/compare/v0.37.39...v0.37.40) (2025-02-17)
 
 
