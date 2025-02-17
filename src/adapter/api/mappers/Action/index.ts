@@ -26,6 +26,8 @@ import {
   UpdatePageNotionActionMapper,
   type UpdatePageNotionActionMapperIntegrations,
 } from './notion/UpdatePage'
+import { SendEmailGoogleMailActionMapper } from './googleMail/SendEmailMapper'
+import type { SendEmailGoogleMailActionIntegrations } from '/domain/entities/Action/googleMail/SendEmail'
 
 export type ActionMapperServices = CreateRecordDatabaseActionMapperServices &
   RunJavascriptCodeActionMapperServices &
@@ -35,7 +37,8 @@ export type ActionMapperEntities = CreateRecordDatabaseActionMapperEntities
 
 export type ActionMapperIntegrations = GetCompanyPappersActionMapperIntegrations &
   CreateClientQontoActionMapperIntegrations &
-  UpdatePageNotionActionMapperIntegrations
+  UpdatePageNotionActionMapperIntegrations &
+  SendEmailGoogleMailActionIntegrations
 
 export class ActionMapper {
   static toEntity(
@@ -54,71 +57,62 @@ export class ActionMapper {
       monitor,
     } = services
     const { tables } = entities
-    const { pappers, qonto, notion } = integrations
-    if (action === 'CreateRecord')
-      return CreateRecordDatabaseActionMapper.toEntity(
-        config,
-        { idGenerator, templateCompiler, logger, monitor },
-        { tables }
-      )
-    if (action === 'ReadRecord')
-      return ReadRecordDatabaseActionMapper.toEntity(
-        config,
-        { templateCompiler, logger, monitor },
-        { tables }
-      )
-    if (action === 'RunJavascript')
-      return RunJavascriptCodeActionMapper.toEntity(config, {
-        templateCompiler,
-        javascriptCompiler,
-        logger,
-        monitor,
-      })
-    if (action === 'RunTypescript')
-      return RunTypescriptCodeActionMapper.toEntity(config, {
-        templateCompiler,
-        typescriptCompiler,
-        logger,
-        monitor,
-      })
-    if (action === 'GetCompany')
-      return GetCompanyPappersActionMapper.toEntity(
-        config,
-        {
-          templateCompiler,
-          logger,
-          monitor,
-        },
-        {
-          pappers,
-        }
-      )
+    const { pappers, qonto, notion, googleMail } = integrations
 
-    if (action === 'CreateClient')
-      return CreateClientQontoActionMapper.toEntity(
-        config,
-        {
+    switch (action) {
+      case 'CreateRecord':
+        return CreateRecordDatabaseActionMapper.toEntity(
+          config,
+          { idGenerator, templateCompiler, logger, monitor },
+          { tables }
+        )
+      case 'ReadRecord':
+        return ReadRecordDatabaseActionMapper.toEntity(
+          config,
+          { templateCompiler, logger, monitor },
+          { tables }
+        )
+      case 'RunJavascript':
+        return RunJavascriptCodeActionMapper.toEntity(config, {
           templateCompiler,
+          javascriptCompiler,
           logger,
           monitor,
-        },
-        {
-          qonto,
-        }
-      )
-    if (action === 'UpdatePage')
-      return UpdatePageNotionActionMapper.toEntity(
-        config,
-        {
+        })
+      case 'RunTypescript':
+        return RunTypescriptCodeActionMapper.toEntity(config, {
           templateCompiler,
+          typescriptCompiler,
           logger,
           monitor,
-        },
-        {
-          notion,
-        }
-      )
-    throw new Error(`ActionMapper: Action ${action} not supported`)
+        })
+      case 'GetCompany':
+        return GetCompanyPappersActionMapper.toEntity(
+          config,
+          { templateCompiler, logger, monitor },
+          { pappers }
+        )
+      case 'CreateClient':
+        return CreateClientQontoActionMapper.toEntity(
+          config,
+          { templateCompiler, logger, monitor },
+          { qonto }
+        )
+      case 'UpdatePage':
+        return UpdatePageNotionActionMapper.toEntity(
+          config,
+          { templateCompiler, logger, monitor },
+          { notion }
+        )
+      case 'SendEmail':
+        return SendEmailGoogleMailActionMapper.toEntity(
+          config,
+          { templateCompiler, logger, monitor },
+          { googleMail }
+        )
+      default:
+        throw new Error(`ActionMapper: Action ${action} not supported`)
+    }
   }
 
   static toManyEntities(

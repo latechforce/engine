@@ -5,6 +5,7 @@ import type { ReadRecordDatabaseAction } from './database/ReadRecord'
 import type { GetCompanyPappersAction } from './pappers/GetCompany'
 import type { CreateClientQontoAction } from './qonto/CreateClient'
 import type { UpdatePageNotionAction } from './notion/UpdatePage'
+import type { SendEmailGoogleMailAction } from './googleMail/SendEmail'
 
 export type Action =
   | CreateRecordDatabaseAction
@@ -14,3 +15,4 @@ export type Action =
   | GetCompanyPappersAction
   | CreateClientQontoAction
   | UpdatePageNotionAction
+  | SendEmailGoogleMailAction

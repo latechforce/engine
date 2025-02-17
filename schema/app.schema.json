@@ -30,6 +30,27 @@
             ],
             "type": "object"
         },
+        "ConvertToTemplateObject<GoogleMailEmailOptions>": {
+            "additionalProperties": false,
+            "properties": {
+                "from": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "html": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "subject": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "text": {
+                    "$ref": "#/definitions/TemplateValue"
+                },
+                "to": {
+                    "$ref": "#/definitions/TemplateValue"
+                }
+            },
+            "type": "object"
+        },
         "ConvertToTemplateObject<QontoCreateClient>": {
             "additionalProperties": false,
             "properties": {
@@ -104,6 +125,22 @@
             ],
             "type": "string"
         },
+        "GoogleMailConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "password",
+                "user"
+            ],
+            "type": "object"
+        },
         "IAction": {
             "anyOf": [
                 {
@@ -126,6 +163,9 @@
                 },
                 {
                     "$ref": "#/definitions/IUpdatePageNotionAction"
+                },
+                {
+                    "$ref": "#/definitions/ISendEmailGoogleMailAction"
                 }
             ]
         },
@@ -447,6 +487,15 @@
             "properties": {
                 "airtable": {
                     "$ref": "#/definitions/AirtableConfig"
+                },
+                "google": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "mail": {
+                            "$ref": "#/definitions/GoogleMailConfig"
+                        }
+                    },
+                    "type": "object"
                 },
                 "notion": {
                     "$ref": "#/definitions/NotionConfig"
@@ -839,6 +888,32 @@
                 "code",
                 "name",
                 "service"
+            ],
+            "type": "object"
+        },
+        "ISendEmailGoogleMailAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "SendEmail",
+                    "type": "string"
+                },
+                "email": {
+                    "$ref": "#/definitions/ConvertToTemplateObject<GoogleMailEmailOptions>"
+                },
+                "integration": {
+                    "const": "GoogleMail",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "email",
+                "integration",
+                "name"
             ],
             "type": "object"
         },

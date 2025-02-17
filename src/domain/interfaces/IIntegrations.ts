@@ -1,3 +1,4 @@
+import type { GoogleMailConfig } from '../integrations/Google/GoogleMail'
 import type { AirtableConfig } from '/domain/integrations/Airtable'
 import type { NotionConfig } from '/domain/integrations/Notion'
 import type { PappersConfig } from '/domain/integrations/Pappers'
@@ -8,4 +9,7 @@ export interface IIntegrations {
   notion?: NotionConfig
   pappers?: PappersConfig
   qonto?: QontoConfig
+  google?: {
+    mail?: GoogleMailConfig
+  }
 }

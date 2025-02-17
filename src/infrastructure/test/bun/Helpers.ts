@@ -15,6 +15,8 @@ import { AirtableIntegration } from '/infrastructure/integrations/bun/mocks/airt
 import type { AirtableConfig } from '/domain/integrations/Airtable'
 import { MockedApp } from './MockedApp'
 import { MockedFetcherDriver } from './MockedFetcherDriver'
+import { GoogleMailIntegration } from '/infrastructure/integrations/bun/mocks/google/mail/GoogleMailIntegration.mock'
+import type { GoogleMailConfig } from '/domain/integrations/Google/GoogleMail'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -24,7 +26,7 @@ type Tester = {
 }
 
 type DriverType = 'Database' | 'Storage' | 'Fetcher'
-type IntegrationType = 'Notion' | 'Qonto' | 'Pappers' | 'Airtable'
+type IntegrationType = 'Notion' | 'Qonto' | 'Pappers' | 'Airtable' | 'GoogleMail'
 
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
@@ -46,7 +48,9 @@ type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
       ? QontoIntegration
       : I extends 'Pappers'
         ? PappersIntegration
-        : never
+        : I extends 'GoogleMail'
+          ? GoogleMailIntegration
+          : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -197,6 +201,18 @@ export class Helpers {
           }
           integrations.qonto = new QontoIntegration(config)
           extendsConfig.integrations.qonto = config
+        }
+        if (options.integrations.includes('GoogleMail')) {
+          const url = join(process.cwd(), 'tmp', `googlemail-${nanoid()}.db`)
+          await fs.ensureFile(url)
+          files.push(url)
+          const config: GoogleMailConfig = {
+            user: 'test',
+            password: url,
+          }
+          integrations.qonto = new GoogleMailIntegration(config)
+          if (!extendsConfig.integrations.google) extendsConfig.integrations.google = {}
+          extendsConfig.integrations.google.mail = config
         }
         if (options.integrations.includes('Pappers')) {
           const config: PappersConfig = {

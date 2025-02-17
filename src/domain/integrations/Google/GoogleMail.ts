@@ -20,11 +20,16 @@ export interface GoogleMailEmailResponse {
 }
 
 export interface IGoogleMailSpi {
+  getConfig: () => GoogleMailConfig
   sendEmail: (options: GoogleMailEmailOptions) => Promise<GoogleMailEmailResponse>
 }
 
 export class GoogleMail {
   constructor(private _spi: IGoogleMailSpi) {}
+
+  getConfig = (): GoogleMailConfig => {
+    return this._spi.getConfig()
+  }
 
   sendEmail = async (options: GoogleMailEmailOptions): Promise<GoogleMailEmailResponse> => {
     return this._spi.sendEmail(options)

@@ -5,6 +5,7 @@ import type { IReadRecordDatabaseAction } from './database/IReadRecord'
 import type { IGetCompanyPappersAction } from './pappers/IGetCompany'
 import type { ICreateClientQontoAction } from './qonto/ICreateClient'
 import type { IUpdatePageNotionAction } from './notion/IUpdatePage'
+import type { ISendEmailGoogleMailAction } from './googleMail/ISendEmail'
 
 export type IAction =
   | IRunJavascriptCodeAction
@@ -14,3 +15,4 @@ export type IAction =
   | IGetCompanyPappersAction
   | ICreateClientQontoAction
   | IUpdatePageNotionAction
+  | ISendEmailGoogleMailAction

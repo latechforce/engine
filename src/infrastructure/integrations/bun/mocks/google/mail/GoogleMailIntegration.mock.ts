@@ -3,7 +3,7 @@ import type {
   GoogleMailConfig,
   GoogleMailEmailOptions,
   GoogleMailEmailResponse,
-} from '/domain/integrations/Google/Mail'
+} from '/domain/integrations/Google/GoogleMail'
 import type { IGoogleMailIntegration } from '/adapter/spi/integrations/GoogleMailSpi'
 
 type Email = {
@@ -17,7 +17,7 @@ type Email = {
 export class GoogleMailIntegration implements IGoogleMailIntegration {
   private db: Database
 
-  constructor(private _config: GoogleMailConfig) {
+  constructor(private _config?: GoogleMailConfig) {
     this.db = new Database(_config?.password ?? ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS emails (

@@ -22,6 +22,7 @@ import { QontoMapper } from './Integration/QontoMapper'
 import { TunnelMapper } from './Services/TunnelMapper'
 import { FetcherMapper } from './Services/FetcherMapper'
 import { AirtableMapper } from './Integration/AirtableMapper'
+import { GoogleMailMapper } from './Integration/GoogleMailMapper'
 
 export class AppMapper {
   static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
@@ -68,6 +69,10 @@ export class AppMapper {
     const airtable = AirtableMapper.toIntegration(integrations, config.integrations?.airtable)
     const pappers = PappersMapper.toIntegration(integrations, config.integrations?.pappers)
     const qonto = QontoMapper.toIntegration(integrations, config.integrations?.qonto)
+    const googleMail = GoogleMailMapper.toIntegration(
+      integrations,
+      config.integrations?.google?.mail
+    )
     const javascriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger, fetcher },
@@ -97,7 +102,7 @@ export class AppMapper {
         database,
       },
       { tables },
-      { notion, pappers, qonto }
+      { notion, pappers, qonto, googleMail }
     )
     return new StoppedApp(
       {

@@ -3,20 +3,27 @@ import type {
   GoogleMailConfig,
   GoogleMailEmailOptions,
   GoogleMailEmailResponse,
-} from '/domain/integrations/Google/Mail'
+} from '/domain/integrations/Google/GoogleMail'
 import type { IGoogleMailIntegration } from '/adapter/spi/integrations/GoogleMailSpi'
 
 export class GoogleMailIntegration implements IGoogleMailIntegration {
   private _transporter: nodemailer.Transporter
 
-  constructor(config: GoogleMailConfig) {
+  constructor(private _config?: GoogleMailConfig) {
     this._transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: config.user,
-        pass: config.password,
+        user: _config?.user,
+        pass: _config?.password,
       },
     })
+  }
+
+  getConfig = (): GoogleMailConfig => {
+    if (!this._config) {
+      throw new Error('Google Mail config not set')
+    }
+    return this._config
   }
 
   sendEmail = async (options: GoogleMailEmailOptions): Promise<GoogleMailEmailResponse> => {
