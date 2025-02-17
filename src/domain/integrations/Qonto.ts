@@ -209,7 +209,7 @@ export type QontoClientInvoice = {
   attachment_id: string
   number: string
   purchase_order: string
-  status: string
+  status: 'draft' | 'unpaid' | 'paid' | 'canceled'
   invoice_url: string
   contact_email: string
   terms_and_conditions: string
