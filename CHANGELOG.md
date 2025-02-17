@@ -1,3 +1,10 @@
+## [0.37.44](https://github.com/latechforce/engine/compare/v0.37.43...v0.37.44) (2025-02-17)
+
+
+### Bug Fixes
+
+* **test:** fix qonto integration mapping to google mail ([7946be0](https://github.com/latechforce/engine/commit/7946be0d78a319672e6be95ce4aed92a299e1524))
+
 ## [0.37.43](https://github.com/latechforce/engine/compare/v0.37.42...v0.37.43) (2025-02-17)
 
 
