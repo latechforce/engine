@@ -115,9 +115,6 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
         continue
       }
       switch (property.type) {
-        case 'SingleLineText':
-          fields[key] = value ? String(value) : null
-          break
         case 'DateTime':
           if (typeof value === 'number') fields[key] = new Date(value).toISOString()
           else fields[key] = value ? String(value) : null
@@ -147,7 +144,8 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
           }
           break
         default:
-          throw new Error(`Invalid property type: ${property.type}`)
+          fields[key] = value ? String(value) : null
+          break
       }
     }
     return fields
@@ -161,20 +159,8 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       const property = this._fields.find((p) => p.name === key)
       if (!property) throw new Error(`Field "${key}" does not exist`)
       switch (property.type) {
-        case 'SingleLineText':
-          fields[key] = value ?? null
-          break
         case 'DateTime':
           fields[key] = value ? new Date(value as number).toISOString() : null
-          break
-        case 'Number':
-          fields[key] = value ?? null
-          break
-        case 'Checkbox':
-          fields[key] = value ?? false
-          break
-        case 'SingleSelect':
-          fields[key] = value ?? null
           break
         case 'MultipleSelect':
           fields[key] = value ? (value as string[]) : []
@@ -189,11 +175,9 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
         case 'MultipleAttachment':
           fields[key] = typeof value === 'string' ? JSON.parse(value) : []
           break
-        case 'Rollup':
+        default:
           fields[key] = value ?? null
           break
-        default:
-          throw new Error(`Invalid property type: ${property.type}`)
       }
     }
     return {
