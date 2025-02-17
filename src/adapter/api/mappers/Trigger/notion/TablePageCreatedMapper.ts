@@ -13,12 +13,4 @@ export class TablePageCreatedNotionTriggerMapper {
   ): TablePageCreatedNotionTrigger => {
     return new TablePageCreatedNotionTrigger(config, services, integration)
   }
-
-  static toManyEntities = (
-    configs: TablePageCreatedNotionTriggerConfig[],
-    services: TablePageCreatedNotionTriggerServices,
-    integration: TablePageCreatedNotionTriggerIntegrations
-  ): TablePageCreatedNotionTrigger[] => {
-    return configs.map((config) => this.toEntity(config, services, integration))
-  }
 }

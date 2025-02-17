@@ -11,11 +11,4 @@ export class WebhookCalledHttpTriggerMapper {
   ): WebhookCalledHttpTrigger => {
     return new WebhookCalledHttpTrigger(config, services)
   }
-
-  static toManyEntities = (
-    configs: WebhookCalledHttpTriggerConfig[],
-    services: WebhookCalledHttpTriggerServices
-  ): WebhookCalledHttpTrigger[] => {
-    return configs.map((config) => this.toEntity(config, services))
-  }
 }

@@ -1,4 +1,4 @@
-import type { ICronSpi } from '/domain/services/CronDriver'
+import type { ICronSpi } from '/domain/services/Cron'
 
 export interface ICronDriver {
   start(cronTime: string, onTick: () => void): string

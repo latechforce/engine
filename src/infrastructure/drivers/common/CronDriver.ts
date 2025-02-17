@@ -1,6 +1,6 @@
 import { CronJob } from 'cron'
 import { nanoid } from 'nanoid'
-import type { ICronDriver } from '/adapter/spi/drivers/CronDriverSpi'
+import type { ICronDriver } from '/adapter/spi/drivers/CronSpi'
 
 export class CronDriver implements ICronDriver {
   private _jobs = new Map<string, CronJob>()

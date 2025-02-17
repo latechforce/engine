@@ -23,6 +23,7 @@ import { TunnelMapper } from './Services/TunnelMapper'
 import { FetcherMapper } from './Services/FetcherMapper'
 import { AirtableMapper } from './Integration/AirtableMapper'
 import { GoogleMailMapper } from './Integration/GoogleMailMapper'
+import { CronMapper } from './Services/CronMapper'
 
 export class AppMapper {
   static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
@@ -37,6 +38,7 @@ export class AppMapper {
     )
     const idGenerator = IdGeneratorMapper.toService(drivers)
     const fetcher = FetcherMapper.toService(drivers)
+    const cron = CronMapper.toService(drivers)
     const schemaValidator = SchemaValidatorMapper.toService(drivers)
     const templateCompiler = TemplateCompilerMapper.toService(drivers)
     const database = DatabaseMapper.toService(drivers, config.database, {
@@ -100,6 +102,7 @@ export class AppMapper {
         typescriptCompiler,
         monitor,
         database,
+        cron,
       },
       { tables },
       { notion, pappers, qonto, googleMail }

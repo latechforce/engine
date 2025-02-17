@@ -20,6 +20,7 @@ import { type LoggersConfig } from '/domain/services/Logger'
 import { type CodeCompilerConfig } from '/domain/services/CodeCompiler'
 import { type TunnelConfig } from '/domain/services/Tunnel'
 import type { StorageConfig } from '/domain/services/Storage'
+import type { ICronDriver } from './CronSpi'
 
 export interface Drivers {
   tunnel: (config?: TunnelConfig) => ITunnelDriver
@@ -35,4 +36,5 @@ export interface Drivers {
   templateCompiler: () => ITemplateCompilerDriver
   fileSystem: () => IFileSystemDriver
   fetcher: () => IFetcherDriver
+  cron: () => ICronDriver
 }

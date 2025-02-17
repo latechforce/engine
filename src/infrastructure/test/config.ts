@@ -113,6 +113,15 @@ const fullConfig: Config = {
       },
       actions: [],
     },
+    {
+      name: 'CronTimeTicked',
+      trigger: {
+        service: 'Schedule',
+        event: 'CronTimeTicked',
+        cronTime: '* * * * * *',
+      },
+      actions: [],
+    },
   ],
   tables: [
     {
@@ -262,6 +271,7 @@ type AutomationName =
   | 'FirstNotionTablePageCreated'
   | 'WebhookCalled'
   | 'WebhookCalledWithApiKeyAuth'
+  | 'CronTimeTicked'
 
 type FirstTableFieldName =
   | 'name'

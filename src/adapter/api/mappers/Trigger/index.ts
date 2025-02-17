@@ -10,6 +10,8 @@ import { RecordCreatedDatabaseTriggerMapper } from './database/RecordCreatedMapp
 import { ApiCalledHttpTriggerMapper } from './http/ApiCalledMapper'
 import { WebhookCalledHttpTriggerMapper } from './http/WebhookCalledMapper'
 import { TablePageCreatedNotionTriggerMapper } from './notion/TablePageCreatedMapper'
+import { CronTimeTickedScheduleTriggerMapper } from './schedule/CronTimeTicked'
+import type { Cron } from '/domain/services/Cron'
 
 type TriggerMapperConfig = ITrigger & {
   automation: string
@@ -23,6 +25,7 @@ export interface TriggerMapperServices {
   realtime: Realtime
   templateCompiler: TemplateCompiler
   monitor: Monitor
+  cron: Cron
 }
 
 export interface TriggerMapperIntegrations {
@@ -36,20 +39,20 @@ export class TriggerMapper {
     integrations: TriggerMapperIntegrations
   ): Trigger {
     const { event } = config
-    if (event === 'RecordCreated')
-      return RecordCreatedDatabaseTriggerMapper.toEntity(config, services)
-    if (event === 'WebhookCalled') return WebhookCalledHttpTriggerMapper.toEntity(config, services)
-    if (event === 'ApiCalled') return ApiCalledHttpTriggerMapper.toEntity(config, services)
-    if (event === 'TablePageCreated')
-      return TablePageCreatedNotionTriggerMapper.toEntity(config, services, integrations)
-    throw new Error(`TriggerMapper: trigger ${event} not found`)
-  }
 
-  static toManyEntities(
-    configs: TriggerMapperConfig[],
-    services: TriggerMapperServices,
-    integrations: TriggerMapperIntegrations
-  ): Trigger[] {
-    return configs.map((config) => this.toEntity(config, services, integrations))
+    switch (event) {
+      case 'RecordCreated':
+        return RecordCreatedDatabaseTriggerMapper.toEntity(config, services)
+      case 'WebhookCalled':
+        return WebhookCalledHttpTriggerMapper.toEntity(config, services)
+      case 'ApiCalled':
+        return ApiCalledHttpTriggerMapper.toEntity(config, services)
+      case 'TablePageCreated':
+        return TablePageCreatedNotionTriggerMapper.toEntity(config, services, integrations)
+      case 'CronTimeTicked':
+        return CronTimeTickedScheduleTriggerMapper.toEntity(config, services)
+      default:
+        throw new Error(`TriggerMapper: trigger ${event} not found`)
+    }
   }
 }

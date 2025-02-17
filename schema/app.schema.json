@@ -318,6 +318,28 @@
             ],
             "type": "object"
         },
+        "ICronTimeTickedScheduleTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "cronTime": {
+                    "type": "string"
+                },
+                "event": {
+                    "const": "CronTimeTicked",
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Schedule",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cronTime",
+                "event",
+                "service"
+            ],
+            "type": "object"
+        },
         "IDateTimeField": {
             "additionalProperties": false,
             "properties": {
@@ -1050,6 +1072,9 @@
                 },
                 {
                     "$ref": "#/definitions/IPageCreatedNotionTrigger"
+                },
+                {
+                    "$ref": "#/definitions/ICronTimeTickedScheduleTrigger"
                 }
             ]
         },

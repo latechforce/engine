@@ -11,11 +11,4 @@ export class RecordCreatedDatabaseTriggerMapper {
   ): RecordCreatedDatabaseTrigger => {
     return new RecordCreatedDatabaseTrigger(config, services)
   }
-
-  static toManyEntities = (
-    configs: RecordCreatedDatabaseTriggerConfig[],
-    services: RecordCreatedDatabaseTriggerServices
-  ): RecordCreatedDatabaseTrigger[] => {
-    return configs.map((config) => this.toEntity(config, services))
-  }
 }

@@ -15,6 +15,7 @@ import { CodeCompilerDriver } from './CodeCompilerDriver'
 import { FileSystemDriver } from './FileSystemDriver'
 import { TunnelDriver } from './TunnelDriver'
 import { FetcherDriver } from './FetcherDriver'
+import { CronDriver } from './CronDriver'
 
 export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server'> = {
   tunnel: (config?: TunnelConfig) => new TunnelDriver(config),
@@ -27,4 +28,5 @@ export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server'> = {
   idGenerator: () => new IdGeneratorDriver(),
   fileSystem: () => new FileSystemDriver(),
   fetcher: () => new FetcherDriver(),
+  cron: () => new CronDriver(),
 }
