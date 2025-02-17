@@ -1,3 +1,10 @@
+## [0.37.47](https://github.com/latechforce/engine/compare/v0.37.46...v0.37.47) (2025-02-17)
+
+
+### Bug Fixes
+
+* **GoogleMail:** update EmailOptions type ([593cdda](https://github.com/latechforce/engine/commit/593cddaa2fb12e31d1ac82e2586109696da0daa6))
+
 ## [0.37.46](https://github.com/latechforce/engine/compare/v0.37.45...v0.37.46) (2025-02-17)
 
 
