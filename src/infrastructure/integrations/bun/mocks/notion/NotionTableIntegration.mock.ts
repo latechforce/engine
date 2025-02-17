@@ -118,10 +118,6 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
         continue
       }
       switch (property.type) {
-        case 'Email':
-        case 'SingleLineText':
-          fields[key] = value ? String(value) : null
-          break
         case 'DateTime':
           if (typeof value === 'number') fields[key] = new Date(value)
           else fields[key] = value as Date
@@ -155,7 +151,8 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
           }
           break
         default:
-          throw new Error(`Invalid property type: ${property.type}`)
+          fields[key] = value ? String(value) : null
+          break
       }
     }
     return fields
