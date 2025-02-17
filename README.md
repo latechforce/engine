@@ -79,6 +79,8 @@ const data = await response.json()
 console.log(data.message) // Hello World!
 ```
 
+You can find the Open API documentation at `http://localhost:3000/api/docs`.
+
 ## Configuration
 
 A configuration is a JSON representation of the application. It contains the tables, automations, services, integrations, etc...
