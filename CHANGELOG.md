@@ -1,3 +1,10 @@
+## [0.37.46](https://github.com/latechforce/engine/compare/v0.37.45...v0.37.46) (2025-02-17)
+
+
+### Bug Fixes
+
+* **Qonto:** add client invoice status ([7900955](https://github.com/latechforce/engine/commit/790095500c5f67b299497db180c6c288bb2c7b75))
+
 ## [0.37.45](https://github.com/latechforce/engine/compare/v0.37.44...v0.37.45) (2025-02-17)
 
 
