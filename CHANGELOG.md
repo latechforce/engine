@@ -1,3 +1,10 @@
+## [0.37.38](https://github.com/latechforce/engine/compare/v0.37.37...v0.37.38) (2025-02-14)
+
+
+### Bug Fixes
+
+* **Qonto:** fix types ([d9a7628](https://github.com/latechforce/engine/commit/d9a76281fe1c2a2fb9375af55ca676c9a3a5e683))
+
 ## [0.37.37](https://github.com/latechforce/engine/compare/v0.37.36...v0.37.37) (2025-02-14)
 
 
