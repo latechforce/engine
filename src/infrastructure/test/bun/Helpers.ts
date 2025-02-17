@@ -210,7 +210,7 @@ export class Helpers {
             user: 'test',
             password: url,
           }
-          integrations.qonto = new GoogleMailIntegration(config)
+          integrations.googleMail = new GoogleMailIntegration(config)
           if (!extendsConfig.integrations.google) extendsConfig.integrations.google = {}
           extendsConfig.integrations.google.mail = config
         }
