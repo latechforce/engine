@@ -1,16 +1,16 @@
 import type BunTester from 'bun:test'
-import type { IMailerDriver } from '/adapter/spi/drivers/MailerSpi'
 import env from '/infrastructure/test/env'
+import type { IGoogleMailIntegration } from '/adapter/spi/integrations/GoogleMailSpi'
 
-export function testMailerDriver(
+export function testGoogleMailIntegration(
   { describe, beforeAll, afterAll, it, expect }: typeof BunTester,
-  setup: () => Promise<IMailerDriver>,
+  setup: () => Promise<IGoogleMailIntegration>,
   teardown?: () => Promise<void>
 ) {
-  let mailer: IMailerDriver
+  let gmail: IGoogleMailIntegration
 
   beforeAll(async () => {
-    mailer = await setup()
+    gmail = await setup()
   })
 
   afterAll(async () => {
@@ -28,7 +28,7 @@ export function testMailerDriver(
       }
 
       // WHEN
-      const email = await mailer.sendEmail(options)
+      const email = await gmail.sendEmail(options)
 
       // THEN
       expect(email.messageId).toBeDefined()

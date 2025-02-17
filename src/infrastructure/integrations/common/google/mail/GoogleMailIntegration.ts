@@ -1,22 +1,26 @@
 import * as nodemailer from 'nodemailer'
-import type { MailerConfig, MailerEmailOptions, MailerEmailResponse } from '/domain/services/Mailer'
-import type { IMailerDriver } from '/adapter/spi/drivers/MailerSpi'
+import type {
+  GoogleMailConfig,
+  GoogleMailEmailOptions,
+  GoogleMailEmailResponse,
+} from '/domain/integrations/Google/Mail'
+import type { IGoogleMailIntegration } from '/adapter/spi/integrations/GoogleMailSpi'
 
-export class NodemailerDriver implements IMailerDriver {
+export class GoogleMailIntegration implements IGoogleMailIntegration {
   private _transporter: nodemailer.Transporter
 
-  constructor(config: MailerConfig) {
+  constructor(config: GoogleMailConfig) {
     this._transporter = nodemailer.createTransport({
-      service: config.service,
+      service: 'gmail',
       auth: {
         user: config.user,
-        pass: config.pass,
+        pass: config.password,
       },
     })
   }
 
-  sendEmail = async (options: MailerEmailOptions): Promise<MailerEmailResponse> => {
-    const result = await new Promise<MailerEmailResponse>((resolve, reject) =>
+  sendEmail = async (options: GoogleMailEmailOptions): Promise<GoogleMailEmailResponse> => {
+    const result = await new Promise<GoogleMailEmailResponse>((resolve, reject) =>
       this._transporter.sendMail(options, (error: Error | null, info) => {
         if (error) {
           reject(error)
