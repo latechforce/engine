@@ -22,8 +22,4 @@ export class RollupFieldMapper {
     const multipleLinkedRecord = MultipleLinkedRecordFieldMapper.toEntity(multipleLinkedRecordField)
     return new RollupField({ ...res, name, output: outputEntity, multipleLinkedRecord })
   }
-
-  static toManyEntities = (configs: IRollupField[], fields: IField[]): RollupField[] => {
-    return configs.map((config) => this.toEntity(config, fields))
-  }
 }

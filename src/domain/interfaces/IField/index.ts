@@ -11,6 +11,7 @@ import type { IRollupField } from './IRollup'
 import type { ISingleLineTextField } from './ISingleLineText'
 import type { ISingleLinkedRecordField } from './ISingleLinkedRecord'
 import type { ISingleSelectField } from './ISingleSelect'
+import type { IUrlField } from './IUrl'
 
 export type IField =
   | IDateTimeField
@@ -26,3 +27,4 @@ export type IField =
   | IMultipleSelectField
   | ICheckboxField
   | IMultipleAttachmentField
+  | IUrlField

@@ -17,6 +17,7 @@ import type { NumberField } from '/domain/entities/Field/Number'
 import type { SingleLineTextField } from '/domain/entities/Field/SingleLineText'
 import { MultipleSelectFieldMapper } from './MultipleSelectMapper'
 import { MultipleAttachmentFieldMapper } from './MultipleAttachmentMapper'
+import { UrlFieldMapper } from './UrlMapper'
 
 export class FieldMapper {
   static toEntity(config: IField, fields: IField[]): Field {
@@ -48,6 +49,8 @@ export class FieldMapper {
         return RollupFieldMapper.toEntity(config, fields)
       case 'Checkbox':
         return CheckboxFieldMapper.toEntity(config)
+      case 'Url':
+        return UrlFieldMapper.toEntity(config)
       default:
         throw new Error(`FieldMapper: type ${type} not found`)
     }

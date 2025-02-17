@@ -5,8 +5,4 @@ export class MultipleLinkedRecordFieldMapper {
   static toEntity = (config: IMultipleLinkedRecordField): MultipleLinkedRecordField => {
     return new MultipleLinkedRecordField(config)
   }
-
-  static toManyEntities = (configs: IMultipleLinkedRecordField[]): MultipleLinkedRecordField[] => {
-    return configs.map((config) => this.toEntity(config))
-  }
 }

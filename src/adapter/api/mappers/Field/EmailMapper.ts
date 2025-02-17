@@ -5,8 +5,4 @@ export class EmailFieldMapper {
   static toEntity = (config: IEmailField): EmailField => {
     return new EmailField(config)
   }
-
-  static toManyEntities = (configs: IEmailField[]): EmailField[] => {
-    return configs.map((config) => this.toEntity(config))
-  }
 }

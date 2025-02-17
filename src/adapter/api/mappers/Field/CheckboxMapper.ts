@@ -5,8 +5,4 @@ export class CheckboxFieldMapper {
   static toEntity = (config: ICheckboxField): CheckboxField => {
     return new CheckboxField(config)
   }
-
-  static toManyEntities = (configs: ICheckboxField[]): CheckboxField[] => {
-    return configs.map((config) => this.toEntity(config))
-  }
 }

@@ -438,6 +438,9 @@
                 },
                 {
                     "$ref": "#/definitions/ISingleSelectField"
+                },
+                {
+                    "$ref": "#/definitions/IUrlField"
                 }
             ]
         },
@@ -1112,6 +1115,35 @@
                 "name",
                 "page",
                 "table"
+            ],
+            "type": "object"
+        },
+        "IUrlField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Url",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
             ],
             "type": "object"
         },

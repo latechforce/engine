@@ -625,6 +625,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
           ...column,
           type: 'TEXT',
         }
+      case 'Url':
+        return {
+          ...column,
+          type: 'TEXT',
+        }
       case 'DateTime':
         return {
           ...column,

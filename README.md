@@ -83,6 +83,8 @@ console.log(data.message) // Hello World!
 
 A configuration is a JSON representation of the application. It contains the tables, automations, services, integrations, etc...
 
+You can [explore the configuration here](https://json-schema.app/view/%23?url=https%3A%2F%2Fraw.githubusercontent.com%2Flatechforce%2Fengine%2Frefs%2Fheads%2Fmain%2Fschema%2Fapp.schema.json).
+
 ## Contributing
 
 La Tech Force Engine is built and maintained by a small team – we'd love your help to fix bugs and add features!

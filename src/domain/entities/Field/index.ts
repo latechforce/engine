@@ -11,6 +11,7 @@ import type { RollupField } from './Rollup'
 import type { CheckboxField } from './Checkbox'
 import type { MultipleSelectField } from './MultipleSelect'
 import type { MultipleAttachmentField } from './MultipleAttachment'
+import type { UrlField } from './Url'
 
 export type Field =
   | EmailField
@@ -26,3 +27,4 @@ export type Field =
   | CheckboxField
   | MultipleSelectField
   | MultipleAttachmentField
+  | UrlField

@@ -8,8 +8,4 @@ export class FormulaFieldMapper {
     const outputEntity = FieldMapper.toOutputEntity({ ...output, name })
     return new FormulaField({ ...res, name, output: outputEntity })
   }
-
-  static toManyEntities = (configs: IFormulaField[]): FormulaField[] => {
-    return configs.map((config) => this.toEntity(config))
-  }
 }

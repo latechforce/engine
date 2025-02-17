@@ -5,8 +5,4 @@ export class MultipleSelectFieldMapper {
   static toEntity = (config: IMultipleSelectField): MultipleSelectField => {
     return new MultipleSelectField(config)
   }
-
-  static toManyEntities = (configs: IMultipleSelectField[]): MultipleSelectField[] => {
-    return configs.map((config) => this.toEntity(config))
-  }
 }

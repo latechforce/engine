@@ -169,21 +169,8 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
       const property = this._properties.find((p) => p.name === key)
       if (!property) throw new Error(`Property "${key}" does not exist`)
       switch (property.type) {
-        case 'Email':
-        case 'SingleLineText':
-          page[key] = value ?? null
-          break
         case 'DateTime':
           page[key] = value ? new Date(value as number) : null
-          break
-        case 'Number':
-          page[key] = value ?? null
-          break
-        case 'Checkbox':
-          page[key] = value ?? false
-          break
-        case 'SingleSelect':
-          page[key] = value ?? null
           break
         case 'MultipleSelect':
           page[key] = value ? (value as string[]) : []
@@ -201,11 +188,9 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
         case 'MultipleAttachment':
           page[key] = typeof value === 'string' ? JSON.parse(value) : []
           break
-        case 'Rollup':
+        default:
           page[key] = value ?? null
           break
-        default:
-          throw new Error(`Invalid property type: ${property.type}`)
       }
     }
     return {

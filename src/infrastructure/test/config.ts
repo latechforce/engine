@@ -238,6 +238,14 @@ const fullConfig: Config = {
           name: 'Champs avec charactères (spéciaux)',
           type: 'SingleLineText',
         },
+        {
+          name: 'email',
+          type: 'Email',
+        },
+        {
+          name: 'url',
+          type: 'Url',
+        },
       ],
     },
     {
@@ -292,6 +300,8 @@ type FirstTableFieldName =
   | 'multiple_linked_record'
   | 'text_rollup'
   | 'number_rollup'
+  | 'email'
+  | 'url'
 
 export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
   name: string
