@@ -39,12 +39,14 @@ export {
   type ConvertToNotionTablePageProperties,
 } from '/domain/integrations/Notion/NotionTablePage'
 export type { NotionUser } from '/domain/integrations/Notion/NotionUser'
+export type { NotionTablePageDto } from '/adapter/spi/dtos/NotionTablePageDto'
 export {
   AirtableTableRecord,
   type AirtableTableRecordFields,
   type AirtableTableRecordFieldValue,
   type ConvertToAirtableTableRecordFields,
 } from '/domain/integrations/Airtable/AirtableTableRecord'
+export type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
 export {
   type QontoCreateClient,
   type QontoClient,
