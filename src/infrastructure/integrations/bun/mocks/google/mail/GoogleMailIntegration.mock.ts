@@ -39,7 +39,7 @@ export class GoogleMailIntegration implements IGoogleMailIntegration {
 
   sendEmail = async (options: GoogleMailEmailOptions): Promise<GoogleMailEmailResponse> => {
     const stmt = this.db.prepare('INSERT INTO emails ("to", subject, body) VALUES (?, ?, ?)')
-    stmt.run(options.to, options.subject, options.text)
+    stmt.run(options.to ?? '', options.subject ?? '', options.text ?? '')
     return {
       messageId: `local-${Date.now()}`,
       accepted: [options.to],

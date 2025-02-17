@@ -72,6 +72,12 @@
         "GoogleMailEmailOptions": {
             "additionalProperties": false,
             "properties": {
+                "bcc": {
+                    "type": "string"
+                },
+                "cc": {
+                    "type": "string"
+                },
                 "from": {
                     "type": "string"
                 },
@@ -89,9 +95,6 @@
                 }
             },
             "required": [
-                "from",
-                "subject",
-                "text",
                 "to"
             ],
             "type": "object"

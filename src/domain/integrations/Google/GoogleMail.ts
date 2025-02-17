@@ -4,10 +4,12 @@ export interface GoogleMailConfig {
 }
 
 export interface GoogleMailEmailOptions {
-  from: string
+  from?: string
   to: string
-  subject: string
-  text: string
+  cc?: string
+  bcc?: string
+  subject?: string
+  text?: string
   html?: string
 }
 
