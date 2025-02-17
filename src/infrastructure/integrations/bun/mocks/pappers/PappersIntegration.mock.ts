@@ -6,7 +6,7 @@ export class PappersIntegration implements IPappersIntegration {
   private db: Database
 
   constructor(private _config?: PappersConfig) {
-    this.db = new Database('file::memory:?cache=shared')
+    this.db = new Database(_config?.apiKey ?? ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS Companies (
         siret TEXT PRIMARY KEY,
