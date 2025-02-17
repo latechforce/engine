@@ -215,8 +215,11 @@ export class Helpers {
           extendsConfig.integrations.google.mail = config
         }
         if (options.integrations.includes('Pappers')) {
+          const url = join(process.cwd(), 'tmp', `pappers-${nanoid()}.db`)
+          await fs.ensureFile(url)
+          files.push(url)
           const config: PappersConfig = {
-            apiKey: 'test',
+            apiKey: url,
           }
           integrations.pappers = new PappersIntegration()
           extendsConfig.integrations.pappers = config
