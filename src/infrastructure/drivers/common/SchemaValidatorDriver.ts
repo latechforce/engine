@@ -4,8 +4,6 @@ import { join } from 'path'
 import type { ISchemaValidatorDriver } from '/adapter/spi/drivers/SchemaValidatorSpi'
 import type { JSONSchema } from '/domain/services/SchemaValidator'
 
-const dirname = new URL('.', import.meta.url).pathname
-
 export class SchemaValidatorDriver implements ISchemaValidatorDriver {
   private _ajv: Ajv
 
@@ -14,7 +12,11 @@ export class SchemaValidatorDriver implements ISchemaValidatorDriver {
   }
 
   getSchemaFilePath = (schema: string) => {
-    let schemaPath = join(dirname + '../schema/', schema + '.schema.json')
+    let schemaPath = join(
+      process.cwd(),
+      'node_modules/@latechforce/engine/schema/',
+      schema + '.schema.json'
+    )
     if (!fs.existsSync(schemaPath)) {
       schemaPath = join(process.cwd(), 'schema/', schema + '.schema.json')
       if (!fs.existsSync(schemaPath)) {
