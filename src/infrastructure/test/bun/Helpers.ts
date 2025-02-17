@@ -144,13 +144,17 @@ export class Helpers {
       },
     }
 
+    async function getTestDbUrl(name: string) {
+      const url = join(process.cwd(), 'tmp', `${name}-${nanoid()}.db`)
+      await fs.ensureFile(url)
+      files.push(url)
+      return url
+    }
+
     this.tester.beforeEach(async () => {
       if ('drivers' in options) {
         if (options.drivers.includes('Database')) {
-          const url = join(process.cwd(), 'tmp', `database-${nanoid()}.db`)
-          await fs.ensureFile(url)
-          files.push(url)
-          const config: DatabaseConfig = { driver: 'SQLite', url }
+          const config: DatabaseConfig = { driver: 'SQLite', url: await getTestDbUrl('database') }
           const database = new DatabaseDriver(config)
           drivers.database = database
           extendsConfig.database = config
@@ -169,59 +173,44 @@ export class Helpers {
       extendsConfig.integrations = {}
       if ('integrations' in options) {
         if (options.integrations.includes('Notion')) {
-          const url = join(process.cwd(), 'tmp', `notion-${nanoid()}.db`)
-          await fs.ensureFile(url)
-          files.push(url)
           const config: NotionConfig = {
-            token: url,
+            token: await getTestDbUrl('notion'),
             pollingInterval: 1,
           }
           integrations.notion = new NotionIntegration(config)
           extendsConfig.integrations.notion = config
         }
         if (options.integrations.includes('Airtable')) {
-          const url = join(process.cwd(), 'tmp', `airtable-${nanoid()}.db`)
-          await fs.ensureFile(url)
-          files.push(url)
           const config: AirtableConfig = {
-            apiKey: url,
+            apiKey: await getTestDbUrl('airtable'),
             baseId: 'test',
           }
           integrations.airtable = new AirtableIntegration(config)
           extendsConfig.integrations.airtable = config
         }
         if (options.integrations.includes('Qonto')) {
-          const url = join(process.cwd(), 'tmp', `qonto-${nanoid()}.db`)
-          await fs.ensureFile(url)
-          files.push(url)
           const config: QontoConfig = {
             environment: 'production',
             organisationSlug: 'test',
-            secretKey: url,
+            secretKey: await getTestDbUrl('qonto'),
           }
           integrations.qonto = new QontoIntegration(config)
           extendsConfig.integrations.qonto = config
         }
         if (options.integrations.includes('GoogleMail')) {
-          const url = join(process.cwd(), 'tmp', `googlemail-${nanoid()}.db`)
-          await fs.ensureFile(url)
-          files.push(url)
           const config: GoogleMailConfig = {
             user: 'test',
-            password: url,
+            password: await getTestDbUrl('googlemail'),
           }
           integrations.googleMail = new GoogleMailIntegration(config)
           if (!extendsConfig.integrations.google) extendsConfig.integrations.google = {}
           extendsConfig.integrations.google.mail = config
         }
         if (options.integrations.includes('Pappers')) {
-          const url = join(process.cwd(), 'tmp', `pappers-${nanoid()}.db`)
-          await fs.ensureFile(url)
-          files.push(url)
           const config: PappersConfig = {
-            apiKey: url,
+            apiKey: await getTestDbUrl('pappers'),
           }
-          integrations.pappers = new PappersIntegration()
+          integrations.pappers = new PappersIntegration(config)
           extendsConfig.integrations.pappers = config
         }
       }

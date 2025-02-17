@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Helpers, type Config } from '/test/bun'
-import { pappersCompanySample } from '/infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
+import { pappersCompanySample } from '/infrastructure/integrations/bun/mocks/pappers/PappersTestSamples'
 
 const helpers = new Helpers(Tester)
 
