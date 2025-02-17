@@ -24,32 +24,44 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     readonly createdTime: string
   ) {}
 
-  getTitle(name: keyof T): string | null {
+  getSingleLineText(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getCheckbox(name: keyof T): boolean {
+  getSingleLineTextOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
+  }
+
+  getCheckbox(name: keyof T): boolean | null {
     return this._getPropertyAsBoolean(name)
   }
 
-  getCreatedBy(name: keyof T): string {
-    const value = this._getPropertyAsString(name)
-    if (!value) throw new Error('Field "createdBy" should not be null')
-    return value
+  getCheckboxOrThrow(name: keyof T): boolean {
+    return this._getPropertyAsBooleanOrThrow(name)
   }
 
-  getCreatedTime(name: keyof T): Date {
-    const value = this._getPropertyAsDate(name)
-    if (!value) throw new Error('Field "createdTime" should not be null')
-    return value
+  getCreatedByOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
+  }
+
+  getCreatedTimeOrThrow(name: keyof T): Date {
+    return this._getPropertyAsDateOrThrow(name)
   }
 
   getDate(name: keyof T): Date | null {
     return this._getPropertyAsDate(name)
   }
 
+  getDateOrThrow(name: keyof T): Date {
+    return this._getPropertyAsDateOrThrow(name)
+  }
+
   getEmail(name: keyof T): string | null {
     return this._getPropertyAsString(name)
+  }
+
+  getEmailOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
   }
 
   getFiles(name: keyof T): AirtableTableRecordFieldFile[] {
@@ -62,28 +74,48 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     return this._getPropertyAsString(name)
   }
 
+  getStringFormulaOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
+  }
+
   getNumberFormula(name: keyof T): number | null {
     return this._getPropertyAsNumber(name)
+  }
+
+  getNumberFormulaOrThrow(name: keyof T): number {
+    return this._getPropertyAsNumberOrThrow(name)
   }
 
   getBooleanFormula(name: keyof T): boolean | null {
     return this._getPropertyAsBoolean(name)
   }
 
+  getBooleanFormulaOrThrow(name: keyof T): boolean {
+    return this._getPropertyAsBooleanOrThrow(name)
+  }
+
   getDateFormula(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getLastEditedBy(name: keyof T): string {
-    const value = this._getPropertyAsString(name)
-    if (!value) throw new Error('Field "lastEditedBy" should not be null')
-    return value
+  getDateFormulaOrThrow(name: keyof T): Date {
+    return this._getPropertyAsDateOrThrow(name)
   }
 
-  getLastEditedTime(name: keyof T): string {
-    const value = this._getPropertyAsString(name)
-    if (!value) throw new Error('Field "lastEditedTime" should not be null')
-    return value
+  getLastEditedBy(name: keyof T): string | null {
+    return this._getPropertyAsString(name)
+  }
+
+  getLastEditedByOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
+  }
+
+  getLastEditedTime(name: keyof T): Date | null {
+    return this._getPropertyAsDate(name)
+  }
+
+  getLastEditedTimeOrThrow(name: keyof T): Date {
+    return this._getPropertyAsDateOrThrow(name)
   }
 
   getMultiSelect(name: keyof T): string[] {
@@ -94,6 +126,10 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     return this._getPropertyAsNumber(name)
   }
 
+  getNumberOrThrow(name: keyof T): number {
+    return this._getPropertyAsNumberOrThrow(name)
+  }
+
   getPeople(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
@@ -102,12 +138,32 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     return this._getPropertyAsString(name)
   }
 
+  getPhoneOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
+  }
+
+  getRelation(name: keyof T): string | null {
+    return this._getPropertyAsStringArray(name)[0] || null
+  }
+
+  getRelationOrThrow(name: keyof T): string {
+    const value = this._getPropertyAsStringArray(name)[0]
+    if (!value) throw new Error(`Field "${String(name)}" should not be null`)
+    return value
+  }
+
   getRelations(name: keyof T): string[] {
     return this._getPropertyAsStringArray(name)
   }
 
   getSingleRelation(name: keyof T): string | null {
     return this._getPropertyAsStringArray(name)[0] || null
+  }
+
+  getSingleRelationOrThrow(name: keyof T): string {
+    const value = this._getPropertyAsStringArray(name)[0]
+    if (!value) throw new Error(`Field "${String(name)}" should not be null`)
+    return value
   }
 
   getStringArrayRollup(name: keyof T): string[] {
@@ -130,28 +186,50 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     return this._getPropertyAsStringArray(name)[0] || null
   }
 
+  getSingleStringRollupOrThrow(name: keyof T): string {
+    const value = this._getPropertyAsStringArray(name)[0]
+    if (!value) throw new Error(`Field "${String(name)}" should not be null`)
+    return value
+  }
+
   getDateRollup(name: keyof T): string | null {
     return this._getPropertyAsString(name)
+  }
+
+  getDateRollupOrThrow(name: keyof T): Date {
+    return this._getPropertyAsDateOrThrow(name)
   }
 
   getNumberRollup(name: keyof T): number | null {
     return this._getPropertyAsNumber(name)
   }
 
-  getRichText(name: keyof T): string | null {
+  getNumberRollupOrThrow(name: keyof T): number {
+    return this._getPropertyAsNumberOrThrow(name)
+  }
+
+  getLongText(name: keyof T): string | null {
     return this._getPropertyAsString(name)
+  }
+
+  getLongTextOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
   }
 
   getSelect(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
+  getSelectOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
+  }
+
   getUrl(name: keyof T): string | null {
     return this._getPropertyAsString(name)
   }
 
-  getStatus(name: keyof T): string | null {
-    return this._getPropertyAsString(name)
+  getUrlOrThrow(name: keyof T): string {
+    return this._getPropertyAsStringOrThrow(name)
   }
 
   private _getPropertyAsString(name: keyof T): string | null {
@@ -161,6 +239,12 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     const value = this.fields[name]
     if (!value) return null
     return typeof value === 'string' ? value : value.toString()
+  }
+
+  private _getPropertyAsStringOrThrow(name: keyof T): string {
+    const value = this._getPropertyAsString(name)
+    if (value === null) throw new Error(`Field "${String(name)}" should not be null`)
+    return value
   }
 
   private _getPropertyAsStringArray(name: keyof T): string[] {
@@ -175,15 +259,34 @@ export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableT
     return value instanceof Date ? value : new Date(value.toString())
   }
 
+  private _getPropertyAsDateOrThrow(name: keyof T): Date {
+    const value = this._getPropertyAsDate(name)
+    if (value === null) throw new Error(`Field "${String(name)}" should not be null`)
+    return value
+  }
+
   private _getPropertyAsNumber(name: keyof T): number | null {
     const value = this._checkIfPropertyExists(name)
     if (!value) return null
     return typeof value === 'number' ? value : parseFloat(value.toString())
   }
 
-  private _getPropertyAsBoolean(name: keyof T): boolean {
+  private _getPropertyAsNumberOrThrow(name: keyof T): number {
+    const value = this._getPropertyAsNumber(name)
+    if (value === null) throw new Error(`Field "${String(name)}" should not be null`)
+    return value
+  }
+
+  private _getPropertyAsBoolean(name: keyof T): boolean | null {
     const value = this._checkIfPropertyExists(name)
+    if (value === null) return null
     return typeof value === 'boolean' ? value : !!value
+  }
+
+  private _getPropertyAsBooleanOrThrow(name: keyof T): boolean {
+    const value = this._getPropertyAsBoolean(name)
+    if (value === null) throw new Error(`Field "${String(name)}" should not be null`)
+    return value
   }
 
   private _checkIfPropertyExists(name: keyof T): AirtableTableRecordFieldValue {
