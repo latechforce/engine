@@ -1,3 +1,10 @@
+## [0.37.42](https://github.com/latechforce/engine/compare/v0.37.41...v0.37.42) (2025-02-17)
+
+
+### Bug Fixes
+
+* **Types:** export Airtable and Notion dto ([981d405](https://github.com/latechforce/engine/commit/981d405ea343c823400b90dc8cc3446417586e20))
+
 ## [0.37.41](https://github.com/latechforce/engine/compare/v0.37.40...v0.37.41) (2025-02-17)
 
 
