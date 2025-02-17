@@ -1,3 +1,11 @@
+## [0.37.39](https://github.com/latechforce/engine/compare/v0.37.38...v0.37.39) (2025-02-17)
+
+
+### Bug Fixes
+
+* **Google:** add green test: should send an email ([640e42b](https://github.com/latechforce/engine/commit/640e42b863b352e4e06f7b7d15b10f90c0991def))
+* **Notion:** add green tests form OrThrow functions ([6f63e49](https://github.com/latechforce/engine/commit/6f63e49c250ba5123c7748aa0e4aa4166fca3791))
+
 ## [0.37.38](https://github.com/latechforce/engine/compare/v0.37.37...v0.37.38) (2025-02-14)
 
 
