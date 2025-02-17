@@ -30,78 +30,6 @@
             ],
             "type": "object"
         },
-        "ConvertToTemplateObject<GoogleMailEmailOptions>": {
-            "additionalProperties": false,
-            "properties": {
-                "from": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "html": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "subject": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "text": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "to": {
-                    "$ref": "#/definitions/TemplateValue"
-                }
-            },
-            "type": "object"
-        },
-        "ConvertToTemplateObject<QontoCreateClient>": {
-            "additionalProperties": false,
-            "properties": {
-                "address": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "billing_address": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "city": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "country_code": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "currency": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "delivery_address": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "email": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "first_name": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "last_name": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "locale": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "name": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "tax_identification_number": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "type": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "vat_number": {
-                    "$ref": "#/definitions/TemplateValue"
-                },
-                "zip_code": {
-                    "$ref": "#/definitions/TemplateValue"
-                }
-            },
-            "type": "object"
-        },
         "DatabaseConfig": {
             "additionalProperties": false,
             "properties": {
@@ -138,6 +66,33 @@
             "required": [
                 "password",
                 "user"
+            ],
+            "type": "object"
+        },
+        "GoogleMailEmailOptions": {
+            "additionalProperties": false,
+            "properties": {
+                "from": {
+                    "type": "string"
+                },
+                "html": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "to": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "from",
+                "subject",
+                "text",
+                "to"
             ],
             "type": "object"
         },
@@ -267,7 +222,7 @@
                     "type": "string"
                 },
                 "client": {
-                    "$ref": "#/definitions/ConvertToTemplateObject<QontoCreateClient>"
+                    "$ref": "#/definitions/QontoCreateClient"
                 },
                 "integration": {
                     "const": "Qonto",
@@ -924,7 +879,7 @@
                     "type": "string"
                 },
                 "email": {
-                    "$ref": "#/definitions/ConvertToTemplateObject<GoogleMailEmailOptions>"
+                    "$ref": "#/definitions/GoogleMailEmailOptions"
                 },
                 "integration": {
                     "const": "GoogleMail",
@@ -1439,6 +1394,122 @@
             },
             "required": [
                 "apiKey"
+            ],
+            "type": "object"
+        },
+        "QontoBillingAddress": {
+            "additionalProperties": false,
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "country_code": {
+                    "type": "string"
+                },
+                "province_code": {
+                    "type": "string"
+                },
+                "street_address": {
+                    "type": "string"
+                },
+                "zip_code": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "city",
+                "country_code",
+                "province_code",
+                "street_address",
+                "zip_code"
+            ],
+            "type": "object"
+        },
+        "QontoCreateClient": {
+            "additionalProperties": false,
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "billing_address": {
+                    "$ref": "#/definitions/QontoBillingAddress"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country_code": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "delivery_address": {
+                    "$ref": "#/definitions/QontoDeliveryAddress"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "locale": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tax_identification_number": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "vat_number": {
+                    "type": "string"
+                },
+                "zip_code": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "address",
+                "city",
+                "country_code",
+                "currency",
+                "locale",
+                "type",
+                "zip_code"
+            ],
+            "type": "object"
+        },
+        "QontoDeliveryAddress": {
+            "additionalProperties": false,
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "country_code": {
+                    "type": "string"
+                },
+                "province_code": {
+                    "type": "string"
+                },
+                "street_address": {
+                    "type": "string"
+                },
+                "zip_code": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "city",
+                "country_code",
+                "province_code",
+                "street_address",
+                "zip_code"
             ],
             "type": "object"
         },

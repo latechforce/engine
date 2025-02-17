@@ -4,17 +4,15 @@ import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type { QontoCreateClient, QontoClient, Qonto } from '/domain/integrations/Qonto'
 import {
   Template,
-  type ConvertToTemplateObject,
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
 } from '/domain/services/Template'
 
-type QontoCreateClientAsTemplateObject = ConvertToTemplateObject<QontoCreateClient>
 type QontoCreateClientAsTemplateObjectCompiled = ConvertToTemplateObjectCompiled<QontoCreateClient>
 type QontoCreateClientAsTemplateObjectFilled = ConvertToTemplateObjectFilled<QontoCreateClient>
 
 export interface CreateClientQontoActionConfig extends BaseActionConfig {
-  client: QontoCreateClientAsTemplateObject
+  client: QontoCreateClient
 }
 
 export interface CreateClientQontoActionServices extends BaseActionServices {
@@ -39,7 +37,9 @@ export class CreateClientQontoAction extends BaseAction<Input, Output> {
     super(config, services)
     const { client } = config
     const { templateCompiler } = services
-    this._client = templateCompiler.compileObject<QontoCreateClientAsTemplateObjectCompiled>(client)
+    const clientChecked = this._checkTemplateObject(client)
+    this._client =
+      templateCompiler.compileObject<QontoCreateClientAsTemplateObjectCompiled>(clientChecked)
     _integrations.qonto.getConfig()
   }
 

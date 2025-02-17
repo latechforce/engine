@@ -4,6 +4,7 @@ import type { Bucket } from '../Bucket'
 import { ConfigError } from '../Error/Config'
 import type { Table } from '../Table'
 import { Logger } from '/domain/services/Logger'
+import type { ConvertToTemplateObject } from '/domain/services/Template'
 
 export interface BaseActionConfig {
   name: string
@@ -80,5 +81,16 @@ export class BaseAction<Input extends object, Output extends object> {
       name: this.name,
       message,
     })
+  }
+
+  protected _isTemplateObject = <T>(object: unknown): object is ConvertToTemplateObject<T> => {
+    return typeof object === 'object' && object !== null
+  }
+
+  protected _checkTemplateObject = <T>(object: unknown): ConvertToTemplateObject<T> => {
+    if (!this._isTemplateObject<T>(object)) {
+      throw new Error('Object is not a template object')
+    }
+    return object
   }
 }

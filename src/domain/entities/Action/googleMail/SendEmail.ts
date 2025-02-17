@@ -3,7 +3,6 @@ import type { AutomationContext } from '../../Automation/Context'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import {
   Template,
-  type ConvertToTemplateObject,
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
 } from '/domain/services/Template'
@@ -13,14 +12,13 @@ import type {
   GoogleMailEmailResponse,
 } from '/domain/integrations/Google/GoogleMail'
 
-type GoogleMailSendEmailAsTemplateObject = ConvertToTemplateObject<GoogleMailEmailOptions>
 type GoogleMailSendEmailAsTemplateObjectCompiled =
   ConvertToTemplateObjectCompiled<GoogleMailEmailOptions>
 type GoogleMailSendEmailAsTemplateObjectFilled =
   ConvertToTemplateObjectFilled<GoogleMailEmailOptions>
 
 export interface SendEmailGoogleMailActionConfig extends BaseActionConfig {
-  email: GoogleMailSendEmailAsTemplateObject
+  email: GoogleMailEmailOptions
 }
 
 export interface SendEmailGoogleMailActionServices extends BaseActionServices {
@@ -45,7 +43,9 @@ export class SendEmailGoogleMailAction extends BaseAction<Input, Output> {
     super(config, services)
     const { email } = config
     const { templateCompiler } = services
-    this._email = templateCompiler.compileObject<GoogleMailSendEmailAsTemplateObjectCompiled>(email)
+    const emailChecked = this._checkTemplateObject(email)
+    this._email =
+      templateCompiler.compileObject<GoogleMailSendEmailAsTemplateObjectCompiled>(emailChecked)
     _integrations.googleMail.getConfig()
   }
 
