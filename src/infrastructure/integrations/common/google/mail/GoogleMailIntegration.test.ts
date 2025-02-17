@@ -8,8 +8,4 @@ const integration = new GoogleMailIntegration({
   password: env.TEST_GOOGLE_MAIL_PASSWORD,
 })
 
-const setup = async () => {
-  return integration
-}
-
-testGoogleMailIntegration(BunTester, setup)
+testGoogleMailIntegration(BunTester, integration)
