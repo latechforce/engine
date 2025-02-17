@@ -386,7 +386,7 @@ helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ app, request, integ
                   const table = await airtable.getTable(env.TEST_AIRTABLE_TABLE_1_ID)
                   const record = await table.retrieve(id)
                   if (!record) throw new Error('Record not found')
-                  const field: string | null = record.getTitle('name')
+                  const field: string | null = record.getSingleLineText('name')
                   return { field }
                 }),
               },

@@ -14,6 +14,8 @@ const {
   TEST_AIRTABLE_BASE_ID,
   TEST_AIRTABLE_TABLE_1_ID,
   TEST_AIRTABLE_TABLE_2_ID,
+  TEST_GOOGLE_MAIL_USER,
+  TEST_GOOGLE_MAIL_PASSWORD,
 } = process.env
 
 if (!TEST_NOTION_TOKEN) throw new Error('TEST_NOTION_TOKEN env var is not defined')
@@ -33,6 +35,8 @@ if (!TEST_AIRTABLE_API_KEY) throw new Error('TEST_AIRTABLE_API_KEY env var is no
 if (!TEST_AIRTABLE_BASE_ID) throw new Error('TEST_AIRTABLE_BASE_ID env var is not defined')
 if (!TEST_AIRTABLE_TABLE_1_ID) throw new Error('TEST_AIRTABLE_TABLE_1 env var is not defined')
 if (!TEST_AIRTABLE_TABLE_2_ID) throw new Error('TEST_AIRTABLE_TABLE_2 env var is not defined')
+if (!TEST_GOOGLE_MAIL_USER) throw new Error('TEST_GOOGLE_MAIL_USER env var is not defined')
+if (!TEST_GOOGLE_MAIL_PASSWORD) throw new Error('TEST_GOOGLE_MAIL_PASSWORD env var is not defined')
 
 const env = {
   TEST_NOTION_TOKEN,
@@ -50,6 +54,8 @@ const env = {
   TEST_AIRTABLE_BASE_ID,
   TEST_AIRTABLE_TABLE_1_ID,
   TEST_AIRTABLE_TABLE_2_ID,
+  TEST_GOOGLE_MAIL_USER,
+  TEST_GOOGLE_MAIL_PASSWORD,
 }
 
 export default env

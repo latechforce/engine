@@ -66,6 +66,7 @@
     "lodash": "^4.17.21",
     "minipass": "^7.1.2",
     "nanoid": "^5.0.9",
+    "nodemailer": "^6.10.0",
     "papaparse": "^5.5.2",
     "pg": "^8.13.3",
     "pg-boss": "^10.1.6",
