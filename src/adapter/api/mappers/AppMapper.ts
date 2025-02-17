@@ -121,6 +121,7 @@ export class AppMapper {
         storage,
         monitor,
         codeCompiler: typescriptCompiler,
+        cron,
       },
       {
         tables,

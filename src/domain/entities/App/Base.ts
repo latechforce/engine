@@ -11,6 +11,7 @@ import type { Monitor } from '/domain/services/Monitor'
 import type { Notion } from '/domain/integrations/Notion'
 import type { CodeCompiler } from '/domain/services/CodeCompiler'
 import type { IIntegrations } from '/domain/interfaces/IIntegrations'
+import type { Cron } from '/domain/services/Cron'
 
 export interface AppConfig {
   name: string
@@ -26,6 +27,7 @@ export interface AppServices {
   storage: Storage
   monitor: Monitor
   codeCompiler: CodeCompiler
+  cron: Cron
 }
 
 export interface AppEntities {
