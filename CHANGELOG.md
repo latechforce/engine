@@ -1,3 +1,11 @@
+## [0.37.43](https://github.com/latechforce/engine/compare/v0.37.42...v0.37.43) (2025-02-17)
+
+
+### Bug Fixes
+
+* **Airtable:** fix Airtable url management ([306e69f](https://github.com/latechforce/engine/commit/306e69f89dd7366c1a6e15c0b1ff123253553308))
+* **Notion:** fix url management on notion mock ([6148ac9](https://github.com/latechforce/engine/commit/6148ac94d1f52543c31e2db328e32d2701ca4cb2))
+
 ## [0.37.42](https://github.com/latechforce/engine/compare/v0.37.41...v0.37.42) (2025-02-17)
 
 
