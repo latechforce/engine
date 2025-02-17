@@ -1,3 +1,12 @@
+## [0.37.45](https://github.com/latechforce/engine/compare/v0.37.44...v0.37.45) (2025-02-17)
+
+
+### Bug Fixes
+
+* **Helpers:** add test url for Pappers ([e281dc9](https://github.com/latechforce/engine/commit/e281dc9d1c1dc5ee9eed9c8982fd3403e5aa1b5f))
+* **Pappers:** fix broken test: should get a company ([806f1f0](https://github.com/latechforce/engine/commit/806f1f08ec72c5a74b3e554fa6cb3892b1f3ec2c))
+* **Pappers:** should fix SQLiteError: unable to open database file on windows ([2c984ee](https://github.com/latechforce/engine/commit/2c984ee3803dffde9a19546f8ee21e2c9178f977))
+
 ## [0.37.44](https://github.com/latechforce/engine/compare/v0.37.43...v0.37.44) (2025-02-17)
 
 
