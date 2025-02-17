@@ -1,3 +1,11 @@
+## [0.37.40](https://github.com/latechforce/engine/compare/v0.37.39...v0.37.40) (2025-02-17)
+
+
+### Bug Fixes
+
+* **Cron:** add green test: should start an automation ([ad17ba7](https://github.com/latechforce/engine/commit/ad17ba76870d91c525dfc926f003ff52d6c960d3))
+* **Sentry:** update package ([f7766c5](https://github.com/latechforce/engine/commit/f7766c5139d670a2beb01ebdcd80feed2eeb9b35))
+
 ## [0.37.39](https://github.com/latechforce/engine/compare/v0.37.38...v0.37.39) (2025-02-17)
 
 
