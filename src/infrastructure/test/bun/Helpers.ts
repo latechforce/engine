@@ -217,7 +217,11 @@ export class Helpers {
       let startedApp: StartedApp | undefined
       app.start = async (config: Config) => {
         const options = { drivers: { fetcher: () => drivers.fetcher } }
-        startedApp = await new MockedApp(options).start({ ...config, ...extendsConfig })
+        startedApp = await new MockedApp(options).start({
+          loggers: [],
+          ...config,
+          ...extendsConfig,
+        })
         return startedApp
       }
       app.stop = async () => {

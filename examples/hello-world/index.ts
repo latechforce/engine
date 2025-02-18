@@ -38,11 +38,9 @@ const config: Config = {
       ],
     },
   ],
-  loggers: [
-    {
-      driver: 'Console',
-    },
-  ],
+  server: {
+    port: 3000,
+  },
 }
 
 await new App().start(config)
