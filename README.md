@@ -22,9 +22,7 @@ $ bun run test:unit
 The `bun run test` and `bun run test:integration` commands will not work because they require private environnement variables.
 You can run this tests by pushing a commit to the repository.
 
-**Important** : You need to have docker installed on your machine to run the e2e tests (you can use [Docker Desktop](https://docs.docker.com/desktop/)).
-
-```
+**Important**: You need to have docker installed on your machine to run the e2e tests (you can use [Docker Desktop](https://docs.docker.com/desktop/)).
 
 ## Scripts
 
