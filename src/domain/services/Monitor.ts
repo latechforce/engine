@@ -1,4 +1,6 @@
 export interface MonitorSentryConfig {
+  appName: string
+  appVersion: string
   driver: 'Sentry'
   dsn: string
   environment: string
@@ -10,7 +12,7 @@ export interface MonitorConsoleConfig {
 
 export type MonitorConfig = MonitorSentryConfig | MonitorConsoleConfig
 export type MonitorsConfig = MonitorConfig[]
-export type MonitorDrivers = ('Sentry' | 'Console')[]
+export type MonitorDrivers = MonitorConfig['driver'][]
 
 export interface IMonitorSpi {
   captureException: (error: Error) => void

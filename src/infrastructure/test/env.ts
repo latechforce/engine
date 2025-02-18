@@ -1,4 +1,5 @@
 const {
+  TEST_SENTRY_DSN,
   TEST_NOTION_TOKEN,
   TEST_NOTION_TABLE_1_ID,
   TEST_NOTION_TABLE_2_ID,
@@ -18,6 +19,7 @@ const {
   TEST_GOOGLE_MAIL_PASSWORD,
 } = process.env
 
+if (!TEST_SENTRY_DSN) throw new Error('TEST_SENTRY_DSN env var is not defined')
 if (!TEST_NOTION_TOKEN) throw new Error('TEST_NOTION_TOKEN env var is not defined')
 if (!TEST_NOTION_TABLE_1_ID) throw new Error('TEST_NOTION_TABLE_1_ID env var is not defined')
 if (!TEST_NOTION_TABLE_2_ID) throw new Error('TEST_NOTION_TABLE_2_ID env var is not defined')
@@ -39,6 +41,7 @@ if (!TEST_GOOGLE_MAIL_USER) throw new Error('TEST_GOOGLE_MAIL_USER env var is no
 if (!TEST_GOOGLE_MAIL_PASSWORD) throw new Error('TEST_GOOGLE_MAIL_PASSWORD env var is not defined')
 
 const env = {
+  TEST_SENTRY_DSN,
   TEST_NOTION_TOKEN,
   TEST_NOTION_TABLE_1_ID,
   TEST_NOTION_TABLE_2_ID,

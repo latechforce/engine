@@ -4,7 +4,12 @@ import * as Sentry from './Sentry'
 export function instrument(config: Config) {
   if (config.monitors) {
     for (const monitor of config.monitors) {
-      if (monitor.driver === 'Sentry') Sentry.init(monitor)
+      if (monitor.driver === 'Sentry')
+        Sentry.init({
+          appName: config.name,
+          appVersion: config.version,
+          ...monitor,
+        })
     }
   }
 }

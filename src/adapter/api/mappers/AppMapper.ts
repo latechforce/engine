@@ -27,13 +27,16 @@ import { CronMapper } from './Services/CronMapper'
 
 export class AppMapper {
   static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
-    const { name, version, description } = config
-    const monitor = MonitorMapper.toService(drivers, config.monitors)
+    const { name: appName, version: appVersion, description: appDescription } = config
+    const monitor = MonitorMapper.toService(
+      drivers,
+      config.monitors?.map((monitor) => ({ ...monitor, appName, appVersion }))
+    )
     const logger = LoggerMapper.toService(drivers, config.loggers)
     const tunnel = TunnelMapper.toService(drivers, config.tunnel)
     const server = ServerMapper.toService(
       drivers,
-      { ...config.server, appName: name, appVersion: version, appDescription: description },
+      { ...config.server, appName, appVersion, appDescription },
       { logger, monitor, tunnel }
     )
     const idGenerator = IdGeneratorMapper.toService(drivers)
@@ -109,7 +112,7 @@ export class AppMapper {
     )
     return new StoppedApp(
       {
-        name,
+        name: appName,
         integrations: config.integrations,
       },
       {

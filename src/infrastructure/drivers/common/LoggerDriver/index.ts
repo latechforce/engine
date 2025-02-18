@@ -2,10 +2,9 @@ import type { ILoggerDriver } from '/adapter/spi/drivers/LoggerSpi'
 import type { LoggersConfig } from '/domain/services/Logger'
 import { ConsoleDriver } from './ConsoleDriver'
 import { FileDriver } from './FileDriver'
-import { ElasticsSearchDriver } from './ElasticSearchDriver'
 
 export class LoggerDriver implements ILoggerDriver {
-  private _loggers: (ConsoleDriver | FileDriver | ElasticsSearchDriver)[] = []
+  private _loggers: (ConsoleDriver | FileDriver)[] = []
 
   constructor(config: LoggersConfig) {
     for (const logger of config) {
@@ -16,9 +15,6 @@ export class LoggerDriver implements ILoggerDriver {
           break
         case 'File':
           this._loggers.push(new FileDriver(logger))
-          break
-        case 'ElasticSearch':
-          this._loggers.push(new ElasticsSearchDriver(logger))
           break
         default:
           throw new Error('Invalid driver')
