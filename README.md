@@ -4,7 +4,7 @@ La Tech Force Engine is a backend generator from a JSON configuration, fast and 
 
 ## Requirements
 
-- [Bun](https://bun.sh/) v1.2.2
+- [Bun](https://bun.sh/) v1.2.0 or later
 - [VS Code](https://code.visualstudio.com/) editor
 
 ## Getting Started
