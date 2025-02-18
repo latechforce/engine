@@ -1,3 +1,10 @@
+## [0.37.50](https://github.com/latechforce/engine/compare/v0.37.49...v0.37.50) (2025-02-18)
+
+
+### Bug Fixes
+
+* **Sentry:** add green test: should start an app with Sentry monitor and a name with spaces ([e95ac5a](https://github.com/latechforce/engine/commit/e95ac5a281edcd2a44b6d469a64e5b2c2e0552f6))
+
 ## [0.37.49](https://github.com/latechforce/engine/compare/v0.37.48...v0.37.49) (2025-02-18)
 
 
