@@ -23,6 +23,10 @@ export class StorageDriver implements IStorageDriver {
     await this._storage.connect()
   }
 
+  disconnect = async () => {
+    await this._storage.disconnect()
+  }
+
   bucket = (name: string) => {
     return this._storage.bucket(name)
   }

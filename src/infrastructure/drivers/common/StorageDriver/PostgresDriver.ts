@@ -12,6 +12,8 @@ export class PostgresDriver implements IStorageDriver {
     await this._exec('CREATE SCHEMA IF NOT EXISTS storage;')
   }
 
+  disconnect: () => Promise<void> = async () => {}
+
   bucket = (name: string) => {
     return new PostgresBucketDriver(name, this._query, this._exec)
   }

@@ -49,13 +49,14 @@ export class StartedApp extends BaseApp {
       throw new Error(`App is not running, current status is ${this._status}`)
     const { graceful = true } = options || {}
     this._setStatus('stopping')
-    const { server, database, queue, cron } = this._services
+    const { server, database, queue, cron, storage } = this._services
     const { notion } = this._integrations
     await server.stop(async () => {
       cron.stopAll()
       await notion.stopPolling()
       await queue.stop({ graceful })
       await database.disconnect()
+      await storage.disconnect()
     })
     const stoppedApp = new StoppedApp(
       this._config,

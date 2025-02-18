@@ -16,6 +16,7 @@ export interface StorageServices {
 
 export interface IStorageSpi {
   connect: () => Promise<void>
+  disconnect: () => Promise<void>
   bucket: (name: string) => StorageBucketSpi
 }
 
@@ -30,6 +31,11 @@ export class Storage {
   connect = () => {
     this._services.logger.debug(`connecting storage...`)
     return this._spi.connect()
+  }
+
+  disconnect = () => {
+    this._services.logger.debug(`disconnecting storage...`)
+    return this._spi.disconnect()
   }
 
   bucket = (name: string) => {

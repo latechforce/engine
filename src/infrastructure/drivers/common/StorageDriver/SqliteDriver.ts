@@ -10,6 +10,8 @@ export class SqliteDriver implements IStorageDriver {
 
   connect = async () => {}
 
+  disconnect: () => Promise<void> = async () => {}
+
   bucket = (name: string) => {
     return new SqliteBucketDriver(name, this._query, this._exec)
   }
