@@ -2,21 +2,20 @@ import type { Config, CodeRunnerContext } from '@latechforce/engine'
 import App from '@latechforce/engine/bun'
 
 const config: Config = {
-  name: 'App',
+  name: 'Hello World Example',
   version: '1.0.0',
   automations: [
     {
-      name: 'helloName',
+      name: 'helloWorld',
       trigger: {
         service: 'Http',
         event: 'ApiCalled',
-        path: 'hello-name',
+        path: 'hello-world',
         input: {
           type: 'object',
           properties: {
             name: { type: 'string' },
           },
-          required: ['name'],
         },
         output: {
           message: '{{runJavascriptCode.message}}',
@@ -30,8 +29,8 @@ const config: Config = {
           input: {
             name: '{{trigger.body.name}}',
           },
-          code: String(async function (context: CodeRunnerContext<{ name: string }>) {
-            const { name } = context.inputData
+          code: String(async function (context: CodeRunnerContext<{ name?: string }>) {
+            const { name = 'world' } = context.inputData
             return { message: `Hello ${name}!` }
           }),
         },

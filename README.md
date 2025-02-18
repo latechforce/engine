@@ -47,8 +47,9 @@ $ bun install
 $ bun start
 ```
 
-You can find the Open API documentation at `http://localhost:3000/api/docs`.
-You can test the API at `http://localhost:3000/api/docs#tag/automation/POST/api/automation/hello-name`.
+You can find the Open API documentation at [`http://localhost:3000/api/docs`](http://localhost:3000/api/docs).
+
+You can test the API at [`http://localhost:3000/api/docs#tag/automation/POST/api/automation/hello-world`](http://localhost:3000/api/docs#tag/automation/POST/api/automation/hello-world).
 
 ## Starter Kit
 
@@ -60,13 +61,13 @@ A configuration is a JSON representation of the application. It contains the tab
 
 You can [explore the configuration here](https://json-schema.app/view/%23?url=https%3A%2F%2Fraw.githubusercontent.com%2Flatechforce%2Fengine%2Frefs%2Fheads%2Fmain%2Fschema%2Fapp.schema.json).
 
-We invite you to navigate into the `test/` folder to see some examples.
+We invite you to navigate into the `examples/` folder to see some examples.
 
 ## Contributing
 
 La Tech Force Engine is built and maintained by a small team – we'd love your help to fix bugs and add features!
 
-You can read our [contributing guide here](https://github.com/latechforce/engine/blob/main/docs/CONTRIBUTING.md) and our [code of conduct here](https://github.com/latechforce/engine/blob/main/docs/CODE_OF_CONDUCT.md).
+You can read our [contributing guide here](https://github.com/latechforce/engine/blob/main/CONTRIBUTING.md) and our [code of conduct here](https://github.com/latechforce/engine/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
