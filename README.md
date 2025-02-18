@@ -9,7 +9,7 @@ La Tech Force Engine is a backend generator from a JSON configuration, fast and 
 
 ## Getting Started
 
-Clone the project, install project dependencies, and start hacking:
+Clone the project, install project dependencies, and start contributing:
 
 ```
 $ git clone https://github.com/latechforce/engine.git latechforce-engine
