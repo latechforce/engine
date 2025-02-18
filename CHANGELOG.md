@@ -1,3 +1,10 @@
+## [0.37.51](https://github.com/latechforce/engine/compare/v0.37.50...v0.37.51) (2025-02-18)
+
+
+### Bug Fixes
+
+* **Logger:** add Console logger by default ([28f88c4](https://github.com/latechforce/engine/commit/28f88c411c56bc12883da5d871c6ae8c6c95cb44))
+
 ## [0.37.50](https://github.com/latechforce/engine/compare/v0.37.49...v0.37.50) (2025-02-18)
 
 
