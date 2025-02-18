@@ -25,7 +25,7 @@ export default class {
   }
 
   private _getSchemaErrors = (config: unknown): SchemaError[] => {
-    return this._schemaValidator.validateFromFile(config, 'app')
+    return this._schemaValidator.validateAppSchema(config)
   }
 
   private _isConfig = (config: unknown): config is Config => {
@@ -34,7 +34,7 @@ export default class {
 
   private _validateSchemaOrThrow = (config: unknown): Config => {
     if (!this._isConfig(config)) {
-      const errors = this._schemaValidator.validateFromFile(config, 'app')
+      const errors = this._schemaValidator.validateAppSchema(config)
       throw new Error(JSON.stringify(errors, null, 2))
     }
     return { ...config }

@@ -17,15 +17,15 @@ export interface JSONSchema {
 }
 
 export interface ISchemaValidatorSpi {
-  validateFromFile(json: unknown, schemaFileName: string): SchemaError[]
+  validateAppSchema(json: unknown): SchemaError[]
   validate(json: unknown, schema: JSONSchema): SchemaError[]
 }
 
 export class SchemaValidator {
   constructor(private _spi: ISchemaValidatorSpi) {}
 
-  validateFromFile = (json: unknown, schemaFileName: string) => {
-    return this._spi.validateFromFile(json, schemaFileName)
+  validateAppSchema = (json: unknown) => {
+    return this._spi.validateAppSchema(json)
   }
 
   validate = (json: unknown, schema: JSONSchema) => {
