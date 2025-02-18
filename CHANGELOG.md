@@ -1,3 +1,12 @@
+## [0.37.52](https://github.com/latechforce/engine/compare/v0.37.51...v0.37.52) (2025-02-18)
+
+
+### Bug Fixes
+
+* **README:** update with examples ([bca3330](https://github.com/latechforce/engine/commit/bca33300402cead1a544250ce3897038abdeb32e))
+* update example ([b44ed7b](https://github.com/latechforce/engine/commit/b44ed7b5bd247f73ebdedead33aeb9eeb485d9e8))
+* update LICENSE ([0e12ea6](https://github.com/latechforce/engine/commit/0e12ea6d09a96853ca377e278ffcc72b58ed8136))
+
 ## [0.37.51](https://github.com/latechforce/engine/compare/v0.37.50...v0.37.51) (2025-02-18)
 
 
