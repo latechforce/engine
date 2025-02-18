@@ -1,3 +1,10 @@
+## [0.37.53](https://github.com/latechforce/engine/compare/v0.37.52...v0.37.53) (2025-02-18)
+
+
+### Bug Fixes
+
+* update Open API log ([cd7f9ec](https://github.com/latechforce/engine/commit/cd7f9ec8b3188d6dc98472395e7814fac0ab4069))
+
 ## [0.37.52](https://github.com/latechforce/engine/compare/v0.37.51...v0.37.52) (2025-02-18)
 
 
