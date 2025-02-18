@@ -1,3 +1,12 @@
+## [0.37.48](https://github.com/latechforce/engine/compare/v0.37.47...v0.37.48) (2025-02-18)
+
+
+### Bug Fixes
+
+* **Server:** add default idleTimeout to 5 minutes ([fd35438](https://github.com/latechforce/engine/commit/fd35438e670badf855b314feb5a357bc464492f6))
+* **Server:** set max idleTimeout ([1eb8632](https://github.com/latechforce/engine/commit/1eb86323c100f2f35dcf1bee1737a43b38e87c7d))
+* **Server:** update idleTimeout ([9d786cd](https://github.com/latechforce/engine/commit/9d786cd72dcde34cdf7d4b611ffcb4adb157b9cd))
+
 ## [0.37.47](https://github.com/latechforce/engine/compare/v0.37.46...v0.37.47) (2025-02-17)
 
 
