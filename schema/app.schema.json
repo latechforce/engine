@@ -1363,6 +1363,12 @@
                 "env": {
                     "type": "string"
                 },
+                "idleTimeout": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
                 "monitors": {
                     "items": {
                         "enum": [

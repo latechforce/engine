@@ -16,6 +16,7 @@ export interface ServerConfig {
   appDescription?: string
   apiKeys?: string[]
   port?: string | number
+  idleTimeout?: string | number
   baseUrl?: string
   sslCert?: string
   sslKey?: string

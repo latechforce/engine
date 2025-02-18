@@ -177,10 +177,11 @@ export class ElysiaDriver implements IServerDriver {
   }
 
   start = async (): Promise<number> => {
+    const idleTimeout = this._config.idleTimeout ? Number(this._config.idleTimeout) : 300000
     const port = this._config.port
       ? Number(this._config.port)
       : await this._findRandomAvailablePort()
-    this._app.listen(port)
+    this._app.listen({ port, idleTimeout })
     return port
   }
 
