@@ -192,7 +192,10 @@ export class ElysiaDriver implements IServerDriver {
     const { auth } = options
     if (auth) {
       if (auth === 'ApiKey') {
-        const apiKey = request.headers.get('x-api-key')
+        const apiKey =
+          request.headers.get('x-api-key') ||
+          request.headers.get('X-Api-Key') ||
+          request.headers.get('X-API-KEY')
         if (!apiKey || !this._config.apiKeys?.includes(apiKey)) {
           return this._formatResponse(
             new JsonResponse({ error: 'Unauthorized: Invalid API Key' }, 401)

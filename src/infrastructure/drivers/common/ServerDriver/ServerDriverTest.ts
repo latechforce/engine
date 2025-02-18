@@ -95,6 +95,24 @@ export function testServerDriver(
       expect(data.message).toBe('GET success')
     })
 
+    it('should succeed to GET requests with ApiKey authentification and camelcase header', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-get`, {
+        headers: { 'X-Api-Key': 'test-key' },
+      })
+      const data = await res.json()
+      expect(res.status).toBe(200)
+      expect(data.message).toBe('GET success')
+    })
+
+    it('should succeed to GET requests with ApiKey authentification and uppercase header', async () => {
+      const res = await fetch(`http://localhost:${port}/test-auth-get`, {
+        headers: { 'X-API-KEY': 'test-key' },
+      })
+      const data = await res.json()
+      expect(res.status).toBe(200)
+      expect(data.message).toBe('GET success')
+    })
+
     it('should return 404 for unknown routes', async () => {
       const res = await fetch(`http://localhost:${port}/unknown-route`)
       const data = await res.json()
