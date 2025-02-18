@@ -18,7 +18,7 @@ test('should return a mocked response from fetcher', async () => {
       fetcher: () => mockedFetcher,
     },
   })
-  const { services } = await mockedApp.start({ name: 'Test', version: '1.0.0' })
+  const { services } = await mockedApp.start({ name: 'Test', version: '1.0.0', loggers: [] })
   mockedFetcher.addEndpoint('GET', 'https://example.com/api/test', async () => {
     return new Response('Test Response', { status: 200 })
   })

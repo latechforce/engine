@@ -19,14 +19,16 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      loggers: [],
     }
     const app = new MockedApp()
 
     // WHEN
-    const { url } = await app.start(config)
+    const startedApp = await app.start(config)
 
     // THEN
-    expect(url).toBeDefined()
+    expect(startedApp.url).toBeDefined()
+    await startedApp.stop()
   })
 
   it('should start an app on a dedicated PORT', async () => {
@@ -35,14 +37,16 @@ describe('start', () => {
       name: 'App',
       version: '1.0.0',
       server: { port: '6543' },
+      loggers: [],
     }
     const app = new MockedApp()
 
     // WHEN
-    const { url } = await app.start(config)
+    const startedApp = await app.start(config)
 
     // THEN
-    expect(url).toBe('http://localhost:6543')
+    expect(startedApp.url).toBe('http://localhost:6543')
+    await startedApp.stop()
   })
 
   it('should check the app running status through /api/health endpoint', async () => {
@@ -50,15 +54,17 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      loggers: [],
     }
     const app = new MockedApp()
-    const { url } = await app.start(config)
+    const startedApp = await app.start(config)
 
     // WHEN
-    const { success } = await fetch(url + '/api/health').then((res) => res.json())
+    const { success } = await fetch(startedApp.url + '/api/health').then((res) => res.json())
 
     // THEN
     expect(success).toBe(true)
+    await startedApp.stop()
   })
 })
 
@@ -68,6 +74,7 @@ describe('stop', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      loggers: [],
     }
     const app = new MockedApp()
     const startedApp = await app.start(config)

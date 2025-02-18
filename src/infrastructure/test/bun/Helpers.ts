@@ -131,7 +131,7 @@ export class Helpers {
         : {}
     }) => void
   ): void {
-    const files: string[] = []
+    let files: string[] = []
     const drivers: any = {}
     const integrations: any = {}
     const extendsConfig: Partial<Config> = {}
@@ -231,12 +231,8 @@ export class Helpers {
 
     this.tester.afterEach(async () => {
       await app.stop()
-    })
-
-    this.tester.afterAll(async () => {
-      for (const file of files) {
-        await fs.remove(file)
-      }
+      for (const file of files) await fs.unlink(file)
+      files = []
     })
 
     tests({

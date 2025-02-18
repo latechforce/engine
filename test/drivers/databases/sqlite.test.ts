@@ -35,6 +35,7 @@ describe('on start', () => {
         driver: 'SQLite',
         url,
       },
+      loggers: [],
     }
     const app = new MockedApp()
 
@@ -65,6 +66,7 @@ describe('on start', () => {
         driver: 'SQLite',
         url,
       },
+      loggers: [],
     }
     const app = new MockedApp()
     const startedApp = await app.start(config)
@@ -108,6 +110,7 @@ describe('on start', () => {
         driver: 'SQLite',
         url,
       },
+      loggers: [],
     }
     const app = new MockedApp()
 
@@ -149,6 +152,7 @@ describe('on start', () => {
         driver: 'SQLite',
         url,
       },
+      loggers: [],
     }
     const app = new MockedApp()
     const startedApp = await app.start(config)
