@@ -1,3 +1,10 @@
+## [0.37.49](https://github.com/latechforce/engine/compare/v0.37.48...v0.37.49) (2025-02-18)
+
+
+### Bug Fixes
+
+* **Sentry:** add release in Sentry monitoring ([813e2a0](https://github.com/latechforce/engine/commit/813e2a0462173ff7e8d5059159f4a02d39992953))
+
 ## [0.37.48](https://github.com/latechforce/engine/compare/v0.37.47...v0.37.48) (2025-02-18)
 
 
