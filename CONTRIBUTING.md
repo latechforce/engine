@@ -52,11 +52,9 @@ More generally, make sure to follow these three principles:
 
 ## Project Structure
 
-- **scripts** Utilities for production build
-- **tests** End-to-End tests
 - **src** Source code following the Clean Architecture patterns
-- **test** Utilities for e2e, integration and unit tests
+- **test** Utilities for e2e tests
 
 ## Contact information
 
-You can contact Thomas JEANNEAU by email at: thomas@essentiel.io
+You can contact Thomas JEANNEAU by email at: thomas.jeanneau@latechforce.com
