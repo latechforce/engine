@@ -1,3 +1,11 @@
+## [0.37.55](https://github.com/latechforce/engine/compare/v0.37.54...v0.37.55) (2025-02-18)
+
+
+### Bug Fixes
+
+* **Schema:** update ([2fa4d05](https://github.com/latechforce/engine/commit/2fa4d056437f4e81b8c5017e2050ae9df1b1482c))
+* **SchemaValidator:** add app.schema.json in build ([35ec5c7](https://github.com/latechforce/engine/commit/35ec5c783a0bf45ace8aa04918f4e5995de3f8c3))
+
 ## [0.37.54](https://github.com/latechforce/engine/compare/v0.37.53...v0.37.54) (2025-02-18)
 
 
