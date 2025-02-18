@@ -1,3 +1,10 @@
+## [0.37.56](https://github.com/latechforce/engine/compare/v0.37.55...v0.37.56) (2025-02-18)
+
+
+### Bug Fixes
+
+* update README with docker requirement ([42574ae](https://github.com/latechforce/engine/commit/42574aee9bd87e2b60c79716c8c0fe2bb88f83a7))
+
 ## [0.37.55](https://github.com/latechforce/engine/compare/v0.37.54...v0.37.55) (2025-02-18)
 
 
