@@ -1289,16 +1289,6 @@
             ],
             "type": "object"
         },
-        "MonitorConfig": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/MonitorSentryConfig"
-                },
-                {
-                    "$ref": "#/definitions/MonitorConsoleConfig"
-                }
-            ]
-        },
         "MonitorConsoleConfig": {
             "additionalProperties": false,
             "properties": {
@@ -1312,7 +1302,22 @@
             ],
             "type": "object"
         },
-        "MonitorSentryConfig": {
+        "NotionConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "pollingInterval": {
+                    "type": "number"
+                },
+                "token": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "token"
+            ],
+            "type": "object"
+        },
+        "Omit<MonitorSentryConfig,\"appName\"|\"appVersion\">": {
             "additionalProperties": false,
             "properties": {
                 "driver": {
@@ -1330,21 +1335,6 @@
                 "driver",
                 "dsn",
                 "environment"
-            ],
-            "type": "object"
-        },
-        "NotionConfig": {
-            "additionalProperties": false,
-            "properties": {
-                "pollingInterval": {
-                    "type": "number"
-                },
-                "token": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "token"
             ],
             "type": "object"
         },
@@ -1668,7 +1658,14 @@
         },
         "monitors": {
             "items": {
-                "$ref": "#/definitions/MonitorConfig"
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/MonitorConsoleConfig"
+                    },
+                    {
+                        "$ref": "#/definitions/Omit<MonitorSentryConfig,\"appName\"|\"appVersion\">"
+                    }
+                ]
             },
             "type": "array"
         },

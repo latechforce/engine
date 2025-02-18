@@ -3,8 +3,6 @@ import appSchema from '../../../../schema/app.schema.json'
 import type { ISchemaValidatorDriver } from '/adapter/spi/drivers/SchemaValidatorSpi'
 import type { JSONSchema } from '/domain/services/SchemaValidator'
 
-type AppSchema = typeof appSchema
-
 export class SchemaValidatorDriver implements ISchemaValidatorDriver {
   private _ajv: Ajv
 
@@ -13,7 +11,7 @@ export class SchemaValidatorDriver implements ISchemaValidatorDriver {
   }
 
   validateAppSchema = (data: unknown) => {
-    const validate = this._ajv.compile<AppSchema>(appSchema)
+    const validate = this._ajv.compile(appSchema)
     if (validate(data)) return []
     return this._returnErrors(validate.errors)
   }
