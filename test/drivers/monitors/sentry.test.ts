@@ -26,4 +26,27 @@ describe('on start', () => {
     // THEN
     await startedApp.stop()
   })
+
+  it('should start an app with Sentry monitor and a name with spaces', async () => {
+    // GIVEN
+    const config: Config = {
+      name: 'La Tech Force App',
+      version: '1.0.0',
+      monitors: [
+        {
+          driver: 'Sentry',
+          dsn: env.TEST_SENTRY_DSN,
+          environment: 'test',
+        },
+      ],
+    }
+    const app = new MockedApp()
+
+    // WHEN
+    instrument(config)
+    const startedApp = await app.start(config)
+
+    // THEN
+    await startedApp.stop()
+  })
 })
