@@ -1,13 +1,13 @@
 {
   "name": "@latechforce/engine",
-  "description": "Generate web app with a configuration file",
+  "description": "Open-source backend generator from a simple configuration.",
   "version": "0.37.52",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "author": "Thomas JEANNEAU",
-  "license": "BSL 1.1",
+  "license": "MIT",
   "exports": {
     ".": "./dist/index.js",
     "./bun": "./dist/bun.js",
