@@ -1,3 +1,10 @@
+## [0.37.54](https://github.com/latechforce/engine/compare/v0.37.53...v0.37.54) (2025-02-18)
+
+
+### Bug Fixes
+
+* **Server:** add green test: should succeed to GET requests with ApiKey authentification and camelcase header ([09a2dd6](https://github.com/latechforce/engine/commit/09a2dd637f59719518341973c7da102dd790e2d7))
+
 ## [0.37.53](https://github.com/latechforce/engine/compare/v0.37.52...v0.37.53) (2025-02-18)
 
 
