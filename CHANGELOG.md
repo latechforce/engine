@@ -1,3 +1,10 @@
+## [0.37.57](https://github.com/latechforce/engine/compare/v0.37.56...v0.37.57) (2025-02-24)
+
+
+### Bug Fixes
+
+* update package.json ([3469eb8](https://github.com/latechforce/engine/commit/3469eb812f1efbf011b536a89a20b6c64e91be86))
+
 ## [0.37.56](https://github.com/latechforce/engine/compare/v0.37.55...v0.37.56) (2025-02-18)
 
 
