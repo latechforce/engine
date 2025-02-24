@@ -47,9 +47,9 @@
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
-    "@elysiajs/swagger": "^1.2.0",
+    "@elysiajs/swagger": "^1.2.2",
     "@ngrok/ngrok": "^1.4.1",
-    "@notionhq/client": "^2.2.15",
+    "@notionhq/client": "^2.2.16",
     "@sentry/bun": "^9.1.0",
     "@types/lodash": "^4.17.15",
     "@types/papaparse": "^5.3.15",
@@ -57,27 +57,27 @@
     "airtable": "^0.12.2",
     "ajv": "^8.17.1",
     "axios": "^1.7.9",
-    "cron": "^3.5.0",
+    "cron": "^4.0.0",
     "date-fns": "^4.1.0",
-    "elysia": "^1.2.14",
+    "elysia": "^1.2.21",
     "fs-extra": "^11.3.0",
     "googleapis": "^144.0.0",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
     "minipass": "^7.1.2",
-    "nanoid": "^5.1.0",
+    "nanoid": "^5.1.2",
     "nodemailer": "^6.10.0",
     "papaparse": "^5.5.2",
     "pg": "^8.13.3",
     "pg-boss": "^10.1.6",
     "puppeteer": "^24.2.1",
     "slugify": "^1.6.6",
-    "uuid": "^11.0.5",
+    "uuid": "^11.1.0",
     "winston": "^3.17.0",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
-    "@eslint/js": "^9.20.0",
+    "@eslint/js": "^9.21.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/exec": "^7.0.3",
@@ -89,15 +89,14 @@
     "@types/bun": "latest",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
-    "@types/eslint__js": "^8.42.3",
     "@types/express": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
     "@types/pg": "^8.11.11",
     "@types/smtp-server": "^3.5.10",
-    "eslint": "^9.20.1",
+    "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
-    "prettier": "^3.5.1",
+    "prettier": "^3.5.2",
     "semantic-release": "^24.2.3",
     "typescript-eslint": "^8.24.1",
     "typescript-json-schema": "^0.65.1"
@@ -106,7 +105,7 @@
     "typescript": "^5.5.4"
   },
   "engines": {
-    "bun": "1.2.2"
+    "bun": "1.2.3"
   },
   "config": {
     "commitizen": {
