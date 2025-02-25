@@ -19,9 +19,15 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
   }
 
   createPayment = async (payment: GoCardlessCreatePayment): Promise<GoCardlessPayment> => {
+    const { mandate, ...rest } = payment
     const response = await this._api()
       .post('/payments', {
-        payments: payment,
+        payments: {
+          ...rest,
+          links: {
+            mandate,
+          },
+        },
       })
       .catch((error) => {
         return error.response

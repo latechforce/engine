@@ -53,6 +53,77 @@
             ],
             "type": "string"
         },
+        "GoCardlessCreatePayment": {
+            "additionalProperties": false,
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "charge_date": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "mandate": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/Record<string,string>"
+                },
+                "reference": {
+                    "type": "string"
+                },
+                "retry_if_possible": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "amount",
+                "charge_date",
+                "currency",
+                "mandate",
+                "retry_if_possible"
+            ],
+            "type": "object"
+        },
+        "GoCardlessProductionConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "environment": {
+                    "const": "production",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "accessToken",
+                "environment"
+            ],
+            "type": "object"
+        },
+        "GoCardlessSandboxConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "environment": {
+                    "const": "sandbox",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "accessToken",
+                "environment"
+            ],
+            "type": "object"
+        },
         "GoogleMailConfig": {
             "additionalProperties": false,
             "properties": {
@@ -124,6 +195,9 @@
                 },
                 {
                     "$ref": "#/definitions/ISendEmailGoogleMailAction"
+                },
+                {
+                    "$ref": "#/definitions/ICreatePaymentGoCardlessAction"
                 }
             ]
         },
@@ -240,6 +314,32 @@
                 "client",
                 "integration",
                 "name"
+            ],
+            "type": "object"
+        },
+        "ICreatePaymentGoCardlessAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "CreatePayment",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "GoCardless",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "payment": {
+                    "$ref": "#/definitions/GoCardlessCreatePayment"
+                }
+            },
+            "required": [
+                "action",
+                "integration",
+                "name",
+                "payment"
             ],
             "type": "object"
         },
@@ -470,6 +570,16 @@
             "properties": {
                 "airtable": {
                     "$ref": "#/definitions/AirtableConfig"
+                },
+                "gocardless": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/GoCardlessSandboxConfig"
+                        },
+                        {
+                            "$ref": "#/definitions/GoCardlessProductionConfig"
+                        }
+                    ]
                 },
                 "google": {
                     "additionalProperties": false,
@@ -1556,6 +1666,10 @@
                 "secretKey",
                 "stagingToken"
             ],
+            "type": "object"
+        },
+        "Record<string,string>": {
+            "additionalProperties": false,
             "type": "object"
         },
         "TemplateObject": {

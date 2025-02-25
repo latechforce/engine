@@ -28,6 +28,10 @@ import {
 } from './notion/UpdatePage'
 import { SendEmailGoogleMailActionMapper } from './googleMail/SendEmailMapper'
 import type { SendEmailGoogleMailActionIntegrations } from '/domain/entities/Action/googleMail/SendEmail'
+import {
+  CreatePaymentGoCardlessActionMapper,
+  type CreatePaymentGoCardlessActionMapperIntegrations,
+} from './gocardless/CreatePaymentMapper'
 
 export type ActionMapperServices = CreateRecordDatabaseActionMapperServices &
   RunJavascriptCodeActionMapperServices &
@@ -38,7 +42,8 @@ export type ActionMapperEntities = CreateRecordDatabaseActionMapperEntities
 export type ActionMapperIntegrations = GetCompanyPappersActionMapperIntegrations &
   CreateClientQontoActionMapperIntegrations &
   UpdatePageNotionActionMapperIntegrations &
-  SendEmailGoogleMailActionIntegrations
+  SendEmailGoogleMailActionIntegrations &
+  CreatePaymentGoCardlessActionMapperIntegrations
 
 export class ActionMapper {
   static toEntity(
@@ -57,8 +62,7 @@ export class ActionMapper {
       monitor,
     } = services
     const { tables } = entities
-    const { pappers, qonto, notion, googleMail } = integrations
-
+    const { pappers, qonto, notion, googleMail, gocardless } = integrations
     switch (action) {
       case 'CreateRecord':
         return CreateRecordDatabaseActionMapper.toEntity(
@@ -109,6 +113,12 @@ export class ActionMapper {
           config,
           { templateCompiler, logger, monitor },
           { googleMail }
+        )
+      case 'CreatePayment':
+        return CreatePaymentGoCardlessActionMapper.toEntity(
+          config,
+          { templateCompiler, logger, monitor },
+          { gocardless }
         )
       default:
         throw new Error(`ActionMapper: Action ${action} not supported`)

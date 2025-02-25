@@ -112,6 +112,8 @@ export class Template {
         } else {
           result[key] = this.fillObject(value, data)
         }
+      } else {
+        result[key] = value
       }
     }
     return result as T

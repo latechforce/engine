@@ -42,7 +42,7 @@ export class AutomationMapper {
       database,
       cron,
     } = services
-    const { notion, pappers, qonto, googleMail } = integrations
+    const { notion, pappers, qonto, googleMail, gocardless } = integrations
     const trigger = TriggerMapper.toEntity(
       {
         ...config.trigger,
@@ -78,6 +78,7 @@ export class AutomationMapper {
         qonto,
         notion,
         googleMail,
+        gocardless,
       }
     )
     return new Automation(config, { logger, monitor, idGenerator, database }, { trigger, actions })

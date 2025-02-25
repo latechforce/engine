@@ -17,6 +17,8 @@ import { MockedApp } from './MockedApp'
 import { MockedFetcherDriver } from './MockedFetcherDriver'
 import { GoogleMailIntegration } from '/infrastructure/integrations/bun/mocks/google/mail/GoogleMailIntegration.mock'
 import type { GoogleMailConfig } from '/domain/integrations/Google/GoogleMail'
+import { GoCardlessIntegration } from '/infrastructure/integrations/bun/mocks/gocardless/GoCardlessIntegration.mock'
+import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -26,7 +28,7 @@ type Tester = {
 }
 
 type DriverType = 'Database' | 'Storage' | 'Fetcher'
-type IntegrationType = 'Notion' | 'Qonto' | 'Pappers' | 'Airtable' | 'GoogleMail'
+type IntegrationType = 'Notion' | 'Qonto' | 'Pappers' | 'Airtable' | 'GoogleMail' | 'GoCardless'
 
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
@@ -50,7 +52,9 @@ type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
         ? PappersIntegration
         : I extends 'GoogleMail'
           ? GoogleMailIntegration
-          : never
+          : I extends 'GoCardless'
+            ? GoCardlessIntegration
+            : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -212,6 +216,14 @@ export class Helpers {
           }
           integrations.pappers = new PappersIntegration(config)
           extendsConfig.integrations.pappers = config
+        }
+        if (options.integrations.includes('GoCardless')) {
+          const config: GoCardlessConfig = {
+            environment: 'production',
+            accessToken: await getTestDbUrl('gocardless'),
+          }
+          integrations.gocardless = new GoCardlessIntegration(config)
+          extendsConfig.integrations.gocardless = config
         }
       }
       let startedApp: StartedApp | undefined

@@ -53,7 +53,7 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
         'pending_submission', // Default initial status
         payment.charge_date || chargeDate.toISOString(),
         createdAt,
-        payment.links.mandate,
+        payment.mandate,
         payment.metadata ? JSON.stringify(payment.metadata) : null,
         payment.reference || null,
         payment.description || null,
@@ -70,7 +70,7 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
       reference: payment.reference || null,
       description: payment.description || null,
       links: {
-        mandate: payment.links.mandate,
+        mandate: payment.mandate,
         creditor: 'CR123',
       },
       amount_refunded: 0,

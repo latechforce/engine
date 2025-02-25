@@ -1,6 +1,6 @@
 import type { IGoCardlessIntegration } from '/adapter/spi/integrations/GoCardlessSpi'
 import type BunTester from 'bun:test'
-import { qontoCreatePaymentSample } from '../../bun/mocks/gocardless/GoCardlessTestSamples'
+import { goCardlessCreatePaymentSample } from '../../bun/mocks/gocardless/GoCardlessTestSamples'
 
 export function testGoCardlessIntegration(
   { describe, it, expect }: typeof BunTester,
@@ -9,7 +9,7 @@ export function testGoCardlessIntegration(
   describe('createPayment', () => {
     it('should create a payment', async () => {
       // WHEN
-      const payment = await integration.createPayment(qontoCreatePaymentSample)
+      const payment = await integration.createPayment(goCardlessCreatePaymentSample)
 
       // THEN
       expect(payment?.id).toBeDefined()

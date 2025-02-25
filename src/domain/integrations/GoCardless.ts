@@ -35,9 +35,7 @@ export interface GoCardlessCreatePayment {
   description?: string
   metadata?: Record<string, string>
   retry_if_possible: boolean
-  links: {
-    mandate: string
-  }
+  mandate: string
 }
 
 export interface GoCardlessPayment {

@@ -24,6 +24,7 @@ import { FetcherMapper } from './Services/FetcherMapper'
 import { AirtableMapper } from './Integration/AirtableMapper'
 import { GoogleMailMapper } from './Integration/GoogleMailMapper'
 import { CronMapper } from './Services/CronMapper'
+import { GoCardlessMapper } from './Integration/GoCardlessMapper'
 
 export class AppMapper {
   static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
@@ -78,18 +79,19 @@ export class AppMapper {
       integrations,
       config.integrations?.google?.mail
     )
+    const gocardless = GoCardlessMapper.toIntegration(integrations, config.integrations?.gocardless)
     const javascriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger, fetcher },
       { tables },
-      { notion, airtable, qonto },
+      { notion, airtable, qonto, gocardless },
       { language: 'JavaScript' }
     )
     const typescriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger, fetcher },
       { tables },
-      { notion, airtable, qonto },
+      { notion, airtable, qonto, gocardless },
       { language: 'TypeScript' }
     )
     const automations = AutomationMapper.toManyEntities(
@@ -108,7 +110,7 @@ export class AppMapper {
         cron,
       },
       { tables },
-      { notion, pappers, qonto, googleMail }
+      { notion, pappers, qonto, googleMail, gocardless }
     )
     return new StoppedApp(
       {

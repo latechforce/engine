@@ -24,6 +24,8 @@ import type {
   QontoClientInvoice,
   Qonto,
 } from '../integrations/Qonto'
+import type { GoCardless, GoCardlessPayment } from '../integrations/GoCardless'
+import type { GoCardlessCreatePayment } from '../integrations/GoCardless'
 
 export interface ICodeRunnerSpi {
   run: (
@@ -111,10 +113,15 @@ export interface CodeRunnerContextIntegrationsQonto {
   listClientInvoices: () => Promise<QontoClientInvoice[]>
 }
 
+export interface CodeRunnerContextIntegrationsGoCardless {
+  createPayment: (payment: GoCardlessCreatePayment) => Promise<GoCardlessPayment>
+}
+
 export interface CodeRunnerContextIntegrations {
   notion: CodeRunnerContextIntegrationsNotion
   airtable: CodeRunnerContextIntegrationsAirtable
   qonto: CodeRunnerContextIntegrationsQonto
+  gocardless: CodeRunnerContextIntegrationsGoCardless
 }
 
 export interface CodeRunnerContextPackages {
@@ -153,6 +160,7 @@ export interface CodeRunnerIntegrations {
   notion: Notion
   airtable: Airtable
   qonto: Qonto
+  gocardless: GoCardless
 }
 
 export class CodeRunner {
