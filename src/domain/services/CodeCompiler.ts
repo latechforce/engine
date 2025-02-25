@@ -17,7 +17,7 @@ import type { UpdateNotionTablePageProperties } from '/domain/integrations/Notio
 import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
 import type { QontoCreateClient, QontoCreateClientInvoice } from '../integrations/Qonto'
-import type { GoCardlessCreatePayment } from '../integrations/GoCardless'
+import type { GoCardlessCreatePayment, GoCardlessListPayment } from '../integrations/GoCardless'
 
 export type CodeCompilerServices = CodeRunnerServices
 
@@ -193,6 +193,9 @@ export class CodeCompiler {
       gocardless: {
         createPayment: async (payment: GoCardlessCreatePayment) => {
           return gocardless.createPayment(payment)
+        },
+        listPayments: async (params: GoCardlessListPayment) => {
+          return gocardless.listPayments(params)
         },
       },
     }

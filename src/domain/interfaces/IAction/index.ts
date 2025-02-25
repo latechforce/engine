@@ -7,7 +7,7 @@ import type { ICreateClientQontoAction } from './qonto/ICreateClient'
 import type { IUpdatePageNotionAction } from './notion/IUpdatePage'
 import type { ISendEmailGoogleMailAction } from './googleMail/ISendEmail'
 import type { ICreatePaymentGoCardlessAction } from './gocardless/ICreatePayment'
-
+import type { IListPaymentsGoCardlessAction } from './gocardless/IListPayments'
 export type IAction =
   | IRunJavascriptCodeAction
   | IRunTypescriptCodeAction
@@ -18,3 +18,4 @@ export type IAction =
   | IUpdatePageNotionAction
   | ISendEmailGoogleMailAction
   | ICreatePaymentGoCardlessAction
+  | IListPaymentsGoCardlessAction

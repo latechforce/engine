@@ -10,6 +10,9 @@ type TemplateValue =
       json: string
     }
   | TemplateObject
+  | string[]
+  | number
+  | boolean
   | undefined
 
 export interface TemplateObject {
@@ -39,27 +42,33 @@ export type TemplateObjectCompiled = {
     | { boolean: Template }
     | { json: Template }
     | TemplateObjectCompiled
+    | string[]
+    | number
+    | boolean
     | undefined
 }
 
 export type TemplateObjectFilled = {
-  [key: string]: string | number | boolean | TemplateObjectFilled | undefined
+  [key: string]: string | number | boolean | TemplateObjectFilled | undefined | string[]
 }
 
 export type ConvertToTemplateObject<T> = {
   [K in keyof T]: T[K] extends object ? ConvertToTemplateObject<T[K]> : TemplateValue
 }
-
 export type ConvertToTemplateObjectCompiled<T> = {
   [K in keyof T]: T[K] extends string
     ? Template
     : T[K] extends string | undefined
       ? Template | undefined
-      : T[K] extends object
-        ? ConvertToTemplateObjectCompiled<T[K]>
-        : T[K] extends object | undefined
-          ? ConvertToTemplateObjectCompiled<T[K]> | undefined
-          : never
+      : T[K] extends string[]
+        ? string[]
+        : T[K] extends string[] | undefined
+          ? string[] | undefined
+          : T[K] extends object
+            ? ConvertToTemplateObjectCompiled<T[K]>
+            : T[K] extends object | undefined
+              ? ConvertToTemplateObjectCompiled<T[K]> | undefined
+              : never
 }
 
 export type ConvertToTemplateObjectFilled<T> = {
@@ -67,19 +76,23 @@ export type ConvertToTemplateObjectFilled<T> = {
     ? string
     : T[K] extends string | undefined
       ? string | undefined
-      : T[K] extends number
-        ? number
-        : T[K] extends number | undefined
-          ? number | undefined
-          : T[K] extends boolean
-            ? boolean
-            : T[K] extends boolean | undefined
-              ? boolean | undefined
-              : T[K] extends object
-                ? ConvertToTemplateObjectFilled<T[K]>
-                : T[K] extends object | undefined
-                  ? ConvertToTemplateObjectFilled<T[K]> | undefined
-                  : never
+      : T[K] extends string[]
+        ? string[]
+        : T[K] extends string[] | undefined
+          ? string[] | undefined
+          : T[K] extends number
+            ? number
+            : T[K] extends number | undefined
+              ? number | undefined
+              : T[K] extends boolean
+                ? boolean
+                : T[K] extends boolean | undefined
+                  ? boolean | undefined
+                  : T[K] extends object
+                    ? ConvertToTemplateObjectFilled<T[K]>
+                    : T[K] extends object | undefined
+                      ? ConvertToTemplateObjectFilled<T[K]> | undefined
+                      : never
 }
 
 export interface ITemplateSpi {
@@ -109,8 +122,10 @@ export class Template {
           result[key] = value.boolean.fill(data) === 'true' || value.boolean.fill(data) === '1'
         } else if ('json' in value && value.json instanceof Template) {
           result[key] = JSON.parse(value.json.fill(data))
-        } else {
+        } else if (!Array.isArray(value)) {
           result[key] = this.fillObject(value, data)
+        } else {
+          result[key] = value
         }
       } else {
         result[key] = value

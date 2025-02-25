@@ -13,6 +13,7 @@ export type GoCardlessConfig = GoCardlessSandboxConfig | GoCardlessProductionCon
 export interface IGoCardlessSpi {
   getConfig: () => GoCardlessConfig
   createPayment: (payment: GoCardlessCreatePayment) => Promise<GoCardlessPayment>
+  listPayments: (params: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
 }
 
 export class GoCardless {
@@ -24,6 +25,10 @@ export class GoCardless {
 
   createPayment = async (payment: GoCardlessCreatePayment): Promise<GoCardlessPayment> => {
     return this._spi.createPayment(payment)
+  }
+
+  listPayments = async (params: GoCardlessListPayment): Promise<GoCardlessPaymentList> => {
+    return this._spi.listPayments(params)
   }
 }
 
@@ -60,4 +65,23 @@ export interface GoCardlessPayment {
     creditor: string
   }
   retry_if_possible: boolean
+}
+
+export interface GoCardlessListPayment {
+  limit?: number
+  after?: string
+  before?: string
+  status?: string
+  mandate?: string
+}
+
+export interface GoCardlessPaymentList {
+  payments: GoCardlessPayment[]
+  meta: {
+    cursors: {
+      before: string | null
+      after: string | null
+    }
+    limit: number
+  }
 }

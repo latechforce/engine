@@ -24,7 +24,12 @@ import type {
   QontoClientInvoice,
   Qonto,
 } from '../integrations/Qonto'
-import type { GoCardless, GoCardlessPayment } from '../integrations/GoCardless'
+import type {
+  GoCardless,
+  GoCardlessPayment,
+  GoCardlessListPayment,
+  GoCardlessPaymentList,
+} from '../integrations/GoCardless'
 import type { GoCardlessCreatePayment } from '../integrations/GoCardless'
 
 export interface ICodeRunnerSpi {
@@ -115,6 +120,7 @@ export interface CodeRunnerContextIntegrationsQonto {
 
 export interface CodeRunnerContextIntegrationsGoCardless {
   createPayment: (payment: GoCardlessCreatePayment) => Promise<GoCardlessPayment>
+  listPayments: (params: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
 }
 
 export interface CodeRunnerContextIntegrations {

@@ -101,6 +101,12 @@ export class ApiCalledHttpTrigger implements BaseTrigger {
       const value = output ? output[key] : undefined
       if (!value || typeof value === 'string') {
         res[key] = { type: 'string' }
+      } else if (Array.isArray(value)) {
+        res[key] = { type: 'array', items: { type: 'string' } }
+      } else if (typeof value === 'number') {
+        res[key] = { type: 'number' }
+      } else if (typeof value === 'boolean') {
+        res[key] = { type: 'boolean' }
       } else if ('number' in value) {
         res[key] = { type: 'number' }
       } else if ('boolean' in value) {

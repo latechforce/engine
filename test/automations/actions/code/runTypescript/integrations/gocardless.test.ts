@@ -5,7 +5,7 @@ import { goCardlessCreatePaymentSample } from '/infrastructure/integrations/bun/
 
 const helpers = new Helpers(Tester)
 
-helpers.testWithMockedApp({ integrations: ['GoCardless'] }, ({ app, request }) => {
+helpers.testWithMockedApp({ integrations: ['GoCardless'] }, ({ app, request, integrations }) => {
   describe('on POST', () => {
     it('should run a Typescript code with GoCardless create payment', async () => {
       // GIVEN
@@ -57,6 +57,56 @@ helpers.testWithMockedApp({ integrations: ['GoCardless'] }, ({ app, request }) =
 
       // THEN
       expect(response.payment.id).toBeDefined()
+    })
+
+    it('should run a Typescript code with GoCardless list payments', async () => {
+      // GIVEN
+      const payment = await integrations.gocardless.createPayment(goCardlessCreatePaymentSample)
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'listPayments',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'list-payments',
+              output: {
+                payments: { json: '{{runTypescriptCode.payments}}' },
+                meta: { json: '{{runTypescriptCode.meta}}' },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runTypescriptCode',
+                code: String(async function (context: CodeRunnerContext<{}>) {
+                  const { gocardless } = context.integrations
+
+                  const result = await gocardless.listPayments({
+                    limit: 10,
+                    status: 'pending_submission',
+                  })
+                  return result
+                }),
+              },
+            ],
+          },
+        ],
+      }
+
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/list-payments`)
+
+      // THEN
+      expect(response.payments).toBeDefined()
+      expect(Array.isArray(response.payments)).toBe(true)
+      expect(response.meta.limit).toBe(10)
+      expect(response.payments[0].id).toBe(payment.id)
     })
   })
 })

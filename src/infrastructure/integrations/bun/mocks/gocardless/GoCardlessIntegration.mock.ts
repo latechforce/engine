@@ -3,8 +3,25 @@ import type {
   GoCardlessPayment,
   GoCardlessConfig,
   GoCardlessCreatePayment,
+  GoCardlessListPayment,
+  GoCardlessPaymentList,
 } from '/domain/integrations/GoCardless'
 import { Database } from 'bun:sqlite'
+
+type PaymentRow = {
+  id: string
+  amount: number
+  currency: string
+  status: string
+  charge_date: string
+  created_at: string
+  mandate: string
+  metadata: string | null
+  reference: string | null
+  description: string | null
+  amount_refunded: number
+  retry_if_possible: boolean
+}
 
 export class GoCardlessIntegration implements IGoCardlessIntegration {
   private db: Database
@@ -22,7 +39,9 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
         mandate TEXT NOT NULL,
         metadata TEXT,
         reference TEXT,
-        description TEXT
+        description TEXT,
+        amount_refunded INTEGER DEFAULT 0,
+        retry_if_possible BOOLEAN DEFAULT 0
       )
     `)
   }
@@ -43,8 +62,8 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
       `
         INSERT INTO Payments (
           id, amount, currency, status, charge_date, created_at, 
-          mandate, metadata, reference, description
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          mandate, metadata, reference, description, amount_refunded, retry_if_possible
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
       [
         id,
@@ -57,6 +76,8 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
         payment.metadata ? JSON.stringify(payment.metadata) : null,
         payment.reference || null,
         payment.description || null,
+        0, // Default amount_refunded
+        payment.retry_if_possible ?? false, // Default retry_if_possible
       ]
     )
     return {
@@ -81,6 +102,69 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
         estimated_exchange_rate: '1.1234567890',
       },
       retry_if_possible: payment.retry_if_possible ?? false,
+    }
+  }
+
+  listPayments = async (params: GoCardlessListPayment): Promise<GoCardlessPaymentList> => {
+    const limit = params.limit || 10
+    const after = params.after
+    const before = params.before
+
+    let query = `
+      SELECT 
+        id, amount, currency, status, charge_date, created_at,
+        metadata, reference, description, mandate,
+        amount_refunded, retry_if_possible
+      FROM Payments
+    `
+    const queryParams: string[] = []
+
+    if (after) {
+      query += ' WHERE created_at > ?'
+      queryParams.push(after)
+    } else if (before) {
+      query += ' WHERE created_at < ?'
+      queryParams.push(before)
+    }
+
+    query += ' ORDER BY created_at DESC LIMIT ?'
+    queryParams.push(limit.toString())
+
+    const rows = this.db.prepare<PaymentRow, string[]>(query).all(...queryParams)
+
+    const payments: GoCardlessPayment[] = rows.map((row) => ({
+      id: row.id,
+      amount: row.amount,
+      currency: row.currency,
+      status: row.status,
+      charge_date: row.charge_date,
+      created_at: row.created_at,
+      metadata: row.metadata ? JSON.parse(row.metadata) : null,
+      reference: row.reference,
+      description: row.description,
+      links: {
+        mandate: row.mandate,
+        creditor: 'CR123',
+      },
+      amount_refunded: row.amount_refunded,
+      fx: {
+        fx_currency: 'EUR',
+        fx_amount: null,
+        exchange_rate: null,
+        estimated_exchange_rate: '1.1234567890',
+      },
+      retry_if_possible: row.retry_if_possible,
+    }))
+
+    return {
+      payments,
+      meta: {
+        cursors: {
+          before: rows[0]?.created_at || null,
+          after: rows[rows.length - 1]?.created_at || null,
+        },
+        limit,
+      },
     }
   }
 }

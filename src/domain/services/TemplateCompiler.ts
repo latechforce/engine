@@ -31,7 +31,7 @@ export class TemplateCompiler {
         result[key] = { boolean: this.compile(value.boolean) }
       } else if (isTemplateJsonValue(value)) {
         result[key] = { json: this.compile(value.json) }
-      } else if (typeof value === 'object') {
+      } else if (typeof value === 'object' && !Array.isArray(value)) {
         result[key] = this.compileObject(value)
       } else {
         result[key] = value

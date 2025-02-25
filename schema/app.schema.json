@@ -88,6 +88,27 @@
             ],
             "type": "object"
         },
+        "GoCardlessListPayment": {
+            "additionalProperties": false,
+            "properties": {
+                "after": {
+                    "type": "string"
+                },
+                "before": {
+                    "type": "string"
+                },
+                "limit": {
+                    "type": "number"
+                },
+                "mandate": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "GoCardlessProductionConfig": {
             "additionalProperties": false,
             "properties": {
@@ -196,6 +217,9 @@
                 },
                 {
                     "$ref": "#/definitions/ICreatePaymentGoCardlessAction"
+                },
+                {
+                    "$ref": "#/definitions/IListPaymentsGoCardlessAction"
                 }
             ]
         },
@@ -605,6 +629,32 @@
                     ]
                 }
             },
+            "type": "object"
+        },
+        "IListPaymentsGoCardlessAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "ListPayments",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "GoCardless",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "params": {
+                    "$ref": "#/definitions/GoCardlessListPayment"
+                }
+            },
+            "required": [
+                "action",
+                "integration",
+                "name",
+                "params"
+            ],
             "type": "object"
         },
         "ILongTextField": {
@@ -1679,6 +1729,12 @@
         "TemplateValue": {
             "anyOf": [
                 {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                {
                     "additionalProperties": false,
                     "properties": {
                         "number": {
@@ -1718,7 +1774,11 @@
                     "$ref": "#/definitions/TemplateObject"
                 },
                 {
-                    "type": "string"
+                    "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                    ]
                 }
             ]
         },

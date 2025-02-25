@@ -32,6 +32,7 @@ import {
   CreatePaymentGoCardlessActionMapper,
   type CreatePaymentGoCardlessActionMapperIntegrations,
 } from './gocardless/CreatePaymentMapper'
+import { ListPaymentsGoCardlessActionMapper } from './gocardless/ListPaymentsMapper'
 
 export type ActionMapperServices = CreateRecordDatabaseActionMapperServices &
   RunJavascriptCodeActionMapperServices &
@@ -116,6 +117,12 @@ export class ActionMapper {
         )
       case 'CreatePayment':
         return CreatePaymentGoCardlessActionMapper.toEntity(
+          config,
+          { templateCompiler, logger, monitor },
+          { gocardless }
+        )
+      case 'ListPayments':
+        return ListPaymentsGoCardlessActionMapper.toEntity(
           config,
           { templateCompiler, logger, monitor },
           { gocardless }

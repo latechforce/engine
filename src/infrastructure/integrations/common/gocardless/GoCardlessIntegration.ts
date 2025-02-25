@@ -3,6 +3,8 @@ import type {
   GoCardlessPayment,
   GoCardlessConfig,
   GoCardlessCreatePayment,
+  GoCardlessListPayment,
+  GoCardlessPaymentList,
 } from '/domain/integrations/GoCardless'
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
@@ -34,6 +36,22 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
       })
     if (response.status === 201) {
       return response.data.payments
+    } else {
+      return this._throwError(response)
+    }
+  }
+
+  listPayments = async (params: GoCardlessListPayment): Promise<GoCardlessPaymentList> => {
+    const response = await this._api()
+      .get('/payments', { params })
+      .catch((error) => {
+        return error.response
+      })
+    if (response.status === 200) {
+      return {
+        payments: response.data.payments,
+        meta: response.data.meta,
+      }
     } else {
       return this._throwError(response)
     }
