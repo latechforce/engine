@@ -5,6 +5,7 @@ import type { QontoConfig } from '/domain/integrations/Qonto'
 import type { NgrokConfig } from '/domain/integrations/Ngrok'
 import type { AirtableConfig } from '/domain/integrations/Airtable'
 import type { GoogleMailConfig } from '/domain/integrations/Google/GoogleMail'
+import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 
 import { NotionIntegration } from './notion/NotionIntegration.mock'
 import { PappersIntegration } from './pappers/PappersIntegration.mock'
@@ -12,6 +13,7 @@ import { QontoIntegration } from './qonto/QontoIntegration.mock'
 import { NgrokIntegration } from './ngrok/NgrokIntegration.mock'
 import { AirtableIntegration } from './airtable/AirtableIntegration.mock'
 import { GoogleMailIntegration } from './google/mail/GoogleMailIntegration.mock'
+import { GoCardlessIntegration } from './gocardless/GoCardlessIntegration.mock'
 
 export const mocks: Integrations = {
   airtable: (config?: AirtableConfig) => new AirtableIntegration(config),
@@ -20,4 +22,5 @@ export const mocks: Integrations = {
   qonto: (config?: QontoConfig) => new QontoIntegration(config),
   ngrok: (config?: NgrokConfig) => new NgrokIntegration(config),
   googleMail: (config?: GoogleMailConfig) => new GoogleMailIntegration(config),
+  gocardless: (config?: GoCardlessConfig) => new GoCardlessIntegration(config),
 }

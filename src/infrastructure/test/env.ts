@@ -17,6 +17,7 @@ const {
   TEST_AIRTABLE_TABLE_2_ID,
   TEST_GOOGLE_MAIL_USER,
   TEST_GOOGLE_MAIL_PASSWORD,
+  TEST_GOCARDLESS_ACCESS_TOKEN,
 } = process.env
 
 if (!TEST_SENTRY_DSN) throw new Error('TEST_SENTRY_DSN env var is not defined')
@@ -39,6 +40,8 @@ if (!TEST_AIRTABLE_TABLE_1_ID) throw new Error('TEST_AIRTABLE_TABLE_1 env var is
 if (!TEST_AIRTABLE_TABLE_2_ID) throw new Error('TEST_AIRTABLE_TABLE_2 env var is not defined')
 if (!TEST_GOOGLE_MAIL_USER) throw new Error('TEST_GOOGLE_MAIL_USER env var is not defined')
 if (!TEST_GOOGLE_MAIL_PASSWORD) throw new Error('TEST_GOOGLE_MAIL_PASSWORD env var is not defined')
+if (!TEST_GOCARDLESS_ACCESS_TOKEN)
+  throw new Error('TEST_GOCARDLESS_ACCESS_TOKEN env var is not defined')
 
 const env = {
   TEST_SENTRY_DSN,
@@ -59,6 +62,7 @@ const env = {
   TEST_AIRTABLE_TABLE_2_ID,
   TEST_GOOGLE_MAIL_USER,
   TEST_GOOGLE_MAIL_PASSWORD,
+  TEST_GOCARDLESS_ACCESS_TOKEN,
 }
 
 export default env

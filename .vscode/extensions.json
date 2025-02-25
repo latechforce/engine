@@ -7,6 +7,7 @@
     "christian-kohler.path-intellisense",
     "usernamehw.errorlens",
     "yoavbls.pretty-ts-errors",
-    "github.vscode-github-actions"
+    "github.vscode-github-actions",
+    "yzhang.markdown-all-in-one"
   ]
 }

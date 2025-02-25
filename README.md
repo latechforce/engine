@@ -11,12 +11,12 @@ La Tech Force Engine is a backend generator from a JSON configuration, fast and 
 
 Clone the project, install project dependencies, and start contributing:
 
-```
-$ git clone https://github.com/latechforce/engine.git latechforce-engine
-$ cd ./latechforce-engine
-$ bun install
-$ bun run test:e2e
-$ bun run test:unit
+```bash
+git clone https://github.com/latechforce/engine.git latechforce-engine
+cd ./latechforce-engine
+bun install
+bun run test:e2e
+bun run test:unit
 ```
 
 The `bun run test` and `bun run test:integration` commands will not work because they require private environnement variables.
@@ -43,10 +43,10 @@ You can run this tests by pushing a commit to the repository.
 
 Go to the [`examples/hello-world`](https://github.com/latechforce/engine/tree/main/examples/hello-world) folder, install dependencies, and start hacking:
 
-```
-$ cd ./examples/hello-world
-$ bun install
-$ bun start
+```bash
+cd ./examples/hello-world
+bun install
+bun start
 ```
 
 You can find the Open API documentation at [`http://localhost:3000/api/docs`](http://localhost:3000/api/docs).
