@@ -1,3 +1,10 @@
+## [0.37.60](https://github.com/latechforce/engine/compare/v0.37.59...v0.37.60) (2025-02-25)
+
+
+### Bug Fixes
+
+* **GoCardless:** add green test: should list payments ([46e86a9](https://github.com/latechforce/engine/commit/46e86a996e9e6e93878aa27f6fd34a9d5fcf5bd1))
+
 ## [0.37.59](https://github.com/latechforce/engine/compare/v0.37.58...v0.37.59) (2025-02-25)
 
 
