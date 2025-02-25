@@ -402,48 +402,91 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       // THEN
       expect(response.exist).toBeTruthy()
     })
-  })
 
-  it('should run a Typescript code with papaparse package', async () => {
-    // GIVEN
-    const config: Config = {
-      name: 'App',
-      version: '1.0.0',
-      automations: [
-        {
-          name: 'papaparse',
-          trigger: {
-            service: 'Http',
-            event: 'ApiCalled',
-            path: 'papaparse',
-            output: {
-              exist: {
-                boolean: '{{runJavascriptCode.exist}}',
+    it('should run a Typescript code with papaparse package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'papaparse',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'papaparse',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
               },
             },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { papaparse },
+                  } = context
+                  return { exist: !!papaparse.parse }
+                }),
+              },
+            ],
           },
-          actions: [
-            {
-              service: 'Code',
-              action: 'RunTypescript',
-              name: 'runJavascriptCode',
-              code: String(async function (context: CodeRunnerContext) {
-                const {
-                  packages: { papaparse },
-                } = context
-                return { exist: !!papaparse.parse }
-              }),
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/papaparse`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with puppeteer package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'puppeteer',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'puppeteer',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
             },
-          ],
-        },
-      ],
-    }
-    const { url } = await app.start(config)
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { puppeteer },
+                  } = context
+                  return { exist: !!puppeteer.launch }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
 
-    // WHEN
-    const response = await request.post(`${url}/api/automation/papaparse`)
+      // WHEN
+      const response = await request.post(`${url}/api/automation/puppeteer`)
 
-    // THEN
-    expect(response.exist).toBeTruthy()
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
   })
 })

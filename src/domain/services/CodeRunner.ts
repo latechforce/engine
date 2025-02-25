@@ -129,6 +129,7 @@ export interface CodeRunnerContextPackages {
   crypto: typeof import('crypto')
   lodash: typeof import('lodash')
   papaparse: typeof import('papaparse')
+  puppeteer: typeof import('puppeteer').default
 }
 
 export interface CodeRunnerContext<I extends object = {}> {
