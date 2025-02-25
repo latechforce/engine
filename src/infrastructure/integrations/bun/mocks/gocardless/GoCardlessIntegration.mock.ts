@@ -80,7 +80,7 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
         exchange_rate: null,
         estimated_exchange_rate: '1.1234567890',
       },
-      retry_if_possible: payment.retry_if_possible,
+      retry_if_possible: payment.retry_if_possible ?? false,
     }
   }
 }

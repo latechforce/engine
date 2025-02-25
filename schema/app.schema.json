@@ -83,10 +83,8 @@
             },
             "required": [
                 "amount",
-                "charge_date",
                 "currency",
-                "mandate",
-                "retry_if_possible"
+                "mandate"
             ],
             "type": "object"
         },

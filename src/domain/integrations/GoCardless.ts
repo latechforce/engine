@@ -30,11 +30,11 @@ export class GoCardless {
 export interface GoCardlessCreatePayment {
   amount: number
   currency: string
-  charge_date: string
+  charge_date?: string
   reference?: string
   description?: string
   metadata?: Record<string, string>
-  retry_if_possible: boolean
+  retry_if_possible?: boolean
   mandate: string
 }
 
