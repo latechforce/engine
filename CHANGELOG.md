@@ -1,3 +1,10 @@
+## [0.37.58](https://github.com/latechforce/engine/compare/v0.37.57...v0.37.58) (2025-02-25)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with puppeteer package ([3226092](https://github.com/latechforce/engine/commit/3226092c2acdbfa45149f1215c4d9a8756bf7a59))
+
 ## [0.37.57](https://github.com/latechforce/engine/compare/v0.37.56...v0.37.57) (2025-02-24)
 
 
