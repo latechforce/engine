@@ -5,7 +5,7 @@ La Tech Force Engine is a backend generator from a JSON configuration, fast and 
 ## Requirements
 
 - [Bun](https://bun.sh/) v1.2.0 or later
-- [VS Code](https://code.visualstudio.com/) editor
+- [Cursor](https://www.cursor.com/) editor
 
 ## Getting Started
 
@@ -29,7 +29,7 @@ You can run this tests by pushing a commit to the repository.
 - `bun run format` — Format the code using Prettier
 - `bun run lint` — Validate the code using ESLint
 - `bun run clean` — Remove the `dist/` directory
-- `bun run build:schema` —  Generate the JSON schema
+- `bun run build:schema` — Generate the JSON schema
 - `bun run build` — Build the engine for production
 - `bun run test:e2e` — Run the end-to-end tests with Bun
 - `bun run test:unit` — Run the unit tests with Bun
