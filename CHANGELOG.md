@@ -1,3 +1,11 @@
+## [0.37.59](https://github.com/latechforce/engine/compare/v0.37.58...v0.37.59) (2025-02-25)
+
+
+### Bug Fixes
+
+* **GoCardless:** add green test: should create a client ([441fc60](https://github.com/latechforce/engine/commit/441fc60e41db6b4ce33621dd3b83aee8ee1723a7))
+* **GoCardless:** add green test: should create a payment ([e9d2fc9](https://github.com/latechforce/engine/commit/e9d2fc9dd3187bd8d6d00bbdbb1e9ad875d1cc30))
+
 ## [0.37.58](https://github.com/latechforce/engine/compare/v0.37.57...v0.37.58) (2025-02-25)
 
 
