@@ -1,7 +1,13 @@
 import type { Config } from '@latechforce/engine'
 import App from '@latechforce/engine/bun'
 
-const { NOTION_TABLE_CLIENTS_ID, NOTION_API_TOKEN, PAPPERS_API_KEY, QONTO_SECRET_KEY, QONTO_ORGANISATION_SLUG } = process.env
+const {
+  NOTION_TABLE_CLIENTS_ID,
+  NOTION_API_TOKEN,
+  PAPPERS_API_KEY,
+  QONTO_SECRET_KEY,
+  QONTO_ORGANISATION_SLUG,
+} = process.env
 
 const config: Config = {
   name: 'Create Qonto client from Notion with Pappers',
@@ -77,7 +83,7 @@ const config: Config = {
       secretKey: QONTO_SECRET_KEY!,
       organisationSlug: QONTO_ORGANISATION_SLUG!,
     },
-  }
+  },
 }
 
 await new App().start(config)

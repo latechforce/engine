@@ -1,253 +1,220 @@
 ## [0.37.62](https://github.com/latechforce/engine/compare/v0.37.61...v0.37.62) (2025-02-26)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** add green test: should run a Typescript code with fs-extra package ([fa40768](https://github.com/latechforce/engine/commit/fa40768bf7fcd99329b79eaf334dda6e78932213))
+- **RunTypescript:** add green test: should run a Typescript code with fs-extra package ([fa40768](https://github.com/latechforce/engine/commit/fa40768bf7fcd99329b79eaf334dda6e78932213))
 
 ## [0.37.61](https://github.com/latechforce/engine/compare/v0.37.60...v0.37.61) (2025-02-26)
 
-
 ### Bug Fixes
 
-* **GoCardless:** make list payment params optional ([366f545](https://github.com/latechforce/engine/commit/366f545e2aea9c7324a48a6b5baedab37ce4ee6c))
+- **GoCardless:** make list payment params optional ([366f545](https://github.com/latechforce/engine/commit/366f545e2aea9c7324a48a6b5baedab37ce4ee6c))
 
 ## [0.37.60](https://github.com/latechforce/engine/compare/v0.37.59...v0.37.60) (2025-02-25)
 
-
 ### Bug Fixes
 
-* **GoCardless:** add green test: should list payments ([46e86a9](https://github.com/latechforce/engine/commit/46e86a996e9e6e93878aa27f6fd34a9d5fcf5bd1))
+- **GoCardless:** add green test: should list payments ([46e86a9](https://github.com/latechforce/engine/commit/46e86a996e9e6e93878aa27f6fd34a9d5fcf5bd1))
 
 ## [0.37.59](https://github.com/latechforce/engine/compare/v0.37.58...v0.37.59) (2025-02-25)
 
-
 ### Bug Fixes
 
-* **GoCardless:** add green test: should create a client ([441fc60](https://github.com/latechforce/engine/commit/441fc60e41db6b4ce33621dd3b83aee8ee1723a7))
-* **GoCardless:** add green test: should create a payment ([e9d2fc9](https://github.com/latechforce/engine/commit/e9d2fc9dd3187bd8d6d00bbdbb1e9ad875d1cc30))
+- **GoCardless:** add green test: should create a client ([441fc60](https://github.com/latechforce/engine/commit/441fc60e41db6b4ce33621dd3b83aee8ee1723a7))
+- **GoCardless:** add green test: should create a payment ([e9d2fc9](https://github.com/latechforce/engine/commit/e9d2fc9dd3187bd8d6d00bbdbb1e9ad875d1cc30))
 
 ## [0.37.58](https://github.com/latechforce/engine/compare/v0.37.57...v0.37.58) (2025-02-25)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** add green test: should run a Typescript code with puppeteer package ([3226092](https://github.com/latechforce/engine/commit/3226092c2acdbfa45149f1215c4d9a8756bf7a59))
+- **RunTypescript:** add green test: should run a Typescript code with puppeteer package ([3226092](https://github.com/latechforce/engine/commit/3226092c2acdbfa45149f1215c4d9a8756bf7a59))
 
 ## [0.37.57](https://github.com/latechforce/engine/compare/v0.37.56...v0.37.57) (2025-02-24)
 
-
 ### Bug Fixes
 
-* update package.json ([3469eb8](https://github.com/latechforce/engine/commit/3469eb812f1efbf011b536a89a20b6c64e91be86))
+- update package.json ([3469eb8](https://github.com/latechforce/engine/commit/3469eb812f1efbf011b536a89a20b6c64e91be86))
 
 ## [0.37.56](https://github.com/latechforce/engine/compare/v0.37.55...v0.37.56) (2025-02-18)
 
-
 ### Bug Fixes
 
-* update README with docker requirement ([42574ae](https://github.com/latechforce/engine/commit/42574aee9bd87e2b60c79716c8c0fe2bb88f83a7))
+- update README with docker requirement ([42574ae](https://github.com/latechforce/engine/commit/42574aee9bd87e2b60c79716c8c0fe2bb88f83a7))
 
 ## [0.37.55](https://github.com/latechforce/engine/compare/v0.37.54...v0.37.55) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **Schema:** update ([2fa4d05](https://github.com/latechforce/engine/commit/2fa4d056437f4e81b8c5017e2050ae9df1b1482c))
-* **SchemaValidator:** add app.schema.json in build ([35ec5c7](https://github.com/latechforce/engine/commit/35ec5c783a0bf45ace8aa04918f4e5995de3f8c3))
+- **Schema:** update ([2fa4d05](https://github.com/latechforce/engine/commit/2fa4d056437f4e81b8c5017e2050ae9df1b1482c))
+- **SchemaValidator:** add app.schema.json in build ([35ec5c7](https://github.com/latechforce/engine/commit/35ec5c783a0bf45ace8aa04918f4e5995de3f8c3))
 
 ## [0.37.54](https://github.com/latechforce/engine/compare/v0.37.53...v0.37.54) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **Server:** add green test: should succeed to GET requests with ApiKey authentification and camelcase header ([09a2dd6](https://github.com/latechforce/engine/commit/09a2dd637f59719518341973c7da102dd790e2d7))
+- **Server:** add green test: should succeed to GET requests with ApiKey authentification and camelcase header ([09a2dd6](https://github.com/latechforce/engine/commit/09a2dd637f59719518341973c7da102dd790e2d7))
 
 ## [0.37.53](https://github.com/latechforce/engine/compare/v0.37.52...v0.37.53) (2025-02-18)
 
-
 ### Bug Fixes
 
-* update Open API log ([cd7f9ec](https://github.com/latechforce/engine/commit/cd7f9ec8b3188d6dc98472395e7814fac0ab4069))
+- update Open API log ([cd7f9ec](https://github.com/latechforce/engine/commit/cd7f9ec8b3188d6dc98472395e7814fac0ab4069))
 
 ## [0.37.52](https://github.com/latechforce/engine/compare/v0.37.51...v0.37.52) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **README:** update with examples ([bca3330](https://github.com/latechforce/engine/commit/bca33300402cead1a544250ce3897038abdeb32e))
-* update example ([b44ed7b](https://github.com/latechforce/engine/commit/b44ed7b5bd247f73ebdedead33aeb9eeb485d9e8))
-* update LICENSE ([0e12ea6](https://github.com/latechforce/engine/commit/0e12ea6d09a96853ca377e278ffcc72b58ed8136))
+- **README:** update with examples ([bca3330](https://github.com/latechforce/engine/commit/bca33300402cead1a544250ce3897038abdeb32e))
+- update example ([b44ed7b](https://github.com/latechforce/engine/commit/b44ed7b5bd247f73ebdedead33aeb9eeb485d9e8))
+- update LICENSE ([0e12ea6](https://github.com/latechforce/engine/commit/0e12ea6d09a96853ca377e278ffcc72b58ed8136))
 
 ## [0.37.51](https://github.com/latechforce/engine/compare/v0.37.50...v0.37.51) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **Logger:** add Console logger by default ([28f88c4](https://github.com/latechforce/engine/commit/28f88c411c56bc12883da5d871c6ae8c6c95cb44))
+- **Logger:** add Console logger by default ([28f88c4](https://github.com/latechforce/engine/commit/28f88c411c56bc12883da5d871c6ae8c6c95cb44))
 
 ## [0.37.50](https://github.com/latechforce/engine/compare/v0.37.49...v0.37.50) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **Sentry:** add green test: should start an app with Sentry monitor and a name with spaces ([e95ac5a](https://github.com/latechforce/engine/commit/e95ac5a281edcd2a44b6d469a64e5b2c2e0552f6))
+- **Sentry:** add green test: should start an app with Sentry monitor and a name with spaces ([e95ac5a](https://github.com/latechforce/engine/commit/e95ac5a281edcd2a44b6d469a64e5b2c2e0552f6))
 
 ## [0.37.49](https://github.com/latechforce/engine/compare/v0.37.48...v0.37.49) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **Sentry:** add release in Sentry monitoring ([813e2a0](https://github.com/latechforce/engine/commit/813e2a0462173ff7e8d5059159f4a02d39992953))
+- **Sentry:** add release in Sentry monitoring ([813e2a0](https://github.com/latechforce/engine/commit/813e2a0462173ff7e8d5059159f4a02d39992953))
 
 ## [0.37.48](https://github.com/latechforce/engine/compare/v0.37.47...v0.37.48) (2025-02-18)
 
-
 ### Bug Fixes
 
-* **Server:** add default idleTimeout to 5 minutes ([fd35438](https://github.com/latechforce/engine/commit/fd35438e670badf855b314feb5a357bc464492f6))
-* **Server:** set max idleTimeout ([1eb8632](https://github.com/latechforce/engine/commit/1eb86323c100f2f35dcf1bee1737a43b38e87c7d))
-* **Server:** update idleTimeout ([9d786cd](https://github.com/latechforce/engine/commit/9d786cd72dcde34cdf7d4b611ffcb4adb157b9cd))
+- **Server:** add default idleTimeout to 5 minutes ([fd35438](https://github.com/latechforce/engine/commit/fd35438e670badf855b314feb5a357bc464492f6))
+- **Server:** set max idleTimeout ([1eb8632](https://github.com/latechforce/engine/commit/1eb86323c100f2f35dcf1bee1737a43b38e87c7d))
+- **Server:** update idleTimeout ([9d786cd](https://github.com/latechforce/engine/commit/9d786cd72dcde34cdf7d4b611ffcb4adb157b9cd))
 
 ## [0.37.47](https://github.com/latechforce/engine/compare/v0.37.46...v0.37.47) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **GoogleMail:** update EmailOptions type ([593cdda](https://github.com/latechforce/engine/commit/593cddaa2fb12e31d1ac82e2586109696da0daa6))
+- **GoogleMail:** update EmailOptions type ([593cdda](https://github.com/latechforce/engine/commit/593cddaa2fb12e31d1ac82e2586109696da0daa6))
 
 ## [0.37.46](https://github.com/latechforce/engine/compare/v0.37.45...v0.37.46) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **Qonto:** add client invoice status ([7900955](https://github.com/latechforce/engine/commit/790095500c5f67b299497db180c6c288bb2c7b75))
+- **Qonto:** add client invoice status ([7900955](https://github.com/latechforce/engine/commit/790095500c5f67b299497db180c6c288bb2c7b75))
 
 ## [0.37.45](https://github.com/latechforce/engine/compare/v0.37.44...v0.37.45) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **Helpers:** add test url for Pappers ([e281dc9](https://github.com/latechforce/engine/commit/e281dc9d1c1dc5ee9eed9c8982fd3403e5aa1b5f))
-* **Pappers:** fix broken test: should get a company ([806f1f0](https://github.com/latechforce/engine/commit/806f1f08ec72c5a74b3e554fa6cb3892b1f3ec2c))
-* **Pappers:** should fix SQLiteError: unable to open database file on windows ([2c984ee](https://github.com/latechforce/engine/commit/2c984ee3803dffde9a19546f8ee21e2c9178f977))
+- **Helpers:** add test url for Pappers ([e281dc9](https://github.com/latechforce/engine/commit/e281dc9d1c1dc5ee9eed9c8982fd3403e5aa1b5f))
+- **Pappers:** fix broken test: should get a company ([806f1f0](https://github.com/latechforce/engine/commit/806f1f08ec72c5a74b3e554fa6cb3892b1f3ec2c))
+- **Pappers:** should fix SQLiteError: unable to open database file on windows ([2c984ee](https://github.com/latechforce/engine/commit/2c984ee3803dffde9a19546f8ee21e2c9178f977))
 
 ## [0.37.44](https://github.com/latechforce/engine/compare/v0.37.43...v0.37.44) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **test:** fix qonto integration mapping to google mail ([7946be0](https://github.com/latechforce/engine/commit/7946be0d78a319672e6be95ce4aed92a299e1524))
+- **test:** fix qonto integration mapping to google mail ([7946be0](https://github.com/latechforce/engine/commit/7946be0d78a319672e6be95ce4aed92a299e1524))
 
 ## [0.37.43](https://github.com/latechforce/engine/compare/v0.37.42...v0.37.43) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **Airtable:** fix Airtable url management ([306e69f](https://github.com/latechforce/engine/commit/306e69f89dd7366c1a6e15c0b1ff123253553308))
-* **Notion:** fix url management on notion mock ([6148ac9](https://github.com/latechforce/engine/commit/6148ac94d1f52543c31e2db328e32d2701ca4cb2))
+- **Airtable:** fix Airtable url management ([306e69f](https://github.com/latechforce/engine/commit/306e69f89dd7366c1a6e15c0b1ff123253553308))
+- **Notion:** fix url management on notion mock ([6148ac9](https://github.com/latechforce/engine/commit/6148ac94d1f52543c31e2db328e32d2701ca4cb2))
 
 ## [0.37.42](https://github.com/latechforce/engine/compare/v0.37.41...v0.37.42) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **Types:** export Airtable and Notion dto ([981d405](https://github.com/latechforce/engine/commit/981d405ea343c823400b90dc8cc3446417586e20))
+- **Types:** export Airtable and Notion dto ([981d405](https://github.com/latechforce/engine/commit/981d405ea343c823400b90dc8cc3446417586e20))
 
 ## [0.37.41](https://github.com/latechforce/engine/compare/v0.37.40...v0.37.41) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **Field:** add green test: should create a table with an url ([6153ec0](https://github.com/latechforce/engine/commit/6153ec0e21717f379c6889d60648a60c20b701d1))
-* **Schema:** improve loading ([16d29f0](https://github.com/latechforce/engine/commit/16d29f0a5f6aa0fc863bd5b279d6d32448bd15cb))
+- **Field:** add green test: should create a table with an url ([6153ec0](https://github.com/latechforce/engine/commit/6153ec0e21717f379c6889d60648a60c20b701d1))
+- **Schema:** improve loading ([16d29f0](https://github.com/latechforce/engine/commit/16d29f0a5f6aa0fc863bd5b279d6d32448bd15cb))
 
 ## [0.37.40](https://github.com/latechforce/engine/compare/v0.37.39...v0.37.40) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **Cron:** add green test: should start an automation ([ad17ba7](https://github.com/latechforce/engine/commit/ad17ba76870d91c525dfc926f003ff52d6c960d3))
-* **Sentry:** update package ([f7766c5](https://github.com/latechforce/engine/commit/f7766c5139d670a2beb01ebdcd80feed2eeb9b35))
+- **Cron:** add green test: should start an automation ([ad17ba7](https://github.com/latechforce/engine/commit/ad17ba76870d91c525dfc926f003ff52d6c960d3))
+- **Sentry:** update package ([f7766c5](https://github.com/latechforce/engine/commit/f7766c5139d670a2beb01ebdcd80feed2eeb9b35))
 
 ## [0.37.39](https://github.com/latechforce/engine/compare/v0.37.38...v0.37.39) (2025-02-17)
 
-
 ### Bug Fixes
 
-* **Google:** add green test: should send an email ([640e42b](https://github.com/latechforce/engine/commit/640e42b863b352e4e06f7b7d15b10f90c0991def))
-* **Notion:** add green tests form OrThrow functions ([6f63e49](https://github.com/latechforce/engine/commit/6f63e49c250ba5123c7748aa0e4aa4166fca3791))
+- **Google:** add green test: should send an email ([640e42b](https://github.com/latechforce/engine/commit/640e42b863b352e4e06f7b7d15b10f90c0991def))
+- **Notion:** add green tests form OrThrow functions ([6f63e49](https://github.com/latechforce/engine/commit/6f63e49c250ba5123c7748aa0e4aa4166fca3791))
 
 ## [0.37.38](https://github.com/latechforce/engine/compare/v0.37.37...v0.37.38) (2025-02-14)
 
-
 ### Bug Fixes
 
-* **Qonto:** fix types ([d9a7628](https://github.com/latechforce/engine/commit/d9a76281fe1c2a2fb9375af55ca676c9a3a5e683))
+- **Qonto:** fix types ([d9a7628](https://github.com/latechforce/engine/commit/d9a76281fe1c2a2fb9375af55ca676c9a3a5e683))
 
 ## [0.37.37](https://github.com/latechforce/engine/compare/v0.37.36...v0.37.37) (2025-02-14)
 
-
 ### Bug Fixes
 
-* **Notion:** add typing for NotionTablePage functions ([031f346](https://github.com/latechforce/engine/commit/031f346727f6c8a654e14d5b2501849efd45336f))
+- **Notion:** add typing for NotionTablePage functions ([031f346](https://github.com/latechforce/engine/commit/031f346727f6c8a654e14d5b2501849efd45336f))
 
 ## [0.37.36](https://github.com/latechforce/engine/compare/v0.37.35...v0.37.36) (2025-02-14)
 
-
 ### Bug Fixes
 
-* **Notion:** add green test: should return relation as a string ([4bcac96](https://github.com/latechforce/engine/commit/4bcac96098a5de7521d44ac9c274289759c14d37))
+- **Notion:** add green test: should return relation as a string ([4bcac96](https://github.com/latechforce/engine/commit/4bcac96098a5de7521d44ac9c274289759c14d37))
 
 ## [0.37.35](https://github.com/latechforce/engine/compare/v0.37.34...v0.37.35) (2025-02-14)
 
-
 ### Bug Fixes
 
-* **Fetcher:** fix broken tests ([cb86cbb](https://github.com/latechforce/engine/commit/cb86cbbeec8dd37e7fe0941fffca3d4b0099d96c))
-* **Fetcher:** fix broken tests ([f7a6c8c](https://github.com/latechforce/engine/commit/f7a6c8c3b9a98610d502ee7a63bdfbd6fbb526e5))
-* **Qonto:** add broken test ([12406cb](https://github.com/latechforce/engine/commit/12406cbd09eea824039e15aafc86af51302bfde5))
-* **Qonto:** add green test: should list client invoices ([f30113d](https://github.com/latechforce/engine/commit/f30113d2afbde2c13a44fbed0cb7320f7179771b))
-* **Qonto:** add green test: should run a Typescript code with a Qonto list client invoices ([44d5aa2](https://github.com/latechforce/engine/commit/44d5aa2c01c4f291c0cc47cb73203d03e83b853a))
+- **Fetcher:** fix broken tests ([cb86cbb](https://github.com/latechforce/engine/commit/cb86cbbeec8dd37e7fe0941fffca3d4b0099d96c))
+- **Fetcher:** fix broken tests ([f7a6c8c](https://github.com/latechforce/engine/commit/f7a6c8c3b9a98610d502ee7a63bdfbd6fbb526e5))
+- **Qonto:** add broken test ([12406cb](https://github.com/latechforce/engine/commit/12406cbd09eea824039e15aafc86af51302bfde5))
+- **Qonto:** add green test: should list client invoices ([f30113d](https://github.com/latechforce/engine/commit/f30113d2afbde2c13a44fbed0cb7320f7179771b))
+- **Qonto:** add green test: should run a Typescript code with a Qonto list client invoices ([44d5aa2](https://github.com/latechforce/engine/commit/44d5aa2c01c4f291c0cc47cb73203d03e83b853a))
 
 ## [0.37.34](https://github.com/latechforce/engine/compare/v0.37.33...v0.37.34) (2025-02-14)
 
-
 ### Bug Fixes
 
-* **Notion:** add addTable typing ([aa1bb21](https://github.com/latechforce/engine/commit/aa1bb210add8452e489273e728598241363281d6))
+- **Notion:** add addTable typing ([aa1bb21](https://github.com/latechforce/engine/commit/aa1bb210add8452e489273e728598241363281d6))
 
 ## [0.37.33](https://github.com/latechforce/engine/compare/v0.37.32...v0.37.33) (2025-02-14)
 
-
 ### Bug Fixes
 
-* **Airtable:** add green test: should list records in a table with multiple Is filters ([b4703fa](https://github.com/latechforce/engine/commit/b4703fa357bc40f7af8c7ce74384f73007ae46b5))
-* **Notion:** add green test: should insert a page in a table with a relation ([7135962](https://github.com/latechforce/engine/commit/7135962687c111c7361d89dde40ccfbe4d9a2071))
-* **Notion:** add green test: should insert a page in a table with a single relation ([8adf00a](https://github.com/latechforce/engine/commit/8adf00a1ee06ff39833d30d739ea98d1e7f5f3bf))
-* **Notion:** fix broken tests ([cf58388](https://github.com/latechforce/engine/commit/cf58388c81e18fd415e81598c585720eb981b66d))
+- **Airtable:** add green test: should list records in a table with multiple Is filters ([b4703fa](https://github.com/latechforce/engine/commit/b4703fa357bc40f7af8c7ce74384f73007ae46b5))
+- **Notion:** add green test: should insert a page in a table with a relation ([7135962](https://github.com/latechforce/engine/commit/7135962687c111c7361d89dde40ccfbe4d9a2071))
+- **Notion:** add green test: should insert a page in a table with a single relation ([8adf00a](https://github.com/latechforce/engine/commit/8adf00a1ee06ff39833d30d739ea98d1e7f5f3bf))
+- **Notion:** fix broken tests ([cf58388](https://github.com/latechforce/engine/commit/cf58388c81e18fd415e81598c585720eb981b66d))
 
 ## [0.37.32](https://github.com/latechforce/engine/compare/v0.37.31...v0.37.32) (2025-02-12)
 
-
 ### Bug Fixes
 
-* **Database:** add green test: should restart an app with a SQLite database and an automation ([9406dbf](https://github.com/latechforce/engine/commit/9406dbf3db5e4f05539acdde3af60593c1a5e2c1))
+- **Database:** add green test: should restart an app with a SQLite database and an automation ([9406dbf](https://github.com/latechforce/engine/commit/9406dbf3db5e4f05539acdde3af60593c1a5e2c1))
 
 ## [0.37.31](https://github.com/latechforce/engine/compare/v0.37.30...v0.37.31) (2025-02-12)
 
-
 ### Bug Fixes
 
-* **Database:** add green test: should restart an app with a PostgreSQL database ([eaca124](https://github.com/latechforce/engine/commit/eaca12428e9e1fa7c43d3db048fc1c91d41d5229))
+- **Database:** add green test: should restart an app with a PostgreSQL database ([eaca124](https://github.com/latechforce/engine/commit/eaca12428e9e1fa7c43d3db048fc1c91d41d5229))
 
 ## [0.37.30](https://github.com/latechforce/engine/compare/v0.37.29...v0.37.30) (2025-02-12)
 
-
 ### Bug Fixes
 
-* **Database:** add green test: should create a database file in a folder that not exists ([d281d66](https://github.com/latechforce/engine/commit/d281d662d6120038726deb79911c1f23d1a11293))
-* **Notion:** add green test: should add a table with real Notion table config ([5533f61](https://github.com/latechforce/engine/commit/5533f615c83e39b1f64e59f252d3474e475dcdd3))
+- **Database:** add green test: should create a database file in a folder that not exists ([d281d66](https://github.com/latechforce/engine/commit/d281d662d6120038726deb79911c1f23d1a11293))
+- **Notion:** add green test: should add a table with real Notion table config ([5533f61](https://github.com/latechforce/engine/commit/5533f615c83e39b1f64e59f252d3474e475dcdd3))
 
 ## [0.37.29](https://github.com/latechforce/engine/compare/v0.37.28...v0.37.29) (2025-02-12)
 

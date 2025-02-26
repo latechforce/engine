@@ -5,6 +5,7 @@ I'll create a template notepad for creating new integration actions based on the
 ## 1. Domain Layer
 
 ### a. Integration Interface (`/domain/integrations/[Integration].ts`)
+
 ```typescript
 export interface [Integration]Config {
   // Configuration properties
@@ -37,6 +38,7 @@ export interface [ActionOutput] {
 ```
 
 ### b. Action Entity (`/domain/entities/Action/[integration]/[Action].ts`)
+
 ```typescript
 import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
@@ -100,6 +102,7 @@ export class [Action][Integration]Action extends BaseAction<Input, Output> {
 ## 2. Interface Layer
 
 ### a. Action Interface (`/domain/interfaces/IAction/[integration]/I[Action].ts`)
+
 ```typescript
 import type { [Action][Integration]ActionConfig } from '/domain/entities/Action/[integration]/[Action]'
 
@@ -112,6 +115,7 @@ export interface I[Action][Integration]Action extends [Action][Integration]Actio
 ## 3. Adapter Layer
 
 ### a. Action Mapper (`/adapter/api/mappers/Action/[integration]/[Action]Mapper.ts`)
+
 ```typescript
 import {
   [Action],
@@ -137,6 +141,7 @@ export class [Action]Mapper {
 ## 4. Infrastructure Layer
 
 ### a. Integration Implementation (`/infrastructure/integrations/common/[integration]/[Integration]Integration.ts`)
+
 Reference implementation pattern:
 
 ```1:79:src/infrastructure/integrations/common/gocardless/GoCardlessIntegration.ts
@@ -221,8 +226,8 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
 }
 ```
 
-
 ### b. Integration Test Samples (`/infrastructure/integrations/bun/mocks/[integration]/[Integration]TestSamples.ts`)
+
 ```typescript
 export const [integration][action]Sample: [ActionInput] = {
   // Sample data for testing
@@ -232,6 +237,7 @@ export const [integration][action]Sample: [ActionInput] = {
 ## 5. Tests
 
 ### a. Action Test (`/test/automations/actions/[integration]/[action].test.ts`)
+
 Reference test pattern:
 
 ```1:55:test/automations/actions/qonto/createClient.test.ts
@@ -292,8 +298,8 @@ helpers.testWithMockedApp({ integrations: ['Qonto'] }, ({ app, request }) => {
 })
 ```
 
-
 ### b. Integration Test (`/test/automations/actions/code/runTypescript/integrations/[integration].test.ts`)
+
 Reference test pattern:
 
 ```1:62:test/automations/actions/code/runTypescript/integrations/gocardless.test.ts
@@ -361,8 +367,8 @@ helpers.testWithMockedApp({ integrations: ['GoCardless'] }, ({ app, request }) =
 })
 ```
 
-
 ### c. Integration Common Test (`/infrastructure/integrations/common/[integration]/[Integration]IntegrationTest.ts`)
+
 ```typescript
 import type { I[Integration]Integration } from '/adapter/spi/integrations/[Integration]Spi'
 import type BunTester from 'bun:test'
@@ -385,6 +391,7 @@ export function test[Integration]Integration(
 ```
 
 Remember to:
+
 1. Update the main Action type union in `/domain/entities/Action/index.ts`
 2. Add the integration type to `/infrastructure/test/bun/Helpers.ts`
 3. Add the mapper to the ActionMapper switch case in `/adapter/api/mappers/Action/index.ts
@@ -392,6 +399,7 @@ Remember to:
 ## 6. Additional Integration Updates
 
 ### a. Update Action Type Union (`/domain/entities/Action/index.ts`)
+
 ```typescript
 import type { [Action] } from './[integration]/[Action]'
 
@@ -403,6 +411,7 @@ export type Action =
 ```
 
 ### b. Update Integration Type (`/infrastructure/test/bun/Helpers.ts`)
+
 ```typescript
 type IntegrationType =
   | 'Notion'
@@ -412,6 +421,7 @@ type IntegrationType =
 ```
 
 ### c. Update Action Mapper (`/adapter/api/mappers/Action/index.ts`)
+
 ```typescript
 import { [Action]Mapper } from './[integration]/[Action]Mapper'
 
@@ -439,6 +449,7 @@ export class ActionMapper {
 ```
 
 ### d. Update Integration SPI (`/adapter/spi/integrations/[Integration]Spi.ts`)
+
 ```typescript
 import type { I[Integration]Integration } from './[Integration]Integration'
 import type {
@@ -466,6 +477,7 @@ export class [Integration]Spi implements I[Integration]Spi {
 ```
 
 ### e. Update Integration Mapper (`/adapter/api/mappers/Integration/[Integration]Mapper.ts`)
+
 ```typescript
 import type { Integrations } from '/adapter/spi/integrations'
 import { [Integration]Spi } from '/adapter/spi/integrations/[Integration]Spi'
@@ -483,6 +495,7 @@ export class [Integration]Mapper {
 ## 7. Mock Implementation
 
 ### a. Mock Integration (`/infrastructure/integrations/bun/mocks/[integration]/[Integration]Integration.mock.ts`)
+
 ```typescript
 import type { I[Integration]Integration } from '/adapter/spi/integrations/[Integration]Spi'
 import type { [Integration]Config, [ActionInput], [ActionOutput] } from '/domain/integrations/[Integration]'
@@ -519,7 +532,7 @@ export class [Integration]Integration implements I[Integration]Integration {
   [actionName] = async ([actionInput]: [ActionInput]): Promise<[ActionOutput]> => {
     const id = `[PREFIX]${Date.now()}${Math.random().toString(36).substring(2, 10)}`
     const createdAt = new Date().toISOString()
-    
+
     // Insert into mock database
     this.db.run(
       `INSERT INTO [TableName] (
@@ -546,28 +559,33 @@ export class [Integration]Integration implements I[Integration]Integration {
 ## 8. Best Practices
 
 1. **Naming Conventions**
+
    - Use PascalCase for class names and interfaces
    - Use camelCase for methods and properties
    - Prefix interfaces with 'I'
    - Suffix types with meaningful descriptors (e.g., Config, Input, Output)
 
 2. **File Organization**
+
    - Keep related files in the same directory
    - Use consistent file naming across the codebase
    - Group integration-specific files together
 
 3. **Testing**
+
    - Write tests for both success and error cases
    - Use meaningful test descriptions
    - Follow the Given-When-Then pattern in tests
    - Use mock data that closely resembles production data
 
 4. **Error Handling**
+
    - Implement proper error handling in the integration
    - Return meaningful error messages
    - Include relevant error details (status codes, error codes, etc.)
 
 5. **Configuration**
+
    - Make integration configuration flexible and environment-aware
    - Use environment variables for sensitive data
    - Validate configuration on initialization
