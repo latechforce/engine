@@ -39,7 +39,11 @@ You can run this tests by pushing a commit to the repository.
 - `bun upgrade` — Bump Bun to the latest version
 - `bun update` — Update Node.js modules (dependencies)
 
-## Hello World Example
+## Examples
+
+You can find some app examples in the [`examples/`](https://github.com/latechforce/engine/tree/main/examples) folder.
+
+### Hello World
 
 Go to the [`examples/hello-world`](https://github.com/latechforce/engine/tree/main/examples/hello-world) folder, install dependencies, and start hacking:
 
@@ -68,6 +72,8 @@ We invite you to navigate into the `examples/` folder to see some examples.
 ## Contributing
 
 La Tech Force Engine is built and maintained by a small team – we'd love your help to fix bugs and add features!
+
+We use the [Cursor IDE](https://www.cursor.com/) to write code. You can find some templates in the `.cursor` folder.
 
 You can read our [contributing guide here](https://github.com/latechforce/engine/blob/main/CONTRIBUTING.md) and our [code of conduct here](https://github.com/latechforce/engine/blob/main/CODE_OF_CONDUCT.md).
 

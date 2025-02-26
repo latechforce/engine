@@ -31,6 +31,30 @@ You can contribute to La Tech Force Engine in various ways:
 4. Wait for your PR to be reviewed and merged into the `main` branch of La Tech Force Engine's repository
 5. Be available to reply if a contributor gets involved in the reviewing process of your PR.
 
+## Creating New Integrations and Actions
+
+When contributing new integrations or integration actions, we provide templates to ensure consistency:
+
+### New Integration
+
+To create a new integration, use the template provided in `.cursor/new-integration.md`. This template will guide you through:
+
+- Setting up the integration structure
+- Implementing required interfaces
+- Creating necessary test files
+- Adding proper error handling
+- Setting up configuration
+
+### New Integration Action
+
+For adding new actions to existing integrations, refer to `.cursor/new-integration-action.md`. This template covers:
+
+- Action implementation structure
+- Required parameters and return types
+- Error handling patterns
+- Test case setup
+- Documentation requirements
+
 ## Acceptance criteria for Pull Requests (PR)
 
 - A PR must address just one Github issue. Any PR that address zero or more than one Github issue (e.g. "cleaned .gitignore and added installation guide" are two independant PR) will be rejected.
@@ -53,6 +77,9 @@ More generally, make sure to follow these three principles:
 ## Project Structure
 
 - **src** Source code following the Clean Architecture patterns
+  - **/infrastructure/integrations** Contains all integration implementations
+  - **/domain/entities/Action** Contains integration actions
+  - **/adapter/spi/integrations** Contains integration interfaces
 - **test** Utilities for e2e tests
 
 ## Contact information
