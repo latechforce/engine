@@ -1,3 +1,10 @@
+## [0.37.61](https://github.com/latechforce/engine/compare/v0.37.60...v0.37.61) (2025-02-26)
+
+
+### Bug Fixes
+
+* **GoCardless:** make list payment params optional ([366f545](https://github.com/latechforce/engine/commit/366f545e2aea9c7324a48a6b5baedab37ce4ee6c))
+
 ## [0.37.60](https://github.com/latechforce/engine/compare/v0.37.59...v0.37.60) (2025-02-25)
 
 
