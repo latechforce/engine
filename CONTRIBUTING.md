@@ -76,11 +76,28 @@ More generally, make sure to follow these three principles:
 
 ## Project Structure
 
-- **src** Source code following the Clean Architecture patterns
-  - **/infrastructure/integrations** Contains all integration implementations
-  - **/domain/entities/Action** Contains integration actions
-  - **/adapter/spi/integrations** Contains integration interfaces
-- **test** Utilities for e2e tests
+The codebase follows Clean Architecture patterns with the following structure:
+
+- **src/** Source code
+  - **/domain** Core business logic and entities
+    - **/entities** Domain entities (Action, App, Field, File, etc.)
+    - **/services** Core services (CodeCompiler, Logger, Server, etc.)
+    - **/integrations** Integration interfaces and types
+    - **/interfaces** Configuration interfaces
+  - **/adapter** Interface adapters
+    - **/api** API layer and mappers
+    - **/spi** Service Provider Interfaces for drivers and integrations
+  - **/infrastructure** External implementations
+    - **/drivers** Driver implementations (Database, Server, etc.)
+      - **/bun** Bun-specific drivers
+      - **/common** Shared driver implementations
+    - **/integrations** Integration implementations
+      - **/bun** Bun-specific integrations
+      - **/common** Shared integration implementations
+- **test/** Test utilities and e2e tests
+- **schema/** JSON schema definitions
+- **.cursor/** Templates for new code components
+- **examples/** Example applications and implementations
 
 ## Contact information
 
