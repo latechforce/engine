@@ -103,7 +103,7 @@
     "typescript": "^5.5.4"
   },
   "engines": {
-    "bun": "1.2.3"
+    "bun": "1.2.4"
   },
   "config": {
     "commitizen": {
