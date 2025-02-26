@@ -44,4 +44,43 @@ export function testQontoIntegration(
       expect(invoices.length > 0).toBeTruthy()
     })
   })
+
+  describe('retrieveAttachment', () => {
+    it('should retrieve an attachment', async () => {
+      // GIVEN
+      let attachmentId: string | undefined
+      do {
+        const [invoice] = await integration.listClientInvoices()
+        attachmentId = invoice.attachment_id
+      } while (!attachmentId)
+
+      // WHEN
+      const attachment = await integration.retrieveAttachment(attachmentId)
+
+      // THEN
+      expect(attachment?.id).toBe(attachmentId)
+      expect(attachment?.file_content_type).toBe('application/pdf')
+      expect(attachment?.url).toBeDefined()
+    })
+
+    it('should fetch an attachment as a buffer', async () => {
+      // GIVEN
+      let attachmentId: string | undefined
+      do {
+        const [invoice] = await integration.listClientInvoices()
+        attachmentId = invoice.attachment_id
+      } while (!attachmentId)
+
+      // WHEN
+      const attachment = await integration.retrieveAttachment(attachmentId)
+      if (!attachment) {
+        throw new Error('Attachment not found')
+      }
+      const buffer = await fetch(attachment.url).then((res) => res.arrayBuffer())
+
+      // THEN
+      expect(buffer).toBeDefined()
+      expect(buffer).toBeInstanceOf(ArrayBuffer)
+    })
+  })
 }

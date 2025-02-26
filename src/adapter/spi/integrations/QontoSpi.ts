@@ -5,6 +5,7 @@ import type {
   QontoClient,
   QontoCreateClientInvoice,
   QontoClientInvoice,
+  QontoAttachment,
 } from '/domain/integrations/Qonto'
 
 export interface IQontoIntegration {
@@ -12,6 +13,7 @@ export interface IQontoIntegration {
   createClient: (client: QontoCreateClient) => Promise<QontoClient>
   createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
   listClientInvoices: () => Promise<QontoClientInvoice[]>
+  retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
 }
 
 export class QontoSpi implements IQontoSpi {
@@ -31,5 +33,9 @@ export class QontoSpi implements IQontoSpi {
 
   listClientInvoices = async () => {
     return this._integration.listClientInvoices()
+  }
+
+  retrieveAttachment = async (attachmentId: string) => {
+    return this._integration.retrieveAttachment(attachmentId)
   }
 }

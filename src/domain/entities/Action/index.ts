@@ -8,7 +8,7 @@ import type { UpdatePageNotionAction } from './notion/UpdatePage'
 import type { SendEmailGoogleMailAction } from './googleMail/SendEmail'
 import type { CreatePaymentGoCardlessAction } from './gocardless/CreatePayment'
 import type { ListPaymentsGoCardlessAction } from './gocardless/ListPayments'
-
+import type { RetrieveAttachmentQontoAction } from './qonto/RetrieveAttachment'
 export type Action =
   | CreateRecordDatabaseAction
   | ReadRecordDatabaseAction
@@ -20,3 +20,4 @@ export type Action =
   | SendEmailGoogleMailAction
   | CreatePaymentGoCardlessAction
   | ListPaymentsGoCardlessAction
+  | RetrieveAttachmentQontoAction

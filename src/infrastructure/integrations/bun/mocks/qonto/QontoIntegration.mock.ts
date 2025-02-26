@@ -5,9 +5,11 @@ import type {
   QontoClientInvoice,
   QontoCreateClientInvoice,
   QontoOrganization,
+  QontoAttachment,
 } from '/domain/integrations/Qonto'
 import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
 import { Database } from 'bun:sqlite'
+import fsExtra from 'fs-extra'
 
 export class QontoIntegration implements IQontoIntegration {
   private db: Database
@@ -52,6 +54,17 @@ export class QontoIntegration implements IQontoIntegration {
         total_amount_currency TEXT,
         vat_amount_value TEXT,
         vat_amount_currency TEXT,
+        created_at TEXT NOT NULL,
+        attachment_id TEXT
+      )
+    `)
+    this.db.run(`
+      CREATE TABLE IF NOT EXISTS Attachments (
+        id TEXT PRIMARY KEY,
+        file_name TEXT NOT NULL,
+        file_size INTEGER NOT NULL,
+        file_content_type TEXT NOT NULL,
+        url TEXT NOT NULL,
         created_at TEXT NOT NULL
       )
     `)
@@ -138,13 +151,40 @@ export class QontoIntegration implements IQontoIntegration {
   createClientInvoice = async (invoice: QontoCreateClientInvoice): Promise<QontoClientInvoice> => {
     const id = `${Date.now()}-${Math.random().toString(36).substring(2, 10)}`
     const createdAt = new Date().toISOString()
+
+    // Create a default attachment for the invoice
+    const attachmentId = `att-${Date.now()}-${Math.random().toString(36).substring(2, 10)}`
+    const url = process.cwd() + '/tmp/qonto/attachments/' + attachmentId + '.pdf'
+    await fsExtra.ensureFile(url)
+    await fsExtra.writeFile(url, 'Invoice attachment ' + attachmentId)
+    const mockAttachment: QontoAttachment = {
+      id: attachmentId,
+      created_at: createdAt,
+      file_name: `invoice-${id}.pdf`,
+      file_size: 1024,
+      file_content_type: 'application/pdf',
+      url: `file://${url}`,
+    }
+
+    this.db.run(
+      'INSERT INTO Attachments (id, file_name, file_size, file_content_type, url, created_at) VALUES (?, ?, ?, ?, ?, ?)',
+      [
+        mockAttachment.id,
+        mockAttachment.file_name,
+        mockAttachment.file_size,
+        mockAttachment.file_content_type,
+        mockAttachment.url,
+        mockAttachment.created_at,
+      ]
+    )
+
     this.db.run(
       `
       INSERT INTO ClientInvoices (
         id, client_id, issue_date, performance_date, due_date, status, number, purchase_order, 
         terms_and_conditions, header, footer, currency, total_amount_value, total_amount_currency, 
-        vat_amount_value, vat_amount_currency, created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        vat_amount_value, vat_amount_currency, created_at, attachment_id
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `,
       [
         id,
@@ -178,13 +218,13 @@ export class QontoIntegration implements IQontoIntegration {
           .toFixed(2), // VAT Amount Value
         invoice.currency,
         createdAt,
+        attachmentId,
       ]
     )
 
     return {
       id,
       organization_id: 'org-placeholder',
-      attachment_id: 'att-placeholder',
       number: invoice.number || `INV-${Date.now()}`,
       purchase_order: invoice.purchase_order || '',
       status: invoice.status || 'unpaid',
@@ -258,5 +298,12 @@ export class QontoIntegration implements IQontoIntegration {
       total_amount: { value: row.total_amount_value, currency: row.total_amount_currency },
       vat_amount: { value: row.vat_amount_value, currency: row.vat_amount_currency },
     }))
+  }
+
+  retrieveAttachment = async (attachmentId: string): Promise<QontoAttachment | undefined> => {
+    const attachment = this.db
+      .query<QontoAttachment, string>('SELECT * FROM Attachments WHERE id = ?')
+      .get(attachmentId)
+    return attachment ?? undefined
   }
 }

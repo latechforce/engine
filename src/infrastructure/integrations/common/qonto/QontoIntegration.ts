@@ -5,6 +5,7 @@ import type {
   QontoConfig,
   QontoCreateClient,
   QontoCreateClientInvoice,
+  QontoAttachment,
 } from '/domain/integrations/Qonto'
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
@@ -54,6 +55,21 @@ export class QontoIntegration implements IQontoIntegration {
       })
     if (response.status === 200) {
       return response.data.client_invoices
+    } else {
+      return this._throwError(response)
+    }
+  }
+
+  retrieveAttachment = async (attachmentId: string): Promise<QontoAttachment | undefined> => {
+    const response = await this._api()
+      .get(`/attachments/${attachmentId}`)
+      .catch((error) => {
+        return error.response
+      })
+    if (response.status === 404) {
+      return undefined
+    } else if (response.status === 200) {
+      return response.data.attachment
     } else {
       return this._throwError(response)
     }

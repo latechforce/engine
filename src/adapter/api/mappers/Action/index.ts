@@ -33,6 +33,7 @@ import {
   type CreatePaymentGoCardlessActionMapperIntegrations,
 } from './gocardless/CreatePaymentMapper'
 import { ListPaymentsGoCardlessActionMapper } from './gocardless/ListPaymentsMapper'
+import { RetrieveAttachmentQontoActionMapper } from './qonto/RetrieveAttachmentMapper'
 
 export type ActionMapperServices = CreateRecordDatabaseActionMapperServices &
   RunJavascriptCodeActionMapperServices &
@@ -126,6 +127,12 @@ export class ActionMapper {
           config,
           { templateCompiler, logger, monitor },
           { gocardless }
+        )
+      case 'RetrieveAttachment':
+        return RetrieveAttachmentQontoActionMapper.toEntity(
+          config,
+          { templateCompiler, logger, monitor },
+          { qonto }
         )
       default:
         throw new Error(`ActionMapper: Action ${action} not supported`)

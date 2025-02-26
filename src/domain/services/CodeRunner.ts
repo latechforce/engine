@@ -23,6 +23,7 @@ import type {
   QontoCreateClientInvoice,
   QontoClientInvoice,
   Qonto,
+  QontoAttachment,
 } from '../integrations/Qonto'
 import type {
   GoCardless,
@@ -116,6 +117,7 @@ export interface CodeRunnerContextIntegrationsQonto {
   createClient: (client: QontoCreateClient) => Promise<QontoClient>
   createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
   listClientInvoices: () => Promise<QontoClientInvoice[]>
+  retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
 }
 
 export interface CodeRunnerContextIntegrationsGoCardless {

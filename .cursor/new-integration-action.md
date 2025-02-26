@@ -118,22 +118,22 @@ export interface I[Action][Integration]Action extends [Action][Integration]Actio
 
 ```typescript
 import {
-  [Action],
-  type [Action]Config,
-  type [Action]Services,
-  type [Action]Integrations,
+  [Action][Integration]Action,
+  type [Action][Integration]ActionConfig,
+  type [Action][Integration]ActionServices,
+  type [Action][Integration]ActionIntegrations,
 } from '/domain/entities/Action/[integration]/[Action]'
 
-export type [Action]MapperServices = [Action]Services
-export type [Action]MapperIntegrations = [Action]Integrations
+export type [Action][Integration]ActionMapperServices = [Action]Services
+export type [Action][Integration]ActionMapperIntegrations = [Action]Integrations
 
-export class [Action]Mapper {
+export class [Action][Integration]ActionMapper {
   static toEntity = (
-    config: [Action]Config,
-    services: [Action]MapperServices,
-    integrations: [Action]MapperIntegrations
-  ): [Action] => {
-    return new [Action](config, services, integrations)
+    config: [Action][Integration]ActionConfig,
+    services: [Action][Integration]ActionMapperServices,
+    integrations: [Action][Integration]ActionMapperIntegrations
+  ): [Action][Integration]Action => {
+    return new [Action][Integration]Action(config, services, integrations)
   }
 }
 ```

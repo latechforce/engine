@@ -5,7 +5,7 @@ import {
   qontoCreateClientInvoiceSample,
   qontoCreateClientSample,
 } from '/infrastructure/integrations/bun/mocks/qonto/QontoTestSamples'
-import type { QontoClient, QontoClientInvoice } from '/domain/integrations/Qonto'
+import type { QontoAttachment, QontoClient, QontoClientInvoice } from '/domain/integrations/Qonto'
 
 const helpers = new Helpers(Tester)
 
@@ -161,6 +161,60 @@ helpers.testWithMockedApp({ integrations: ['Qonto'] }, ({ app, request, integrat
 
       // THEN
       expect(response.clientInvoices).toHaveLength(1)
+    })
+
+    it('should run a Typescript code with a Qonto retrieve attachment', async () => {
+      // GIVEN
+      const client = await integrations.qonto.createClient(qontoCreateClientSample)
+      await integrations.qonto.createClientInvoice(qontoCreateClientInvoiceSample(client))
+      const [invoice] = await integrations.qonto.listClientInvoices()
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'retrieveAttachment',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'retrieve-attachment',
+              output: {
+                attachment: {
+                  json: '{{runJavascriptCode.attachment}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                input: {
+                  attachmentId: invoice.attachment_id!,
+                },
+                code: String(async function (context: CodeRunnerContext<{ attachmentId: string }>) {
+                  const { qonto } = context.integrations
+                  const { attachmentId } = context.inputData
+                  const attachment = await qonto.retrieveAttachment(attachmentId)
+                  return { attachment }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post<{ attachment: QontoAttachment }>(
+        `${url}/api/automation/retrieve-attachment`
+      )
+
+      // THEN
+      expect(response.attachment.id).toBe(invoice.attachment_id!)
+      expect(response.attachment.file_name).toContain('invoice')
+      expect(response.attachment.file_content_type).toBe('application/pdf')
+      expect(response.attachment.url).toBeDefined()
     })
   })
 })

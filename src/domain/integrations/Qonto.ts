@@ -16,6 +16,7 @@ export interface IQontoSpi {
   createClient: (client: QontoCreateClient) => Promise<QontoClient>
   createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
   listClientInvoices: () => Promise<QontoClientInvoice[]>
+  retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
 }
 
 export class Qonto {
@@ -35,6 +36,10 @@ export class Qonto {
 
   listClientInvoices = async (): Promise<QontoClientInvoice[]> => {
     return this._spi.listClientInvoices()
+  }
+
+  retrieveAttachment = async (attachmentId: string): Promise<QontoAttachment | undefined> => {
+    return this._spi.retrieveAttachment(attachmentId)
   }
 }
 
@@ -206,7 +211,7 @@ export type QontoCreateClientInvoice = {
 export type QontoClientInvoice = {
   id: string
   organization_id: string
-  attachment_id: string
+  attachment_id?: string
   number: string
   purchase_order: string
   status: 'draft' | 'unpaid' | 'paid' | 'canceled'
@@ -239,4 +244,13 @@ export type QontoClientInvoice = {
   welfare_fund: WelfareFund
   withholding_tax: WithholdingTax
   payment_reporting: PaymentReporting
+}
+
+export interface QontoAttachment {
+  id: string
+  created_at: string
+  file_name: string
+  file_size: number
+  file_content_type: string
+  url: string
 }

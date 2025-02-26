@@ -8,6 +8,8 @@ import type { IUpdatePageNotionAction } from './notion/IUpdatePage'
 import type { ISendEmailGoogleMailAction } from './googleMail/ISendEmail'
 import type { ICreatePaymentGoCardlessAction } from './gocardless/ICreatePayment'
 import type { IListPaymentsGoCardlessAction } from './gocardless/IListPayments'
+import type { IRetrieveAttachmentQontoAction } from './qonto/IRetrieveAttachment'
+
 export type IAction =
   | IRunJavascriptCodeAction
   | IRunTypescriptCodeAction
@@ -19,3 +21,4 @@ export type IAction =
   | ISendEmailGoogleMailAction
   | ICreatePaymentGoCardlessAction
   | IListPaymentsGoCardlessAction
+  | IRetrieveAttachmentQontoAction

@@ -189,6 +189,9 @@ export class CodeCompiler {
         listClientInvoices: async () => {
           return qonto.listClientInvoices()
         },
+        retrieveAttachment: async (attachmentId: string) => {
+          return qonto.retrieveAttachment(attachmentId)
+        },
       },
       gocardless: {
         createPayment: async (payment: GoCardlessCreatePayment) => {
