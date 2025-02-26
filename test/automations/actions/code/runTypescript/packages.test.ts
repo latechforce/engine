@@ -231,6 +231,92 @@ helpers.testWithMockedApp({}, ({ app, request }) => {
       expect(response.exist).toBeTruthy()
     })
 
+    it('should run a Typescript code with fs-extra package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'fsExtra',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'fsExtra',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { fsExtra },
+                  } = context
+                  return { exist: !!fsExtra.copy }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/fsExtra`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with path package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'path',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'path',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { path },
+                  } = context
+                  return { exist: !!path.join }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/path`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
     it('should run a Typescript code with crypto package', async () => {
       // GIVEN
       const config: Config = {

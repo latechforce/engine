@@ -73,7 +73,7 @@ We invite you to navigate into the `examples/` folder to see some examples.
 
 La Tech Force Engine is built and maintained by a small team – we'd love your help to fix bugs and add features!
 
-We use the [Cursor IDE](https://www.cursor.com/) to write code. You can find some templates in the `.cursor` folder.
+We use the [Cursor IDE](https://www.cursor.com/) to write code. You can find some notepads templates in the `.cursor` folder.
 
 You can read our [contributing guide here](https://github.com/latechforce/engine/blob/main/CONTRIBUTING.md) and our [code of conduct here](https://github.com/latechforce/engine/blob/main/CODE_OF_CONDUCT.md).
 

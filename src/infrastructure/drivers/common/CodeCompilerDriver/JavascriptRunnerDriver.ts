@@ -20,6 +20,8 @@ import lodash from 'lodash'
 import { Client as Notion } from '@notionhq/client'
 import papaparse from 'papaparse'
 import puppeteer from 'puppeteer'
+import path from 'path'
+import fsExtra from 'fs-extra'
 
 export const packages: CodeRunnerContextPackages = {
   xml2js,
@@ -34,6 +36,8 @@ export const packages: CodeRunnerContextPackages = {
   lodash,
   papaparse,
   puppeteer,
+  path,
+  fsExtra,
 }
 
 const globalContext = {
