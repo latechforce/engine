@@ -41,7 +41,7 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
     }
   }
 
-  listPayments = async (params: GoCardlessListPayment): Promise<GoCardlessPaymentList> => {
+  listPayments = async (params: GoCardlessListPayment = {}): Promise<GoCardlessPaymentList> => {
     const response = await this._api()
       .get('/payments', { params })
       .catch((error) => {

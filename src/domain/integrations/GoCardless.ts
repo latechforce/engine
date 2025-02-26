@@ -13,7 +13,7 @@ export type GoCardlessConfig = GoCardlessSandboxConfig | GoCardlessProductionCon
 export interface IGoCardlessSpi {
   getConfig: () => GoCardlessConfig
   createPayment: (payment: GoCardlessCreatePayment) => Promise<GoCardlessPayment>
-  listPayments: (params: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
+  listPayments: (params?: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
 }
 
 export class GoCardless {
@@ -27,7 +27,7 @@ export class GoCardless {
     return this._spi.createPayment(payment)
   }
 
-  listPayments = async (params: GoCardlessListPayment): Promise<GoCardlessPaymentList> => {
+  listPayments = async (params?: GoCardlessListPayment): Promise<GoCardlessPaymentList> => {
     return this._spi.listPayments(params)
   }
 }

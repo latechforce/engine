@@ -105,7 +105,7 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
     }
   }
 
-  listPayments = async (params: GoCardlessListPayment): Promise<GoCardlessPaymentList> => {
+  listPayments = async (params: GoCardlessListPayment = {}): Promise<GoCardlessPaymentList> => {
     const limit = params.limit || 10
     const after = params.after
     const before = params.before

@@ -10,7 +10,7 @@ import type {
 export interface IGoCardlessIntegration {
   getConfig: () => GoCardlessConfig
   createPayment: (payment: GoCardlessCreatePayment) => Promise<GoCardlessPayment>
-  listPayments: (params: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
+  listPayments: (params?: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
 }
 
 export class GoCardlessSpi implements IGoCardlessSpi {
@@ -24,7 +24,7 @@ export class GoCardlessSpi implements IGoCardlessSpi {
     return this._integration.createPayment(payment)
   }
 
-  listPayments = async (params: GoCardlessListPayment) => {
+  listPayments = async (params?: GoCardlessListPayment) => {
     return this._integration.listPayments(params)
   }
 }
