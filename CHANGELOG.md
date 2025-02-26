@@ -1,3 +1,10 @@
+## [0.37.64](https://github.com/latechforce/engine/compare/v0.37.63...v0.37.64) (2025-02-26)
+
+
+### Bug Fixes
+
+* **Qonto:** add green test: should retrieve an attachment ([419900f](https://github.com/latechforce/engine/commit/419900f1c26f1c10d3ea21134f815e1715ffb4ba))
+
 ## [0.37.63](https://github.com/latechforce/engine/compare/v0.37.62...v0.37.63) (2025-02-26)
 
 
