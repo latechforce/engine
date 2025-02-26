@@ -34,6 +34,7 @@ export const qontoCreateClientInvoiceSample = (client: QontoClient): QontoCreate
     {
       title: 'Item 1',
       quantity: '1',
+      unit: 'hour',
       unit_price: {
         value: '100',
         currency: 'EUR',
