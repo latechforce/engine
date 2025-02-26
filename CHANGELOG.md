@@ -1,3 +1,11 @@
+## [0.37.63](https://github.com/latechforce/engine/compare/v0.37.62...v0.37.63) (2025-02-26)
+
+
+### Bug Fixes
+
+* **package:** update ([70b0f24](https://github.com/latechforce/engine/commit/70b0f24c941d21ce42a22d37c911a469df8d0012))
+* **RunTypescript:** add @types/fs-extra independancies❯ git push ([7628a16](https://github.com/latechforce/engine/commit/7628a16a90d6f3bdb490fdeb9074de7caba406ed))
+
 ## [0.37.62](https://github.com/latechforce/engine/compare/v0.37.61...v0.37.62) (2025-02-26)
 
 
