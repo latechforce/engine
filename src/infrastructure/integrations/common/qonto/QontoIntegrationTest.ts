@@ -63,7 +63,7 @@ export function testQontoIntegration(
       expect(attachment?.url).toBeDefined()
     })
 
-    it('should fetch an attachment url', async () => {
+    it('should fetch an attachment url and return a pdf', async () => {
       // GIVEN
       let attachmentId: string | undefined
       do {
@@ -80,6 +80,8 @@ export function testQontoIntegration(
 
       // THEN
       expect(response.ok).toBeTruthy()
+      const contentType = response.headers.get('content-type')
+      expect(contentType).toBe('application/pdf')
     })
   })
 }
