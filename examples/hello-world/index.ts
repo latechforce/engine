@@ -31,7 +31,15 @@ const config: Config = {
           },
           code: String(async function (context: CodeRunnerContext<{ name?: string }>) {
             const { name = 'world' } = context.inputData
-            return { message: `Hello ${name}!` }
+            const { logger } = context.services
+            const {
+              lodash: { capitalize },
+            } = context.packages
+
+            const message = `Hello ${capitalize(name)}!`
+            logger.info(message)
+
+            return { message }
           }),
         },
       ],
