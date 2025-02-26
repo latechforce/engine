@@ -1,3 +1,10 @@
+## [0.37.66](https://github.com/latechforce/engine/compare/v0.37.65...v0.37.66) (2025-02-26)
+
+
+### Bug Fixes
+
+* **Qonto:** update green test: should fetch an attachment url ([e72bc30](https://github.com/latechforce/engine/commit/e72bc3038b289ccd231f48350a61b99e6adedc7b))
+
 ## [0.37.65](https://github.com/latechforce/engine/compare/v0.37.64...v0.37.65) (2025-02-26)
 
 
