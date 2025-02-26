@@ -10,6 +10,7 @@ import type {
 import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
 import { Database } from 'bun:sqlite'
 import fsExtra from 'fs-extra'
+import PDFDocument from 'pdfkit'
 
 export class QontoIntegration implements IQontoIntegration {
   private db: Database
@@ -151,21 +152,26 @@ export class QontoIntegration implements IQontoIntegration {
   createClientInvoice = async (invoice: QontoCreateClientInvoice): Promise<QontoClientInvoice> => {
     const id = `${Date.now()}-${Math.random().toString(36).substring(2, 10)}`
     const createdAt = new Date().toISOString()
-
-    // Create a default attachment for the invoice
     const attachmentId = `att-${Date.now()}-${Math.random().toString(36).substring(2, 10)}`
-    const url = process.cwd() + '/tmp/qonto/attachments/' + attachmentId + '.pdf'
-    await fsExtra.ensureFile(url)
-    await fsExtra.writeFile(url, 'Invoice attachment ' + attachmentId)
+    const path = process.cwd() + '/tmp/qonto/attachments/' + attachmentId + '.pdf'
+    await fsExtra.ensureFile(path)
+    const doc = new PDFDocument()
+    await new Promise((resolve, reject) => {
+      const stream = fsExtra.createWriteStream(path)
+      doc.pipe(stream)
+      doc.fontSize(25).text(`TEST - Invoice attachment ${attachmentId}`, 100, 100)
+      doc.end()
+      stream.on('finish', () => resolve(true))
+      stream.on('error', reject)
+    })
     const mockAttachment: QontoAttachment = {
       id: attachmentId,
       created_at: createdAt,
       file_name: `invoice-${id}.pdf`,
       file_size: 1024,
       file_content_type: 'application/pdf',
-      url: `file:/${url}`,
+      url: `file:/${path}`,
     }
-
     this.db.run(
       'INSERT INTO Attachments (id, file_name, file_size, file_content_type, url, created_at) VALUES (?, ?, ?, ?, ?, ?)',
       [
