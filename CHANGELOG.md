@@ -1,3 +1,10 @@
+## [0.37.67](https://github.com/latechforce/engine/compare/v0.37.66...v0.37.67) (2025-02-26)
+
+
+### Bug Fixes
+
+* **Qonto:** create real pdf for mock ([db850cb](https://github.com/latechforce/engine/commit/db850cbb72ce261730e20c28903d822c91365823))
+
 ## [0.37.66](https://github.com/latechforce/engine/compare/v0.37.65...v0.37.66) (2025-02-26)
 
 
