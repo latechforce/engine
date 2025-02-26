@@ -163,7 +163,7 @@ export class QontoIntegration implements IQontoIntegration {
       file_name: `invoice-${id}.pdf`,
       file_size: 1024,
       file_content_type: 'application/pdf',
-      url: `file://${url}`,
+      url: `file:/${url}`,
     }
 
     this.db.run(

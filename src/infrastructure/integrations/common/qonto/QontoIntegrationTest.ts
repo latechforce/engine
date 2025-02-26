@@ -63,7 +63,7 @@ export function testQontoIntegration(
       expect(attachment?.url).toBeDefined()
     })
 
-    it('should fetch an attachment as a buffer', async () => {
+    it('should fetch an attachment url', async () => {
       // GIVEN
       let attachmentId: string | undefined
       do {
@@ -76,11 +76,10 @@ export function testQontoIntegration(
       if (!attachment) {
         throw new Error('Attachment not found')
       }
-      const buffer = await fetch(attachment.url).then((res) => res.arrayBuffer())
+      const response = await fetch(attachment.url)
 
       // THEN
-      expect(buffer).toBeDefined()
-      expect(buffer).toBeInstanceOf(ArrayBuffer)
+      expect(response.ok).toBeTruthy()
     })
   })
 }
