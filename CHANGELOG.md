@@ -1,3 +1,10 @@
+## [0.37.62](https://github.com/latechforce/engine/compare/v0.37.61...v0.37.62) (2025-02-26)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with fs-extra package ([fa40768](https://github.com/latechforce/engine/commit/fa40768bf7fcd99329b79eaf334dda6e78932213))
+
 ## [0.37.61](https://github.com/latechforce/engine/compare/v0.37.60...v0.37.61) (2025-02-26)
 
 
