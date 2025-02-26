@@ -1,3 +1,10 @@
+## [0.37.65](https://github.com/latechforce/engine/compare/v0.37.64...v0.37.65) (2025-02-26)
+
+
+### Bug Fixes
+
+* **Qonto:** export type QontoAttachment ([52e4544](https://github.com/latechforce/engine/commit/52e4544e605f0b3250d48fad1349229585d50cc2))
+
 ## [0.37.64](https://github.com/latechforce/engine/compare/v0.37.63...v0.37.64) (2025-02-26)
 
 
