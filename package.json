@@ -63,7 +63,7 @@
     "elysia": "^1.2.22",
     "fs-extra": "^11.3.0",
     "gocardless-nodejs": "^4.3.0",
-    "googleapis": "^144.0.0",
+    "googleapis": "^146.0.0",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
     "minipass": "^7.1.2",
