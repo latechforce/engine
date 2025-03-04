@@ -727,6 +727,22 @@ export function testNotionTableIntegration(
       // THEN
       expect(pages).toHaveLength(1)
     })
+
+    it('should list pages in a table with a Is filter on a single select', async () => {
+      // GIVEN
+      const status = 'En cours'
+      await table1.insert({ status })
+
+      // WHEN
+      const pages = await table1.list({
+        field: 'status',
+        operator: 'Is',
+        value: status,
+      })
+
+      // THEN
+      expect(pages).toHaveLength(1)
+    })
   })
 
   describe('stress test', () => {
