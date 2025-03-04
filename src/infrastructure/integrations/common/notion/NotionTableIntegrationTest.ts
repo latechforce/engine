@@ -466,8 +466,8 @@ export function testNotionTableIntegration(
 
     it('should update a page in a table with a status property', async () => {
       // GIVEN
-      const { id } = await table1.insert({ status: 'En cours' })
-      const status = 'Terminé'
+      const { id } = await table1.insert({ status: 'Pas commencé' })
+      const status = 'En cours'
 
       // WHEN
       const page = await table1.update(id, { status })
@@ -730,7 +730,7 @@ export function testNotionTableIntegration(
 
     it('should list pages in a table with a Is filter on a single select', async () => {
       // GIVEN
-      const status = 'En cours'
+      const status = 'Terminé'
       await table1.insert({ status })
 
       // WHEN
