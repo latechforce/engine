@@ -53,9 +53,81 @@ bun install
 bun start
 ```
 
+Then, you can edit the JSON configuration in the `index.ts` file:
+
+```ts
+import type { Config, CodeRunnerContext } from '@latechforce/engine'
+import App from '@latechforce/engine/bun'
+
+const config: Config = {
+  name: 'Hello World Example',
+  version: '1.0.0',
+  automations: [
+    {
+      name: 'helloWorld',
+      trigger: {
+        service: 'Http',
+        event: 'ApiCalled',
+        path: 'hello-world',
+        input: {
+          type: 'object',
+          properties: {
+            name: { type: 'string' },
+          },
+        },
+        output: {
+          message: '{{runJavascriptCode.message}}',
+        },
+      },
+      actions: [
+        {
+          service: 'Code',
+          action: 'RunTypescript',
+          name: 'runJavascriptCode',
+          input: {
+            name: '{{trigger.body.name}}',
+          },
+          code: String(async function (context: CodeRunnerContext<{ name?: string }>) {
+            const { name = 'world' } = context.inputData
+            const { logger } = context.services
+            const {
+              lodash: { capitalize },
+            } = context.packages
+
+            const message = `Hello ${capitalize(name)}!`
+            logger.info(message)
+
+            return { message }
+          }),
+        },
+      ],
+    },
+  ],
+  server: {
+    port: 3000,
+  },
+}
+
+await new App().start(config)
+```
+
 You can find the Open API documentation at [`http://localhost:3000/api/docs`](http://localhost:3000/api/docs).
 
 You can test the API at [`http://localhost:3000/api/docs#tag/automation/POST/api/automation/hello-world`](http://localhost:3000/api/docs#tag/automation/POST/api/automation/hello-world).
+
+### Create Qonto Client from Notion with Pappers
+
+Go to the [`examples/create-qonto-client-from-notion-with-pappers`](https://github.com/latechforce/engine/tree/main/examples/create-qonto-client-from-notion-with-pappers) folder, install dependencies, and start hacking:
+
+```bash
+cd ./examples/create-qonto-client-from-notion-with-pappers
+bun install
+bun start
+```
+
+Here is the workflow:
+
+![Create Qonto Client from Notion with Pappers](./assets/create-qonto-client-from-notion-with-pappers.jpg)
 
 ## Starter Kit
 
