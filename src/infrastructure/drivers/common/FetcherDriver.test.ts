@@ -9,7 +9,7 @@ describe('get', () => {
     const data = await response.text()
 
     expect(response.status).toBe(200)
-    expect(data).toContain('La Tech Force')
+    expect(data).toContain('notion')
   })
 })
 
@@ -20,6 +20,6 @@ describe('post', () => {
     const data = await response.text()
 
     expect(response.status).toBe(200)
-    expect(data).toContain('La Tech Force')
+    expect(data).toContain('notion')
   })
 })
