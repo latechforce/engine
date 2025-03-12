@@ -1,3 +1,10 @@
+## [0.37.68](https://github.com/latechforce/engine/compare/v0.37.67...v0.37.68) (2025-03-12)
+
+
+### Bug Fixes
+
+* **package:** update ([cbf2d7c](https://github.com/latechforce/engine/commit/cbf2d7c3f6dbc3e32c54e48331c99042d32b37ad))
+
 ## [0.37.67](https://github.com/latechforce/engine/compare/v0.37.66...v0.37.67) (2025-02-26)
 
 
