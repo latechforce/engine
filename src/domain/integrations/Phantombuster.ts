@@ -19,8 +19,18 @@ export interface IPhantombusterSpi {
   fetchAgentOutput: (agentId: string) => Promise<PhantombusterAgentOutput>
 }
 
+export interface PhantombusterCodeRunnerIntegration {
+  fetchAgentOutput: (agentId: string) => Promise<PhantombusterAgentOutput>
+}
+
 export class Phantombuster {
   constructor(private _spi: IPhantombusterSpi) {}
+
+  get codeRunnerIntegration(): PhantombusterCodeRunnerIntegration {
+    return {
+      fetchAgentOutput: this.fetchAgentOutput,
+    }
+  }
 
   getConfig = (): PhantombusterConfig => {
     return this._spi.getConfig()

@@ -1,5 +1,4 @@
 import { type FilterConfig, FilterMapper } from '/domain/entities/Filter'
-import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
 import { CodeRunner } from './CodeRunner'
 import type {
   ICodeRunnerSpi,
@@ -13,11 +12,6 @@ import type {
   CodeRunnerContextServicesFetcher,
 } from './CodeRunner'
 import type { RecordFields, UpdateRecordFields } from '/domain/entities/Record'
-import type { UpdateNotionTablePageProperties } from '/domain/integrations/Notion/NotionTable'
-import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
-import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
-import type { QontoCreateClient, QontoCreateClientInvoice } from '../integrations/Qonto'
-import type { GoCardlessCreatePayment, GoCardlessListPayment } from '../integrations/GoCardless'
 
 export type CodeCompilerServices = CodeRunnerServices
 
@@ -106,101 +100,14 @@ export class CodeCompiler {
   }
 
   getIntegrations = (): CodeRunnerContextIntegrations => {
-    const { notion, airtable, qonto, gocardless } = this._integrations
+    const { notion, airtable, qonto, gocardless, pappers, phantombuster } = this._integrations
     return {
-      notion: {
-        getTable: async <T extends NotionTablePageProperties = NotionTablePageProperties>(
-          id: string
-        ) => {
-          const table = await notion.getTable<T>(id)
-          if (!table) {
-            throw new Error(`CodeRunner: Notion table "${id}" not found`)
-          }
-          return {
-            insert: async (data: T) => {
-              return table.insert(data)
-            },
-            insertMany: async (data: T[]) => {
-              return table.insertMany(data)
-            },
-            update: async (id: string, data: Partial<T>) => {
-              return table.update(id, data)
-            },
-            updateMany: async (data: UpdateNotionTablePageProperties<T>[]) => {
-              return table.updateMany(data)
-            },
-            retrieve: async (id: string) => {
-              return table.retrieve(id)
-            },
-            list: async (filterConfig?: FilterConfig) => {
-              const filter = filterConfig ? FilterMapper.toEntity(filterConfig) : undefined
-              return table.list(filter)
-            },
-            archive: async (id: string) => {
-              return table.archive(id)
-            },
-          }
-        },
-        listAllUsers: async () => {
-          return notion.listAllUsers()
-        },
-      },
-      airtable: {
-        getTable: async <T extends AirtableTableRecordFields = AirtableTableRecordFields>(
-          id: string
-        ) => {
-          const table = await airtable.getTable<T>(id)
-          if (!table) {
-            throw new Error(`CodeRunner: Airtable table "${id}" not found`)
-          }
-          return {
-            insert: async (data: T) => {
-              return table.insert(data)
-            },
-            insertMany: async (data: T[]) => {
-              return table.insertMany(data)
-            },
-            update: async (id: string, data: Partial<T>) => {
-              return table.update(id, data)
-            },
-            updateMany: async (data: UpdateAirtableTableRecord<T>[]) => {
-              return table.updateMany(data)
-            },
-            retrieve: async (id: string) => {
-              return table.retrieve(id)
-            },
-            list: async (filterConfig?: FilterConfig) => {
-              const filter = filterConfig ? FilterMapper.toEntity(filterConfig) : undefined
-              return table.list(filter)
-            },
-            delete: async (id: string) => {
-              return table.delete(id)
-            },
-          }
-        },
-      },
-      qonto: {
-        createClient: async (client: QontoCreateClient) => {
-          return qonto.createClient(client)
-        },
-        createClientInvoice: async (invoice: QontoCreateClientInvoice) => {
-          return qonto.createClientInvoice(invoice)
-        },
-        listClientInvoices: async () => {
-          return qonto.listClientInvoices()
-        },
-        retrieveAttachment: async (attachmentId: string) => {
-          return qonto.retrieveAttachment(attachmentId)
-        },
-      },
-      gocardless: {
-        createPayment: async (payment: GoCardlessCreatePayment) => {
-          return gocardless.createPayment(payment)
-        },
-        listPayments: async (params: GoCardlessListPayment) => {
-          return gocardless.listPayments(params)
-        },
-      },
+      notion: notion.codeRunnerIntegration,
+      airtable: airtable.codeRunnerIntegration,
+      qonto: qonto.codeRunnerIntegration,
+      gocardless: gocardless.codeRunnerIntegration,
+      pappers: pappers.codeRunnerIntegration,
+      phantombuster: phantombuster.codeRunnerIntegration,
     }
   }
 }

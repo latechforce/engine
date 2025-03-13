@@ -1,5 +1,6 @@
-import type { Filter } from '/domain/entities/Filter'
+import type { Filter, FilterConfig } from '/domain/entities/Filter'
 import type { AirtableTableRecord, AirtableTableRecordFields } from './AirtableTableRecord'
+import { FilterMapper } from '/domain/entities/Filter'
 
 export type UpdateAirtableTableRecord<T extends AirtableTableRecordFields> = {
   id: string
@@ -53,7 +54,8 @@ export class AirtableTable<T extends AirtableTableRecordFields = AirtableTableRe
     return this._spi.delete(id)
   }
 
-  list = async (filter?: Filter) => {
+  list = async (filterConfig?: FilterConfig) => {
+    const filter = filterConfig ? FilterMapper.toEntity(filterConfig) : undefined
     return this._spi.list(filter)
   }
 }

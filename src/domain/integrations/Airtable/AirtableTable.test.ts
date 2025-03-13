@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, mock } from 'bun:test'
-import { OrFilter } from '/domain/entities/Filter/Or'
-import { OnOrAfterDateFilter } from '/domain/entities/Filter/date/OnOrAfter'
 import { AirtableTable, type IAirtableTableSpi } from './AirtableTable'
+import type { FilterConfig } from '/domain/entities/Filter'
+import { FilterMapper } from '/domain/entities/Filter'
 
 let spi: IAirtableTableSpi
 let airtableTable: AirtableTable
@@ -115,12 +115,16 @@ describe('list', () => {
 
   it('should call SPI list with a filter', async () => {
     // GIVEN
-    const filter = new OrFilter([new OnOrAfterDateFilter('created_time', '2023-01-01T00:00:00Z')])
+    const filter: FilterConfig = {
+      field: 'created_time',
+      operator: 'OnOrAfter',
+      value: '2023-01-01T00:00:00Z',
+    }
 
     // WHEN
     await airtableTable.list(filter)
 
     // THEN
-    expect(spi.list).toHaveBeenCalledWith(filter)
+    expect(spi.list).toHaveBeenCalledWith(FilterMapper.toEntity(filter))
   })
 })

@@ -1,5 +1,9 @@
 import type { NotionTableSpi } from '/adapter/spi/integrations/NotionTableSpi'
-import { NotionTable, type NotionTableServices } from './NotionTable'
+import {
+  NotionTable,
+  type NotionCodeRunnerIntegrationTable,
+  type NotionTableServices,
+} from './NotionTable'
 import { Bucket } from '/domain/entities/Bucket'
 import type { Storage } from '/domain/services/Storage'
 import type { Server } from '/domain/services/Server'
@@ -24,6 +28,13 @@ export interface INotionSpi {
   listAllUsers: () => Promise<NotionUser[]>
 }
 
+export interface NotionCodeRunnerIntegration {
+  getTable: <T extends NotionTablePageProperties>(
+    id: string
+  ) => Promise<NotionCodeRunnerIntegrationTable<T>>
+  listAllUsers: () => Promise<NotionUser[]>
+}
+
 export class Notion {
   private _bucket?: Bucket
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,6 +44,16 @@ export class Notion {
     private _spi: INotionSpi,
     private _services: NotionServices
   ) {}
+
+  get codeRunnerIntegration(): NotionCodeRunnerIntegration {
+    return {
+      getTable: async <T extends NotionTablePageProperties>(id: string) => {
+        const table = await this.getTable<T>(id)
+        return table.codeRunnerIntegration
+      },
+      listAllUsers: this.listAllUsers,
+    }
+  }
 
   getConfig = (): NotionConfig => {
     return this._spi.getConfig()

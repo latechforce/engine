@@ -25,6 +25,7 @@ import { AirtableMapper } from './Integration/AirtableMapper'
 import { GoogleMailMapper } from './Integration/GoogleMailMapper'
 import { CronMapper } from './Services/CronMapper'
 import { GoCardlessMapper } from './Integration/GoCardlessMapper'
+import { PhantombusterMapper } from './Integration/PhantombusterMapper'
 
 export class AppMapper {
   static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
@@ -75,6 +76,10 @@ export class AppMapper {
     const airtable = AirtableMapper.toIntegration(integrations, config.integrations?.airtable)
     const pappers = PappersMapper.toIntegration(integrations, config.integrations?.pappers)
     const qonto = QontoMapper.toIntegration(integrations, config.integrations?.qonto)
+    const phantombuster = PhantombusterMapper.toIntegration(
+      integrations,
+      config.integrations?.phantombuster
+    )
     const googleMail = GoogleMailMapper.toIntegration(
       integrations,
       config.integrations?.google?.mail
@@ -84,14 +89,14 @@ export class AppMapper {
       drivers,
       { logger, fetcher },
       { tables },
-      { notion, airtable, qonto, gocardless },
+      { notion, airtable, qonto, gocardless, pappers, phantombuster },
       { language: 'JavaScript' }
     )
     const typescriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger, fetcher },
       { tables },
-      { notion, airtable, qonto, gocardless },
+      { notion, airtable, qonto, gocardless, pappers, phantombuster },
       { language: 'TypeScript' }
     )
     const automations = AutomationMapper.toManyEntities(

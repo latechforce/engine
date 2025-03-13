@@ -16,8 +16,20 @@ export interface IGoCardlessSpi {
   listPayments: (params?: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
 }
 
+export interface GoCardlessCodeRunnerIntegration {
+  createPayment: (payment: GoCardlessCreatePayment) => Promise<GoCardlessPayment>
+  listPayments: (params?: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
+}
+
 export class GoCardless {
   constructor(private _spi: IGoCardlessSpi) {}
+
+  get codeRunnerIntegration(): GoCardlessCodeRunnerIntegration {
+    return {
+      createPayment: this.createPayment,
+      listPayments: this.listPayments,
+    }
+  }
 
   getConfig = (): GoCardlessConfig => {
     return this._spi.getConfig()

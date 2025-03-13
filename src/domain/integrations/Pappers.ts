@@ -7,8 +7,18 @@ export interface IPappersSpi {
   getCompany: (siret: string) => Promise<PappersEntreprise | undefined>
 }
 
+export interface PappersCodeRunnerIntegration {
+  getCompany: (siret: string) => Promise<PappersEntreprise | undefined>
+}
+
 export class Pappers {
   constructor(private _spi: IPappersSpi) {}
+
+  get codeRunnerIntegration(): PappersCodeRunnerIntegration {
+    return {
+      getCompany: this.getCompany,
+    }
+  }
 
   getConfig = (): PappersConfig => {
     return this._spi.getConfig()

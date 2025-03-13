@@ -1,12 +1,12 @@
 import type { Filter } from '/domain/entities/Filter'
-import { OnOrAfterDateFilter } from '/domain/entities/Filter/date/OnOrAfter'
-import { OrFilter } from '/domain/entities/Filter/Or'
 import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { Logger } from '/domain/services/Logger'
 import type { NotionConfig } from '.'
 import { NotionTablePage, type NotionTablePageProperties } from './NotionTablePage'
 import type { Bucket } from '/domain/entities/Bucket'
 import type { Fetcher } from '/domain/services/Fetcher'
+import { FilterMapper } from '/domain/entities/Filter'
+import type { FilterConfig } from '/domain/entities/Filter'
 
 export type NotionTableAction = 'INSERT'
 
@@ -25,6 +25,18 @@ export interface NotionTableServices {
   logger: Logger
   idGenerator: IdGenerator
   fetcher: Fetcher
+}
+
+export interface NotionCodeRunnerIntegrationTable<
+  T extends NotionTablePageProperties = NotionTablePageProperties,
+> {
+  insert: (data: T) => Promise<NotionTablePage<T>>
+  insertMany: (data: T[]) => Promise<NotionTablePage<T>[]>
+  update: (id: string, data: Partial<T>) => Promise<NotionTablePage<T>>
+  updateMany: (data: UpdateNotionTablePageProperties<T>[]) => Promise<NotionTablePage<T>[]>
+  archive: (id: string) => Promise<void>
+  retrieve: (id: string) => Promise<NotionTablePage<T>>
+  list: (filter?: FilterConfig) => Promise<NotionTablePage<T>[]>
 }
 
 export interface INotionTableSpi<T extends NotionTablePageProperties = NotionTablePageProperties> {
@@ -54,6 +66,18 @@ export class NotionTable<T extends NotionTablePageProperties = NotionTablePagePr
     return this._spi.id
   }
 
+  get codeRunnerIntegration(): NotionCodeRunnerIntegrationTable<T> {
+    return {
+      insert: this.insert,
+      insertMany: this.insertMany,
+      update: this.update,
+      updateMany: this.updateMany,
+      archive: this.archive,
+      retrieve: this.retrieve,
+      list: this.list,
+    }
+  }
+
   startPolling = () => {
     const { logger } = this._services
     const { pollingInterval = 60 } = this._config
@@ -66,8 +90,11 @@ export class NotionTable<T extends NotionTablePageProperties = NotionTablePagePr
       const now = new Date()
       const seconds = Math.min((now.getTime() - startDate.getTime()) / 1000, pollingInterval * 2)
       now.setSeconds(now.getSeconds() - seconds)
-      const filter = new OrFilter([new OnOrAfterDateFilter('created_time', now.toISOString())])
-      const pages = await this.list(filter)
+      const pages = await this.list({
+        field: 'created_time',
+        operator: 'OnOrAfter',
+        value: now.toISOString(),
+      })
       const pagesNotPolled = pages.filter((page) => !pagesIdsPolled.includes(page.id))
       pagesIdsPolled = pages.map((page) => page.id)
       logger.debug(`polled ${pagesNotPolled.length} new pages on Notion table "${this._spi.name}"`)
@@ -129,7 +156,8 @@ export class NotionTable<T extends NotionTablePageProperties = NotionTablePagePr
     return this._spi.archive(id)
   }
 
-  list = async (filter?: Filter) => {
+  list = async (filterConfig?: FilterConfig) => {
+    const filter = filterConfig ? FilterMapper.toEntity(filterConfig) : undefined
     return this._spi.list(filter)
   }
 

@@ -3,8 +3,8 @@ import { NotionTable } from './NotionTable'
 import type { INotionTableSpi, NotionTableServices } from './NotionTable'
 import type { NotionConfig } from '.'
 import type { Bucket } from '/domain/entities/Bucket'
-import { OrFilter } from '/domain/entities/Filter/Or'
-import { OnOrAfterDateFilter } from '/domain/entities/Filter/date/OnOrAfter'
+import type { FilterConfig } from '/domain/entities/Filter'
+import { FilterMapper } from '/domain/entities/Filter'
 
 let spi: INotionTableSpi
 let services: NotionTableServices
@@ -368,13 +368,17 @@ describe('list', () => {
 
   it('should call SPI list with a filter', async () => {
     // GIVEN
-    const filter = new OrFilter([new OnOrAfterDateFilter('created_time', '2023-01-01T00:00:00Z')])
+    const filter: FilterConfig = {
+      field: 'created_time',
+      operator: 'OnOrAfter',
+      value: '2023-01-01T00:00:00Z',
+    }
 
     // WHEN
     await notionTable.list(filter)
 
     // THEN
-    expect(spi.list).toHaveBeenCalledWith(filter)
+    expect(spi.list).toHaveBeenCalledWith(FilterMapper.toEntity(filter))
   })
 })
 

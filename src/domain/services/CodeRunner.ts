@@ -1,37 +1,20 @@
 import type { Table } from '/domain/entities/Table'
 import type { FilterConfig } from '/domain/entities/Filter'
-import type { Notion } from '/domain/integrations/Notion'
-import {
-  NotionTablePage,
-  type NotionTablePageProperties,
-} from '/domain/integrations/Notion/NotionTablePage'
+import type { Notion, NotionCodeRunnerIntegration } from '/domain/integrations/Notion'
 import type { Record, UpdateRecordFields } from '/domain/entities/Record'
 import { Logger } from '/domain/services/Logger'
-import type { NotionUser } from '/domain/integrations/Notion/NotionUser'
 import type { RecordFields } from '/domain/entities/Record'
-import type { UpdateNotionTablePageProperties } from '/domain/integrations/Notion/NotionTable'
-import type { Airtable } from '/domain/integrations/Airtable'
-import type {
-  AirtableTableRecord,
-  AirtableTableRecordFields,
-} from '/domain/integrations/Airtable/AirtableTableRecord'
-import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
+import type { Airtable, AirtableCodeRunnerIntegration } from '/domain/integrations/Airtable'
 import type { Fetcher } from './Fetcher'
+import type { Qonto, QontoCodeRunnerIntegration } from '../integrations/Qonto'
+import type { GoCardless, GoCardlessCodeRunnerIntegration } from '../integrations/GoCardless'
 import type {
-  QontoCreateClient,
-  QontoClient,
-  QontoCreateClientInvoice,
-  QontoClientInvoice,
-  Qonto,
-  QontoAttachment,
-} from '../integrations/Qonto'
-import type {
-  GoCardless,
-  GoCardlessPayment,
-  GoCardlessListPayment,
-  GoCardlessPaymentList,
-} from '../integrations/GoCardless'
-import type { GoCardlessCreatePayment } from '../integrations/GoCardless'
+  Phantombuster,
+  PhantombusterCodeRunnerIntegration,
+} from '../integrations/Phantombuster'
+import type { Pappers, PappersCodeRunnerIntegration } from '../integrations/Pappers'
+import type { NotionCodeRunnerIntegrationTable } from '../integrations/Notion/NotionTable'
+import type { NotionTablePageProperties } from '../integrations/Notion/NotionTablePage'
 
 export interface ICodeRunnerSpi {
   run: (
@@ -52,7 +35,6 @@ export interface CodeRunnerContextServicesDatabaseTable<T extends RecordFields =
   exists: () => Promise<boolean>
 }
 
-// TODO: installer Zod sur l'engine pour générer ce type à partir des schemas de la DB et avec les tables de la Database déjà typées
 export interface CodeRunnerContextServicesDatabase {
   table: <T extends RecordFields = RecordFields>(
     name: string
@@ -76,60 +58,17 @@ export interface CodeRunnerContextServices {
   fetcher: CodeRunnerContextServicesFetcher
 }
 
-export interface CodeRunnerContextIntegrationsNotionTable<
-  T extends NotionTablePageProperties = NotionTablePageProperties,
-> {
-  insert: (data: T) => Promise<NotionTablePage<T>>
-  insertMany: (data: T[]) => Promise<NotionTablePage<T>[]>
-  update: (id: string, data: Partial<T>) => Promise<NotionTablePage<T>>
-  updateMany: (data: UpdateNotionTablePageProperties<T>[]) => Promise<NotionTablePage<T>[]>
-  retrieve: (id: string) => Promise<NotionTablePage<T> | undefined>
-  list: (filter?: FilterConfig) => Promise<NotionTablePage<T>[]>
-  archive: (id: string) => Promise<void>
-}
-
-export interface CodeRunnerContextIntegrationsNotion {
-  getTable: <T extends NotionTablePageProperties = NotionTablePageProperties>(
-    id: string
-  ) => Promise<CodeRunnerContextIntegrationsNotionTable<T>>
-  listAllUsers: () => Promise<NotionUser[]>
-}
-
-export interface CodeRunnerContextIntegrationsAirtableTable<
-  T extends AirtableTableRecordFields = AirtableTableRecordFields,
-> {
-  insert: (data: T) => Promise<AirtableTableRecord<T>>
-  insertMany: (data: T[]) => Promise<AirtableTableRecord<T>[]>
-  update: (id: string, data: Partial<T>) => Promise<AirtableTableRecord<T>>
-  updateMany: (data: UpdateAirtableTableRecord<T>[]) => Promise<AirtableTableRecord<T>[]>
-  retrieve: (id: string) => Promise<AirtableTableRecord<T> | undefined>
-  list: (filter?: FilterConfig) => Promise<AirtableTableRecord<T>[]>
-  delete: (id: string) => Promise<void>
-}
-
-export interface CodeRunnerContextIntegrationsAirtable {
-  getTable: <T extends AirtableTableRecordFields = AirtableTableRecordFields>(
-    id: string
-  ) => Promise<CodeRunnerContextIntegrationsAirtableTable<T>>
-}
-
-export interface CodeRunnerContextIntegrationsQonto {
-  createClient: (client: QontoCreateClient) => Promise<QontoClient>
-  createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
-  listClientInvoices: () => Promise<QontoClientInvoice[]>
-  retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
-}
-
-export interface CodeRunnerContextIntegrationsGoCardless {
-  createPayment: (payment: GoCardlessCreatePayment) => Promise<GoCardlessPayment>
-  listPayments: (params: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
-}
+export type CodeRunnerContextIntegrationsNotion = NotionCodeRunnerIntegration
+export type CodeRunnerContextIntegrationsNotionTable<T extends NotionTablePageProperties> =
+  NotionCodeRunnerIntegrationTable<T>
 
 export interface CodeRunnerContextIntegrations {
-  notion: CodeRunnerContextIntegrationsNotion
-  airtable: CodeRunnerContextIntegrationsAirtable
-  qonto: CodeRunnerContextIntegrationsQonto
-  gocardless: CodeRunnerContextIntegrationsGoCardless
+  notion: NotionCodeRunnerIntegration
+  airtable: AirtableCodeRunnerIntegration
+  qonto: QontoCodeRunnerIntegration
+  gocardless: GoCardlessCodeRunnerIntegration
+  pappers: PappersCodeRunnerIntegration
+  phantombuster: PhantombusterCodeRunnerIntegration
 }
 
 export interface CodeRunnerContextPackages {
@@ -171,6 +110,8 @@ export interface CodeRunnerIntegrations {
   airtable: Airtable
   qonto: Qonto
   gocardless: GoCardless
+  pappers: Pappers
+  phantombuster: Phantombuster
 }
 
 export class CodeRunner {

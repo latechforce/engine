@@ -19,8 +19,24 @@ export interface IQontoSpi {
   retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
 }
 
+export interface QontoCodeRunnerIntegration {
+  createClient: (client: QontoCreateClient) => Promise<QontoClient>
+  createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
+  listClientInvoices: () => Promise<QontoClientInvoice[]>
+  retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
+}
+
 export class Qonto {
   constructor(private _spi: IQontoSpi) {}
+
+  get codeRunnerIntegration(): QontoCodeRunnerIntegration {
+    return {
+      createClient: this.createClient,
+      createClientInvoice: this.createClientInvoice,
+      listClientInvoices: this.listClientInvoices,
+      retrieveAttachment: this.retrieveAttachment,
+    }
+  }
 
   getConfig = (): QontoConfig => {
     return this._spi.getConfig()
