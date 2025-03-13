@@ -18,6 +18,8 @@ const {
   TEST_GOOGLE_MAIL_USER,
   TEST_GOOGLE_MAIL_PASSWORD,
   TEST_GOCARDLESS_ACCESS_TOKEN,
+  TEST_PHANTOMBUSTER_API_KEY,
+  TEST_PHANTOMBUSTER_AGENT_ID,
 } = process.env
 
 if (!TEST_SENTRY_DSN) throw new Error('TEST_SENTRY_DSN env var is not defined')
@@ -42,6 +44,10 @@ if (!TEST_GOOGLE_MAIL_USER) throw new Error('TEST_GOOGLE_MAIL_USER env var is no
 if (!TEST_GOOGLE_MAIL_PASSWORD) throw new Error('TEST_GOOGLE_MAIL_PASSWORD env var is not defined')
 if (!TEST_GOCARDLESS_ACCESS_TOKEN)
   throw new Error('TEST_GOCARDLESS_ACCESS_TOKEN env var is not defined')
+if (!TEST_PHANTOMBUSTER_API_KEY)
+  throw new Error('TEST_PHANTOMBUSTER_API_KEY env var is not defined')
+if (!TEST_PHANTOMBUSTER_AGENT_ID)
+  throw new Error('TEST_PHANTOMBUSTER_AGENT_ID env var is not defined')
 
 const env = {
   TEST_SENTRY_DSN,
@@ -63,6 +69,8 @@ const env = {
   TEST_GOOGLE_MAIL_USER,
   TEST_GOOGLE_MAIL_PASSWORD,
   TEST_GOCARDLESS_ACCESS_TOKEN,
+  TEST_PHANTOMBUSTER_API_KEY,
+  TEST_PHANTOMBUSTER_AGENT_ID,
 }
 
 export default env
