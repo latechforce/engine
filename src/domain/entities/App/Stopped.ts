@@ -34,11 +34,12 @@ export class StoppedApp extends BaseApp {
 
   validateConfig = async (): Promise<ConfigError[]> => {
     await this.init()
-    const { tables, automations, buckets } = this._entities
+    const { tables, automations, buckets, forms } = this._entities
     const errors: Promise<ConfigError[]>[] = []
     errors.push(...tables.map((table) => table.validateConfig()))
     errors.push(...buckets.map((bucket) => bucket.validateConfig()))
     errors.push(...automations.map((automation) => automation.validateConfig()))
+    errors.push(...forms.map((form) => form.validateConfig()))
     return Promise.all(errors).then((errors) => errors.flat())
   }
 

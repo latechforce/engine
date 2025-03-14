@@ -28,3 +28,19 @@ export type Field =
   | MultipleSelectField
   | MultipleAttachmentField
   | UrlField
+
+export type FieldName =
+  | 'Email'
+  | 'SingleLineText'
+  | 'LongText'
+  | 'DateTime'
+  | 'Number'
+  | 'Formula'
+  | 'SingleSelect'
+  | 'SingleLinkedRecord'
+  | 'MultipleLinkedRecord'
+  | 'Rollup'
+  | 'Checkbox'
+  | 'MultipleSelect'
+  | 'MultipleAttachment'
+  | 'Url'

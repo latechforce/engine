@@ -1,4 +1,4 @@
-import type { InputConfig } from './Input'
+import { Input, type InputConfig } from './Input'
 import type { ConfigError } from '/domain/entities/Error/Config'
 import type { Server } from '/domain/services/Server'
 import type { Table } from '../Table'
@@ -21,33 +21,48 @@ export interface FormEntities {
 }
 
 export class Form {
+  table: Table
+
   constructor(
     private _config: FormConfig,
     private _services: FormServices,
-    private _entities: FormEntities
-  ) {}
+    entities: FormEntities
+  ) {
+    const { tables } = entities
+    const table = tables.find((table) => table.name === _config.table)
+    if (!table) throw new Error(`Table ${_config.table} not found`)
+    this.table = table
+  }
 
   init = async () => {
     const { server } = this._services
-    const { path, title, description } = this._config
-    await server.get(`/forms/${path}`, async () => {
-      return new JsxResponse(
-        (
-          <html lang="en">
-            <head>
-              <title>{title}</title>
-            </head>
-            <body>
-              <h1>{title}</h1>
-              <p>{description}</p>
-            </body>
-          </html>
-        )
-      )
-    })
+    const { path } = this._config
+    await server.get(`/forms/${path}`, this.render)
   }
 
   validateConfig = async (): Promise<ConfigError[]> => {
     return []
+  }
+
+  render = async (): Promise<JsxResponse> => {
+    const { name, title, description, inputs } = this._config
+    const Inputs = await Promise.all(inputs.map((input) => new Input(input, this.table).render()))
+    return new JsxResponse(
+      (
+        <html lang="en">
+          <head>
+            <title>{title ?? name}</title>
+          </head>
+          <body>
+            {title ? <h1>{title}</h1> : null}
+            {description ? <p>{description}</p> : null}
+            <form>
+              {Inputs}
+              <button type="submit">Submit</button>
+            </form>
+          </body>
+        </html>
+      )
+    )
   }
 }

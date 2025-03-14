@@ -59,5 +59,16 @@ mock.page(({ app, browser }) => {
       // THEN
       expect(browser.page.content()).resolves.toContain('Form description')
     })
+
+    it('should display the form inputs', async () => {
+      // GIVEN
+      const { url } = await app.start(config)
+
+      // WHEN
+      await browser.page.goto(`${url}/forms/user`)
+
+      // THEN
+      expect(browser.page.content()).resolves.toContain('Name')
+    })
   })
 })
