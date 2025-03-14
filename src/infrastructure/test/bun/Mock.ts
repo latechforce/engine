@@ -2,6 +2,7 @@ import type { Config, StartedApp } from '../../..'
 import { join } from 'path'
 import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
+import puppeteer, { type Browser, type Page } from 'puppeteer'
 import { DatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver'
 import { StorageDriver } from '/infrastructure/drivers/common/StorageDriver'
 import { NotionIntegration } from '/infrastructure/integrations/bun/mocks/notion/NotionIntegration.mock'
@@ -19,7 +20,6 @@ import { GoogleMailIntegration } from '/infrastructure/integrations/bun/mocks/go
 import type { GoogleMailConfig } from '/domain/integrations/Google/GoogleMail'
 import { GoCardlessIntegration } from '/infrastructure/integrations/bun/mocks/gocardless/GoCardlessIntegration.mock'
 import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
-import puppeteer, { type Browser, type Page } from 'puppeteer'
 import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import { PhantombusterIntegration } from '/infrastructure/integrations/bun/mocks/phantombuster/PhantombusterIntegration.mock'
 
@@ -157,39 +157,52 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
 
   page(tests: (helpers: AppHelpers<D, I> & { browser: { page: Page } }) => void): void {
     const { app, drivers, integrations } = this._prepare()
-    let browser: Browser
+    let browser: Browser | undefined
     const browserPage: any = {}
+
     this.tester.describe('ui', () => {
       this.tester.beforeAll(async () => {
         browser = await puppeteer.launch({
-          args: process.env.CI
-            ? [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-gpu',
-                '--no-first-run',
-                '--no-zygote',
-                '--single-process',
-              ]
-            : [],
+          args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
           headless: true,
-          timeout: 60000,
         })
       })
+
       this.tester.beforeEach(async () => {
+        if (!browser) {
+          browser = await puppeteer.launch({
+            args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+            headless: true,
+          })
+        }
         const page = await browser.newPage()
         await page.setViewport({ width: 1280, height: 800 })
         page.setDefaultNavigationTimeout(30000)
         page.setDefaultTimeout(30000)
         browserPage.page = page
       })
+
       this.tester.afterEach(async () => {
-        if (browserPage.page) await browserPage.page.close()
+        try {
+          if (browserPage.page) {
+            await browserPage.page.close().catch(() => {})
+          }
+        } catch (error) {
+          console.warn('Error closing page:', error)
+        }
       })
+
       this.tester.afterAll(async () => {
-        if (browser) await browser.close()
+        try {
+          if (browser) {
+            await browser.close().catch(() => {})
+            browser = undefined
+          }
+        } catch (error) {
+          console.warn('Error closing browser:', error)
+        }
       })
+
       tests({
         app,
         drivers,
