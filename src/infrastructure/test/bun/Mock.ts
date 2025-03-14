@@ -157,24 +157,15 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
 
   page(tests: (helpers: AppHelpers<D, I> & { browser: { page: Page } }) => void): void {
     const { app, drivers, integrations } = this._prepare()
-    let browser: Browser | undefined
+    let browser: Browser
     const browserPage: any = {}
 
     this.tester.describe('ui', () => {
-      this.tester.beforeAll(async () => {
+      this.tester.beforeEach(async () => {
         browser = await puppeteer.launch({
           args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
           headless: true,
         })
-      })
-
-      this.tester.beforeEach(async () => {
-        if (!browser) {
-          browser = await puppeteer.launch({
-            args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
-            headless: true,
-          })
-        }
         const page = await browser.newPage()
         await page.setViewport({ width: 1280, height: 800 })
         page.setDefaultNavigationTimeout(30000)
@@ -183,24 +174,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
       })
 
       this.tester.afterEach(async () => {
-        try {
-          if (browserPage.page) {
-            await browserPage.page.close().catch(() => {})
-          }
-        } catch (error) {
-          console.warn('Error closing page:', error)
-        }
-      })
-
-      this.tester.afterAll(async () => {
-        try {
-          if (browser) {
-            await browser.close().catch(() => {})
-            browser = undefined
-          }
-        } catch (error) {
-          console.warn('Error closing browser:', error)
-        }
+        await browser.close()
       })
 
       tests({

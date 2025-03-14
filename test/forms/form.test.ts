@@ -4,7 +4,7 @@ import { Mock, type Config } from '/test/bun'
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.page(({ app, browser, drivers }) => {
-  describe('on GET', () => {
+  describe('open page', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.1',
