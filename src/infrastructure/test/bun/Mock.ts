@@ -162,8 +162,19 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     this.tester.describe('ui', () => {
       this.tester.beforeAll(async () => {
         browser = await puppeteer.launch({
-          args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+          args: process.env.CI
+            ? [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process',
+              ]
+            : [],
           headless: true,
+          timeout: 60000,
         })
       })
       this.tester.beforeEach(async () => {
