@@ -17,9 +17,26 @@ export const Default: Story = {
   args: {
     field: 'name',
     type: 'text',
+  },
+}
+
+export const WithLabel: Story = {
+  args: {
+    ...Default.args,
     label: 'Name',
+  },
+}
+
+export const WithDescription: Story = {
+  args: {
+    ...WithLabel.args,
     description: 'This is a description',
+  },
+}
+
+export const WithPlaceholder: Story = {
+  args: {
+    ...WithDescription.args,
     placeholder: 'Enter your name',
-    required: true,
   },
 }

@@ -2,13 +2,34 @@ import type { FormProps } from '/domain/entities/Form'
 
 export const Form = ({ title, description, action, submitLabel, children }: FormProps) => {
   return (
-    <div>
-      {title ? <h1 className="text-2xl font-bold">{title}</h1> : null}
-      {description ? <p>{description}</p> : null}
-      <form action={action} method="POST">
-        {children}
-        <button type="submit">{submitLabel}</button>
-      </form>
+    <div className="container mx-auto bg-gray-50 dark:bg-neutral-800">
+      <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <div className="max-w-xl mx-auto">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-gray-800 sm:text-4xl dark:text-white">
+              {title}
+            </h1>
+            {description ? (
+              <p className="mt-1 text-gray-600 dark:text-neutral-400">{description}</p>
+            ) : null}
+          </div>
+          <div className="mt-12">
+            <form action={action} method="POST">
+              <div className="grid gap-4 lg:gap-6">
+                {children}
+                <div className="mt-6 grid">
+                  <button
+                    type="submit"
+                    className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                  >
+                    {submitLabel}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

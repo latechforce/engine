@@ -1,4 +1,5 @@
 import { CssResponse } from '../entities/Response/Css'
+import { JsResponse } from '../entities/Response/Js'
 import type { Server } from './Server'
 
 export interface ThemeConfig {
@@ -12,6 +13,7 @@ export interface ThemeServices {
 
 export interface IThemeSpi {
   buildCss: () => Promise<string>
+  buildJs: () => Promise<string>
 }
 
 export class Theme {
@@ -23,6 +25,8 @@ export class Theme {
   init = async () => {
     const { server } = this._services
     const css = await this._spi.buildCss()
-    await server.get('/output.css', async () => new CssResponse(css))
+    const js = await this._spi.buildJs()
+    await server.get('/style.css', async () => new CssResponse(css))
+    await server.get('/style.js', async () => new JsResponse(js))
   }
 }

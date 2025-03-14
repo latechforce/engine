@@ -7,7 +7,7 @@ import type { PageProps } from '../Page'
 
 export interface FormProps extends React.PropsWithChildren {
   action: string
-  title?: string
+  title: string
   description?: string
   submitLabel?: string
 }

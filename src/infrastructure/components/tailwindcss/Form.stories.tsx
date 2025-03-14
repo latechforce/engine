@@ -7,7 +7,7 @@ const meta = {
   title: 'Form/Form',
   component: Form,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
   },
 } satisfies Meta<typeof Form>
 

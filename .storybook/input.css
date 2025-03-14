@@ -1,1 +1,5 @@
 @import 'tailwindcss';
+
+@import 'preline/variants.css';
+
+@custom-variant dark (&:where(.dark, .dark *));

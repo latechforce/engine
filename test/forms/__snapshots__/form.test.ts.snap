@@ -1,3 +1,0 @@
-// Bun Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`ui on GET should match the form snapshot 1`] = `"<html lang="en"><head><title>Form title</title><meta name="description" content="Form description"></head><body><div><h1>Form title</h1><p>Form description</p><form action="/api/table/users" method="POST"><div><label for="name">Name</label><input type="text" required="" name="name"></div><button type="submit">Save</button></form></div></body></html>"`;

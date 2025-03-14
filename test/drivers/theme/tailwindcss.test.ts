@@ -34,7 +34,7 @@ mock.page(({ app, browser }) => {
 
       // THEN
       const html = await page.content()
-      expect(html).toContain('<link href="/output.css" rel="stylesheet">')
+      expect(html).toContain('<link href="/style.css" rel="stylesheet">')
     })
 
     it('should return the tailwind css content', async () => {
@@ -43,11 +43,24 @@ mock.page(({ app, browser }) => {
       const { url } = await app.start(config)
 
       // WHEN
-      const response = await page.goto(`${url}/output.css`)
+      const response = await page.goto(`${url}/style.css`)
 
       // THEN
       const css = await response?.text()
       expect(css).toContain('tailwindcss')
+    })
+
+    it('should return the preline js content', async () => {
+      // GIVEN
+      const { page } = browser
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await page.goto(`${url}/style.js`)
+
+      // THEN
+      const js = await response?.text()
+      expect(js).toContain('preline')
     })
   })
 })

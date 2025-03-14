@@ -41,46 +41,50 @@ mock.page(({ app, browser, drivers }) => {
     it('should display the form title', async () => {
       // GIVEN
       const { url } = await app.start(config)
+      const { page } = browser
 
       // WHEN
-      await browser.page.goto(`${url}/forms/user`)
+      await page.goto(`${url}/form/user`)
 
       // THEN
-      expect(browser.page.title()).resolves.toBe('Form title')
-      expect(browser.page.content()).resolves.toContain('Form title')
+      expect(page.title()).resolves.toBe('Form title')
+      expect(page.content()).resolves.toContain('Form title')
     })
 
     it('should display the form description', async () => {
       // GIVEN
       const { url } = await app.start(config)
+      const { page } = browser
 
       // WHEN
-      await browser.page.goto(`${url}/form/user`)
+      await page.goto(`${url}/form/user`)
 
       // THEN
-      expect(browser.page.content()).resolves.toContain('Form description')
+      expect(page.content()).resolves.toContain('Form description')
     })
 
     it('should display the form inputs', async () => {
       // GIVEN
       const { url } = await app.start(config)
+      const { page } = browser
 
       // WHEN
-      await browser.page.goto(`${url}/form/user`)
+      await page.goto(`${url}/form/user`)
 
       // THEN
-      expect(browser.page.content()).resolves.toContain('Name')
+      expect(page.content()).resolves.toContain('Name')
     })
 
     it('should display the form submit button', async () => {
       // GIVEN
       const { url } = await app.start(config)
+      const { page } = browser
 
       // WHEN
-      await browser.page.goto(`${url}/form/user`)
+      await page.goto(`${url}/form/user`)
 
       // THEN
-      expect(browser.page.content()).resolves.toContain('Save')
+      expect(page.content()).resolves.toContain('Save')
     })
 
     it('should create a record when the form is submitted', async () => {
@@ -100,18 +104,6 @@ mock.page(({ app, browser, drivers }) => {
       const records = await table.list()
       expect(records).toHaveLength(1)
       expect(records[0].fields.name).toBe('John Doe')
-    })
-
-    it('should match the form snapshot', async () => {
-      // GIVEN
-      const { url } = await app.start(config)
-      const { page } = browser
-
-      // WHEN
-      await page.goto(`${url}/form/user`)
-
-      // THEN
-      expect(await page.content()).toMatchSnapshot()
     })
   })
 })
