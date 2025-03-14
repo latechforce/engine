@@ -29,7 +29,7 @@ export class Form {
 
   init = async () => {
     const { server } = this._services
-    const { path, title } = this._config
+    const { path, title, description } = this._config
     await server.get(`/forms/${path}`, async () => {
       return new JsxResponse(
         (
@@ -39,6 +39,7 @@ export class Form {
             </head>
             <body>
               <h1>{title}</h1>
+              <p>{description}</p>
             </body>
           </html>
         )

@@ -12,8 +12,8 @@ mock.page(({ app, browser }) => {
         {
           name: 'user',
           path: 'user',
-          title: 'Form',
-          description: 'Form',
+          title: 'Form title',
+          description: 'Form description',
           table: 'users',
           inputs: [
             {
@@ -45,8 +45,19 @@ mock.page(({ app, browser }) => {
       await browser.page.goto(`${url}/forms/user`)
 
       // THEN
-      expect(browser.page.title()).resolves.toBe('Form')
-      expect(browser.page.content()).resolves.toContain('Form')
+      expect(browser.page.title()).resolves.toBe('Form title')
+      expect(browser.page.content()).resolves.toContain('Form title')
+    })
+
+    it('should display the form description', async () => {
+      // GIVEN
+      const { url } = await app.start(config)
+
+      // WHEN
+      await browser.page.goto(`${url}/forms/user`)
+
+      // THEN
+      expect(browser.page.content()).resolves.toContain('Form description')
     })
   })
 })
