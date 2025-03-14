@@ -5,7 +5,7 @@ const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.page(({ app, browser }) => {
   describe('on GET', () => {
-    it.skip('should display a form', async () => {
+    it('should display a form', async () => {
       // GIVEN
       const config: Config = {
         name: 'App',
