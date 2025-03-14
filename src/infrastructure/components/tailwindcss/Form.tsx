@@ -2,7 +2,7 @@ import type { FormProps } from '/domain/entities/Form'
 
 export const Form = ({ title, description, action, submitLabel, children }: FormProps) => {
   return (
-    <div className="container mx-auto bg-gray-50 dark:bg-neutral-800">
+    <div className="w-full h-screen bg-gray-50 dark:bg-neutral-800">
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <div className="max-w-xl mx-auto">
           <div className="text-center">

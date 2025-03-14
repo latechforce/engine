@@ -43,6 +43,8 @@
     "test:integration": "bun test src/infrastructure --bail --timeout 20000",
     "test:e2e": "bun test test/ --bail",
     "test:coverage": "bun test --bail --timeout 20000 --coverage",
+    "test:ui": "bun test src/infrastructure/components --bail",
+    "test:ui:snapshots": "bun test src/infrastructure/components  --bail --update-snapshots",
     "semantic-release": "semantic-release",
     "storybook": "concurrently \"bunx @tailwindcss/cli -i ./.storybook/input.css -o ./.storybook/output.css --watch\" \"storybook dev -p 6006\"",
     "build-storybook": "storybook build"
