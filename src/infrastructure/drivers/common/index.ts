@@ -16,16 +16,13 @@ import { FileSystemDriver } from './FileSystemDriver'
 import { TunnelDriver } from './TunnelDriver'
 import { FetcherDriver } from './FetcherDriver'
 import { CronDriver } from './CronDriver'
-import type { ThemeConfig } from '/domain/services/Theme'
-import { ThemeDriver } from './ThemeDriver'
 
-export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server'> = {
+export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server' | 'theme'> = {
   tunnel: (config?: TunnelConfig) => new TunnelDriver(config),
   queue: (config: QueueConfig) => new QueueDriver(config),
   storage: (config: StorageConfig) => new StorageDriver(config),
   logger: (config: LoggersConfig) => new LoggerDriver(config),
   codeCompiler: (config: CodeCompilerConfig) => new CodeCompilerDriver(config),
-  theme: (config: ThemeConfig) => new ThemeDriver(config),
   templateCompiler: () => new TemplateCompilerDriver(),
   schemaValidator: () => new SchemaValidatorDriver(),
   idGenerator: () => new IdGeneratorDriver(),
