@@ -8,6 +8,8 @@ import type { ServerConfig, ServerMethodOptions } from '/domain/services/Server'
 import type { Response as EngineResponse } from '/domain/entities/Response'
 import { JsonResponse } from '/domain/entities/Response/Json'
 import type { JSONSchema } from '/domain/services/SchemaValidator'
+import { isJsxResponse } from '/domain/entities/Response/Jsx'
+import { renderToString } from 'react-dom/server'
 
 export type SwaggerSchema = {
   body?: TSchema
@@ -274,6 +276,13 @@ export class ElysiaDriver implements IServerDriver {
   }
 
   private _formatResponse = (response: EngineResponse) => {
+    if (isJsxResponse(response)) {
+      const html = renderToString(response.jsx)
+      return new Response(html, {
+        status: response.status,
+        headers: response.headers,
+      })
+    }
     return new Response(response.body, {
       status: response.status,
       headers: response.headers,

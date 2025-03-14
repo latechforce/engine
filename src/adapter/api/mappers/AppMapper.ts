@@ -26,6 +26,7 @@ import { GoogleMailMapper } from './Integration/GoogleMailMapper'
 import { CronMapper } from './Services/CronMapper'
 import { GoCardlessMapper } from './Integration/GoCardlessMapper'
 import { PhantombusterMapper } from './Integration/PhantombusterMapper'
+import { FormMapper } from './FormMapper'
 
 export class AppMapper {
   static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
@@ -117,6 +118,7 @@ export class AppMapper {
       { tables },
       { notion, pappers, qonto, googleMail, gocardless }
     )
+    const forms = FormMapper.toManyEntities(config.forms, { server }, { tables })
     return new StoppedApp(
       {
         name: appName,
@@ -137,6 +139,7 @@ export class AppMapper {
         tables,
         automations,
         buckets,
+        forms,
       },
       { notion }
     )

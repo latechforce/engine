@@ -53,6 +53,39 @@
             ],
             "type": "string"
         },
+        "FormConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "inputs": {
+                    "items": {
+                        "$ref": "#/definitions/InputConfig"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "inputs",
+                "name",
+                "path",
+                "table"
+            ],
+            "type": "object"
+        },
         "GoCardlessCreatePayment": {
             "additionalProperties": false,
             "properties": {
@@ -620,6 +653,9 @@
                 },
                 "pappers": {
                     "$ref": "#/definitions/PappersConfig"
+                },
+                "phantombuster": {
+                    "$ref": "#/definitions/PhantombusterConfig"
                 },
                 "qonto": {
                     "anyOf": [
@@ -1318,6 +1354,30 @@
             ],
             "type": "object"
         },
+        "InputConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "field": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "placeholder": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "field"
+            ],
+            "type": "object"
+        },
         "JSONSchema": {
             "additionalProperties": false,
             "properties": {
@@ -1572,6 +1632,18 @@
             "type": "object"
         },
         "PappersConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "apiKey"
+            ],
+            "type": "object"
+        },
+        "PhantombusterConfig": {
             "additionalProperties": false,
             "properties": {
                 "apiKey": {
@@ -1847,6 +1919,12 @@
         },
         "description": {
             "type": "string"
+        },
+        "forms": {
+            "items": {
+                "$ref": "#/definitions/FormConfig"
+            },
+            "type": "array"
         },
         "integrations": {
             "$ref": "#/definitions/IIntegrations"

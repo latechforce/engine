@@ -5,7 +5,7 @@ export class HtmlResponse extends BaseResponse {
     super({
       body: html,
       headers: {
-        'Content-Type': 'text/html',
+        'Content-Type': 'text/html; charset=utf8',
       },
     })
   }

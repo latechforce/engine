@@ -12,6 +12,7 @@ import type { Notion } from '/domain/integrations/Notion'
 import type { CodeCompiler } from '/domain/services/CodeCompiler'
 import type { IIntegrations } from '/domain/interfaces/IIntegrations'
 import type { Cron } from '/domain/services/Cron'
+import type { Form } from '../Form'
 
 export interface AppConfig {
   name: string
@@ -34,6 +35,7 @@ export interface AppEntities {
   tables: Table[]
   automations: Automation[]
   buckets: Bucket[]
+  forms: Form[]
 }
 
 export interface AppIntegrations {
