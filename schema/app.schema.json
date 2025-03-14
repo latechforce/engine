@@ -71,6 +71,9 @@
                 "path": {
                     "type": "string"
                 },
+                "submitLabel": {
+                    "type": "string"
+                },
                 "table": {
                     "type": "string"
                 },

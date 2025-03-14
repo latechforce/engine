@@ -3,7 +3,7 @@ import { Mock, type Config } from '/test/bun'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
-mock.page(({ app, browser }) => {
+mock.page(({ app, browser, drivers }) => {
   describe('on GET', () => {
     const config: Config = {
       name: 'App',
@@ -22,6 +22,7 @@ mock.page(({ app, browser }) => {
               required: true,
             },
           ],
+          submitLabel: 'Save',
         },
       ],
       tables: [
@@ -69,6 +70,35 @@ mock.page(({ app, browser }) => {
 
       // THEN
       expect(browser.page.content()).resolves.toContain('Name')
+    })
+
+    it('should display the form submit button', async () => {
+      // GIVEN
+      const { url } = await app.start(config)
+
+      // WHEN
+      await browser.page.goto(`${url}/forms/user`)
+
+      // THEN
+      expect(browser.page.content()).resolves.toContain('Save')
+    })
+
+    it('should create a record when the form is submitted', async () => {
+      // GIVEN
+      const { page } = browser
+      const table = drivers.database.table(config.tables![0])
+      const { url } = await app.start(config)
+
+      // WHEN
+      await page.goto(`${url}/forms/user`)
+      await page.type('input[name="name"]', 'John Doe')
+      await page.click('button[type="submit"]')
+      await page.waitForNavigation()
+
+      // THEN
+      const records = await table.list()
+      expect(records).toHaveLength(1)
+      expect(records[0].fields.name).toBe('John Doe')
     })
   })
 })

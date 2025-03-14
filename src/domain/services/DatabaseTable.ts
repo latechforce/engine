@@ -127,7 +127,7 @@ export class DatabaseTable {
   }
 
   readById = async <T extends RecordFields>(id: string) => {
-    this._logger.debug(`read in table "${this.name}" in schema "${this.schema}"`, { id })
+    this._logger.debug(`readById in table "${this.name}" in schema "${this.schema}"`, { id })
     return this._table.readById<T>(id)
   }
 

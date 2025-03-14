@@ -10,6 +10,7 @@ export interface FormConfig {
   description?: string
   table: string
   inputs: InputConfig[]
+  submitLabel?: string
 }
 
 export interface FormServices {
@@ -45,7 +46,7 @@ export class Form {
   }
 
   render = async (): Promise<JsxResponse> => {
-    const { name, title, description, inputs } = this._config
+    const { name, title, description, inputs, submitLabel } = this._config
     const Inputs = await Promise.all(inputs.map((input) => new Input(input, this.table).render()))
     return new JsxResponse(
       (
@@ -56,9 +57,9 @@ export class Form {
           <body>
             {title ? <h1>{title}</h1> : null}
             {description ? <p>{description}</p> : null}
-            <form>
+            <form action={`${this.table.path}`} method="POST">
               {Inputs}
-              <button type="submit">Submit</button>
+              <button type="submit">{submitLabel ?? 'Submit'}</button>
             </form>
           </body>
         </html>
