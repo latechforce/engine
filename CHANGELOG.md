@@ -1,3 +1,16 @@
+# [0.38.0](https://github.com/latechforce/engine/compare/v0.37.68...v0.38.0) (2025-03-14)
+
+
+### Bug Fixes
+
+* **Form:** update ui ([f1bcff2](https://github.com/latechforce/engine/commit/f1bcff2c2205bc37cd1d24a4b1c7a80993a2b93d))
+* **test:** refactor test API for ui testing with puppeteer ([f361935](https://github.com/latechforce/engine/commit/f3619356a4ea890ed9b3930890fcd6a8537f3211))
+
+
+### Features
+
+* **Form:** add green tests ([b158b67](https://github.com/latechforce/engine/commit/b158b670c7261f17d5ebb2a9b5069eda6bbfc00f))
+
 ## [0.37.68](https://github.com/latechforce/engine/compare/v0.37.67...v0.37.68) (2025-03-12)
 
 
