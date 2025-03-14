@@ -91,6 +91,7 @@ mock.page(({ app, browser, drivers }) => {
 
       // WHEN
       await page.goto(`${url}/forms/user`)
+
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
       await page.waitForNavigation()
@@ -99,6 +100,18 @@ mock.page(({ app, browser, drivers }) => {
       const records = await table.list()
       expect(records).toHaveLength(1)
       expect(records[0].fields.name).toBe('John Doe')
+    })
+
+    it('should match the form snapshot', async () => {
+      // GIVEN
+      const { url } = await app.start(config)
+      const { page } = browser
+
+      // WHEN
+      await page.goto(`${url}/forms/user`)
+
+      // THEN
+      expect(await page.content()).toMatchSnapshot()
     })
   })
 })

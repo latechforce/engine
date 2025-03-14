@@ -27,9 +27,15 @@ import { CronMapper } from './Services/CronMapper'
 import { GoCardlessMapper } from './Integration/GoCardlessMapper'
 import { PhantombusterMapper } from './Integration/PhantombusterMapper'
 import { FormMapper } from './FormMapper'
+import type { Components } from '/adapter/spi/components'
 
 export class AppMapper {
-  static toEntity = (drivers: Drivers, integrations: Integrations, config: Config) => {
+  static toEntity = (
+    drivers: Drivers,
+    integrations: Integrations,
+    components: Components,
+    config: Config
+  ) => {
     const { name: appName, version: appVersion, description: appDescription } = config
     const monitor = MonitorMapper.toService(
       drivers,
@@ -118,7 +124,7 @@ export class AppMapper {
       { tables },
       { notion, pappers, qonto, googleMail, gocardless }
     )
-    const forms = FormMapper.toManyEntities(config.forms, { server }, { tables })
+    const forms = FormMapper.toManyEntities(config.forms, { server }, { tables }, components)
     return new StoppedApp(
       {
         name: appName,

@@ -1,26 +1,33 @@
 import type { IForm } from '/domain/interfaces/IForm'
-import type { Server } from '/domain/services/Server'
-import { Form } from '/domain/entities/Form'
-import type { Table } from '/domain/entities/Table'
+import {
+  Form,
+  type FormComponents,
+  type FormEntities,
+  type FormServices,
+} from '/domain/entities/Form'
 
-export interface FormMapperServices {
-  server: Server
-}
+export type FormMapperServices = FormServices
 
-export interface FormMapperEntities {
-  tables: Table[]
-}
+export type FormMapperEntities = FormEntities
+
+export type FormMapperComponents = FormComponents
 
 export class FormMapper {
-  static toEntity = (config: IForm, services: FormMapperServices, entities: FormMapperEntities) => {
-    return new Form(config, services, entities)
+  static toEntity = (
+    config: IForm,
+    services: FormMapperServices,
+    entities: FormMapperEntities,
+    components: FormMapperComponents
+  ) => {
+    return new Form(config, services, entities, components)
   }
 
   static toManyEntities = (
     configs: IForm[] = [],
     services: FormMapperServices,
-    entities: FormMapperEntities
+    entities: FormMapperEntities,
+    components: FormMapperComponents
   ) => {
-    return configs.map((config) => this.toEntity(config, services, entities))
+    return configs.map((config) => this.toEntity(config, services, entities, components))
   }
 }

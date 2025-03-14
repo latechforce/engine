@@ -7,13 +7,15 @@ import type { SchemaValidator } from '/domain/services/SchemaValidator'
 import { SchemaValidatorMapper } from './mappers/Services/SchemaValidatorMapper'
 import type { Integrations } from '/adapter/spi/integrations'
 import type { StartedApp } from '/domain/entities/App/Started'
+import type { Components } from '/adapter/spi/components'
 
 export default class {
   private _schemaValidator: SchemaValidator
 
   constructor(
     private _drivers: Drivers,
-    private _integrations: Integrations
+    private _integrations: Integrations,
+    private _components: Components
   ) {
     this._schemaValidator = SchemaValidatorMapper.toService(_drivers)
   }
@@ -41,7 +43,12 @@ export default class {
   }
 
   private _validateConfigOrThrow = async (config: Config): Promise<StoppedApp> => {
-    const stoppedApp = AppMapper.toEntity(this._drivers, this._integrations, config)
+    const stoppedApp = AppMapper.toEntity(
+      this._drivers,
+      this._integrations,
+      this._components,
+      config
+    )
     await stoppedApp.logger.init()
     stoppedApp.logger.debug('✅ config schema is valid')
     const errors = await stoppedApp.validateConfig()

@@ -1,8 +1,10 @@
 import { drivers } from '/infrastructure/drivers/common'
 import { integrations } from '/infrastructure/integrations/common'
+import { components } from '/infrastructure/components'
 import App from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
+import type { Components } from '/adapter/spi/components'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type { DatabaseConfig } from '/domain/services/Database'
 import type { MonitorsConfig } from './domain/services/Monitor'
@@ -72,9 +74,15 @@ export default class extends App {
       server: (config: ServerConfig) => IServerDriver
     }
     integrations?: Partial<Integrations>
+    components?: Partial<Components>
   }) {
     const customDrivers = options?.drivers ?? {}
     const customIntegrations = options?.integrations ?? {}
-    super({ ...drivers, ...customDrivers }, { ...integrations, ...customIntegrations })
+    const customComponents = options?.components ?? {}
+    super(
+      { ...drivers, ...customDrivers },
+      { ...integrations, ...customIntegrations },
+      { ...components, ...customComponents }
+    )
   }
 }
