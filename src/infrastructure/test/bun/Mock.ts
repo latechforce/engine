@@ -19,16 +19,27 @@ import { GoogleMailIntegration } from '/infrastructure/integrations/bun/mocks/go
 import type { GoogleMailConfig } from '/domain/integrations/Google/GoogleMail'
 import { GoCardlessIntegration } from '/infrastructure/integrations/bun/mocks/gocardless/GoCardlessIntegration.mock'
 import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
+import puppeteer, { type Browser, type Page } from 'puppeteer'
+import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
+import { PhantombusterIntegration } from '/infrastructure/integrations/bun/mocks/phantombuster/PhantombusterIntegration.mock'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
+  beforeAll: (fn: () => Promise<void>) => void
   beforeEach: (fn: () => Promise<void>) => void
   afterEach: (fn: () => Promise<void>) => void
   afterAll: (fn: () => Promise<void>) => void
 }
 
 type DriverType = 'Database' | 'Storage' | 'Fetcher'
-type IntegrationType = 'Notion' | 'Qonto' | 'Pappers' | 'Airtable' | 'GoogleMail' | 'GoCardless'
+type IntegrationType =
+  | 'Notion'
+  | 'Qonto'
+  | 'Pappers'
+  | 'Airtable'
+  | 'GoogleMail'
+  | 'GoCardless'
+  | 'Phantombuster'
 
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
@@ -54,7 +65,9 @@ type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
           ? GoogleMailIntegration
           : I extends 'GoCardless'
             ? GoCardlessIntegration
-            : never
+            : I extends 'Phantombuster'
+              ? PhantombusterIntegration
+              : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -67,16 +80,35 @@ type Request = {
   post: <T = any>(url: string, body?: unknown, options?: RequestInit) => Promise<T>
   patch: <T = any>(url: string, body?: unknown, options?: RequestInit) => Promise<T>
 }
-type TestApp = {
+type App = {
   start: (_: Config) => Promise<StartedApp>
   stop: () => Promise<void>
 }
 
-export class Helpers {
-  constructor(private tester: Tester) {}
+type AppHelpers<D extends DriverType[], I extends IntegrationType[]> = {
+  app: App
+  drivers: D extends (infer U)[]
+    ? { [K in U & DriverType as Lowercase<K>]: WithDriverOutput<K> }
+    : {}
+  integrations: I extends (infer V)[]
+    ? { [J in V & IntegrationType as Lowercase<J>]: WithIntegrationOutput<J> }
+    : {}
+}
 
-  get request(): Request {
-    return {
+export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []> {
+  constructor(
+    private tester: Tester,
+    private options: WithOptions<D, I> = {}
+  ) {}
+
+  app(tests: (helpers: AppHelpers<D, I>) => void): void {
+    const { app, drivers, integrations } = this._prepare()
+    tests({ app, drivers, integrations })
+  }
+
+  request(tests: (helper: AppHelpers<D, I> & { request: Request }) => void): void {
+    const { app, drivers, integrations } = this._prepare()
+    const request = {
       get: async <T = any>(url: string, options: RequestInit = {}): Promise<T> => {
         return fetch(url, options)
           .then((res) => res.json())
@@ -120,26 +152,56 @@ export class Helpers {
           })
       },
     }
+    tests({ app, drivers, integrations, request })
   }
 
-  testWithMockedApp<D extends DriverType[] = [], I extends IntegrationType[] = []>(
-    options: WithOptions<D, I>,
-    tests: (helper: {
-      app: TestApp
-      request: Request
-      drivers: D extends (infer U)[]
-        ? { [K in U & DriverType as Lowercase<K>]: WithDriverOutput<K> }
-        : {}
-      integrations: I extends (infer V)[]
-        ? { [J in V & IntegrationType as Lowercase<J>]: WithIntegrationOutput<J> }
-        : {}
-    }) => void
-  ): void {
+  page(tests: (helpers: AppHelpers<D, I> & { browser: { page: Page } }) => void): void {
+    const { app, drivers, integrations } = this._prepare()
+    let browser: Browser
+    const browserPage: any = {}
+    this.tester.describe('ui', () => {
+      this.tester.beforeAll(async () => {
+        browser = await puppeteer.launch({
+          args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+          headless: true,
+        })
+      })
+      this.tester.beforeEach(async () => {
+        const page = await browser.newPage()
+        await page.setViewport({ width: 1280, height: 800 })
+        page.setDefaultNavigationTimeout(30000)
+        page.setDefaultTimeout(30000)
+        browserPage.page = page
+      })
+      this.tester.afterEach(async () => {
+        if (browserPage.page) await browserPage.page.close()
+      })
+      this.tester.afterAll(async () => {
+        if (browser) await browser.close()
+      })
+      tests({
+        app,
+        drivers,
+        integrations,
+        browser: browserPage,
+      })
+    })
+  }
+
+  private _prepare(): {
+    app: App
+    drivers: D extends (infer U)[]
+      ? { [K in U & DriverType as Lowercase<K>]: WithDriverOutput<K> }
+      : {}
+    integrations: I extends (infer V)[]
+      ? { [J in V & IntegrationType as Lowercase<J>]: WithIntegrationOutput<J> }
+      : {}
+  } {
     let files: string[] = []
     const drivers: any = {}
     const integrations: any = {}
     const extendsConfig: Partial<Config> = {}
-    const app: TestApp = {
+    const app: App = {
       start: async (_: Config): Promise<StartedApp> => {
         throw new Error('App must be initialized before starting')
       },
@@ -156,27 +218,27 @@ export class Helpers {
     }
 
     this.tester.beforeEach(async () => {
-      if ('drivers' in options) {
-        if (options.drivers.includes('Database')) {
+      if ('drivers' in this.options) {
+        if (this.options.drivers.includes('Database')) {
           const config: DatabaseConfig = { driver: 'SQLite', url: await getTestDbUrl('database') }
           const database = new DatabaseDriver(config)
           drivers.database = database
           extendsConfig.database = config
         }
-        if (options.drivers.includes('Storage')) {
+        if (this.options.drivers.includes('Storage')) {
           if (!drivers.database) {
             throw new Error('Database must be initialized before Storage')
           }
           drivers.storage = new StorageDriver(drivers.database)
         }
-        if (options.drivers.includes('Fetcher')) {
+        if (this.options.drivers.includes('Fetcher')) {
           const fetcher = new MockedFetcherDriver()
           drivers.fetcher = fetcher
         }
       }
       extendsConfig.integrations = {}
-      if ('integrations' in options) {
-        if (options.integrations.includes('Notion')) {
+      if ('integrations' in this.options) {
+        if (this.options.integrations.includes('Notion')) {
           const config: NotionConfig = {
             token: await getTestDbUrl('notion'),
             pollingInterval: 1,
@@ -184,7 +246,7 @@ export class Helpers {
           integrations.notion = new NotionIntegration(config)
           extendsConfig.integrations.notion = config
         }
-        if (options.integrations.includes('Airtable')) {
+        if (this.options.integrations.includes('Airtable')) {
           const config: AirtableConfig = {
             apiKey: await getTestDbUrl('airtable'),
             baseId: 'test',
@@ -192,7 +254,7 @@ export class Helpers {
           integrations.airtable = new AirtableIntegration(config)
           extendsConfig.integrations.airtable = config
         }
-        if (options.integrations.includes('Qonto')) {
+        if (this.options.integrations.includes('Qonto')) {
           const config: QontoConfig = {
             environment: 'production',
             organisationSlug: 'test',
@@ -201,7 +263,7 @@ export class Helpers {
           integrations.qonto = new QontoIntegration(config)
           extendsConfig.integrations.qonto = config
         }
-        if (options.integrations.includes('GoogleMail')) {
+        if (this.options.integrations.includes('GoogleMail')) {
           const config: GoogleMailConfig = {
             user: 'test',
             password: await getTestDbUrl('googlemail'),
@@ -210,20 +272,27 @@ export class Helpers {
           if (!extendsConfig.integrations.google) extendsConfig.integrations.google = {}
           extendsConfig.integrations.google.mail = config
         }
-        if (options.integrations.includes('Pappers')) {
+        if (this.options.integrations.includes('Pappers')) {
           const config: PappersConfig = {
             apiKey: await getTestDbUrl('pappers'),
           }
           integrations.pappers = new PappersIntegration(config)
           extendsConfig.integrations.pappers = config
         }
-        if (options.integrations.includes('GoCardless')) {
+        if (this.options.integrations.includes('GoCardless')) {
           const config: GoCardlessConfig = {
             environment: 'production',
             accessToken: await getTestDbUrl('gocardless'),
           }
           integrations.gocardless = new GoCardlessIntegration(config)
           extendsConfig.integrations.gocardless = config
+        }
+        if (this.options.integrations.includes('Phantombuster')) {
+          const config: PhantombusterConfig = {
+            apiKey: await getTestDbUrl('phantombuster'),
+          }
+          integrations.phantombuster = new PhantombusterIntegration(config)
+          extendsConfig.integrations.phantombuster = config
         }
       }
       let startedApp: StartedApp | undefined
@@ -247,11 +316,10 @@ export class Helpers {
       files = []
     })
 
-    tests({
+    return {
       drivers,
       integrations,
-      request: this.request,
       app,
-    })
+    }
   }
 }

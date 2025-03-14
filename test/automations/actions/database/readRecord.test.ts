@@ -1,9 +1,9 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { drivers: ['Database'] })
 
-helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers }) => {
+mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should read a record in database', async () => {
       // GIVEN

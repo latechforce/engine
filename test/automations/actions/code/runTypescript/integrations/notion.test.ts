@@ -1,5 +1,5 @@
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import {
   notionTableSample1,
@@ -7,9 +7,9 @@ import {
   notionUserSample,
 } from '/infrastructure/integrations/bun/mocks/notion/NotionTestSamples'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { integrations: ['Notion'] })
 
-helpers.testWithMockedApp({ integrations: ['Notion'] }, ({ app, request, integrations }) => {
+mock.request(({ app, request, integrations }) => {
   beforeEach(async () => {
     await integrations.notion.addTable(notionTableSample1.name, notionTableSample1.fields)
     await integrations.notion.addTable(notionTableSample2.name, notionTableSample2.fields)

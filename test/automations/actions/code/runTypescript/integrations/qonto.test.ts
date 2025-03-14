@@ -1,5 +1,5 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import {
   qontoCreateClientInvoiceSample,
@@ -7,9 +7,9 @@ import {
 } from '/infrastructure/integrations/bun/mocks/qonto/QontoTestSamples'
 import type { QontoAttachment, QontoClient, QontoClientInvoice } from '/domain/integrations/Qonto'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { integrations: ['Qonto'] })
 
-helpers.testWithMockedApp({ integrations: ['Qonto'] }, ({ app, request, integrations }) => {
+mock.request(({ app, request, integrations }) => {
   describe('on POST', () => {
     it('should run a Typescript code with a Qonto create client', async () => {
       // GIVEN

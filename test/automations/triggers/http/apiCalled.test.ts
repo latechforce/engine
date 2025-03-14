@@ -1,10 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers } from '/test/bun'
+import { Mock } from '/test/bun'
 import { getAutomationConfig } from '/test/config'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester)
 
-helpers.testWithMockedApp({}, ({ app, request }) => {
+mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should run an automation', async () => {
       // GIVEN

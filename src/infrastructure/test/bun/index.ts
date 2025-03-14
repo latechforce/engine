@@ -5,5 +5,5 @@ export type { QontoIntegration } from '/infrastructure/integrations/bun/mocks/qo
 export type { PappersIntegration } from '/infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
 
 export { mocks } from '/infrastructure/integrations/bun/mocks'
-export { Helpers } from './Helpers'
+export { Mock } from './Mock'
 export { MockedApp } from './MockedApp'

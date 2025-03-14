@@ -302,6 +302,7 @@ type FirstTableFieldName =
   | 'number_rollup'
   | 'email'
   | 'url'
+  | 'Champs avec charactères (spéciaux)'
 
 export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
   name: string

@@ -1,10 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers } from '/test/bun'
+import { Mock } from '/test/bun'
 import { getAutomationConfig, getFirstTableConfig } from '/test/config'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { drivers: ['Database'] })
 
-helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, drivers }) => {
+mock.request(({ app, drivers }) => {
   describe('on record created', () => {
     it('should start an automation', async () => {
       // GIVEN

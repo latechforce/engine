@@ -1,13 +1,13 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 import {
   qontoCreateClientInvoiceSample,
   qontoCreateClientSample,
 } from '/infrastructure/integrations/bun/mocks/qonto/QontoTestSamples'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { integrations: ['Qonto'] })
 
-helpers.testWithMockedApp({ integrations: ['Qonto'] }, ({ app, request, integrations }) => {
+mock.request(({ app, request, integrations }) => {
   describe('on POST', () => {
     it('should retrieve an attachment', async () => {
       // GIVEN

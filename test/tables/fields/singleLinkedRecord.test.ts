@@ -1,10 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers } from '/test/bun'
+import { Mock } from '/test/bun'
 import { getFirstAndSecondTableConfig } from '/test/config'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { drivers: ['Database'] })
 
-helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers }) => {
+mock.request(({ app, request, drivers }) => {
   describe('on start', () => {
     it('should create a table with a single linked record', async () => {
       // GIVEN

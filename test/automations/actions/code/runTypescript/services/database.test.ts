@@ -1,11 +1,11 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import type { ITable } from '/domain/interfaces/ITable'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { drivers: ['Database'] })
 
-helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers }) => {
+mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should run a Typescript code with a database insert', async () => {
       // GIVEN

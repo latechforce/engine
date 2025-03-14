@@ -1,11 +1,11 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import { goCardlessCreatePaymentSample } from '/infrastructure/integrations/bun/mocks/gocardless/GoCardlessTestSamples'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { integrations: ['GoCardless'] })
 
-helpers.testWithMockedApp({ integrations: ['GoCardless'] }, ({ app, request, integrations }) => {
+mock.request(({ app, request, integrations }) => {
   describe('on POST', () => {
     it('should run a Typescript code with GoCardless create payment', async () => {
       // GIVEN

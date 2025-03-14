@@ -1,10 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers } from '/test/bun'
+import { Mock } from '/test/bun'
 import { getFirstTableConfig } from '/test/config'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { drivers: ['Database'] })
 
-helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers }) => {
+mock.request(({ app, request, drivers }) => {
   describe('on start', () => {
     it('should create a table', async () => {
       // GIVEN
@@ -121,7 +121,6 @@ helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers })
       const { url } = await app.start(config)
 
       // WHEN
-
       await request.post(`${url}/api/table/${config.tables[0].name}`, {
         name: 'John',
       })

@@ -1,10 +1,10 @@
-import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers } from '/test/bun'
+import BunTester, { expect, describe, it } from 'bun:test'
+import { Mock } from '/infrastructure/test/bun/Mock'
 import { getAutomationConfig } from '/test/config'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(BunTester, { drivers: ['Database'] })
 
-helpers.testWithMockedApp({ drivers: ['Database'] }, ({ app, request, drivers }) => {
+mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should create an automation history', async () => {
       // GIVEN

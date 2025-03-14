@@ -1,9 +1,9 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester)
 
-helpers.testWithMockedApp({}, ({ app, request }) => {
+mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should run a JavaScript code', async () => {
       // GIVEN

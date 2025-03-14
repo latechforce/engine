@@ -242,11 +242,11 @@ Reference test pattern:
 
 ```1:55:test/automations/actions/qonto/createClient.test.ts
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester)
 
-helpers.testWithMockedApp({ integrations: ['Qonto'] }, ({ app, request }) => {
+mock.request({ integrations: ['Qonto'] }, ({ app, request }) => {
   describe('on POST', () => {
     it('should create a client', async () => {
       // GIVEN
@@ -304,13 +304,13 @@ Reference test pattern:
 
 ```1:62:test/automations/actions/code/runTypescript/integrations/gocardless.test.ts
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import { goCardlessCreatePaymentSample } from '/infrastructure/integrations/bun/mocks/gocardless/GoCardlessTestSamples'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester)
 
-helpers.testWithMockedApp({ integrations: ['GoCardless'] }, ({ app, request }) => {
+mock.request({ integrations: ['GoCardless'] }, ({ app, request }) => {
   describe('on POST', () => {
     it('should run a Typescript code with GoCardless create payment', async () => {
       // GIVEN

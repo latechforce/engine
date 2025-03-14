@@ -1,10 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Helpers } from '/test/bun'
+import { Mock } from '/test/bun'
 import { getFirstTableConfig } from '/test/config'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester)
 
-helpers.testWithMockedApp({}, ({ app, request }) => {
+mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a long text', async () => {
       // GIVEN

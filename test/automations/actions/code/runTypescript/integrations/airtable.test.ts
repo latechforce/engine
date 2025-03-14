@@ -1,14 +1,14 @@
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
-import { Helpers, type Config } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import {
   airtableTableSample1,
   type AirtableTableSample1,
 } from '/infrastructure/integrations/bun/mocks/airtable/AirtableTestSamples'
 
-const helpers = new Helpers(Tester)
+const mock = new Mock(Tester, { integrations: ['Airtable'] })
 
-helpers.testWithMockedApp({ integrations: ['Airtable'] }, ({ app, request, integrations }) => {
+mock.request(({ app, request, integrations }) => {
   beforeEach(async () => {
     await integrations.airtable.addTable<AirtableTableSample1>(
       airtableTableSample1.name,
