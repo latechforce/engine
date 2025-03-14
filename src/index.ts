@@ -1,6 +1,6 @@
 import { drivers } from '/infrastructure/drivers/common'
 import { integrations } from '/infrastructure/integrations/common'
-import { components } from '/infrastructure/components'
+import { components } from '/infrastructure/components/tailwindcss'
 import App from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'

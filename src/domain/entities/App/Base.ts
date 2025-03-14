@@ -13,6 +13,7 @@ import type { CodeCompiler } from '/domain/services/CodeCompiler'
 import type { IIntegrations } from '/domain/interfaces/IIntegrations'
 import type { Cron } from '/domain/services/Cron'
 import type { Form } from '../Form'
+import type { Theme } from '/domain/services/Theme'
 
 export interface AppConfig {
   name: string
@@ -29,6 +30,7 @@ export interface AppServices {
   monitor: Monitor
   codeCompiler: CodeCompiler
   cron: Cron
+  theme: Theme
 }
 
 export interface AppEntities {

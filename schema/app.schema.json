@@ -1886,6 +1886,19 @@
                 }
             ]
         },
+        "ThemeConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "const": "tailwindcss",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "type": "object"
+        },
         "TunnelNgrokConfig": {
             "additionalProperties": false,
             "properties": {
@@ -1962,6 +1975,9 @@
                 "$ref": "#/definitions/ITable"
             },
             "type": "array"
+        },
+        "theme": {
+            "$ref": "#/definitions/ThemeConfig"
         },
         "tunnel": {
             "$ref": "#/definitions/TunnelNgrokConfig"

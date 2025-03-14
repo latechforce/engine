@@ -55,7 +55,7 @@ mock.page(({ app, browser, drivers }) => {
       const { url } = await app.start(config)
 
       // WHEN
-      await browser.page.goto(`${url}/forms/user`)
+      await browser.page.goto(`${url}/form/user`)
 
       // THEN
       expect(browser.page.content()).resolves.toContain('Form description')
@@ -66,7 +66,7 @@ mock.page(({ app, browser, drivers }) => {
       const { url } = await app.start(config)
 
       // WHEN
-      await browser.page.goto(`${url}/forms/user`)
+      await browser.page.goto(`${url}/form/user`)
 
       // THEN
       expect(browser.page.content()).resolves.toContain('Name')
@@ -77,7 +77,7 @@ mock.page(({ app, browser, drivers }) => {
       const { url } = await app.start(config)
 
       // WHEN
-      await browser.page.goto(`${url}/forms/user`)
+      await browser.page.goto(`${url}/form/user`)
 
       // THEN
       expect(browser.page.content()).resolves.toContain('Save')
@@ -90,7 +90,7 @@ mock.page(({ app, browser, drivers }) => {
       const { url } = await app.start(config)
 
       // WHEN
-      await page.goto(`${url}/forms/user`)
+      await page.goto(`${url}/form/user`)
 
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
@@ -108,7 +108,7 @@ mock.page(({ app, browser, drivers }) => {
       const { page } = browser
 
       // WHEN
-      await page.goto(`${url}/forms/user`)
+      await page.goto(`${url}/form/user`)
 
       // THEN
       expect(await page.content()).toMatchSnapshot()

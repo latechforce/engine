@@ -6,6 +6,7 @@ export const Page = ({ title, description, children }: PageProps) => {
       <head>
         <title>{title}</title>
         {description ? <meta name="description" content={description} /> : null}
+        <link href="/output.css" rel="stylesheet" />
       </head>
       <body>{children}</body>
     </html>

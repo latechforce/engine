@@ -1,6 +1,6 @@
 import { drivers } from '/infrastructure/drivers/bun'
 import { integrations } from '/infrastructure/integrations/bun'
-import { components } from '/infrastructure/components'
+import { components } from '/infrastructure/components/tailwindcss'
 import App from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'

@@ -20,7 +20,7 @@ export class StoppedApp extends BaseApp {
   }
 
   init = async (): Promise<void> => {
-    const { server } = this._services
+    const { server, theme } = this._services
     const { tables, automations, buckets, forms } = this._entities
     const { notion } = this._integrations
     await server.init(async () => {
@@ -29,6 +29,7 @@ export class StoppedApp extends BaseApp {
       for (const automation of automations) await automation.init()
       for (const bucket of buckets) await bucket.init()
       for (const form of forms) await form.init()
+      if (forms.length > 0) await theme.init()
     })
   }
 

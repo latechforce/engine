@@ -1,3 +1,4 @@
+import type { ThemeConfig } from '/domain/services/Theme'
 import type { DatabaseConfig } from '/domain/services/Database'
 import type { LoggersConfig } from '/domain/services/Logger'
 import type {
@@ -16,4 +17,5 @@ export type IServices = {
   monitors?: (Omit<MonitorSentryConfig, 'appName' | 'appVersion'> | MonitorConsoleConfig)[]
   loggers?: LoggersConfig
   tunnel?: TunnelConfig
+  theme?: ThemeConfig
 }

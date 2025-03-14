@@ -28,6 +28,7 @@ import { GoCardlessMapper } from './Integration/GoCardlessMapper'
 import { PhantombusterMapper } from './Integration/PhantombusterMapper'
 import { FormMapper } from './FormMapper'
 import type { Components } from '/adapter/spi/components'
+import { ThemeMapper } from './Services/ThemeMapper'
 
 export class AppMapper {
   static toEntity = (
@@ -51,6 +52,7 @@ export class AppMapper {
     const idGenerator = IdGeneratorMapper.toService(drivers)
     const fetcher = FetcherMapper.toService(drivers)
     const cron = CronMapper.toService(drivers)
+    const theme = ThemeMapper.toService(drivers, { server }, config.theme)
     const schemaValidator = SchemaValidatorMapper.toService(drivers)
     const templateCompiler = TemplateCompilerMapper.toService(drivers)
     const database = DatabaseMapper.toService(drivers, config.database, {
@@ -140,6 +142,7 @@ export class AppMapper {
         monitor,
         codeCompiler: typescriptCompiler,
         cron,
+        theme,
       },
       {
         tables,

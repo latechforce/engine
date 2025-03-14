@@ -53,7 +53,7 @@ export class Form {
   init = async () => {
     const { server } = this._services
     const { path } = this._config
-    await server.get(`/forms/${path}`, async () => new JsxResponse(this.render()))
+    await server.get(`/form/${path}`, async () => new JsxResponse(this.render()))
   }
 
   validateConfig = async (): Promise<ConfigError[]> => {

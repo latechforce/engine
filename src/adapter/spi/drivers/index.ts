@@ -11,6 +11,8 @@ import { type IStorageDriver } from './StorageSpi'
 import { type IMonitorDriver } from './MonitorSpi'
 import { type ITunnelDriver } from './TunnelSpi'
 import { type IFetcherDriver } from './FetcherSpi'
+import type { ICronDriver } from './CronSpi'
+import type { IThemeDriver } from './ThemeSpi'
 
 import { type ServerConfig } from '/domain/services/Server'
 import { type DatabaseConfig } from '/domain/services/Database'
@@ -20,8 +22,7 @@ import { type LoggersConfig } from '/domain/services/Logger'
 import { type CodeCompilerConfig } from '/domain/services/CodeCompiler'
 import { type TunnelConfig } from '/domain/services/Tunnel'
 import type { StorageConfig } from '/domain/services/Storage'
-import type { ICronDriver } from './CronSpi'
-
+import type { ThemeConfig } from '/domain/services/Theme'
 export interface Drivers {
   tunnel: (config?: TunnelConfig) => ITunnelDriver
   server: (config: ServerConfig) => IServerDriver
@@ -31,6 +32,7 @@ export interface Drivers {
   monitor: (config: MonitorsConfig) => IMonitorDriver
   logger: (config: LoggersConfig) => ILoggerDriver
   codeCompiler: (config: CodeCompilerConfig) => ICodeCompilerDriver
+  theme: (config: ThemeConfig) => IThemeDriver
   idGenerator: () => IIdGeneratorDriver
   schemaValidator: () => ISchemaValidatorDriver
   templateCompiler: () => ITemplateCompilerDriver
