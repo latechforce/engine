@@ -157,7 +157,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
 
   page(tests: (helpers: AppHelpers<D, I> & { browser: { page: Page } }) => void): void {
     const { app, drivers, integrations } = this._prepare()
-    let browser: Browser
+    let browser: Browser | undefined
     const browserPage: any = {}
 
     this.tester.describe('ui', () => {
@@ -174,7 +174,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
       })
 
       this.tester.afterEach(async () => {
-        await browser.close()
+        if (browser) await browser.close()
       })
 
       tests({
