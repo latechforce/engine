@@ -10,21 +10,21 @@ mock.page(({ app, browser }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.1',
-        /*forms: [
+        forms: [
           {
             name: 'user',
             title: 'Form',
             description: 'Form',
             table: 'users',
-            fields: [
+            inputs: [
               {
-                name: 'name',
+                field: 'name',
                 label: 'Name',
                 required: true,
               },
             ],
           },
-        ],*/
+        ],
         tables: [
           {
             name: 'users',
