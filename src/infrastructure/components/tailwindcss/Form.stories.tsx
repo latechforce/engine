@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-
-import { Form } from './Form'
+import { Form, FormResponse, FormContainer } from './Form'
 import { Input } from './Input'
 
 const meta = {
-  title: 'Form/Form',
-  component: Form,
+  title: 'Form',
   parameters: {
     layout: 'fullscreen',
   },
@@ -15,13 +13,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    id: 'form',
-    title: 'Form',
-    description: 'This is a form',
-    action: '/',
-    submitLabel: 'Submit',
-    children: [
+  render: () => (
+    <Form id="form" title="Form" description="This is a form" action="/" submitLabel="Submit">
       <Input
         field="name"
         type="text"
@@ -29,7 +22,15 @@ export const Default: Story = {
         description="This is a description"
         placeholder="Enter your name"
         required={true}
-      />,
-    ],
-  },
+      />
+    </Form>
+  ),
+}
+
+export const Response: Story = {
+  render: () => (
+    <FormContainer>
+      <FormResponse id="form" message="Form submitted successfully!" />,
+    </FormContainer>
+  ),
 }

@@ -80,7 +80,7 @@ export class Form {
 
   post = async (request: PostRequest): Promise<JsxResponse> => {
     const { FormResponse } = this._components
-    const { successMessage = 'Success!' } = this._config
+    const { successMessage = 'Form submitted successfully!' } = this._config
     await this.table.insert(request.body)
     return new JsxResponse(<FormResponse id={this.id} message={successMessage} />)
   }
