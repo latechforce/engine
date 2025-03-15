@@ -1,10 +1,18 @@
-import type { FormProps } from '/domain/entities/Form'
+import type { FormProps, FormResponseProps } from '/domain/entities/Form'
 
-export const Form = ({ title, description, action, submitLabel, children }: FormProps) => {
+export const FormResponse = ({ id, message }: FormResponseProps) => {
+  return (
+    <div id={`${id}-form-container`} className="max-w-xl mx-auto">
+      <p className="mt-10 text-gray-600 dark:text-neutral-400">{message}</p>
+    </div>
+  )
+}
+
+export const Form = ({ id, title, description, action, submitLabel, children }: FormProps) => {
   return (
     <div className="w-full h-screen bg-gray-50 dark:bg-neutral-800">
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
-        <div className="max-w-xl mx-auto">
+        <div id={`${id}-form-container`} className="max-w-xl mx-auto">
           <div className="text-center">
             <h1 className="text-3xl font-bold text-gray-800 sm:text-4xl dark:text-white">
               {title}
@@ -14,7 +22,7 @@ export const Form = ({ title, description, action, submitLabel, children }: Form
             ) : null}
           </div>
           <div className="mt-12">
-            <form action={action} method="POST">
+            <form hx-post={action} hx-target={`#${id}-form-container`} hx-swap="outerHTML">
               <div className="grid gap-4 lg:gap-6">
                 {children}
                 <div className="mt-6 grid">

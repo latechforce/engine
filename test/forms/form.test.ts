@@ -99,7 +99,7 @@ mock.page(({ app, browser, drivers }) => {
 
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
-      await page.waitForNavigation()
+      await page.waitForFunction((text) => document.body.innerText.includes(text), {}, 'Success')
 
       // THEN
       const records = await table.list()
@@ -107,7 +107,7 @@ mock.page(({ app, browser, drivers }) => {
       expect(records[0].fields.name).toBe('John Doe')
     })
 
-    it.only('should display a success message when the form is submitted', async () => {
+    it('should display a success message when the form is submitted', async () => {
       // GIVEN
       const { page } = browser
       const { url } = await app.start(config)
@@ -117,7 +117,7 @@ mock.page(({ app, browser, drivers }) => {
 
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
-      await page.waitForNavigation()
+      await page.waitForFunction((text) => document.body.innerText.includes(text), {}, 'Success')
 
       // THEN
       const html = await page.content()

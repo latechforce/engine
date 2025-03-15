@@ -128,7 +128,12 @@ export class AppMapper {
       { tables },
       { notion, pappers, qonto, googleMail, gocardless }
     )
-    const forms = FormMapper.toManyEntities(config.forms, { server }, { tables }, components)
+    const forms = FormMapper.toManyEntities(
+      config.forms,
+      { server, fetcher, idGenerator },
+      { tables },
+      components
+    )
     return new StoppedApp(
       {
         name: appName,

@@ -16,6 +16,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    id: 'form',
     title: 'Form',
     description: 'This is a form',
     action: '/',

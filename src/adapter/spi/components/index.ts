@@ -1,9 +1,4 @@
-import type { FormProps } from '/domain/entities/Form'
-import type { InputProps } from '/domain/entities/Form/Input'
-import type { PageProps } from '/domain/entities/Page'
+import type { FormComponents } from '/domain/entities/Form'
+import type { InputComponents } from '/domain/entities/Form/Input'
 
-export interface Components {
-  Page: React.ComponentType<PageProps>
-  Form: React.ComponentType<FormProps>
-  Input: React.ComponentType<InputProps>
-}
+export type Components = FormComponents & InputComponents

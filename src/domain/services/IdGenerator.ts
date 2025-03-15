@@ -3,39 +3,24 @@ export interface IIdGeneratorSpi {
 }
 
 export class IdGenerator {
-  private alphabet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  private _alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  private _alphabetWithNumbers = '0123456789' + this._alphabet
 
   constructor(private _spi: IIdGeneratorSpi) {}
 
   forRecord = () => {
-    return this._spi.generate(24, this.alphabet)
+    return 'rec' + this._spi.generate(24, this._alphabetWithNumbers)
   }
 
   forFile = () => {
-    return this._spi.generate(24, this.alphabet)
-  }
-
-  forEmail = () => {
-    return this._spi.generate(24, this.alphabet)
+    return 'fil' + this._spi.generate(24, this._alphabetWithNumbers)
   }
 
   forComponent = () => {
-    return this._spi.generate(12, this.alphabet)
+    return 'com' + this._spi.generate(12, this._alphabet)
   }
 
   forListener = () => {
-    return this._spi.generate(12, this.alphabet)
-  }
-
-  forPath = () => {
-    return this._spi.generate(8, this.alphabet)
-  }
-
-  forBrowser = () => {
-    return this._spi.generate(8, this.alphabet)
-  }
-
-  forAutomation = () => {
-    return this._spi.generate(8, this.alphabet)
+    return 'lis' + this._spi.generate(12, this._alphabetWithNumbers)
   }
 }
