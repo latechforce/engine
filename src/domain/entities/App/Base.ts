@@ -14,7 +14,7 @@ import type { IIntegrations } from '/domain/interfaces/IIntegrations'
 import type { Cron } from '/domain/services/Cron'
 import type { Form } from '../Form'
 import type { Theme } from '/domain/services/Theme'
-
+import type { Client } from '/domain/services/Client'
 export interface AppConfig {
   name: string
   integrations?: IIntegrations
@@ -31,6 +31,7 @@ export interface AppServices {
   codeCompiler: CodeCompiler
   cron: Cron
   theme: Theme
+  client: Client
 }
 
 export interface AppEntities {

@@ -23,6 +23,7 @@ import { type CodeCompilerConfig } from '/domain/services/CodeCompiler'
 import { type TunnelConfig } from '/domain/services/Tunnel'
 import type { StorageConfig } from '/domain/services/Storage'
 import type { ThemeConfig } from '/domain/services/Theme'
+import type { IClientDriver } from './ClientSpi'
 export interface Drivers {
   tunnel: (config?: TunnelConfig) => ITunnelDriver
   server: (config: ServerConfig) => IServerDriver
@@ -39,4 +40,5 @@ export interface Drivers {
   fileSystem: () => IFileSystemDriver
   fetcher: () => IFetcherDriver
   cron: () => ICronDriver
+  client: () => IClientDriver
 }

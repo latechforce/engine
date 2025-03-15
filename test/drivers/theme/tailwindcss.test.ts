@@ -24,7 +24,7 @@ mock.page(({ app, browser }) => {
   }
 
   describe('on open page', () => {
-    it('should return link to output.css', async () => {
+    it('should return link to style.css', async () => {
       // GIVEN
       const { page } = browser
       const { url } = await app.start(config)
@@ -48,6 +48,19 @@ mock.page(({ app, browser }) => {
       // THEN
       const css = await response?.text()
       expect(css).toContain('tailwindcss')
+    })
+
+    it('should return link to style.js', async () => {
+      // GIVEN
+      const { page } = browser
+      const { url } = await app.start(config)
+
+      // WHEN
+      await page.goto(`${url}/form/user`)
+
+      // THEN
+      const html = await page.content()
+      expect(html).toContain('<script src="/style.js">')
     })
 
     it('should return the preline js content', async () => {

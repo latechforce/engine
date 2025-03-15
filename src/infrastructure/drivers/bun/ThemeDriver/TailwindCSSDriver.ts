@@ -22,7 +22,7 @@ export class TailwindCSSDriver implements IThemeDriver {
   }
 
   buildJs = async (): Promise<string> => {
-    const output = await fs.readFile('./node_modules/preline/dist/preline.js', 'utf8')
+    const output = await fs.readFile(require.resolve('preline/dist/preline.js'), 'utf8')
     return output
   }
 }

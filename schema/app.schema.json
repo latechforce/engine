@@ -74,6 +74,9 @@
                 "submitLabel": {
                     "type": "string"
                 },
+                "successMessage": {
+                    "type": "string"
+                },
                 "table": {
                     "type": "string"
                 },
@@ -1889,6 +1892,9 @@
         "ThemeConfig": {
             "additionalProperties": false,
             "properties": {
+                "tmpDir": {
+                    "type": "string"
+                },
                 "type": {
                     "const": "tailwindcss",
                     "type": "string"

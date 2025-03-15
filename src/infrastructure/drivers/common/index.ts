@@ -16,6 +16,7 @@ import { FileSystemDriver } from './FileSystemDriver'
 import { TunnelDriver } from './TunnelDriver'
 import { FetcherDriver } from './FetcherDriver'
 import { CronDriver } from './CronDriver'
+import { ClientDriver } from './ClientDriver'
 
 export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server' | 'theme'> = {
   tunnel: (config?: TunnelConfig) => new TunnelDriver(config),
@@ -29,4 +30,5 @@ export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server' | 'theme'>
   fileSystem: () => new FileSystemDriver(),
   fetcher: () => new FetcherDriver(),
   cron: () => new CronDriver(),
+  client: () => new ClientDriver(),
 }

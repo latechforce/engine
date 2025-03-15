@@ -29,6 +29,7 @@ import { PhantombusterMapper } from './Integration/PhantombusterMapper'
 import { FormMapper } from './FormMapper'
 import type { Components } from '/adapter/spi/components'
 import { ThemeMapper } from './Services/ThemeMapper'
+import { ClientMapper } from './Services/ClientMapper'
 
 export class AppMapper {
   static toEntity = (
@@ -52,6 +53,7 @@ export class AppMapper {
     const idGenerator = IdGeneratorMapper.toService(drivers)
     const fetcher = FetcherMapper.toService(drivers)
     const cron = CronMapper.toService(drivers)
+    const client = ClientMapper.toService(drivers, { server })
     const theme = ThemeMapper.toService(drivers, { server }, config.theme)
     const schemaValidator = SchemaValidatorMapper.toService(drivers)
     const templateCompiler = TemplateCompilerMapper.toService(drivers)
@@ -143,6 +145,7 @@ export class AppMapper {
         codeCompiler: typescriptCompiler,
         cron,
         theme,
+        client,
       },
       {
         tables,

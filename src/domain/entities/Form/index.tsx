@@ -20,6 +20,7 @@ export interface FormConfig {
   table: string
   inputs: InputConfig[]
   submitLabel?: string
+  successMessage?: string
 }
 
 export interface FormServices {

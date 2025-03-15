@@ -23,6 +23,7 @@ mock.page(({ app, browser, drivers }) => {
             },
           ],
           submitLabel: 'Save',
+          successMessage: 'Success',
         },
       ],
       tables: [
@@ -104,6 +105,23 @@ mock.page(({ app, browser, drivers }) => {
       const records = await table.list()
       expect(records).toHaveLength(1)
       expect(records[0].fields.name).toBe('John Doe')
+    })
+
+    it.only('should display a success message when the form is submitted', async () => {
+      // GIVEN
+      const { page } = browser
+      const { url } = await app.start(config)
+
+      // WHEN
+      await page.goto(`${url}/form/user`)
+
+      await page.type('input[name="name"]', 'John Doe')
+      await page.click('button[type="submit"]')
+      await page.waitForNavigation()
+
+      // THEN
+      const html = await page.content()
+      expect(html).toContain('Success')
     })
   })
 })
