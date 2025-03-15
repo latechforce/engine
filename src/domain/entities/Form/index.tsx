@@ -7,13 +7,14 @@ import type { PageProps } from '../Page'
 import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { Fetcher } from '/domain/services/Fetcher'
 import type { PostRequest } from '../Request/Post'
+import type { Client } from '/domain/services/Client'
 
 export interface FormProps extends React.PropsWithChildren {
   id: string
-  action: string
   title: string
   description?: string
   submitLabel?: string
+  formClientProps?: Record<string, string>
 }
 
 export interface FormResponseProps {
@@ -36,6 +37,7 @@ export interface FormServices {
   server: Server
   idGenerator: IdGenerator
   fetcher: Fetcher
+  client: Client
 }
 
 export interface FormEntities {
@@ -86,8 +88,14 @@ export class Form {
   }
 
   get = async (): Promise<JsxResponse> => {
+    const { client } = this._services
     const { name, title = name, description, inputs, submitLabel } = this._config
     const { Form, Page } = this._components
+    const formClientProps = client.getHtmlAttributes({
+      post: this.path,
+      target: `#${this.id}-form-container`,
+      action: 'replace',
+    })
     return new JsxResponse(
       (
         <Page title={title} description={description}>
@@ -95,8 +103,8 @@ export class Form {
             id={this.id}
             title={title}
             description={description}
-            action={this.path}
             submitLabel={submitLabel ?? 'Submit'}
+            formClientProps={formClientProps}
           >
             {inputs.map((input) => {
               const component = new Input(input, this.table, this._components)

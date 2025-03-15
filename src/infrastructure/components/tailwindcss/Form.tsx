@@ -18,7 +18,14 @@ export const FormResponse = ({ id, message }: FormResponseProps) => {
   )
 }
 
-export const Form = ({ id, title, description, action, submitLabel, children }: FormProps) => {
+export const Form = ({
+  id,
+  title,
+  description,
+  submitLabel,
+  children,
+  formClientProps = {},
+}: FormProps) => {
   return (
     <FormContainer>
       <div id={`${id}-form-container`} className="max-w-xl mx-auto">
@@ -29,7 +36,7 @@ export const Form = ({ id, title, description, action, submitLabel, children }: 
           ) : null}
         </div>
         <div className="mt-12">
-          <form hx-post={action} hx-target={`#${id}-form-container`} hx-swap="outerHTML">
+          <form {...formClientProps}>
             <div className="grid gap-4 lg:gap-6">
               {children}
               <div className="mt-6 grid">

@@ -5,7 +5,7 @@ import { renderToString } from 'react-dom/server'
 describe('Form', () => {
   it('should match the form snapshot', async () => {
     // GIVEN
-    const form = <Form id="form" title="Form" action="/form/user" />
+    const form = <Form id="form" title="Form" />
 
     // WHEN
     const html = renderToString(form)
@@ -16,7 +16,7 @@ describe('Form', () => {
 
   it('should match the form snapshot with description', async () => {
     // GIVEN
-    const form = <Form id="form" title="Form" description="Form description" action="/form/user" />
+    const form = <Form id="form" title="Form" description="Form description" />
 
     // WHEN
     const html = renderToString(form)
@@ -27,7 +27,7 @@ describe('Form', () => {
 
   it('should match the form snapshot with submit label', async () => {
     // GIVEN
-    const form = <Form id="form" title="Form" submitLabel="Save" action="/form/user" />
+    const form = <Form id="form" title="Form" submitLabel="Save" />
 
     // WHEN
     const html = renderToString(form)

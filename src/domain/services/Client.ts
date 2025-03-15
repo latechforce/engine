@@ -5,8 +5,15 @@ export interface ClientServices {
   server: Server
 }
 
+export interface ClientHtmlAttributesOptions {
+  post?: string
+  target?: string
+  action?: 'replace' | 'append' | 'prepend'
+}
+
 export interface IClientSpi {
   getJs: () => Promise<string>
+  getHtmlAttributes: (options: ClientHtmlAttributesOptions) => Record<string, string>
 }
 
 export class Client {
@@ -19,5 +26,9 @@ export class Client {
     const { server } = this._services
     const js = await this._spi.getJs()
     await server.get('/script.js', async () => new JsResponse(js))
+  }
+
+  getHtmlAttributes = (options: ClientHtmlAttributesOptions) => {
+    return this._spi.getHtmlAttributes(options)
   }
 }

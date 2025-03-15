@@ -130,7 +130,7 @@ export class AppMapper {
     )
     const forms = FormMapper.toManyEntities(
       config.forms,
-      { server, fetcher, idGenerator },
+      { server, fetcher, idGenerator, client },
       { tables },
       components
     )
