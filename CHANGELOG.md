@@ -1,3 +1,11 @@
+## [0.38.1](https://github.com/latechforce/engine/compare/v0.38.0...v0.38.1) (2025-03-15)
+
+
+### Bug Fixes
+
+* **Form:** add success message after submission ([331224e](https://github.com/latechforce/engine/commit/331224e125e1f07ded9be3ec6008414fc6e99cee))
+* **Form:** update snapshots ([ad292c4](https://github.com/latechforce/engine/commit/ad292c4edbc8647aee7c214bf7fab4e99844201a))
+
 # [0.38.0](https://github.com/latechforce/engine/compare/v0.37.68...v0.38.0) (2025-03-14)
 
 
