@@ -3,7 +3,9 @@ import type { FormProps, FormResponseProps } from '/domain/entities/Form'
 export const FormResponse = ({ id, message }: FormResponseProps) => {
   return (
     <div id={`${id}-form-container`} className="max-w-xl mx-auto">
-      <p className="mt-10 text-gray-600 dark:text-neutral-400">{message}</p>
+      <div className="text-center">
+        <p className="mt-10 text-gray-600 dark:text-neutral-400">{message}</p>
+      </div>
     </div>
   )
 }

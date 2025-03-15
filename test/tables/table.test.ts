@@ -150,7 +150,7 @@ mock.request(({ app, request, drivers }) => {
       expect(record.fields.name).toBe('John')
     })
 
-    it('should create a record with an id with a length of 24', async () => {
+    it('should create a record with an id with a length of 27', async () => {
       // GIVEN
       const config = getFirstTableConfig()
       const { url } = await app.start(config)
@@ -165,7 +165,7 @@ mock.request(({ app, request, drivers }) => {
         .table(config.tables[0])
         .read({ field: 'name', operator: 'Is', value: 'John' })
       expect(record).toBeDefined()
-      expect(record!.id).toHaveLength(24)
+      expect(record!.id).toHaveLength(27)
     })
 
     it('should create a record with a date field', async () => {
