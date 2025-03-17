@@ -1,5 +1,5 @@
 import { InputDescription, InputLabel } from './BaseInput'
-import type { CheckboxInputProps } from '/domain/components/Form/CheckboxInput'
+import type { CheckboxInputProps } from '/domain/components/Form/Input/CheckboxInput'
 
 export const CheckboxInput = ({ field, label, description, required }: CheckboxInputProps) => {
   return (

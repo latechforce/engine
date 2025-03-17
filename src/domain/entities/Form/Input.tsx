@@ -1,8 +1,8 @@
 import type { ConfigError } from '../Error/Config'
 import type { Table } from '../Table'
-import type { TextInput } from '../../components/Form/Input/TextInput'
 import type { Input as InputComponent } from '/domain/components/Form/Input'
-import type { CheckboxInput } from '/domain/components/Form/CheckboxInput'
+import type { TextInput } from '/domain/components/Form/Input/TextInput'
+import type { CheckboxInput } from '/domain/components/Form/Input/CheckboxInput'
 
 export interface InputConfig {
   field: string

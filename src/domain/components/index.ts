@@ -1,4 +1,4 @@
-import type { CheckboxInput } from './Form/CheckboxInput'
+import type { CheckboxInput } from './Form/Input/CheckboxInput'
 import type { Form } from './Form'
 import type { FormResponse } from './Form/FormResponse'
 import type { TextInput } from './Form/Input/TextInput'
