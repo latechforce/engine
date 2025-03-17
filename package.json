@@ -7,7 +7,7 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "author": "Thomas JEANNEAU",
-  "license": "MIT",
+  "license": "Fair Use License",
   "exports": {
     ".": "./dist/index.js",
     "./bun": "./dist/bun.js",

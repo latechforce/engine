@@ -151,4 +151,4 @@ You can read our [contributing guide here](https://github.com/latechforce/engine
 
 ## License
 
-Copyright (c) 2025-present Thomas JEANNEAU, La Tech Force (thomas.jeanneau@latechforce.com). This source code is licensed under the MIT license found in the [LICENSE](https://github.com/latechforce/engine/blob/main/LICENSE).
+Copyright (c) 2024-present Thomas JEANNEAU, La Tech Force (thomas.jeanneau@latechforce.com). This source code is licensed under a Fair Use License found in the [LICENSE](https://github.com/latechforce/engine/blob/main/LICENSE).
