@@ -95,6 +95,10 @@ type AppHelpers<D extends DriverType[], I extends IntegrationType[]> = {
     : {}
 }
 
+type PageHelpers = Page & {
+  waitForText: (text: string) => Promise<void>
+}
+
 export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []> {
   constructor(
     private tester: Tester,
@@ -155,7 +159,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     tests({ app, drivers, integrations, request })
   }
 
-  page(tests: (helpers: AppHelpers<D, I> & { browser: { page: Page } }) => void): void {
+  page(tests: (helpers: AppHelpers<D, I> & { browser: { page: PageHelpers } }) => void): void {
     const { app, drivers, integrations } = this._prepare()
     let browser: Browser | undefined
     const browserPage: any = {}
@@ -166,7 +170,14 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
           headless: true,
         })
-        const page = await browser.newPage()
+        const page = (await browser.newPage()) as PageHelpers
+        page.waitForText = async (text: string) => {
+          await page.waitForFunction(
+            (text: string) => document.body.innerText.includes(text),
+            {},
+            text
+          )
+        }
         await page.setViewport({ width: 1280, height: 800 })
         page.setDefaultNavigationTimeout(30000)
         page.setDefaultTimeout(30000)

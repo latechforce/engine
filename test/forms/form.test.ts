@@ -99,7 +99,7 @@ mock.page(({ app, browser, drivers }) => {
 
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
-      await page.waitForFunction((text) => document.body.innerText.includes(text), {}, 'Success')
+      await page.waitForText('Success')
 
       // THEN
       const records = await table.list()
@@ -117,7 +117,7 @@ mock.page(({ app, browser, drivers }) => {
 
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
-      await page.waitForFunction((text) => document.body.innerText.includes(text), {}, 'Success')
+      await page.waitForText('Success')
 
       // THEN
       const html = await page.content()
