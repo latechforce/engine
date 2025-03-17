@@ -1,71 +1,69 @@
-import { describe, it, expect } from 'bun:test'
+import { it, expect } from 'bun:test'
 import { TextInput } from './TextInput'
 import { renderToString } from 'react-dom/server'
 
-describe('TextInput', () => {
-  it('should match the form snapshot', async () => {
-    // GIVEN
-    const input = <TextInput field="name" />
+it('should match the text input snapshot', async () => {
+  // GIVEN
+  const input = <TextInput field="name" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with label', async () => {
-    // GIVEN
-    const input = <TextInput field="name" label="Name" />
+it('should match the text input snapshot with label', async () => {
+  // GIVEN
+  const input = <TextInput field="name" label="Name" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with description', async () => {
-    // GIVEN
-    const input = <TextInput field="name" description="Description" />
+it('should match the text input snapshot with description', async () => {
+  // GIVEN
+  const input = <TextInput field="name" description="Description" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with label and description', async () => {
-    // GIVEN
-    const input = <TextInput field="name" label="Name" description="Description" />
+it('should match the text input snapshot with label and description', async () => {
+  // GIVEN
+  const input = <TextInput field="name" label="Name" description="Description" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with placeholder', async () => {
-    // GIVEN
-    const input = <TextInput field="name" placeholder="Placeholder" />
+it('should match the input snapshot with placeholder', async () => {
+  // GIVEN
+  const input = <TextInput field="name" placeholder="Placeholder" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with required', async () => {
-    // GIVEN
-    const input = <TextInput field="name" required />
+it('should match the text input snapshot with required', async () => {
+  // GIVEN
+  const input = <TextInput field="name" required />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
 })

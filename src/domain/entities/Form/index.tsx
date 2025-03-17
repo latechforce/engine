@@ -8,7 +8,7 @@ import type { Fetcher } from '/domain/services/Fetcher'
 import type { PostRequest } from '../Request/Post'
 import type { Client } from '/domain/services/Client'
 import type { Page as PageComponent } from '/domain/components/Page'
-import type { Form as FormComponent } from '/domain/components/Form/Form'
+import type { Form as FormComponent } from '/domain/components/Form'
 import type { FormResponse as FormResponseComponent } from '/domain/components/Form/FormResponse'
 
 export interface FormConfig {

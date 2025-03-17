@@ -1,4 +1,4 @@
-import type { FormProps } from '/domain/components/Form/Form'
+import type { FormProps } from '/domain/components/Form'
 
 export const FormContainer = ({ children }: React.PropsWithChildren) => {
   return (

@@ -1,71 +1,58 @@
-import { describe, it, expect } from 'bun:test'
-import { TextInput } from './TextInput'
+import { it, expect } from 'bun:test'
 import { renderToString } from 'react-dom/server'
+import { CheckboxInput } from './CheckboxInput'
 
-describe('TextInput', () => {
-  it('should match the form snapshot', async () => {
-    // GIVEN
-    const input = <TextInput field="name" />
+it('should match the checkbox input snapshot', async () => {
+  // GIVEN
+  const input = <CheckboxInput field="name" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with label', async () => {
-    // GIVEN
-    const input = <TextInput field="name" label="Name" />
+it('should match the checkbox input snapshot with label', async () => {
+  // GIVEN
+  const input = <CheckboxInput field="name" label="Name" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with description', async () => {
-    // GIVEN
-    const input = <TextInput field="name" description="Description" />
+it('should match the checkbox input snapshot with description', async () => {
+  // GIVEN
+  const input = <CheckboxInput field="name" description="Description" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with label and description', async () => {
-    // GIVEN
-    const input = <TextInput field="name" label="Name" description="Description" />
+it('should match the checkbox input snapshot with label and description', async () => {
+  // GIVEN
+  const input = <CheckboxInput field="name" label="Name" description="Description" />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
+})
 
-  it('should match the input snapshot with placeholder', async () => {
-    // GIVEN
-    const input = <TextInput field="name" placeholder="Placeholder" />
+it('should match the checkbox input snapshot with required', async () => {
+  // GIVEN
+  const input = <CheckboxInput field="name" required />
 
-    // WHEN
-    const html = renderToString(input)
+  // WHEN
+  const html = renderToString(input)
 
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
-
-  it('should match the input snapshot with required', async () => {
-    // GIVEN
-    const input = <TextInput field="name" required />
-
-    // WHEN
-    const html = renderToString(input)
-
-    // THEN
-    expect(html).toMatchSnapshot()
-  })
+  // THEN
+  expect(html).toMatchSnapshot()
 })
