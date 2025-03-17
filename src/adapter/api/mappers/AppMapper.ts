@@ -27,9 +27,9 @@ import { CronMapper } from './Services/CronMapper'
 import { GoCardlessMapper } from './Integration/GoCardlessMapper'
 import { PhantombusterMapper } from './Integration/PhantombusterMapper'
 import { FormMapper } from './FormMapper'
-import type { Components } from '/adapter/spi/components'
 import { ThemeMapper } from './Services/ThemeMapper'
 import { ClientMapper } from './Services/ClientMapper'
+import type { Components } from '/domain/components'
 
 export class AppMapper {
   static toEntity = (

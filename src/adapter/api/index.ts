@@ -7,7 +7,7 @@ import type { SchemaValidator } from '/domain/services/SchemaValidator'
 import { SchemaValidatorMapper } from './mappers/Services/SchemaValidatorMapper'
 import type { Integrations } from '/adapter/spi/integrations'
 import type { StartedApp } from '/domain/entities/App/Started'
-import type { Components } from '/adapter/spi/components'
+import type { Components } from '/domain/components'
 
 export default class {
   private _schemaValidator: SchemaValidator

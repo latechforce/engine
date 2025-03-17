@@ -12,6 +12,8 @@ export class TailwindCSSDriver implements IThemeDriver {
     const input = `
       @import "tailwindcss";
       @import "preline/variants.css";
+
+      @plugin "@tailwindcss/forms";
     `
     const inputPath = join(tmpDir, 'input.css')
     const outputPath = join(tmpDir, 'output.css')

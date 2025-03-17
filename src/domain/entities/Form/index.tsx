@@ -3,24 +3,13 @@ import type { ConfigError } from '/domain/entities/Error/Config'
 import type { Server } from '/domain/services/Server'
 import type { Table } from '../Table'
 import { JsxResponse } from '../Response/Jsx'
-import type { PageProps } from '../Page'
 import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { Fetcher } from '/domain/services/Fetcher'
 import type { PostRequest } from '../Request/Post'
 import type { Client } from '/domain/services/Client'
-
-export interface FormProps extends React.PropsWithChildren {
-  id: string
-  title: string
-  description?: string
-  submitLabel?: string
-  formClientProps?: Record<string, string>
-}
-
-export interface FormResponseProps {
-  id: string
-  message: string
-}
+import type { Page as PageComponent } from '/domain/components/Page'
+import type { Form as FormComponent } from '/domain/components/Form/Form'
+import type { FormResponse as FormResponseComponent } from '/domain/components/Form/FormResponse'
 
 export interface FormConfig {
   name: string
@@ -45,9 +34,9 @@ export interface FormEntities {
 }
 
 export interface FormComponents extends InputComponents {
-  Page: React.ComponentType<PageProps>
-  Form: React.ComponentType<FormProps>
-  FormResponse: React.ComponentType<FormResponseProps>
+  Page: PageComponent
+  Form: FormComponent
+  FormResponse: FormResponseComponent
 }
 
 export class Form {

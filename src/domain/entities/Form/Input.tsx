@@ -1,14 +1,8 @@
 import type { ConfigError } from '../Error/Config'
 import type { Table } from '../Table'
-
-export interface InputProps extends React.PropsWithChildren {
-  field: string
-  type: React.HTMLInputTypeAttribute
-  label?: string
-  description?: string
-  placeholder?: string
-  required?: boolean
-}
+import type { TextInput } from '/domain/components/Form/TextInput'
+import type { Input as InputComponent } from '/domain/components/Form/Input'
+import type { CheckboxInput } from '/domain/components/Form/CheckboxInput'
 
 export interface InputConfig {
   field: string
@@ -19,11 +13,12 @@ export interface InputConfig {
 }
 
 export interface InputComponents {
-  Input: React.ComponentType<InputProps>
+  TextInput: TextInput
+  CheckboxInput: CheckboxInput
 }
 
 export class Input {
-  type: React.HTMLInputTypeAttribute
+  InputComponent: InputComponent
 
   constructor(
     public config: InputConfig,
@@ -32,25 +27,17 @@ export class Input {
   ) {
     const field = table.fields.find((field) => field.name === config.field)
     if (!field) throw new Error(`Field ${config.field} not found`)
+    const { TextInput, CheckboxInput } = this._components
     const { type } = field.config
     switch (type) {
       case 'SingleLineText':
-        this.type = 'text'
+        this.InputComponent = TextInput
         break
-      case 'LongText':
-        this.type = 'textarea'
-        break
-      case 'Email':
-        this.type = 'email'
-        break
-      case 'SingleSelect':
-        this.type = 'select'
-        break
-      case 'MultipleSelect':
-        this.type = 'select'
+      case 'Checkbox':
+        this.InputComponent = CheckboxInput
         break
       default:
-        throw new Error(`Unsupported field type: ${type}`)
+        throw new Error(`Unsupported input type: ${type}`)
     }
   }
 
@@ -60,11 +47,10 @@ export class Input {
 
   render = (): React.ReactElement => {
     const { field, label, description, placeholder, required } = this.config
-    const { Input } = this._components
+    const Input = this.InputComponent
     return (
       <Input
         field={field}
-        type={this.type}
         label={label}
         description={description}
         placeholder={placeholder}

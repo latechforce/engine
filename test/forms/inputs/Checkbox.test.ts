@@ -15,8 +15,8 @@ mock.page(({ app, browser, drivers }) => {
           table: 'table',
           inputs: [
             {
-              field: 'text',
-              label: 'Text',
+              field: 'checkbox',
+              label: 'Checkbox',
               required: true,
             },
           ],
@@ -27,15 +27,15 @@ mock.page(({ app, browser, drivers }) => {
           name: 'table',
           fields: [
             {
-              name: 'text',
-              type: 'SingleLineText',
+              name: 'checkbox',
+              type: 'Checkbox',
             },
           ],
         },
       ],
     }
 
-    it('should display the text input', async () => {
+    it('should display the checkbox input', async () => {
       // GIVEN
       const { url } = await app.start(config)
       const { page } = browser
@@ -44,10 +44,10 @@ mock.page(({ app, browser, drivers }) => {
       await page.goto(`${url}/form/path`)
 
       // THEN
-      expect(page.content()).resolves.toContain('Text')
+      expect(page.content()).resolves.toContain('Checkbox')
     })
 
-    it('should create a record with a text input', async () => {
+    it('should create a record with a checkbox input', async () => {
       // GIVEN
       const { page } = browser
       const table = drivers.database.table(config.tables![0])
@@ -55,14 +55,14 @@ mock.page(({ app, browser, drivers }) => {
 
       // WHEN
       await page.goto(`${url}/form/path`)
-      await page.type('input[name="text"]', 'John Doe')
+      await page.click('input[name="checkbox"]')
       await page.click('button[type="submit"]')
       await page.waitForText('submitted')
 
       // THEN
       const records = await table.list()
       expect(records).toHaveLength(1)
-      expect(records[0].fields.text).toBe('John Doe')
+      expect(records[0].fields.checkbox).toBe(true)
     })
   })
 })

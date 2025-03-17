@@ -1,4 +1,4 @@
-import type { PageProps } from '/domain/entities/Page'
+import type { PageProps } from '/domain/components/Page'
 
 export const Page = ({ title, description, children }: PageProps) => {
   return (
