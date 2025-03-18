@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Form } from './Form'
-import { TextInput } from './Input/TextInput'
+import { SingleLineTextInput } from './Input/SingleLineTextInput'
 
 const meta = {
   title: 'Form/Form',
@@ -19,6 +19,6 @@ export const Default: Story = {
     title: 'Form',
     description: 'This is a form',
     submitLabel: 'Submit',
-    children: <TextInput field="name" label="Name" />,
+    children: <SingleLineTextInput field="name" label="Name" />,
   },
 }

@@ -1,13 +1,15 @@
 import type { CheckboxInput } from './Form/Input/CheckboxInput'
 import type { Form } from './Form'
 import type { FormResponse } from './Form/FormResponse'
-import type { TextInput } from './Form/Input/TextInput'
+import type { SingleLineTextInput } from './Form/Input/SingleLineTextInput'
+import type { SingleSelectInput } from './Form/Input/SingleSelectInput'
 import type { Page } from './Page'
 
 export type Components = {
   Page: Page
   Form: Form
   FormResponse: FormResponse
-  TextInput: TextInput
+  SingleLineTextInput: SingleLineTextInput
+  SingleSelectInput: SingleSelectInput
   CheckboxInput: CheckboxInput
 }

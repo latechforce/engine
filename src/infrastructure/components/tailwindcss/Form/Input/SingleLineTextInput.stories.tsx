@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { TextInput } from './TextInput'
+import { SingleLineTextInput } from './SingleLineTextInput'
 import { Form } from '../../Form/Form'
-import type { TextInputProps } from '/domain/components/Form/Input/TextInput'
+import type { SingleLineTextInputProps } from '/domain/components/Form/Input/SingleLineTextInput'
 
-const TextInputWithForm = (props: TextInputProps) => (
+const SingleLineTextInputWithForm = (props: SingleLineTextInputProps) => (
   <Form id="id" title="Form" submitLabel="Save">
-    <TextInput {...props} />
+    <SingleLineTextInput {...props} />
   </Form>
 )
 
 const meta = {
-  title: 'Form/TextInput',
-  component: TextInputWithForm,
+  title: 'Form/SingleLineTextInput',
+  component: SingleLineTextInputWithForm,
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof TextInputWithForm>
+} satisfies Meta<typeof SingleLineTextInputWithForm>
 
 export default meta
 type Story = StoryObj<typeof meta>

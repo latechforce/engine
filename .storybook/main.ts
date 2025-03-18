@@ -12,5 +12,9 @@ const config: StorybookConfig = {
     name: '@storybook/react-vite',
     options: {},
   },
+  previewHead: (head) => `
+    ${head}
+    <script src="./node_modules/preline/dist/preline.js" defer></script>
+  `,
 }
 export default config

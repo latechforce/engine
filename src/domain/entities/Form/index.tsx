@@ -43,6 +43,7 @@ export class Form {
   id: string
   table: Table
   path: string
+  inputs: Input[]
 
   constructor(
     private _config: FormConfig,
@@ -52,11 +53,13 @@ export class Form {
   ) {
     const { tables } = entities
     const { idGenerator } = this._services
+    const { inputs, path } = this._config
     const table = tables.find((table) => table.name === _config.table)
     if (!table) throw new Error(`Table ${_config.table} not found`)
     this.table = table
     this.id = idGenerator.forComponent()
-    this.path = `/form/${this._config.path}`
+    this.path = `/form/${path}`
+    this.inputs = inputs.map((input) => new Input(input, this.table, this._components))
   }
 
   init = async () => {
@@ -78,7 +81,7 @@ export class Form {
 
   get = async (): Promise<JsxResponse> => {
     const { client } = this._services
-    const { name, title = name, description, inputs, submitLabel } = this._config
+    const { name, title = name, description, submitLabel } = this._config
     const { Form, Page } = this._components
     const formClientProps = client.getHtmlAttributes({
       post: this.path,
@@ -95,9 +98,8 @@ export class Form {
             submitLabel={submitLabel ?? 'Submit'}
             formClientProps={formClientProps}
           >
-            {inputs.map((input) => {
-              const component = new Input(input, this.table, this._components)
-              return <component.render key={input.field} />
+            {this.inputs.map((input) => {
+              return <input.render key={input.field.name} />
             })}
           </Form>
         </Page>

@@ -1,7 +1,13 @@
 import { InputDescription, InputLabel } from './BaseInput'
-import type { TextInputProps } from '/domain/components/Form/Input/TextInput'
+import type { SingleLineTextInputProps } from '/domain/components/Form/Input/SingleLineTextInput'
 
-export const TextInput = ({ field, label, description, placeholder, required }: TextInputProps) => {
+export const SingleLineTextInput = ({
+  field,
+  label,
+  description,
+  placeholder,
+  required,
+}: SingleLineTextInputProps) => {
   return (
     <div>
       {label ? <InputLabel label={label} field={field} /> : null}

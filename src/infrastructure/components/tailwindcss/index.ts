@@ -1,14 +1,15 @@
 import type { Components } from '/domain/components'
 import { Page } from '../Page'
 import { Form } from './Form/Form'
-import { TextInput } from './Form/Input/TextInput'
+import { SingleLineTextInput } from './Form/Input/SingleLineTextInput'
 import { FormResponse } from './Form/FormResponse'
 import { CheckboxInput } from './Form/Input/CheckboxInput'
-
+import { SingleSelectInput } from './Form/Input/SingleSelectInput'
 export const components: Components = {
   Page,
   Form,
   FormResponse,
-  TextInput,
+  SingleLineTextInput,
+  SingleSelectInput,
   CheckboxInput,
 }

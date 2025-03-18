@@ -7,7 +7,7 @@ mock.page(({ app, browser, drivers }) => {
   describe('open page', () => {
     const config: Config = {
       name: 'App',
-      version: '1.0.1',
+      version: '1.0.0',
       forms: [
         {
           name: 'form',
@@ -17,7 +17,6 @@ mock.page(({ app, browser, drivers }) => {
             {
               field: 'text',
               label: 'Text',
-              required: true,
             },
           ],
         },

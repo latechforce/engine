@@ -59,7 +59,7 @@ const fullConfig: Config = {
       ],
     },
     {
-      name: 'ApiCalledWithTextInput',
+      name: 'ApiCalledWithSingleLineTextInput',
       trigger: {
         service: 'Http',
         event: 'ApiCalled',
@@ -274,7 +274,7 @@ type AutomationName =
   | 'ApiCalledWithApiKeyAuth'
   | 'ApiCalledWithReturnedValue'
   | 'ApiCalledWithError'
-  | 'ApiCalledWithTextInput'
+  | 'ApiCalledWithSingleLineTextInput'
   | 'FirstDatabaseTableRecordCreated'
   | 'FirstNotionTablePageCreated'
   | 'WebhookCalled'

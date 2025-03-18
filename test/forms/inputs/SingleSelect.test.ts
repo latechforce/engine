@@ -15,8 +15,8 @@ mock.page(({ app, browser, drivers }) => {
           table: 'table',
           inputs: [
             {
-              field: 'checkbox',
-              label: 'Checkbox',
+              field: 'single_select',
+              label: 'Single Select',
             },
           ],
         },
@@ -26,15 +26,16 @@ mock.page(({ app, browser, drivers }) => {
           name: 'table',
           fields: [
             {
-              name: 'checkbox',
-              type: 'Checkbox',
+              name: 'single_select',
+              type: 'SingleSelect',
+              options: ['Option 1', 'Option 2', 'Option 3'],
             },
           ],
         },
       ],
     }
 
-    it('should display the checkbox input', async () => {
+    it('should display the single select input', async () => {
       // GIVEN
       const { url } = await app.start(config)
       const { page } = browser
@@ -43,10 +44,10 @@ mock.page(({ app, browser, drivers }) => {
       await page.goto(`${url}/form/path`)
 
       // THEN
-      expect(page.content()).resolves.toContain('Checkbox')
+      expect(page.content()).resolves.toContain('Single Select')
     })
 
-    it('should create a record with a checkbox input', async () => {
+    it('should create a record with a single select input', async () => {
       // GIVEN
       const { page } = browser
       const table = drivers.database.table(config.tables![0])
@@ -54,14 +55,14 @@ mock.page(({ app, browser, drivers }) => {
 
       // WHEN
       await page.goto(`${url}/form/path`)
-      await page.click('input[name="checkbox"]')
+      await page.select('select[name="single_select"]', 'Option 1')
       await page.click('button[type="submit"]')
       await page.waitForText('submitted')
 
       // THEN
       const records = await table.list()
       expect(records).toHaveLength(1)
-      expect(records[0].fields.checkbox).toBe(true)
+      expect(records[0].fields.single_select).toBe('Option 1')
     })
   })
 })

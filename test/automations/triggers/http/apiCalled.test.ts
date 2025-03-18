@@ -82,7 +82,7 @@ mock.request(({ app, request }) => {
 
     it('should return run an automation with a body', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalledWithTextInput')
+      const config = getAutomationConfig('ApiCalledWithSingleLineTextInput')
       const { url } = await app.start(config)
 
       // WHEN
@@ -94,7 +94,7 @@ mock.request(({ app, request }) => {
 
     it('should return an invalid body error', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalledWithTextInput')
+      const config = getAutomationConfig('ApiCalledWithSingleLineTextInput')
       const { url } = await app.start(config)
 
       // WHEN

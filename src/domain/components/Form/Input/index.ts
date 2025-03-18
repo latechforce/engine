@@ -1,4 +1,5 @@
 import type { CheckboxInput } from './CheckboxInput'
-import type { TextInput } from './TextInput'
+import type { SingleLineTextInput } from './SingleLineTextInput'
+import type { SingleSelectInput } from './SingleSelectInput'
 
-export type Input = TextInput | CheckboxInput
+export type Input = SingleLineTextInput | CheckboxInput | SingleSelectInput

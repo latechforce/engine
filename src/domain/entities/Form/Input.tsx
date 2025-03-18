@@ -1,8 +1,10 @@
 import type { ConfigError } from '../Error/Config'
 import type { Table } from '../Table'
 import type { Input as InputComponent } from '/domain/components/Form/Input'
-import type { TextInput } from '/domain/components/Form/Input/TextInput'
+import type { SingleLineTextInput } from '/domain/components/Form/Input/SingleLineTextInput'
 import type { CheckboxInput } from '/domain/components/Form/Input/CheckboxInput'
+import type { SingleSelectInput } from '/domain/components/Form/Input/SingleSelectInput'
+import type { Field } from '/domain/entities/Field'
 
 export interface InputConfig {
   field: string
@@ -13,11 +15,14 @@ export interface InputConfig {
 }
 
 export interface InputComponents {
-  TextInput: TextInput
+  SingleLineTextInput: SingleLineTextInput
   CheckboxInput: CheckboxInput
+  SingleSelectInput: SingleSelectInput
 }
 
 export class Input {
+  field: Field
+  options: string[] = []
   InputComponent: InputComponent
 
   constructor(
@@ -27,14 +32,19 @@ export class Input {
   ) {
     const field = table.fields.find((field) => field.name === config.field)
     if (!field) throw new Error(`Field ${config.field} not found`)
-    const { TextInput, CheckboxInput } = this._components
-    const { type } = field.config
+    this.field = field
+    const { SingleLineTextInput, CheckboxInput, SingleSelectInput } = this._components
+    const { type } = this.field.config
     switch (type) {
       case 'SingleLineText':
-        this.InputComponent = TextInput
+        this.InputComponent = SingleLineTextInput
         break
       case 'Checkbox':
         this.InputComponent = CheckboxInput
+        break
+      case 'SingleSelect':
+        this.InputComponent = SingleSelectInput
+        this.options = this.field.config.options
         break
       default:
         throw new Error(`Unsupported input type: ${type}`)
@@ -55,6 +65,7 @@ export class Input {
         description={description}
         placeholder={placeholder}
         required={required}
+        options={this.options}
       />
     )
   }
