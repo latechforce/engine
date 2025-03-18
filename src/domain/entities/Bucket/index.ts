@@ -8,10 +8,9 @@ import type { StorageBucket } from '/domain/services/StorageBucket'
 import { JsonResponse } from '../Response/Json'
 import { DocxResponse } from '../Response/Docx'
 import { XlsxResponse } from '../Response/Xlsx'
-import type { FileJson } from '../File/base'
-import { CreatedFile, type CreatedFileConfig } from '../File/Created'
 import { PngResponse } from '../Response/Png'
 import { PdfResponse } from '../Response/Pdf'
+import type { FileProperties, FileToSave, File } from '../File'
 
 export interface BucketConfig {
   name: string
@@ -34,10 +33,15 @@ export class Bucket {
     _config: BucketConfig,
     private _services: BucketServices
   ) {
+    const { storage } = this._services
     this.name = _config.name
     this.path = `/api/bucket/${this.name}`
     this.filePath = `${this.path}/:id`
-    this.storage = _services.storage.bucket(this.name)
+    this.storage = storage.bucket(this.name)
+  }
+
+  get endpoint(): string {
+    return `${this._services.server.baseUrl}${this.path}`
   }
 
   init = async () => {
@@ -49,21 +53,29 @@ export class Bucket {
     return []
   }
 
-  save = async (createdFileConfig: CreatedFileConfig) => {
-    const createdFile = new CreatedFile(createdFileConfig, this._services)
-    const file = await this.storage.save(createdFile)
-    const url = `${this._services.server.baseUrl}${this.path}/${file.id}`
-    return { ...file.toJson(), url }
+  save = async (fileProperties: FileProperties): Promise<File> => {
+    const { idGenerator } = this._services
+    const { name, data } = fileProperties
+    const id = idGenerator.forFile()
+    const created_at = new Date()
+    let fileToSave: FileToSave
+    if (data instanceof Buffer) {
+      fileToSave = { id, name, data, created_at }
+    } else {
+      fileToSave = { id, name, data: Buffer.from(data as string), created_at }
+    }
+    const file = await this.storage.save(fileToSave, this.endpoint)
+    return file
   }
 
-  readById = async (id: string): Promise<FileJson | undefined> => {
-    const file = await this.storage.readById(id)
-    return file ? file.toJson() : undefined
+  readById = async (id: string): Promise<File | undefined> => {
+    const file = await this.storage.readById(id, this.endpoint)
+    return file
   }
 
   get = async (request: GetRequest) => {
     const id = request.getParamOrThrow('id')
-    const file = await this.storage.readById(id)
+    const file = await this.storage.readById(id, this.endpoint)
     if (!file) return new JsonResponse({ status: 404, data: { message: 'file not found' } })
     if (file.name.includes('.docx')) return new DocxResponse(file.name, file.data)
     if (file.name.includes('.xlsx')) return new XlsxResponse(file.name, file.data)

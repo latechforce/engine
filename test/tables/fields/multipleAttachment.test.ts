@@ -36,7 +36,8 @@ mock.request(({ app, request }) => {
       })
 
       // THEN
-      expect(record.fields.multiple_attachment).toStrictEqual(multiple_attachment)
+      expect(record.fields.multiple_attachment[0].name).toBe('file1')
+      expect(record.fields.multiple_attachment[0].url).toStartWith('https://example.com/file1')
     })
   })
 })

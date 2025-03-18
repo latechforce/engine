@@ -418,7 +418,12 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     const manyToManyColumns: { [key: string]: string[] } = {}
     for (const [key, value] of Object.entries(row)) {
       const field = this.columns.find((f) => f.name === key)
-      if (field?.type === 'TEXT[]' && field.table && Array.isArray(value)) {
+      if (
+        field?.type === 'TEXT[]' &&
+        field.table &&
+        Array.isArray(value) &&
+        value.every((v) => typeof v === 'string')
+      ) {
         manyToManyColumns[key] = value
       } else {
         staticColumns[key] = value

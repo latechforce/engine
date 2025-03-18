@@ -1,3 +1,5 @@
+import type { Logger } from './Logger'
+
 export interface MonitorSentryConfig {
   appName: string
   appVersion: string
@@ -14,6 +16,10 @@ export type MonitorConfig = MonitorSentryConfig | MonitorConsoleConfig
 export type MonitorsConfig = MonitorConfig[]
 export type MonitorDrivers = MonitorConfig['driver'][]
 
+export interface MonitorServices {
+  logger: Logger
+}
+
 export interface IMonitorSpi {
   captureException: (error: Error) => void
   captureMessage: (message: string) => void
@@ -24,16 +30,19 @@ export class Monitor {
 
   constructor(
     private _spi: IMonitorSpi,
-    config: MonitorsConfig
+    config: MonitorsConfig,
+    private _services: MonitorServices
   ) {
     this.drivers = config.map((c) => c.driver)
   }
 
   captureException = (error: Error) => {
+    this._services.logger.error(error.message)
     this._spi.captureException(error)
   }
 
   captureMessage = (message: string) => {
+    this._services.logger.error(message)
     this._spi.captureMessage(message)
   }
 }

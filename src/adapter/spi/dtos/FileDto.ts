@@ -1,3 +1,3 @@
-import type { FileFields } from '/domain/entities/File/base'
+import type { FileToSave } from '/domain/entities/File'
 
-export type FileDto = FileFields
+export type FileDto = FileToSave

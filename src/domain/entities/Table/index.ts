@@ -1,6 +1,7 @@
 import type { DatabaseTable } from '/domain/services/DatabaseTable'
 import type { Server } from '/domain/services/Server'
 import type { Database } from '/domain/services/Database'
+import type { Storage } from '/domain/services/Storage'
 import type { Field } from '../Field'
 import { JsonResponse } from '/domain/entities/Response/Json'
 import type { PostRequest } from '/domain/entities/Request/Post'
@@ -9,7 +10,7 @@ import type { GetRequest } from '/domain/entities/Request/Get'
 import type { DeleteRequest } from '/domain/entities/Request/Delete'
 import type { ConfigError } from '/domain/entities/Error/Config'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
-import type { IdGenerator } from '/domain/services/IdGenerator'
+import { IdGenerator } from '/domain/services/IdGenerator'
 import type { JSONSchema, SchemaValidator } from '/domain/services/SchemaValidator'
 import type { SchemaError } from '../Error/Schema'
 import { SingleSelectField } from '../Field/SingleSelect'
@@ -22,9 +23,11 @@ import { SingleLinkedRecordField } from '../Field/SingleLinkedRecord'
 import { MultipleLinkedRecordField } from '../Field/MultipleLinkedRecord'
 import { FilterMapper, filterSchema, type FilterConfig } from '../Filter'
 import type { Monitor } from '/domain/services/Monitor'
-import type { Record, RecordFieldsConfig } from '../Record'
+import type { Record, RecordFieldAttachment, RecordFieldsConfig } from '../Record'
 import type { ITable } from '/domain/interfaces/ITable'
 import { MultipleSelectField } from '../Field/MultipleSelect'
+import { MultipleAttachmentField } from '../Field/MultipleAttachment'
+import { Bucket } from '../Bucket'
 
 interface TableConfig {
   name: string
@@ -37,6 +40,7 @@ interface TableServices {
   templateCompiler: TemplateCompiler
   schemaValidator: SchemaValidator
   monitor: Monitor
+  storage: Storage
 }
 
 interface TableEntites {
@@ -49,6 +53,7 @@ export class Table {
   readonly path: string
   readonly recordPath: string
   readonly db: DatabaseTable
+  readonly bucket: Bucket
   private _validateData: (json: unknown, schema: JSONSchema) => SchemaError[]
 
   constructor(
@@ -64,6 +69,7 @@ export class Table {
     this.path = `/api/table/${name}`
     this.recordPath = `${this.path}/:id`
     this.db = database.table(this.config)
+    this.bucket = new Bucket({ name: `table_${name}_attachments` }, _services)
     this._validateData = schemaValidator.validate
   }
 
@@ -143,7 +149,8 @@ export class Table {
   > => {
     const schema = this._getRecordSchema()
     if (this._validateDataType<RecordFieldsConfig>(data, schema)) {
-      const record = await this.db.insert(data)
+      const uploadedData = await this._uploadAttachments(data)
+      const record = await this.db.insert(uploadedData)
       return { record }
     }
     const [error] = this._validateData(data, schema)
@@ -248,6 +255,20 @@ export class Table {
         if (field instanceof MultipleLinkedRecordField) {
           schema.properties[field.name] = { type: 'array', items: { type: 'string' } }
         }
+        if (field instanceof MultipleAttachmentField) {
+          schema.properties[field.name] = {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                size: { type: 'number' },
+                name: { type: 'string' },
+                url: { type: 'string' },
+              },
+              required: ['name'],
+            },
+          }
+        }
         if (required && field.required) {
           schema.required.push(field.name)
         }
@@ -258,5 +279,45 @@ export class Table {
 
   private _validateDataType = <T>(data: unknown, schema: JSONSchema): data is T => {
     return this._validateData(data, schema).length === 0
+  }
+
+  private _uploadAttachments = async (data: RecordFieldsConfig): Promise<RecordFieldsConfig> => {
+    for (const field of this.fields) {
+      if (field instanceof MultipleAttachmentField) {
+        const value = data[field.name]
+        let files: (File | { name: string; url: string })[] = []
+        if (Array.isArray(value)) {
+          files = value as unknown as (File | { name: string; url: string })[]
+        } else {
+          files = value ? [value as unknown as File | { name: string; url: string }] : []
+        }
+        if (files.length > 0) {
+          const attachments: RecordFieldAttachment[] = []
+          for (const uploadedFile of files) {
+            if (uploadedFile instanceof File) {
+              const file = await this.bucket.save({
+                name: uploadedFile.name,
+                data: Buffer.from(await uploadedFile.arrayBuffer()),
+              })
+              attachments.push({
+                id: file.id,
+                name: file.name,
+                url: file.url,
+                created_at: file.created_at.toISOString(),
+              })
+            } else {
+              attachments.push({
+                id: this._services.idGenerator.forFile(),
+                name: uploadedFile.name,
+                url: uploadedFile.url,
+                created_at: new Date().toISOString(),
+              })
+            }
+          }
+          data[field.name] = attachments
+        }
+      }
+    }
+    return data
   }
 }

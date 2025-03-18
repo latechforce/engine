@@ -76,13 +76,10 @@ export class StoppedApp extends BaseApp {
       process.on('SIGTERM', () => startedApp.onClose('SIGTERM'))
       process.on('SIGINT', () => startedApp.onClose('SIGINT'))
       process.on('uncaughtException', (error: Error) => {
-        logger.error(`uncaught exception: ${error.message}`)
         monitor.captureException(error)
         startedApp.onClose('UNCAUGHT_EXCEPTION')
       })
-      process.on('unhandledRejection', (reason: Error, promise) => {
-        logger.error(`uncaught rejection at: ${promise} 
-          reason: ${reason}`)
+      process.on('unhandledRejection', (reason: Error) => {
         monitor.captureException(reason)
         startedApp.onClose('UNCAUGHT_REJECTION')
       })

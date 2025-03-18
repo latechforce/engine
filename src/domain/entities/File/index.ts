@@ -1,4 +1,30 @@
-import { PersistedFile } from './Persisted'
-import { CreatedFile } from './Created'
+export interface FileProperties {
+  name: string
+  data: Buffer
+}
 
-export type File = CreatedFile | PersistedFile
+export interface FileToSave {
+  id: string
+  name: string
+  data: Buffer
+  created_at: Date
+}
+
+export class File {
+  constructor(
+    readonly id: string,
+    readonly name: string,
+    readonly data: Buffer,
+    readonly url: string,
+    readonly created_at: Date
+  ) {}
+
+  toJson = () => {
+    return {
+      id: this.id,
+      name: this.name,
+      url: this.url,
+      created_at: this.created_at.toISOString(),
+    }
+  }
+}

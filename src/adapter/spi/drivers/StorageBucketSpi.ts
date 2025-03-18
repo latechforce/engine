@@ -1,7 +1,7 @@
 import type { IStorageBucketSpi } from '/domain/services/StorageBucket'
 import type { FileDto } from '../dtos/FileDto'
-import type { CreatedFile } from '/domain/entities/File/Created'
 import { FileMapper } from '../mappers/FileMapper'
+import type { FileToSave } from '/domain/entities/File'
 
 export interface IStorageBucketDriver {
   exists: () => Promise<boolean>
@@ -21,14 +21,14 @@ export class StorageBucketSpi implements IStorageBucketSpi {
     await this._driver.create()
   }
 
-  save = async (createdFile: CreatedFile) => {
-    const createdFileDto = FileMapper.toCreatedDto(createdFile)
-    await this._driver.save(createdFileDto)
+  save = async (fileToSave: FileToSave) => {
+    const fileDto = FileMapper.toDto(fileToSave)
+    await this._driver.save(fileDto)
   }
 
-  readById = async (id: string) => {
-    const persistedDto = await this._driver.readById(id)
-    if (!persistedDto) return
-    return FileMapper.toPersistedEntity(persistedDto)
+  readById = async (id: string, endpoint: string) => {
+    const fileDto = await this._driver.readById(id)
+    if (!fileDto) return
+    return FileMapper.toEntity(fileDto, endpoint)
   }
 }

@@ -9,6 +9,7 @@ export interface ClientHtmlAttributesOptions {
   post?: string
   target?: string
   action?: 'replace' | 'append' | 'prepend'
+  fileUpload?: boolean
 }
 
 export interface IClientSpi {

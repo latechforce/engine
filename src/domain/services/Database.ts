@@ -71,7 +71,6 @@ export class Database {
       await this._spi.disconnect()
     } catch (error) {
       if (error instanceof Error) {
-        logger.error(`when trying to disconnect database: ${error.message}`)
         monitor.captureException(error)
       } else throw error
     }
@@ -81,7 +80,6 @@ export class Database {
     const { logger, monitor } = this._services
     logger.debug(`listening for database error...`)
     this._spi.onError((error) => {
-      logger.error(`on database error : ${error.message}`)
       monitor.captureException(error)
       callback(error)
     })
@@ -139,24 +137,22 @@ export class Database {
   }
 
   exec = async (query: string) => {
-    const { logger, monitor } = this._services
+    const { monitor } = this._services
     try {
       await this._spi.exec(query)
     } catch (error) {
       if (error instanceof Error) {
-        logger.error(`when executing database query: ${error.message}`, { query })
         monitor.captureException(error)
       } else throw error
     }
   }
 
   query = async <T>(text: string, values: (string | number | Buffer | Date)[] = []) => {
-    const { logger, monitor } = this._services
+    const { monitor } = this._services
     try {
       return this._spi.query<T>(text, values)
     } catch (error) {
       if (error instanceof Error) {
-        logger.error(`when querying database: ${error.message}`, { text, values })
         monitor.captureException(error)
         return { rows: [], rowCount: 0 }
       } else throw error

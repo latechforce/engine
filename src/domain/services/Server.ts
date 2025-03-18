@@ -199,7 +199,6 @@ export class Server {
       await callback()
     } catch (error) {
       if (error instanceof Error) {
-        logger.error(`when stopping app: ${error.message}`)
         monitor.captureException(error)
       } else throw error
     } finally {

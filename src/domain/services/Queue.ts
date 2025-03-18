@@ -49,7 +49,6 @@ export class Queue {
     const { monitor, logger } = this._services
     logger.debug(`listening for queue error...`)
     this._spi.onError((error: Error) => {
-      logger.error(`queue: ${error.message}`)
       monitor.captureException(error)
     })
   }
@@ -70,7 +69,6 @@ export class Queue {
       await this._spi.stop(options)
     } catch (error) {
       if (error instanceof Error) {
-        logger.error(`when stopping queue: ${error.message}`)
         monitor.captureException(error)
       } else throw error
     }

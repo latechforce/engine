@@ -1,13 +1,13 @@
-import { PersistedFile } from '/domain/entities/File/Persisted'
 import type { FileDto } from '../dtos/FileDto'
-import type { CreatedFile } from '/domain/entities/File/Created'
+import { type FileToSave, File } from '/domain/entities/File'
 
 export class FileMapper {
-  static toCreatedDto = (createdFile: CreatedFile): FileDto => {
-    return createdFile.fields
+  static toDto = (fileToSave: FileToSave): FileDto => {
+    return fileToSave
   }
 
-  static toPersistedEntity = (file: FileDto) => {
-    return new PersistedFile(file)
+  static toEntity = (file: FileDto, endpoint: string) => {
+    const url = `${endpoint}/${file.id}`
+    return new File(file.id, file.name, file.data, url, file.created_at)
   }
 }

@@ -1,4 +1,19 @@
-export type RecordFieldValue = string | number | boolean | Date | string[] | null | undefined
+export type RecordFieldValue =
+  | string
+  | number
+  | boolean
+  | Date
+  | string[]
+  | RecordFieldAttachment[]
+  | null
+  | undefined
+
+export type RecordFieldAttachment = {
+  id: string
+  url: string
+  name: string
+  created_at: string
+}
 
 export type RecordFields = {
   [key: string]: RecordFieldValue
@@ -9,7 +24,7 @@ export type RecordFields = {
 }
 
 export interface RecordFieldsConfig {
-  [key: string]: string | number | boolean | null | string[]
+  [key: string]: string | number | boolean | null | string[] | RecordFieldAttachment[]
 }
 
 export type UpdateRecordFields<T extends RecordFields = RecordFields> = {

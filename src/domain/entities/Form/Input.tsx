@@ -4,6 +4,7 @@ import type { Input as InputComponent } from '/domain/components/Form/Input'
 import type { SingleLineTextInput } from '/domain/components/Form/Input/SingleLineTextInput'
 import type { CheckboxInput } from '/domain/components/Form/Input/CheckboxInput'
 import type { SingleSelectInput } from '/domain/components/Form/Input/SingleSelectInput'
+import type { MultipleAttachmentInput } from '/domain/components/Form/Input/MultipleAttachmentInput'
 import type { Field } from '/domain/entities/Field'
 
 export interface InputConfig {
@@ -18,6 +19,7 @@ export interface InputComponents {
   SingleLineTextInput: SingleLineTextInput
   CheckboxInput: CheckboxInput
   SingleSelectInput: SingleSelectInput
+  MultipleAttachmentInput: MultipleAttachmentInput
 }
 
 export class Input {
@@ -33,7 +35,8 @@ export class Input {
     const field = table.fields.find((field) => field.name === config.field)
     if (!field) throw new Error(`Field ${config.field} not found`)
     this.field = field
-    const { SingleLineTextInput, CheckboxInput, SingleSelectInput } = this._components
+    const { SingleLineTextInput, CheckboxInput, SingleSelectInput, MultipleAttachmentInput } =
+      this._components
     const { type } = this.field.config
     switch (type) {
       case 'SingleLineText':
@@ -45,6 +48,9 @@ export class Input {
       case 'SingleSelect':
         this.InputComponent = SingleSelectInput
         this.options = this.field.config.options
+        break
+      case 'MultipleAttachment':
+        this.InputComponent = MultipleAttachmentInput
         break
       default:
         throw new Error(`Unsupported input type: ${type}`)

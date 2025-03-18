@@ -9,10 +9,11 @@ export class ClientDriver implements IClientDriver {
   }
 
   getHtmlAttributes = (options: ClientHtmlAttributesOptions): Record<string, string> => {
-    const { post, target, action } = options
+    const { post, target, action, fileUpload } = options
     const attributes: Record<string, string> = {}
     if (post) attributes['hx-post'] = post
     if (target) attributes['hx-target'] = target
+    if (fileUpload) attributes['hx-encoding'] = 'multipart/form-data'
     switch (action) {
       case 'replace':
         attributes['hx-swap'] = 'outerHTML'

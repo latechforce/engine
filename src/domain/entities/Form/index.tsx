@@ -4,9 +4,8 @@ import type { Server } from '/domain/services/Server'
 import type { Table } from '../Table'
 import { JsxResponse } from '../Response/Jsx'
 import type { IdGenerator } from '/domain/services/IdGenerator'
-import type { Fetcher } from '/domain/services/Fetcher'
 import type { PostRequest } from '../Request/Post'
-import type { Client } from '/domain/services/Client'
+import type { Client, ClientHtmlAttributesOptions } from '/domain/services/Client'
 import type { Page as PageComponent } from '/domain/components/Page'
 import type { Form as FormComponent } from '/domain/components/Form'
 import type { FormResponse as FormResponseComponent } from '/domain/components/Form/FormResponse'
@@ -25,7 +24,6 @@ export interface FormConfig {
 export interface FormServices {
   server: Server
   idGenerator: IdGenerator
-  fetcher: Fetcher
   client: Client
 }
 
@@ -75,7 +73,10 @@ export class Form {
   post = async (request: PostRequest): Promise<JsxResponse> => {
     const { FormResponse } = this._components
     const { successMessage = 'Form submitted successfully!' } = this._config
-    await this.table.insert(request.body)
+    const { error } = await this.table.insert(request.body)
+    if (error) {
+      return new JsxResponse(<FormResponse id={this.id} message={`Error 500`} />)
+    }
     return new JsxResponse(<FormResponse id={this.id} message={successMessage} />)
   }
 
@@ -83,11 +84,15 @@ export class Form {
     const { client } = this._services
     const { name, title = name, description, submitLabel } = this._config
     const { Form, Page } = this._components
-    const formClientProps = client.getHtmlAttributes({
+    const htmlAttributes: ClientHtmlAttributesOptions = {
       post: this.path,
       target: `#${this.id}-form-container`,
       action: 'replace',
-    })
+    }
+    if (this.inputs.some((input) => input.field.config.type === 'MultipleAttachment')) {
+      htmlAttributes.fileUpload = true
+    }
+    const formClientProps = client.getHtmlAttributes(htmlAttributes)
     return new JsxResponse(
       (
         <Page title={title} description={description}>

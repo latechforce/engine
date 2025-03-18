@@ -382,7 +382,12 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     const manyToManyColumns: { [key: string]: string[] } = {}
     for (const [key, value] of Object.entries(row)) {
       const column = this.columns.find((f) => f.name === key)
-      if (column?.type === 'TEXT[]' && column.table && Array.isArray(value)) {
+      if (
+        column?.type === 'TEXT[]' &&
+        column.table &&
+        Array.isArray(value) &&
+        value.every((v) => typeof v === 'string')
+      ) {
         manyToManyColumns[key] = value
       } else {
         staticColumns[key] = value

@@ -39,11 +39,12 @@ export class AppMapper {
     config: Config
   ) => {
     const { name: appName, version: appVersion, description: appDescription } = config
+    const logger = LoggerMapper.toService(drivers, config.loggers)
     const monitor = MonitorMapper.toService(
       drivers,
-      config.monitors?.map((monitor) => ({ ...monitor, appName, appVersion }))
+      config.monitors?.map((monitor) => ({ ...monitor, appName, appVersion })),
+      { logger }
     )
-    const logger = LoggerMapper.toService(drivers, config.loggers)
     const tunnel = TunnelMapper.toService(drivers, config.tunnel)
     const server = ServerMapper.toService(
       drivers,
@@ -77,6 +78,7 @@ export class AppMapper {
       templateCompiler,
       schemaValidator,
       monitor,
+      storage,
     })
     const realtime = RealtimeMapper.toService({ database, logger, idGenerator }, { tables })
     const notion = NotionMapper.toIntegration(
@@ -130,7 +132,7 @@ export class AppMapper {
     )
     const forms = FormMapper.toManyEntities(
       config.forms,
-      { server, fetcher, idGenerator, client },
+      { server, idGenerator, client },
       { tables },
       components
     )

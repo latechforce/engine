@@ -33,8 +33,8 @@ export class SqliteBucketDriver implements IStorageBucketDriver {
     await this._exec(createTableQuery)
   }
 
-  save = async (fields: FileDto) => {
-    const { id, name, data, created_at } = fields
+  save = async (file: FileDto) => {
+    const { id, name, data, created_at } = file
     const createAt = created_at.getTime()
     await this._query(
       `INSERT INTO ${this._nameWithSchema} (id, name, data, created_at) VALUES (?, ?, ?, ?)`,
