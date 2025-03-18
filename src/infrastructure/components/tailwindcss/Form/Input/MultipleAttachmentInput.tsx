@@ -18,6 +18,7 @@ export const MultipleAttachmentInput = ({
           type="file"
           name={field}
           multiple
+          required={!!required}
           className="block w-full text-sm text-gray-500
             file:me-4 file:py-2 file:px-4
             file:rounded-lg file:border-0
