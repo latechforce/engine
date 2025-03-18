@@ -28,3 +28,10 @@ export const Default: Story = {
     description: 'This is a description',
   },
 }
+
+export const Required: Story = {
+  args: {
+    ...Default.args,
+    required: true,
+  },
+}

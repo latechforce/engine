@@ -4,7 +4,7 @@ import type { CheckboxInputProps } from '/domain/components/Form/Input/CheckboxI
 export const CheckboxInput = ({ field, label, description, required }: CheckboxInputProps) => {
   return (
     <div>
-      {label ? <InputLabel label={label} field={field} /> : null}
+      {label ? <InputLabel label={label} field={field} required={required} /> : null}
       {description ? <InputDescription description={description} /> : null}
       <input
         type="checkbox"

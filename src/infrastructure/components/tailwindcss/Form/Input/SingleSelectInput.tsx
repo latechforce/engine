@@ -13,7 +13,7 @@ export const SingleSelectInput = ({
 }: SingleSelectInputProps) => {
   return (
     <div>
-      {label ? <InputLabel label={label} field={field} /> : null}
+      {label ? <InputLabel label={label} field={field} required={required} /> : null}
       {description ? <InputDescription description={description} /> : null}
       <select
         name={field}

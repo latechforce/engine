@@ -10,7 +10,7 @@ export const SingleLineTextInput = ({
 }: SingleLineTextInputProps) => {
   return (
     <div>
-      {label ? <InputLabel label={label} field={field} /> : null}
+      {label ? <InputLabel label={label} field={field} required={required} /> : null}
       {description ? <InputDescription description={description} /> : null}
       <input
         type="text"

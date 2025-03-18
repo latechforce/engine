@@ -23,9 +23,16 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    field: 'text',
-    label: 'Text',
+    field: 'single_line_text',
+    label: 'Single Line Text',
     description: 'This is a description',
     placeholder: 'Enter your text',
+  },
+}
+
+export const Required: Story = {
+  args: {
+    ...Default.args,
+    required: true,
   },
 }
