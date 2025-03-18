@@ -2,7 +2,7 @@
 
 exports[`should match the single select input snapshot 1`] = `
 "<div><select name="name" data-hs-select="{
-        &quot;placeholder&quot;: &quot;undefined&quot;,
+        &quot;placeholder&quot;: &quot;&quot;,
         &quot;toggleTag&quot;: &quot;&lt;button type=\\&quot;button\\&quot; aria-expanded=\\&quot;false\\&quot;&gt;&lt;/button&gt;&quot;,
         &quot;toggleClasses&quot;: &quot;hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600&quot;,
         &quot;dropdownClasses&quot;: &quot;mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&amp;::-webkit-scrollbar]:w-2 [&amp;::-webkit-scrollbar-thumb]:rounded-full [&amp;::-webkit-scrollbar-track]:bg-gray-100 [&amp;::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&amp;::-webkit-scrollbar-track]:bg-neutral-700 dark:[&amp;::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700&quot;,
@@ -14,7 +14,7 @@ exports[`should match the single select input snapshot 1`] = `
 
 exports[`should match the single select input snapshot with label 1`] = `
 "<div><label for="name" class="block mb-2 text-sm text-gray-700 font-medium dark:text-white">Name</label><select name="name" data-hs-select="{
-        &quot;placeholder&quot;: &quot;undefined&quot;,
+        &quot;placeholder&quot;: &quot;&quot;,
         &quot;toggleTag&quot;: &quot;&lt;button type=\\&quot;button\\&quot; aria-expanded=\\&quot;false\\&quot;&gt;&lt;/button&gt;&quot;,
         &quot;toggleClasses&quot;: &quot;hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600&quot;,
         &quot;dropdownClasses&quot;: &quot;mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&amp;::-webkit-scrollbar]:w-2 [&amp;::-webkit-scrollbar-thumb]:rounded-full [&amp;::-webkit-scrollbar-track]:bg-gray-100 [&amp;::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&amp;::-webkit-scrollbar-track]:bg-neutral-700 dark:[&amp;::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700&quot;,
@@ -26,7 +26,7 @@ exports[`should match the single select input snapshot with label 1`] = `
 
 exports[`should match the single select input snapshot with description 1`] = `
 "<div><p class="mb-2 text-sm text-gray-500 dark:text-neutral-500">Description</p><select name="name" data-hs-select="{
-        &quot;placeholder&quot;: &quot;undefined&quot;,
+        &quot;placeholder&quot;: &quot;&quot;,
         &quot;toggleTag&quot;: &quot;&lt;button type=\\&quot;button\\&quot; aria-expanded=\\&quot;false\\&quot;&gt;&lt;/button&gt;&quot;,
         &quot;toggleClasses&quot;: &quot;hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600&quot;,
         &quot;dropdownClasses&quot;: &quot;mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&amp;::-webkit-scrollbar]:w-2 [&amp;::-webkit-scrollbar-thumb]:rounded-full [&amp;::-webkit-scrollbar-track]:bg-gray-100 [&amp;::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&amp;::-webkit-scrollbar-track]:bg-neutral-700 dark:[&amp;::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700&quot;,
@@ -38,7 +38,7 @@ exports[`should match the single select input snapshot with description 1`] = `
 
 exports[`should match the single select input snapshot with label and description 1`] = `
 "<div><label for="name" class="block mb-2 text-sm text-gray-700 font-medium dark:text-white">Name</label><p class="mb-2 text-sm text-gray-500 dark:text-neutral-500">Description</p><select name="name" data-hs-select="{
-        &quot;placeholder&quot;: &quot;undefined&quot;,
+        &quot;placeholder&quot;: &quot;&quot;,
         &quot;toggleTag&quot;: &quot;&lt;button type=\\&quot;button\\&quot; aria-expanded=\\&quot;false\\&quot;&gt;&lt;/button&gt;&quot;,
         &quot;toggleClasses&quot;: &quot;hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600&quot;,
         &quot;dropdownClasses&quot;: &quot;mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&amp;::-webkit-scrollbar]:w-2 [&amp;::-webkit-scrollbar-thumb]:rounded-full [&amp;::-webkit-scrollbar-track]:bg-gray-100 [&amp;::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&amp;::-webkit-scrollbar-track]:bg-neutral-700 dark:[&amp;::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700&quot;,
@@ -62,7 +62,7 @@ exports[`should match the single select input snapshot with placeholder 1`] = `
 
 exports[`should match the single select input snapshot with required 1`] = `
 "<div><select name="name" required="" data-hs-select="{
-        &quot;placeholder&quot;: &quot;undefined&quot;,
+        &quot;placeholder&quot;: &quot;&quot;,
         &quot;toggleTag&quot;: &quot;&lt;button type=\\&quot;button\\&quot; aria-expanded=\\&quot;false\\&quot;&gt;&lt;/button&gt;&quot;,
         &quot;toggleClasses&quot;: &quot;hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-3 ps-4 pe-9 flex gap-x-2 text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-hidden focus:ring-2 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:focus:outline-hidden dark:focus:ring-1 dark:focus:ring-neutral-600&quot;,
         &quot;dropdownClasses&quot;: &quot;mt-2 z-50 w-full max-h-72 p-1 space-y-0.5 bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto [&amp;::-webkit-scrollbar]:w-2 [&amp;::-webkit-scrollbar-thumb]:rounded-full [&amp;::-webkit-scrollbar-track]:bg-gray-100 [&amp;::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&amp;::-webkit-scrollbar-track]:bg-neutral-700 dark:[&amp;::-webkit-scrollbar-thumb]:bg-neutral-500 dark:bg-neutral-900 dark:border-neutral-700&quot;,

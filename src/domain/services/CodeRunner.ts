@@ -15,6 +15,7 @@ import type {
 import type { Pappers, PappersCodeRunnerIntegration } from '../integrations/Pappers'
 import type { NotionCodeRunnerIntegrationTable } from '../integrations/Notion/NotionTable'
 import type { NotionTablePageProperties } from '../integrations/Notion/NotionTablePage'
+import type { File } from '../entities/File'
 
 export interface ICodeRunnerSpi {
   run: (
@@ -31,6 +32,7 @@ export interface CodeRunnerContextServicesDatabaseTable<T extends RecordFields =
   updateMany: (data: UpdateRecordFields<T>[]) => Promise<Record<T>[]>
   read: (filter: FilterConfig) => Promise<Record<T> | undefined>
   readById: (id: string) => Promise<Record<T> | undefined>
+  readFileById: (id: string) => Promise<File | undefined>
   list: (filter?: FilterConfig) => Promise<Record<T>[]>
   exists: () => Promise<boolean>
 }

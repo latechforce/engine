@@ -299,12 +299,7 @@ export class Table {
                 name: uploadedFile.name,
                 data: Buffer.from(await uploadedFile.arrayBuffer()),
               })
-              attachments.push({
-                id: file.id,
-                name: file.name,
-                url: file.url,
-                created_at: file.created_at.toISOString(),
-              })
+              attachments.push(file.toAttachment())
             } else {
               attachments.push({
                 id: this._services.idGenerator.forFile(),

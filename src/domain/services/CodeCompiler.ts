@@ -67,6 +67,9 @@ export class CodeCompiler {
           readById: async (id: string) => {
             return table.db.readById<T>(id)
           },
+          readFileById: async (id: string) => {
+            return await table.bucket.readById(id)
+          },
           list: async (filterConfig?: FilterConfig) => {
             const filter = filterConfig && FilterMapper.toEntity(filterConfig)
             return await table.db.list<T>(filter)

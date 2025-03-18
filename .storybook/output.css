@@ -992,6 +992,40 @@
       }
     }
   }
+  .\[\&amp\;\:\:-webkit-scrollbar\]\:w-2 {
+    &amp;::-webkit-scrollbar {
+      width: calc(var(--spacing) * 2);
+    }
+  }
+  .\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:rounded-full {
+    &amp;::-webkit-scrollbar-thumb {
+      border-radius: calc(infinity * 1px);
+    }
+  }
+  .\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:bg-gray-300 {
+    &amp;::-webkit-scrollbar-thumb {
+      background-color: var(--color-gray-300);
+    }
+  }
+  .dark\:\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:bg-neutral-500 {
+    &:where(.dark, .dark *) {
+      &amp;::-webkit-scrollbar-thumb {
+        background-color: var(--color-neutral-500);
+      }
+    }
+  }
+  .\[\&amp\;\:\:-webkit-scrollbar-track\]\:bg-gray-100 {
+    &amp;::-webkit-scrollbar-track {
+      background-color: var(--color-gray-100);
+    }
+  }
+  .dark\:\[\&amp\;\:\:-webkit-scrollbar-track\]\:bg-neutral-700 {
+    &:where(.dark, .dark *) {
+      &amp;::-webkit-scrollbar-track {
+        background-color: var(--color-neutral-700);
+      }
+    }
+  }
 }
 @layer base {
   [type='text'],input:where(:not([type])),[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='datetime-local'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],[multiple],textarea,select {

@@ -3,7 +3,7 @@ import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
 import type { ITable } from '/domain/interfaces/ITable'
 
-const mock = new Mock(Tester, { drivers: ['Database'] })
+const mock = new Mock(Tester, { drivers: ['Database', 'Storage'] })
 
 mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
@@ -386,6 +386,86 @@ mock.request(({ app, request, drivers }) => {
 
       // THEN
       expect(response.user.name).toBe('John Doe')
+    })
+
+    it('should run a Typescript code with a database read file by id', async () => {
+      // GIVEN
+      const table: ITable = {
+        name: 'users',
+        fields: [{ name: 'attachments', type: 'MultipleAttachment' }],
+      }
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        tables: [table],
+        automations: [
+          {
+            name: 'readFile',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'read-file',
+              input: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string' },
+                },
+              },
+              output: {
+                file: {
+                  json: '{{runJavascriptCode.file}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                input: {
+                  id: '{{trigger.body.id}}',
+                },
+                code: String(async function (context: CodeRunnerContext<{ id: string }>) {
+                  const { inputData, services } = context
+                  const { database } = services
+                  const { id } = inputData
+                  const file = await database.table('users').readFileById(id)
+                  return { file: file?.toAttachment() }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+      await drivers.storage.bucket('table_users_attachments').save({
+        id: '1',
+        name: 'test.txt',
+        data: Buffer.from('test'),
+        created_at: new Date(),
+      })
+      await drivers.database.table(table).insert({
+        id: '1',
+        fields: {
+          attachments: [
+            {
+              id: '1',
+              name: 'test.txt',
+              url: 'https://example.com/test.txt',
+              created_at: new Date().toISOString(),
+            },
+          ],
+        },
+        created_at: new Date().toISOString(),
+      })
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/read-file`, {
+        id: '1',
+      })
+
+      // THEN
+      expect(response.file.name).toBe('test.txt')
     })
 
     it('should run a Typescript code with a database read with a string field', async () => {

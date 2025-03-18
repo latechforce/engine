@@ -2,7 +2,7 @@ import { it, expect } from 'bun:test'
 import { MultipleAttachmentInput } from './MultipleAttachmentInput'
 import { renderToString } from 'react-dom/server'
 
-it('should match the single select input snapshot', async () => {
+it('should match the multiple attachment input snapshot', async () => {
   // GIVEN
   const input = <MultipleAttachmentInput field="name" />
 
@@ -13,7 +13,7 @@ it('should match the single select input snapshot', async () => {
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with label', async () => {
+it('should match the multiple attachment input snapshot with label', async () => {
   // GIVEN
   const input = <MultipleAttachmentInput field="name" label="Name" />
 
@@ -24,7 +24,7 @@ it('should match the single select input snapshot with label', async () => {
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with description', async () => {
+it('should match the multiple attachment input snapshot with description', async () => {
   // GIVEN
   const input = <MultipleAttachmentInput field="name" description="Description" />
 
@@ -35,7 +35,7 @@ it('should match the single select input snapshot with description', async () =>
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with label and description', async () => {
+it('should match the multiple attachment input snapshot with label and description', async () => {
   // GIVEN
   const input = <MultipleAttachmentInput field="name" label="Name" description="Description" />
 
@@ -46,7 +46,7 @@ it('should match the single select input snapshot with label and description', a
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with placeholder', async () => {
+it('should match the multiple attachment input snapshot with placeholder', async () => {
   // GIVEN
   const input = <MultipleAttachmentInput field="name" placeholder="Placeholder" />
 
@@ -57,7 +57,7 @@ it('should match the single select input snapshot with placeholder', async () =>
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with required', async () => {
+it('should match the multiple attachment input snapshot with required', async () => {
   // GIVEN
   const input = <MultipleAttachmentInput field="name" required />
 

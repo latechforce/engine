@@ -1,3 +1,5 @@
+import type { RecordFieldAttachment } from '../Record'
+
 export interface FileProperties {
   name: string
   data: Buffer
@@ -19,7 +21,7 @@ export class File {
     readonly created_at: Date
   ) {}
 
-  toJson = () => {
+  toAttachment = (): RecordFieldAttachment => {
     return {
       id: this.id,
       name: this.name,
