@@ -1,3 +1,11 @@
+## [0.38.2](https://github.com/latechforce/engine/compare/v0.38.1...v0.38.2) (2025-03-18)
+
+
+### Bug Fixes
+
+* typescript error ([6c3658a](https://github.com/latechforce/engine/commit/6c3658afb3244a9a7791c5d35a8c29cb0f6f8e4e))
+* update LICENSE with Fair Code ([f851d71](https://github.com/latechforce/engine/commit/f851d71b490519bd8655111a65be5705f97a26ba))
+
 ## [0.38.1](https://github.com/latechforce/engine/compare/v0.38.0...v0.38.1) (2025-03-15)
 
 
