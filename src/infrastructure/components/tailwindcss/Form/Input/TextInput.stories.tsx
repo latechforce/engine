@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import { TextInput } from './TextInput'
-import { Form } from '../Form/Form'
-import type { TextInputProps } from '../../../../domain/components/Form/Input/TextInput'
+import { Form } from '../../Form/Form'
+import type { TextInputProps } from '/domain/components/Form/Input/TextInput'
 
 const TextInputWithForm = (props: TextInputProps) => (
   <Form id="id" title="Form" submitLabel="Save">

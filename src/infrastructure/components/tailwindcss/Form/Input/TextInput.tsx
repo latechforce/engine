@@ -1,5 +1,5 @@
 import { InputDescription, InputLabel } from './BaseInput'
-import type { TextInputProps } from '../../../../domain/components/Form/Input/TextInput'
+import type { TextInputProps } from '/domain/components/Form/Input/TextInput'
 
 export const TextInput = ({ field, label, description, placeholder, required }: TextInputProps) => {
   return (

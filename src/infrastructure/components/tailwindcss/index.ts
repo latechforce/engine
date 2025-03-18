@@ -1,9 +1,9 @@
 import type { Components } from '/domain/components'
 import { Page } from '../Page'
 import { Form } from './Form/Form'
-import { TextInput } from './Input/TextInput'
+import { TextInput } from './Form/Input/TextInput'
 import { FormResponse } from './Form/FormResponse'
-import { CheckboxInput } from './Input/CheckboxInput'
+import { CheckboxInput } from './Form/Input/CheckboxInput'
 
 export const components: Components = {
   Page,

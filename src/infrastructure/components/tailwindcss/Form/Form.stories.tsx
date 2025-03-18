@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { Form } from './Form'
-import { TextInput } from '../Input/TextInput'
+import { TextInput } from './Input/TextInput'
 
 const meta = {
   title: 'Form/Form',
