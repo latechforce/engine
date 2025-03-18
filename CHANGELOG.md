@@ -1,3 +1,10 @@
+## [0.38.3](https://github.com/latechforce/engine/compare/v0.38.2...v0.38.3) (2025-03-18)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with a database read file by id' ([00c2cb9](https://github.com/latechforce/engine/commit/00c2cb9f80d8aac26a538e247383bc143c9b42b2))
+
 ## [0.38.2](https://github.com/latechforce/engine/compare/v0.38.1...v0.38.2) (2025-03-18)
 
 
