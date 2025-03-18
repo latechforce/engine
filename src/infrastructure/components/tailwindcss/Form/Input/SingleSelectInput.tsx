@@ -29,6 +29,7 @@ export const SingleSelectInput = ({
       }`}
         className="hidden"
       >
+        <option value=""></option>
         {options.map((option) => (
           <option key={option}>{option}</option>
         ))}

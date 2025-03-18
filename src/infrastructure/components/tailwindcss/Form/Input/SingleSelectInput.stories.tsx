@@ -26,7 +26,7 @@ export const Default: Story = {
     field: 'text',
     label: 'Text',
     description: 'This is a description',
-    placeholder: 'Enter your text',
+    placeholder: 'Select an option',
     options: ['Option 1', 'Option 2', 'Option 3'],
   },
 }

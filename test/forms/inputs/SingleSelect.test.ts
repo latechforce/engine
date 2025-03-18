@@ -55,14 +55,14 @@ mock.page(({ app, browser, drivers }) => {
 
       // WHEN
       await page.goto(`${url}/form/path`)
-      await page.select('select[name="single_select"]', 'Option 1')
+      await page.select('select[name="single_select"]', 'Option 3')
       await page.click('button[type="submit"]')
       await page.waitForText('submitted')
 
       // THEN
       const records = await table.list()
       expect(records).toHaveLength(1)
-      expect(records[0].fields.single_select).toBe('Option 1')
+      expect(records[0].fields.single_select).toBe('Option 3')
     })
   })
 })
