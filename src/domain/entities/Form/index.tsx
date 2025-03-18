@@ -9,6 +9,7 @@ import type { Client, ClientHtmlAttributesOptions } from '/domain/services/Clien
 import type { Page as PageComponent } from '/domain/components/Page'
 import type { Form as FormComponent } from '/domain/components/Form'
 import type { FormResponse as FormResponseComponent } from '/domain/components/Form/FormResponse'
+import type { Logger } from '/domain/services/Logger'
 
 export interface FormConfig {
   name: string
@@ -25,6 +26,7 @@ export interface FormServices {
   server: Server
   idGenerator: IdGenerator
   client: Client
+  logger: Logger
 }
 
 export interface FormEntities {
@@ -75,6 +77,7 @@ export class Form {
     const { successMessage = 'Form submitted successfully!' } = this._config
     const { error } = await this.table.insert(request.body)
     if (error) {
+      this._services.logger.error(JSON.stringify(error))
       return new JsxResponse(<FormResponse id={this.id} message={`Error 500`} />)
     }
     return new JsxResponse(<FormResponse id={this.id} message={successMessage} />)
