@@ -1,43 +1,47 @@
-# La Tech Force Engine - Backend Generator
+# La Tech Force Engine
 
-La Tech Force Engine is a backend generator from a JSON configuration, fast and easy.
+Engine is a NPM package that generate a web application from a JSON configuration.
 
 ## Requirements
 
-- [Bun](https://bun.sh/) v1.2.0 or later
-- [Cursor](https://www.cursor.com/) editor
+We use [Bun](https://bun.sh/) 1.2 or later to run the engine.
 
-## Getting Started
+## Installation
 
-Clone the project, install project dependencies, and start contributing:
+Install the engine in your project like any other NPM package:
 
 ```bash
-git clone https://github.com/latechforce/engine.git latechforce-engine
-cd ./latechforce-engine
-bun install
-bun run test:e2e
-bun run test:unit
+bun add @latechforce/engine
 ```
 
-The `bun run test` and `bun run test:integration` commands will not work because they require private environnement variables.
-You can run this tests by pushing a commit to the repository.
+## Usage
 
-**Important**: You need to have docker installed on your machine to run the e2e tests (you can use [Docker Desktop](https://docs.docker.com/desktop/)).
+Create a new file `index.ts` and import the engine:
 
-## Scripts
+```ts
+import App from '@latechforce/engine/bun'
 
-- `bun run format` — Format the code using Prettier
-- `bun run lint` — Validate the code using ESLint
-- `bun run clean` — Remove the `dist/` directory
-- `bun run build:schema` — Generate the JSON schema
-- `bun run build` — Build the engine for production
-- `bun run test:e2e` — Run the end-to-end tests with Bun
-- `bun run test:unit` — Run the unit tests with Bun
+const app = new App()
 
-## How to Update
+const { url } = await app.start({
+  name: 'My App',
+  version: '1.0.0',
+})
 
-- `bun upgrade` — Bump Bun to the latest version
-- `bun update` — Update Node.js modules (dependencies)
+console.log(`App is running at ${url}`)
+```
+
+## Starter Kit
+
+We recommend you to use our [starter kit](https://github.com/latechforce/engine-starter-kit) to start a new project.
+
+## Configuration
+
+You can configure your app from a JSON object. This object contains the configuration of the tables, automations, drivers, integrations, forms, etc...
+
+You can [explore the configuration here](https://json-schema.app/view/%23?url=https%3A%2F%2Fraw.githubusercontent.com%2Flatechforce%2Fengine%2Frefs%2Fheads%2Fmain%2Fschema%2Fapp.schema.json).
+
+We invite you to navigate into the [`examples/`](https://github.com/latechforce/engine/tree/main/examples) folder to see some examples.
 
 ## Examples
 
@@ -129,18 +133,6 @@ Here is the workflow:
 
 ![Create Qonto Client from Notion with Pappers](./assets/create-qonto-client-from-notion-with-pappers.jpg)
 
-## Starter Kit
-
-You can use our [starter kit](https://github.com/latechforce/engine-starter-kit) to start a new project.
-
-## Configuration
-
-A configuration is a JSON representation of the application. It contains the tables, automations, drivers, integrations, etc...
-
-You can [explore the configuration here](https://json-schema.app/view/%23?url=https%3A%2F%2Fraw.githubusercontent.com%2Flatechforce%2Fengine%2Frefs%2Fheads%2Fmain%2Fschema%2Fapp.schema.json).
-
-We invite you to navigate into the `examples/` folder to see some examples.
-
 ## Contributing
 
 La Tech Force Engine is built and maintained by a small team – we'd love your help to fix bugs and add features!
@@ -148,6 +140,43 @@ La Tech Force Engine is built and maintained by a small team – we'd love your 
 We use the [Cursor IDE](https://www.cursor.com/) to write code. You can find some notepads templates in the `.cursor` folder.
 
 You can read our [contributing guide here](https://github.com/latechforce/engine/blob/main/CONTRIBUTING.md) and our [code of conduct here](https://github.com/latechforce/engine/blob/main/CODE_OF_CONDUCT.md).
+
+### Requirements
+
+- [Bun](https://bun.sh/) v1.2.0 or later
+- [Cursor](https://www.cursor.com/) editor
+
+### Getting Started
+
+Clone the project, install project dependencies, and start contributing:
+
+```bash
+git clone https://github.com/latechforce/engine.git latechforce-engine
+cd ./latechforce-engine
+bun install
+bun run test:e2e
+bun run test:unit
+```
+
+The `bun run test` and `bun run test:integration` commands will not work because they require private environnement variables.
+You can run this tests by pushing a commit to the repository.
+
+**Important**: You need to have docker installed on your machine to run the e2e tests (you can use [Docker Desktop](https://docs.docker.com/desktop/)).
+
+### Scripts
+
+- `bun run format` — Format the code using Prettier
+- `bun run lint` — Validate the code using ESLint
+- `bun run clean` — Remove the `dist/` directory
+- `bun run build:schema` — Generate the JSON schema
+- `bun run build` — Build the engine for production
+- `bun run test:e2e` — Run the end-to-end tests with Bun
+- `bun run test:unit` — Run the unit tests with Bun
+
+### How to Update
+
+- `bun upgrade` — Bump Bun to the latest version
+- `bun update` — Update Node.js modules (dependencies)
 
 ## License
 
