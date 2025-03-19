@@ -11,7 +11,7 @@ export interface IntegrationResponseError {
   data?: undefined
   error: {
     status: number
-    message: string
+    message?: string
   }
 }
 

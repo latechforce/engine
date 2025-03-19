@@ -7,6 +7,7 @@ const integration = new PappersIntegration({
   apiKey: ':memory:',
 })
 
+await integration.createUser(':memory:')
 await integration.addCompany(pappersCompanySample)
 
 testPappersIntegration(BunTester, integration)

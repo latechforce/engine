@@ -1,37 +1,36 @@
-import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
+import { type BaseActionConfig } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
 import { Template } from '/domain/services/Template'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
-import type { PappersEntreprise, Pappers } from '/domain/integrations/Pappers'
+import type { PappersEntreprise } from '/domain/integrations/Pappers/PappersTypes'
+import {
+  BasePappersAction,
+  type BasePappersActionIntegrations,
+  type BasePappersActionServices,
+} from './base'
 
 export interface GetCompanyPappersActionConfig extends BaseActionConfig {
   siret: string
 }
 
-export interface GetCompanyPappersActionServices extends BaseActionServices {
-  templateCompiler: TemplateCompiler
-}
+export type GetCompanyPappersActionServices = BasePappersActionServices
 
-export interface GetCompanyPappersActionIntegrations {
-  pappers: Pappers
-}
+export type GetCompanyPappersActionIntegrations = BasePappersActionIntegrations
 
 type Input = { siret: string }
 type Output = PappersEntreprise
 
-export class GetCompanyPappersAction extends BaseAction<Input, Output> {
+export class GetCompanyPappersAction extends BasePappersAction<Input, Output> {
   private _siret: Template
 
   constructor(
     config: GetCompanyPappersActionConfig,
     services: GetCompanyPappersActionServices,
-    private _integrations: GetCompanyPappersActionIntegrations
+    integrations: GetCompanyPappersActionIntegrations
   ) {
-    super(config, services)
+    super(config, services, integrations)
     const { siret } = config
     const { templateCompiler } = services
     this._siret = templateCompiler.compile(siret)
-    _integrations.pappers.getConfig()
   }
 
   protected _prepare = async (context: AutomationContext) => {

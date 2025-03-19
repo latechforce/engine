@@ -1,4 +1,4 @@
-import type { PappersEntreprise } from '/domain/integrations/Pappers'
+import type { PappersEntreprise } from '/domain/integrations/Pappers/PappersTypes'
 
 export const pappersCompanySample: PappersEntreprise = {
   siren: '44306184100047',

@@ -1,6 +1,6 @@
 import type { Integrations } from '/adapter/spi/integrations'
 import type { NotionConfig } from '/domain/integrations/Notion'
-import type { PappersConfig } from '/domain/integrations/Pappers'
+import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
 import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
 import type { NgrokConfig } from '/domain/integrations/Ngrok'
 import type { AirtableConfig } from '/domain/integrations/Airtable'

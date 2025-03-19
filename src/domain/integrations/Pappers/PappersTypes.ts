@@ -1,34 +1,3 @@
-export interface PappersConfig {
-  apiKey: string
-}
-
-export interface IPappersSpi {
-  getConfig: () => PappersConfig
-  getCompany: (siret: string) => Promise<PappersEntreprise | undefined>
-}
-
-export interface PappersCodeRunnerIntegration {
-  getCompany: (siret: string) => Promise<PappersEntreprise | undefined>
-}
-
-export class Pappers {
-  constructor(private _spi: IPappersSpi) {}
-
-  get codeRunnerIntegration(): PappersCodeRunnerIntegration {
-    return {
-      getCompany: this.getCompany,
-    }
-  }
-
-  getConfig = (): PappersConfig => {
-    return this._spi.getConfig()
-  }
-
-  getCompany = async (siret: string): Promise<PappersEntreprise | undefined> => {
-    return this._spi.getCompany(siret)
-  }
-}
-
 export interface PappersEntreprise {
   siren: string
   siren_formate: string

@@ -5,38 +5,59 @@ import { pappersCompanySample } from '/infrastructure/integrations/bun/mocks/pap
 const mock = new Mock(Tester, { integrations: ['Pappers'] })
 
 mock.request(({ app, request, integrations }) => {
+  const config: Config = {
+    name: 'App',
+    version: '1.0.0',
+    automations: [
+      {
+        name: 'getCompany',
+        trigger: {
+          service: 'Http',
+          event: 'ApiCalled',
+          path: 'get-company',
+          output: {
+            denomination: '{{getCompany.denomination}}',
+          },
+        },
+        actions: [
+          {
+            name: 'getCompany',
+            integration: 'Pappers',
+            action: 'GetCompany',
+            siret: '44306184100047',
+          },
+        ],
+      },
+    ],
+  }
+
   beforeEach(async () => {
     await integrations.pappers.addCompany(pappersCompanySample)
+  })
+
+  describe('on start', () => {
+    it('should return a config error if the configuration is not valid', async () => {
+      // GIVEN
+      const extendConfig: Config = {
+        ...config,
+        integrations: {
+          pappers: {
+            apiKey: './tmp/new-api-key',
+          },
+        },
+      }
+
+      // WHEN
+      const call = async () => app.start(extendConfig)
+
+      // THEN
+      expect(call()).rejects.toThrow('Pappers configuration is invalid')
+    })
   })
 
   describe('on POST', () => {
     it('should get a company', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-        version: '1.0.0',
-        automations: [
-          {
-            name: 'getCompany',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'get-company',
-              output: {
-                denomination: '{{getCompany.denomination}}',
-              },
-            },
-            actions: [
-              {
-                name: 'getCompany',
-                integration: 'Pappers',
-                action: 'GetCompany',
-                siret: '44306184100047',
-              },
-            ],
-          },
-        ],
-      }
       const { url } = await app.start(config)
 
       // WHEN

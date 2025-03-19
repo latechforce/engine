@@ -11,7 +11,7 @@ import { PappersIntegration } from '/infrastructure/integrations/bun/mocks/pappe
 import type { DatabaseConfig } from '/domain/services/Database'
 import type { NotionConfig } from '/domain/integrations/Notion'
 import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
-import type { PappersConfig } from '/domain/integrations/Pappers'
+import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
 import { AirtableIntegration } from '/infrastructure/integrations/bun/mocks/airtable/AirtableIntegration.mock'
 import type { AirtableConfig } from '/domain/integrations/Airtable'
 import { MockedApp } from './MockedApp'
@@ -288,6 +288,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           }
           integrations.pappers = new PappersIntegration(config)
           extendsConfig.integrations.pappers = config
+          await integrations.pappers.createUser(config.apiKey)
         }
         if (this.options.integrations.includes('GoCardless')) {
           const config: GoCardlessConfig = {

@@ -1,12 +1,16 @@
 import type { IPappersIntegration } from '/adapter/spi/integrations/PappersSpi'
-import type { PappersConfig, PappersEntreprise } from '/domain/integrations/Pappers'
 import { Database } from 'bun:sqlite'
+import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
+import type { PappersEntreprise } from '/domain/integrations/Pappers/PappersTypes'
+import type { IntegrationResponseError } from '/domain/integrations/base'
+import type { IntegrationResponse } from '/domain/integrations/base'
 
 export class PappersIntegration implements IPappersIntegration {
   private db: Database
 
   constructor(private _config?: PappersConfig) {
     this.db = new Database(_config?.apiKey ?? ':memory:')
+    this.db.run(`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)`)
     this.db.run(`
       CREATE TABLE IF NOT EXISTS companies (
         siret TEXT PRIMARY KEY,
@@ -15,22 +19,31 @@ export class PappersIntegration implements IPappersIntegration {
     `)
   }
 
-  getConfig = (): PappersConfig => {
-    if (!this._config) {
-      throw new Error('Pappers config not set')
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    const user = this.db.query('SELECT * FROM users WHERE id = ?').get(this._config?.apiKey ?? '')
+    if (!user) {
+      return { error: { status: 404 } }
     }
-    return this._config
+    return undefined
   }
 
-  getCompany = async (siret: string): Promise<PappersEntreprise | undefined> => {
+  createUser = async (id: string): Promise<void> => {
+    this.db.run(`INSERT INTO users (id) VALUES (?)`, [id])
+  }
+
+  getCompany = async (siret: string): Promise<IntegrationResponse<PappersEntreprise>> => {
     const result = this.db
       .query<{ data: string }, [string]>('SELECT data FROM companies WHERE siret = ?')
       .get(siret)
     if (!result) {
-      return undefined
+      return {
+        error: {
+          status: 404,
+        },
+      }
     }
     const companyData: PappersEntreprise = JSON.parse(result.data)
-    return companyData
+    return { data: companyData }
   }
 
   addCompany = async (company: PappersEntreprise): Promise<void> => {
