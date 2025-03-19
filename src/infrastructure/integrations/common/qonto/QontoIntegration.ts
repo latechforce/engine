@@ -42,9 +42,9 @@ export class QontoIntegration implements IQontoIntegration {
   private _errorMapper = (
     response: AxiosResponse<{ errors: QontoError[] }>
   ): IntegrationResponseError => {
-    const [{ status, code, detail }] = response.data.errors
+    const [{ status, detail }] = response.data.errors
     return {
-      error: { status, code, detail },
+      error: { status, message: detail },
     }
   }
 

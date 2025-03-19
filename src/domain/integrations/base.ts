@@ -11,8 +11,7 @@ export interface IntegrationResponseError {
   data?: undefined
   error: {
     status: number
-    code: string
-    detail: string
+    message: string
   }
 }
 
@@ -32,7 +31,7 @@ export class Integration<T extends BaseSpi> {
 
   protected _throwError = (method: string, error: IntegrationResponseError['error']) => {
     throw new Error(
-      `${error.status} error "${error.code}" from ${this.constructor.name} ${method} API: ${error.detail}`
+      `${error.status} error from ${this.constructor.name} ${method} API: ${error.message}`
     )
   }
 }

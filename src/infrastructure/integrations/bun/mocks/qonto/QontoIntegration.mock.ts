@@ -78,7 +78,7 @@ export class QontoIntegration implements IQontoIntegration {
       .query<QontoOrganization, string>('SELECT * FROM Organizations WHERE id = ?')
       .get(this._config?.organisationSlug ?? '')
     if (!organization) {
-      return { error: { status: 404, code: 'not_found', detail: 'Organization not found' } }
+      return { error: { status: 404, message: 'Organization not found' } }
     }
     return undefined
   }

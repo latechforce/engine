@@ -2,6 +2,8 @@
 
 This tutorial will guide you through creating a new integration in the codebas. We'll break this down into multiple steps and files.
 
+Here we only want to add the integration to the codebase, not to add the integration methods and actions.
+
 ## Step 1: Domain Integration Configuration
 
 First, let's create the configuration types for your integration. Create a new file in `src/domain/integrations/NewIntegration/NewIntegrationConfig.ts`:
@@ -237,7 +239,7 @@ export function testNewIntegrationIntegration(
 
 ## Step 10: Infrastructure Common Integration Test Runner
 
-Create a new file in `src/infrastructure/integrations/common/newIntegration/NewIntegration.test.ts` to create the integration test common:
+Create a new file in `src/infrastructure/integrations/common/newIntegration/NewIntegrationIntegration.test.ts` to create the integration test common:
 
 ```typescript
 import { NewIntegrationIntegration } from './NewIntegrationIntegration'
@@ -254,9 +256,23 @@ export const integration = new NewIntegrationIntegration({
 testNewIntegrationIntegration(BunTester, integration)
 ```
 
+## Step 13: Infrastructure Common Integration Index
+
+Update the `src/infrastructure/integrations/bun/mocks/index.ts` file to add the new integration to the integrations SPI index:
+
+```typescript
+import type { Integrations } from '/adapter/spi/integrations'
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+import type { INewIntegrationIntegration } from './newIntegration/NewIntegrationIntegration'
+
+export const integrations: Integrations = {
+  newIntegration: (config?: NewIntegrationConfig) => INewIntegrationIntegration,
+}
+```
+
 ## Step 11: Infrastructure Bun Integration
 
-Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegration.mock.ts` to create the integration mock:
+Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegrationIntegration.mock.ts` to create the integration mock:
 
 ```typescript
 import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
@@ -286,7 +302,7 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
 
 ## Step 12: Infrastructure Bun Integration Test
 
-Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegration.test.ts` to create the integration test:
+Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegrationIntegration.test.ts` to create the integration test:
 
 ```typescript
 import { NewIntegrationIntegration } from './NewIntegrationIntegration'
@@ -298,4 +314,18 @@ export const integration = new NewIntegrationIntegration({
 })
 
 testNewIntegrationIntegration(BunTester, integration)
+```
+
+## Step 13: Infrastructure Integration Bun Index
+
+Update the `src/infrastructure/integrations/bun/mocks/index.ts` file to add the new integration to the integrations SPI index:
+
+```typescript
+import type { Integrations } from '/adapter/spi/integrations'
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+import type { INewIntegrationIntegration } from './newIntegration/NewIntegrationIntegration.mock'
+
+export const mocks: Integrations = {
+  newIntegration: (config?: NewIntegrationConfig) => INewIntegrationIntegration,
+}
 ```
