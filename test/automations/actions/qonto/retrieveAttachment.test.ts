@@ -57,7 +57,7 @@ mock.request(({ app, request, integrations }) => {
         integrations: {
           qonto: {
             organisationSlug: 'new-organization-slug',
-            secretKey: 'new-secret-key',
+            secretKey: ':memory:',
             environment: 'production',
           },
         },
