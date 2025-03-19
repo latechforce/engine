@@ -1,7 +1,5 @@
-import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
+import { type BaseActionConfig } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
-import type { Qonto } from '/domain/integrations/Qonto'
 import {
   Template,
   type ConvertToTemplateObjectCompiled,
@@ -9,43 +7,40 @@ import {
 } from '/domain/services/Template'
 import type { QontoClient } from '/domain/integrations/Qonto/QontoTypes'
 import type { QontoCreateClient } from '/domain/integrations/Qonto/QontoTypes'
+import {
+  BaseQontoAction,
+  type BaseQontoActionIntegrations,
+  type BaseQontoActionServices,
+} from './base'
 
 type QontoCreateClientAsTemplateObjectCompiled = ConvertToTemplateObjectCompiled<QontoCreateClient>
 type QontoCreateClientAsTemplateObjectFilled = ConvertToTemplateObjectFilled<QontoCreateClient>
+
+export type CreateClientQontoActionServices = BaseQontoActionServices
+
+export type CreateClientQontoActionIntegrations = BaseQontoActionIntegrations
 
 export interface CreateClientQontoActionConfig extends BaseActionConfig {
   client: QontoCreateClient
 }
 
-export interface CreateClientQontoActionServices extends BaseActionServices {
-  templateCompiler: TemplateCompiler
-}
-
-export interface CreateClientQontoActionIntegrations {
-  qonto: Qonto
-}
-
 type Input = { client: QontoCreateClient }
 type Output = QontoClient
 
-export class CreateClientQontoAction extends BaseAction<Input, Output> {
+export class CreateClientQontoAction extends BaseQontoAction<Input, Output> {
   private _client: QontoCreateClientAsTemplateObjectCompiled
 
   constructor(
     config: CreateClientQontoActionConfig,
     services: CreateClientQontoActionServices,
-    private _integrations: CreateClientQontoActionIntegrations
+    integrations: CreateClientQontoActionIntegrations
   ) {
-    super(config, services)
+    super(config, services, integrations)
     const { client } = config
     const { templateCompiler } = services
     const clientChecked = this._checkTemplateObject(client)
     this._client =
       templateCompiler.compileObject<QontoCreateClientAsTemplateObjectCompiled>(clientChecked)
-  }
-
-  validateConfig = async () => {
-    return this._integrations.qonto.checkConfiguration()
   }
 
   protected _prepare = async (context: AutomationContext) => {

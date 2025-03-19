@@ -1,5 +1,3 @@
-import { ConfigError } from '../entities/Error/Config'
-
 export interface BaseSpi {
   checkConfiguration: () => Promise<IntegrationResponseError | undefined>
 }
@@ -25,19 +23,11 @@ export class Integration<T extends BaseSpi> {
 
   constructor(protected _spi: T) {}
 
-  checkConfiguration = async (): Promise<ConfigError[]> => {
-    if (this._isConfigurationChecked) return []
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    if (this._isConfigurationChecked) return
     const response = await this._spi.checkConfiguration()
     this._isConfigurationChecked = true
-    if (response)
-      return [
-        new ConfigError({
-          entity: 'Integration',
-          name: this.constructor.name,
-          message: response.error.detail,
-        }),
-      ]
-    return []
+    return response
   }
 
   protected _throwError = (method: string, error: IntegrationResponseError['error']) => {

@@ -308,10 +308,15 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
       let startedApp: StartedApp | undefined
       app.start = async (config: Config) => {
         const options = { drivers: { fetcher: () => drivers.fetcher } }
+        const { integrations, ...rest } = extendsConfig
         startedApp = await new MockedApp(options).start({
           loggers: [],
           ...config,
-          ...extendsConfig,
+          ...rest,
+          integrations: {
+            ...integrations,
+            ...config.integrations,
+          },
         })
         return startedApp
       }

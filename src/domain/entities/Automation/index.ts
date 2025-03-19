@@ -52,9 +52,10 @@ export class Automation {
 
   validateConfig = async (): Promise<ConfigError[]> => {
     const { trigger, actions } = this._entities
-    await trigger.validateConfig()
-    for (const action of actions) await action.validateConfig()
-    return []
+    const errors: Promise<ConfigError[]>[] = []
+    errors.push(trigger.validateConfig())
+    for (const action of actions) errors.push(action.validateConfig())
+    return Promise.all(errors).then((errors) => errors.flat())
   }
 
   run = async (triggerData: object) => {
