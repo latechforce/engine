@@ -71,7 +71,7 @@ exports[`should match the multiple attachment input snapshot with placeholder 1`
 `;
 
 exports[`should match the multiple attachment input snapshot with required 1`] = `
-"<div><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500
+"<div><label class="block"><span class="sr-only"></span><input type="file" multiple="" required="" class="block w-full text-sm text-gray-500
             file:me-4 file:py-2 file:px-4
             file:rounded-lg file:border-0
             file:text-sm file:font-semibold
