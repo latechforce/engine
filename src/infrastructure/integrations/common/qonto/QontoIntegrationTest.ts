@@ -12,6 +12,16 @@ export function testQontoIntegration(
 ) {
   let client: QontoClient | undefined
 
+  describe('checkConfiguration', () => {
+    it('should check configuration', async () => {
+      // WHEN
+      const result = await integration.checkConfiguration()
+
+      // THEN
+      expect(result).toBeUndefined()
+    })
+  })
+
   describe('createClient', () => {
     it('should create a client', async () => {
       // WHEN

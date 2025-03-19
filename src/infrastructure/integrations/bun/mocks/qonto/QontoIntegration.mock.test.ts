@@ -9,4 +9,6 @@ const integration = new QontoIntegration({
   secretKey: ':memory:',
 })
 
+await integration.createOrganization('test', 'test')
+
 testQontoIntegration(BunTester, integration)
