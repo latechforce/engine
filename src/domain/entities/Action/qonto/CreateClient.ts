@@ -1,12 +1,14 @@
 import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
-import type { QontoCreateClient, QontoClient, Qonto } from '/domain/integrations/Qonto'
+import type { Qonto } from '/domain/integrations/Qonto'
 import {
   Template,
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
 } from '/domain/services/Template'
+import type { QontoClient } from '/domain/integrations/Qonto/QontoTypes'
+import type { QontoCreateClient } from '/domain/integrations/Qonto/QontoTypes'
 
 type QontoCreateClientAsTemplateObjectCompiled = ConvertToTemplateObjectCompiled<QontoCreateClient>
 type QontoCreateClientAsTemplateObjectFilled = ConvertToTemplateObjectFilled<QontoCreateClient>
@@ -40,7 +42,10 @@ export class CreateClientQontoAction extends BaseAction<Input, Output> {
     const clientChecked = this._checkTemplateObject(client)
     this._client =
       templateCompiler.compileObject<QontoCreateClientAsTemplateObjectCompiled>(clientChecked)
-    _integrations.qonto.getConfig()
+  }
+
+  validateConfig = async () => {
+    return this._integrations.qonto.checkConfiguration()
   }
 
   protected _prepare = async (context: AutomationContext) => {

@@ -10,7 +10,7 @@ import { QontoIntegration } from '/infrastructure/integrations/bun/mocks/qonto/Q
 import { PappersIntegration } from '/infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
 import type { DatabaseConfig } from '/domain/services/Database'
 import type { NotionConfig } from '/domain/integrations/Notion'
-import type { QontoConfig } from '/domain/integrations/Qonto'
+import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
 import type { PappersConfig } from '/domain/integrations/Pappers'
 import { AirtableIntegration } from '/infrastructure/integrations/bun/mocks/airtable/AirtableIntegration.mock'
 import type { AirtableConfig } from '/domain/integrations/Airtable'
@@ -271,6 +271,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           }
           integrations.qonto = new QontoIntegration(config)
           extendsConfig.integrations.qonto = config
+          await integrations.qonto.createOrganization(config.organisationSlug, 'Org Name')
         }
         if (this.options.integrations.includes('GoogleMail')) {
           const config: GoogleMailConfig = {

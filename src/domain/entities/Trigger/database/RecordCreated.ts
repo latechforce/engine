@@ -27,6 +27,10 @@ export class RecordCreatedDatabaseTrigger implements BaseTrigger {
     realtime.onInsert(table, this.onInsert)
   }
 
+  validateConfig = async () => {
+    return []
+  }
+
   onInsert = async (record: Record) => {
     const { queue } = this._services
     const { automation } = this._config

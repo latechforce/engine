@@ -1,22 +1,24 @@
 import type {
   QontoClient,
   QontoCreateClient,
-  QontoConfig,
   QontoClientInvoice,
   QontoCreateClientInvoice,
   QontoOrganization,
   QontoAttachment,
-} from '/domain/integrations/Qonto'
+} from '/domain/integrations/Qonto/QontoTypes'
 import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
 import { Database } from 'bun:sqlite'
 import fsExtra from 'fs-extra'
 import PDFDocument from 'pdfkit'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
+import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
 
 export class QontoIntegration implements IQontoIntegration {
   private db: Database
 
   constructor(private _config?: QontoConfig) {
     this.db = new Database(_config?.secretKey ?? ':memory:')
+    this.db.run(`CREATE TABLE IF NOT EXISTS Organizations (id TEXT PRIMARY KEY, legal_name TEXT)`)
     this.db.run(`
       CREATE TABLE IF NOT EXISTS Clients (
         id TEXT PRIMARY KEY,
@@ -71,14 +73,21 @@ export class QontoIntegration implements IQontoIntegration {
     `)
   }
 
-  getConfig = (): QontoConfig => {
-    if (!this._config) {
-      throw new Error('Qonto config not set')
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    const organization = this.db
+      .query<QontoOrganization, string>('SELECT * FROM Organizations WHERE id = ?')
+      .get(this._config?.organisationSlug ?? '')
+    if (!organization) {
+      return { error: { status: 404, code: 'not_found', detail: 'Organization not found' } }
     }
-    return this._config
+    return undefined
   }
 
-  createClient = async (client: QontoCreateClient): Promise<QontoClient> => {
+  createOrganization = async (id: string, legalName: string): Promise<void> => {
+    this.db.run(`INSERT INTO Organizations (id, legal_name) VALUES (?, ?)`, [id, legalName])
+  }
+
+  createClient = async (client: QontoCreateClient): Promise<IntegrationResponse<QontoClient>> => {
     const id = `${Date.now()}-${Math.random().toString(36).substring(2, 10)}`
     const createdAt = new Date().toISOString()
     const billingAddress = client.billing_address ? JSON.stringify(client.billing_address) : null
@@ -146,10 +155,12 @@ export class QontoIntegration implements IQontoIntegration {
             locale: client.locale,
           }
 
-    return createdClient
+    return { data: createdClient }
   }
 
-  createClientInvoice = async (invoice: QontoCreateClientInvoice): Promise<QontoClientInvoice> => {
+  createClientInvoice = async (
+    invoice: QontoCreateClientInvoice
+  ): Promise<IntegrationResponse<QontoClientInvoice>> => {
     const id = `${Date.now()}-${Math.random().toString(36).substring(2, 10)}`
     const createdAt = new Date().toISOString()
     const attachmentId = `att-${Date.now()}-${Math.random().toString(36).substring(2, 10)}`
@@ -229,65 +240,67 @@ export class QontoIntegration implements IQontoIntegration {
     )
 
     return {
-      id,
-      organization_id: 'org-placeholder',
-      number: invoice.number || `INV-${Date.now()}`,
-      purchase_order: invoice.purchase_order || '',
-      status: invoice.status || 'unpaid',
-      invoice_url: `https://pay.qonto.com/invoices/${id}`,
-      contact_email: 'contact@example.com',
-      terms_and_conditions: invoice.terms_and_conditions || '',
-      discount_conditions: invoice.settings?.discount_conditions || '',
-      late_payment_penalties: invoice.settings?.late_payment_penalties || '',
-      legal_fixed_compensation: invoice.settings?.legal_fixed_compensation || '',
-      header: invoice.header || '',
-      footer: invoice.footer || '',
-      currency: invoice.currency,
-      total_amount: { value: '0.00', currency: invoice.currency },
-      total_amount_cents: 0,
-      vat_amount: { value: '0.00', currency: invoice.currency },
-      vat_amount_cents: 0,
-      issue_date: invoice.issue_date,
-      due_date: invoice.due_date,
-      performance_date: invoice.performance_date || '',
-      created_at: createdAt,
-      finalized_at: createdAt,
-      paid_at: '',
-      stamp_duty_amount: invoice.stamp_duty_amount || '',
-      items: invoice.items.map((item) => ({
-        ...item,
-        unit_price_cents: parseFloat(item.unit_price.value) * 100,
-        total_vat: { value: '0.00', currency: invoice.currency },
-        total_vat_cents: 0,
+      data: {
+        id,
+        organization_id: 'org-placeholder',
+        number: invoice.number || `INV-${Date.now()}`,
+        purchase_order: invoice.purchase_order || '',
+        status: invoice.status || 'unpaid',
+        invoice_url: `https://pay.qonto.com/invoices/${id}`,
+        contact_email: 'contact@example.com',
+        terms_and_conditions: invoice.terms_and_conditions || '',
+        discount_conditions: invoice.settings?.discount_conditions || '',
+        late_payment_penalties: invoice.settings?.late_payment_penalties || '',
+        legal_fixed_compensation: invoice.settings?.legal_fixed_compensation || '',
+        header: invoice.header || '',
+        footer: invoice.footer || '',
+        currency: invoice.currency,
         total_amount: { value: '0.00', currency: invoice.currency },
         total_amount_cents: 0,
-        subtotal: { value: '0.00', currency: invoice.currency },
-        subtotal_cents: 0,
-      })),
-      client: { id: invoice.client_id, name: 'Client Placeholder' } as QontoClient,
-      payment_methods: [
-        {
-          beneficiary_name: 'Placeholder',
-          bic: 'BIC123',
-          iban: invoice.payment_methods.iban,
-          type: 'transfer',
+        vat_amount: { value: '0.00', currency: invoice.currency },
+        vat_amount_cents: 0,
+        issue_date: invoice.issue_date,
+        due_date: invoice.due_date,
+        performance_date: invoice.performance_date || '',
+        created_at: createdAt,
+        finalized_at: createdAt,
+        paid_at: '',
+        stamp_duty_amount: invoice.stamp_duty_amount || '',
+        items: invoice.items.map((item) => ({
+          ...item,
+          unit_price_cents: parseFloat(item.unit_price.value) * 100,
+          total_vat: { value: '0.00', currency: invoice.currency },
+          total_vat_cents: 0,
+          total_amount: { value: '0.00', currency: invoice.currency },
+          total_amount_cents: 0,
+          subtotal: { value: '0.00', currency: invoice.currency },
+          subtotal_cents: 0,
+        })),
+        client: { id: invoice.client_id, name: 'Client Placeholder' } as QontoClient,
+        payment_methods: [
+          {
+            beneficiary_name: 'Placeholder',
+            bic: 'BIC123',
+            iban: invoice.payment_methods.iban,
+            type: 'transfer',
+          },
+        ],
+        credit_notes_ids: [],
+        organization: { id: 'org-placeholder', legal_name: 'Org Name' } as QontoOrganization,
+        einvoicing_status: 'pending',
+        welfare_fund: invoice.welfare_fund || { type: '', rate: '' },
+        withholding_tax: invoice.withholding_tax || {
+          reason: '',
+          rate: '',
+          payment_reason: '',
+          amount: '',
         },
-      ],
-      credit_notes_ids: [],
-      organization: { id: 'org-placeholder', legal_name: 'Org Name' } as QontoOrganization,
-      einvoicing_status: 'pending',
-      welfare_fund: invoice.welfare_fund || { type: '', rate: '' },
-      withholding_tax: invoice.withholding_tax || {
-        reason: '',
-        rate: '',
-        payment_reason: '',
-        amount: '',
+        payment_reporting: invoice.payment_reporting || { conditions: '', method: '' },
       },
-      payment_reporting: invoice.payment_reporting || { conditions: '', method: '' },
     }
   }
 
-  listClientInvoices = async (): Promise<QontoClientInvoice[]> => {
+  listClientInvoices = async (): Promise<IntegrationResponse<QontoClientInvoice[]>> => {
     const result = this.db
       .query<
         QontoClientInvoice & {
@@ -299,17 +312,21 @@ export class QontoIntegration implements IQontoIntegration {
         []
       >('SELECT * FROM ClientInvoices')
       .all()
-    return result.map((row) => ({
-      ...row,
-      total_amount: { value: row.total_amount_value, currency: row.total_amount_currency },
-      vat_amount: { value: row.vat_amount_value, currency: row.vat_amount_currency },
-    }))
+    return {
+      data: result.map((row) => ({
+        ...row,
+        total_amount: { value: row.total_amount_value, currency: row.total_amount_currency },
+        vat_amount: { value: row.vat_amount_value, currency: row.vat_amount_currency },
+      })),
+    }
   }
 
-  retrieveAttachment = async (attachmentId: string): Promise<QontoAttachment | undefined> => {
+  retrieveAttachment = async (
+    attachmentId: string
+  ): Promise<IntegrationResponse<QontoAttachment | undefined>> => {
     const attachment = this.db
       .query<QontoAttachment, string>('SELECT * FROM Attachments WHERE id = ?')
       .get(attachmentId)
-    return attachment ?? undefined
+    return { data: attachment ?? undefined }
   }
 }

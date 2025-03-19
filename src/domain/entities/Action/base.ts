@@ -27,6 +27,10 @@ export class BaseAction<Input extends object, Output extends object> {
 
   init = async () => {}
 
+  validateConfig = async (): Promise<ConfigError[]> => {
+    return []
+  }
+
   protected _prepare = async (_context: AutomationContext): Promise<Input> => {
     throw new Error('Method not implemented.')
   }

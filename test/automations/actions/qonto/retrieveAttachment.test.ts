@@ -11,9 +11,12 @@ mock.request(({ app, request, integrations }) => {
   describe('on POST', () => {
     it('should retrieve an attachment', async () => {
       // GIVEN
-      const client = await integrations.qonto.createClient(qontoCreateClientSample)
+      const { data: client } = await integrations.qonto.createClient(qontoCreateClientSample)
+      if (!client) throw new Error('Client not created')
       await integrations.qonto.createClientInvoice(qontoCreateClientInvoiceSample(client))
-      const [invoice] = await integrations.qonto.listClientInvoices()
+      const { data: invoices = [] } = await integrations.qonto.listClientInvoices()
+      const invoice = invoices[0]
+      if (!invoice) throw new Error('Invoice not created')
       const config: Config = {
         name: 'App',
         version: '1.0.0',

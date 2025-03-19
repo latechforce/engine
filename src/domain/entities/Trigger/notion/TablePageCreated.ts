@@ -35,6 +35,10 @@ export class TablePageCreatedNotionTrigger implements BaseTrigger {
     queue.job(automation, run)
   }
 
+  validateConfig = async () => {
+    return []
+  }
+
   onTablePageCreated = async (page: NotionTablePage) => {
     const { queue } = this._services
     const { automation } = this._config

@@ -1,5 +1,9 @@
 # Integration Implementation Template
 
+Legend:
+
+- `NewIntegration` is the name of the integration and should be replaced by the actual name of the integration (e.g. `Qonto`) in the codebase.
+
 ## 1. Domain Layer
 
 ### a. Domain Interface (`/domain/integrations/NewIntegration.ts`)

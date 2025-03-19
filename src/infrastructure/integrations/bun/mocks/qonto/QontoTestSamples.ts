@@ -2,7 +2,7 @@ import type {
   QontoClient,
   QontoCreateClient,
   QontoCreateClientInvoice,
-} from '/domain/integrations/Qonto'
+} from '/domain/integrations/Qonto/QontoTypes'
 import { format } from 'date-fns'
 import env from '/test/env'
 

@@ -1,8 +1,9 @@
 import { BaseAction, type BaseActionConfig, type BaseActionServices } from '../base'
-import type { AutomationContext } from '../../Automation/Context'
-import type { TemplateCompiler } from '../../../services/TemplateCompiler'
-import type { Qonto, QontoAttachment } from '../../../integrations/Qonto'
-import { Template } from '../../../services/Template'
+import type { AutomationContext } from '/domain/entities/Automation/Context'
+import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import type { Qonto } from '/domain/integrations/Qonto'
+import { Template } from '/domain/services/Template'
+import type { QontoAttachment } from '/domain/integrations/Qonto/QontoTypes'
 
 export interface RetrieveAttachmentQontoActionConfig extends BaseActionConfig {
   attachmentId: string
@@ -31,7 +32,10 @@ export class RetrieveAttachmentQontoAction extends BaseAction<Input, Output> {
     const { attachmentId } = config
     const { templateCompiler } = services
     this._attachmentId = templateCompiler.compile(attachmentId)
-    _integrations.qonto.getConfig()
+  }
+
+  validateConfig = async () => {
+    return this._integrations.qonto.checkConfiguration()
   }
 
   protected _prepare = async (context: AutomationContext) => {

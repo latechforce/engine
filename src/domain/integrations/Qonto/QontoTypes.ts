@@ -1,62 +1,7 @@
-export interface QontoSandboxConfig extends Omit<QontoProductionConfig, 'environment'> {
-  environment: 'sandbox'
-  stagingToken: string
-}
-
-export interface QontoProductionConfig {
-  environment: 'production'
-  organisationSlug: string
-  secretKey: string
-}
-
-export type QontoConfig = QontoSandboxConfig | QontoProductionConfig
-
-export interface IQontoSpi {
-  getConfig: () => QontoConfig
-  createClient: (client: QontoCreateClient) => Promise<QontoClient>
-  createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
-  listClientInvoices: () => Promise<QontoClientInvoice[]>
-  retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
-}
-
-export interface QontoCodeRunnerIntegration {
-  createClient: (client: QontoCreateClient) => Promise<QontoClient>
-  createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
-  listClientInvoices: () => Promise<QontoClientInvoice[]>
-  retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
-}
-
-export class Qonto {
-  constructor(private _spi: IQontoSpi) {}
-
-  get codeRunnerIntegration(): QontoCodeRunnerIntegration {
-    return {
-      createClient: this.createClient,
-      createClientInvoice: this.createClientInvoice,
-      listClientInvoices: this.listClientInvoices,
-      retrieveAttachment: this.retrieveAttachment,
-    }
-  }
-
-  getConfig = (): QontoConfig => {
-    return this._spi.getConfig()
-  }
-
-  createClient = async (client: QontoCreateClient): Promise<QontoClient> => {
-    return this._spi.createClient(client)
-  }
-
-  createClientInvoice = async (invoice: QontoCreateClientInvoice): Promise<QontoClientInvoice> => {
-    return this._spi.createClientInvoice(invoice)
-  }
-
-  listClientInvoices = async (): Promise<QontoClientInvoice[]> => {
-    return this._spi.listClientInvoices()
-  }
-
-  retrieveAttachment = async (attachmentId: string): Promise<QontoAttachment | undefined> => {
-    return this._spi.retrieveAttachment(attachmentId)
-  }
+export interface QontoError {
+  status: number
+  code: string
+  detail: string
 }
 
 interface QontoBillingAddress {

@@ -1,113 +1,116 @@
 import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
-import type {
-  QontoClient,
-  QontoClientInvoice,
-  QontoConfig,
-  QontoCreateClient,
-  QontoCreateClientInvoice,
-  QontoAttachment,
-} from '/domain/integrations/Qonto'
-import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
+import type { IntegrationResponseError } from '/domain/integrations/base'
+import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
+import {
+  type QontoClient,
+  type QontoClientInvoice,
+  type QontoCreateClient,
+  type QontoCreateClientInvoice,
+  type QontoAttachment,
+  type QontoError,
+} from '/domain/integrations/Qonto/QontoTypes'
+import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
 export class QontoIntegration implements IQontoIntegration {
-  private _instance?: AxiosInstance
+  private _instance: AxiosInstance
 
-  constructor(private _config?: QontoConfig) {}
-
-  getConfig = (): QontoConfig => {
-    if (!this._config) {
-      throw new Error('Qonto config not set')
+  constructor(config?: QontoConfig) {
+    const headers = {
+      Authorization: `${config?.organisationSlug}:${config?.secretKey}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     }
-    return this._config
-  }
-
-  createClient = async (client: QontoCreateClient): Promise<QontoClient> => {
-    const response = await this._api()
-      .post('/clients', client)
-      .catch((error) => {
-        return error.response
-      })
-    if (response.status === 200) {
-      return response.data.client
-    } else {
-      return this._throwError(response)
-    }
-  }
-
-  createClientInvoice = async (invoice: QontoCreateClientInvoice): Promise<QontoClientInvoice> => {
-    const response = await this._api()
-      .post('/client_invoices', invoice)
-      .catch((error) => {
-        return error.response
-      })
-    if (response.status === 201) {
-      return response.data.client_invoice
-    } else {
-      return this._throwError(response)
+    switch (config?.environment) {
+      case 'sandbox':
+        this._instance = axios.create({
+          baseURL: 'https://thirdparty-sandbox.staging.qonto.co/v2',
+          headers: {
+            ...headers,
+            'X-Qonto-Staging-Token': config?.stagingToken,
+          },
+        })
+        break
+      default:
+        this._instance = axios.create({
+          baseURL: 'https://thirdparty.qonto.com/v2',
+          headers,
+        })
+        break
     }
   }
 
-  listClientInvoices = async (): Promise<QontoClientInvoice[]> => {
-    const response = await this._api()
-      .get(`/client_invoices`)
-      .catch((error) => {
-        return error.response
-      })
-    if (response.status === 200) {
-      return response.data.client_invoices
-    } else {
-      return this._throwError(response)
+  private _errorMapper = (
+    response: AxiosResponse<{ errors: QontoError[] }>
+  ): IntegrationResponseError => {
+    const [{ status, code, detail }] = response.data.errors
+    return {
+      error: { status, code, detail },
     }
   }
 
-  retrieveAttachment = async (attachmentId: string): Promise<QontoAttachment | undefined> => {
-    const response = await this._api()
-      .get(`/attachments/${attachmentId}`)
-      .catch((error) => {
-        return error.response
-      })
-    if (response.status === 404) {
-      return undefined
-    } else if (response.status === 200) {
-      return response.data.attachment
-    } else {
-      return this._throwError(response)
-    }
-  }
-
-  private _api = (): AxiosInstance => {
-    if (!this._instance) {
-      const config = this.getConfig()
-      const headers = {
-        Authorization: `${config.organisationSlug}:${config.secretKey}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    try {
+      await this._instance.get('/organization')
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
       }
-      switch (config.environment) {
-        case 'sandbox':
-          this._instance = axios.create({
-            baseURL: 'https://thirdparty-sandbox.staging.qonto.co/v2',
-            headers: {
-              ...headers,
-              'X-Qonto-Staging-Token': config.stagingToken,
-            },
-          })
-          break
-        case 'production':
-          this._instance = axios.create({
-            baseURL: 'https://thirdparty.qonto.com/v2',
-            headers,
-          })
-          break
-      }
+      throw error
     }
-    return this._instance
   }
 
-  private _throwError = (response: AxiosResponse) => {
-    const [{ status, code, detail, message }] = response.data.errors
-    throw new Error(
-      `${status} error "${code}" fetching data from Qonto ${this.getConfig().environment} API: ${message}${detail ? ', ' + detail : ''}`
-    )
+  createClient = async (client: QontoCreateClient) => {
+    try {
+      const response = await this._instance.post<{ client: QontoClient }>('/clients', client)
+      return { data: response.data.client }
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  createClientInvoice = async (invoice: QontoCreateClientInvoice) => {
+    try {
+      const response = await this._instance.post<{ client_invoice: QontoClientInvoice }>(
+        '/client_invoices',
+        invoice
+      )
+      return { data: response.data.client_invoice }
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  listClientInvoices = async () => {
+    try {
+      const response = await this._instance.get<{ client_invoices: QontoClientInvoice[] }>(
+        `/client_invoices`
+      )
+      return { data: response.data.client_invoices }
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  retrieveAttachment = async (attachmentId: string) => {
+    try {
+      const response = await this._instance.get<{ attachment: QontoAttachment }>(
+        `/attachments/${attachmentId}`
+      )
+      return { data: response.data.attachment }
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
   }
 }

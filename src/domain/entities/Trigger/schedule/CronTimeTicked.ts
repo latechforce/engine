@@ -26,6 +26,10 @@ export class CronTimeTickedScheduleTrigger implements BaseTrigger {
     cron.start(cronTime, this.onTick)
   }
 
+  validateConfig = async () => {
+    return []
+  }
+
   onTick = async () => {
     const { queue } = this._services
     const { automation } = this._config

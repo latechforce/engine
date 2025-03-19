@@ -1,5 +1,5 @@
 import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
-import type { QontoClient } from '/domain/integrations/Qonto'
+import type { QontoClient } from '/domain/integrations/Qonto/QontoTypes'
 import type BunTester from 'bun:test'
 import {
   qontoCreateClientInvoiceSample,
@@ -10,12 +10,13 @@ export function testQontoIntegration(
   { describe, it, expect }: typeof BunTester,
   integration: IQontoIntegration
 ) {
-  let client: QontoClient
+  let client: QontoClient | undefined
 
   describe('createClient', () => {
     it('should create a client', async () => {
       // WHEN
-      client = await integration.createClient(qontoCreateClientSample)
+      const response = await integration.createClient(qontoCreateClientSample)
+      client = response.data
 
       // THEN
       expect(client?.id).toBeDefined()
@@ -25,10 +26,13 @@ export function testQontoIntegration(
   describe('createClientInvoice', () => {
     it('should create a client invoices', async () => {
       // GIVEN
+      if (!client) {
+        throw new Error('Client not found')
+      }
       const createClientInvoice = qontoCreateClientInvoiceSample(client)
 
       // WHEN
-      const invoice = await integration.createClientInvoice(createClientInvoice)
+      const { data: invoice } = await integration.createClientInvoice(createClientInvoice)
 
       // THEN
       expect(invoice?.id).toBeDefined()
@@ -38,7 +42,7 @@ export function testQontoIntegration(
   describe('listClientInvoices', () => {
     it('should list client invoices', async () => {
       // WHEN
-      const invoices = await integration.listClientInvoices()
+      const { data: invoices = [] } = await integration.listClientInvoices()
 
       // THEN
       expect(invoices.length > 0).toBeTruthy()
@@ -50,12 +54,12 @@ export function testQontoIntegration(
       // GIVEN
       let attachmentId: string | undefined
       do {
-        const [invoice] = await integration.listClientInvoices()
-        attachmentId = invoice.attachment_id
+        const { data: invoices = [] } = await integration.listClientInvoices()
+        attachmentId = invoices[0].attachment_id
       } while (!attachmentId)
 
       // WHEN
-      const attachment = await integration.retrieveAttachment(attachmentId)
+      const { data: attachment } = await integration.retrieveAttachment(attachmentId)
 
       // THEN
       expect(attachment?.id).toBe(attachmentId)
@@ -67,12 +71,12 @@ export function testQontoIntegration(
       // GIVEN
       let attachmentId: string | undefined
       do {
-        const [invoice] = await integration.listClientInvoices()
-        attachmentId = invoice.attachment_id
+        const { data: invoices = [] } = await integration.listClientInvoices()
+        attachmentId = invoices[0].attachment_id
       } while (!attachmentId)
 
       // WHEN
-      const attachment = await integration.retrieveAttachment(attachmentId)
+      const { data: attachment } = await integration.retrieveAttachment(attachmentId)
       if (!attachment) {
         throw new Error('Attachment not found')
       }

@@ -64,6 +64,10 @@ export class ApiCalledHttpTrigger implements BaseTrigger {
     })
   }
 
+  validateConfig = async () => {
+    return []
+  }
+
   post = async (request: PostRequest, run: (data: object) => Promise<AutomationContext>) => {
     try {
       const { input } = this._config

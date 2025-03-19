@@ -5,7 +5,11 @@ import {
   qontoCreateClientInvoiceSample,
   qontoCreateClientSample,
 } from '/infrastructure/integrations/bun/mocks/qonto/QontoTestSamples'
-import type { QontoAttachment, QontoClient, QontoClientInvoice } from '/domain/integrations/Qonto'
+import type {
+  QontoAttachment,
+  QontoClient,
+  QontoClientInvoice,
+} from '/domain/integrations/Qonto/QontoTypes'
 
 const mock = new Mock(Tester, { integrations: ['Qonto'] })
 
@@ -65,7 +69,8 @@ mock.request(({ app, request, integrations }) => {
 
     it('should run a Typescript code with a Qonto create client invoice', async () => {
       // GIVEN
-      const client = await integrations.qonto.createClient(qontoCreateClientSample)
+      const { data: client } = await integrations.qonto.createClient(qontoCreateClientSample)
+      if (!client) throw new Error('Client not created')
       const sample = qontoCreateClientInvoiceSample(client)
       const config: Config = {
         name: 'App',
@@ -119,7 +124,8 @@ mock.request(({ app, request, integrations }) => {
 
     it('should run a Typescript code with a Qonto list client invoices', async () => {
       // GIVEN
-      const client = await integrations.qonto.createClient(qontoCreateClientSample)
+      const { data: client } = await integrations.qonto.createClient(qontoCreateClientSample)
+      if (!client) throw new Error('Client not created')
       await integrations.qonto.createClientInvoice(qontoCreateClientInvoiceSample(client))
       const config: Config = {
         name: 'App',
@@ -165,9 +171,12 @@ mock.request(({ app, request, integrations }) => {
 
     it('should run a Typescript code with a Qonto retrieve attachment', async () => {
       // GIVEN
-      const client = await integrations.qonto.createClient(qontoCreateClientSample)
+      const { data: client } = await integrations.qonto.createClient(qontoCreateClientSample)
+      if (!client) throw new Error('Client not created')
       await integrations.qonto.createClientInvoice(qontoCreateClientInvoiceSample(client))
-      const [invoice] = await integrations.qonto.listClientInvoices()
+      const { data: invoices = [] } = await integrations.qonto.listClientInvoices()
+      const invoice = invoices[0]
+      if (!invoice) throw new Error('Invoice not created')
       const config: Config = {
         name: 'App',
         version: '1.0.0',

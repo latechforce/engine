@@ -57,7 +57,7 @@ export {
   type QontoCreateClientInvoice,
   type QontoClientInvoice,
   type QontoAttachment,
-} from '/domain/integrations/Qonto'
+} from '/domain/integrations/Qonto/QontoTypes'
 export {
   Record as DatabaseTableRecord,
   type RecordFields as DatabaseTableRecordFields,

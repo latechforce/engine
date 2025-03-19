@@ -1,26 +1,15 @@
 import type {
-  IQontoSpi,
-  QontoConfig,
   QontoCreateClient,
-  QontoClient,
   QontoCreateClientInvoice,
-  QontoClientInvoice,
-  QontoAttachment,
-} from '/domain/integrations/Qonto'
+} from '/domain/integrations/Qonto/QontoTypes'
+import { BaseSpi } from './base'
+import type { IQontoSpi } from '/domain/integrations/Qonto/IQontoSpi'
 
-export interface IQontoIntegration {
-  getConfig: () => QontoConfig
-  createClient: (client: QontoCreateClient) => Promise<QontoClient>
-  createClientInvoice: (invoice: QontoCreateClientInvoice) => Promise<QontoClientInvoice>
-  listClientInvoices: () => Promise<QontoClientInvoice[]>
-  retrieveAttachment: (attachmentId: string) => Promise<QontoAttachment | undefined>
-}
+export type IQontoIntegration = IQontoSpi
 
-export class QontoSpi implements IQontoSpi {
-  constructor(private _integration: IQontoIntegration) {}
-
-  getConfig = () => {
-    return this._integration.getConfig()
+export class QontoSpi extends BaseSpi<IQontoIntegration> implements IQontoSpi {
+  constructor(integration: IQontoIntegration) {
+    super(integration)
   }
 
   createClient = async (client: QontoCreateClient) => {

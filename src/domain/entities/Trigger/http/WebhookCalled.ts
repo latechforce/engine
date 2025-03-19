@@ -51,6 +51,10 @@ export class WebhookCalledHttpTrigger implements BaseTrigger {
     queue.job(automation, run)
   }
 
+  validateConfig = async () => {
+    return []
+  }
+
   post = async (request: PostRequest) => {
     const { queue } = this._services
     const { automation } = this._config

@@ -1,5 +1,13 @@
 export interface ConfigErrorParams {
-  entity: 'Action' | 'Component' | 'Field' | 'Table' | 'Automation' | 'Page' | 'Trigger'
+  entity:
+    | 'Action'
+    | 'Component'
+    | 'Field'
+    | 'Table'
+    | 'Automation'
+    | 'Page'
+    | 'Trigger'
+    | 'Integration'
   name: string
   message: string
 }
