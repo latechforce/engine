@@ -2,7 +2,7 @@ import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
 import { getFirstBucketConfig } from '/test/config'
 
-const mock = new Mock(Tester, { drivers: ['Database', 'Storage', 'SpreadsheetLoader'] })
+const mock = new Mock(Tester, { drivers: ['Database', 'Storage'] })
 
 mock.request(({ app, drivers }) => {
   describe('on start', () => {
@@ -37,13 +37,13 @@ mock.request(({ app, drivers }) => {
         ...config,
         integrations: {
           notion: {
-            token: 'token',
+            token: ':memory:',
           },
         },
       })
 
       // THEN
-      expect(drivers.storage.bucket('notion_files').exists()).resolves.toBe(false)
+      expect(drivers.storage.bucket('notion_files').exists()).resolves.toBe(true)
     })
   })
 })
