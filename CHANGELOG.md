@@ -1,3 +1,10 @@
+## [0.38.4](https://github.com/latechforce/engine/compare/v0.38.3...v0.38.4) (2025-03-19)
+
+
+### Bug Fixes
+
+* **package:** update test timeout ([1be0d4e](https://github.com/latechforce/engine/commit/1be0d4e68b1ecf8520ae45d0170df1f8fa28b507))
+
 ## [0.38.3](https://github.com/latechforce/engine/compare/v0.38.2...v0.38.3) (2025-03-18)
 
 
