@@ -1,291 +1,301 @@
-# Integration Implementation Template
+# Creating New Integrations Tutorial
 
-Legend:
+This tutorial will guide you through creating a new integration in the codebas. We'll break this down into multiple steps and files.
 
-- `NewIntegration` is the name of the integration and should be replaced by the actual name of the integration (e.g. `Qonto`) in the codebase.
+## Step 1: Domain Integration Configuration
 
-## 1. Domain Layer
-
-### a. Domain Interface (`/domain/integrations/NewIntegration.ts`)
+First, let's create the configuration types for your integration. Create a new file in `src/domain/integrations/NewIntegration/NewIntegrationConfig.ts`:
 
 ```typescript
-export interface NewIntegrationSandboxConfig {
-  environment: 'sandbox'
-  accessToken: string
-}
-
-export interface NewIntegrationProductionConfig {
-  environment: 'production'
-  accessToken: string
-}
-
-export type NewIntegrationConfig = NewIntegrationSandboxConfig | NewIntegrationProductionConfig
-
-export interface INewIntegrationSpi {
-  getConfig: () => NewIntegrationConfig
-  newApiMethod: (data: NewApiMethodInput) => Promise<NewApiMethodOutput>
-}
-
-export class NewIntegration {
-  constructor(private _spi: INewIntegrationSpi) {}
-
-  getConfig = (): NewIntegrationConfig => {
-    return this._spi.getConfig()
-  }
-
-  newApiMethod = async (data: NewApiMethodInput): Promise<NewApiMethodOutput> => {
-    return this._spi.newApiMethod(data)
-  }
-}
-
-// Define your API method interfaces
-export interface NewApiMethodInput {
-  // Input properties
-}
-
-export interface NewApiMethodOutput {
-  // Output properties
+export type NewIntegrationConfig = {
+  // Add your production-specific configuration fields
+  apiKey: string
 }
 ```
 
-### b. Update Domain Interfaces (`/domain/interfaces/IIntegrations.ts`)
+### Key Points:
 
-Reference for pattern:
+- Keep sensitive information like API keys in the configuration
+- Make all configuration fields required unless optional
 
-```1:15:src/domain/interfaces/IIntegrations.ts
-import type { GoogleMailConfig } from '../integrations/Google/GoogleMail'
-import type { AirtableConfig } from '/domain/integrations/Airtable'
-import type { NotionConfig } from '/domain/integrations/Notion'
-import type { PappersConfig } from '/domain/integrations/Pappers'
-import type { QontoConfig } from '/domain/integrations/Qonto'
+## Step 2: Domain Integration Types
 
-export interface IIntegrations {
-  airtable?: AirtableConfig
-  notion?: NotionConfig
-  pappers?: PappersConfig
-  qonto?: QontoConfig
-  google?: {
-    mail?: GoogleMailConfig
-  }
-}
-```
-
-## 2. Adapter Layer
-
-### a. SPI Interface (`/adapter/spi/integrations/NewIntegrationSpi.ts`)
+Now, let's create the types for your integration. Create a new file in `src/domain/integrations/NewIntegration/NewIntegrationTypes.ts`:
 
 ```typescript
-import type {
-  INewIntegrationSpi,
-  NewIntegrationConfig,
-  NewApiMethodInput,
-  NewApiMethodOutput,
-} from '/domain/integrations/NewIntegration'
-
-export interface INewIntegrationIntegration {
-  getConfig: () => NewIntegrationConfig
-  newApiMethod: (data: NewApiMethodInput) => Promise<NewApiMethodOutput>
+// Example of error type for API responses
+export interface NewIntegrationError {
+  status: number
+  code: string
+  detail: string
 }
 
-export class NewIntegrationSpi implements INewIntegrationSpi {
-  constructor(private _integration: INewIntegrationIntegration) {}
+// Example of a resource type
+export interface NewIntegrationResource {
+  id: string
+  name: string
+  created_at: string
+  // Add other resource-specific fields
+}
 
-  getConfig = () => {
-    return this._integration.getConfig()
-  }
-
-  newApiMethod = async (data: NewApiMethodInput) => {
-    return this._integration.newApiMethod(data)
-  }
+// Example of a create resource request type
+export interface NewIntegrationCreateResource {
+  name: string
+  // Add other required fields for creation
 }
 ```
 
-## 3. Infrastructure Layer
+## Step 3: Domain Integration SPI
 
-### a. Main Integration Implementation (`/infrastructure/integrations/common/newintegration/NewIntegrationIntegration.ts`)
+Create a new file in `src/domain/integrations/NewIntegration/INewIntegrationSpi.ts` to define the domain interface for your integration:
 
 ```typescript
-import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
-import type {
-  NewApiMethodInput,
-  NewApiMethodOutput,
-  NewIntegrationConfig,
-} from '/domain/integrations/NewIntegration'
-import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
+import type { BaseSpi } from '../base'
 
-export class NewIntegrationIntegration implements INewIntegrationIntegration {
-  private _instance?: AxiosInstance
+export interface INewIntegrationSpi extends BaseSpi {
+  // Add your integration-specific methods here
+}
+```
 
-  constructor(private _config?: NewIntegrationConfig) {}
+## Step 4: Domain Integration
 
-  getConfig = (): NewIntegrationConfig => {
-    if (!this._config) {
-      throw new Error('NewIntegration config not set')
-    }
-    return this._config
-  }
+Create a new file in `src/domain/integrations/NewIntegration/index.ts` to implement the integration:
 
-  newApiMethod = async (data: NewApiMethodInput): Promise<NewApiMethodOutput> => {
-    const response = await this._api()
-      .post('/endpoint', data)
-      .catch((error) => {
-        return error.response
-      })
-    if (response.status === 201) {
-      return response.data
-    } else {
-      return this._throwError(response)
-    }
-  }
+```typescript
+import type { INewIntegrationSpi } from './INewIntegrationSpi'
+import { Integration } from '../base'
 
-  private _api = (): AxiosInstance => {
-    if (!this._instance) {
-      const config = this.getConfig()
-      const headers = {
-        Authorization: `Bearer ${config.accessToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      }
-      switch (config.environment) {
-        case 'sandbox':
-          this._instance = axios.create({
-            baseURL: 'https://api-sandbox.newintegration.com/',
-            headers,
-          })
-          break
-        case 'production':
-          this._instance = axios.create({
-            baseURL: 'https://api.newintegration.com/',
-            headers,
-          })
-          break
-      }
-    }
-    return this._instance
-  }
-
-  private _throwError = (response: AxiosResponse) => {
-    const { code, message, detail } = response.data.error
-    throw new Error(
-      `Error "${code}" fetching data from NewIntegration ${this.getConfig().environment} API: ${message}${detail ? ', ' + detail : ''}`
-    )
+export class NewIntegration extends Integration<INewIntegrationSpi> {
+  constructor(spi: INewIntegrationSpi) {
+    super(spi)
   }
 }
 ```
 
-### b. Mock Implementation (`/infrastructure/integrations/bun/mocks/newintegration/NewIntegrationIntegration.mock.ts`)
+## Step 5: Adapter Integration SPI
+
+Create a new file in `src/adapter/spi/integrations/NewIntegrationSpi.ts` to implement the adapter layer:
+
+```typescript
+import { BaseSpi } from './base'
+import type { INewIntegrationSpi } from '/domain/integrations/NewIntegration/INewIntegrationSpi'
+
+export type INewIntegrationIntegration = INewIntegrationSpi
+
+export class NewIntegrationSpi
+  extends BaseSpi<INewIntegrationIntegration>
+  implements INewIntegrationSpi
+{
+  constructor(integration: INewIntegrationIntegration) {
+    super(integration)
+  }
+}
+```
+
+## Step 6: Adapter Integration Index
+
+Update the `src/adapter/spi/integrations/index.ts` file to add the new integration to the integrations SPI index:
+
+```typescript
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+import type { INewIntegrationIntegration } from './NewIntegrationSpi'
+
+export interface Integrations {
+  newIntegration: (config?: NewIntegrationConfig) => INewIntegrationIntegration
+}
+```
+
+## Step 7: Adapter Integration Mapper
+
+Create a new file in `src/adapter/api/mappers/Integration/NewIntegrationMapper.ts` to create the integration mapper:
+
+```typescript
+import type { Integrations } from '/adapter/spi/integrations'
+import { NewIntegrationSpi } from '/adapter/spi/integrations/NewIntegrationSpi'
+import { NewIntegration } from '/domain/integrations/NewIntegration'
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+
+export class NewIntegrationMapper {
+  static toIntegration(integrations: Integrations, config?: NewIntegrationConfig): NewIntegration {
+    const driver = integrations.newIntegration(config)
+    const spi = new NewIntegrationSpi(driver)
+    return new NewIntegration(spi)
+  }
+}
+```
+
+## Step 8: Infrastructure Common Integration
+
+### With NPM Package (if available)
+
+Create a new file in `src/infrastructure/integrations/common/newIntegration/NewIntegrationIntegration.ts` to create the integration integration:
 
 ```typescript
 import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
-import type {
-  NewApiMethodInput,
-  NewApiMethodOutput,
-  NewIntegrationConfig,
-} from '/domain/integrations/NewIntegration'
-import { Database } from 'bun:sqlite'
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+// To be replaced with the actual NPM package corresponding to the integration
+import { NewIntegration, type NewIntegrationError } from 'newintegration'
 
-export class NewIntegrationIntegration implements INewIntegrationIntegration {
-  private db: Database
+export class NewIntegrationIntegration implements INotionIntegration {
+  private _newIntegration: NewIntegration
 
   constructor(private _config?: NewIntegrationConfig) {
-    this.db = new Database(_config?.accessToken ?? ':memory:')
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS ApiMethodTable (
-        id TEXT PRIMARY KEY,
-        // Add your table columns
-      )
-    `)
+    this._newIntegration = new NewIntegration(this._config)
   }
 
-  getConfig = (): NewIntegrationConfig => {
-    if (!this._config) {
-      throw new Error('NewIntegration config not set')
+  private _errorMapper = (error: NewIntegrationError): IntegrationResponseError => {
+    const { status, code, detail } = error
+    return {
+      error: { status, code, detail },
     }
-    return this._config
   }
 
-  newApiMethod = async (data: NewApiMethodInput): Promise<NewApiMethodOutput> => {
-    // Implement mock logic
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    try {
+      await this._newIntegration.get('/user')
+    } catch (error) {
+      if (error instanceof NewIntegrationError) {
+        return this._errorMapper(error)
+      }
+      throw error
+    }
   }
 }
 ```
 
-### c. Test Samples (`/infrastructure/integrations/bun/mocks/newintegration/NewIntegrationTestSamples.ts`)
+### With Axios (if NPM package is not available)
 
-```typescript
-import type { NewApiMethodInput } from '/domain/integrations/NewIntegration'
-
-export const newApiMethodSample: NewApiMethodInput = {
-  // Add sample data
-}
-```
-
-### d. Integration Tests (`/infrastructure/integrations/common/newintegration/NewIntegrationTest.ts`)
+Create a new file in `src/infrastructure/integrations/common/newIntegration/NewIntegrationIntegration.ts` to create the integration integration:
 
 ```typescript
 import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
+import type { IntegrationResponseError } from '/domain/integrations/base'
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
+
+export class NewIntegrationIntegration implements INewIntegrationIntegration {
+  private _instance: AxiosInstance
+
+  constructor(config?: NewIntegrationConfig) {
+    const headers = {
+      Authorization: `${config?.apiKey}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    }
+    this._instance = axios.create({
+      baseURL: 'https://newIntegration.com/api',
+      headers,
+    })
+  }
+
+  private _errorMapper = (
+    response: AxiosResponse<{ errors: NewIntegrationError[] }>
+  ): IntegrationResponseError => {
+    const [{ status, code, detail }] = response.data.errors
+    return {
+      error: { status, code, detail },
+    }
+  }
+
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    try {
+      await this._instance.get('/user')
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+}
+```
+
+## Step 9: Infrastructure Common Integration Test
+
+Create a new file in `src/infrastructure/integrations/common/newIntegration/NewIntegrationIntegrationTest.ts` to create the integration test:
+
+```typescript
+import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
 import type BunTester from 'bun:test'
 
-export function testNewIntegration(
+export function testNewIntegrationIntegration(
   { describe, it, expect }: typeof BunTester,
   integration: INewIntegrationIntegration
 ) {
-  describe('newApiMethod', () => {
-    it('should execute the API method', async () => {
-      // Add your test
+  describe('NewIntegrationIntegration', () => {
+    it('should be able to check configuration', async () => {
+      // WHEN
+      const result = await integration.checkConfiguration()
+
+      // THEN
+      expect(result).toBeUndefined()
     })
   })
 }
 ```
 
-### e. Update Integration Registry (`/infrastructure/integrations/common/index.ts`)
+## Step 10: Infrastructure Common Integration Test Runner
 
-Reference for pattern:
-
-```1:23:src/infrastructure/integrations/common/index.ts
-import type { Integrations } from '/adapter/spi/integrations'
-import type { NotionConfig } from '/domain/integrations/Notion'
-import type { PappersConfig } from '/domain/integrations/Pappers'
-import type { QontoConfig } from '/domain/integrations/Qonto'
-import type { NgrokConfig } from '/domain/integrations/Ngrok'
-import type { AirtableConfig } from '/domain/integrations/Airtable'
-import type { GoogleMailConfig } from '/domain/integrations/Google/GoogleMail'
-import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
-
-import { NotionIntegration } from './notion/NotionIntegration'
-import { PappersIntegration } from './pappers/PappersIntegration'
-import { QontoIntegration } from './qonto/QontoIntegration'
-import { NgrokIntegration } from './ngrok/NgrokIntegration'
-import { AirtableIntegration } from './airtable/AirtableIntegration'
-import { GoogleMailIntegration } from './google/mail/GoogleMailIntegration'
-import { GoCardlessIntegration } from './gocardless/GoCardlessIntegration'
-
-export const integrations: Integrations = {
-  airtable: (config?: AirtableConfig) => new AirtableIntegration(config),
-  notion: (config?: NotionConfig) => new NotionIntegration(config),
-  pappers: (config?: PappersConfig) => new PappersIntegration(config),
-  qonto: (config?: QontoConfig) => new QontoIntegration(config),
-
-```
-
-## 4. Testing
-
-### a. Integration Test Implementation (`/infrastructure/integrations/common/newintegration/NewIntegrationIntegration.test.ts`)
+Create a new file in `src/infrastructure/integrations/common/newIntegration/NewIntegration.test.ts` to create the integration test common:
 
 ```typescript
 import { NewIntegrationIntegration } from './NewIntegrationIntegration'
-import { testNewIntegration } from './NewIntegrationTest'
-import env from '../../../test/env'
+import { testNewIntegrationIntegration } from './NewIntegrationIntegrationTest'
+import env from '/infrastructure/test/env'
 import BunTester from 'bun:test'
 
-const { TEST_NEW_INTEGRATION_ACCESS_TOKEN } = env
+const { TEST_NEW_INTEGRATION_API_KEY } = env
 
 export const integration = new NewIntegrationIntegration({
-  environment: 'sandbox',
-  accessToken: TEST_NEW_INTEGRATION_ACCESS_TOKEN,
+  apiKey: TEST_NEW_INTEGRATION_API_KEY,
 })
 
-testNewIntegration(BunTester, integration)
+testNewIntegrationIntegration(BunTester, integration)
 ```
 
-This template follows the clean architecture pattern seen in the codebase and provides a structured approach to adding new integrations. Each new integration should implement these core components while adapting the specific API requirements and business logic needed.
+## Step 11: Infrastructure Bun Integration
+
+Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegration.mock.ts` to create the integration mock:
+
+```typescript
+import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
+import { Database } from 'bun:sqlite'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+
+export class NewIntegrationIntegration implements INewIntegrationIntegration {
+  private db: Database
+
+  constructor(private _config?: NewIntegrationConfig) {
+    this.db = new Database(_config?.apiKey ?? ':memory:')
+    this.db.run(`CREATE TABLE IF NOT EXISTS Users (apiKey TEXT PRIMARY KEY)`)
+  }
+
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    const user = this.db
+      .query<NewIntegrationConfig, string>('SELECT * FROM Users WHERE apiKey = ?')
+      .get(this._config?.apiKey ?? '')
+    if (!user) {
+      return { error: { status: 404, code: 'not_found', detail: 'User not found' } }
+    }
+    return undefined
+  }
+}
+```
+
+## Step 12: Infrastructure Bun Integration Test
+
+Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegration.test.ts` to create the integration test:
+
+```typescript
+import { NewIntegrationIntegration } from './NewIntegrationIntegration'
+import { testNewIntegrationIntegration } from './NewIntegrationIntegrationTest'
+import BunTester from 'bun:test'
+
+export const integration = new NewIntegrationIntegration({
+  apiKey: ':memory:',
+})
+
+testNewIntegrationIntegration(BunTester, integration)
+```
