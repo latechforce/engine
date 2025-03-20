@@ -1,18 +1,18 @@
 import type { IFetcherSpi } from '/domain/services/Fetcher'
 
 export interface IFetcherDriver {
-  get: (url: string) => Promise<Response>
-  post: (url: string, body?: object) => Promise<Response>
+  get: (url: string, options?: RequestInit) => Promise<Response>
+  post: (url: string, body?: object, options?: RequestInit) => Promise<Response>
 }
 
 export class FetcherSpi implements IFetcherSpi {
   constructor(private _driver: IFetcherDriver) {}
 
-  get = (url: string) => {
-    return this._driver.get(url)
+  get = (url: string, options?: RequestInit) => {
+    return this._driver.get(url, options)
   }
 
-  post = (url: string, body?: object) => {
-    return this._driver.post(url, body)
+  post = (url: string, body?: object, options?: RequestInit) => {
+    return this._driver.post(url, body, options)
   }
 }

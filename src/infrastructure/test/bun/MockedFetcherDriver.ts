@@ -8,26 +8,28 @@ export class MockedFetcherDriver implements IFetcherDriver {
     POST: {},
   }
 
-  get = async (url: string) => {
+  get = async (url: string, options: RequestInit = {}) => {
     const matchingUrl = Object.keys(this._endpoints.GET).find((endpoint) =>
       url.startsWith(endpoint)
     )
     if (matchingUrl) {
-      return this._endpoints.GET[matchingUrl](new Request(url, { method: 'GET' }))
+      return this._endpoints.GET[matchingUrl](new Request(url, { method: 'GET', ...options }))
     }
     throw new Error(`No matching endpoint found for URL: ${url}`)
   }
 
-  post = async (url: string, body: object = {}) => {
+  post = async (url: string, body: object = {}, options: RequestInit = {}) => {
     const matchingUrl = Object.keys(this._endpoints.POST).find((endpoint) =>
       url.startsWith(endpoint)
     )
     if (matchingUrl) {
+      const { headers = {}, ...rest } = options
       return this._endpoints.POST[matchingUrl](
         new Request(url, {
           method: 'POST',
           body: JSON.stringify(body),
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...headers },
+          ...rest,
         })
       )
     }

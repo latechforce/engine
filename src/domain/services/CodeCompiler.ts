@@ -92,11 +92,11 @@ export class CodeCompiler {
       },
     }
     const fetcher: CodeRunnerContextServicesFetcher = {
-      get: (url: string) => {
-        return this._services.fetcher.get(url)
+      get: (url: string, options?: RequestInit) => {
+        return this._services.fetcher.get(url, options)
       },
-      post: (url: string, body: object) => {
-        return this._services.fetcher.post(url, body)
+      post: (url: string, body: object, options?: RequestInit) => {
+        return this._services.fetcher.post(url, body, options)
       },
     }
     return { database, logger, fetcher }

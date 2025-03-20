@@ -68,7 +68,15 @@ mock.request(({ app, request, drivers }) => {
                 name: 'runJavascriptCode',
                 code: String(async function (context: CodeRunnerContext) {
                   const { fetcher } = context.services
-                  await fetcher.post('https://example.com/', { name: 'Joe' })
+                  await fetcher.post(
+                    'https://example.com/',
+                    { name: 'Joe' },
+                    {
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    }
+                  )
                 }),
               },
             ],

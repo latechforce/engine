@@ -9,7 +9,11 @@ describe('get', () => {
       return new Response('Test Response', { status: 200 })
     })
 
-    const response = await fetcher.get('https://example.com/api/test')
+    const response = await fetcher.get('https://example.com/api/test', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
     const text = await response.text()
 
     expect(response.status).toBe(200)
@@ -55,7 +59,15 @@ describe('post', () => {
     const fetcher = new MockedFetcherDriver()
 
     try {
-      await fetcher.post('https://example.com/api/unknown', { test: 'data' })
+      await fetcher.post(
+        'https://example.com/api/unknown',
+        { test: 'data' },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
     } catch (error) {
       expect(error).toBeInstanceOf(Error)
       if (error instanceof Error)
@@ -66,7 +78,7 @@ describe('post', () => {
   })
 })
 
-describe('addEndpoint', () => {
+describe('mock', () => {
   it('should execute an endpoint that starts with the given URL', async () => {
     const fetcher = new MockedFetcherDriver()
 
