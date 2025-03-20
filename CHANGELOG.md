@@ -1,3 +1,10 @@
+## [0.38.6](https://github.com/latechforce/engine/compare/v0.38.5...v0.38.6) (2025-03-20)
+
+
+### Bug Fixes
+
+* add options to fetcher driver ([b9d03d3](https://github.com/latechforce/engine/commit/b9d03d38715df8c30af4d8952518cfb939e0ceeb))
+
 ## [0.38.5](https://github.com/latechforce/engine/compare/v0.38.4...v0.38.5) (2025-03-20)
 
 
