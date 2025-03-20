@@ -1,3 +1,10 @@
+## [0.38.5](https://github.com/latechforce/engine/compare/v0.38.4...v0.38.5) (2025-03-20)
+
+
+### Bug Fixes
+
+* rename fetcher mock addEnpoint function ([c2039ec](https://github.com/latechforce/engine/commit/c2039ecab33dd313509eef565062ba6fedf768ad))
+
 ## [0.38.4](https://github.com/latechforce/engine/compare/v0.38.3...v0.38.4) (2025-03-19)
 
 
