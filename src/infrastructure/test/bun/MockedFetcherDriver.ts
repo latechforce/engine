@@ -34,7 +34,7 @@ export class MockedFetcherDriver implements IFetcherDriver {
     throw new Error(`No matching endpoint found for URL: ${url}`)
   }
 
-  addEndpoint = async (
+  mock = async (
     method: 'GET' | 'POST',
     url: string,
     endpoint: (request: Request) => Promise<Response>

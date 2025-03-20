@@ -8,7 +8,7 @@ mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should run a Typescript code with a fetcher get', async () => {
       // GIVEN
-      await drivers.fetcher.addEndpoint('GET', 'https://example.com/', async () => {
+      await drivers.fetcher.mock('GET', 'https://example.com/', async () => {
         return new Response('<html></html>', { status: 200 })
       })
       const config: Config = {
@@ -47,7 +47,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a fetcher post', async () => {
       // GIVEN
-      await drivers.fetcher.addEndpoint('POST', 'https://example.com/', async () => {
+      await drivers.fetcher.mock('POST', 'https://example.com/', async () => {
         return new Response(JSON.stringify({ name: 'John' }), { status: 200 })
       })
       const config: Config = {

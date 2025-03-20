@@ -5,7 +5,7 @@ describe('get', () => {
   it('should add and retrieve a GET endpoint', async () => {
     const fetcher = new MockedFetcherDriver()
 
-    fetcher.addEndpoint('GET', 'https://example.com/api/test', async () => {
+    fetcher.mock('GET', 'https://example.com/api/test', async () => {
       return new Response('Test Response', { status: 200 })
     })
 
@@ -35,7 +35,7 @@ describe('post', () => {
   it('should add and retrieve a POST endpoint', async () => {
     const fetcher = new MockedFetcherDriver()
 
-    fetcher.addEndpoint('POST', 'https://example.com/api/post', async (request) => {
+    fetcher.mock('POST', 'https://example.com/api/post', async (request) => {
       const requestBody = await request.json()
       return new Response(JSON.stringify({ received: requestBody }), {
         status: 201,
@@ -70,7 +70,7 @@ describe('addEndpoint', () => {
   it('should execute an endpoint that starts with the given URL', async () => {
     const fetcher = new MockedFetcherDriver()
 
-    fetcher.addEndpoint('GET', 'https://example.com/api/resource', async () => {
+    fetcher.mock('GET', 'https://example.com/api/resource', async () => {
       return new Response('Resource Found', { status: 200 })
     })
 
