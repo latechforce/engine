@@ -69,7 +69,7 @@
     "elysia": "^1.2.25",
     "fs-extra": "^11.3.0",
     "gocardless-nodejs": "^4.3.0",
-    "googleapis": "^146.0.0",
+    "googleapis": "^148.0.0",
     "handlebars": "^4.7.8",
     "htmx.org": "2.0.4",
     "lodash": "^4.17.21",
