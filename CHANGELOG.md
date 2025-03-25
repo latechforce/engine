@@ -1,3 +1,11 @@
+## [0.38.7](https://github.com/latechforce/engine/compare/v0.38.6...v0.38.7) (2025-03-25)
+
+
+### Bug Fixes
+
+* **CI:** set bun version in workflow ([ba1da53](https://github.com/latechforce/engine/commit/ba1da5350f74c1bf4744c618b577893795da938c))
+* revert @testcontainers/postgresql to v10.21 because of a breaking change in the v10.22 ([d8087d8](https://github.com/latechforce/engine/commit/d8087d89b3ab7bd2a672345fbcabfdc89b4f956c))
+
 ## [0.38.6](https://github.com/latechforce/engine/compare/v0.38.5...v0.38.6) (2025-03-20)
 
 
