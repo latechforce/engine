@@ -106,7 +106,7 @@
     "@storybook/react": "^8.6.9",
     "@storybook/react-vite": "^8.6.9",
     "@storybook/test": "^8.6.9",
-    "@testcontainers/postgresql": "^10.22.0",
+    "@testcontainers/postgresql": "10.21.0",
     "@types/bun": "latest",
     "@types/nodemailer": "^6.4.17",
     "@types/pdfkit": "^0.13.9",
