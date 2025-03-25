@@ -29,7 +29,6 @@ export function testNgrokIntegration(
 
       // THEN
       const response = await fetch(url).then((res) => res.text())
-      console.log(response)
       expect(response).toBe(message)
     })
   })
