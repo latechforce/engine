@@ -4,10 +4,7 @@ import { PostgreSQLDatabaseDriver } from './PostgreSQLDriver'
 let container: StartedPostgreSqlContainer
 
 export const setupPostgres = async (): Promise<string> => {
-  container = await new PostgreSqlContainer()
-    .withExposedPorts(5432)
-    .withStartupTimeout(60000)
-    .start()
+  container = await new PostgreSqlContainer().withExposedPorts(5432).start()
   const url = container.getConnectionUri()
   return url
 }
