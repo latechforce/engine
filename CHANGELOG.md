@@ -1,3 +1,10 @@
+## [0.38.12](https://github.com/latechforce/engine/compare/v0.38.11...v0.38.12) (2025-03-26)
+
+
+### Bug Fixes
+
+* **Theme:** import correct node_modules path ([c109e46](https://github.com/latechforce/engine/commit/c109e4672fdfd2e52984edb6aa13154d6acb6d65))
+
 ## [0.38.11](https://github.com/latechforce/engine/compare/v0.38.10...v0.38.11) (2025-03-26)
 
 
