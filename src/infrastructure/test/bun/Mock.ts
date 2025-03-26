@@ -175,7 +175,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         browserPage.newPage = async ({ headless = true }: { headless?: boolean } = {}) => {
           browser = await puppeteer.launch({
             args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
-            headless,
+            headless: process.env.CI ? true : headless,
           })
           const page = (await browser.newPage()) as PageHelpers
           page.waitForText = async (text: string) => {
