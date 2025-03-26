@@ -1,7 +1,7 @@
 {
   "name": "@latechforce/engine",
   "description": "Open-source backend generator from a simple configuration.",
-  "version": "0.38.7",
+  "version": "0.38.8",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",

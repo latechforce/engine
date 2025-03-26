@@ -1,3 +1,10 @@
+## [0.38.8](https://github.com/latechforce/engine/compare/v0.38.7...v0.38.8) (2025-03-26)
+
+
+### Bug Fixes
+
+* **Form:** export Form type ([5e9dd8d](https://github.com/latechforce/engine/commit/5e9dd8dc3a534d484cfc2d86c2049439fdd528f7))
+
 ## [0.38.7](https://github.com/latechforce/engine/compare/v0.38.6...v0.38.7) (2025-03-25)
 
 
