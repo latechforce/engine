@@ -59,6 +59,15 @@ export class Record<T extends RecordFields = RecordFields> {
     readonly updated_at?: Date
   ) {}
 
+  toJson(): PersistedRecordFields<T> {
+    return {
+      id: this.id,
+      created_at: this.created_at,
+      updated_at: this.updated_at,
+      fields: this.fields,
+    }
+  }
+
   getFieldAsString(key: string): string | null {
     const value = this.fields[key]
     if (!value) return null

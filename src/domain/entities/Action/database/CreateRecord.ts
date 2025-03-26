@@ -4,7 +4,7 @@ import type { Table } from '../../Table'
 import { Template, type TemplateObjectCompiled } from '/domain/services/Template'
 import { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type { IdGenerator } from '/domain/services/IdGenerator'
-import type { Record } from '/domain/entities/Record'
+import type { PersistedRecordFields } from '/domain/entities/Record'
 
 export interface CreateRecordDatabaseActionConfig extends BaseActionConfig {
   fields: { [key: string]: string }
@@ -21,7 +21,7 @@ export interface CreateRecordDatabaseActionEntities {
 }
 
 type Input = { [key: string]: string }
-type Output = { record: Record }
+type Output = PersistedRecordFields
 
 export class CreateRecordDatabaseAction extends BaseAction<Input, Output> {
   private _fields: TemplateObjectCompiled
@@ -46,6 +46,6 @@ export class CreateRecordDatabaseAction extends BaseAction<Input, Output> {
 
   protected _process = async (input: Input) => {
     const record = await this._table.db.insert(input)
-    return { record }
+    return record.toJson()
   }
 }

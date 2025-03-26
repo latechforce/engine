@@ -91,7 +91,7 @@ mock.request(({ app, request, integrations, drivers }) => {
                 table: notionTableSample3.name,
                 id: '{{trigger.id}}',
                 page: {
-                  '[App] Nom': '{{lookup trigger "[App] Nom" }} updated',
+                  '[App] Nom': '{{lookup trigger.properties "[App] Nom" }} updated',
                 },
               },
             ],
@@ -105,14 +105,9 @@ mock.request(({ app, request, integrations, drivers }) => {
       await table.insert({ '[App] Nom': 'App' })
 
       // THEN
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const {
-        rows: [history],
-      } = await drivers.database.query<{ actions_data: string }>(
-        'SELECT * FROM automations_histories_view'
-      )
+      const [history] = await drivers.database.waitForAutomationsHistories()
       const [actionData] = JSON.parse(history.actions_data)
-      expect(actionData.output['[App] Nom']).toBe('App updated')
+      expect(actionData.output.properties['[App] Nom']).toBe('App updated')
     })
   })
 })

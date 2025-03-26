@@ -1,5 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
+import type { CodeRunnerContext } from 'index'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -33,6 +34,30 @@ mock.page(({ app, browser, drivers }) => {
             {
               name: 'name',
               type: 'SingleLineText',
+            },
+          ],
+        },
+      ],
+      automations: [
+        {
+          name: 'user_created',
+          trigger: {
+            service: 'Database',
+            event: 'RecordCreated',
+            table: 'users',
+          },
+          actions: [
+            {
+              name: 'user_created',
+              service: 'Code',
+              action: 'RunTypescript',
+              input: {
+                name: '{{trigger.fields.name}}',
+              },
+              code: String(function (context: CodeRunnerContext<{ name: string }>) {
+                const { name } = context.inputData
+                return { message: `User created: ${name}` }
+              }),
             },
           ],
         },
@@ -122,6 +147,24 @@ mock.page(({ app, browser, drivers }) => {
       // THEN
       const html = await page.content()
       expect(html).toContain('Success')
+    })
+
+    it('should start an automation when the form is submitted', async () => {
+      // GIVEN
+      const { page } = browser
+      const { url } = await app.start(config)
+
+      // WHEN
+      await page.goto(`${url}/form/user`)
+
+      await page.type('input[name="name"]', 'John Doe')
+      await page.click('button[type="submit"]')
+      await page.waitForText('Success')
+
+      // THEN
+      const histories = await drivers.database.waitForAutomationsHistories()
+      expect(histories).toHaveLength(1)
+      expect(histories[0].actions_data).toContain('User created: John Doe')
     })
   })
 })

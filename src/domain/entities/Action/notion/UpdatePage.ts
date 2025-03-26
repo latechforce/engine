@@ -8,7 +8,10 @@ import {
 } from '/domain/services/Template'
 import type { Notion } from '/domain/integrations/Notion'
 import type { NotionTable } from '/domain/integrations/Notion/NotionTable'
-import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
+import type {
+  NotionTablePageJson,
+  NotionTablePageProperties,
+} from '/domain/integrations/Notion/NotionTablePage'
 
 type NotionTablePagePropertiesAsTemplateObjectCompiled =
   ConvertToTemplateObjectCompiled<NotionTablePageProperties>
@@ -30,7 +33,7 @@ export interface UpdatePageNotionActionIntegrations {
 }
 
 type Input = { id: string; page: NotionTablePagePropertiesAsTemplateObjectFilled }
-type Output = NotionTablePageProperties
+type Output = NotionTablePageJson
 
 export class UpdatePageNotionAction extends BaseAction<Input, Output> {
   private _id: Template
@@ -70,6 +73,6 @@ export class UpdatePageNotionAction extends BaseAction<Input, Output> {
   protected _process = async (input: Input) => {
     if (!this._table) throw new Error('Table not initialized')
     const page = await this._table.update(input.id, input.page)
-    return page.properties
+    return page.toJson()
   }
 }

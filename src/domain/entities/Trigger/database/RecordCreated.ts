@@ -34,6 +34,6 @@ export class RecordCreatedDatabaseTrigger implements BaseTrigger {
   onInsert = async (record: Record) => {
     const { queue } = this._services
     const { automation } = this._config
-    await queue.add(automation, record.fields)
+    await queue.add(automation, record.toJson())
   }
 }

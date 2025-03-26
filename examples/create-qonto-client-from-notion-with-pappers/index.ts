@@ -25,7 +25,7 @@ const config: Config = {
           name: 'getCompanyFromPappers',
           integration: 'Pappers',
           action: 'GetCompany',
-          siret: '{{lookup trigger "SIRET"}}',
+          siret: '{{lookup trigger.properties "SIRET"}}',
         },
         {
           name: 'createClientInQonto',
@@ -34,9 +34,9 @@ const config: Config = {
           client: {
             name: '{{getCompanyFromPappers.denomination}}',
             type: 'company',
-            email: '{{lookup trigger "Email de facturation"}}',
+            email: '{{lookup trigger.properties "Email de facturation"}}',
             vat_number: '{{getCompanyFromPappers.numero_tva_intracommunautaire}}',
-            tax_identification_number: '{{lookup trigger "SIRET"}}',
+            tax_identification_number: '{{lookup trigger.properties "SIRET"}}',
             currency: 'EUR',
             locale: 'FR',
             address: '{{getCompanyFromPappers.siege.adresse_ligne_1}}',

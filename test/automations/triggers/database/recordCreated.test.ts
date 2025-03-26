@@ -22,11 +22,9 @@ mock.request(({ app, drivers }) => {
       })
 
       // THEN
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      const { rows: histories } = await drivers.database.query(
-        'SELECT * FROM automations_histories_view'
-      )
+      const histories = await drivers.database.waitForAutomationsHistories()
       expect(histories).toHaveLength(1)
+      expect(histories[0].trigger_data).toContain('1')
     })
   })
 })

@@ -16,6 +16,14 @@ export type NotionTablePagePropertyValue =
   | null
   | undefined
 
+export type NotionTablePageJson = {
+  id: string
+  properties: NotionTablePageProperties
+  createdTime: Date
+  lastEditedTime: Date
+  archived: boolean
+}
+
 export class NotionTablePage<T extends NotionTablePageProperties = NotionTablePageProperties> {
   readonly id: string
 
@@ -27,6 +35,16 @@ export class NotionTablePage<T extends NotionTablePageProperties = NotionTablePa
     readonly archived: boolean
   ) {
     this.id = id.replace(/-/g, '')
+  }
+
+  toJson(): NotionTablePageJson {
+    return {
+      id: this.id,
+      properties: this.properties,
+      createdTime: this.createdTime,
+      lastEditedTime: this.lastEditedTime,
+      archived: this.archived,
+    }
   }
 
   getTitle(name: keyof T): string | null {

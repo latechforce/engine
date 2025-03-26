@@ -4,6 +4,7 @@ import type { EventDto } from '/adapter/spi/dtos/EventDto'
 import { PostgreSQLDatabaseDriver } from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriver'
 import type { ITable } from '/domain/interfaces/ITable'
 import { SQLiteDatabaseDriver } from './SQLiteDriver'
+import type { AutomationHistoryRecord } from '/domain/entities/Automation/History'
 
 export class DatabaseDriver implements IDatabaseDriver {
   private _db: PostgreSQLDatabaseDriver | SQLiteDatabaseDriver
@@ -52,5 +53,22 @@ export class DatabaseDriver implements IDatabaseDriver {
 
   setupTriggers = async (tables: string[]) => {
     await this._db.setupTriggers(tables)
+  }
+
+  waitForAutomationsHistories = async (count: number = 1) => {
+    let histories: AutomationHistoryRecord[] = []
+    let retry = 0
+    do {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const { rows } = await this.query<AutomationHistoryRecord>(
+        'SELECT * FROM automations_histories_view'
+      )
+      histories = rows
+      retry++
+    } while (histories.length < count && retry < 10)
+    if (histories.length < count) {
+      throw new Error('Automations histories not found')
+    }
+    return histories
   }
 }

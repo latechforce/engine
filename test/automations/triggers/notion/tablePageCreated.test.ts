@@ -24,10 +24,7 @@ mock.request(({ app, drivers, integrations }) => {
       })
 
       // THEN
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const { rows: histories } = await drivers.database.query(
-        'SELECT * FROM automations_histories_view'
-      )
+      const histories = await drivers.database.waitForAutomationsHistories()
       expect(histories).toHaveLength(1)
     })
 
@@ -49,12 +46,7 @@ mock.request(({ app, drivers, integrations }) => {
       })
 
       // THEN
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const {
-        rows: [history],
-      } = await drivers.database.query<{ trigger_data: string }>(
-        'SELECT * FROM automations_histories_view'
-      )
+      const [history] = await drivers.database.waitForAutomationsHistories()
       const triggerData = JSON.parse(history.trigger_data)
       expect(triggerData.createdTime).toBeDefined()
     })
@@ -77,14 +69,9 @@ mock.request(({ app, drivers, integrations }) => {
       })
 
       // THEN
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      const {
-        rows: [history],
-      } = await drivers.database.query<{ trigger_data: string }>(
-        'SELECT * FROM automations_histories_view'
-      )
+      const [history] = await drivers.database.waitForAutomationsHistories()
       const triggerData = JSON.parse(history.trigger_data)
-      expect(triggerData['Champs avec charactères (spéciaux)']).toBe('value')
+      expect(triggerData.properties['Champs avec charactères (spéciaux)']).toBe('value')
     })
   })
 })

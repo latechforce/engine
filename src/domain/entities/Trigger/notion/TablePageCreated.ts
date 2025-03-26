@@ -42,10 +42,6 @@ export class TablePageCreatedNotionTrigger implements BaseTrigger {
   onTablePageCreated = async (page: NotionTablePage) => {
     const { queue } = this._services
     const { automation } = this._config
-    await queue.add(automation, {
-      ...page.properties,
-      id: page.id,
-      createdTime: page.createdTime,
-    })
+    await queue.add(automation, page.toJson())
   }
 }
