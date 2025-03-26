@@ -1,85 +1,13 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should match the multiple attachment input snapshot 1`] = `
-"<div><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500
-            file:me-4 file:py-2 file:px-4
-            file:rounded-lg file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-600 file:text-white
-            hover:file:bg-blue-700
-            file:disabled:opacity-50 file:disabled:pointer-events-none
-            dark:text-neutral-500
-            dark:file:bg-blue-500
-            dark:hover:file:bg-blue-400
-          " name="name"/></label></div>"
-`;
+exports[`should match the multiple attachment input snapshot 1`] = `"<div><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500 file:me-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700 file:disabled:pointer-events-none file:disabled:opacity-50 dark:text-neutral-500 dark:file:bg-blue-500 dark:hover:file:bg-blue-400" name="name"/></label></div>"`;
 
-exports[`should match the multiple attachment input snapshot with label 1`] = `
-"<div><label for="name" class="block mb-2 text-sm text-gray-700 font-medium dark:text-white">Name</label><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500
-            file:me-4 file:py-2 file:px-4
-            file:rounded-lg file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-600 file:text-white
-            hover:file:bg-blue-700
-            file:disabled:opacity-50 file:disabled:pointer-events-none
-            dark:text-neutral-500
-            dark:file:bg-blue-500
-            dark:hover:file:bg-blue-400
-          " name="name"/></label></div>"
-`;
+exports[`should match the multiple attachment input snapshot with label 1`] = `"<div><label for="name" class="mb-2 block text-sm font-medium text-gray-700 dark:text-white">Name</label><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500 file:me-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700 file:disabled:pointer-events-none file:disabled:opacity-50 dark:text-neutral-500 dark:file:bg-blue-500 dark:hover:file:bg-blue-400" name="name"/></label></div>"`;
 
-exports[`should match the multiple attachment input snapshot with description 1`] = `
-"<div><p class="mb-2 text-sm text-gray-500 dark:text-neutral-500">Description</p><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500
-            file:me-4 file:py-2 file:px-4
-            file:rounded-lg file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-600 file:text-white
-            hover:file:bg-blue-700
-            file:disabled:opacity-50 file:disabled:pointer-events-none
-            dark:text-neutral-500
-            dark:file:bg-blue-500
-            dark:hover:file:bg-blue-400
-          " name="name"/></label></div>"
-`;
+exports[`should match the multiple attachment input snapshot with description 1`] = `"<div><p class="mb-2 text-sm text-gray-500 dark:text-neutral-500">Description</p><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500 file:me-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700 file:disabled:pointer-events-none file:disabled:opacity-50 dark:text-neutral-500 dark:file:bg-blue-500 dark:hover:file:bg-blue-400" name="name"/></label></div>"`;
 
-exports[`should match the multiple attachment input snapshot with label and description 1`] = `
-"<div><label for="name" class="block mb-2 text-sm text-gray-700 font-medium dark:text-white">Name</label><p class="mb-2 text-sm text-gray-500 dark:text-neutral-500">Description</p><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500
-            file:me-4 file:py-2 file:px-4
-            file:rounded-lg file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-600 file:text-white
-            hover:file:bg-blue-700
-            file:disabled:opacity-50 file:disabled:pointer-events-none
-            dark:text-neutral-500
-            dark:file:bg-blue-500
-            dark:hover:file:bg-blue-400
-          " name="name"/></label></div>"
-`;
+exports[`should match the multiple attachment input snapshot with label and description 1`] = `"<div><label for="name" class="mb-2 block text-sm font-medium text-gray-700 dark:text-white">Name</label><p class="mb-2 text-sm text-gray-500 dark:text-neutral-500">Description</p><label class="block"><span class="sr-only"></span><input type="file" multiple="" class="block w-full text-sm text-gray-500 file:me-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700 file:disabled:pointer-events-none file:disabled:opacity-50 dark:text-neutral-500 dark:file:bg-blue-500 dark:hover:file:bg-blue-400" name="name"/></label></div>"`;
 
-exports[`should match the multiple attachment input snapshot with placeholder 1`] = `
-"<div><label class="block"><span class="sr-only">Placeholder</span><input type="file" multiple="" class="block w-full text-sm text-gray-500
-            file:me-4 file:py-2 file:px-4
-            file:rounded-lg file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-600 file:text-white
-            hover:file:bg-blue-700
-            file:disabled:opacity-50 file:disabled:pointer-events-none
-            dark:text-neutral-500
-            dark:file:bg-blue-500
-            dark:hover:file:bg-blue-400
-          " name="name"/></label></div>"
-`;
+exports[`should match the multiple attachment input snapshot with placeholder 1`] = `"<div><label class="block"><span class="sr-only">Placeholder</span><input type="file" multiple="" class="block w-full text-sm text-gray-500 file:me-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700 file:disabled:pointer-events-none file:disabled:opacity-50 dark:text-neutral-500 dark:file:bg-blue-500 dark:hover:file:bg-blue-400" name="name"/></label></div>"`;
 
-exports[`should match the multiple attachment input snapshot with required 1`] = `
-"<div><label class="block"><span class="sr-only"></span><input type="file" multiple="" required="" class="block w-full text-sm text-gray-500
-            file:me-4 file:py-2 file:px-4
-            file:rounded-lg file:border-0
-            file:text-sm file:font-semibold
-            file:bg-blue-600 file:text-white
-            hover:file:bg-blue-700
-            file:disabled:opacity-50 file:disabled:pointer-events-none
-            dark:text-neutral-500
-            dark:file:bg-blue-500
-            dark:hover:file:bg-blue-400
-          " name="name"/></label></div>"
-`;
+exports[`should match the multiple attachment input snapshot with required 1`] = `"<div><label class="block"><span class="sr-only"></span><input type="file" multiple="" required="" class="block w-full text-sm text-gray-500 file:me-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700 file:disabled:pointer-events-none file:disabled:opacity-50 dark:text-neutral-500 dark:file:bg-blue-500 dark:hover:file:bg-blue-400" name="name"/></label></div>"`;
