@@ -1,3 +1,10 @@
+## [0.38.9](https://github.com/latechforce/engine/compare/v0.38.8...v0.38.9) (2025-03-26)
+
+
+### Bug Fixes
+
+* **Form:** add green test: should start an automation when the form is submitted ([f3d1b57](https://github.com/latechforce/engine/commit/f3d1b57d03d89c40bca9be9ab0793d1f134a7852))
+
 ## [0.38.8](https://github.com/latechforce/engine/compare/v0.38.7...v0.38.8) (2025-03-26)
 
 
