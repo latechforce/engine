@@ -1,3 +1,11 @@
+## [0.38.13](https://github.com/latechforce/engine/compare/v0.38.12...v0.38.13) (2025-03-26)
+
+
+### Bug Fixes
+
+* tailwindcss config ([4fba7b0](https://github.com/latechforce/engine/commit/4fba7b0aab88ef222cb0321f0c5cee5dd6cfb31d))
+* update package ([1fb3708](https://github.com/latechforce/engine/commit/1fb37086cdc8c7fd16ba811faeaf3ef277854e46))
+
 ## [0.38.12](https://github.com/latechforce/engine/compare/v0.38.11...v0.38.12) (2025-03-26)
 
 
