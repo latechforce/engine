@@ -159,29 +159,37 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     tests({ app, drivers, integrations, request })
   }
 
-  page(tests: (helpers: AppHelpers<D, I> & { browser: { page: PageHelpers } }) => void): void {
+  page(
+    tests: (
+      helpers: AppHelpers<D, I> & {
+        browser: { newPage: (options?: { headless?: boolean }) => Promise<PageHelpers> }
+      }
+    ) => void
+  ): void {
     const { app, drivers, integrations } = this._prepare()
     let browser: Browser | undefined
     const browserPage: any = {}
 
     this.tester.describe('ui', () => {
       this.tester.beforeEach(async () => {
-        browser = await puppeteer.launch({
-          args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
-          headless: true,
-        })
-        const page = (await browser.newPage()) as PageHelpers
-        page.waitForText = async (text: string) => {
-          await page.waitForFunction(
-            (text: string) => document.body.innerText.includes(text),
-            {},
-            text
-          )
+        browserPage.newPage = async ({ headless = true }: { headless?: boolean } = {}) => {
+          browser = await puppeteer.launch({
+            args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+            headless,
+          })
+          const page = (await browser.newPage()) as PageHelpers
+          page.waitForText = async (text: string) => {
+            await page.waitForFunction(
+              (text: string) => document.body.innerText.includes(text),
+              {},
+              text
+            )
+          }
+          await page.setViewport({ width: 1280, height: 800 })
+          page.setDefaultNavigationTimeout(30000)
+          page.setDefaultTimeout(30000)
+          return page
         }
-        await page.setViewport({ width: 1280, height: 800 })
-        page.setDefaultNavigationTimeout(30000)
-        page.setDefaultTimeout(30000)
-        browserPage.page = page
       })
 
       this.tester.afterEach(async () => {

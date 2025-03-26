@@ -26,7 +26,7 @@ mock.page(({ app, browser }) => {
   describe('on open page', () => {
     it('should return link to script.js', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const { url } = await app.start(config)
 
       // WHEN
@@ -39,7 +39,7 @@ mock.page(({ app, browser }) => {
 
     it('should return the htmx js content', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const { url } = await app.start(config)
 
       // WHEN

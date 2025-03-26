@@ -37,7 +37,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should display the checkbox input', async () => {
       // GIVEN
       const { url } = await app.start(config)
-      const { page } = browser
+      const page = await browser.newPage()
 
       // WHEN
       await page.goto(`${url}/form/path`)
@@ -48,7 +48,7 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should create a record with a checkbox input', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const table = drivers.database.table(config.tables![0])
       const { url } = await app.start(config)
 

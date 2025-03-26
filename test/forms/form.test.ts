@@ -67,7 +67,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should display the form title', async () => {
       // GIVEN
       const { url } = await app.start(config)
-      const { page } = browser
+      const page = await browser.newPage()
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -80,7 +80,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should display the form description', async () => {
       // GIVEN
       const { url } = await app.start(config)
-      const { page } = browser
+      const page = await browser.newPage()
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -92,7 +92,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should display the form inputs', async () => {
       // GIVEN
       const { url } = await app.start(config)
-      const { page } = browser
+      const page = await browser.newPage()
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -104,7 +104,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should display the form submit button', async () => {
       // GIVEN
       const { url } = await app.start(config)
-      const { page } = browser
+      const page = await browser.newPage()
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -115,7 +115,7 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should create a record when the form is submitted', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const table = drivers.database.table(config.tables![0])
       const { url } = await app.start(config)
 
@@ -134,7 +134,7 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should display a success message when the form is submitted', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const { url } = await app.start(config)
 
       // WHEN
@@ -151,7 +151,7 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should start an automation when the form is submitted', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const { url } = await app.start(config)
 
       // WHEN

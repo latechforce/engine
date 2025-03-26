@@ -35,10 +35,18 @@ mock.page(({ app, browser }) => {
   })
 
   // WHEN
-  test('should have a provided page', async () => {
+  test('should have a provided headless page', async () => {
     // THEN
-    expect(browser.page).toBeDefined()
-    expect(browser.page.goto).toBeDefined()
+    expect(browser.newPage).toBeDefined()
+    const page = await browser.newPage()
+    expect(page.goto).toBeDefined()
+  })
+
+  // WHEN
+  test('should have a provided non-headless page', async () => {
+    // THEN
+    const page = await browser.newPage({ headless: false })
+    expect(page.goto).toBeDefined()
   })
 })
 

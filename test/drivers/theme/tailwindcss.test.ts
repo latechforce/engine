@@ -26,7 +26,7 @@ mock.page(({ app, browser }) => {
   describe('on open page', () => {
     it('should return link to style.css', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const { url } = await app.start(config)
 
       // WHEN
@@ -39,7 +39,7 @@ mock.page(({ app, browser }) => {
 
     it('should return the tailwind css content', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const { url } = await app.start(config)
 
       // WHEN
@@ -48,11 +48,12 @@ mock.page(({ app, browser }) => {
       // THEN
       const css = await response?.text()
       expect(css).toContain('tailwindcss')
+      expect(css).toContain('w-full')
     })
 
     it('should return link to style.js', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const { url } = await app.start(config)
 
       // WHEN
@@ -65,7 +66,7 @@ mock.page(({ app, browser }) => {
 
     it('should return the preline js content', async () => {
       // GIVEN
-      const { page } = browser
+      const page = await browser.newPage()
       const { url } = await app.start(config)
 
       // WHEN
