@@ -55,7 +55,7 @@ export class AppMapper {
     const fetcher = FetcherMapper.toService(drivers)
     const cron = CronMapper.toService(drivers)
     const client = ClientMapper.toService(drivers, { server })
-    const theme = ThemeMapper.toService(drivers, { server }, config.theme)
+    const theme = ThemeMapper.toService(drivers, { server, logger }, config.theme)
     const schemaValidator = SchemaValidatorMapper.toService(drivers)
     const templateCompiler = TemplateCompilerMapper.toService(drivers)
     const database = DatabaseMapper.toService(drivers, config.database, {

@@ -16,7 +16,7 @@ export class ThemeDriver implements IThemeDriver {
     }
   }
 
-  buildCss = async (): Promise<string> => {
+  buildCss = async (): Promise<{ output: string; logs: string }> => {
     return this._driver.buildCss()
   }
 

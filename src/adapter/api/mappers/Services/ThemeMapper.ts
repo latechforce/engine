@@ -10,6 +10,6 @@ export class ThemeMapper {
   ): Theme {
     const driver = drivers.theme(config)
     const spi = new ThemeSpi(driver)
-    return new Theme(spi, services)
+    return new Theme(spi, services, config)
   }
 }

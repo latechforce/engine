@@ -59,13 +59,13 @@ export class DatabaseDriver implements IDatabaseDriver {
     let histories: AutomationHistoryRecord[] = []
     let retry = 0
     do {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 100))
       const { rows } = await this.query<AutomationHistoryRecord>(
         'SELECT * FROM automations_histories_view'
       )
       histories = rows
       retry++
-    } while (histories.length < count && retry < 10)
+    } while (histories.length < count && retry < 100)
     if (histories.length < count) {
       throw new Error('Automations histories not found')
     }
