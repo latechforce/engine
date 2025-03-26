@@ -22,6 +22,7 @@ export type { ITable as Table } from '/domain/interfaces/ITable'
 export type { IField as Field } from '/domain/interfaces/IField'
 export type { FilterConfig as Filter } from '/domain/entities/Filter'
 export type { IBucket as Bucket } from '/domain/interfaces/IBucket'
+export type { IForm as Form } from '/domain/interfaces/IForm'
 export type {
   DatabaseConfig as Database,
   LoggersConfig as Loggers,
