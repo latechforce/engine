@@ -6,6 +6,7 @@ import type { CheckboxInput } from '/domain/components/Form/Input/CheckboxInput'
 import type { SingleSelectInput } from '/domain/components/Form/Input/SingleSelectInput'
 import type { MultipleAttachmentInput } from '/domain/components/Form/Input/MultipleAttachmentInput'
 import type { Field } from '/domain/entities/Field'
+import type { LongTextInput } from '/domain/components/Form/Input/LongTextInput'
 
 export interface InputConfig {
   field: string
@@ -17,6 +18,7 @@ export interface InputConfig {
 
 export interface InputComponents {
   SingleLineTextInput: SingleLineTextInput
+  LongTextInput: LongTextInput
   CheckboxInput: CheckboxInput
   SingleSelectInput: SingleSelectInput
   MultipleAttachmentInput: MultipleAttachmentInput
@@ -35,12 +37,20 @@ export class Input {
     const field = table.fields.find((field) => field.name === config.field)
     if (!field) throw new Error(`Field ${config.field} not found`)
     this.field = field
-    const { SingleLineTextInput, CheckboxInput, SingleSelectInput, MultipleAttachmentInput } =
-      this._components
+    const {
+      SingleLineTextInput,
+      CheckboxInput,
+      SingleSelectInput,
+      MultipleAttachmentInput,
+      LongTextInput,
+    } = this._components
     const { type } = this.field.config
     switch (type) {
       case 'SingleLineText':
         this.InputComponent = SingleLineTextInput
+        break
+      case 'LongText':
+        this.InputComponent = LongTextInput
         break
       case 'Checkbox':
         this.InputComponent = CheckboxInput

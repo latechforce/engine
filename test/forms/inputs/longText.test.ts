@@ -15,8 +15,8 @@ mock.page(({ app, browser, drivers }) => {
           table: 'table',
           inputs: [
             {
-              field: 'single_line_text',
-              label: 'Single Line Text',
+              field: 'long_text',
+              label: 'Long Text',
             },
           ],
         },
@@ -26,15 +26,15 @@ mock.page(({ app, browser, drivers }) => {
           name: 'table',
           fields: [
             {
-              name: 'single_line_text',
-              type: 'SingleLineText',
+              name: 'long_text',
+              type: 'LongText',
             },
           ],
         },
       ],
     }
 
-    it('should display the text input', async () => {
+    it('should display the textarea', async () => {
       // GIVEN
       const { url } = await app.start(config)
       const { page } = browser
@@ -43,25 +43,27 @@ mock.page(({ app, browser, drivers }) => {
       await page.goto(`${url}/form/path`)
 
       // THEN
-      expect(page.content()).resolves.toContain('Single Line Text')
+      expect(page.content()).resolves.toContain('Long Text')
     })
 
-    it('should create a record with a text input', async () => {
+    it('should create a record with a textarea', async () => {
       // GIVEN
       const { page } = browser
       const table = drivers.database.table(config.tables![0])
       const { url } = await app.start(config)
+      const longText =
+        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.'
 
       // WHEN
       await page.goto(`${url}/form/path`)
-      await page.type('input[name="single_line_text"]', 'John Doe')
+      await page.type('textarea[name="long_text"]', longText)
       await page.click('button[type="submit"]')
       await page.waitForText('submitted')
 
       // THEN
       const records = await table.list()
       expect(records).toHaveLength(1)
-      expect(records[0].fields.single_line_text).toBe('John Doe')
+      expect(records[0].fields.long_text).toBe(longText)
     })
   })
 })

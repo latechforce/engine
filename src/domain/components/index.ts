@@ -5,12 +5,13 @@ import type { SingleLineTextInput } from './Form/Input/SingleLineTextInput'
 import type { SingleSelectInput } from './Form/Input/SingleSelectInput'
 import type { Page } from './Page'
 import type { MultipleAttachmentInput } from './Form/Input/MultipleAttachmentInput'
-
+import type { LongTextInput } from './Form/Input/LongTextInput'
 export type Components = {
   Page: Page
   Form: Form
   FormResponse: FormResponse
   SingleLineTextInput: SingleLineTextInput
+  LongTextInput: LongTextInput
   SingleSelectInput: SingleSelectInput
   CheckboxInput: CheckboxInput
   MultipleAttachmentInput: MultipleAttachmentInput

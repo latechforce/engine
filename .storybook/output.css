@@ -1,11 +1,7 @@
-/*! tailwindcss v4.0.14 | MIT License | https://tailwindcss.com */
+/*! tailwindcss v4.0.17 | MIT License | https://tailwindcss.com */
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
-    --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-      "Courier New", monospace;
     --color-red-500: oklch(0.637 0.237 25.331);
     --color-blue-400: oklch(0.707 0.165 254.624);
     --color-blue-500: oklch(0.623 0.214 259.815);
@@ -44,18 +40,6 @@
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    --default-font-family: var(--font-sans);
-    --default-font-feature-settings: var(--font-sans--font-feature-settings);
-    --default-font-variation-settings: var(
-      --font-sans--font-variation-settings
-    );
-    --default-mono-font-family: var(--font-mono);
-    --default-mono-font-feature-settings: var(
-      --font-mono--font-feature-settings
-    );
-    --default-mono-font-variation-settings: var(
-      --font-mono--font-variation-settings
-    );
   }
 }
 @layer base {
@@ -69,13 +53,11 @@
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
-    font-family: var( --default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" );
-    font-feature-settings: var(--default-font-feature-settings, normal);
-    font-variation-settings: var( --default-font-variation-settings, normal );
+    font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+      "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-feature-settings: initial;
+    font-variation-settings: initial;
     -webkit-tap-highlight-color: transparent;
-  }
-  body {
-    line-height: inherit;
   }
   hr {
     height: 0;
@@ -99,9 +81,10 @@
     font-weight: bolder;
   }
   code, kbd, samp, pre {
-    font-family: var( --default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace );
-    font-feature-settings: var( --default-mono-font-feature-settings, normal );
-    font-variation-settings: var( --default-mono-font-variation-settings, normal );
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+    font-feature-settings: initial;
+    font-variation-settings: initial;
     font-size: 1em;
   }
   small {
@@ -165,7 +148,11 @@
   }
   ::placeholder {
     opacity: 1;
-    color: color-mix(in oklab, currentColor 50%, transparent);
+  }
+  @supports (not (-webkit-appearance: -apple-pay-button))  or (contain-intrinsic-size: 1px) {
+    ::placeholder {
+      color: color-mix(in oklab, currentColor 50%, transparent);
+    }
   }
   textarea {
     resize: vertical;
@@ -363,9 +350,6 @@
   .shrink-0 {
     flex-shrink: 0;
   }
-  .grow {
-    flex-grow: 1;
-  }
   .border-collapse {
     border-collapse: collapse;
   }
@@ -415,11 +399,6 @@
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
   }
-  .truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -456,6 +435,9 @@
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
+  }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
@@ -710,6 +692,11 @@
       }
     }
   }
+  .sm\:px-4 {
+    @media (width >= 40rem) {
+      padding-inline: calc(var(--spacing) * 4);
+    }
+  }
   .sm\:px-6 {
     @media (width >= 40rem) {
       padding-inline: calc(var(--spacing) * 6);
@@ -930,6 +917,40 @@
   .dark\:\[\&\:\:-webkit-scrollbar-track\]\:bg-neutral-700 {
     &:where(.dark, .dark *) {
       &::-webkit-scrollbar-track {
+        background-color: var(--color-neutral-700);
+      }
+    }
+  }
+  .\[\&amp\;\:\:-webkit-scrollbar\]\:w-2 {
+    &amp;::-webkit-scrollbar {
+      width: calc(var(--spacing) * 2);
+    }
+  }
+  .\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:rounded-full {
+    &amp;::-webkit-scrollbar-thumb {
+      border-radius: calc(infinity * 1px);
+    }
+  }
+  .\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:bg-gray-300 {
+    &amp;::-webkit-scrollbar-thumb {
+      background-color: var(--color-gray-300);
+    }
+  }
+  .dark\:\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:bg-neutral-500 {
+    &:where(.dark, .dark *) {
+      &amp;::-webkit-scrollbar-thumb {
+        background-color: var(--color-neutral-500);
+      }
+    }
+  }
+  .\[\&amp\;\:\:-webkit-scrollbar-track\]\:bg-gray-100 {
+    &amp;::-webkit-scrollbar-track {
+      background-color: var(--color-gray-100);
+    }
+  }
+  .dark\:\[\&amp\;\:\:-webkit-scrollbar-track\]\:bg-neutral-700 {
+    &:where(.dark, .dark *) {
+      &amp;::-webkit-scrollbar-track {
         background-color: var(--color-neutral-700);
       }
     }

@@ -6,12 +6,14 @@ import { FormResponse } from './Form/FormResponse'
 import { CheckboxInput } from './Form/Input/CheckboxInput'
 import { SingleSelectInput } from './Form/Input/SingleSelectInput'
 import { MultipleAttachmentInput } from './Form/Input/MultipleAttachmentInput'
+import { LongTextInput } from './Form/Input/LongTextInput'
 
 export const components: Components = {
   Page,
   Form,
   FormResponse,
   SingleLineTextInput,
+  LongTextInput,
   SingleSelectInput,
   CheckboxInput,
   MultipleAttachmentInput,
