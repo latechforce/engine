@@ -1,3 +1,10 @@
+## [0.38.10](https://github.com/latechforce/engine/compare/v0.38.9...v0.38.10) (2025-03-26)
+
+
+### Bug Fixes
+
+* **Form:** add green test: should create a record with a textarea ([c1519d2](https://github.com/latechforce/engine/commit/c1519d2948b9ac36194cb3210e69ecfe4e16fec0))
+
 ## [0.38.9](https://github.com/latechforce/engine/compare/v0.38.8...v0.38.9) (2025-03-26)
 
 
