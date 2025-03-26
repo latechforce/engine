@@ -1,3 +1,12 @@
+## [0.38.11](https://github.com/latechforce/engine/compare/v0.38.10...v0.38.11) (2025-03-26)
+
+
+### Bug Fixes
+
+* **Mock:** add green test: should have a provided non-headless page ([f35e513](https://github.com/latechforce/engine/commit/f35e5134871172c1a3b04617f6ed830b01a33d0b))
+* **Mock:** add headless always true for CI ([eb17437](https://github.com/latechforce/engine/commit/eb17437503c1437972e3f1fca1977db20f293fc0))
+* **Theme:** add tailwindcss style import from npm package ([4fd2765](https://github.com/latechforce/engine/commit/4fd2765c7240cd274512cc595818fa97512b4297))
+
 ## [0.38.10](https://github.com/latechforce/engine/compare/v0.38.9...v0.38.10) (2025-03-26)
 
 ### Bug Fixes
