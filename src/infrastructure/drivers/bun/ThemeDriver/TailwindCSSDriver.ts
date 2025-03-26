@@ -13,7 +13,7 @@ export class TailwindCSSDriver implements IThemeDriver {
       @import "tailwindcss";
       @import "preline/variants.css";
       
-      @source "../node_modules/@latechforce/engine/dist"
+      @source "../node_modules/@latechforce/engine/dist";
 
       @plugin "@tailwindcss/forms";
     `
