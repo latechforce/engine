@@ -1,131 +1,113 @@
 ## [0.38.10](https://github.com/latechforce/engine/compare/v0.38.9...v0.38.10) (2025-03-26)
 
-
 ### Bug Fixes
 
-* **Form:** add green test: should create a record with a textarea ([c1519d2](https://github.com/latechforce/engine/commit/c1519d2948b9ac36194cb3210e69ecfe4e16fec0))
+- **Form:** add green test: should create a record with a textarea ([c1519d2](https://github.com/latechforce/engine/commit/c1519d2948b9ac36194cb3210e69ecfe4e16fec0))
 
 ## [0.38.9](https://github.com/latechforce/engine/compare/v0.38.8...v0.38.9) (2025-03-26)
 
-
 ### Bug Fixes
 
-* **Form:** add green test: should start an automation when the form is submitted ([f3d1b57](https://github.com/latechforce/engine/commit/f3d1b57d03d89c40bca9be9ab0793d1f134a7852))
+- **Form:** add green test: should start an automation when the form is submitted ([f3d1b57](https://github.com/latechforce/engine/commit/f3d1b57d03d89c40bca9be9ab0793d1f134a7852))
 
 ## [0.38.8](https://github.com/latechforce/engine/compare/v0.38.7...v0.38.8) (2025-03-26)
 
-
 ### Bug Fixes
 
-* **Form:** export Form type ([5e9dd8d](https://github.com/latechforce/engine/commit/5e9dd8dc3a534d484cfc2d86c2049439fdd528f7))
+- **Form:** export Form type ([5e9dd8d](https://github.com/latechforce/engine/commit/5e9dd8dc3a534d484cfc2d86c2049439fdd528f7))
 
 ## [0.38.7](https://github.com/latechforce/engine/compare/v0.38.6...v0.38.7) (2025-03-25)
 
-
 ### Bug Fixes
 
-* **CI:** set bun version in workflow ([ba1da53](https://github.com/latechforce/engine/commit/ba1da5350f74c1bf4744c618b577893795da938c))
-* revert @testcontainers/postgresql to v10.21 because of a breaking change in the v10.22 ([d8087d8](https://github.com/latechforce/engine/commit/d8087d89b3ab7bd2a672345fbcabfdc89b4f956c))
+- **CI:** set bun version in workflow ([ba1da53](https://github.com/latechforce/engine/commit/ba1da5350f74c1bf4744c618b577893795da938c))
+- revert @testcontainers/postgresql to v10.21 because of a breaking change in the v10.22 ([d8087d8](https://github.com/latechforce/engine/commit/d8087d89b3ab7bd2a672345fbcabfdc89b4f956c))
 
 ## [0.38.6](https://github.com/latechforce/engine/compare/v0.38.5...v0.38.6) (2025-03-20)
 
-
 ### Bug Fixes
 
-* add options to fetcher driver ([b9d03d3](https://github.com/latechforce/engine/commit/b9d03d38715df8c30af4d8952518cfb939e0ceeb))
+- add options to fetcher driver ([b9d03d3](https://github.com/latechforce/engine/commit/b9d03d38715df8c30af4d8952518cfb939e0ceeb))
 
 ## [0.38.5](https://github.com/latechforce/engine/compare/v0.38.4...v0.38.5) (2025-03-20)
 
-
 ### Bug Fixes
 
-* rename fetcher mock addEnpoint function ([c2039ec](https://github.com/latechforce/engine/commit/c2039ecab33dd313509eef565062ba6fedf768ad))
+- rename fetcher mock addEnpoint function ([c2039ec](https://github.com/latechforce/engine/commit/c2039ecab33dd313509eef565062ba6fedf768ad))
 
 ## [0.38.4](https://github.com/latechforce/engine/compare/v0.38.3...v0.38.4) (2025-03-19)
 
-
 ### Bug Fixes
 
-* **package:** update test timeout ([1be0d4e](https://github.com/latechforce/engine/commit/1be0d4e68b1ecf8520ae45d0170df1f8fa28b507))
+- **package:** update test timeout ([1be0d4e](https://github.com/latechforce/engine/commit/1be0d4e68b1ecf8520ae45d0170df1f8fa28b507))
 
 ## [0.38.3](https://github.com/latechforce/engine/compare/v0.38.2...v0.38.3) (2025-03-18)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** add green test: should run a Typescript code with a database read file by id' ([00c2cb9](https://github.com/latechforce/engine/commit/00c2cb9f80d8aac26a538e247383bc143c9b42b2))
+- **RunTypescript:** add green test: should run a Typescript code with a database read file by id' ([00c2cb9](https://github.com/latechforce/engine/commit/00c2cb9f80d8aac26a538e247383bc143c9b42b2))
 
 ## [0.38.2](https://github.com/latechforce/engine/compare/v0.38.1...v0.38.2) (2025-03-18)
 
-
 ### Bug Fixes
 
-* typescript error ([6c3658a](https://github.com/latechforce/engine/commit/6c3658afb3244a9a7791c5d35a8c29cb0f6f8e4e))
-* update LICENSE with Fair Code ([f851d71](https://github.com/latechforce/engine/commit/f851d71b490519bd8655111a65be5705f97a26ba))
+- typescript error ([6c3658a](https://github.com/latechforce/engine/commit/6c3658afb3244a9a7791c5d35a8c29cb0f6f8e4e))
+- update LICENSE with Fair Code ([f851d71](https://github.com/latechforce/engine/commit/f851d71b490519bd8655111a65be5705f97a26ba))
 
 ## [0.38.1](https://github.com/latechforce/engine/compare/v0.38.0...v0.38.1) (2025-03-15)
 
-
 ### Bug Fixes
 
-* **Form:** add success message after submission ([331224e](https://github.com/latechforce/engine/commit/331224e125e1f07ded9be3ec6008414fc6e99cee))
-* **Form:** update snapshots ([ad292c4](https://github.com/latechforce/engine/commit/ad292c4edbc8647aee7c214bf7fab4e99844201a))
+- **Form:** add success message after submission ([331224e](https://github.com/latechforce/engine/commit/331224e125e1f07ded9be3ec6008414fc6e99cee))
+- **Form:** update snapshots ([ad292c4](https://github.com/latechforce/engine/commit/ad292c4edbc8647aee7c214bf7fab4e99844201a))
 
 # [0.38.0](https://github.com/latechforce/engine/compare/v0.37.68...v0.38.0) (2025-03-14)
 
-
 ### Bug Fixes
 
-* **Form:** update ui ([f1bcff2](https://github.com/latechforce/engine/commit/f1bcff2c2205bc37cd1d24a4b1c7a80993a2b93d))
-* **test:** refactor test API for ui testing with puppeteer ([f361935](https://github.com/latechforce/engine/commit/f3619356a4ea890ed9b3930890fcd6a8537f3211))
-
+- **Form:** update ui ([f1bcff2](https://github.com/latechforce/engine/commit/f1bcff2c2205bc37cd1d24a4b1c7a80993a2b93d))
+- **test:** refactor test API for ui testing with puppeteer ([f361935](https://github.com/latechforce/engine/commit/f3619356a4ea890ed9b3930890fcd6a8537f3211))
 
 ### Features
 
-* **Form:** add green tests ([b158b67](https://github.com/latechforce/engine/commit/b158b670c7261f17d5ebb2a9b5069eda6bbfc00f))
+- **Form:** add green tests ([b158b67](https://github.com/latechforce/engine/commit/b158b670c7261f17d5ebb2a9b5069eda6bbfc00f))
 
 ## [0.37.68](https://github.com/latechforce/engine/compare/v0.37.67...v0.37.68) (2025-03-12)
 
-
 ### Bug Fixes
 
-* **package:** update ([cbf2d7c](https://github.com/latechforce/engine/commit/cbf2d7c3f6dbc3e32c54e48331c99042d32b37ad))
+- **package:** update ([cbf2d7c](https://github.com/latechforce/engine/commit/cbf2d7c3f6dbc3e32c54e48331c99042d32b37ad))
 
 ## [0.37.67](https://github.com/latechforce/engine/compare/v0.37.66...v0.37.67) (2025-02-26)
 
-
 ### Bug Fixes
 
-* **Qonto:** create real pdf for mock ([db850cb](https://github.com/latechforce/engine/commit/db850cbb72ce261730e20c28903d822c91365823))
+- **Qonto:** create real pdf for mock ([db850cb](https://github.com/latechforce/engine/commit/db850cbb72ce261730e20c28903d822c91365823))
 
 ## [0.37.66](https://github.com/latechforce/engine/compare/v0.37.65...v0.37.66) (2025-02-26)
 
-
 ### Bug Fixes
 
-* **Qonto:** update green test: should fetch an attachment url ([e72bc30](https://github.com/latechforce/engine/commit/e72bc3038b289ccd231f48350a61b99e6adedc7b))
+- **Qonto:** update green test: should fetch an attachment url ([e72bc30](https://github.com/latechforce/engine/commit/e72bc3038b289ccd231f48350a61b99e6adedc7b))
 
 ## [0.37.65](https://github.com/latechforce/engine/compare/v0.37.64...v0.37.65) (2025-02-26)
 
-
 ### Bug Fixes
 
-* **Qonto:** export type QontoAttachment ([52e4544](https://github.com/latechforce/engine/commit/52e4544e605f0b3250d48fad1349229585d50cc2))
+- **Qonto:** export type QontoAttachment ([52e4544](https://github.com/latechforce/engine/commit/52e4544e605f0b3250d48fad1349229585d50cc2))
 
 ## [0.37.64](https://github.com/latechforce/engine/compare/v0.37.63...v0.37.64) (2025-02-26)
 
-
 ### Bug Fixes
 
-* **Qonto:** add green test: should retrieve an attachment ([419900f](https://github.com/latechforce/engine/commit/419900f1c26f1c10d3ea21134f815e1715ffb4ba))
+- **Qonto:** add green test: should retrieve an attachment ([419900f](https://github.com/latechforce/engine/commit/419900f1c26f1c10d3ea21134f815e1715ffb4ba))
 
 ## [0.37.63](https://github.com/latechforce/engine/compare/v0.37.62...v0.37.63) (2025-02-26)
 
-
 ### Bug Fixes
 
-* **package:** update ([70b0f24](https://github.com/latechforce/engine/commit/70b0f24c941d21ce42a22d37c911a469df8d0012))
-* **RunTypescript:** add @types/fs-extra independancies❯ git push ([7628a16](https://github.com/latechforce/engine/commit/7628a16a90d6f3bdb490fdeb9074de7caba406ed))
+- **package:** update ([70b0f24](https://github.com/latechforce/engine/commit/70b0f24c941d21ce42a22d37c911a469df8d0012))
+- **RunTypescript:** add @types/fs-extra independancies❯ git push ([7628a16](https://github.com/latechforce/engine/commit/7628a16a90d6f3bdb490fdeb9074de7caba406ed))
 
 ## [0.37.62](https://github.com/latechforce/engine/compare/v0.37.61...v0.37.62) (2025-02-26)
 

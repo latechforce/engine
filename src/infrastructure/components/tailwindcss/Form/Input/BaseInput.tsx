@@ -6,7 +6,7 @@ type InputLabelProps = {
 
 export const InputLabel = ({ label, field, required = false }: InputLabelProps) => {
   return (
-    <label htmlFor={field} className="block mb-2 text-sm text-gray-700 font-medium dark:text-white">
+    <label htmlFor={field} className="mb-2 block text-sm font-medium text-gray-700 dark:text-white">
       {label}
       {required ? <span className="text-red-500"> *</span> : null}
     </label>

@@ -2,8 +2,8 @@ import type { FormProps } from '/domain/components/Form'
 
 export const FormContainer = ({ children }: React.PropsWithChildren) => {
   return (
-    <div className="w-full h-screen bg-gray-50 dark:bg-neutral-800">
-      <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">{children}</div>
+    <div className="h-screen w-full bg-gray-50 dark:bg-neutral-800">
+      <div className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">{children}</div>
     </div>
   )
 }
@@ -18,7 +18,7 @@ export const Form = ({
 }: FormProps) => {
   return (
     <FormContainer>
-      <div id={`${id}-form-container`} className="max-w-xl mx-auto">
+      <div id={`${id}-form-container`} className="mx-auto max-w-xl">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-800 sm:text-4xl dark:text-white">{title}</h1>
           {description ? (
@@ -32,7 +32,7 @@ export const Form = ({
               <div className="mt-6 grid">
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                  className="inline-flex w-full items-center justify-center gap-x-2 rounded-lg border border-transparent bg-blue-600 px-4 py-3 text-sm font-medium text-white hover:bg-blue-700 focus:bg-blue-700 focus:outline-hidden disabled:pointer-events-none disabled:opacity-50"
                 >
                   {submitLabel}
                 </button>
