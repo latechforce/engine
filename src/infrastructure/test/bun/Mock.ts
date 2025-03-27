@@ -97,6 +97,7 @@ type AppHelpers<D extends DriverType[], I extends IntegrationType[]> = {
 
 type PageHelpers = Page & {
   waitForText: (text: string) => Promise<void>
+  waitForTimeout: (ms: number) => Promise<void>
 }
 
 export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []> {
@@ -184,6 +185,9 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
               {},
               text
             )
+          }
+          page.waitForTimeout = async (ms: number) => {
+            await new Promise((resolve) => setTimeout(resolve, ms))
           }
           await page.setViewport({ width: 1280, height: 800 })
           page.setDefaultNavigationTimeout(30000)

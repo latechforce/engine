@@ -7,6 +7,8 @@ export const LongTextInput = ({
   description,
   placeholder,
   required,
+  minLength,
+  maxLength,
 }: LongTextInputProps) => {
   return (
     <InputContext label={label} description={description} field={field} required={required}>
@@ -18,6 +20,8 @@ export const LongTextInput = ({
         rows={3}
         placeholder={placeholder}
         data-hs-textarea-auto-height=""
+        minLength={minLength}
+        maxLength={maxLength}
       ></textarea>
     </InputContext>
   )

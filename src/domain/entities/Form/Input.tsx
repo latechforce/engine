@@ -14,6 +14,8 @@ export interface InputConfig {
   description?: string
   placeholder?: string
   required?: boolean
+  minLength?: number
+  maxLength?: number
 }
 
 export interface InputComponents {
@@ -72,7 +74,7 @@ export class Input {
   }
 
   render = (): React.ReactElement => {
-    const { field, label, description, placeholder, required } = this.config
+    const { field, label, description, placeholder, required, minLength, maxLength } = this.config
     const Input = this.InputComponent
     return (
       <Input
@@ -82,6 +84,8 @@ export class Input {
         placeholder={placeholder}
         required={required}
         options={this.options}
+        minLength={minLength}
+        maxLength={maxLength}
       />
     )
   }
