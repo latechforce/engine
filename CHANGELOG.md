@@ -1,3 +1,10 @@
+# [0.39.0](https://github.com/latechforce/engine/compare/v0.38.14...v0.39.0) (2025-03-27)
+
+
+### Features
+
+* **env:** add green test: should start an app with default env variables ([b346699](https://github.com/latechforce/engine/commit/b3466992ed8ade09f6b97325779bd329102babea))
+
 ## [0.38.14](https://github.com/latechforce/engine/compare/v0.38.13...v0.38.14) (2025-03-27)
 
 
