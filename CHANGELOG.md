@@ -1,3 +1,12 @@
+## [0.38.14](https://github.com/latechforce/engine/compare/v0.38.13...v0.38.14) (2025-03-27)
+
+
+### Bug Fixes
+
+* **CI:** add catch to browser closing ([58de382](https://github.com/latechforce/engine/commit/58de382970b216a1fe2e97e4af5757c752be4cf2))
+* **CI:** add isMainBrowserConnected management ([76a370e](https://github.com/latechforce/engine/commit/76a370eaba6cb433d7a62fe956448765a08967a0))
+* **Form:** add green test: should submit the form with a text limited to maxLength ([043cb75](https://github.com/latechforce/engine/commit/043cb75f171fa63de16640d8a5f0ac5a57c62139))
+
 ## [0.38.13](https://github.com/latechforce/engine/compare/v0.38.12...v0.38.13) (2025-03-26)
 
 ### Bug Fixes
