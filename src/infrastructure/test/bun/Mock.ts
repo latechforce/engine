@@ -169,6 +169,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
   ): void {
     const { app, drivers, integrations } = this._prepare()
     let mainBrowser: Browser | undefined
+    let isMainBrowserConnected = false
     let browsers: Browser[] = []
     let pages: Page[] = []
     const browserPage: any = {}
@@ -179,20 +180,22 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
           headless: true,
         })
-        mainBrowser.on('disconnected', () => {})
+        isMainBrowserConnected = true
+        mainBrowser.on('disconnected', () => {
+          isMainBrowserConnected = false
+        })
         browsers.push(mainBrowser)
       })
 
       this.tester.beforeEach(async () => {
         browserPage.newPage = async (options?: { headless?: boolean }) => {
           let page: PageHelpers
-          if (options) {
+          if (options || !isMainBrowserConnected) {
             const { headless = true } = options ?? {}
             const newBrowser = await puppeteer.launch({
               args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
               headless: process.env.CI ? true : headless,
             })
-            newBrowser.on('disconnected', () => {})
             browsers.push(newBrowser)
             page = (await newBrowser.newPage()) as PageHelpers
           } else {
@@ -218,12 +221,12 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
       })
 
       this.tester.afterEach(async () => {
-        await Promise.all(pages.map((page) => page.close().catch(() => {})))
+        await Promise.all(pages.map((page) => page.close()))
         pages = []
       })
 
       this.tester.afterAll(async () => {
-        await Promise.all(browsers.map((browser) => browser.close().catch(() => {})))
+        await Promise.all(browsers.map((browser) => browser.close()))
         browsers = []
       })
 
