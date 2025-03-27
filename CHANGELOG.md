@@ -1,3 +1,10 @@
+## [0.39.2](https://github.com/latechforce/engine/compare/v0.39.1...v0.39.2) (2025-03-27)
+
+
+### Bug Fixes
+
+* ensure tmpDir for theme ([cc80fdc](https://github.com/latechforce/engine/commit/cc80fdcc7de17a1056bffed5d6c004193da62f54))
+
 ## [0.39.1](https://github.com/latechforce/engine/compare/v0.39.0...v0.39.1) (2025-03-27)
 
 
