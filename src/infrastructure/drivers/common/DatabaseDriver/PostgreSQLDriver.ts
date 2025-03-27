@@ -20,7 +20,10 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
     const NUMERIC_OID = 1700
     const pool = new pg.Pool({
       connectionString: url,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+      ssl:
+        process.env.NODE_ENV === 'production' && !process.env.CI
+          ? { rejectUnauthorized: false }
+          : false,
     })
     pool.on('error', (error) => {
       console.error(error)
