@@ -19,6 +19,7 @@ export class TailwindCSSDriver implements IThemeDriver {
     `
     const inputPath = join(tmpDir, 'input.css')
     const outputPath = join(tmpDir, 'output.css')
+    await fs.ensureDir(tmpDir)
     await fs.writeFile(inputPath, input)
     const { stderr } = await $`bunx @tailwindcss/cli -i ${inputPath} -o ${outputPath}`.quiet()
     const output = await fs.readFile(outputPath, 'utf8')
