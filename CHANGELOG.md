@@ -1,3 +1,11 @@
+## [0.39.1](https://github.com/latechforce/engine/compare/v0.39.0...v0.39.1) (2025-03-27)
+
+
+### Bug Fixes
+
+* **App:** add version in starter log ([fdaf211](https://github.com/latechforce/engine/commit/fdaf21132ed8227155c9af06fb75cba570ceb035))
+* **Config:** update green test: should start an app with default env variables ([526f91e](https://github.com/latechforce/engine/commit/526f91e6e5b2e814f6ddb2220010206623f943d0))
+
 # [0.39.0](https://github.com/latechforce/engine/compare/v0.38.14...v0.39.0) (2025-03-27)
 
 
