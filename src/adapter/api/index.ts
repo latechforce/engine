@@ -66,21 +66,21 @@ export default class {
 
   private _fillEnv = (config: unknown): unknown => {
     if (Array.isArray(config)) {
-      return config.map((item) => this._fillEnv(item as Config))
+      return config.map((item) => this._fillEnv(item))
     }
 
     if (typeof config !== 'object' || config === null) {
       return config
     }
 
-    const result = { ...config } as Record<string, unknown>
+    const result = { ...config } as unknown as Record<string, unknown>
     for (const [key, value] of Object.entries(config)) {
       if (typeof value === 'string' && value.startsWith('{{env.') && value.endsWith('}}')) {
-        const content = value.slice(6, -2) // Remove {{env. and }}
+        const content = value.slice(6, -2)
         const [envKey, ...defaultValueParts] = content.split(' ')
         const defaultValue =
           defaultValueParts.length > 0
-            ? defaultValueParts.join(' ').replace(/^"|"$/g, '') // Remove surrounding quotes
+            ? defaultValueParts.join(' ').replace(/^"|"$/g, '')
             : undefined
 
         if (envKey in this._env) {
@@ -91,7 +91,7 @@ export default class {
           throw new Error(`Environment variable ${envKey} not found and no default value provided`)
         }
       } else if (typeof value === 'object' && value !== null) {
-        result[key] = this._fillEnv(value as Config)
+        result[key] = this._fillEnv(value)
       } else {
         result[key] = value
       }
