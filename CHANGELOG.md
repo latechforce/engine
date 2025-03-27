@@ -1,26 +1,23 @@
 ## [0.38.13](https://github.com/latechforce/engine/compare/v0.38.12...v0.38.13) (2025-03-26)
 
-
 ### Bug Fixes
 
-* tailwindcss config ([4fba7b0](https://github.com/latechforce/engine/commit/4fba7b0aab88ef222cb0321f0c5cee5dd6cfb31d))
-* update package ([1fb3708](https://github.com/latechforce/engine/commit/1fb37086cdc8c7fd16ba811faeaf3ef277854e46))
+- tailwindcss config ([4fba7b0](https://github.com/latechforce/engine/commit/4fba7b0aab88ef222cb0321f0c5cee5dd6cfb31d))
+- update package ([1fb3708](https://github.com/latechforce/engine/commit/1fb37086cdc8c7fd16ba811faeaf3ef277854e46))
 
 ## [0.38.12](https://github.com/latechforce/engine/compare/v0.38.11...v0.38.12) (2025-03-26)
 
-
 ### Bug Fixes
 
-* **Theme:** import correct node_modules path ([c109e46](https://github.com/latechforce/engine/commit/c109e4672fdfd2e52984edb6aa13154d6acb6d65))
+- **Theme:** import correct node_modules path ([c109e46](https://github.com/latechforce/engine/commit/c109e4672fdfd2e52984edb6aa13154d6acb6d65))
 
 ## [0.38.11](https://github.com/latechforce/engine/compare/v0.38.10...v0.38.11) (2025-03-26)
 
-
 ### Bug Fixes
 
-* **Mock:** add green test: should have a provided non-headless page ([f35e513](https://github.com/latechforce/engine/commit/f35e5134871172c1a3b04617f6ed830b01a33d0b))
-* **Mock:** add headless always true for CI ([eb17437](https://github.com/latechforce/engine/commit/eb17437503c1437972e3f1fca1977db20f293fc0))
-* **Theme:** add tailwindcss style import from npm package ([4fd2765](https://github.com/latechforce/engine/commit/4fd2765c7240cd274512cc595818fa97512b4297))
+- **Mock:** add green test: should have a provided non-headless page ([f35e513](https://github.com/latechforce/engine/commit/f35e5134871172c1a3b04617f6ed830b01a33d0b))
+- **Mock:** add headless always true for CI ([eb17437](https://github.com/latechforce/engine/commit/eb17437503c1437972e3f1fca1977db20f293fc0))
+- **Theme:** add tailwindcss style import from npm package ([4fd2765](https://github.com/latechforce/engine/commit/4fd2765c7240cd274512cc595818fa97512b4297))
 
 ## [0.38.10](https://github.com/latechforce/engine/compare/v0.38.9...v0.38.10) (2025-03-26)
 
