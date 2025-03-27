@@ -88,6 +88,7 @@ export interface CodeRunnerContextPackages {
   puppeteer: typeof import('puppeteer').default
   path: typeof import('path')
   fsExtra: typeof import('fs-extra')
+  slugify: typeof import('slugify').default
 }
 
 export interface CodeRunnerContext<I extends object = {}> {

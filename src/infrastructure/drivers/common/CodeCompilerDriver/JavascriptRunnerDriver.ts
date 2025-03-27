@@ -22,6 +22,7 @@ import papaparse from 'papaparse'
 import puppeteer from 'puppeteer'
 import path from 'path'
 import fsExtra from 'fs-extra'
+import slugify from 'slugify'
 
 export const packages: CodeRunnerContextPackages = {
   xml2js,
@@ -38,6 +39,7 @@ export const packages: CodeRunnerContextPackages = {
   puppeteer,
   path,
   fsExtra,
+  slugify,
 }
 
 const globalContext = {
