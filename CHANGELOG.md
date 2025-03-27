@@ -1,3 +1,12 @@
+## [0.39.3](https://github.com/latechforce/engine/compare/v0.39.2...v0.39.3) (2025-03-27)
+
+
+### Bug Fixes
+
+* add rejectUnauthorized: false in pg ([97db8f3](https://github.com/latechforce/engine/commit/97db8f327edd45cfbc013b5048563a5ef03b9ffd))
+* pg ssl ([e7735f2](https://github.com/latechforce/engine/commit/e7735f2c112100018f10b51078bb0dab272c5012))
+* pg ssl ([b3cc69f](https://github.com/latechforce/engine/commit/b3cc69fa7b55df25b913f3fd95c62796381d42f6))
+
 ## [0.39.2](https://github.com/latechforce/engine/compare/v0.39.1...v0.39.2) (2025-03-27)
 
 
