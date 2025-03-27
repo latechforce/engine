@@ -1,7 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
 import { getAutomationConfig } from '/test/config'
-import type { AutomationHistoryRecord } from '/domain/entities/Automation/History'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -16,9 +15,7 @@ mock.request(({ app, drivers }) => {
       await new Promise((resolve) => setTimeout(resolve, 3000))
 
       // THEN
-      const { rows: histories } = await drivers.database.query<AutomationHistoryRecord>(
-        'SELECT * FROM automations_histories_view'
-      )
+      const histories = await drivers.database.waitForAutomationsHistories()
       expect(histories.length).toBeGreaterThan(0)
       expect(histories[0].status).toBe('succeed')
     })
