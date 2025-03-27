@@ -84,7 +84,7 @@ export class StoppedApp extends BaseApp {
         startedApp.onClose('UNCAUGHT_REJECTION')
       })
     }
-    logger.info(`🚀 app "${this.name}" started at ${startedApp.url}`)
+    logger.info(`🚀 app "${this.name}" version ${this.version} started at ${startedApp.url}`)
     logger.info(`🔗 Open API documentation available at ${startedApp.url}/api/docs`)
     return startedApp
   }
