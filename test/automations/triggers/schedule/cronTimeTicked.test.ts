@@ -13,7 +13,7 @@ mock.request(({ app, drivers }) => {
       await app.start(config)
 
       // WHEN
-      await new Promise((resolve) => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 3000))
 
       // THEN
       const { rows: histories } = await drivers.database.query<AutomationHistoryRecord>(

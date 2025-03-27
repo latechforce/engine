@@ -118,7 +118,7 @@ const fullConfig: Config = {
       trigger: {
         service: 'Schedule',
         event: 'CronTimeTicked',
-        cronTime: '* * * * * *',
+        cronTime: '*/2 * * * * *',
       },
       actions: [],
     },
