@@ -18,7 +18,12 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
   constructor(config: DatabaseConfig) {
     const { url } = config
     const NUMERIC_OID = 1700
-    const pool = new pg.Pool({ connectionString: url })
+    const pool = new pg.Pool({
+      connectionString: url,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+    })
     pool.on('error', (error) => {
       console.error(error)
     })
