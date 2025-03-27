@@ -66,6 +66,42 @@ describe('start', () => {
     expect(success).toBe(true)
     await startedApp.stop()
   })
+
+  it('should start an app with env variables', async () => {
+    // GIVEN
+    const config: Config = {
+      name: 'App',
+      version: '1.0.0',
+      server: { port: '{{env.PORT}}' },
+      loggers: [],
+    }
+    const app = new MockedApp({ env: { PORT: '6543' } })
+
+    // WHEN
+    const startedApp = await app.start(config)
+
+    // THEN
+    expect(startedApp.url).toBe('http://localhost:6543')
+    await startedApp.stop()
+  })
+
+  it('should start an app with default env variables', async () => {
+    // GIVEN
+    const config: Config = {
+      name: 'App',
+      version: '1.0.0',
+      server: { port: '{{env.PORT "6543"}}' },
+      loggers: [],
+    }
+    const app = new MockedApp()
+
+    // WHEN
+    const startedApp = await app.start(config)
+
+    // THEN
+    expect(startedApp.url).toBe('http://localhost:6543')
+    await startedApp.stop()
+  })
 })
 
 describe('stop', () => {

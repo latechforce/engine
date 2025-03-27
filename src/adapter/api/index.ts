@@ -15,7 +15,8 @@ export default class {
   constructor(
     private _drivers: Drivers,
     private _integrations: Integrations,
-    private _components: Components
+    private _components: Components,
+    private _env: Record<string, string | undefined>
   ) {
     this._schemaValidator = SchemaValidatorMapper.toService(_drivers)
   }
@@ -58,7 +59,43 @@ export default class {
   }
 
   private _validateOrThrow = async (config: unknown): Promise<StoppedApp> => {
-    const configWithValidSchema = this._validateSchemaOrThrow(config)
+    const configWithEnv = this._fillEnv(config)
+    const configWithValidSchema = this._validateSchemaOrThrow(configWithEnv)
     return this._validateConfigOrThrow(configWithValidSchema)
+  }
+
+  private _fillEnv = (config: unknown): unknown => {
+    if (Array.isArray(config)) {
+      return config.map((item) => this._fillEnv(item as Config))
+    }
+
+    if (typeof config !== 'object' || config === null) {
+      return config
+    }
+
+    const result = { ...config } as Record<string, unknown>
+    for (const [key, value] of Object.entries(config)) {
+      if (typeof value === 'string' && value.startsWith('{{env.') && value.endsWith('}}')) {
+        const content = value.slice(6, -2) // Remove {{env. and }}
+        const [envKey, ...defaultValueParts] = content.split(' ')
+        const defaultValue =
+          defaultValueParts.length > 0
+            ? defaultValueParts.join(' ').replace(/^"|"$/g, '') // Remove surrounding quotes
+            : undefined
+
+        if (envKey in this._env) {
+          result[key] = this._env[envKey]
+        } else if (defaultValue !== undefined) {
+          result[key] = defaultValue
+        } else {
+          throw new Error(`Environment variable ${envKey} not found and no default value provided`)
+        }
+      } else if (typeof value === 'object' && value !== null) {
+        result[key] = this._fillEnv(value as Config)
+      } else {
+        result[key] = value
+      }
+    }
+    return result
   }
 }
