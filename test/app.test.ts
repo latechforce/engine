@@ -72,16 +72,18 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      description: '{{ env.DESCRIPTION }}',
       server: { port: '{{env.PORT}}' },
       loggers: [],
     }
-    const app = new MockedApp({ env: { PORT: '6543' } })
+    const app = new MockedApp({ env: { PORT: '6543', DESCRIPTION: 'App' } })
 
     // WHEN
     const startedApp = await app.start(config)
 
     // THEN
     expect(startedApp.url).toBe('http://localhost:6543')
+    expect(startedApp.description).toBe('App')
     await startedApp.stop()
   })
 
@@ -89,7 +91,7 @@ describe('start', () => {
     // GIVEN
     const config: Config = {
       name: 'App',
-      version: '1.0.0',
+      version: '{{ env.VERSION "1.0.0" }}',
       server: { port: '{{env.PORT "6543"}}' },
       loggers: [],
     }
@@ -100,6 +102,7 @@ describe('start', () => {
 
     // THEN
     expect(startedApp.url).toBe('http://localhost:6543')
+    expect(startedApp.version).toBe('1.0.0')
     await startedApp.stop()
   })
 })

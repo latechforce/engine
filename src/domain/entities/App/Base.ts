@@ -17,6 +17,8 @@ import type { Theme } from '/domain/services/Theme'
 import type { Client } from '/domain/services/Client'
 export interface AppConfig {
   name: string
+  version: string
+  description?: string
   integrations?: IIntegrations
 }
 
@@ -49,6 +51,8 @@ type Status = 'stopped' | 'starting' | 'started' | 'stopping'
 
 export class BaseApp {
   public name: string
+  public version: string
+  public description?: string
   public logger: Logger
   protected _status: Status = 'stopped'
 
@@ -58,8 +62,10 @@ export class BaseApp {
     protected _entities: AppEntities,
     protected _integrations: AppIntegrations
   ) {
-    const { name } = _config
+    const { name, version, description } = _config
     this.name = name
+    this.version = version
+    this.description = description
     this.logger = _services.logger
   }
 

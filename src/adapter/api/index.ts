@@ -75,8 +75,8 @@ export default class {
 
     const result = { ...config } as unknown as Record<string, unknown>
     for (const [key, value] of Object.entries(config)) {
-      if (typeof value === 'string' && value.startsWith('{{env.') && value.endsWith('}}')) {
-        const content = value.slice(6, -2)
+      if (typeof value === 'string' && value.match(/^{{\s*env\./)) {
+        const content = value.replace(/^{{\s*env\.|}}$/g, '').trim()
         const [envKey, ...defaultValueParts] = content.split(' ')
         const defaultValue =
           defaultValueParts.length > 0

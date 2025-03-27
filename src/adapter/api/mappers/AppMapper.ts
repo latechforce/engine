@@ -139,6 +139,8 @@ export class AppMapper {
     return new StoppedApp(
       {
         name: appName,
+        version: appVersion,
+        description: appDescription,
         integrations: config.integrations,
       },
       {
