@@ -21,6 +21,7 @@ mock.page(({ app, browser }) => {
         fields: [],
       },
     ],
+    theme: { type: 'tailwindcss' },
   }
 
   describe('on open page', () => {

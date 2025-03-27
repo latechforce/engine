@@ -1,11 +1,11 @@
 import type { IThemeDriver } from '/adapter/spi/drivers/ThemeSpi'
-import type { ThemeConfig } from '/domain/services/Theme'
+import type { ThemeConfigTailwindCSS } from '/domain/services/Theme'
 import { $ } from 'bun'
 import fs from 'fs-extra'
 import { join } from 'path'
 
 export class TailwindCSSDriver implements IThemeDriver {
-  constructor(private _config: ThemeConfig) {}
+  constructor(private _config: ThemeConfigTailwindCSS) {}
 
   buildCss = async (): Promise<{ output: string; logs: string }> => {
     const { tmpDir = './tmp' } = this._config

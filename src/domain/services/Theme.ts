@@ -3,10 +3,16 @@ import { JsResponse } from '../entities/Response/Js'
 import type { Server } from './Server'
 import type { Logger } from './Logger'
 
-export interface ThemeConfig {
+export interface ThemeConfigNone {
+  type: 'none'
+}
+
+export interface ThemeConfigTailwindCSS {
   type: 'tailwindcss'
   tmpDir?: string
 }
+
+export type ThemeConfig = ThemeConfigNone | ThemeConfigTailwindCSS
 
 export interface ThemeServices {
   server: Server

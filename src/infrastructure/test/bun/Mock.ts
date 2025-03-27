@@ -168,17 +168,35 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     ) => void
   ): void {
     const { app, drivers, integrations } = this._prepare()
-    let browser: Browser | undefined
+    let mainBrowser: Browser | undefined
+    let browsers: Browser[] = []
+    let pages: Page[] = []
     const browserPage: any = {}
 
     this.tester.describe('ui', () => {
+      this.tester.beforeAll(async () => {
+        mainBrowser = await puppeteer.launch({
+          args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+          headless: true,
+        })
+        browsers.push(mainBrowser)
+      })
+
       this.tester.beforeEach(async () => {
-        browserPage.newPage = async ({ headless = true }: { headless?: boolean } = {}) => {
-          browser = await puppeteer.launch({
-            args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
-            headless: process.env.CI ? true : headless,
-          })
-          const page = (await browser.newPage()) as PageHelpers
+        browserPage.newPage = async (options?: { headless?: boolean }) => {
+          let page: PageHelpers
+          if (options) {
+            const { headless = true } = options ?? {}
+            const newBrowser = await puppeteer.launch({
+              args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+              headless: process.env.CI ? true : headless,
+            })
+            browsers.push(newBrowser)
+            page = (await newBrowser.newPage()) as PageHelpers
+          } else {
+            if (!mainBrowser) throw new Error('Browser not initialized')
+            page = (await mainBrowser.newPage()) as PageHelpers
+          }
           page.waitForText = async (text: string) => {
             await page.waitForFunction(
               (text: string) => document.body.innerText.includes(text),
@@ -192,12 +210,19 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           await page.setViewport({ width: 1280, height: 800 })
           page.setDefaultNavigationTimeout(30000)
           page.setDefaultTimeout(30000)
+          pages.push(page)
           return page
         }
       })
 
       this.tester.afterEach(async () => {
-        if (browser) await browser.close()
+        await Promise.all(pages.map((page) => page.close()))
+        pages = []
+      })
+
+      this.tester.afterAll(async () => {
+        await Promise.all(browsers.map((browser) => browser.close()))
+        browsers = []
       })
 
       tests({
@@ -324,6 +349,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         const { integrations, ...rest } = extendsConfig
         startedApp = await new MockedApp(options).start({
           loggers: [],
+          theme: { type: 'none' },
           ...config,
           ...rest,
           integrations: {

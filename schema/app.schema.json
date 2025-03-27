@@ -1895,7 +1895,20 @@
                 }
             ]
         },
-        "ThemeConfig": {
+        "ThemeConfigNone": {
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "const": "none",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "type": "object"
+        },
+        "ThemeConfigTailwindCSS": {
             "additionalProperties": false,
             "properties": {
                 "tmpDir": {
@@ -1989,7 +2002,14 @@
             "type": "array"
         },
         "theme": {
-            "$ref": "#/definitions/ThemeConfig"
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/ThemeConfigNone"
+                },
+                {
+                    "$ref": "#/definitions/ThemeConfigTailwindCSS"
+                }
+            ]
         },
         "tunnel": {
             "$ref": "#/definitions/TunnelNgrokConfig"
