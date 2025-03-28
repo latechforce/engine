@@ -1,3 +1,10 @@
+## [0.39.4](https://github.com/latechforce/engine/compare/v0.39.3...v0.39.4) (2025-03-28)
+
+
+### Bug Fixes
+
+* update postgres scalingo url to set sslmode to no-verify ([49f546f](https://github.com/latechforce/engine/commit/49f546f0f9ddd3e3a3e4a7dca02599ef5cfc6e9b))
+
 ## [0.39.3](https://github.com/latechforce/engine/compare/v0.39.2...v0.39.3) (2025-03-27)
 
 
