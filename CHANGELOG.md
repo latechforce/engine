@@ -1,3 +1,10 @@
+## [0.39.5](https://github.com/latechforce/engine/compare/v0.39.4...v0.39.5) (2025-03-28)
+
+
+### Bug Fixes
+
+* add engine package in starting logs ([5a05c24](https://github.com/latechforce/engine/commit/5a05c24e1d802856e837fdbb7c6d392cd1ee68ed))
+
 ## [0.39.4](https://github.com/latechforce/engine/compare/v0.39.3...v0.39.4) (2025-03-28)
 
 
