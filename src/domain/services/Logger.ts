@@ -1,5 +1,5 @@
 interface LoggerBaseConfig {
-  level?: 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly'
+  level?: string | 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly'
   silent?: boolean
 }
 
