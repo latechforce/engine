@@ -18,12 +18,13 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
   constructor(config: DatabaseConfig) {
     const { url } = config
     const NUMERIC_OID = 1700
+    const urlWithoutSslMode = url.includes('scalingo')
+      ? url.replace(/sslmode=[^&]+/, 'sslmode=no-verify')
+      : url
+    const isProduction = process.env.NODE_ENV === 'production' && !process.env.CI
     const pool = new pg.Pool({
-      connectionString: url,
-      ssl:
-        process.env.NODE_ENV === 'production' && !process.env.CI
-          ? { rejectUnauthorized: false }
-          : false,
+      connectionString: urlWithoutSslMode,
+      ssl: isProduction ? { rejectUnauthorized: false } : false,
     })
     pool.on('error', (error) => {
       console.error(error)
