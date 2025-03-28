@@ -7,6 +7,7 @@ import {
   type AppServices,
 } from './Base'
 import { StartedApp } from './Started'
+import pkg from '../../../../package.json'
 
 export class StoppedApp extends BaseApp {
   constructor(
@@ -84,7 +85,9 @@ export class StoppedApp extends BaseApp {
         startedApp.onClose('UNCAUGHT_REJECTION')
       })
     }
-    logger.info(`🚀 app "${this.name}" version ${this.version} started at ${startedApp.url}`)
+    logger.info(`🚀 App "${this.name}" started at ${startedApp.url}`)
+    logger.info(`⚙️ App config version: ${this.version}`)
+    logger.info(`⚙️ Engine version: ${pkg.version}`)
     logger.info(`🔗 Open API documentation available at ${startedApp.url}/api/docs`)
     return startedApp
   }
