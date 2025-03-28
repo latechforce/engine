@@ -1,3 +1,10 @@
+## [0.39.6](https://github.com/latechforce/engine/compare/v0.39.5...v0.39.6) (2025-03-28)
+
+
+### Bug Fixes
+
+* **Logger:** can dynamically set logging level ([f63307e](https://github.com/latechforce/engine/commit/f63307efb193edae77955d6ff1b87625920fce7c))
+
 ## [0.39.5](https://github.com/latechforce/engine/compare/v0.39.4...v0.39.5) (2025-03-28)
 
 
