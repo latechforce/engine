@@ -7,8 +7,6 @@ Important: don't integrate any specifics endpoints for each file of the new inte
 - [Nom]: Name of the integration, replace `NewIntegration` by the name of the integration
 - [OpenAPI]: Optional, OpenAPI definition of the integration, with API endpoints and methods
 - [NPMPackage]: Optional, NPM package of the integration
-- [NewIntegrationTypes]: Integration file types where there is the error
-- [NewIntegrationConfig]: Integration file config where there is the auth keys / tokens
 
 ## Step 1: Infrastructure Common Integration
 
@@ -26,16 +24,15 @@ export class NewIntegrationIntegration implements INotionIntegration {
   private _newIntegration: NewIntegration
 
   constructor(private _config?: NewIntegrationConfig) {
-    // Reuse the configuration keys in the /domain/integrations/NewIntegration/NewIntegrationConfig.ts
     this._newIntegration = new NewIntegration(this._config)
   }
 
   private _errorMapper = (error: NewIntegrationError): IntegrationResponseError => {
-    // Replace with the error type of the integration in the /domain/integrations/NewIntegration/NewIntegrationTypes.ts
-    const {} = error
+     // Replace with the error type of the integration
+    const {  } = error
     return {
-      // Map the NewIntegrationError with the IntegrationResponseError of the /domain/integration/base.ts file
-      error: {},
+      // Replace with the error type of the integration
+      error: {  },
     }
   }
 
@@ -68,9 +65,8 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
 
   constructor(config?: NewIntegrationConfig) {
     const headers = {
-      // Fill with the authentication method of the integration following the OpenAPI definition
-      // Reuse the configuration keys in the /domain/integrations/NewIntegration/NewIntegrationConfig.ts
-      Authorization: `{token}`,
+      // Replace with the authentication method of the integration following the OpenAPI definition
+      Authorization: `${config?.apiKey}`,
       'Content-Type': 'application/json',
       Accept: 'application/json',
     }
@@ -81,22 +77,20 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
     })
   }
 
-  // Don't change the methods parameters
-
   private _errorMapper = (
     response: AxiosResponse<{ errors: NewIntegrationError[] }>
   ): IntegrationResponseError => {
-    // Replace with the error type of the integration in the /domain/integrations/NewIntegration/NewIntegrationTypes.ts
-    const [{}] = response.data.errors
+    // Replace with the error type of the integration
+    const [{  }] = response.data.errors
     return {
-       // Map the NewIntegrationError with the IntegrationResponseError of the /domain/integration/base.ts file
-      error: {},
+      // Replace with the error type of the integration
+      error: {  },
     }
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
-      // Replace with the most basic and costless method of the integration, only to check the authentication
+      // Replace with the most basic method of the integration, only to check the authentication
       await this._instance.get('/user')
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
@@ -108,9 +102,53 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
 }
 ```
 
-## Step 2: Infrastructure Common Integration Index
+## Step 9: Infrastructure Common Integration Test
 
-Update the `src/infrastructure/integrations/common/index.ts` file to add the new integration to the integrations SPI index:
+Create a new file in `src/infrastructure/integrations/common/newIntegration/NewIntegrationIntegrationTest.ts` to create the integration test:
+
+```typescript
+import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+import type BunTester from 'bun:test'
+
+export function testNewIntegrationIntegration(
+  { describe, it, expect }: typeof BunTester,
+  integration: INewIntegrationIntegration
+) {
+  describe('NewIntegrationIntegration', () => {
+    it('should be able to check configuration', async () => {
+      // WHEN
+      const result = await integration.checkConfiguration()
+
+      // THEN
+      expect(result).toBeUndefined()
+    })
+  })
+}
+```
+
+## Step 10: Infrastructure Common Integration Test Runner
+
+Create a new file in `src/infrastructure/integrations/common/newIntegration/NewIntegrationIntegration.test.ts` to create the integration test common:
+
+```typescript
+import { NewIntegrationIntegration } from './NewIntegrationIntegration'
+import { testNewIntegrationIntegration } from './NewIntegrationIntegrationTest'
+import env from '/infrastructure/test/env'
+import BunTester from 'bun:test'
+
+const { TEST_NEW_INTEGRATION_API_KEY } = env
+
+export const integration = new NewIntegrationIntegration({
+  apiKey: TEST_NEW_INTEGRATION_API_KEY,
+})
+
+testNewIntegrationIntegration(BunTester, integration)
+```
+
+## Step 13: Infrastructure Common Integration Index
+
+Update the `src/infrastructure/integrations/bun/mocks/index.ts` file to add the new integration to the integrations SPI index:
 
 ```typescript
 import type { Integrations } from '/adapter/spi/integrations'
@@ -122,7 +160,7 @@ export const integrations: Integrations = {
 }
 ```
 
-## Step 3: Infrastructure Bun Integration
+## Step 11: Infrastructure Bun Integration
 
 Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegrationIntegration.mock.ts` to create the integration mock:
 
@@ -137,23 +175,38 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
 
   constructor(private _config?: NewIntegrationConfig) {
     this.db = new Database(_config?.apiKey ?? ':memory:')
-    // Replace with the table name of the ressource used in the checkConfiguration method of the integration in /infrastructure/integrations/common/newIntegration/NewIntegrationIntegration.ts
-    this.db.run(`CREATE TABLE IF NOT EXISTS {ressource} (id TEXT PRIMARY KEY)`)
+    this.db.run(`CREATE TABLE IF NOT EXISTS Users (apiKey TEXT PRIMARY KEY)`)
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     const user = this.db
-      .query<NewIntegrationConfig, string>('SELECT * FROM {ressource} WHERE id = ?')
+      .query<NewIntegrationConfig, string>('SELECT * FROM Users WHERE apiKey = ?')
       .get(this._config?.apiKey ?? '')
     if (!user) {
-      return { error: { status: 404, code: 'not_found', detail: '{ressource} not found' } }
+      return { error: { status: 404, code: 'not_found', detail: 'User not found' } }
     }
     return undefined
   }
 }
 ```
 
-## Step 4: Infrastructure Integration Bun Index
+## Step 12: Infrastructure Bun Integration Test
+
+Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegrationIntegration.test.ts` to create the integration test:
+
+```typescript
+import { NewIntegrationIntegration } from './NewIntegrationIntegration'
+import { testNewIntegrationIntegration } from './NewIntegrationIntegrationTest'
+import BunTester from 'bun:test'
+
+export const integration = new NewIntegrationIntegration({
+  apiKey: ':memory:',
+})
+
+testNewIntegrationIntegration(BunTester, integration)
+```
+
+## Step 13: Infrastructure Integration Bun Index
 
 Update the `src/infrastructure/integrations/bun/mocks/index.ts` file to add the new integration to the integrations SPI index:
 

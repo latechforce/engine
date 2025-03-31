@@ -7,6 +7,7 @@ import type { AirtableConfig } from '/domain/integrations/Airtable'
 import type { GoogleMailConfig } from '/domain/integrations/Google/GoogleMail'
 import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
+import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 
 import { NotionIntegration } from './notion/NotionIntegration'
 import { PappersIntegration } from './pappers/PappersIntegration'
@@ -16,6 +17,7 @@ import { AirtableIntegration } from './airtable/AirtableIntegration'
 import { GoogleMailIntegration } from './google/mail/GoogleMailIntegration'
 import { GoCardlessIntegration } from './gocardless/GoCardlessIntegration'
 import { PhantombusterIntegration } from './phantombuster/PhantombusterIntegration'
+import { CalendlyIntegration } from './calendly/CalendlyIntegration'
 
 export const integrations: Integrations = {
   airtable: (config?: AirtableConfig) => new AirtableIntegration(config),
@@ -26,4 +28,5 @@ export const integrations: Integrations = {
   googleMail: (config?: GoogleMailConfig) => new GoogleMailIntegration(config),
   gocardless: (config?: GoCardlessConfig) => new GoCardlessIntegration(config),
   phantombuster: (config?: PhantombusterConfig) => new PhantombusterIntegration(config),
+  calendly: (config?: CalendlyConfig) => new CalendlyIntegration(config),
 }
