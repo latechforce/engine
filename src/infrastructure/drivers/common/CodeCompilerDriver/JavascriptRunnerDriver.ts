@@ -23,6 +23,7 @@ import puppeteer from 'puppeteer'
 import path from 'path'
 import fsExtra from 'fs-extra'
 import slugify from 'slugify'
+import sodium from 'libsodium-wrappers'
 
 export const packages: CodeRunnerContextPackages = {
   xml2js,
@@ -40,6 +41,7 @@ export const packages: CodeRunnerContextPackages = {
   path,
   fsExtra,
   slugify,
+  sodium,
 }
 
 const globalContext = {
