@@ -9,27 +9,9 @@ export class TailwindCSSDriver implements IThemeDriver {
   constructor(private _config: ThemeConfigTailwindCSS) {}
 
   buildCss = async (): Promise<string> => {
-    const { base = './' } = this._config
+    const { base = './src' } = this._config
 
     const path = (path: string) => join(process.cwd(), path)
-
-    console.log(
-      path('/node_modules/tailwindcss/index.css'),
-      fs.existsSync(path('/node_modules/tailwindcss'))
-    )
-    console.log(
-      path('/node_modules/preline/variants.css'),
-      fs.existsSync(path('/node_modules/preline/variants.css'))
-    )
-    console.log(
-      path('/node_modules/@latechforce/engine/dist'),
-      fs.existsSync(path('/node_modules/@latechforce/engine/dist'))
-    )
-    console.log(
-      path('/node_modules/@tailwindcss/forms'),
-      fs.existsSync(path('/node_modules/@tailwindcss/forms'))
-    )
-    console.log(path(base), fs.existsSync(path(base)))
 
     const input = `
       @import "${path('/node_modules/tailwindcss/index.css')}";
@@ -40,16 +22,21 @@ export class TailwindCSSDriver implements IThemeDriver {
       @plugin "${path('/node_modules/@tailwindcss/forms')}";
     `
 
-    const result = await postcss([
-      tailwindcss({
-        base: path(base),
-      }),
-    ]).process(input, {
-      from: undefined,
-      to: undefined,
-    })
+    try {
+      const result = await postcss([
+        tailwindcss({
+          base: path(base),
+        }),
+      ]).process(input, {
+        from: undefined,
+        to: undefined,
+      })
 
-    return result.css
+      return result.css
+    } catch (error) {
+      console.error(error)
+      throw error
+    }
   }
 
   buildJs = async (): Promise<string> => {
