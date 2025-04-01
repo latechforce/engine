@@ -107,6 +107,7 @@
     "@storybook/react": "^8.6.11",
     "@storybook/react-vite": "^8.6.11",
     "@storybook/test": "^8.6.11",
+    "@tailwindcss/cli": "^4.0.17",
     "@testcontainers/postgresql": "^10.23.0",
     "@types/bun": "latest",
     "@types/nodemailer": "^6.4.17",

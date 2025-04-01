@@ -350,6 +350,9 @@
   .shrink-0 {
     flex-shrink: 0;
   }
+  .grow {
+    flex-grow: 1;
+  }
   .border-collapse {
     border-collapse: collapse;
   }
@@ -398,6 +401,11 @@
   }
   .gap-x-2 {
     column-gap: calc(var(--spacing) * 2);
+  }
+  .truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .overflow-hidden {
     overflow: hidden;
@@ -917,40 +925,6 @@
   .dark\:\[\&\:\:-webkit-scrollbar-track\]\:bg-neutral-700 {
     &:where(.dark, .dark *) {
       &::-webkit-scrollbar-track {
-        background-color: var(--color-neutral-700);
-      }
-    }
-  }
-  .\[\&amp\;\:\:-webkit-scrollbar\]\:w-2 {
-    &amp;::-webkit-scrollbar {
-      width: calc(var(--spacing) * 2);
-    }
-  }
-  .\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:rounded-full {
-    &amp;::-webkit-scrollbar-thumb {
-      border-radius: calc(infinity * 1px);
-    }
-  }
-  .\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:bg-gray-300 {
-    &amp;::-webkit-scrollbar-thumb {
-      background-color: var(--color-gray-300);
-    }
-  }
-  .dark\:\[\&amp\;\:\:-webkit-scrollbar-thumb\]\:bg-neutral-500 {
-    &:where(.dark, .dark *) {
-      &amp;::-webkit-scrollbar-thumb {
-        background-color: var(--color-neutral-500);
-      }
-    }
-  }
-  .\[\&amp\;\:\:-webkit-scrollbar-track\]\:bg-gray-100 {
-    &amp;::-webkit-scrollbar-track {
-      background-color: var(--color-gray-100);
-    }
-  }
-  .dark\:\[\&amp\;\:\:-webkit-scrollbar-track\]\:bg-neutral-700 {
-    &:where(.dark, .dark *) {
-      &amp;::-webkit-scrollbar-track {
         background-color: var(--color-neutral-700);
       }
     }
