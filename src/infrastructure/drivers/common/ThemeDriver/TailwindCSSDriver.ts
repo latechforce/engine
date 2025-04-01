@@ -3,32 +3,51 @@ import tailwindcss from '@tailwindcss/postcss'
 import postcss from 'postcss'
 import fs from 'fs-extra'
 import { join } from 'path'
+import type { ThemeConfigTailwindCSS } from '/domain/services/Theme'
 
 export class TailwindCSSDriver implements IThemeDriver {
-  constructor() {}
+  constructor(private _config: ThemeConfigTailwindCSS) {}
 
   buildCss = async (): Promise<string> => {
-    const input = `
-      @import "${join(process.cwd(), '/node_modules/tailwindcss')}";
-      @import "${join(process.cwd(), '/node_modules/preline/variants.css')}";
-      
-      @source "${join(process.cwd(), '/node_modules/@latechforce/engine/dist')}";
+    const { base = './' } = this._config
 
-      @plugin "${join(process.cwd(), '/node_modules/@tailwindcss/forms')}";
+    const path = (path: string) => join(process.cwd(), path)
+
+    console.log(
+      path('/node_modules/tailwindcss/index.css'),
+      fs.existsSync(path('/node_modules/tailwindcss'))
+    )
+    console.log(
+      path('/node_modules/preline/variants.css'),
+      fs.existsSync(path('/node_modules/preline/variants.css'))
+    )
+    console.log(
+      path('/node_modules/@latechforce/engine/dist'),
+      fs.existsSync(path('/node_modules/@latechforce/engine/dist'))
+    )
+    console.log(
+      path('/node_modules/@tailwindcss/forms'),
+      fs.existsSync(path('/node_modules/@tailwindcss/forms'))
+    )
+    console.log(path(base), fs.existsSync(path(base)))
+
+    const input = `
+      @import "${path('/node_modules/tailwindcss/index.css')}";
+      @import "${path('/node_modules/preline/variants.css')}";
+      
+      @source "${path('/node_modules/@latechforce/engine/dist')}";
+
+      @plugin "${path('/node_modules/@tailwindcss/forms')}";
     `
 
-    const result = await postcss([tailwindcss()]).process(input, {
+    const result = await postcss([
+      tailwindcss({
+        base: path(base),
+      }),
+    ]).process(input, {
       from: undefined,
       to: undefined,
     })
-
-    if (result.messages.some((message) => message.type === 'error')) {
-      const errors = result.messages
-        .filter((message) => message.type === 'error')
-        .map((message) => message.text)
-        .join('\n')
-      throw new Error(`PostCSS processing failed:\n${errors}`)
-    }
 
     return result.css
   }
