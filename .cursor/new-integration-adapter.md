@@ -16,7 +16,7 @@ import type { INewIntegrationSpi } from '/domain/integrations/NewIntegration/INe
 
 export type INewIntegrationIntegration = INewIntegrationSpi
 
- // Just duplicate the template without filling it
+// Just duplicate the template without filling it
 export class NewIntegrationSpi
   extends BaseSpi<INewIntegrationIntegration>
   implements INewIntegrationSpi

@@ -89,7 +89,7 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
     // Replace with the error type of the integration in the /domain/integrations/NewIntegration/NewIntegrationTypes.ts
     const [{}] = response.data.errors
     return {
-       // Map the NewIntegrationError with the IntegrationResponseError of the /domain/integration/base.ts file
+      // Map the NewIntegrationError with the IntegrationResponseError of the /domain/integration/base.ts file
       error: {},
     }
   }

@@ -1,70 +1,61 @@
 ## [0.39.7](https://github.com/latechforce/engine/compare/v0.39.6...v0.39.7) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **Theme:** can build Tailwindcss theming without cli ([8bf4382](https://github.com/latechforce/engine/commit/8bf4382a29b92ad3cb36dc525b046728edaeb7da))
+- **Theme:** can build Tailwindcss theming without cli ([8bf4382](https://github.com/latechforce/engine/commit/8bf4382a29b92ad3cb36dc525b046728edaeb7da))
 
 ## [0.39.6](https://github.com/latechforce/engine/compare/v0.39.5...v0.39.6) (2025-03-28)
 
-
 ### Bug Fixes
 
-* **Logger:** can dynamically set logging level ([f63307e](https://github.com/latechforce/engine/commit/f63307efb193edae77955d6ff1b87625920fce7c))
+- **Logger:** can dynamically set logging level ([f63307e](https://github.com/latechforce/engine/commit/f63307efb193edae77955d6ff1b87625920fce7c))
 
 ## [0.39.5](https://github.com/latechforce/engine/compare/v0.39.4...v0.39.5) (2025-03-28)
 
-
 ### Bug Fixes
 
-* add engine package in starting logs ([5a05c24](https://github.com/latechforce/engine/commit/5a05c24e1d802856e837fdbb7c6d392cd1ee68ed))
+- add engine package in starting logs ([5a05c24](https://github.com/latechforce/engine/commit/5a05c24e1d802856e837fdbb7c6d392cd1ee68ed))
 
 ## [0.39.4](https://github.com/latechforce/engine/compare/v0.39.3...v0.39.4) (2025-03-28)
 
-
 ### Bug Fixes
 
-* update postgres scalingo url to set sslmode to no-verify ([49f546f](https://github.com/latechforce/engine/commit/49f546f0f9ddd3e3a3e4a7dca02599ef5cfc6e9b))
+- update postgres scalingo url to set sslmode to no-verify ([49f546f](https://github.com/latechforce/engine/commit/49f546f0f9ddd3e3a3e4a7dca02599ef5cfc6e9b))
 
 ## [0.39.3](https://github.com/latechforce/engine/compare/v0.39.2...v0.39.3) (2025-03-27)
 
-
 ### Bug Fixes
 
-* add rejectUnauthorized: false in pg ([97db8f3](https://github.com/latechforce/engine/commit/97db8f327edd45cfbc013b5048563a5ef03b9ffd))
-* pg ssl ([e7735f2](https://github.com/latechforce/engine/commit/e7735f2c112100018f10b51078bb0dab272c5012))
-* pg ssl ([b3cc69f](https://github.com/latechforce/engine/commit/b3cc69fa7b55df25b913f3fd95c62796381d42f6))
+- add rejectUnauthorized: false in pg ([97db8f3](https://github.com/latechforce/engine/commit/97db8f327edd45cfbc013b5048563a5ef03b9ffd))
+- pg ssl ([e7735f2](https://github.com/latechforce/engine/commit/e7735f2c112100018f10b51078bb0dab272c5012))
+- pg ssl ([b3cc69f](https://github.com/latechforce/engine/commit/b3cc69fa7b55df25b913f3fd95c62796381d42f6))
 
 ## [0.39.2](https://github.com/latechforce/engine/compare/v0.39.1...v0.39.2) (2025-03-27)
 
-
 ### Bug Fixes
 
-* ensure tmpDir for theme ([cc80fdc](https://github.com/latechforce/engine/commit/cc80fdcc7de17a1056bffed5d6c004193da62f54))
+- ensure tmpDir for theme ([cc80fdc](https://github.com/latechforce/engine/commit/cc80fdcc7de17a1056bffed5d6c004193da62f54))
 
 ## [0.39.1](https://github.com/latechforce/engine/compare/v0.39.0...v0.39.1) (2025-03-27)
 
-
 ### Bug Fixes
 
-* **App:** add version in starter log ([fdaf211](https://github.com/latechforce/engine/commit/fdaf21132ed8227155c9af06fb75cba570ceb035))
-* **Config:** update green test: should start an app with default env variables ([526f91e](https://github.com/latechforce/engine/commit/526f91e6e5b2e814f6ddb2220010206623f943d0))
+- **App:** add version in starter log ([fdaf211](https://github.com/latechforce/engine/commit/fdaf21132ed8227155c9af06fb75cba570ceb035))
+- **Config:** update green test: should start an app with default env variables ([526f91e](https://github.com/latechforce/engine/commit/526f91e6e5b2e814f6ddb2220010206623f943d0))
 
 # [0.39.0](https://github.com/latechforce/engine/compare/v0.38.14...v0.39.0) (2025-03-27)
 
-
 ### Features
 
-* **env:** add green test: should start an app with default env variables ([b346699](https://github.com/latechforce/engine/commit/b3466992ed8ade09f6b97325779bd329102babea))
+- **env:** add green test: should start an app with default env variables ([b346699](https://github.com/latechforce/engine/commit/b3466992ed8ade09f6b97325779bd329102babea))
 
 ## [0.38.14](https://github.com/latechforce/engine/compare/v0.38.13...v0.38.14) (2025-03-27)
 
-
 ### Bug Fixes
 
-* **CI:** add catch to browser closing ([58de382](https://github.com/latechforce/engine/commit/58de382970b216a1fe2e97e4af5757c752be4cf2))
-* **CI:** add isMainBrowserConnected management ([76a370e](https://github.com/latechforce/engine/commit/76a370eaba6cb433d7a62fe956448765a08967a0))
-* **Form:** add green test: should submit the form with a text limited to maxLength ([043cb75](https://github.com/latechforce/engine/commit/043cb75f171fa63de16640d8a5f0ac5a57c62139))
+- **CI:** add catch to browser closing ([58de382](https://github.com/latechforce/engine/commit/58de382970b216a1fe2e97e4af5757c752be4cf2))
+- **CI:** add isMainBrowserConnected management ([76a370e](https://github.com/latechforce/engine/commit/76a370eaba6cb433d7a62fe956448765a08967a0))
+- **Form:** add green test: should submit the form with a text limited to maxLength ([043cb75](https://github.com/latechforce/engine/commit/043cb75f171fa63de16640d8a5f0ac5a57c62139))
 
 ## [0.38.13](https://github.com/latechforce/engine/compare/v0.38.12...v0.38.13) (2025-03-26)
 

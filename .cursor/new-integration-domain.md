@@ -36,7 +36,7 @@ Create a new file in `src/domain/integrations/NewIntegration/INewIntegrationSpi.
 ```typescript
 import type { BaseSpi } from '../base'
 
- // Just duplicate the template without filling it
+// Just duplicate the template without filling it
 export interface INewIntegrationSpi extends BaseSpi {}
 ```
 
@@ -48,11 +48,10 @@ Create a new file in `src/domain/integrations/NewIntegration/index.ts` to implem
 import type { INewIntegrationSpi } from './INewIntegrationSpi'
 import { Integration } from '../base'
 
- // Just duplicate the template without filling it
+// Just duplicate the template without filling it
 export class NewIntegration extends Integration<INewIntegrationSpi> {
   constructor(spi: INewIntegrationSpi) {
     super(spi)
   }
 }
-
 ```

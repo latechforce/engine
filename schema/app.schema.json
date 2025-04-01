@@ -1283,7 +1283,6 @@
           "type": "string"
         },
         "level": {
-          "enum": ["debug", "error", "http", "info", "silly", "verbose", "warn"],
           "type": "string"
         },
         "silent": {
@@ -1304,7 +1303,6 @@
           "type": "string"
         },
         "level": {
-          "enum": ["debug", "error", "http", "info", "silly", "verbose", "warn"],
           "type": "string"
         },
         "silent": {
@@ -1328,7 +1326,6 @@
           "type": "string"
         },
         "level": {
-          "enum": ["debug", "error", "http", "info", "silly", "verbose", "warn"],
           "type": "string"
         },
         "silent": {
@@ -1639,9 +1636,6 @@
     "ThemeConfigTailwindCSS": {
       "additionalProperties": false,
       "properties": {
-        "tmpDir": {
-          "type": "string"
-        },
         "type": {
           "const": "tailwindcss",
           "type": "string"
