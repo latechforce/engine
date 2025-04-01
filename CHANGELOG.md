@@ -1,3 +1,10 @@
+## [0.39.20](https://github.com/latechforce/engine/compare/v0.39.19...v0.39.20) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Form:** update snapshots ([652c007](https://github.com/latechforce/engine/commit/652c007fc19c90cc2b71f94d20bca6ad8a5201a2))
+
 ## [0.39.19](https://github.com/latechforce/engine/compare/v0.39.18...v0.39.19) (2025-04-01)
 
 
