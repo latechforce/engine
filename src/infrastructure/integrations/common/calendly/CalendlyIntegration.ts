@@ -1,10 +1,16 @@
 import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi'
 import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
-import type { CalendlyError } from '/domain/integrations/Calendly/CalendlyTypes'
+import type {
+  CalendlyError,
+  CalendlyUser,
+  CalendlyUserResponse,
+} from '/domain/integrations/Calendly/CalendlyTypes'
 import type {
   CreateWebhookSubscriptionParams,
   CreateWebhookSubscriptionResponse,
+  ListWebhookSubscriptionsParams,
+  ListWebhookSubscriptionsResponse,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
@@ -22,7 +28,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     })
   }
 
-  private _errorMapper = (response: AxiosResponse<CalendlyError>): IntegrationResponseError => {
+  private _errorMapper = (response: AxiosResponse): IntegrationResponseError => {
     const { error, errorDescription } = response.data as CalendlyError
     return {
       error: {
@@ -35,8 +41,22 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       // Using the /users endpoint as it's a lightweight call to verify authentication
-      await this._instance.get('/users/me')
+      await this._instance.get<CalendlyUserResponse>('/users/me')
     } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
+    try {
+      const response = await this._instance.get<CalendlyUserResponse>('/users/me')
+      return {
+        data: response.data.resource,
+      }
+    } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
         return this._errorMapper(error.response)
       }
@@ -69,6 +89,55 @@ export class CalendlyIntegration implements ICalendlyIntegration {
           organization: response.data.organization,
           user: response.data.user,
           creator: response.data.creator,
+        },
+      }
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  listWebhookSubscriptions = async (
+    params: ListWebhookSubscriptionsParams
+  ): Promise<IntegrationResponse<ListWebhookSubscriptionsResponse>> => {
+    try {
+      const response = await this._instance.get<ListWebhookSubscriptionsResponse>(
+        '/webhook_subscriptions',
+        {
+          params: {
+            ...(params.organization && { organization: params.organization }),
+            ...(params.user && { user: params.user }),
+            ...(params.scope && { scope: params.scope }),
+            ...(params.count && { count: params.count }),
+            ...(params.pageToken && { page_token: params.pageToken }),
+          },
+        }
+      )
+
+      return {
+        data: {
+          collection: response.data.collection.map((subscription) => ({
+            uri: subscription.uri,
+            callback_url: subscription.callback_url,
+            created_at: subscription.created_at,
+            updated_at: subscription.updated_at,
+            retry_started_at: subscription.retry_started_at,
+            state: subscription.state,
+            events: subscription.events,
+            scope: subscription.scope,
+            organization: subscription.organization,
+            user: subscription.user,
+            creator: subscription.creator,
+          })),
+          pagination: {
+            count: response.data.pagination.count,
+            next_page: response.data.pagination.next_page,
+            previous_page: response.data.pagination.previous_page,
+            next_page_token: response.data.pagination.next_page_token,
+            previous_page_token: response.data.pagination.previous_page_token,
+          },
         },
       }
     } catch (error: unknown) {

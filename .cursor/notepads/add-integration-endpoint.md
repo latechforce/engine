@@ -9,35 +9,34 @@ The project use Typescript 5
 - [Nom]: Name of the integration, replace `NewIntegration` by the name of the integration
 - [OpenAPI]: Optional, OpenAPI definition of the integration, with API endpoints and methods
 
-
 ## Step 1: Add methods into Domain Integration SPI `src/domain/integrations/NewIntegration/INewIntegrationSpi.ts`
 
 Add specified methods from API into the INewIntegrationSpi
+
 ```typescript
 import type { IntegrationResponse, BaseSpi } from '../base'
 
-
 export interface INewIntegrationSpi extends BaseSpi {
-    newMethod: (params: NewMethodParams) => Promise<IntegrationResponse<NewMethodResponse>>
+  newMethod: (params: NewMethodParams) => Promise<IntegrationResponse<NewMethodResponse>>
 }
 ```
-
 
 ## Step 2: Add new associated types into NewIntegrationTypes `src/domain/integrations/NewIntegration/NewIntegrationTypes.ts`
 
 Create specific types for params and responses into NewIntegrationTypes
+
 ```typescript
 type NewMethodParams = {
-    // fill with integration method params
-} 
+  // fill with integration method params
+}
 
 type NewMethodResponse = {
-    // fill with integration method response
+  // fill with integration method response
 }
 ```
 
-
 ## Step 3: Bind the SPI into the extended integration NewIntegration `src/domain/integrations/NewIntegration/NewIntegration.ts`
+
 Bind the SPI methods into specific methods in the NewIntegration class.
 DON'T REMOVE EXISTING METHODS, EXISTING PROPS AND EXISTING CONSTRUCTOR CODE. ONLY ADD NEW PROPS AND NEW METHODS.
 
@@ -60,7 +59,8 @@ export class NewIntegration extends Integration<INewIntegrationSpi> {
 ```
 
 ## Step 4: Add methods into NewIntegrationSpi `src/adapter/spi/integrations/NewIntegrationSpi.ts`
-Add methods into the NewIntegrationSpi class using the _integration property.
+
+Add methods into the NewIntegrationSpi class using the \_integration property.
 DON'T REMOVE EXISTING METHODS, EXISTING PROPS AND EXISTING CONSTRUCTOR CODE. ONLY ADD NEW PROPS AND NEW METHODS.
 
 ```typescript
@@ -69,7 +69,10 @@ import type { INewIntegrationSpi } from '/domain/integrations/NewIntegration/INe
 
 export type INewIntegrationIntegration = INewIntegrationSpi
 
-export class NewIntegrationSpi extends BaseSpi<INewIntegrationIntegration> implements INewIntegrationSpi {
+export class NewIntegrationSpi
+  extends BaseSpi<INewIntegrationIntegration>
+  implements INewIntegrationSpi
+{
   constructor(integration: INewIntegrationIntegration) {
     super(integration)
   }
@@ -78,12 +81,13 @@ export class NewIntegrationSpi extends BaseSpi<INewIntegrationIntegration> imple
     return this._integration.newMethod(params)
   }
 }
-
 ```
 
 ## Step 5: Add Bun implementation into infrastructure integrations `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegrationIntegration.mock.ts`
-Add mock integration into NewIntegration.mock.ts 
+
+Add mock integration into NewIntegration.mock.ts
 DON'T REMOVE EXISTING METHODS, EXISTING PROPS AND EXISTING CONSTRUCTOR CODE. ONLY ADD NEW PROPS AND NEW METHODS.
+
 ```typescript
 // [... reimport existing import]
 import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
@@ -121,9 +125,10 @@ export class NewIntegration implements INewIntegrationIntegration {
 }
 ```
 
-
 ## Step 5: Add Real implementation into NewIntegration.ts `src/infrastructure/integrations/common/newIntegration/NewIntegrationIntegration.ts`
+
 Add real implementation that call the API using specific SDK or Axios library. Create specific new AxiosInstance if the new API calls required a different base URL. DON'T REMOVE EXISTING METHODS, EXISTING PROPS AND EXISTING CONSTRUCTOR CODE. ONLY ADD NEW PROPS AND NEW METHODS.
+
 ```typescript
 // [... reimport existing import]
 import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
@@ -136,7 +141,7 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
   // ! DON'T REMOVE EXISTING INSTANCE !
   private _instance: AxiosInstance
   // Only if base url change
-  // private _newInstance: AxiosInstance 
+  // private _newInstance: AxiosInstance
 
   constructor(config?: NewIntegrationConfig) {
     // ! DON'T REMOVE EXISTING CONSTRUCTOR CODE !
@@ -158,11 +163,38 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
 
   // ! DON'T REMOVE EXISTING METHODS !
 
-
-
   newMethod = async (params: NewMethodParams): Promise<NewMethodResponse> => {
     // Fill with api call and response transformation
   }
 }
 ```
 
+## Step 6: Add a unit test for the new integration `src/infrastructure/integrations/common/newIntegration/NewIntegrationIntegrationTest.ts`
+
+Add a unit test for the new integration method. DON'T REMOVE EXISTING TESTS OR METHODS. ONLY ADD NEW TESTS AND METHODS.
+
+```typescript
+import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
+import type BunTester from 'bun:test'
+
+export function testNewIntegrationIntegration(
+  { describe, it, expect }: typeof BunTester,
+  integration: INewIntegrationIntegration
+) {
+  describe('NewIntegrationIntegration', () => {
+    // ! DON'T REMOVE EXISTING TESTS !
+
+    // Add new test
+    it('describe what the new integration method does', async () => {
+      // WHEN
+      const params = {
+        // Fill with params
+      }
+      const result = await integration.newMethod(params)
+
+      // THEN
+      // expect(result)...
+    })
+  })
+}
+```
