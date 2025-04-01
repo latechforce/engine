@@ -44,6 +44,7 @@ export class Form {
   table: Table
   path: string
   inputs: Input[]
+  timestamp: string
 
   constructor(
     private _config: FormConfig,
@@ -60,6 +61,7 @@ export class Form {
     this.id = idGenerator.forComponent()
     this.path = `/form/${path}`
     this.inputs = inputs.map((input) => new Input(input, this.table, this._components))
+    this.timestamp = String(+Date.now())
   }
 
   init = async () => {
@@ -98,7 +100,7 @@ export class Form {
     const formClientProps = client.getHtmlAttributes(htmlAttributes)
     return new JsxResponse(
       (
-        <Page title={title} description={description}>
+        <Page title={title} description={description} timestamp={this.timestamp}>
           <Form
             id={this.id}
             title={title}
