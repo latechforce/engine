@@ -12,7 +12,7 @@ mock.page(({ app, browser, drivers }) => {
       forms: [
         {
           name: 'user',
-          path: 'user',
+          path: '/user',
           title: 'Form title',
           description: 'Form description',
           table: 'users',

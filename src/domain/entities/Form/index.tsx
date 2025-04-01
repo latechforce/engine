@@ -11,6 +11,9 @@ import type { Form as FormComponent } from '/domain/components/Form'
 import type { FormResponse as FormResponseComponent } from '/domain/components/Form/FormResponse'
 import type { Logger } from '/domain/services/Logger'
 
+// TODO: Remove this to put it in a service
+import { join } from 'path'
+
 export interface FormConfig {
   name: string
   path: string
@@ -59,7 +62,7 @@ export class Form {
     if (!table) throw new Error(`Table ${_config.table} not found`)
     this.table = table
     this.id = idGenerator.forComponent()
-    this.path = `/form/${path}`
+    this.path = join(`/form`, path)
     this.inputs = inputs.map((input) => new Input(input, this.table, this._components))
     this.timestamp = String(+Date.now())
   }
