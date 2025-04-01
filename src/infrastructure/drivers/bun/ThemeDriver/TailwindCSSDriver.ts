@@ -1,31 +1,29 @@
 import type { IThemeDriver } from '/adapter/spi/drivers/ThemeSpi'
 import type { ThemeConfigTailwindCSS } from '/domain/services/Theme'
-import { $ } from 'bun'
+import tailwindcss from '@tailwindcss/postcss'
+import postcss from 'postcss'
 import fs from 'fs-extra'
 import { join } from 'path'
 
 export class TailwindCSSDriver implements IThemeDriver {
   constructor(private _config: ThemeConfigTailwindCSS) {}
 
-  buildCss = async (): Promise<{ output: string; logs: string }> => {
-    const { tmpDir = './tmp' } = this._config
+  buildCss = async (): Promise<string> => {
     const input = `
-      @import "tailwindcss";
-      @import "preline/variants.css";
+      @import "${join(process.cwd(), '/node_modules/tailwindcss')}";
+      @import "${join(process.cwd(), '/node_modules/preline/variants.css')}";
       
-      @source "../node_modules/@latechforce/engine/dist";
+      @source "${join(process.cwd(), '/node_modules/@latechforce/engine/dist')}";
 
-      @plugin "@tailwindcss/forms";
+      @plugin "${join(process.cwd(), '/node_modules/@tailwindcss/forms')}";
     `
-    const inputPath = join(tmpDir, 'input.css')
-    const outputPath = join(tmpDir, 'output.css')
-    await fs.ensureDir(tmpDir)
-    await fs.writeFile(inputPath, input)
-    const { stderr } = await $`bunx @tailwindcss/cli -i ${inputPath} -o ${outputPath}`.quiet()
-    const output = await fs.readFile(outputPath, 'utf8')
-    await fs.unlink(inputPath)
-    await fs.unlink(outputPath)
-    return { output, logs: stderr.toString() }
+
+    const result = await postcss([tailwindcss()]).process(input, {
+      from: undefined,
+      to: undefined,
+    })
+
+    return result.css
   }
 
   buildJs = async (): Promise<string> => {

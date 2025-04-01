@@ -74,7 +74,7 @@ testNewIntegrationIntegration(BunTester, integration)
 
 ## Step 4: Infrastructure Bun Integration Test
 
-Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegrationIntegration.test.ts` to create the integration test:
+Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/NewIntegrationIntegration.mock.test.ts` to create the integration test:
 
 ```typescript
 import { NewIntegrationIntegration } from './NewIntegrationIntegration.mock'

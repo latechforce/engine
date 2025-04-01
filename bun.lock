@@ -11,6 +11,7 @@
         "@sentry/bun": "^9.9.0",
         "@tailwindcss/cli": "^4.0.17",
         "@tailwindcss/forms": "^0.5.10",
+        "@tailwindcss/postcss": "^4.0.17",
         "@types/fs-extra": "^11.0.4",
         "@types/lodash": "^4.17.16",
         "@types/papaparse": "^5.3.15",
@@ -18,7 +19,7 @@
         "airtable": "^0.12.2",
         "ajv": "^8.17.1",
         "axios": "^1.8.4",
-        "cron": "^4.1.0",
+        "cron": "^4.1.1",
         "date-fns": "^4.1.0",
         "elysia": "^1.2.25",
         "fs-extra": "^11.3.0",
@@ -34,6 +35,7 @@
         "pdfkit": "^0.16.0",
         "pg": "^8.14.1",
         "pg-boss": "^10.1.6",
+        "postcss": "^8.5.3",
         "preline": "^3.0.1",
         "puppeteer": "^24.4.0",
         "react": "^19.0.0",
@@ -89,6 +91,8 @@
   },
   "packages": {
     "@adobe/css-tools": ["@adobe/css-tools@4.4.2", "", {}, "sha512-baYZExFpsdkBNuvGKTKWCwKH57HRZLVtycZS05WTQNVOiXVSeAki3nU35zlRbToeMW8aHlJfyS+1C4BOv27q0A=="],
+
+    "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
 
     "@ampproject/remapping": ["@ampproject/remapping@2.3.0", "", { "dependencies": { "@jridgewell/gen-mapping": "^0.3.5", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw=="],
 
@@ -623,6 +627,8 @@
     "@tailwindcss/oxide-win32-arm64-msvc": ["@tailwindcss/oxide-win32-arm64-msvc@4.0.17", "", { "os": "win32", "cpu": "arm64" }, "sha512-AkBO8efP2/7wkEXkNlXzRD4f/7WerqKHlc6PWb5v0jGbbm22DFBLbIM19IJQ3b+tNewQZa+WnPOaGm0SmwMNjw=="],
 
     "@tailwindcss/oxide-win32-x64-msvc": ["@tailwindcss/oxide-win32-x64-msvc@4.0.17", "", { "os": "win32", "cpu": "x64" }, "sha512-7/DTEvXcoWlqX0dAlcN0zlmcEu9xSermuo7VNGX9tJ3nYMdo735SHvbrHDln1+LYfF6NhJ3hjbpbjkMOAGmkDg=="],
+
+    "@tailwindcss/postcss": ["@tailwindcss/postcss@4.0.17", "", { "dependencies": { "@alloc/quick-lru": "^5.2.0", "@tailwindcss/node": "4.0.17", "@tailwindcss/oxide": "4.0.17", "lightningcss": "1.29.2", "postcss": "^8.4.41", "tailwindcss": "4.0.17" } }, "sha512-qeJbRTB5FMZXmuJF+eePd235EGY6IyJZF0Bh0YM6uMcCI4L9Z7dy+lPuLAhxOJzxnajsbjPoDAKOuAqZRtf1PQ=="],
 
     "@testcontainers/postgresql": ["@testcontainers/postgresql@10.23.0", "", { "dependencies": { "testcontainers": "^10.23.0" } }, "sha512-PKuv7cSWxOxW4aOEuw1XyYb7tS8rcPEmg2ez97WTLLnVZj4JaoPJqFDSEJ2OSj8s3+6HqLC6hXDCMFmYhP63/A=="],
 

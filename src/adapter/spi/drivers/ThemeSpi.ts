@@ -1,14 +1,14 @@
 import type { IThemeSpi } from '/domain/services/Theme'
 
 export interface IThemeDriver {
-  buildCss: () => Promise<{ output: string; logs: string }>
+  buildCss: () => Promise<string>
   buildJs: () => Promise<string>
 }
 
 export class ThemeSpi implements IThemeSpi {
   constructor(private _driver: IThemeDriver) {}
 
-  buildCss = async (): Promise<{ output: string; logs: string }> => {
+  buildCss = async (): Promise<string> => {
     return this._driver.buildCss()
   }
 

@@ -20,7 +20,7 @@ export interface ThemeServices {
 }
 
 export interface IThemeSpi {
-  buildCss: () => Promise<{ output: string; logs: string }>
+  buildCss: () => Promise<string>
   buildJs: () => Promise<string>
 }
 
@@ -33,10 +33,10 @@ export class Theme {
 
   init = async () => {
     const { server, logger } = this._services
-    const { output: css, logs } = await this._spi.buildCss()
+    const css = await this._spi.buildCss()
     const js = await this._spi.buildJs()
     await server.get('/style.css', async () => new CssResponse(css))
     await server.get('/style.js', async () => new JsResponse(js))
-    logger.debug(`init theme with "${this._config.type}"\n${logs}`.trim())
+    logger.debug(`init theme with "${this._config.type}"`)
   }
 }

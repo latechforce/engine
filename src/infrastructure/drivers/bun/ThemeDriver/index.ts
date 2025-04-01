@@ -20,7 +20,7 @@ export class ThemeDriver implements IThemeDriver {
     }
   }
 
-  buildCss = async (): Promise<{ output: string; logs: string }> => {
+  buildCss = async (): Promise<string> => {
     return this._driver.buildCss()
   }
 
