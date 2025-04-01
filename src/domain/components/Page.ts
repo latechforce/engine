@@ -1,5 +1,6 @@
 export interface PageProps extends React.PropsWithChildren {
   title: string
+  timestamp: string
   description?: string
 }
 

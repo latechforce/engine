@@ -1,3 +1,20 @@
+## [0.39.11](https://github.com/latechforce/engine/compare/v0.39.10...v0.39.11) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Theme:** add error caching for Postcss ([ebfd43e](https://github.com/latechforce/engine/commit/ebfd43ec4d8dae65a53ccdb8b20bfb9454ddb3f2))
+
+## [0.39.10](https://github.com/latechforce/engine/compare/v0.39.9...v0.39.10) (2025-04-01)
+
+
+### Bug Fixes
+
+* add timestamp to link and script files for chaching update ([c049bb1](https://github.com/latechforce/engine/commit/c049bb1e0dd9f4edee550dda8709fc514c855c80))
+* logger message for production ([ac5fd39](https://github.com/latechforce/engine/commit/ac5fd39cdb18c6afdf94e9ae86a1d59e1dcf92f5))
+* update snapshots ([c648373](https://github.com/latechforce/engine/commit/c648373b2a52f27d7555577c8bace5a36215c1b2))
+* update theme logger ([1ad2cac](https://github.com/latechforce/engine/commit/1ad2cacda562279a2dc0f7c13ec203b532c3bb3f))
+
 ## [0.39.9](https://github.com/latechforce/engine/compare/v0.39.8...v0.39.9) (2025-04-01)
 
 

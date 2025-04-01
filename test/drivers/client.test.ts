@@ -34,7 +34,7 @@ mock.page(({ app, browser }) => {
 
       // THEN
       const html = await page.content()
-      expect(html).toContain('<script src="/script.js">')
+      expect(html).toContain('<script src="/script.js?ts=')
     })
 
     it('should return the htmx js content', async () => {

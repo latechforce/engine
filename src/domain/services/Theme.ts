@@ -32,10 +32,11 @@ export class Theme {
 
   init = async () => {
     const { server, logger } = this._services
+    logger.debug(`init theme with "${this._config.type}"`)
     const css = await this._spi.buildCss()
     const js = await this._spi.buildJs()
     await server.get('/style.css', async () => new CssResponse(css))
     await server.get('/style.js', async () => new JsResponse(js))
-    logger.debug(`init theme with "${this._config.type}"`)
+    logger.debug(`theme initialized`)
   }
 }
