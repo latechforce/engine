@@ -22,6 +22,14 @@ export class TailwindCSSDriver implements IThemeDriver {
       to: undefined,
     })
 
+    if (result.messages.some((message) => message.type === 'error')) {
+      const errors = result.messages
+        .filter((message) => message.type === 'error')
+        .map((message) => message.text)
+        .join('\n')
+      throw new Error(`PostCSS processing failed:\n${errors}`)
+    }
+
     return result.css
   }
 
