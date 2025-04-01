@@ -1,6 +1,6 @@
 import type { ICalendlySpi } from './ICalendlySpi'
 import { Integration } from '../base'
-import type { GetAuthorizationCodeParams, GetAuthorizationCodeResponse, GetAccessTokenParams, GetAccessTokenResponse } from './CalendlyTypes'
+import type { GetAuthorizationCodeParams, GetAuthorizationCodeResponse, GetAccessTokenParams, GetAccessTokenResponse, CreateWebhookSubscriptionParams, CreateWebhookSubscriptionResponse } from './CalendlyTypes'
 
 export class Calendly extends Integration<ICalendlySpi> {
   constructor(spi: ICalendlySpi) {
@@ -16,6 +16,12 @@ export class Calendly extends Integration<ICalendlySpi> {
   getAccessToken = async (params: GetAccessTokenParams): Promise<GetAccessTokenResponse> => {
     const response = await this._spi.getAccessToken(params)
     if (response.error) return this._throwError('getAccessToken', response.error)
+    return response.data
+  }
+
+  createWebhookSubscription = async (params: CreateWebhookSubscriptionParams): Promise<CreateWebhookSubscriptionResponse> => {
+    const response = await this._spi.createWebhookSubscription(params)
+    if (response.error) return this._throwError('createWebhookSubscription', response.error)
     return response.data
   }
 }

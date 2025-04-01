@@ -2,7 +2,7 @@ import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi
 import type { IntegrationResponseError } from '/domain/integrations/base'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 import type { CalendlyError } from '/domain/integrations/Calendly/CalendlyTypes'
-import type { GetAuthorizationCodeParams, GetAuthorizationCodeResponse, GetAccessTokenParams, GetAccessTokenResponse } from '/domain/integrations/Calendly/CalendlyTypes'
+import type { GetAuthorizationCodeParams, GetAuthorizationCodeResponse, GetAccessTokenParams, GetAccessTokenResponse, CreateWebhookSubscriptionParams, CreateWebhookSubscriptionResponse } from '/domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
 export class CalendlyIntegration implements ICalendlyIntegration {
@@ -105,6 +105,41 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         error: {
           error: 'token_failed',
           errorDescription: error instanceof Error ? error.message : 'Failed to get access token'
+        }
+      }
+    }
+  }
+
+  createWebhookSubscription = async (params: CreateWebhookSubscriptionParams): Promise<{ data?: CreateWebhookSubscriptionResponse; error?: CalendlyError }> => {
+    try {
+      const response = await this._instance.post('/webhook_subscriptions', {
+        url: params.url,
+        events: params.events,
+        ...(params.organization && { organization: params.organization }),
+        ...(params.user && { user: params.user }),
+        ...(params.scope && { scope: params.scope })
+      })
+
+      return {
+        data: {
+          uri: response.data.uri,
+          callbackUrl: response.data.callback_url,
+          createdAt: response.data.created_at,
+          updatedAt: response.data.updated_at,
+          retryStartedAt: response.data.retry_started_at,
+          state: response.data.state,
+          events: response.data.events,
+          scope: response.data.scope,
+          organization: response.data.organization,
+          user: response.data.user,
+          creator: response.data.creator
+        }
+      }
+    } catch (error: unknown) {
+      return {
+        error: {
+          error: 'webhook_subscription_failed',
+          errorDescription: error instanceof Error ? error.message : 'Failed to create webhook subscription'
         }
       }
     }
