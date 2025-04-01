@@ -1884,6 +1884,9 @@
         "ThemeConfigTailwindCSS": {
             "additionalProperties": false,
             "properties": {
+                "base": {
+                    "type": "string"
+                },
                 "type": {
                     "const": "tailwindcss",
                     "type": "string"

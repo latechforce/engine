@@ -21,7 +21,7 @@ mock.page(({ app, browser }) => {
         fields: [],
       },
     ],
-    theme: { type: 'tailwindcss' },
+    theme: { type: 'tailwindcss', base: 'src/infrastructure/components/tailwindcss' },
   }
 
   describe('on open page', () => {

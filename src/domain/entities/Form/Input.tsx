@@ -82,7 +82,7 @@ export class Input {
         label={label}
         description={description}
         placeholder={placeholder}
-        required={required}
+        required={required || this.field.config.required}
         options={this.options}
         minLength={minLength}
         maxLength={maxLength}

@@ -98,6 +98,9 @@ export class CodeCompiler {
       post: (url: string, body: object, options?: RequestInit) => {
         return this._services.fetcher.post(url, body, options)
       },
+      put: (url: string, body: object, options?: RequestInit) => {
+        return this._services.fetcher.put(url, body, options)
+      },
     }
     return { database, logger, fetcher }
   }

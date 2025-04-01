@@ -466,5 +466,83 @@ mock.request(({ app, request }) => {
       // THEN
       expect(response.param).toBe('1')
     })
+
+    it('should run a Typescript code with the native TextEncoder class', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'getTextEncoder',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-text-encoder',
+              output: {
+                exist: '{{runJavascriptCode.exist}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function () {
+                  const encoder = new TextEncoder()
+                  return { exist: !!encoder }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-text-encoder`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with the native TextDecoder class', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'getTextDecoder',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-text-decoder',
+              output: {
+                exist: '{{runJavascriptCode.exist}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function () {
+                  const decoder = new TextDecoder()
+                  return { exist: !!decoder }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-text-decoder`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
   })
 })

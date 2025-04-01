@@ -23,3 +23,14 @@ describe('post', () => {
     expect(data).toContain('notion')
   })
 })
+
+describe('put', () => {
+  it('should make a PUT request with correct headers and body', async () => {
+    const requestBody = { name: 'Test' }
+    const response = await fetcher.put('https://latechforce.com', requestBody)
+    const data = await response.text()
+
+    expect(response.status).toBe(404)
+    expect(data).toContain('Cannot PUT')
+  })
+})

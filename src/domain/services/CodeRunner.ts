@@ -52,6 +52,7 @@ export interface CodeRunnerContextServicesLogger {
 export interface CodeRunnerContextServicesFetcher {
   get: (url: string, options?: RequestInit) => Promise<Response>
   post: (url: string, body: object, options?: RequestInit) => Promise<Response>
+  put: (url: string, body: object, options?: RequestInit) => Promise<Response>
 }
 
 export interface CodeRunnerContextServices {
@@ -89,6 +90,7 @@ export interface CodeRunnerContextPackages {
   path: typeof import('path')
   fsExtra: typeof import('fs-extra')
   slugify: typeof import('slugify').default
+  sodium: typeof import('libsodium-wrappers')
 }
 
 export interface CodeRunnerContext<I extends object = {}> {

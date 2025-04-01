@@ -1,3 +1,45 @@
+## [0.39.17](https://github.com/latechforce/engine/compare/v0.39.16...v0.39.17) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Form:** add green test: should not submit the form if the required field is empty ([aaf21ba](https://github.com/latechforce/engine/commit/aaf21bad8306517e1da0ea48689752b45d5799e7))
+
+## [0.39.16](https://github.com/latechforce/engine/compare/v0.39.15...v0.39.16) (2025-04-01)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with the native TextEncoder class ([45f524e](https://github.com/latechforce/engine/commit/45f524e1cbb2bfd4341c09cddcf0d686a3efa3f4))
+
+## [0.39.15](https://github.com/latechforce/engine/compare/v0.39.14...v0.39.15) (2025-04-01)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with sodium package ([e8fa623](https://github.com/latechforce/engine/commit/e8fa6236c1e1641ef203bf584d1be9674416e1ae))
+
+## [0.39.14](https://github.com/latechforce/engine/compare/v0.39.13...v0.39.14) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Fetcher:** add green test: should run a Typescript code with a fetcher put ([2fe57af](https://github.com/latechforce/engine/commit/2fe57af05a56926228cbc0e1a9613ef5a62926ef))
+
+## [0.39.13](https://github.com/latechforce/engine/compare/v0.39.12...v0.39.13) (2025-04-01)
+
+
+### Bug Fixes
+
+* add try catch to postcss ([88fdcc8](https://github.com/latechforce/engine/commit/88fdcc8f53725f652f5cb20d422fe7836421058d))
+
+## [0.39.12](https://github.com/latechforce/engine/compare/v0.39.11...v0.39.12) (2025-04-01)
+
+
+### Bug Fixes
+
+* add console.log to theme for debug ([83cff9d](https://github.com/latechforce/engine/commit/83cff9d4a2fda3d832b20c877162e9f446178c65))
+
 ## [0.39.11](https://github.com/latechforce/engine/compare/v0.39.10...v0.39.11) (2025-04-01)
 
 
