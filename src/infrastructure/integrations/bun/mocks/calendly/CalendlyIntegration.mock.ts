@@ -18,6 +18,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     this.db = new Database(':memory:')
     this.db.run(`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)`)
     const userId = this._config?.user.accessToken ?? ''
+
+    // TODO: remove this line to be configured in the test, not in the code
     this.db.run(`INSERT INTO users (id) VALUES (?)`, [userId])
 
     // Table pour stocker les webhooks
@@ -36,6 +38,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         creator TEXT NOT NULL
       )
     `)
+
+    // TODO: remove this line to be configured in the test, not in the code
     this.db.run(
       `
         INSERT INTO WebhookSubscriptions (
