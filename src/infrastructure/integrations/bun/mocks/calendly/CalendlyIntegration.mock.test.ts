@@ -3,7 +3,13 @@ import { testCalendlyIntegration } from '/infrastructure/integrations/common/cal
 import BunTester from 'bun:test'
 
 export const integration = new CalendlyIntegration({
-  accessToken: ':memory:',
+  user: {
+    accessToken: ':memory:',
+  },
+  client: {
+    id: ':memory:',
+    secret: ':memory:',
+  },
 })
 
 testCalendlyIntegration(BunTester, integration)
