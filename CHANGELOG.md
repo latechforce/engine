@@ -1,3 +1,10 @@
+## [0.39.13](https://github.com/latechforce/engine/compare/v0.39.12...v0.39.13) (2025-04-01)
+
+
+### Bug Fixes
+
+* add try catch to postcss ([88fdcc8](https://github.com/latechforce/engine/commit/88fdcc8f53725f652f5cb20d422fe7836421058d))
+
 ## [0.39.12](https://github.com/latechforce/engine/compare/v0.39.11...v0.39.12) (2025-04-01)
 
 
