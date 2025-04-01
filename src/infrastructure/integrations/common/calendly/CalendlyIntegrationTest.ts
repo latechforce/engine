@@ -6,7 +6,7 @@ export function testCalendlyIntegration(
   integration: ICalendlyIntegration
 ) {
   describe('CalendlyIntegration', () => {
-    it.skip('should be able to check configuration', async () => {
+    it('should be able to check configuration', async () => {
       // WHEN
       const result = await integration.checkConfiguration()
 

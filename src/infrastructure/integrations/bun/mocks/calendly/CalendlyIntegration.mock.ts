@@ -13,6 +13,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   constructor(private _config?: CalendlyConfig) {
     this.db = new Database(':memory:')
     this.db.run(`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)`)
+    const userId = this._config?.user.accessToken ?? ''
+    this.db.run(`INSERT INTO users (id) VALUES (?)`, [userId])
 
     // Table pour stocker les webhooks
     this.db.run(`
