@@ -6,6 +6,8 @@ import type { SingleSelectInput } from './Form/Input/SingleSelectInput'
 import type { Page } from './Page'
 import type { MultipleAttachmentInput } from './Form/Input/MultipleAttachmentInput'
 import type { LongTextInput } from './Form/Input/LongTextInput'
+import type { EmailInput } from './Form/Input/EmailInput'
+
 export type Components = {
   Page: Page
   Form: Form
@@ -15,4 +17,5 @@ export type Components = {
   SingleSelectInput: SingleSelectInput
   CheckboxInput: CheckboxInput
   MultipleAttachmentInput: MultipleAttachmentInput
+  EmailInput: EmailInput
 }

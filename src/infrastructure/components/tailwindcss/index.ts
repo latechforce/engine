@@ -7,6 +7,7 @@ import { CheckboxInput } from './Form/Input/CheckboxInput'
 import { SingleSelectInput } from './Form/Input/SingleSelectInput'
 import { MultipleAttachmentInput } from './Form/Input/MultipleAttachmentInput'
 import { LongTextInput } from './Form/Input/LongTextInput'
+import { EmailInput } from './Form/Input/EmailInput'
 
 export const components: Components = {
   Page,
@@ -17,4 +18,5 @@ export const components: Components = {
   SingleSelectInput,
   CheckboxInput,
   MultipleAttachmentInput,
+  EmailInput,
 }

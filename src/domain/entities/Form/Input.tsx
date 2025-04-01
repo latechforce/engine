@@ -7,6 +7,7 @@ import type { SingleSelectInput } from '/domain/components/Form/Input/SingleSele
 import type { MultipleAttachmentInput } from '/domain/components/Form/Input/MultipleAttachmentInput'
 import type { Field } from '/domain/entities/Field'
 import type { LongTextInput } from '/domain/components/Form/Input/LongTextInput'
+import type { EmailInput } from '/domain/components/Form/Input/EmailInput'
 
 export interface InputConfig {
   field: string
@@ -24,6 +25,7 @@ export interface InputComponents {
   CheckboxInput: CheckboxInput
   SingleSelectInput: SingleSelectInput
   MultipleAttachmentInput: MultipleAttachmentInput
+  EmailInput: EmailInput
 }
 
 export class Input {
@@ -45,6 +47,7 @@ export class Input {
       SingleSelectInput,
       MultipleAttachmentInput,
       LongTextInput,
+      EmailInput,
     } = this._components
     const { type } = this.field.config
     switch (type) {
@@ -63,6 +66,9 @@ export class Input {
         break
       case 'MultipleAttachment':
         this.InputComponent = MultipleAttachmentInput
+        break
+      case 'Email':
+        this.InputComponent = EmailInput
         break
       default:
         throw new Error(`Unsupported input type: ${type}`)
