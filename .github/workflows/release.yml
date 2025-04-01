@@ -2,15 +2,21 @@ name: Release
 
 on:
   push:
-    branches: ['main']
+    branches:
+      - main
   pull_request_target:
-    branches: ['main']
+    branches:
+      - main
 
 jobs:
   test:
     name: Run Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
 
     env:
       NODE_ENV: production
@@ -40,6 +46,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.2.5
