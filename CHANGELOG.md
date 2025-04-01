@@ -1,3 +1,10 @@
+## [0.39.17](https://github.com/latechforce/engine/compare/v0.39.16...v0.39.17) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Form:** add green test: should not submit the form if the required field is empty ([aaf21ba](https://github.com/latechforce/engine/commit/aaf21bad8306517e1da0ea48689752b45d5799e7))
+
 ## [0.39.16](https://github.com/latechforce/engine/compare/v0.39.15...v0.39.16) (2025-04-01)
 
 
