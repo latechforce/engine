@@ -1,0 +1,12 @@
+repos:
+  - repo: local
+    hooks:
+      - id: bun-lint
+        name: Run bun lint
+        entry: bun run lint
+        language: system
+      - id: bun-build
+        name: Run bun build
+        entry: bun run build
+        language: system
+        always_run: true
