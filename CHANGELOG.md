@@ -1,3 +1,10 @@
+## [0.39.19](https://github.com/latechforce/engine/compare/v0.39.18...v0.39.19) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Form:** add green test: should create a record with an email input ([0b85118](https://github.com/latechforce/engine/commit/0b8511867dbc722b5f9c364d18efdf2454748583))
+
 ## [0.39.18](https://github.com/latechforce/engine/compare/v0.39.17...v0.39.18) (2025-04-01)
 
 
