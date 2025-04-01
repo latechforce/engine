@@ -1,3 +1,10 @@
+## [0.39.18](https://github.com/latechforce/engine/compare/v0.39.17...v0.39.18) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Form:** update green test to manage /user path for forms ([5d05bcc](https://github.com/latechforce/engine/commit/5d05bccd27a5a021b02478fc7bc3b251a8c53d7d))
+
 ## [0.39.17](https://github.com/latechforce/engine/compare/v0.39.16...v0.39.17) (2025-04-01)
 
 
