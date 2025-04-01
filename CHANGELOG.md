@@ -1,3 +1,10 @@
+## [0.39.14](https://github.com/latechforce/engine/compare/v0.39.13...v0.39.14) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Fetcher:** add green test: should run a Typescript code with a fetcher put ([2fe57af](https://github.com/latechforce/engine/commit/2fe57af05a56926228cbc0e1a9613ef5a62926ef))
+
 ## [0.39.13](https://github.com/latechforce/engine/compare/v0.39.12...v0.39.13) (2025-04-01)
 
 
