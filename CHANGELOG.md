@@ -1,3 +1,10 @@
+## [0.39.12](https://github.com/latechforce/engine/compare/v0.39.11...v0.39.12) (2025-04-01)
+
+
+### Bug Fixes
+
+* add console.log to theme for debug ([83cff9d](https://github.com/latechforce/engine/commit/83cff9d4a2fda3d832b20c877162e9f446178c65))
+
 ## [0.39.11](https://github.com/latechforce/engine/compare/v0.39.10...v0.39.11) (2025-04-01)
 
 
