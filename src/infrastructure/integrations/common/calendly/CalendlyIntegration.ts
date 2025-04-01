@@ -2,10 +2,12 @@ import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi
 import type { IntegrationResponseError } from '/domain/integrations/base'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 import type { CalendlyError } from '/domain/integrations/Calendly/CalendlyTypes'
+import type { GetAuthorizationCodeParams, GetAuthorizationCodeResponse, GetAccessTokenParams, GetAccessTokenResponse } from '/domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
 export class CalendlyIntegration implements ICalendlyIntegration {
   private _instance: AxiosInstance
+  private _authInstance: AxiosInstance
 
   constructor(config?: CalendlyConfig) {
     const headers = {
@@ -16,6 +18,14 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     this._instance = axios.create({
       baseURL: 'https://api.calendly.com',
       headers,
+    })
+
+    this._authInstance = axios.create({
+      baseURL: 'https://auth.calendly.com',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+      }
     })
   }
 
@@ -38,6 +48,65 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         return this._errorMapper(error.response)
       }
       throw error
+    }
+  }
+
+  getAuthorizationCode = async (params: GetAuthorizationCodeParams): Promise<{ data?: GetAuthorizationCodeResponse; error?: CalendlyError }> => {
+    try {
+      const response = await this._authInstance.get('/oauth/authorize', {
+        params: {
+          client_id: params.clientId,
+          response_type: 'code',
+          redirect_uri: params.redirectUri,
+          ...(params.codeChallengeMethod && { code_challenge_method: params.codeChallengeMethod }),
+          ...(params.codeChallenge && { code_challenge: params.codeChallenge })
+        }
+      })
+
+      // L'API Calendly redirige vers l'URL de redirection avec le code dans les paramètres
+      // Cette méthode retourne l'URL complète, le code devra être extrait côté client
+      return { data: { code: response.request.res.responseUrl } }
+    } catch (error: unknown) {
+      return {
+        error: {
+          error: 'authorization_failed',
+          errorDescription: error instanceof Error ? error.message : 'Failed to get authorization code'
+        }
+      }
+    }
+  }
+
+  getAccessToken = async (params: GetAccessTokenParams): Promise<{ data?: GetAccessTokenResponse; error?: CalendlyError }> => {
+    try {
+      const response = await this._authInstance.post('/oauth/token', {
+        client_id: params.clientId,
+        client_secret: params.clientSecret,
+        grant_type: params.grantType,
+        ...(params.code && { code: params.code }),
+        ...(params.refreshToken && { refresh_token: params.refreshToken }),
+        ...(params.redirectUri && { redirect_uri: params.redirectUri }),
+        ...(params.codeVerifier && { code_verifier: params.codeVerifier })
+      })
+
+      return {
+        data: {
+          tokenType: response.data.token_type,
+          accessToken: response.data.access_token,
+          refreshToken: response.data.refresh_token,
+          scope: response.data.scope,
+          createdAt: response.data.created_at,
+          expiresIn: response.data.expires_in,
+          owner: response.data.owner,
+          organization: response.data.organization
+        }
+      }
+    } catch (error: unknown) {
+      return {
+        error: {
+          error: 'token_failed',
+          errorDescription: error instanceof Error ? error.message : 'Failed to get access token'
+        }
+      }
     }
   }
 }
