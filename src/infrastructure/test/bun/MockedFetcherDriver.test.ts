@@ -29,7 +29,7 @@ describe('get', () => {
       expect(error).toBeInstanceOf(Error)
       if (error instanceof Error)
         expect(error.message).toBe(
-          'No matching endpoint found for URL: https://example.com/api/unknown'
+          'No matching GET endpoint found for URL: https://example.com/api/unknown'
         )
     }
   })
@@ -72,7 +72,50 @@ describe('post', () => {
       expect(error).toBeInstanceOf(Error)
       if (error instanceof Error)
         expect(error.message).toBe(
-          'No matching endpoint found for URL: https://example.com/api/unknown'
+          'No matching POST endpoint found for URL: https://example.com/api/unknown'
+        )
+    }
+  })
+})
+
+describe('put', () => {
+  it('should add and retrieve a PUT endpoint', async () => {
+    const fetcher = new MockedFetcherDriver()
+
+    fetcher.mock('PUT', 'https://example.com/api/put', async (request) => {
+      const requestBody = await request.json()
+      return new Response(JSON.stringify({ received: requestBody }), {
+        status: 201,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    })
+
+    const putData = { message: 'Hello' }
+    const response = await fetcher.put('https://example.com/api/put', putData)
+    const data = await response.json()
+
+    expect(response.status).toBe(201)
+    expect(data).toEqual({ received: putData })
+  })
+
+  it('should throw an error when no matching PUT endpoint is found', async () => {
+    const fetcher = new MockedFetcherDriver()
+
+    try {
+      await fetcher.put(
+        'https://example.com/api/unknown',
+        { test: 'data' },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error)
+      if (error instanceof Error)
+        expect(error.message).toBe(
+          'No matching PUT endpoint found for URL: https://example.com/api/unknown'
         )
     }
   })

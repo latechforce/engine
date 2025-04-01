@@ -6,6 +6,7 @@ export class MockedFetcherDriver implements IFetcherDriver {
   } = {
     GET: {},
     POST: {},
+    PUT: {},
   }
 
   get = async (url: string, options: RequestInit = {}) => {
@@ -15,7 +16,7 @@ export class MockedFetcherDriver implements IFetcherDriver {
     if (matchingUrl) {
       return this._endpoints.GET[matchingUrl](new Request(url, { method: 'GET', ...options }))
     }
-    throw new Error(`No matching endpoint found for URL: ${url}`)
+    throw new Error(`No matching GET endpoint found for URL: ${url}`)
   }
 
   post = async (url: string, body: object = {}, options: RequestInit = {}) => {
@@ -33,11 +34,29 @@ export class MockedFetcherDriver implements IFetcherDriver {
         })
       )
     }
-    throw new Error(`No matching endpoint found for URL: ${url}`)
+    throw new Error(`No matching POST endpoint found for URL: ${url}`)
+  }
+
+  put = async (url: string, body: object = {}, options: RequestInit = {}) => {
+    const matchingUrl = Object.keys(this._endpoints.PUT).find((endpoint) =>
+      url.startsWith(endpoint)
+    )
+    if (matchingUrl) {
+      const { headers = {}, ...rest } = options
+      return this._endpoints.PUT[matchingUrl](
+        new Request(url, {
+          method: 'PUT',
+          body: JSON.stringify(body),
+          headers: { 'Content-Type': 'application/json', ...headers },
+          ...rest,
+        })
+      )
+    }
+    throw new Error(`No matching PUT endpoint found for URL: ${url}`)
   }
 
   mock = async (
-    method: 'GET' | 'POST',
+    method: 'GET' | 'POST' | 'PUT',
     url: string,
     endpoint: (request: Request) => Promise<Response>
   ) => {
