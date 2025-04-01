@@ -9,6 +9,9 @@ export class ConsoleDriver extends BaseLoggerDriver {
         format.colorize(),
         format.timestamp(),
         format.printf(({ timestamp, level, message }) => {
+          if (process.env.NODE_ENV === 'production') {
+            return `[${level}]: ${message}`
+          }
           return `${timestamp} [${level}]: ${message}`
         })
       ),
