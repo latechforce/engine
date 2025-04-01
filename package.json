@@ -1,6 +1,6 @@
 {
   "name": "@latechforce/engine",
-  "description": "Open-source backend generator from a simple configuration.",
+  "description": "Web application generator from a configuration file as a Fair Use NPM package.",
   "version": "0.39.9",
   "main": "dist/index.js",
   "module": "dist/index.js",
