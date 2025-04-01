@@ -1,3 +1,10 @@
+## [0.39.7](https://github.com/latechforce/engine/compare/v0.39.6...v0.39.7) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Theme:** can build Tailwindcss theming without cli ([8bf4382](https://github.com/latechforce/engine/commit/8bf4382a29b92ad3cb36dc525b046728edaeb7da))
+
 ## [0.39.6](https://github.com/latechforce/engine/compare/v0.39.5...v0.39.6) (2025-03-28)
 
 
