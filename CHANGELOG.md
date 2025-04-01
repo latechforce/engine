@@ -1,3 +1,10 @@
+## [0.39.15](https://github.com/latechforce/engine/compare/v0.39.14...v0.39.15) (2025-04-01)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with sodium package ([e8fa623](https://github.com/latechforce/engine/commit/e8fa6236c1e1641ef203bf584d1be9674416e1ae))
+
 ## [0.39.14](https://github.com/latechforce/engine/compare/v0.39.13...v0.39.14) (2025-04-01)
 
 
