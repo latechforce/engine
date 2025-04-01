@@ -1,3 +1,10 @@
+## [0.39.9](https://github.com/latechforce/engine/compare/v0.39.8...v0.39.9) (2025-04-01)
+
+
+### Bug Fixes
+
+* update schema ([45f966c](https://github.com/latechforce/engine/commit/45f966cc87eba62c9314aaea19155949e83f7e51))
+
 ## [0.39.8](https://github.com/latechforce/engine/compare/v0.39.7...v0.39.8) (2025-04-01)
 
 
