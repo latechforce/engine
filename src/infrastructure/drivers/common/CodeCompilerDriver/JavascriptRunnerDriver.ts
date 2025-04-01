@@ -56,6 +56,8 @@ const globalContext = {
   URLSearchParams: global.URLSearchParams,
   setTimeout: setTimeout,
   console: console,
+  TextEncoder: global.TextEncoder,
+  TextDecoder: global.TextDecoder,
 }
 
 export class JavascriptRunnerDriver implements ICodeRunnerDriver {
