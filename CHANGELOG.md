@@ -1,3 +1,10 @@
+## [0.39.11](https://github.com/latechforce/engine/compare/v0.39.10...v0.39.11) (2025-04-01)
+
+
+### Bug Fixes
+
+* **Theme:** add error caching for Postcss ([ebfd43e](https://github.com/latechforce/engine/commit/ebfd43ec4d8dae65a53ccdb8b20bfb9454ddb3f2))
+
 ## [0.39.10](https://github.com/latechforce/engine/compare/v0.39.9...v0.39.10) (2025-04-01)
 
 
