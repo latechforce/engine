@@ -1,3 +1,10 @@
+## [0.39.16](https://github.com/latechforce/engine/compare/v0.39.15...v0.39.16) (2025-04-01)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with the native TextEncoder class ([45f524e](https://github.com/latechforce/engine/commit/45f524e1cbb2bfd4341c09cddcf0d686a3efa3f4))
+
 ## [0.39.15](https://github.com/latechforce/engine/compare/v0.39.14...v0.39.15) (2025-04-01)
 
 
