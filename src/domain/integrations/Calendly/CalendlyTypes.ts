@@ -39,3 +39,55 @@ export type WebhookEvents =
   | 'invitee_no_show.created'
   | 'invitee_no_show.deleted'
   | 'routing_form_submission.created'
+
+export type ListWebhookSubscriptionsParams = {
+  organization?: CalendlyOrganizationResourceUrl
+  user?: CalendlyUserResourceUrl
+  scope?: CalendlyScope
+  count?: number
+  pageToken?: string
+}
+
+export type ListWebhookSubscriptionsResponse = {
+  collection: WebhookSubscriptionItem[]
+  pagination: {
+    count: number
+    next_page: string | null
+    previous_page: string | null
+    next_page_token: string | null
+    previous_page_token: string | null
+  }
+}
+
+export type WebhookSubscriptionItem = {
+  uri: string
+  callback_url: string
+  created_at: string
+  updated_at: string
+  retry_started_at: string | null
+  state: CalendlyWebhookState
+  events: WebhookEvents[]
+  scope: CalendlyScope
+  organization: string
+  user: string | null
+  creator: string
+}
+
+export type CalendlyUserResponse = {
+  resource: CalendlyUser
+}
+
+export type CalendlyUser = {
+  uri: string
+  name: string
+  slug: string
+  email: string
+  scheduling_url: string
+  timezone: string
+  avatar_url: string
+  created_at: string
+  updated_at: string
+  current_organization: string
+  resource_type: string
+  locale: string
+}

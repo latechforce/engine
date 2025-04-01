@@ -1,7 +1,11 @@
 import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi'
 import type {
+  CalendlyUser,
   CreateWebhookSubscriptionParams,
   CreateWebhookSubscriptionResponse,
+  ListWebhookSubscriptionsParams,
+  ListWebhookSubscriptionsResponse,
+  WebhookSubscriptionItem,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import { Database } from 'bun:sqlite'
 import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
@@ -13,6 +17,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   constructor(private _config?: CalendlyConfig) {
     this.db = new Database(':memory:')
     this.db.run(`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)`)
+    const userId = this._config?.user.accessToken ?? ''
+    this.db.run(`INSERT INTO users (id) VALUES (?)`, [userId])
 
     // Table pour stocker les webhooks
     this.db.run(`
@@ -30,6 +36,80 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         creator TEXT NOT NULL
       )
     `)
+    this.db.run(
+      `
+        INSERT INTO WebhookSubscriptions (
+          uri, callback_url, created_at, updated_at, retry_started_at,
+        state, events, scope, organization, user, creator
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+      [
+        // Webhook 1
+        'https://api.calendly.com/webhook_subscriptions/123',
+        'https://example.com/webhook1',
+        '2023-01-01T00:00:00Z',
+        '2023-01-01T00:00:00Z',
+        null,
+        'active',
+        JSON.stringify(['invitee.created', 'invitee.canceled']),
+        'organization',
+        'https://api.calendly.com/organizations/ABCDEF',
+        null,
+        'https://api.calendly.com/users/123',
+
+        // Webhook 2
+        'https://api.calendly.com/webhook_subscriptions/456',
+        'https://example.com/webhook2',
+        '2023-02-01T00:00:00Z',
+        '2023-02-01T00:00:00Z',
+        null,
+        'active',
+        JSON.stringify(['invitee.created']),
+        'user',
+        'https://api.calendly.com/organizations/ABCDEF',
+        'https://api.calendly.com/users/456',
+        'https://api.calendly.com/users/456',
+
+        // Webhook 3
+        'https://api.calendly.com/webhook_subscriptions/789',
+        'https://example.com/webhook3',
+        '2023-03-01T00:00:00Z',
+        '2023-03-01T00:00:00Z',
+        '2023-03-02T00:00:00Z',
+        'disabled',
+        JSON.stringify(['invitee.canceled']),
+        'organization',
+        'https://api.calendly.com/organizations/ABCDEF',
+        null,
+        'https://api.calendly.com/users/789',
+
+        // Webhook 4
+        'https://api.calendly.com/webhook_subscriptions/abc',
+        'https://example.com/webhook4',
+        '2023-04-01T00:00:00Z',
+        '2023-04-01T00:00:00Z',
+        null,
+        'active',
+        JSON.stringify(['invitee_no_show.created']),
+        'user',
+        'https://api.calendly.com/organizations/ABCDEF',
+        'https://api.calendly.com/users/abc',
+        'https://api.calendly.com/users/abc',
+
+        // Webhook 5
+        'https://api.calendly.com/webhook_subscriptions/def',
+        'https://example.com/webhook5',
+        '2023-05-01T00:00:00Z',
+        '2023-05-01T00:00:00Z',
+        null,
+        'active',
+        JSON.stringify(['routing_form_submission.created']),
+        'organization',
+        'https://api.calendly.com/organizations/ABCDEF',
+        null,
+        'https://api.calendly.com/users/def',
+      ]
+    )
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
@@ -85,5 +165,35 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     )
 
     return { data: subscription }
+  }
+
+  listWebhookSubscriptions = async (
+    _params: ListWebhookSubscriptionsParams
+  ): Promise<IntegrationResponse<ListWebhookSubscriptionsResponse>> => {
+    const result = this.db
+      .query<WebhookSubscriptionItem, []>('SELECT * FROM WebhookSubscriptions')
+      .all()
+    return {
+      data: {
+        collection: result,
+        pagination: {
+          count: result.length,
+          next_page: '1',
+          previous_page: '1',
+          next_page_token: '',
+          previous_page_token: '',
+        },
+      },
+    }
+  }
+
+  currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
+    const user = this.db
+      .query<CalendlyUser, string>('SELECT * FROM users WHERE id = ?')
+      .get(this._config?.user.accessToken ?? '')
+    if (!user) {
+      return { error: { status: 404, message: 'User not found' } }
+    }
+    return { data: user }
   }
 }
