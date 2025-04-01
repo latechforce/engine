@@ -4,6 +4,7 @@ import type { StorageConfig } from '/domain/services/Storage'
 import type { LoggersConfig } from '/domain/services/Logger'
 import type { CodeCompilerConfig } from '/domain/services/CodeCompiler'
 import type { TunnelConfig } from '/domain/services/Tunnel'
+import type { ThemeConfig } from '/domain/services/Theme'
 
 import { StorageDriver } from './StorageDriver'
 import { SchemaValidatorDriver } from './SchemaValidatorDriver'
@@ -17,13 +18,15 @@ import { TunnelDriver } from './TunnelDriver'
 import { FetcherDriver } from './FetcherDriver'
 import { CronDriver } from './CronDriver'
 import { ClientDriver } from './ClientDriver'
+import { ThemeDriver } from './ThemeDriver'
 
-export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server' | 'theme'> = {
+export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server'> = {
   tunnel: (config?: TunnelConfig) => new TunnelDriver(config),
   queue: (config: QueueConfig) => new QueueDriver(config),
   storage: (config: StorageConfig) => new StorageDriver(config),
   logger: (config: LoggersConfig) => new LoggerDriver(config),
   codeCompiler: (config: CodeCompilerConfig) => new CodeCompilerDriver(config),
+  theme: (config: ThemeConfig) => new ThemeDriver(config),
   templateCompiler: () => new TemplateCompilerDriver(),
   schemaValidator: () => new SchemaValidatorDriver(),
   idGenerator: () => new IdGeneratorDriver(),

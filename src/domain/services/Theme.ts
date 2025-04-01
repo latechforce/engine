@@ -9,7 +9,6 @@ export interface ThemeConfigNone {
 
 export interface ThemeConfigTailwindCSS {
   type: 'tailwindcss'
-  tmpDir?: string
 }
 
 export type ThemeConfig = ThemeConfigNone | ThemeConfigTailwindCSS

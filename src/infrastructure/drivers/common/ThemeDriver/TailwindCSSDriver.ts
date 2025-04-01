@@ -1,12 +1,11 @@
 import type { IThemeDriver } from '/adapter/spi/drivers/ThemeSpi'
-import type { ThemeConfigTailwindCSS } from '/domain/services/Theme'
 import tailwindcss from '@tailwindcss/postcss'
 import postcss from 'postcss'
 import fs from 'fs-extra'
 import { join } from 'path'
 
 export class TailwindCSSDriver implements IThemeDriver {
-  constructor(private _config: ThemeConfigTailwindCSS) {}
+  constructor() {}
 
   buildCss = async (): Promise<string> => {
     const input = `
