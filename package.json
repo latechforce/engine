@@ -84,7 +84,7 @@
     "pg-boss": "^10.1.6",
     "postcss": "^8.5.3",
     "preline": "^3.0.1",
-    "puppeteer": "^24.4.0",
+    "puppeteer": "^24.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "slugify": "^1.6.6",
