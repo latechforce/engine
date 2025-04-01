@@ -65,4 +65,9 @@ export type CalendlyScope = 'organization' | 'user'
 
 export type CalendlyWebhookState = 'active' | 'disabled'
 
-export type WebhookEvents = "invitee.created" | "invitee.canceled" | "invitee_no_show.created" | "invitee_no_show.deleted" | "routing_form_submission.created"
+export type WebhookEvents =
+  | 'invitee.created'
+  | 'invitee.canceled'
+  | 'invitee_no_show.created'
+  | 'invitee_no_show.deleted'
+  | 'routing_form_submission.created'

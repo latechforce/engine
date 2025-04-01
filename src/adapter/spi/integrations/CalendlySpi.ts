@@ -1,6 +1,10 @@
 import { BaseSpi } from './base'
 import type { ICalendlySpi } from '/domain/integrations/Calendly/ICalendlySpi'
-import type { GetAuthorizationCodeParams, GetAuthorizationCodeResponse, GetAccessTokenParams, GetAccessTokenResponse, CreateWebhookSubscriptionParams, CreateWebhookSubscriptionResponse } from '/domain/integrations/Calendly/CalendlyTypes'
+import type {
+  GetAuthorizationCodeParams,
+  GetAccessTokenParams,
+  CreateWebhookSubscriptionParams,
+} from '/domain/integrations/Calendly/CalendlyTypes'
 
 export type ICalendlyIntegration = ICalendlySpi
 

@@ -2,7 +2,14 @@ import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi
 import type { IntegrationResponseError } from '/domain/integrations/base'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 import type { CalendlyError } from '/domain/integrations/Calendly/CalendlyTypes'
-import type { GetAuthorizationCodeParams, GetAuthorizationCodeResponse, GetAccessTokenParams, GetAccessTokenResponse, CreateWebhookSubscriptionParams, CreateWebhookSubscriptionResponse } from '/domain/integrations/Calendly/CalendlyTypes'
+import type {
+  GetAuthorizationCodeParams,
+  GetAuthorizationCodeResponse,
+  GetAccessTokenParams,
+  GetAccessTokenResponse,
+  CreateWebhookSubscriptionParams,
+  CreateWebhookSubscriptionResponse,
+} from '/domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
 export class CalendlyIntegration implements ICalendlyIntegration {
@@ -25,7 +32,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json',
-      }
+      },
     })
   }
 
@@ -51,7 +58,9 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     }
   }
 
-  getAuthorizationCode = async (params: GetAuthorizationCodeParams): Promise<{ data?: GetAuthorizationCodeResponse; error?: CalendlyError }> => {
+  getAuthorizationCode = async (
+    params: GetAuthorizationCodeParams
+  ): Promise<{ data?: GetAuthorizationCodeResponse; error?: CalendlyError }> => {
     try {
       const response = await this._authInstance.get('/oauth/authorize', {
         params: {
@@ -59,8 +68,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
           response_type: 'code',
           redirect_uri: params.redirectUri,
           ...(params.codeChallengeMethod && { code_challenge_method: params.codeChallengeMethod }),
-          ...(params.codeChallenge && { code_challenge: params.codeChallenge })
-        }
+          ...(params.codeChallenge && { code_challenge: params.codeChallenge }),
+        },
       })
 
       // L'API Calendly redirige vers l'URL de redirection avec le code dans les paramètres
@@ -70,13 +79,16 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       return {
         error: {
           error: 'authorization_failed',
-          errorDescription: error instanceof Error ? error.message : 'Failed to get authorization code'
-        }
+          errorDescription:
+            error instanceof Error ? error.message : 'Failed to get authorization code',
+        },
       }
     }
   }
 
-  getAccessToken = async (params: GetAccessTokenParams): Promise<{ data?: GetAccessTokenResponse; error?: CalendlyError }> => {
+  getAccessToken = async (
+    params: GetAccessTokenParams
+  ): Promise<{ data?: GetAccessTokenResponse; error?: CalendlyError }> => {
     try {
       const response = await this._authInstance.post('/oauth/token', {
         client_id: params.clientId,
@@ -85,7 +97,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         ...(params.code && { code: params.code }),
         ...(params.refreshToken && { refresh_token: params.refreshToken }),
         ...(params.redirectUri && { redirect_uri: params.redirectUri }),
-        ...(params.codeVerifier && { code_verifier: params.codeVerifier })
+        ...(params.codeVerifier && { code_verifier: params.codeVerifier }),
       })
 
       return {
@@ -97,27 +109,29 @@ export class CalendlyIntegration implements ICalendlyIntegration {
           createdAt: response.data.created_at,
           expiresIn: response.data.expires_in,
           owner: response.data.owner,
-          organization: response.data.organization
-        }
+          organization: response.data.organization,
+        },
       }
     } catch (error: unknown) {
       return {
         error: {
           error: 'token_failed',
-          errorDescription: error instanceof Error ? error.message : 'Failed to get access token'
-        }
+          errorDescription: error instanceof Error ? error.message : 'Failed to get access token',
+        },
       }
     }
   }
 
-  createWebhookSubscription = async (params: CreateWebhookSubscriptionParams): Promise<{ data?: CreateWebhookSubscriptionResponse; error?: CalendlyError }> => {
+  createWebhookSubscription = async (
+    params: CreateWebhookSubscriptionParams
+  ): Promise<{ data?: CreateWebhookSubscriptionResponse; error?: CalendlyError }> => {
     try {
       const response = await this._instance.post('/webhook_subscriptions', {
         url: params.url,
         events: params.events,
         ...(params.organization && { organization: params.organization }),
         ...(params.user && { user: params.user }),
-        ...(params.scope && { scope: params.scope })
+        ...(params.scope && { scope: params.scope }),
       })
 
       return {
@@ -132,15 +146,16 @@ export class CalendlyIntegration implements ICalendlyIntegration {
           scope: response.data.scope,
           organization: response.data.organization,
           user: response.data.user,
-          creator: response.data.creator
-        }
+          creator: response.data.creator,
+        },
       }
     } catch (error: unknown) {
       return {
         error: {
           error: 'webhook_subscription_failed',
-          errorDescription: error instanceof Error ? error.message : 'Failed to create webhook subscription'
-        }
+          errorDescription:
+            error instanceof Error ? error.message : 'Failed to create webhook subscription',
+        },
       }
     }
   }
