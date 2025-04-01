@@ -1,3 +1,3 @@
 import { Calendly } from './Calendly'
 
-export default Calendly
+export { Calendly }

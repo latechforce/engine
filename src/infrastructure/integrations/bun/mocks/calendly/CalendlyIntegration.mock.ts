@@ -9,7 +9,7 @@ import type {
   CreateWebhookSubscriptionResponse,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import { Database } from 'bun:sqlite'
-import type { IntegrationResponseError } from '/domain/integrations/base'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 
 export class CalendlyIntegration implements ICalendlyIntegration {
@@ -64,14 +64,14 @@ export class CalendlyIntegration implements ICalendlyIntegration {
 
   getAuthorizationCode = async (
     _params: GetAuthorizationCodeParams
-  ): Promise<{ data?: GetAuthorizationCodeResponse; error?: CalendlyError }> => {
+  ): Promise<IntegrationResponse<GetAuthorizationCodeResponse>> => {
     // En mode mock, on simule une URL de redirection avec un code
     return { data: { code: `https://example.com/callback?code=mock_auth_code` } }
   }
 
   getAccessToken = async (
     _params: GetAccessTokenParams
-  ): Promise<{ data?: GetAccessTokenResponse; error?: CalendlyError }> => {
+  ): Promise<IntegrationResponse<GetAccessTokenResponse>> => {
     const mockToken: GetAccessTokenResponse = {
       tokenType: 'Bearer',
       accessToken: 'mock_access_token',
@@ -108,7 +108,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
 
   createWebhookSubscription = async (
     params: CreateWebhookSubscriptionParams
-  ): Promise<{ data?: CreateWebhookSubscriptionResponse; error?: CalendlyError }> => {
+  ): Promise<IntegrationResponse<CreateWebhookSubscriptionResponse>> => {
     const uri = `https://api.calendly.com/webhook_subscriptions/${Math.random().toString(36).substring(7)}`
     const now = new Date().toISOString()
 

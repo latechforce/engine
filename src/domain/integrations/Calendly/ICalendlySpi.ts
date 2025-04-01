@@ -1,10 +1,9 @@
-import type { BaseSpi } from '../base'
+import type { BaseSpi, IntegrationResponse } from '../base'
 import type {
   GetAuthorizationCodeParams,
   GetAuthorizationCodeResponse,
   GetAccessTokenParams,
   GetAccessTokenResponse,
-  CalendlyError,
   CreateWebhookSubscriptionParams,
   CreateWebhookSubscriptionResponse,
 } from './CalendlyTypes'
@@ -12,11 +11,11 @@ import type {
 export interface ICalendlySpi extends BaseSpi {
   getAuthorizationCode: (
     params: GetAuthorizationCodeParams
-  ) => Promise<{ data?: GetAuthorizationCodeResponse; error?: CalendlyError }>
+  ) => Promise<IntegrationResponse<GetAuthorizationCodeResponse>>
   getAccessToken: (
     params: GetAccessTokenParams
-  ) => Promise<{ data?: GetAccessTokenResponse; error?: CalendlyError }>
+  ) => Promise<IntegrationResponse<GetAccessTokenResponse>>
   createWebhookSubscription: (
     params: CreateWebhookSubscriptionParams
-  ) => Promise<{ data?: CreateWebhookSubscriptionResponse; error?: CalendlyError }>
+  ) => Promise<IntegrationResponse<CreateWebhookSubscriptionResponse>>
 }

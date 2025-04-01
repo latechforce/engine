@@ -1,5 +1,5 @@
 import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi'
-import type { IntegrationResponseError } from '/domain/integrations/base'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 import type { CalendlyError } from '/domain/integrations/Calendly/CalendlyTypes'
 import type {
@@ -37,11 +37,11 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   }
 
   private _errorMapper = (response: AxiosResponse<CalendlyError>): IntegrationResponseError => {
-    const { title, message } = response.data
+    const { error, errorDescription } = response.data as CalendlyError
     return {
       error: {
         status: response.status,
-        message: `${title}: ${message}`,
+        message: `${error}: ${errorDescription}`,
       },
     }
   }
@@ -60,7 +60,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
 
   getAuthorizationCode = async (
     params: GetAuthorizationCodeParams
-  ): Promise<{ data?: GetAuthorizationCodeResponse; error?: CalendlyError }> => {
+  ): Promise<IntegrationResponse<GetAuthorizationCodeResponse>> => {
     try {
       const response = await this._authInstance.get('/oauth/authorize', {
         params: {
@@ -76,19 +76,16 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       // Cette méthode retourne l'URL complète, le code devra être extrait côté client
       return { data: { code: response.request.res.responseUrl } }
     } catch (error: unknown) {
-      return {
-        error: {
-          error: 'authorization_failed',
-          errorDescription:
-            error instanceof Error ? error.message : 'Failed to get authorization code',
-        },
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
       }
+      throw error
     }
   }
 
   getAccessToken = async (
     params: GetAccessTokenParams
-  ): Promise<{ data?: GetAccessTokenResponse; error?: CalendlyError }> => {
+  ): Promise<IntegrationResponse<GetAccessTokenResponse>> => {
     try {
       const response = await this._authInstance.post('/oauth/token', {
         client_id: params.clientId,
@@ -113,18 +110,16 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         },
       }
     } catch (error: unknown) {
-      return {
-        error: {
-          error: 'token_failed',
-          errorDescription: error instanceof Error ? error.message : 'Failed to get access token',
-        },
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
       }
+      throw error
     }
   }
 
   createWebhookSubscription = async (
     params: CreateWebhookSubscriptionParams
-  ): Promise<{ data?: CreateWebhookSubscriptionResponse; error?: CalendlyError }> => {
+  ): Promise<IntegrationResponse<CreateWebhookSubscriptionResponse>> => {
     try {
       const response = await this._instance.post('/webhook_subscriptions', {
         url: params.url,
@@ -150,13 +145,10 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         },
       }
     } catch (error: unknown) {
-      return {
-        error: {
-          error: 'webhook_subscription_failed',
-          errorDescription:
-            error instanceof Error ? error.message : 'Failed to create webhook subscription',
-        },
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
       }
+      throw error
     }
   }
 }
