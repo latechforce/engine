@@ -35,7 +35,7 @@ it('should match the email input snapshot with description', async () => {
   expect(html).toMatchSnapshot()
 })
 
-it('should match the text input snapshot with label and description', async () => {
+it('should match the email input snapshot with label and description', async () => {
   // GIVEN
   const input = <EmailInput field="email" label="Email" description="Description" />
 
