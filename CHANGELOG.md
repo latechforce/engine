@@ -1,3 +1,10 @@
+## [0.39.8](https://github.com/latechforce/engine/compare/v0.39.7...v0.39.8) (2025-04-01)
+
+
+### Bug Fixes
+
+* update logger message for production ([9a9c024](https://github.com/latechforce/engine/commit/9a9c0249571e971186014e0385bf4b2329534969))
+
 ## [0.39.7](https://github.com/latechforce/engine/compare/v0.39.6...v0.39.7) (2025-04-01)
 
 ### Bug Fixes
