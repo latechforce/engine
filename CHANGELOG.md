@@ -1,3 +1,11 @@
+## [0.39.21](https://github.com/latechforce/engine/compare/v0.39.20...v0.39.21) (2025-04-02)
+
+
+### Bug Fixes
+
+* **Record:** add green test: getFieldAsAttachments returns attachment arrays correctly ([1871db4](https://github.com/latechforce/engine/commit/1871db4a79ca0b2ebc35bdf9f268aa82fb2f5f0b))
+* **RunTypescript:** add gree test: should run a Typescript code with MistralAI package ([c85a637](https://github.com/latechforce/engine/commit/c85a637bf161e1f26cd629afacadcdfae4a8edb6))
+
 ## [0.39.20](https://github.com/latechforce/engine/compare/v0.39.19...v0.39.20) (2025-04-01)
 
 
