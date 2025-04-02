@@ -704,5 +704,48 @@ mock.request(({ app, request }) => {
       // THEN
       expect(response.exist).toBeTruthy()
     })
+
+    it('should run a Typescript code with xlsx package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'xlsx',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'xlsx',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { XLSX },
+                  } = context
+                  return { exist: !!XLSX.utils.sheet_to_json }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/xlsx`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
   })
 })

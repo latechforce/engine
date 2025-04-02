@@ -92,6 +92,7 @@
     "tailwindcss": "^4.0.17",
     "uuid": "^11.1.0",
     "winston": "^3.17.0",
+    "xlsx": "^0.18.5",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
