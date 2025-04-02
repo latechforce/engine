@@ -92,7 +92,7 @@ export interface CodeRunnerContextPackages {
   slugify: typeof import('slugify').default
   sodium: typeof import('libsodium-wrappers')
   Mistral: typeof import('@mistralai/mistralai').Mistral
-  XLSX: typeof import('xlsx')
+  ExcelJS: typeof import('exceljs')
 }
 
 export interface CodeRunnerContext<I extends object = {}> {

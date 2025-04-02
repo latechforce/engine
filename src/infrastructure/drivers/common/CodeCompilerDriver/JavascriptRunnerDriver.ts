@@ -25,7 +25,7 @@ import fsExtra from 'fs-extra'
 import slugify from 'slugify'
 import sodium from 'libsodium-wrappers'
 import { Mistral } from '@mistralai/mistralai'
-import XLSX from 'xlsx'
+import ExcelJS from 'exceljs'
 
 export const packages: CodeRunnerContextPackages = {
   xml2js,
@@ -45,7 +45,7 @@ export const packages: CodeRunnerContextPackages = {
   slugify,
   sodium,
   Mistral,
-  XLSX,
+  ExcelJS,
 }
 
 const globalContext = {
