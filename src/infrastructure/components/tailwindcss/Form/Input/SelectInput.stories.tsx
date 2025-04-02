@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { SingleSelectInput } from './SingleSelectInput'
+import { SelectInput } from './SelectInput'
 import { Form } from '../Form'
-import type { SingleSelectInputProps } from '/domain/components/Form/Input/SingleSelectInput'
+import type { SelectInputProps } from '/domain/components/Form/Input/SelectInput'
 
-const SingleSelectInputWithForm = (props: SingleSelectInputProps) => (
+const SelectInputWithForm = (props: SelectInputProps) => (
   <Form id="id" title="Form" submitLabel="Save">
-    <SingleSelectInput {...props} />
+    <SelectInput {...props} />
   </Form>
 )
 
 const meta = {
-  title: 'Form/SingleSelectInput',
-  component: SingleSelectInputWithForm,
+  title: 'Form/SelectInput',
+  component: SelectInputWithForm,
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof SingleSelectInputWithForm>
+} satisfies Meta<typeof SelectInputWithForm>
 
 export default meta
 type Story = StoryObj<typeof meta>

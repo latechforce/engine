@@ -1,10 +1,10 @@
 import { it, expect } from 'bun:test'
-import { SingleSelectInput } from './SingleSelectInput'
+import { SelectInput } from './SelectInput'
 import { renderToString } from 'react-dom/server'
 
-it('should match the single select input snapshot', async () => {
+it('should match the select input snapshot', async () => {
   // GIVEN
-  const input = <SingleSelectInput field="name" options={['Option 1', 'Option 2', 'Option 3']} />
+  const input = <SelectInput field="name" options={['Option 1', 'Option 2', 'Option 3']} />
 
   // WHEN
   const html = renderToString(input)
@@ -13,10 +13,10 @@ it('should match the single select input snapshot', async () => {
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with label', async () => {
+it('should match the select input snapshot with label', async () => {
   // GIVEN
   const input = (
-    <SingleSelectInput field="name" label="Name" options={['Option 1', 'Option 2', 'Option 3']} />
+    <SelectInput field="name" label="Name" options={['Option 1', 'Option 2', 'Option 3']} />
   )
 
   // WHEN
@@ -26,10 +26,10 @@ it('should match the single select input snapshot with label', async () => {
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with description', async () => {
+it('should match the select input snapshot with description', async () => {
   // GIVEN
   const input = (
-    <SingleSelectInput
+    <SelectInput
       field="name"
       description="Description"
       options={['Option 1', 'Option 2', 'Option 3']}
@@ -43,10 +43,10 @@ it('should match the single select input snapshot with description', async () =>
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with label and description', async () => {
+it('should match the select input snapshot with label and description', async () => {
   // GIVEN
   const input = (
-    <SingleSelectInput
+    <SelectInput
       field="name"
       label="Name"
       description="Description"
@@ -61,10 +61,10 @@ it('should match the single select input snapshot with label and description', a
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with placeholder', async () => {
+it('should match the select input snapshot with placeholder', async () => {
   // GIVEN
   const input = (
-    <SingleSelectInput
+    <SelectInput
       field="name"
       placeholder="Placeholder"
       options={['Option 1', 'Option 2', 'Option 3']}
@@ -78,11 +78,9 @@ it('should match the single select input snapshot with placeholder', async () =>
   expect(html).toMatchSnapshot()
 })
 
-it('should match the single select input snapshot with required', async () => {
+it('should match the select input snapshot with required', async () => {
   // GIVEN
-  const input = (
-    <SingleSelectInput field="name" required options={['Option 1', 'Option 2', 'Option 3']} />
-  )
+  const input = <SelectInput field="name" required options={['Option 1', 'Option 2', 'Option 3']} />
 
   // WHEN
   const html = renderToString(input)

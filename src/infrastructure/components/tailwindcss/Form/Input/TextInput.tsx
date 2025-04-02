@@ -1,7 +1,7 @@
 import { InputContext } from './BaseInput'
-import type { SingleLineTextInputProps } from '/domain/components/Form/Input/SingleLineTextInput'
+import type { TextInputProps } from '/domain/components/Form/Input/TextInput'
 
-export const SingleLineTextInput = ({
+export const TextInput = ({
   field,
   label,
   description,
@@ -9,7 +9,7 @@ export const SingleLineTextInput = ({
   required,
   minLength,
   maxLength,
-}: SingleLineTextInputProps) => {
+}: TextInputProps) => {
   return (
     <InputContext label={label} description={description} field={field} required={required}>
       <input

@@ -1,7 +1,7 @@
 import { InputContext } from './BaseInput'
-import type { LongTextInputProps } from '/domain/components/Form/Input/LongTextInput'
+import type { TextareaInputProps } from '/domain/components/Form/Input/TextareaInput'
 
-export const LongTextInput = ({
+export const TextareaInput = ({
   field,
   label,
   description,
@@ -9,7 +9,7 @@ export const LongTextInput = ({
   required,
   minLength,
   maxLength,
-}: LongTextInputProps) => {
+}: TextareaInputProps) => {
   return (
     <InputContext label={label} description={description} field={field} required={required}>
       <textarea

@@ -1,28 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { LongTextInput } from './LongTextInput'
+import { TextInput } from './TextInput'
 import { Form } from '../Form'
-import type { LongTextInputProps } from '/domain/components/Form/Input/LongTextInput'
+import type { TextInputProps } from '/domain/components/Form/Input/TextInput'
 
-const LongTextInputWithForm = (props: LongTextInputProps) => (
+const TextInputWithForm = (props: TextInputProps) => (
   <Form id="id" title="Form" submitLabel="Save">
-    <LongTextInput {...props} />
+    <TextInput {...props} />
   </Form>
 )
 
 const meta = {
-  title: 'Form/LongTextInput',
-  component: LongTextInputWithForm,
+  title: 'Form/TextInput',
+  component: TextInputWithForm,
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof LongTextInputWithForm>
+} satisfies Meta<typeof TextInputWithForm>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    type: 'text',
     field: 'single_line_text',
     label: 'Single Line Text',
     description: 'This is a description',

@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { EmailInput } from './EmailInput'
+import { TextareaInput } from './TextareaInput'
 import { Form } from '../Form'
-import type { EmailInputProps } from '/domain/components/Form/Input/EmailInput'
+import type { TextareaInputProps } from '/domain/components/Form/Input/TextareaInput'
 
-const EmailInputWithForm = (props: EmailInputProps) => (
+const TextareaInputWithForm = (props: TextareaInputProps) => (
   <Form id="id" title="Form" submitLabel="Save">
-    <EmailInput {...props} />
+    <TextareaInput {...props} />
   </Form>
 )
 
 const meta = {
-  title: 'Form/EmailInput',
-  component: EmailInputWithForm,
+  title: 'Form/TextareaInput',
+  component: TextareaInputWithForm,
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof EmailInputWithForm>
+} satisfies Meta<typeof TextareaInputWithForm>
 
 export default meta
 type Story = StoryObj<typeof meta>

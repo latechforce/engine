@@ -1,16 +1,16 @@
 import { InputContext } from './BaseInput'
-import type { SingleSelectInputProps } from '/domain/components/Form/Input/SingleSelectInput'
+import type { SelectInputProps } from '/domain/components/Form/Input/SelectInput'
 
 // https://preline.co/docs/advanced-select.html
 
-export const SingleSelectInput = ({
+export const SelectInput = ({
   field,
   label,
   description,
   placeholder,
   required,
   options,
-}: SingleSelectInputProps) => {
+}: SelectInputProps) => {
   return (
     <InputContext label={label} description={description} field={field} required={required}>
       <select

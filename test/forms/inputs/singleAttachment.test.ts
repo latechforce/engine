@@ -16,8 +16,8 @@ mock.page(({ app, browser, drivers }) => {
           table: 'table',
           inputs: [
             {
-              field: 'multiple_attachment',
-              label: 'Multiple Attachment',
+              field: 'single_attachment',
+              label: 'Single Attachment',
             },
           ],
         },
@@ -27,15 +27,15 @@ mock.page(({ app, browser, drivers }) => {
           name: 'table',
           fields: [
             {
-              name: 'multiple_attachment',
-              type: 'MultipleAttachment',
+              name: 'single_attachment',
+              type: 'SingleAttachment',
             },
           ],
         },
       ],
     }
 
-    it('should display the multiple attachments input', async () => {
+    it('should display the single attachment input', async () => {
       // GIVEN
       const { url } = await app.start(config)
       const page = await browser.newPage()
@@ -44,40 +44,34 @@ mock.page(({ app, browser, drivers }) => {
       await page.goto(`${url}/form/path`)
 
       // THEN
-      expect(page.content()).resolves.toContain('Multiple Attachment')
+      expect(page.content()).resolves.toContain('Single Attachment')
     })
 
-    it('should create a record with a multiple attachment input', async () => {
+    it('should create a record with a single attachment input', async () => {
       // GIVEN
       const page = await browser.newPage()
       const table = drivers.database.table(config.tables![0])
       const { url } = await app.start(config)
 
       // Create two test files
-      const filePath1 = './tmp/test1.txt'
-      const filePath2 = './tmp/test2.csv'
-      await Bun.write(filePath1, 'Hello, world!')
-      await Bun.write(filePath2, 'Hello, world 2!')
+      const filePath = './tmp/test3.txt'
+      await Bun.write(filePath, 'Hello, world!')
 
       // WHEN
       await page.goto(`${url}/form/path`)
       const fileInput = await page.waitForSelector('input[type="file"]')
-      await fileInput?.uploadFile(filePath1, filePath2)
+      await fileInput?.uploadFile(filePath)
       await page.click('button[type="submit"]')
       await page.waitForText('submitted')
 
       // THEN
       const records = await table.list<{
-        multiple_attachment: RecordFieldAttachment[]
+        single_attachment: RecordFieldAttachment
       }>()
       expect(records).toHaveLength(1)
-      expect(records[0].fields.multiple_attachment).toHaveLength(2)
-      expect(records[0].fields.multiple_attachment?.[0].name).toBe('test1.txt')
-      expect(records[0].fields.multiple_attachment?.[0].mime_type).toBe('text/plain')
-      expect(records[0].fields.multiple_attachment?.[0].url).toStartWith(url)
-      expect(records[0].fields.multiple_attachment?.[1].name).toBe('test2.csv')
-      expect(records[0].fields.multiple_attachment?.[1].mime_type).toBe('text/csv')
-      expect(records[0].fields.multiple_attachment?.[1].url).toStartWith(url)
+      expect(records[0].fields.single_attachment?.name).toBe('test3.txt')
+      expect(records[0].fields.single_attachment?.mime_type).toBe('text/plain')
+      expect(records[0].fields.single_attachment?.url).toStartWith(url)
     })
   })
 })

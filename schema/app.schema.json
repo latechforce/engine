@@ -556,6 +556,9 @@
                     "$ref": "#/definitions/IRollupField"
                 },
                 {
+                    "$ref": "#/definitions/ISingleAttachmentField"
+                },
+                {
                     "$ref": "#/definitions/ISingleLinkedRecordField"
                 },
                 {
@@ -1126,6 +1129,35 @@
                 "email",
                 "integration",
                 "name"
+            ],
+            "type": "object"
+        },
+        "ISingleAttachmentField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "SingleAttachment",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
             ],
             "type": "object"
         },

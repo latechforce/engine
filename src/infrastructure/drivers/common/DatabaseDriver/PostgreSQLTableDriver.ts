@@ -504,6 +504,8 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           acc[key] = '{' + value.join(',') + '}'
         } else if (field?.type === 'MultipleAttachment' && Array.isArray(value)) {
           acc[key] = JSON.stringify(value)
+        } else if (field?.type === 'SingleAttachment' && value) {
+          acc[key] = JSON.stringify(value)
         }
       }
       return acc
@@ -528,6 +530,9 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           break
         case 'MultipleAttachment':
           acc[key] = value ? JSON.parse(String(value)) : []
+          break
+        case 'SingleAttachment':
+          acc[key] = value ? JSON.parse(String(value)) : null
           break
         case 'Rollup':
           if (field.output.type === 'Number') {
@@ -711,6 +716,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           table: field.table,
         }
       case 'MultipleAttachment':
+        return {
+          ...column,
+          type: 'TEXT',
+        }
+      case 'SingleAttachment':
         return {
           ...column,
           type: 'TEXT',

@@ -1,10 +1,21 @@
 import { it, expect } from 'bun:test'
-import { SingleLineTextInput } from './SingleLineTextInput'
+import { TextInput } from './TextInput'
 import { renderToString } from 'react-dom/server'
 
 it('should match the text input snapshot', async () => {
   // GIVEN
-  const input = <SingleLineTextInput field="name" />
+  const input = <TextInput field="name" type="text" />
+
+  // WHEN
+  const html = renderToString(input)
+
+  // THEN
+  expect(html).toMatchSnapshot()
+})
+
+it('should match the email input snapshot', async () => {
+  // GIVEN
+  const input = <TextInput field="name" type="email" />
 
   // WHEN
   const html = renderToString(input)
@@ -15,7 +26,7 @@ it('should match the text input snapshot', async () => {
 
 it('should match the text input snapshot with label', async () => {
   // GIVEN
-  const input = <SingleLineTextInput field="name" label="Name" />
+  const input = <TextInput field="name" label="Name" type="text" />
 
   // WHEN
   const html = renderToString(input)
@@ -26,7 +37,7 @@ it('should match the text input snapshot with label', async () => {
 
 it('should match the text input snapshot with description', async () => {
   // GIVEN
-  const input = <SingleLineTextInput field="name" description="Description" />
+  const input = <TextInput field="name" description="Description" type="text" />
 
   // WHEN
   const html = renderToString(input)
@@ -37,7 +48,7 @@ it('should match the text input snapshot with description', async () => {
 
 it('should match the text input snapshot with label and description', async () => {
   // GIVEN
-  const input = <SingleLineTextInput field="name" label="Name" description="Description" />
+  const input = <TextInput field="name" label="Name" description="Description" type="text" />
 
   // WHEN
   const html = renderToString(input)
@@ -48,7 +59,7 @@ it('should match the text input snapshot with label and description', async () =
 
 it('should match the input snapshot with placeholder', async () => {
   // GIVEN
-  const input = <SingleLineTextInput field="name" placeholder="Placeholder" />
+  const input = <TextInput field="name" placeholder="Placeholder" type="text" />
 
   // WHEN
   const html = renderToString(input)
@@ -59,7 +70,7 @@ it('should match the input snapshot with placeholder', async () => {
 
 it('should match the text input snapshot with required', async () => {
   // GIVEN
-  const input = <SingleLineTextInput field="name" required />
+  const input = <TextInput field="name" required type="text" />
 
   // WHEN
   const html = renderToString(input)

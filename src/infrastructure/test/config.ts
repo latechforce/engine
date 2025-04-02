@@ -221,6 +221,10 @@ const fullConfig: Config = {
           },
         },
         {
+          name: 'single_attachment',
+          type: 'SingleAttachment',
+        },
+        {
           name: 'multiple_attachment',
           type: 'MultipleAttachment',
         },
@@ -295,6 +299,7 @@ type FirstTableFieldName =
   | 'text_formula_reference'
   | 'single_select'
   | 'multiple_select'
+  | 'single_attachment'
   | 'multiple_attachment'
   | 'single_linked_record'
   | 'multiple_linked_record'

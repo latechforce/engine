@@ -467,6 +467,8 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
           acc[slugifiedField] = JSON.stringify(value)
         } else if (field?.type === 'MultipleAttachment') {
           acc[slugifiedField] = JSON.stringify(value)
+        } else if (field?.type === 'SingleAttachment') {
+          acc[slugifiedField] = JSON.stringify(value)
         } else {
           acc[slugifiedField] = value as string | number | boolean
         }
@@ -491,6 +493,9 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
           break
         case 'MultipleAttachment':
           acc[field.name] = value ? JSON.parse(String(value)) : []
+          break
+        case 'SingleAttachment':
+          acc[field.name] = value ? JSON.parse(String(value)) : null
           break
         case 'Checkbox':
           acc[field.name] = value === 1
@@ -681,6 +686,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
           table: field.table,
         }
       case 'MultipleAttachment':
+        return {
+          ...column,
+          type: 'TEXT',
+        }
+      case 'SingleAttachment':
         return {
           ...column,
           type: 'TEXT',

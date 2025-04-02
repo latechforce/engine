@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { MultipleAttachmentInput } from './MultipleAttachmentInput'
+import { FileInput } from './FileInput'
 import { Form } from '../Form'
-import type { MultipleAttachmentInputProps } from '/domain/components/Form/Input/MultipleAttachmentInput'
+import type { FileInputProps } from '/domain/components/Form/Input/FileInput'
 
-const MultipleAttachmentInputWithForm = (props: MultipleAttachmentInputProps) => (
+const FileInputWithForm = (props: FileInputProps) => (
   <Form id="id" title="Form" submitLabel="Save">
-    <MultipleAttachmentInput {...props} />
+    <FileInput {...props} />
   </Form>
 )
 
 const meta = {
-  title: 'Form/MultipleAttachmentInput',
-  component: MultipleAttachmentInputWithForm,
+  title: 'Form/FileInput',
+  component: FileInputWithForm,
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof MultipleAttachmentInputWithForm>
+} satisfies Meta<typeof FileInputWithForm>
 
 export default meta
 type Story = StoryObj<typeof meta>

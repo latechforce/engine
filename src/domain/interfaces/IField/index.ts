@@ -8,6 +8,7 @@ import type { IMultipleLinkedRecordField } from './IMultipleLinkedRecord'
 import type { IMultipleSelectField } from './IMultipleSelect'
 import type { INumberField } from './INumber'
 import type { IRollupField } from './IRollup'
+import type { ISingleAttachmentField } from './ISingleAttachment'
 import type { ISingleLineTextField } from './ISingleLineText'
 import type { ISingleLinkedRecordField } from './ISingleLinkedRecord'
 import type { ISingleSelectField } from './ISingleSelect'
@@ -28,3 +29,4 @@ export type IField =
   | ICheckboxField
   | IMultipleAttachmentField
   | IUrlField
+  | ISingleAttachmentField

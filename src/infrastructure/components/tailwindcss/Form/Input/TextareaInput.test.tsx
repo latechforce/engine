@@ -1,10 +1,10 @@
 import { it, expect } from 'bun:test'
-import { LongTextInput } from './LongTextInput'
+import { TextareaInput } from './TextareaInput'
 import { renderToString } from 'react-dom/server'
 
 it('should match the textarea snapshot', async () => {
   // GIVEN
-  const input = <LongTextInput field="name" />
+  const input = <TextareaInput field="name" />
 
   // WHEN
   const html = renderToString(input)
@@ -15,7 +15,7 @@ it('should match the textarea snapshot', async () => {
 
 it('should match the textarea snapshot with label', async () => {
   // GIVEN
-  const input = <LongTextInput field="name" label="Name" />
+  const input = <TextareaInput field="name" label="Name" />
 
   // WHEN
   const html = renderToString(input)
@@ -26,7 +26,7 @@ it('should match the textarea snapshot with label', async () => {
 
 it('should match the textarea snapshot with description', async () => {
   // GIVEN
-  const input = <LongTextInput field="name" description="Description" />
+  const input = <TextareaInput field="name" description="Description" />
 
   // WHEN
   const html = renderToString(input)
@@ -37,7 +37,7 @@ it('should match the textarea snapshot with description', async () => {
 
 it('should match the textarea snapshot with label and description', async () => {
   // GIVEN
-  const input = <LongTextInput field="name" label="Name" description="Description" />
+  const input = <TextareaInput field="name" label="Name" description="Description" />
 
   // WHEN
   const html = renderToString(input)
@@ -48,7 +48,7 @@ it('should match the textarea snapshot with label and description', async () => 
 
 it('should match the textarea snapshot with placeholder', async () => {
   // GIVEN
-  const input = <LongTextInput field="name" placeholder="Placeholder" />
+  const input = <TextareaInput field="name" placeholder="Placeholder" />
 
   // WHEN
   const html = renderToString(input)
@@ -59,7 +59,7 @@ it('should match the textarea snapshot with placeholder', async () => {
 
 it('should match the textarea snapshot with required', async () => {
   // GIVEN
-  const input = <LongTextInput field="name" required />
+  const input = <TextareaInput field="name" required />
 
   // WHEN
   const html = renderToString(input)

@@ -29,6 +29,7 @@ import { MultipleSelectField } from '../Field/MultipleSelect'
 import { MultipleAttachmentField } from '../Field/MultipleAttachment'
 import { Bucket } from '../Bucket'
 import type { System } from '/domain/services/System'
+import { SingleAttachmentField } from '../Field/SingleAttachment'
 
 interface TableConfig {
   name: string
@@ -64,12 +65,12 @@ export class Table {
     entities: TableEntites
   ) {
     const { name } = config
-    const { database, schemaValidator } = _services
+    const { database, schemaValidator, system } = _services
     const { fields } = entities
     this.name = name
     this.fields = fields
-    this.path = `/api/table/${name}`
-    this.recordPath = `${this.path}/:id`
+    this.path = system.joinPath(`/api/table`, name)
+    this.recordPath = system.joinPath(this.path, ':id')
     this.db = database.table(this.config)
     this.bucket = new Bucket({ name: `table_${name}_attachments` }, _services)
     this._validateData = schemaValidator.validate
@@ -271,6 +272,17 @@ export class Table {
             },
           }
         }
+        if (field instanceof SingleAttachmentField) {
+          schema.properties[field.name] = {
+            type: 'object',
+            properties: {
+              size: { type: 'number' },
+              name: { type: 'string' },
+              url: { type: 'string' },
+            },
+            required: ['name'],
+          }
+        }
         if (required && field.required) {
           schema.required.push(field.name)
         }
@@ -314,6 +326,25 @@ export class Table {
             }
           }
           data[field.name] = attachments
+        }
+      } else if (field instanceof SingleAttachmentField) {
+        const uploadedFile: File | { name: string; url: string } = data[field.name] as
+          | File
+          | { name: string; url: string }
+        if (uploadedFile instanceof File) {
+          const file = await this.bucket.save({
+            name: uploadedFile.name,
+            data: Buffer.from(await uploadedFile.arrayBuffer()),
+          })
+          data[field.name] = file.toAttachment()
+        } else {
+          data[field.name] = {
+            id: idGenerator.forFile(),
+            name: uploadedFile.name,
+            url: uploadedFile.url,
+            mime_type: system.getMimeType(uploadedFile.name),
+            created_at: new Date().toISOString(),
+          }
         }
       }
     }
