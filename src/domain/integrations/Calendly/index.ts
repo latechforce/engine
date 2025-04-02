@@ -1,3 +1,2 @@
-import { Calendly } from './Calendly'
-
-export { Calendly }
+export * from './CalendlyTypes'
+export * from './Calendly'
