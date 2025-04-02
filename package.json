@@ -1,7 +1,7 @@
 {
   "name": "@latechforce/engine",
   "description": "Web application generator from a configuration file as a Fair Use NPM package.",
-  "version": "0.39.22",
+  "version": "0.39.23",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
