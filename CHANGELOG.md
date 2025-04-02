@@ -1,3 +1,10 @@
+## [0.39.22](https://github.com/latechforce/engine/compare/v0.39.21...v0.39.22) (2025-04-02)
+
+
+### Bug Fixes
+
+* **RunTypescript:** add green test: should run a Typescript code with xlsx package ([18c07fa](https://github.com/latechforce/engine/commit/18c07faf7f7a85b0791f3e1d6a7d18ad3c2f6c77))
+
 ## [0.39.21](https://github.com/latechforce/engine/compare/v0.39.20...v0.39.21) (2025-04-02)
 
 
