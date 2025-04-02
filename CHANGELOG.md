@@ -1,3 +1,10 @@
+## [0.39.23](https://github.com/latechforce/engine/compare/v0.39.22...v0.39.23) (2025-04-02)
+
+
+### Bug Fixes
+
+* **Form:** update green test: should create a record with a multiple attachment input ([2832155](https://github.com/latechforce/engine/commit/283215510b312b1e7deb3563e9785f536ea5463f))
+
 ## [0.39.22](https://github.com/latechforce/engine/compare/v0.39.21...v0.39.22) (2025-04-02)
 
 
