@@ -52,6 +52,7 @@
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
     "@elysiajs/swagger": "^1.2.2",
+    "@mistralai/mistralai": "^1.5.2",
     "@ngrok/ngrok": "^1.4.1",
     "@notionhq/client": "^2.3.0",
     "@sentry/bun": "^9.10.1",

@@ -91,6 +91,7 @@ export interface CodeRunnerContextPackages {
   fsExtra: typeof import('fs-extra')
   slugify: typeof import('slugify').default
   sodium: typeof import('libsodium-wrappers')
+  Mistral: typeof import('@mistralai/mistralai').Mistral
 }
 
 export interface CodeRunnerContext<I extends object = {}> {

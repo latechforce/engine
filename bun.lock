@@ -6,6 +6,7 @@
       "dependencies": {
         "@elysiajs/cors": "^1.2.0",
         "@elysiajs/swagger": "^1.2.2",
+        "@mistralai/mistralai": "^1.5.2",
         "@ngrok/ngrok": "^1.4.1",
         "@notionhq/client": "^2.3.0",
         "@sentry/bun": "^9.10.1",
@@ -253,6 +254,8 @@
     "@js-sdsl/ordered-map": ["@js-sdsl/ordered-map@4.4.2", "", {}, "sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw=="],
 
     "@mdx-js/react": ["@mdx-js/react@3.1.0", "", { "dependencies": { "@types/mdx": "^2.0.0" }, "peerDependencies": { "@types/react": ">=16", "react": ">=16" } }, "sha512-QjHtSaoameoalGnKDT3FoIl4+9RwyTmo9ZJGBdLOks/YOiWHoRDI3PUwEzOE7kEmGcV3AFcp9K6dYu9rEuKLAQ=="],
+
+    "@mistralai/mistralai": ["@mistralai/mistralai@1.5.2", "", { "dependencies": { "zod-to-json-schema": "^3.24.1" }, "peerDependencies": { "zod": ">= 3" } }, "sha512-mBTIDQmuAX9RowMYteZFHJIYlEwDcHzzaxgXzrFtlvH9CkKXK7R1VnZ1sZSe+uLMg0dIXUVdPRUh1SwyFeSqXw=="],
 
     "@ngrok/ngrok": ["@ngrok/ngrok@1.4.1", "", { "optionalDependencies": { "@ngrok/ngrok-android-arm-eabi": "1.4.1", "@ngrok/ngrok-android-arm64": "1.4.1", "@ngrok/ngrok-darwin-arm64": "1.4.1", "@ngrok/ngrok-darwin-universal": "1.4.1", "@ngrok/ngrok-darwin-x64": "1.4.1", "@ngrok/ngrok-freebsd-x64": "1.4.1", "@ngrok/ngrok-linux-arm-gnueabihf": "1.4.1", "@ngrok/ngrok-linux-arm64-gnu": "1.4.1", "@ngrok/ngrok-linux-arm64-musl": "1.4.1", "@ngrok/ngrok-linux-x64-gnu": "1.4.1", "@ngrok/ngrok-linux-x64-musl": "1.4.1", "@ngrok/ngrok-win32-ia32-msvc": "1.4.1", "@ngrok/ngrok-win32-x64-msvc": "1.4.1" } }, "sha512-KZ7/T4UOY3BqJBdweJPeebKW34YzIH+a2y4o7yqTIowoi6dw3sMj140o1Q8FvpPbH5J6lr2TWVCWdgSTYvHNgw=="],
 
@@ -2081,6 +2084,8 @@
     "zip-stream": ["zip-stream@6.0.1", "", { "dependencies": { "archiver-utils": "^5.0.0", "compress-commons": "^6.0.2", "readable-stream": "^4.0.0" } }, "sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA=="],
 
     "zod": ["zod@3.24.2", "", {}, "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ=="],
+
+    "zod-to-json-schema": ["zod-to-json-schema@3.24.5", "", { "peerDependencies": { "zod": "^3.24.1" } }, "sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g=="],
 
     "@babel/core/semver": ["semver@6.3.1", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA=="],
 

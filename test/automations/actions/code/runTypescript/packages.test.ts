@@ -660,5 +660,49 @@ mock.request(({ app, request }) => {
       // THEN
       expect(response.exist).toBeTruthy()
     })
+
+    it('should run a Typescript code with MistralAI package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'mistral',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'mistral',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { Mistral },
+                  } = context
+                  const mistral = new Mistral()
+                  return { exist: !!mistral.chat }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/mistral`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
   })
 })
