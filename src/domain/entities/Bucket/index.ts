@@ -11,6 +11,7 @@ import { XlsxResponse } from '../Response/Xlsx'
 import { PngResponse } from '../Response/Png'
 import { PdfResponse } from '../Response/Pdf'
 import type { FileProperties, FileToSave, File } from '../File'
+import type { System } from '/domain/services/System'
 
 export interface BucketConfig {
   name: string
@@ -21,6 +22,7 @@ export interface BucketServices {
   storage: Storage
   idGenerator: IdGenerator
   templateCompiler: TemplateCompiler
+  system: System
 }
 
 export class Bucket {
@@ -54,15 +56,16 @@ export class Bucket {
   }
 
   save = async (fileProperties: FileProperties): Promise<File> => {
-    const { idGenerator } = this._services
+    const { idGenerator, system } = this._services
     const { name, data } = fileProperties
     const id = idGenerator.forFile()
     const created_at = new Date()
+    const mime_type = system.getMimeType(name)
     let fileToSave: FileToSave
     if (data instanceof Buffer) {
-      fileToSave = { id, name, data, created_at }
+      fileToSave = { id, name, data, created_at, mime_type }
     } else {
-      fileToSave = { id, name, data: Buffer.from(data as string), created_at }
+      fileToSave = { id, name, data: Buffer.from(data as string), created_at, mime_type }
     }
     const file = await this.storage.save(fileToSave, this.endpoint)
     return file

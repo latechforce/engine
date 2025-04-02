@@ -64,7 +64,9 @@ export {
   type RecordFields as DatabaseTableRecordFields,
   type RecordFieldValue as DatabaseTableRecordFieldValue,
   type UpdateRecordFields as DatabaseTableUpdateRecordFields,
+  type RecordFieldAttachment as DatabaseTableRecordFieldAttachment,
 } from '/domain/entities/Record'
+export { type File as StorageFile } from '/domain/entities/File'
 export type { AppIntegrations } from '/domain/entities/App/Base'
 export type { StartedApp } from '/domain/entities/App/Started'
 export type { StoppedApp } from '/domain/entities/App/Stopped'

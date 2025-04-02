@@ -443,6 +443,7 @@ mock.request(({ app, request, drivers }) => {
         name: 'test.txt',
         data: Buffer.from('test'),
         created_at: new Date(),
+        mime_type: 'text/plain',
       })
       await drivers.database.table(table).insert({
         id: '1',
@@ -451,6 +452,7 @@ mock.request(({ app, request, drivers }) => {
             {
               id: '1',
               name: 'test.txt',
+              mime_type: 'text/plain',
               url: 'https://example.com/test.txt',
               created_at: new Date().toISOString(),
             },

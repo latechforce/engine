@@ -24,21 +24,22 @@ export class SqliteBucketDriver implements IStorageBucketDriver {
   create = async (): Promise<void> => {
     const createTableQuery = `
       CREATE TABLE ${this._nameWithSchema} (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        data BLOB,
-        created_at TIMESTAMP
+        id TEXT PRIMARY KEY NOT NULL,
+        name TEXT NOT NULL,
+        mime_type TEXT NOT NULL,
+        data BLOB NOT NULL,
+        created_at TIMESTAMP NOT NULL
       )
     `
     await this._exec(createTableQuery)
   }
 
   save = async (file: FileDto) => {
-    const { id, name, data, created_at } = file
+    const { id, name, mime_type, data, created_at } = file
     const createAt = created_at.getTime()
     await this._query(
-      `INSERT INTO ${this._nameWithSchema} (id, name, data, created_at) VALUES (?, ?, ?, ?)`,
-      [id, name, data, createAt]
+      `INSERT INTO ${this._nameWithSchema} (id, name, mime_type, data, created_at) VALUES (?, ?, ?, ?, ?)`,
+      [id, name, mime_type, data, createAt]
     )
   }
 

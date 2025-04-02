@@ -76,6 +76,7 @@
     "htmx.org": "2.0.4",
     "libsodium-wrappers": "^0.7.15",
     "lodash": "^4.17.21",
+    "mime-types": "^3.0.1",
     "minipass": "^7.1.2",
     "nanoid": "^5.1.5",
     "nodemailer": "^6.10.0",

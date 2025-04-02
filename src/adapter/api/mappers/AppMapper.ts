@@ -30,6 +30,7 @@ import { FormMapper } from './FormMapper'
 import { ThemeMapper } from './Services/ThemeMapper'
 import { ClientMapper } from './Services/ClientMapper'
 import type { Components } from '/domain/components'
+import { SystemMapper } from './Services/SystemMapper'
 
 export class AppMapper {
   static toEntity = (
@@ -45,6 +46,7 @@ export class AppMapper {
       config.monitors?.map((monitor) => ({ ...monitor, appName, appVersion })),
       { logger }
     )
+    const system = SystemMapper.toService(drivers)
     const tunnel = TunnelMapper.toService(drivers, config.tunnel)
     const server = ServerMapper.toService(
       drivers,
@@ -70,6 +72,7 @@ export class AppMapper {
       storage,
       idGenerator,
       templateCompiler,
+      system,
     })
     const tables = TableMapper.toManyEntities(config.tables, {
       database,
@@ -79,11 +82,12 @@ export class AppMapper {
       schemaValidator,
       monitor,
       storage,
+      system,
     })
     const realtime = RealtimeMapper.toService({ database, logger, idGenerator }, { tables })
     const notion = NotionMapper.toIntegration(
       integrations,
-      { idGenerator, logger, storage, server, templateCompiler, fetcher },
+      { idGenerator, logger, storage, server, templateCompiler, fetcher, system },
       config.integrations?.notion
     )
     const airtable = AirtableMapper.toIntegration(integrations, config.integrations?.airtable)
@@ -126,13 +130,14 @@ export class AppMapper {
         monitor,
         database,
         cron,
+        system,
       },
       { tables },
       { notion, pappers, qonto, googleMail, gocardless }
     )
     const forms = FormMapper.toManyEntities(
       config.forms,
-      { server, idGenerator, client, logger },
+      { server, idGenerator, client, logger, system },
       { tables },
       components
     )

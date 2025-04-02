@@ -23,8 +23,8 @@ mock.request(({ app, request }) => {
       // GIVEN
       const multiple_attachment = [
         {
-          name: 'file1',
-          url: 'https://example.com/file1',
+          name: 'file1.txt',
+          url: 'https://example.com/file1.txt',
         },
       ]
       const config = getFirstTableConfig(['multiple_attachment'])
@@ -36,7 +36,8 @@ mock.request(({ app, request }) => {
       })
 
       // THEN
-      expect(record.fields.multiple_attachment[0].name).toBe('file1')
+      expect(record.fields.multiple_attachment[0].name).toBe('file1.txt')
+      expect(record.fields.multiple_attachment[0].mime_type).toBe('text/plain')
       expect(record.fields.multiple_attachment[0].url).toStartWith('https://example.com/file1')
     })
   })

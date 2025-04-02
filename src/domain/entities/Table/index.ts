@@ -28,6 +28,7 @@ import type { ITable } from '/domain/interfaces/ITable'
 import { MultipleSelectField } from '../Field/MultipleSelect'
 import { MultipleAttachmentField } from '../Field/MultipleAttachment'
 import { Bucket } from '../Bucket'
+import type { System } from '/domain/services/System'
 
 interface TableConfig {
   name: string
@@ -41,6 +42,7 @@ interface TableServices {
   schemaValidator: SchemaValidator
   monitor: Monitor
   storage: Storage
+  system: System
 }
 
 interface TableEntites {
@@ -282,6 +284,7 @@ export class Table {
   }
 
   private _uploadAttachments = async (data: RecordFieldsConfig): Promise<RecordFieldsConfig> => {
+    const { system, idGenerator } = this._services
     for (const field of this.fields) {
       if (field instanceof MultipleAttachmentField) {
         const value = data[field.name]
@@ -302,9 +305,10 @@ export class Table {
               attachments.push(file.toAttachment())
             } else {
               attachments.push({
-                id: this._services.idGenerator.forFile(),
+                id: idGenerator.forFile(),
                 name: uploadedFile.name,
                 url: uploadedFile.url,
+                mime_type: system.getMimeType(uploadedFile.name),
                 created_at: new Date().toISOString(),
               })
             }

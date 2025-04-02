@@ -24,10 +24,11 @@ export class PostgresBucketDriver implements IStorageBucketDriver {
   create = async (): Promise<void> => {
     const createTableQuery = `
       CREATE TABLE ${this._nameWithSchema} (
-        id TEXT PRIMARY KEY,
-        name TEXT,
-        data BYTEA,
-        created_at TIMESTAMP
+        id TEXT PRIMARY KEY NOT NULL,
+        name TEXT NOT NULL,
+        mime_type TEXT NOT NULL,
+        data BYTEA NOT NULL,
+        created_at TIMESTAMP NOT NULL
       )
     `
     await this._exec(createTableQuery)

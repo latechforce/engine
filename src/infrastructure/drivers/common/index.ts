@@ -13,7 +13,7 @@ import { IdGeneratorDriver } from './IdGeneratorDriver'
 import { QueueDriver } from './QueueDriver'
 import { TemplateCompilerDriver } from './TemplateCompilerDriver'
 import { CodeCompilerDriver } from './CodeCompilerDriver'
-import { FileSystemDriver } from './FileSystemDriver'
+import { SystemDriver } from './SystemDriver'
 import { TunnelDriver } from './TunnelDriver'
 import { FetcherDriver } from './FetcherDriver'
 import { CronDriver } from './CronDriver'
@@ -30,7 +30,7 @@ export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server'> = {
   templateCompiler: () => new TemplateCompilerDriver(),
   schemaValidator: () => new SchemaValidatorDriver(),
   idGenerator: () => new IdGeneratorDriver(),
-  fileSystem: () => new FileSystemDriver(),
+  system: () => new SystemDriver(),
   fetcher: () => new FetcherDriver(),
   cron: () => new CronDriver(),
   client: () => new ClientDriver(),

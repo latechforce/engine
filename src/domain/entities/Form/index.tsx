@@ -10,9 +10,7 @@ import type { Page as PageComponent } from '/domain/components/Page'
 import type { Form as FormComponent } from '/domain/components/Form'
 import type { FormResponse as FormResponseComponent } from '/domain/components/Form/FormResponse'
 import type { Logger } from '/domain/services/Logger'
-
-// TODO: Remove this to put it in a service
-import { join } from 'path'
+import type { System } from '/domain/services/System'
 
 export interface FormConfig {
   name: string
@@ -30,6 +28,7 @@ export interface FormServices {
   idGenerator: IdGenerator
   client: Client
   logger: Logger
+  system: System
 }
 
 export interface FormEntities {
@@ -56,13 +55,13 @@ export class Form {
     private _components: FormComponents
   ) {
     const { tables } = entities
-    const { idGenerator } = this._services
+    const { idGenerator, system } = this._services
     const { inputs, path } = this._config
     const table = tables.find((table) => table.name === _config.table)
     if (!table) throw new Error(`Table ${_config.table} not found`)
     this.table = table
     this.id = idGenerator.forComponent()
-    this.path = join(`/form`, path)
+    this.path = system.joinPath(`/form`, path)
     this.inputs = inputs.map((input) => new Input(input, this.table, this._components))
     this.timestamp = String(+Date.now())
   }

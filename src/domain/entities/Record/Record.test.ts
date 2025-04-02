@@ -118,12 +118,14 @@ describe('Record', () => {
       {
         id: 'attachment-1',
         url: 'https://example.com/file1.pdf',
+        mime_type: 'application/pdf',
         name: 'File 1',
         created_at: '2023-01-01T00:00:00Z',
       },
       {
         id: 'attachment-2',
         url: 'https://example.com/file2.pdf',
+        mime_type: 'application/pdf',
         name: 'File 2',
         created_at: '2023-01-02T00:00:00Z',
       },

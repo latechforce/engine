@@ -8,6 +8,8 @@ import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type { SchemaValidator } from '/domain/services/SchemaValidator'
 import type { Monitor } from '/domain/services/Monitor'
 import type { Storage } from '/domain/services/Storage'
+import type { System } from '/domain/services/System'
+
 export interface TableMapperServices {
   server: Server
   database: Database
@@ -16,13 +18,22 @@ export interface TableMapperServices {
   schemaValidator: SchemaValidator
   monitor: Monitor
   storage: Storage
+  system: System
 }
 
 export class TableMapper {
   static toEntity = (config: ITable, services: TableMapperServices) => {
     const { name } = config
-    const { server, database, idGenerator, templateCompiler, schemaValidator, monitor, storage } =
-      services
+    const {
+      server,
+      database,
+      idGenerator,
+      templateCompiler,
+      schemaValidator,
+      monitor,
+      storage,
+      system,
+    } = services
     const fields = FieldMapper.toManyEntities(config.fields)
     return new Table(
       {
@@ -36,6 +47,7 @@ export class TableMapper {
         schemaValidator,
         monitor,
         storage,
+        system,
       },
       { fields }
     )

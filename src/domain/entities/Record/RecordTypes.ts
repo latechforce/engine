@@ -12,6 +12,7 @@ export type RecordFieldAttachment = {
   id: string
   url: string
   name: string
+  mime_type: string
   created_at: string
 }
 
