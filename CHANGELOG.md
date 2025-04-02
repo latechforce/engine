@@ -1,3 +1,10 @@
+## [0.39.24](https://github.com/latechforce/engine/compare/v0.39.23...v0.39.24) (2025-04-02)
+
+
+### Bug Fixes
+
+* **RunTypescript:** replace xlsx by exceljs ([50cba0c](https://github.com/latechforce/engine/commit/50cba0c4ace57ad6639e283280356028cb99956d))
+
 ## [0.39.23](https://github.com/latechforce/engine/compare/v0.39.22...v0.39.23) (2025-04-02)
 
 
