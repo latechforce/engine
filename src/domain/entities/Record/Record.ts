@@ -23,6 +23,12 @@ export class Record<T extends RecordFields = RecordFields> {
     return typeof value === 'string' ? value : value.toString()
   }
 
+  getFieldAsArrayString(key: string): string[] | null {
+    const value = this.fields[key]
+    if (!value) return null
+    return Array.isArray(value) && value.every((item) => typeof item === 'string') ? value : null
+  }
+
   getFieldAsDate(key: string): Date | null {
     const value = this.fields[key]
     if (!value || typeof value === 'boolean') return null
@@ -41,7 +47,7 @@ export class Record<T extends RecordFields = RecordFields> {
     return typeof value === 'boolean' ? value : !!value
   }
 
-  getFieldAsAttachments(key: string): RecordFieldAttachment[] {
+  getFieldAsArrayAttachment(key: string): RecordFieldAttachment[] {
     const value = this.fields[key]
     if (!value) return []
     if (
@@ -58,5 +64,20 @@ export class Record<T extends RecordFields = RecordFields> {
       return value
     }
     return []
+  }
+
+  getFieldAsAttachment(key: string): RecordFieldAttachment | null {
+    const value = this.fields[key]
+    if (!value) return null
+    if (
+      typeof value === 'object' &&
+      'id' in value &&
+      'url' in value &&
+      'name' in value &&
+      'created_at' in value
+    ) {
+      return value
+    }
+    return null
   }
 }

@@ -113,7 +113,7 @@ describe('Record', () => {
     expect(record.getFieldAsBoolean('nonExistentField')).toBeNull()
   })
 
-  test('getFieldAsAttachments returns attachment arrays correctly', () => {
+  test('getFieldAsArrayAttachment returns attachment arrays correctly', () => {
     const validAttachments: RecordFieldAttachment[] = [
       {
         id: 'attachment-1',
@@ -144,13 +144,62 @@ describe('Record', () => {
 
     const record = new Record(testId, fields, testCreatedAt)
 
-    expect(record.getFieldAsAttachments('validAttachments')).toEqual(validAttachments)
-    expect(record.getFieldAsAttachments('invalidAttachments')).toEqual([])
-    expect(record.getFieldAsAttachments('stringField')).toEqual([])
-    expect(record.getFieldAsAttachments('numberField')).toEqual([])
-    expect(record.getFieldAsAttachments('booleanField')).toEqual([])
-    expect(record.getFieldAsAttachments('nullField')).toEqual([])
-    expect(record.getFieldAsAttachments('undefinedField')).toEqual([])
-    expect(record.getFieldAsAttachments('nonExistentField')).toEqual([])
+    expect(record.getFieldAsArrayAttachment('validAttachments')).toEqual(validAttachments)
+    expect(record.getFieldAsArrayAttachment('invalidAttachments')).toEqual([])
+    expect(record.getFieldAsArrayAttachment('stringField')).toEqual([])
+    expect(record.getFieldAsArrayAttachment('numberField')).toEqual([])
+    expect(record.getFieldAsArrayAttachment('booleanField')).toEqual([])
+    expect(record.getFieldAsArrayAttachment('nullField')).toEqual([])
+    expect(record.getFieldAsArrayAttachment('undefinedField')).toEqual([])
+    expect(record.getFieldAsArrayAttachment('nonExistentField')).toEqual([])
+  })
+
+  test('getFieldAsArrayString returns string arrays correctly', () => {
+    const fields: RecordFields = {
+      validStringArray: ['one', 'two', 'three'],
+      singleString: 'not an array',
+      numberField: 42,
+      booleanField: true,
+      nullField: null,
+      undefinedField: undefined,
+    }
+    const record = new Record(testId, fields, testCreatedAt)
+
+    expect(record.getFieldAsArrayString('validStringArray')).toEqual(['one', 'two', 'three'])
+    expect(record.getFieldAsArrayString('singleString')).toBeNull()
+    expect(record.getFieldAsArrayString('numberField')).toBeNull()
+    expect(record.getFieldAsArrayString('booleanField')).toBeNull()
+    expect(record.getFieldAsArrayString('nullField')).toBeNull()
+    expect(record.getFieldAsArrayString('undefinedField')).toBeNull()
+    expect(record.getFieldAsArrayString('nonExistentField')).toBeNull()
+  })
+
+  test('getFieldAsAttachment returns single attachment correctly', () => {
+    const validAttachment: RecordFieldAttachment = {
+      id: 'attachment-1',
+      url: 'https://example.com/file1.pdf',
+      mime_type: 'application/pdf',
+      name: 'File 1',
+      created_at: '2023-01-01T00:00:00Z',
+    }
+
+    const fields: RecordFields = {
+      validAttachment,
+      stringField: 'not an attachment',
+      numberField: 42,
+      booleanField: true,
+      nullField: null,
+      undefinedField: undefined,
+    }
+
+    const record = new Record(testId, fields, testCreatedAt)
+
+    expect(record.getFieldAsAttachment('validAttachment')).toEqual(validAttachment)
+    expect(record.getFieldAsAttachment('stringField')).toBeNull()
+    expect(record.getFieldAsAttachment('numberField')).toBeNull()
+    expect(record.getFieldAsAttachment('booleanField')).toBeNull()
+    expect(record.getFieldAsAttachment('nullField')).toBeNull()
+    expect(record.getFieldAsAttachment('undefinedField')).toBeNull()
+    expect(record.getFieldAsAttachment('nonExistentField')).toBeNull()
   })
 })
