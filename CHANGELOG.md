@@ -1,3 +1,10 @@
+## [0.39.26](https://github.com/latechforce/engine/compare/v0.39.25...v0.39.26) (2025-04-03)
+
+
+### Bug Fixes
+
+* add green test: should insert a row with an empty single select ([c197792](https://github.com/latechforce/engine/commit/c19779245320ca13dc0f8b5650b668bfbf5de719))
+
 ## [0.39.25](https://github.com/latechforce/engine/compare/v0.39.24...v0.39.25) (2025-04-03)
 
 
