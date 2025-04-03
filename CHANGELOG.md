@@ -1,3 +1,10 @@
+## [0.39.35](https://github.com/latechforce/engine/compare/v0.39.34...v0.39.35) (2025-04-03)
+
+
+### Bug Fixes
+
+* add engine version in config ([f23e354](https://github.com/latechforce/engine/commit/f23e3547306e3004d26be5ff722c3567126350c9))
+
 ## [0.39.34](https://github.com/latechforce/engine/compare/v0.39.33...v0.39.34) (2025-04-03)
 
 
