@@ -1,3 +1,10 @@
+## [0.39.27](https://github.com/latechforce/engine/compare/v0.39.26...v0.39.27) (2025-04-03)
+
+
+### Bug Fixes
+
+* add green test: getFieldAsAttachment returns single attachment correctly ([fd85d7c](https://github.com/latechforce/engine/commit/fd85d7cc882af20a9fd29851717939240830bd15))
+
 ## [0.39.26](https://github.com/latechforce/engine/compare/v0.39.25...v0.39.26) (2025-04-03)
 
 
