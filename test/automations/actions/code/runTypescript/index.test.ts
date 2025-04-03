@@ -544,5 +544,83 @@ mock.request(({ app, request }) => {
       // THEN
       expect(response.exist).toBeTruthy()
     })
+
+    it('should run a Typescript code with the native Blob class', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'getBlob',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-blob',
+              output: {
+                exist: '{{runJavascriptCode.exist}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function () {
+                  const blob = new Blob(['Hello, world!'])
+                  return { exist: !!blob }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-blob`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with the native ReadableStream class', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        automations: [
+          {
+            name: 'getBlob',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-readable-stream',
+              output: {
+                exist: '{{runJavascriptCode.exist}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function () {
+                  const stream = new ReadableStream()
+                  return { exist: !!stream }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-readable-stream`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
   })
 })

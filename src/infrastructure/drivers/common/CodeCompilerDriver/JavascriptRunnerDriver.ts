@@ -26,7 +26,6 @@ import slugify from 'slugify'
 import sodium from 'libsodium-wrappers'
 import { Mistral } from '@mistralai/mistralai'
 import ExcelJS from 'exceljs'
-import Stream from 'stream'
 
 export const packages: CodeRunnerContextPackages = {
   xml2js,
@@ -47,7 +46,6 @@ export const packages: CodeRunnerContextPackages = {
   sodium,
   Mistral,
   ExcelJS,
-  Stream,
 }
 
 const globalContext = {
@@ -64,6 +62,9 @@ const globalContext = {
   console: console,
   TextEncoder: global.TextEncoder,
   TextDecoder: global.TextDecoder,
+  Blob: global.Blob,
+  ReadableStream: global.ReadableStream,
+  File: global.File,
 }
 
 export class JavascriptRunnerDriver implements ICodeRunnerDriver {

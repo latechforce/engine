@@ -747,48 +747,5 @@ mock.request(({ app, request }) => {
       // THEN
       expect(response.exist).toBeTruthy()
     })
-
-    it('should run a Typescript code with Stream package', async () => {
-      // GIVEN
-      const config: Config = {
-        name: 'App',
-        version: '1.0.0',
-        automations: [
-          {
-            name: 'stream',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'stream',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { Stream },
-                  } = context
-                  return { exist: !!Stream.Readable }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-
-      // WHEN
-      const response = await request.post(`${url}/api/automation/stream`)
-
-      // THEN
-      expect(response.exist).toBeTruthy()
-    })
   })
 })
