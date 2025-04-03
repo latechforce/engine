@@ -116,7 +116,10 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     const request = {
       get: async <T = any>(url: string, options: RequestInit = {}): Promise<T> => {
         return fetch(url, options)
-          .then((res) => res.json())
+          .then((res) => {
+            const headers = new Headers(options.headers)
+            return headers.get('Accept') !== 'application/json' ? res.text() : res.json()
+          })
           .catch((error) => {
             console.error(error)
             return error

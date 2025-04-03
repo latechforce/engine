@@ -12,7 +12,9 @@ import { PngResponse } from '../Response/Png'
 import { PdfResponse } from '../Response/Pdf'
 import type { FileProperties, FileToSave, File } from '../File'
 import type { System } from '/domain/services/System'
-
+import { JpgResponse } from '../Response/Jpg'
+import { CsvResponse } from '../Response/Csv'
+import { XlsResponse } from '../Response/Xls'
 export interface BucketConfig {
   name: string
 }
@@ -80,15 +82,26 @@ export class Bucket {
     const id = request.getParamOrThrow('id')
     const file = await this.storage.readById(id, this.endpoint)
     if (!file) return new JsonResponse({ status: 404, data: { message: 'file not found' } })
-    if (file.name.includes('.docx')) return new DocxResponse(file.name, file.data)
-    if (file.name.includes('.xlsx')) return new XlsxResponse(file.name, file.data)
-    if (file.name.includes('.jpg') || file.name.includes('.jpeg'))
-      return new PngResponse(file.name, file.data)
-    if (file.name.includes('.png')) return new PngResponse(file.name, file.data)
-    if (file.name.includes('.pdf')) return new PdfResponse(file.name, file.data)
-    return new JsonResponse({
-      status: 404,
-      data: { message: `can not return a ${file.name.split('.').pop()} file` },
-    })
+    switch (file.mime_type) {
+      case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        return new DocxResponse(file.name, file.data)
+      case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+        return new XlsxResponse(file.name, file.data)
+      case 'image/jpeg':
+        return new JpgResponse(file.name, file.data)
+      case 'image/png':
+        return new PngResponse(file.name, file.data)
+      case 'application/pdf':
+        return new PdfResponse(file.name, file.data)
+      case 'text/csv':
+        return new CsvResponse(file.name, file.data)
+      case 'application/vnd.ms-excel':
+        return new XlsResponse(file.name, file.data)
+      default:
+        return new JsonResponse({
+          status: 404,
+          data: { message: `can not return a ${file.name.split('.').pop()} file` },
+        })
+    }
   }
 }
