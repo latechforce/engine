@@ -1,3 +1,10 @@
+## [0.39.30](https://github.com/latechforce/engine/compare/v0.39.29...v0.39.30) (2025-04-03)
+
+
+### Bug Fixes
+
+* add green test: should run a Typescript code with the native Blob class ([51818af](https://github.com/latechforce/engine/commit/51818aff562313e588cd3c078e72c93e680b5661))
+
 ## [0.39.29](https://github.com/latechforce/engine/compare/v0.39.28...v0.39.29) (2025-04-03)
 
 
