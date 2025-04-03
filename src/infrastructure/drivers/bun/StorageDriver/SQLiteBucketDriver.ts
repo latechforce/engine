@@ -2,21 +2,21 @@ import type { StorageConfig } from '/domain/services/Storage'
 import type { IStorageBucketDriver } from '/adapter/spi/drivers/StorageBucketSpi'
 import type { FileDto } from '/adapter/spi/dtos/FileDto'
 
-export class PostgresBucketDriver implements IStorageBucketDriver {
+export class SQLiteStorageBucketDriver implements IStorageBucketDriver {
   private _nameWithSchema: string
 
   constructor(
-    private _name: string,
+    name: string,
     private _query: StorageConfig['query'],
     private _exec: StorageConfig['exec']
   ) {
-    this._nameWithSchema = `storage.${_name}`
+    this._nameWithSchema = `_storage_${name}`
   }
 
   exists = async () => {
     const result = await this._query(
-      `SELECT table_name FROM information_schema.tables WHERE table_schema = 'storage' AND table_name = $1`,
-      [this._name]
+      `SELECT name FROM sqlite_master WHERE type='table' AND name = ?`,
+      [this._nameWithSchema]
     )
     return result.rows.length > 0
   }
@@ -27,26 +27,31 @@ export class PostgresBucketDriver implements IStorageBucketDriver {
         id TEXT PRIMARY KEY NOT NULL,
         name TEXT NOT NULL,
         mime_type TEXT NOT NULL,
-        data BYTEA NOT NULL,
+        data BLOB NOT NULL,
         created_at TIMESTAMP NOT NULL
       )
     `
     await this._exec(createTableQuery)
   }
 
-  save = async (fields: FileDto) => {
-    const { id, name, data, created_at } = fields
+  save = async (file: FileDto) => {
+    const { id, name, mime_type, data, created_at } = file
+    const createAt = created_at.getTime()
     await this._query(
-      `INSERT INTO ${this._nameWithSchema} (id, name, data, created_at) VALUES ($1, $2, $3, $4)`,
-      [id, name, data, created_at]
+      `INSERT INTO ${this._nameWithSchema} (id, name, mime_type, data, created_at) VALUES (?, ?, ?, ?, ?)`,
+      [id, name, mime_type, data, createAt]
     )
   }
 
   readById = async (id: string) => {
     const result = await this._query<FileDto>(
-      `SELECT * FROM ${this._nameWithSchema} WHERE id = $1`,
+      `SELECT * FROM ${this._nameWithSchema} WHERE id = ?`,
       [id]
     )
-    return result.rows[0]
+    const file = result.rows[0]
+    if (!file) return
+    const created_at = new Date(file.created_at)
+    const data = Buffer.from(file.data)
+    return { ...file, created_at, data }
   }
 }

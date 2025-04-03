@@ -55,7 +55,7 @@
     "@mistralai/mistralai": "^1.5.2",
     "@ngrok/ngrok": "^1.4.1",
     "@notionhq/client": "^2.3.0",
-    "@sentry/bun": "^9.10.1",
+    "@sentry/bun": "^9.11.0",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/postcss": "^4.1.1",
     "@types/fs-extra": "^11.0.4",

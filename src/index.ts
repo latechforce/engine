@@ -11,8 +11,8 @@ import type { MonitorsConfig } from './domain/services/Monitor'
 import type { IMonitorDriver } from './adapter/spi/drivers/MonitorSpi'
 import type { ServerConfig } from './domain/services/Server'
 import type { IServerDriver } from './adapter/spi/drivers/ServerSpi'
-import type { IThemeDriver } from './adapter/spi/drivers/ThemeSpi'
-import type { ThemeConfig } from './domain/services/Theme'
+import type { IStorageDriver } from './adapter/spi/drivers/StorageSpi'
+import type { StorageConfig } from './domain/services/Storage'
 
 export type { Config } from '/domain/interfaces'
 export type { IAutomation as Automation } from '/domain/interfaces/IAutomation'
@@ -77,7 +77,7 @@ export default class extends App {
       database: (config: DatabaseConfig) => IDatabaseDriver
       monitor: (config: MonitorsConfig) => IMonitorDriver
       server: (config: ServerConfig) => IServerDriver
-      theme: (config: ThemeConfig) => IThemeDriver
+      storage: (config: StorageConfig) => IStorageDriver
     }
     integrations?: Partial<Integrations>
     components?: Partial<Components>
