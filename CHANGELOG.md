@@ -1,3 +1,10 @@
+## [0.39.29](https://github.com/latechforce/engine/compare/v0.39.28...v0.39.29) (2025-04-03)
+
+
+### Bug Fixes
+
+* add green test: should run a Typescript code with Stream package ([1e6d7dd](https://github.com/latechforce/engine/commit/1e6d7ddbfd4961ee79bba35fd9966e9588224c95))
+
 ## [0.39.28](https://github.com/latechforce/engine/compare/v0.39.27...v0.39.28) (2025-04-03)
 
 
