@@ -64,5 +64,22 @@ mock.page(({ app, browser, drivers }) => {
       expect(records).toHaveLength(1)
       expect(records[0].fields.single_select).toBe('Option 3')
     })
+
+    it('should create a record with an empty select input', async () => {
+      // GIVEN
+      const page = await browser.newPage()
+      const table = drivers.database.table(config.tables![0])
+      const { url } = await app.start(config)
+
+      // WHEN
+      await page.goto(`${url}/form/path`)
+      await page.click('button[type="submit"]')
+      await page.waitForText('submitted')
+
+      // THEN
+      const records = await table.list()
+      expect(records).toHaveLength(1)
+      expect(records[0].fields.single_select).toBe(null)
+    })
   })
 })

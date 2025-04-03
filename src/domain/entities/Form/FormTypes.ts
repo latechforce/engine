@@ -1,6 +1,6 @@
 import type { InputComponents, InputConfig } from './Input'
 import type { Server } from '/domain/services/Server'
-import type { Table } from '../Table'
+import type { Table } from '../Table/'
 import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { Client } from '/domain/services/Client'
 import type { Page as PageComponent } from '/domain/components/Page'

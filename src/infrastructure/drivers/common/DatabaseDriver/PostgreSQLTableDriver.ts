@@ -495,8 +495,9 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     return Object.keys(record).reduce((acc: RecordFields, key) => {
       const value = record[key]
       const field = this.fields.find((f) => f.name === key)
-      if (value === undefined || value === null) return acc
-      if (key in acc) {
+      if (value === undefined || value === null || value === '') {
+        acc[key] = null
+      } else if (key in acc) {
         if (field?.type === 'DateTime') {
           if (value instanceof Date) acc[key] = value
           else acc[key] = new Date(String(value))

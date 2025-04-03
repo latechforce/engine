@@ -14,6 +14,7 @@ const setup = async () => {
     'multiple_linked_record',
     'number_rollup',
     'multiple_select',
+    'single_select',
   ])
   const firstTable = new SQLiteDatabaseTableDriver(firstTableConfig, sqliteDatabase.db)
   const secondTable = new SQLiteDatabaseTableDriver(secondTableConfig, sqliteDatabase.db)

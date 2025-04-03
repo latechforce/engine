@@ -1,5 +1,5 @@
 import type { ConfigError } from '../Error/Config'
-import type { Table } from '../Table'
+import type { Table } from '../Table/'
 import type {
   CheckboxInput,
   FileInput,

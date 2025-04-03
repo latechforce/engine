@@ -1,7 +1,7 @@
 import type { FormEntities, FormComponents, FormServices, FormConfig } from './FormTypes'
 import { Input } from './Input'
 import type { ConfigError } from '/domain/entities/Error/Config'
-import type { Table } from '../Table'
+import type { Table } from '../Table/'
 import { JsxResponse } from '../Response/Jsx'
 import type { PostRequest } from '../Request/Post'
 import type { ClientHtmlAttributesOptions } from '/domain/services/Client'

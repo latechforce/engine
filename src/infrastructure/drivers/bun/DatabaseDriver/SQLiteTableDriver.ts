@@ -454,7 +454,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         const field = this.fields.find((f) => f.name === key)
         if (!field) throw new Error(`Field "${key}" not found`)
         const slugifiedField = this._slugify(field.name)
-        if (value === undefined || value === null) {
+        if (value === undefined || value === null || value === '') {
           acc[slugifiedField] = null
         } else if (field.type === 'DateTime') {
           if (value instanceof Date) acc[key] = value.getTime()

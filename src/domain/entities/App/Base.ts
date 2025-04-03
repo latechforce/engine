@@ -1,7 +1,7 @@
 import type { Logger } from '/domain/services/Logger'
 import type { Server } from '/domain/services/Server'
 import type { Database } from '/domain/services/Database'
-import type { Table } from '../Table'
+import type { Table } from '../Table/'
 import type { Bucket } from '../Bucket'
 import type { Automation } from '../Automation'
 import type { Queue } from '/domain/services/Queue'
