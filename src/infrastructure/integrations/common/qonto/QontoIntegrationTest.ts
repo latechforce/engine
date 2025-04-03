@@ -65,7 +65,10 @@ export function testQontoIntegration(
       let attachmentId: string | undefined
       do {
         const { data: invoices = [] } = await integration.listClientInvoices()
-        attachmentId = invoices[0].attachment_id
+        attachmentId = invoices.find((invoice) => invoice.attachment_id)?.attachment_id
+        if (!attachmentId) {
+          await new Promise((resolve) => setTimeout(resolve, 500))
+        }
       } while (!attachmentId)
 
       // WHEN
@@ -82,7 +85,10 @@ export function testQontoIntegration(
       let attachmentId: string | undefined
       do {
         const { data: invoices = [] } = await integration.listClientInvoices()
-        attachmentId = invoices[0].attachment_id
+        attachmentId = invoices.find((invoice) => invoice.attachment_id)?.attachment_id
+        if (!attachmentId) {
+          await new Promise((resolve) => setTimeout(resolve, 500))
+        }
       } while (!attachmentId)
 
       // WHEN
