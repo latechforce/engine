@@ -1,3 +1,10 @@
+## [0.39.34](https://github.com/latechforce/engine/compare/v0.39.33...v0.39.34) (2025-04-03)
+
+
+### Bug Fixes
+
+* increase waitForAutomationsHistories timeout ([c7ca6a7](https://github.com/latechforce/engine/commit/c7ca6a7c5c58b4eebc51e90bdbf75c2a9308d15b))
+
 ## [0.39.33](https://github.com/latechforce/engine/compare/v0.39.32...v0.39.33) (2025-04-03)
 
 
