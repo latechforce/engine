@@ -39,7 +39,12 @@ export class AppMapper {
     components: Components,
     config: Config
   ) => {
-    const { name: appName, version: appVersion, description: appDescription } = config
+    const {
+      name: appName,
+      version: appVersion,
+      engine: appEngine,
+      description: appDescription,
+    } = config
     const logger = LoggerMapper.toService(drivers, config.loggers)
     const monitor = MonitorMapper.toService(
       drivers,
@@ -145,6 +150,7 @@ export class AppMapper {
       {
         name: appName,
         version: appVersion,
+        engine: appEngine,
         description: appDescription,
         integrations: config.integrations,
       },

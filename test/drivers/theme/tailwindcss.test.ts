@@ -7,6 +7,7 @@ mock.page(({ app, browser }) => {
   const config: Config = {
     name: 'App',
     version: '1.0.0',
+    engine: '1.0.0',
     forms: [
       {
         name: 'Form',

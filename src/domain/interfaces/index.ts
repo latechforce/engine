@@ -7,6 +7,7 @@ import type { IForm } from './IForm'
 export interface Config extends IServices {
   name: string
   version: string
+  engine: string
   description?: string
   forms?: IForm[]
   tables?: ITable[]

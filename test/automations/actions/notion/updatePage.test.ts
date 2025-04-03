@@ -23,6 +23,7 @@ mock.request(({ app, request, integrations, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'updatePage',
@@ -75,6 +76,7 @@ mock.request(({ app, request, integrations, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'updatePage',

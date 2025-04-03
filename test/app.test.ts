@@ -19,6 +19,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       loggers: [],
     }
     const app = new MockedApp()
@@ -36,6 +37,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       server: { port: '6543' },
       loggers: [],
     }
@@ -54,6 +56,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       server: {
         baseUrl: 'http://custom-url.com',
       },
@@ -74,6 +77,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       loggers: [],
     }
     const app = new MockedApp()
@@ -92,6 +96,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       description: '{{ env.DESCRIPTION }}',
       server: { port: '{{env.PORT}}' },
       loggers: [],
@@ -112,6 +117,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '{{ env.VERSION "1.0.0" }}',
+      engine: '{{ env.ENGINE "1.0.0" }}',
       server: { port: '{{env.PORT "6543"}}' },
       loggers: [],
     }
@@ -133,6 +139,7 @@ describe('stop', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       loggers: [],
     }
     const app = new MockedApp()

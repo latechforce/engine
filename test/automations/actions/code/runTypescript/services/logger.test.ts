@@ -11,6 +11,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'fetcherGet',
@@ -47,6 +48,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'fetcherGet',
@@ -83,6 +85,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'fetcherGet',
