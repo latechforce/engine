@@ -1,3 +1,11 @@
+## [0.39.32](https://github.com/latechforce/engine/compare/v0.39.31...v0.39.32) (2025-04-03)
+
+
+### Bug Fixes
+
+* **Storage:** add green test: should fetch a csv file ([1906d30](https://github.com/latechforce/engine/commit/1906d30e40c0fc97d466bca110d85d38ad561659))
+* test ([f6b18a5](https://github.com/latechforce/engine/commit/f6b18a5b7d447986213c1d314cc380fb0b5e243f))
+
 ## [0.39.31](https://github.com/latechforce/engine/compare/v0.39.30...v0.39.31) (2025-04-03)
 
 
