@@ -1,6 +1,5 @@
 import { it, expect, describe } from 'bun:test'
 import { MockedApp, type Config } from '/test/bun'
-import env from '/test/env'
 
 describe('start', () => {
   it('should throw an error if config is empty', async () => {
@@ -50,19 +49,15 @@ describe('start', () => {
     await startedApp.stop()
   })
 
-  it('should start an app on a dedicated Ngrok url', async () => {
+  it('should start an app on a base url', async () => {
     // GIVEN
     const config: Config = {
       name: 'App',
       version: '1.0.0',
       server: {
-        port: '6543',
+        baseUrl: 'http://custom-url.com',
       },
       loggers: [],
-      tunnel: {
-        authToken: env.TEST_NGROK_AUTH_TOKEN,
-        integration: 'Ngrok',
-      },
     }
     const app = new MockedApp()
 
@@ -70,7 +65,7 @@ describe('start', () => {
     const startedApp = await app.start(config)
 
     // THEN
-    expect(startedApp.url).toContain('ngrok-free.app')
+    expect(startedApp.url).toBe('http://custom-url.com')
     await startedApp.stop()
   })
 
