@@ -1,3 +1,10 @@
+## [0.39.31](https://github.com/latechforce/engine/compare/v0.39.30...v0.39.31) (2025-04-03)
+
+
+### Bug Fixes
+
+* **Storage:** add green test: should read a file ([43cc2c0](https://github.com/latechforce/engine/commit/43cc2c00b00467ca23e2a5fb6e4e7e09f7befc54))
+
 ## [0.39.30](https://github.com/latechforce/engine/compare/v0.39.29...v0.39.30) (2025-04-03)
 
 
