@@ -1,5 +1,6 @@
 import { it, expect, describe } from 'bun:test'
 import { MockedApp, type Config } from '/test/bun'
+import env from '/test/env'
 
 describe('start', () => {
   it('should throw an error if config is empty', async () => {
@@ -46,6 +47,30 @@ describe('start', () => {
 
     // THEN
     expect(startedApp.url).toBe('http://localhost:6543')
+    await startedApp.stop()
+  })
+
+  it('should start an app on a dedicated Ngrok url', async () => {
+    // GIVEN
+    const config: Config = {
+      name: 'App',
+      version: '1.0.0',
+      server: {
+        port: '6543',
+      },
+      loggers: [],
+      tunnel: {
+        authToken: env.TEST_NGROK_AUTH_TOKEN,
+        integration: 'Ngrok',
+      },
+    }
+    const app = new MockedApp()
+
+    // WHEN
+    const startedApp = await app.start(config)
+
+    // THEN
+    expect(startedApp.url).toContain('ngrok-free.app')
     await startedApp.stop()
   })
 
