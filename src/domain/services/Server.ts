@@ -75,18 +75,23 @@ export class Server {
   getHandlers: string[] = []
   postHandlers: string[] = []
   notFoundHandler?: () => Promise<void>
-  baseUrl?: string
+  private _baseUrl?: string
 
   constructor(
     private _spi: IServerSpi,
     private _services: ServerServices,
     private _config: ServerConfig
   ) {
-    this.baseUrl = _config.baseUrl
+    this._baseUrl = _config.baseUrl
   }
 
   get env() {
     return this._config.env
+  }
+
+  get baseUrl() {
+    if (!this._baseUrl) throw new Error('baseUrl is not set')
+    return this._baseUrl
   }
 
   init = async (callback: () => Promise<void>) => {
@@ -184,7 +189,7 @@ export class Server {
     const { logger, tunnel } = this._services
     logger.debug(`starting server...`)
     const port = await this._spi.start()
-    if (!this.baseUrl) this.baseUrl = await tunnel.start(port)
+    if (!this._baseUrl) this._baseUrl = await tunnel.start(port)
     this.isListening = true
     logger.debug(`server listening at ${this.baseUrl}`)
     return this.baseUrl

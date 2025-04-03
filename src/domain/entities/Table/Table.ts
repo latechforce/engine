@@ -67,6 +67,7 @@ export class Table {
       server.patch(this.recordPath, this.patch),
       server.delete(this.recordPath, this.delete),
     ])
+    await this.bucket.init()
   }
 
   validateConfig = async (): Promise<ConfigError[]> => {

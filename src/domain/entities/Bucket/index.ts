@@ -15,6 +15,7 @@ import type { System } from '/domain/services/System'
 import { JpgResponse } from '../Response/Jpg'
 import { CsvResponse } from '../Response/Csv'
 import { XlsResponse } from '../Response/Xls'
+import { TxtResponse } from '../Response/Txt'
 export interface BucketConfig {
   name: string
 }
@@ -37,20 +38,21 @@ export class Bucket {
     _config: BucketConfig,
     private _services: BucketServices
   ) {
-    const { storage } = this._services
+    const { storage, system } = this._services
     this.name = _config.name
-    this.path = `/api/bucket/${this.name}`
-    this.filePath = `${this.path}/:id`
+    this.path = system.joinPath('/api/bucket', this.name)
+    this.filePath = system.joinPath(this.path, ':id')
     this.storage = storage.bucket(this.name)
   }
 
   get endpoint(): string {
-    return `${this._services.server.baseUrl}${this.path}`
+    const { server } = this._services
+    return server.baseUrl + this.path
   }
 
   init = async () => {
     const { server } = this._services
-    await Promise.all([server.get(this.filePath, this.get)])
+    await server.get(this.filePath, this.get)
   }
 
   validateConfig = async (): Promise<ConfigError[]> => {
@@ -97,6 +99,8 @@ export class Bucket {
         return new CsvResponse(file.name, file.data)
       case 'application/vnd.ms-excel':
         return new XlsResponse(file.name, file.data)
+      case 'text/plain':
+        return new TxtResponse(file.name, file.data)
       default:
         return new JsonResponse({
           status: 404,

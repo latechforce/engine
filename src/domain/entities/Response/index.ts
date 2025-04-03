@@ -8,6 +8,7 @@ import { type JsonResponse, isJsonResponse } from './Json'
 import { isJsxResponse, type JsxResponse } from './Jsx'
 import { isPdfResponse, type PdfResponse } from './Pdf'
 import { isPngResponse, type PngResponse } from './Png'
+import { isTxtResponse, type TxtResponse } from './Txt'
 import { isXlsResponse, type XlsResponse } from './Xls'
 import { type XlsxResponse, isXlsxResponse } from './Xlsx'
 
@@ -24,6 +25,7 @@ export type Response =
   | JsxResponse
   | XlsResponse
   | CsvResponse
+  | TxtResponse
 
 export function isResponse(value: unknown): value is Response {
   return (
@@ -38,6 +40,7 @@ export function isResponse(value: unknown): value is Response {
     isPdfResponse(value) ||
     isJsxResponse(value) ||
     isXlsResponse(value) ||
-    isCsvResponse(value)
+    isCsvResponse(value) ||
+    isTxtResponse(value)
   )
 }
