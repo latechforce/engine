@@ -1,3 +1,12 @@
+## [0.39.25](https://github.com/latechforce/engine/compare/v0.39.24...v0.39.25) (2025-04-03)
+
+
+### Bug Fixes
+
+* **Form:** add green test: should create a record with a single attachment input ([3f1415a](https://github.com/latechforce/engine/commit/3f1415a7899d0bd552c091ff7368ddfa14ccdc92))
+* **Form:** update snapshots ([7979054](https://github.com/latechforce/engine/commit/79790544929b54893bde8e92b72c25c8448f00e7))
+* qonto broken test ([04aac1c](https://github.com/latechforce/engine/commit/04aac1c225401e0f454f3b08ab770f3c6ac9a7b0))
+
 ## [0.39.24](https://github.com/latechforce/engine/compare/v0.39.23...v0.39.24) (2025-04-02)
 
 ### Bug Fixes
