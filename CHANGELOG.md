@@ -1,3 +1,10 @@
+## [0.39.33](https://github.com/latechforce/engine/compare/v0.39.32...v0.39.33) (2025-04-03)
+
+
+### Bug Fixes
+
+* **Storage:** add green test: should be able to download a submitted single attachment ([ab8b285](https://github.com/latechforce/engine/commit/ab8b285b8ffbccbcbee6f6f746125df31c04b0ca))
+
 ## [0.39.32](https://github.com/latechforce/engine/compare/v0.39.31...v0.39.32) (2025-04-03)
 
 
