@@ -1,3 +1,10 @@
+## [0.39.28](https://github.com/latechforce/engine/compare/v0.39.27...v0.39.28) (2025-04-03)
+
+
+### Bug Fixes
+
+* update waitForAutomationsHistories params ([52f7816](https://github.com/latechforce/engine/commit/52f7816283d1a13e16819108c66b8fb68e046617))
+
 ## [0.39.27](https://github.com/latechforce/engine/compare/v0.39.26...v0.39.27) (2025-04-03)
 
 
