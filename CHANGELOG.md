@@ -1,125 +1,108 @@
 ## [0.39.24](https://github.com/latechforce/engine/compare/v0.39.23...v0.39.24) (2025-04-02)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** replace xlsx by exceljs ([50cba0c](https://github.com/latechforce/engine/commit/50cba0c4ace57ad6639e283280356028cb99956d))
+- **RunTypescript:** replace xlsx by exceljs ([50cba0c](https://github.com/latechforce/engine/commit/50cba0c4ace57ad6639e283280356028cb99956d))
 
 ## [0.39.23](https://github.com/latechforce/engine/compare/v0.39.22...v0.39.23) (2025-04-02)
 
-
 ### Bug Fixes
 
-* **Form:** update green test: should create a record with a multiple attachment input ([2832155](https://github.com/latechforce/engine/commit/283215510b312b1e7deb3563e9785f536ea5463f))
+- **Form:** update green test: should create a record with a multiple attachment input ([2832155](https://github.com/latechforce/engine/commit/283215510b312b1e7deb3563e9785f536ea5463f))
 
 ## [0.39.22](https://github.com/latechforce/engine/compare/v0.39.21...v0.39.22) (2025-04-02)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** add green test: should run a Typescript code with xlsx package ([18c07fa](https://github.com/latechforce/engine/commit/18c07faf7f7a85b0791f3e1d6a7d18ad3c2f6c77))
+- **RunTypescript:** add green test: should run a Typescript code with xlsx package ([18c07fa](https://github.com/latechforce/engine/commit/18c07faf7f7a85b0791f3e1d6a7d18ad3c2f6c77))
 
 ## [0.39.21](https://github.com/latechforce/engine/compare/v0.39.20...v0.39.21) (2025-04-02)
 
-
 ### Bug Fixes
 
-* **Record:** add green test: getFieldAsAttachments returns attachment arrays correctly ([1871db4](https://github.com/latechforce/engine/commit/1871db4a79ca0b2ebc35bdf9f268aa82fb2f5f0b))
-* **RunTypescript:** add gree test: should run a Typescript code with MistralAI package ([c85a637](https://github.com/latechforce/engine/commit/c85a637bf161e1f26cd629afacadcdfae4a8edb6))
+- **Record:** add green test: getFieldAsAttachments returns attachment arrays correctly ([1871db4](https://github.com/latechforce/engine/commit/1871db4a79ca0b2ebc35bdf9f268aa82fb2f5f0b))
+- **RunTypescript:** add gree test: should run a Typescript code with MistralAI package ([c85a637](https://github.com/latechforce/engine/commit/c85a637bf161e1f26cd629afacadcdfae4a8edb6))
 
 ## [0.39.20](https://github.com/latechforce/engine/compare/v0.39.19...v0.39.20) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **Form:** update snapshots ([652c007](https://github.com/latechforce/engine/commit/652c007fc19c90cc2b71f94d20bca6ad8a5201a2))
+- **Form:** update snapshots ([652c007](https://github.com/latechforce/engine/commit/652c007fc19c90cc2b71f94d20bca6ad8a5201a2))
 
 ## [0.39.19](https://github.com/latechforce/engine/compare/v0.39.18...v0.39.19) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **Form:** add green test: should create a record with an email input ([0b85118](https://github.com/latechforce/engine/commit/0b8511867dbc722b5f9c364d18efdf2454748583))
+- **Form:** add green test: should create a record with an email input ([0b85118](https://github.com/latechforce/engine/commit/0b8511867dbc722b5f9c364d18efdf2454748583))
 
 ## [0.39.18](https://github.com/latechforce/engine/compare/v0.39.17...v0.39.18) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **Form:** update green test to manage /user path for forms ([5d05bcc](https://github.com/latechforce/engine/commit/5d05bccd27a5a021b02478fc7bc3b251a8c53d7d))
+- **Form:** update green test to manage /user path for forms ([5d05bcc](https://github.com/latechforce/engine/commit/5d05bccd27a5a021b02478fc7bc3b251a8c53d7d))
 
 ## [0.39.17](https://github.com/latechforce/engine/compare/v0.39.16...v0.39.17) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **Form:** add green test: should not submit the form if the required field is empty ([aaf21ba](https://github.com/latechforce/engine/commit/aaf21bad8306517e1da0ea48689752b45d5799e7))
+- **Form:** add green test: should not submit the form if the required field is empty ([aaf21ba](https://github.com/latechforce/engine/commit/aaf21bad8306517e1da0ea48689752b45d5799e7))
 
 ## [0.39.16](https://github.com/latechforce/engine/compare/v0.39.15...v0.39.16) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** add green test: should run a Typescript code with the native TextEncoder class ([45f524e](https://github.com/latechforce/engine/commit/45f524e1cbb2bfd4341c09cddcf0d686a3efa3f4))
+- **RunTypescript:** add green test: should run a Typescript code with the native TextEncoder class ([45f524e](https://github.com/latechforce/engine/commit/45f524e1cbb2bfd4341c09cddcf0d686a3efa3f4))
 
 ## [0.39.15](https://github.com/latechforce/engine/compare/v0.39.14...v0.39.15) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** add green test: should run a Typescript code with sodium package ([e8fa623](https://github.com/latechforce/engine/commit/e8fa6236c1e1641ef203bf584d1be9674416e1ae))
+- **RunTypescript:** add green test: should run a Typescript code with sodium package ([e8fa623](https://github.com/latechforce/engine/commit/e8fa6236c1e1641ef203bf584d1be9674416e1ae))
 
 ## [0.39.14](https://github.com/latechforce/engine/compare/v0.39.13...v0.39.14) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **Fetcher:** add green test: should run a Typescript code with a fetcher put ([2fe57af](https://github.com/latechforce/engine/commit/2fe57af05a56926228cbc0e1a9613ef5a62926ef))
+- **Fetcher:** add green test: should run a Typescript code with a fetcher put ([2fe57af](https://github.com/latechforce/engine/commit/2fe57af05a56926228cbc0e1a9613ef5a62926ef))
 
 ## [0.39.13](https://github.com/latechforce/engine/compare/v0.39.12...v0.39.13) (2025-04-01)
 
-
 ### Bug Fixes
 
-* add try catch to postcss ([88fdcc8](https://github.com/latechforce/engine/commit/88fdcc8f53725f652f5cb20d422fe7836421058d))
+- add try catch to postcss ([88fdcc8](https://github.com/latechforce/engine/commit/88fdcc8f53725f652f5cb20d422fe7836421058d))
 
 ## [0.39.12](https://github.com/latechforce/engine/compare/v0.39.11...v0.39.12) (2025-04-01)
 
-
 ### Bug Fixes
 
-* add console.log to theme for debug ([83cff9d](https://github.com/latechforce/engine/commit/83cff9d4a2fda3d832b20c877162e9f446178c65))
+- add console.log to theme for debug ([83cff9d](https://github.com/latechforce/engine/commit/83cff9d4a2fda3d832b20c877162e9f446178c65))
 
 ## [0.39.11](https://github.com/latechforce/engine/compare/v0.39.10...v0.39.11) (2025-04-01)
 
-
 ### Bug Fixes
 
-* **Theme:** add error caching for Postcss ([ebfd43e](https://github.com/latechforce/engine/commit/ebfd43ec4d8dae65a53ccdb8b20bfb9454ddb3f2))
+- **Theme:** add error caching for Postcss ([ebfd43e](https://github.com/latechforce/engine/commit/ebfd43ec4d8dae65a53ccdb8b20bfb9454ddb3f2))
 
 ## [0.39.10](https://github.com/latechforce/engine/compare/v0.39.9...v0.39.10) (2025-04-01)
 
-
 ### Bug Fixes
 
-* add timestamp to link and script files for chaching update ([c049bb1](https://github.com/latechforce/engine/commit/c049bb1e0dd9f4edee550dda8709fc514c855c80))
-* logger message for production ([ac5fd39](https://github.com/latechforce/engine/commit/ac5fd39cdb18c6afdf94e9ae86a1d59e1dcf92f5))
-* update snapshots ([c648373](https://github.com/latechforce/engine/commit/c648373b2a52f27d7555577c8bace5a36215c1b2))
-* update theme logger ([1ad2cac](https://github.com/latechforce/engine/commit/1ad2cacda562279a2dc0f7c13ec203b532c3bb3f))
+- add timestamp to link and script files for chaching update ([c049bb1](https://github.com/latechforce/engine/commit/c049bb1e0dd9f4edee550dda8709fc514c855c80))
+- logger message for production ([ac5fd39](https://github.com/latechforce/engine/commit/ac5fd39cdb18c6afdf94e9ae86a1d59e1dcf92f5))
+- update snapshots ([c648373](https://github.com/latechforce/engine/commit/c648373b2a52f27d7555577c8bace5a36215c1b2))
+- update theme logger ([1ad2cac](https://github.com/latechforce/engine/commit/1ad2cacda562279a2dc0f7c13ec203b532c3bb3f))
 
 ## [0.39.9](https://github.com/latechforce/engine/compare/v0.39.8...v0.39.9) (2025-04-01)
 
-
 ### Bug Fixes
 
-* update schema ([45f966c](https://github.com/latechforce/engine/commit/45f966cc87eba62c9314aaea19155949e83f7e51))
+- update schema ([45f966c](https://github.com/latechforce/engine/commit/45f966cc87eba62c9314aaea19155949e83f7e51))
 
 ## [0.39.8](https://github.com/latechforce/engine/compare/v0.39.7...v0.39.8) (2025-04-01)
 
-
 ### Bug Fixes
 
-* update logger message for production ([9a9c024](https://github.com/latechforce/engine/commit/9a9c0249571e971186014e0385bf4b2329534969))
+- update logger message for production ([9a9c024](https://github.com/latechforce/engine/commit/9a9c0249571e971186014e0385bf4b2329534969))
 
 ## [0.39.7](https://github.com/latechforce/engine/compare/v0.39.6...v0.39.7) (2025-04-01)
 
