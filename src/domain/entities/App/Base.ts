@@ -67,7 +67,7 @@ export class BaseApp {
     const { name, version, engine, description } = _config
     this.name = name
     this.version = version
-    this.engine = engine
+    this.engine = engine.replace('^', '')
     this.description = description
     this.logger = _services.logger
   }
