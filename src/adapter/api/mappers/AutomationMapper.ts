@@ -41,6 +41,7 @@ export class AutomationMapper {
       monitor,
       database,
       cron,
+      system,
     } = services
     const { notion, pappers, qonto, googleMail, gocardless } = integrations
     const trigger = TriggerMapper.toEntity(
@@ -57,6 +58,7 @@ export class AutomationMapper {
         templateCompiler,
         monitor,
         cron,
+        system,
       },
       {
         notion,

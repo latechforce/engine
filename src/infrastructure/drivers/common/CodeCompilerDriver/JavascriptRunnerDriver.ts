@@ -23,6 +23,9 @@ import puppeteer from 'puppeteer'
 import path from 'path'
 import fsExtra from 'fs-extra'
 import slugify from 'slugify'
+import sodium from 'libsodium-wrappers'
+import { Mistral } from '@mistralai/mistralai'
+import ExcelJS from 'exceljs'
 
 export const packages: CodeRunnerContextPackages = {
   xml2js,
@@ -40,6 +43,9 @@ export const packages: CodeRunnerContextPackages = {
   path,
   fsExtra,
   slugify,
+  sodium,
+  Mistral,
+  ExcelJS,
 }
 
 const globalContext = {
@@ -54,6 +60,11 @@ const globalContext = {
   URLSearchParams: global.URLSearchParams,
   setTimeout: setTimeout,
   console: console,
+  TextEncoder: global.TextEncoder,
+  TextDecoder: global.TextDecoder,
+  Blob: global.Blob,
+  ReadableStream: global.ReadableStream,
+  File: global.File,
 }
 
 export class JavascriptRunnerDriver implements ICodeRunnerDriver {

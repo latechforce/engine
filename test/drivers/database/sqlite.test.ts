@@ -20,6 +20,7 @@ describe('on start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       tables: [
         {
           name: 'users',
@@ -51,6 +52,7 @@ describe('on start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       tables: [
         {
           name: 'users',
@@ -84,6 +86,7 @@ describe('on start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       automations: [
         {
           name: 'onUserCreated',
@@ -126,6 +129,7 @@ describe('on start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       automations: [
         {
           name: 'onUserCreated',

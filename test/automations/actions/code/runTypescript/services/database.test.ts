@@ -13,6 +13,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -71,6 +72,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [{ name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }],
         automations: [
           {
@@ -130,6 +132,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -197,6 +200,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -268,6 +272,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -333,6 +338,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -397,6 +403,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -443,6 +450,7 @@ mock.request(({ app, request, drivers }) => {
         name: 'test.txt',
         data: Buffer.from('test'),
         created_at: new Date(),
+        mime_type: 'text/plain',
       })
       await drivers.database.table(table).insert({
         id: '1',
@@ -451,6 +459,7 @@ mock.request(({ app, request, drivers }) => {
             {
               id: '1',
               name: 'test.txt',
+              mime_type: 'text/plain',
               url: 'https://example.com/test.txt',
               created_at: new Date().toISOString(),
             },
@@ -474,6 +483,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -532,6 +542,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -592,7 +603,8 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
-        tables: [{ name: 'users', fields: [{ name: 'valid', type: 'Checkbox' }] }],
+        engine: '1.0.0',
+        tables: [table],
         automations: [
           {
             name: 'readValid',
@@ -652,6 +664,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -711,6 +724,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -766,6 +780,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {
@@ -820,6 +835,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         tables: [table],
         automations: [
           {

@@ -9,6 +9,7 @@ describe('on start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       monitors: [
         {
           driver: 'Sentry',
@@ -32,6 +33,7 @@ describe('on start', () => {
     const config: Config = {
       name: 'La Tech Force App',
       version: '1.0.0',
+      engine: '1.0.0',
       monitors: [
         {
           driver: 'Sentry',

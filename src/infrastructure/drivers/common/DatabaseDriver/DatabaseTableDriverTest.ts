@@ -103,11 +103,62 @@ export function testDatabaseTableDriver(
   describe('insert', () => {
     it('should insert a row', async () => {
       // WHEN
-      await firstTable.insert({
-        id: '1',
-        fields: { name: 'John', multiple_select: ['Red', 'Blue'] },
-        created_at,
-      })
+      const call = () =>
+        firstTable.insert({
+          id: '1',
+          fields: { name: 'John' },
+          created_at,
+        })
+
+      expect(call()).resolves.toBeUndefined()
+    })
+
+    it('should insert a row with a single select', async () => {
+      // WHEN
+      const call = () =>
+        firstTable.insert({
+          id: '2',
+          fields: { name: 'John', single_select: 'Red' },
+          created_at,
+        })
+
+      expect(call()).resolves.toBeUndefined()
+    })
+
+    it('should insert a row with an empty single select', async () => {
+      // WHEN
+      const call = () =>
+        firstTable.insert({
+          id: '3',
+          fields: { name: 'John', single_select: '' },
+          created_at,
+        })
+
+      expect(call()).resolves.toBeUndefined()
+    })
+
+    it('should insert a row with a multiple select', async () => {
+      // WHEN
+      const call = () =>
+        firstTable.insert({
+          id: '4',
+          fields: { name: 'John', multiple_select: ['Red', 'Blue'] },
+          created_at,
+        })
+
+      expect(call()).resolves.toBeUndefined()
+    })
+
+    it('should insert a row with an empty multiple select', async () => {
+      // WHEN
+      const call = () =>
+        firstTable.insert({
+          id: '5',
+          fields: { name: 'John', multiple_select: [] },
+          created_at,
+        })
+
+      expect(call()).resolves.toBeUndefined()
     })
 
     it('should return an error if a record id already exist', async () => {
@@ -127,7 +178,7 @@ export function testDatabaseTableDriver(
       // WHEN
       const call = () =>
         firstTable.insert({
-          id: '2',
+          id: '6',
           fields: { multiple_linked_record: ['1'] },
           created_at,
         })
@@ -147,14 +198,14 @@ export function testDatabaseTableDriver(
       // WHEN
       await firstTable
         .insert({
-          id: '2',
+          id: '7',
           fields: { multiple_linked_record: ['1', '2'] },
           created_at,
         })
         .catch(() => {})
 
       // THEN
-      const record = await firstTable.readById('2')
+      const record = await firstTable.readById('7')
       expect(record).toBeUndefined()
     })
   })
@@ -162,11 +213,14 @@ export function testDatabaseTableDriver(
   describe('update', () => {
     it('should update a row', async () => {
       // WHEN
-      await firstTable.update({
-        id: '1',
-        fields: { name: 'John Doe' },
-        updated_at,
-      })
+      const call = () =>
+        firstTable.update({
+          id: '1',
+          fields: { name: 'John Doe' },
+          updated_at,
+        })
+
+      expect(call()).resolves.toBeUndefined()
     })
   })
 
@@ -186,7 +240,8 @@ export function testDatabaseTableDriver(
           name: 'John Doe',
           multiple_linked_record: [],
           number_rollup: 0,
-          multiple_select: ['Red', 'Blue'],
+          multiple_select: [],
+          single_select: null,
         },
         created_at,
         updated_at,
@@ -240,19 +295,19 @@ export function testDatabaseTableDriver(
       const rows = await firstTable.list()
 
       // THEN
-      expect(rows).toStrictEqual([
-        {
-          id: '1',
-          fields: {
-            name: 'John Doe',
-            multiple_linked_record: [],
-            number_rollup: 0,
-            multiple_select: ['Red', 'Blue'],
-          },
-          created_at,
-          updated_at,
+      expect(rows).toHaveLength(5)
+      expect(rows.find((row) => row.id === '1')).toStrictEqual({
+        id: '1',
+        fields: {
+          name: 'John Doe',
+          multiple_linked_record: [],
+          number_rollup: 0,
+          multiple_select: [],
+          single_select: null,
         },
-      ])
+        created_at,
+        updated_at,
+      })
     })
 
     it('should return a list of rows with an empty "or" filter', async () => {
@@ -260,7 +315,7 @@ export function testDatabaseTableDriver(
       const rows = await firstTable.list({ or: [] })
 
       // THEN
-      expect(rows).toHaveLength(1)
+      expect(rows).toHaveLength(5)
     })
 
     it('should return a list of rows with an empty "and" filter', async () => {
@@ -268,7 +323,7 @@ export function testDatabaseTableDriver(
       const rows = await firstTable.list({ and: [] })
 
       // THEN
-      expect(rows).toHaveLength(1)
+      expect(rows).toHaveLength(5)
     })
 
     it('should return an empty list of rows with a filter', async () => {

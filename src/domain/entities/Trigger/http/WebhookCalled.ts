@@ -4,6 +4,7 @@ import { JsonResponse } from '/domain/entities/Response/Json'
 import type { PostRequest } from '/domain/entities/Request/Post'
 import type { BaseTrigger, BaseTriggerConfig } from '../base'
 import type { AutomationContext } from '../../Automation/Context'
+import type { System } from '/domain/services/System'
 
 export interface WebhookCalledHttpTriggerConfig extends BaseTriggerConfig {
   automation: string
@@ -16,6 +17,7 @@ export interface WebhookCalledHttpTriggerConfig extends BaseTriggerConfig {
 export interface WebhookCalledHttpTriggerServices {
   server: Server
   queue: Queue
+  system: System
 }
 
 export class WebhookCalledHttpTrigger implements BaseTrigger {
@@ -26,7 +28,8 @@ export class WebhookCalledHttpTrigger implements BaseTrigger {
 
   get path() {
     const { path } = this._config
-    return `/api/webhook/${path}`
+    const { system } = this._services
+    return system.joinPath(`/api/webhook`, path)
   }
 
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {

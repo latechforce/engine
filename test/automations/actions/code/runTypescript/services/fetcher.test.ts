@@ -14,6 +14,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'fetcherGet',
@@ -53,6 +54,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'fetcherPost',
@@ -87,6 +89,54 @@ mock.request(({ app, request, drivers }) => {
 
       // WHEN
       const response = await request.post(`${url}/api/automation/fetcher-post`)
+
+      // THEN
+      expect(response.success).toBe(true)
+    })
+
+    it('should run a Typescript code with a fetcher put', async () => {
+      // GIVEN
+      await drivers.fetcher.mock('PUT', 'https://example.com/', async () => {
+        return new Response(JSON.stringify({ name: 'John' }), { status: 200 })
+      })
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'fetcherPut',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'fetcher-put',
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const { fetcher } = context.services
+                  await fetcher.put(
+                    'https://example.com/',
+                    { name: 'Joe' },
+                    {
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                    }
+                  )
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/fetcher-put`)
 
       // THEN
       expect(response.success).toBe(true)

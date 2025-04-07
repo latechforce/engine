@@ -10,6 +10,7 @@ mock.request(({ app, request, drivers }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'readRecord',

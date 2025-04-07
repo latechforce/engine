@@ -2,7 +2,7 @@ import type { FormProps } from '/domain/components/Form'
 
 export const FormContainer = ({ children }: React.PropsWithChildren) => {
   return (
-    <div className="h-screen w-full bg-gray-50 dark:bg-neutral-800">
+    <div className="min-h-screen w-full bg-gray-50 dark:bg-neutral-800">
       <div className="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">{children}</div>
     </div>
   )

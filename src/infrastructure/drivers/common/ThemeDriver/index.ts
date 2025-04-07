@@ -10,7 +10,7 @@ export class ThemeDriver implements IThemeDriver {
     const { type } = config
     switch (type) {
       case 'tailwindcss':
-        this._driver = new TailwindCSSDriver()
+        this._driver = new TailwindCSSDriver(config)
         break
       case 'none':
         this._driver = new NoneDriver()

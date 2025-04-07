@@ -9,10 +9,11 @@ mock.page(({ app, browser, drivers }) => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       forms: [
         {
           name: 'user',
-          path: 'user',
+          path: '/user',
           title: 'Form title',
           description: 'Form description',
           table: 'users',
@@ -20,7 +21,6 @@ mock.page(({ app, browser, drivers }) => {
             {
               field: 'name',
               label: 'Name',
-              required: true,
             },
           ],
           submitLabel: 'Save',
@@ -34,6 +34,7 @@ mock.page(({ app, browser, drivers }) => {
             {
               name: 'name',
               type: 'SingleLineText',
+              required: true,
             },
           ],
         },
@@ -121,7 +122,6 @@ mock.page(({ app, browser, drivers }) => {
 
       // WHEN
       await page.goto(`${url}/form/user`)
-
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
       await page.waitForText('Success')
@@ -139,7 +139,6 @@ mock.page(({ app, browser, drivers }) => {
 
       // WHEN
       await page.goto(`${url}/form/user`)
-
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
       await page.waitForText('Success')
@@ -156,7 +155,6 @@ mock.page(({ app, browser, drivers }) => {
 
       // WHEN
       await page.goto(`${url}/form/user`)
-
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
       await page.waitForText('Success')
@@ -165,6 +163,22 @@ mock.page(({ app, browser, drivers }) => {
       const histories = await drivers.database.waitForAutomationsHistories()
       expect(histories).toHaveLength(1)
       expect(histories[0].actions_data).toContain('User created: John Doe')
+    })
+
+    it('should not submit the form if the required field is empty', async () => {
+      // GIVEN
+      const page = await browser.newPage()
+      const { url } = await app.start(config)
+
+      // WHEN
+      await page.goto(`${url}/form/user`)
+      await page.type('input[name="name"]', '')
+      await page.click('button[type="submit"]')
+      await page.waitForTimeout(100)
+      const isValid = await page.$eval('input[name="name"]', (input) => input.checkValidity())
+
+      // THEN
+      expect(isValid).toBe(false)
     })
   })
 })

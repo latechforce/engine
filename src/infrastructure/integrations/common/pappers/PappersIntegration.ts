@@ -19,7 +19,10 @@ export class PappersIntegration implements IPappersIntegration {
 
   private _errorMapper = (response: AxiosResponse): IntegrationResponseError => {
     return {
-      error: { status: response.status },
+      error: {
+        status: response.status,
+        message: response.data.error,
+      },
     }
   }
 

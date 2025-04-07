@@ -14,6 +14,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'hello-name',
@@ -65,6 +66,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'hello-name',
@@ -121,6 +123,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'hello-name',
@@ -174,6 +177,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getEnv',
@@ -219,6 +223,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getEnv',
@@ -269,6 +274,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getTimestamp',
@@ -310,6 +316,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getIsArray',
@@ -351,6 +358,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getIsNumber',
@@ -392,6 +400,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getIsBoolean',
@@ -433,6 +442,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getURLSearchParams',
@@ -465,6 +475,166 @@ mock.request(({ app, request }) => {
 
       // THEN
       expect(response.param).toBe('1')
+    })
+
+    it('should run a Typescript code with the native TextEncoder class', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'getTextEncoder',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-text-encoder',
+              output: {
+                exist: '{{runJavascriptCode.exist}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function () {
+                  const encoder = new TextEncoder()
+                  return { exist: !!encoder }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-text-encoder`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with the native TextDecoder class', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'getTextDecoder',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-text-decoder',
+              output: {
+                exist: '{{runJavascriptCode.exist}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function () {
+                  const decoder = new TextDecoder()
+                  return { exist: !!decoder }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-text-decoder`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with the native Blob class', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'getBlob',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-blob',
+              output: {
+                exist: '{{runJavascriptCode.exist}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function () {
+                  const blob = new Blob(['Hello, world!'])
+                  return { exist: !!blob }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-blob`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with the native ReadableStream class', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'getBlob',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-readable-stream',
+              output: {
+                exist: '{{runJavascriptCode.exist}}',
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function () {
+                  const stream = new ReadableStream()
+                  return { exist: !!stream }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-readable-stream`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
     })
   })
 })

@@ -17,4 +17,17 @@ export class FetcherDriver implements IFetcherDriver {
       ...rest,
     })
   }
+
+  put = async (url: string, body: object = {}, options: RequestInit = {}) => {
+    const { headers = {}, ...rest } = options
+    return fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify(body),
+      ...rest,
+    })
+  }
 }

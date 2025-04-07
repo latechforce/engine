@@ -11,8 +11,8 @@ import type { MonitorsConfig } from './domain/services/Monitor'
 import type { IMonitorDriver } from './adapter/spi/drivers/MonitorSpi'
 import type { ServerConfig } from './domain/services/Server'
 import type { IServerDriver } from './adapter/spi/drivers/ServerSpi'
-import type { IThemeDriver } from './adapter/spi/drivers/ThemeSpi'
-import type { ThemeConfig } from './domain/services/Theme'
+import type { IStorageDriver } from './adapter/spi/drivers/StorageSpi'
+import type { StorageConfig } from './domain/services/Storage'
 
 export type { Config } from '/domain/interfaces'
 export type { IAutomation as Automation } from '/domain/interfaces/IAutomation'
@@ -64,7 +64,9 @@ export {
   type RecordFields as DatabaseTableRecordFields,
   type RecordFieldValue as DatabaseTableRecordFieldValue,
   type UpdateRecordFields as DatabaseTableUpdateRecordFields,
+  type RecordFieldAttachment as DatabaseTableRecordFieldAttachment,
 } from '/domain/entities/Record'
+export { type File as StorageFile } from '/domain/entities/File'
 export type { AppIntegrations } from '/domain/entities/App/Base'
 export type { StartedApp } from '/domain/entities/App/Started'
 export type { StoppedApp } from '/domain/entities/App/Stopped'
@@ -75,7 +77,7 @@ export default class extends App {
       database: (config: DatabaseConfig) => IDatabaseDriver
       monitor: (config: MonitorsConfig) => IMonitorDriver
       server: (config: ServerConfig) => IServerDriver
-      theme: (config: ThemeConfig) => IThemeDriver
+      storage: (config: StorageConfig) => IStorageDriver
     }
     integrations?: Partial<Integrations>
     components?: Partial<Components>
