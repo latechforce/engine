@@ -11,6 +11,8 @@ import type {
   CreateWebhookSubscriptionResponse,
   ListWebhookSubscriptionsParams,
   ListWebhookSubscriptionsResponse,
+  GetWebhookSubscriptionParams,
+  GetWebhookSubscriptionResponse,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
@@ -29,11 +31,11 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   }
 
   private _errorMapper = (response: AxiosResponse): IntegrationResponseError => {
-    const { error, errorDescription } = response.data as CalendlyError
+    const { title, message } = response.data as CalendlyError
     return {
       error: {
         status: response.status,
-        message: `${error}: ${errorDescription}`,
+        message: `${title}: ${message}`,
       },
     }
   }
@@ -71,9 +73,9 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       const response = await this._instance.post('/webhook_subscriptions', {
         url: params.url,
         events: params.events,
-        ...(params.organization && { organization: params.organization }),
+        organization: params.organization,
+        scope: params.scope,
         ...(params.user && { user: params.user }),
-        ...(params.scope && { scope: params.scope }),
       })
 
       return {
@@ -141,6 +143,22 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         },
       }
     } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  getWebhookSubscription = async (
+    params: GetWebhookSubscriptionParams
+  ): Promise<IntegrationResponse<GetWebhookSubscriptionResponse>> => {
+    try {
+      const url = new URL(params.webhook_uri)
+
+      const response = await this._instance.get<GetWebhookSubscriptionResponse>(`${url.pathname}`)
+      return { data: response.data }
+    } catch (error) {
       if (error instanceof AxiosError && error.response) {
         return this._errorMapper(error.response)
       }

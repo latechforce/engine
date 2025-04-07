@@ -3,6 +3,8 @@ import type {
   CalendlyUser,
   CreateWebhookSubscriptionParams,
   CreateWebhookSubscriptionResponse,
+  GetWebhookSubscriptionParams,
+  GetWebhookSubscriptionResponse,
   ListWebhookSubscriptionsParams,
   ListWebhookSubscriptionsResponse,
   WebhookSubscriptionItem,
@@ -182,6 +184,36 @@ export class CalendlyIntegration implements ICalendlyIntegration {
           previous_page: '1',
           next_page_token: '',
           previous_page_token: '',
+        },
+      },
+    }
+  }
+
+  getWebhookSubscription = async (
+    params: GetWebhookSubscriptionParams
+  ): Promise<IntegrationResponse<GetWebhookSubscriptionResponse>> => {
+    const result = this.db
+      .query<WebhookSubscriptionItem, string>('SELECT * FROM WebhookSubscriptions WHERE uri LIKE ?')
+      .get(`%${params.webhook_uuid}%`)
+
+    if (!result) {
+      return { error: { status: 404, message: 'Webhook subscription not found' } }
+    }
+
+    return {
+      data: {
+        resource: {
+          uri: result.uri,
+          callback_url: result.callback_url,
+          created_at: result.created_at,
+          updated_at: result.updated_at,
+          retry_started_at: result.retry_started_at,
+          state: result.state,
+          events: result.events,
+          scope: result.scope,
+          organization: result.organization,
+          user: result.user || '',
+          creator: result.creator,
         },
       },
     }

@@ -1,14 +1,14 @@
 export type CalendlyError = {
-  error: string
-  errorDescription: string
+  title: string
+  message: string
 }
 
 export type CreateWebhookSubscriptionParams = {
   url: string
   events: WebhookEvents[]
-  organization?: CalendlyOrganizationResourceUrl
+  organization: CalendlyOrganizationResourceUrl
   user?: CalendlyUserResourceUrl
-  scope?: CalendlyScope
+  scope: CalendlyScope
 }
 
 export type CreateWebhookSubscriptionResponse = {
@@ -90,4 +90,24 @@ export type CalendlyUser = {
   current_organization: string
   resource_type: string
   locale: string
+}
+
+export type GetWebhookSubscriptionParams = {
+  webhook_uri: string
+}
+
+export type GetWebhookSubscriptionResponse = {
+  resource: {
+    uri: string
+    callback_url: string
+    created_at: string
+    updated_at: string
+    retry_started_at: string | null
+    state: string
+    events: string[]
+    scope: string
+    organization: string
+    user: string
+    creator: string
+  }
 }

@@ -5,6 +5,8 @@ import type {
   CreateWebhookSubscriptionResponse,
   ListWebhookSubscriptionsParams,
   ListWebhookSubscriptionsResponse,
+  GetWebhookSubscriptionParams,
+  GetWebhookSubscriptionResponse,
 } from './CalendlyTypes'
 
 export interface ICalendlySpi extends BaseSpi {
@@ -15,4 +17,7 @@ export interface ICalendlySpi extends BaseSpi {
   listWebhookSubscriptions: (
     params: ListWebhookSubscriptionsParams
   ) => Promise<IntegrationResponse<ListWebhookSubscriptionsResponse>>
+  getWebhookSubscription: (
+    params: GetWebhookSubscriptionParams
+  ) => Promise<IntegrationResponse<GetWebhookSubscriptionResponse>>
 }
