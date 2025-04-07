@@ -6,10 +6,6 @@ export const integration = new CalendlyIntegration({
   user: {
     accessToken: ':memory:',
   },
-  client: {
-    id: ':memory:',
-    secret: ':memory:',
-  },
 })
 
 testCalendlyIntegration(BunTester, integration)
