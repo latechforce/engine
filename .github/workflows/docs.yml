@@ -1,0 +1,41 @@
+name: Build Documentation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install json-schema-for-humans
+        run: pip install json-schema-for-humans
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.5
+
+      - name: Build documentation
+        run: bun run build:docs
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit and push if changed
+        run: |
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: update generated documentation [skip ci]" && git push)

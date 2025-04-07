@@ -47,7 +47,8 @@
     "test:ui:snapshots": "bun test src/infrastructure/components  --bail --update-snapshots",
     "semantic-release": "semantic-release",
     "storybook": "concurrently \"bunx @tailwindcss/cli -i ./.storybook/input.css -o ./.storybook/output.css --watch\" \"storybook dev -p 6006\"",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build:docs": "generate-schema-doc ./schema/app.schema.json ./docs"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
