@@ -1,82 +1,71 @@
 ## [0.39.35](https://github.com/latechforce/engine/compare/v0.39.34...v0.39.35) (2025-04-03)
 
-
 ### Bug Fixes
 
-* add engine version in config ([f23e354](https://github.com/latechforce/engine/commit/f23e3547306e3004d26be5ff722c3567126350c9))
+- add engine version in config ([f23e354](https://github.com/latechforce/engine/commit/f23e3547306e3004d26be5ff722c3567126350c9))
 
 ## [0.39.34](https://github.com/latechforce/engine/compare/v0.39.33...v0.39.34) (2025-04-03)
 
-
 ### Bug Fixes
 
-* increase waitForAutomationsHistories timeout ([c7ca6a7](https://github.com/latechforce/engine/commit/c7ca6a7c5c58b4eebc51e90bdbf75c2a9308d15b))
+- increase waitForAutomationsHistories timeout ([c7ca6a7](https://github.com/latechforce/engine/commit/c7ca6a7c5c58b4eebc51e90bdbf75c2a9308d15b))
 
 ## [0.39.33](https://github.com/latechforce/engine/compare/v0.39.32...v0.39.33) (2025-04-03)
 
-
 ### Bug Fixes
 
-* **Storage:** add green test: should be able to download a submitted single attachment ([ab8b285](https://github.com/latechforce/engine/commit/ab8b285b8ffbccbcbee6f6f746125df31c04b0ca))
+- **Storage:** add green test: should be able to download a submitted single attachment ([ab8b285](https://github.com/latechforce/engine/commit/ab8b285b8ffbccbcbee6f6f746125df31c04b0ca))
 
 ## [0.39.32](https://github.com/latechforce/engine/compare/v0.39.31...v0.39.32) (2025-04-03)
 
-
 ### Bug Fixes
 
-* **Storage:** add green test: should fetch a csv file ([1906d30](https://github.com/latechforce/engine/commit/1906d30e40c0fc97d466bca110d85d38ad561659))
-* test ([f6b18a5](https://github.com/latechforce/engine/commit/f6b18a5b7d447986213c1d314cc380fb0b5e243f))
+- **Storage:** add green test: should fetch a csv file ([1906d30](https://github.com/latechforce/engine/commit/1906d30e40c0fc97d466bca110d85d38ad561659))
+- test ([f6b18a5](https://github.com/latechforce/engine/commit/f6b18a5b7d447986213c1d314cc380fb0b5e243f))
 
 ## [0.39.31](https://github.com/latechforce/engine/compare/v0.39.30...v0.39.31) (2025-04-03)
 
-
 ### Bug Fixes
 
-* **Storage:** add green test: should read a file ([43cc2c0](https://github.com/latechforce/engine/commit/43cc2c00b00467ca23e2a5fb6e4e7e09f7befc54))
+- **Storage:** add green test: should read a file ([43cc2c0](https://github.com/latechforce/engine/commit/43cc2c00b00467ca23e2a5fb6e4e7e09f7befc54))
 
 ## [0.39.30](https://github.com/latechforce/engine/compare/v0.39.29...v0.39.30) (2025-04-03)
 
-
 ### Bug Fixes
 
-* add green test: should run a Typescript code with the native Blob class ([51818af](https://github.com/latechforce/engine/commit/51818aff562313e588cd3c078e72c93e680b5661))
+- add green test: should run a Typescript code with the native Blob class ([51818af](https://github.com/latechforce/engine/commit/51818aff562313e588cd3c078e72c93e680b5661))
 
 ## [0.39.29](https://github.com/latechforce/engine/compare/v0.39.28...v0.39.29) (2025-04-03)
 
-
 ### Bug Fixes
 
-* add green test: should run a Typescript code with Stream package ([1e6d7dd](https://github.com/latechforce/engine/commit/1e6d7ddbfd4961ee79bba35fd9966e9588224c95))
+- add green test: should run a Typescript code with Stream package ([1e6d7dd](https://github.com/latechforce/engine/commit/1e6d7ddbfd4961ee79bba35fd9966e9588224c95))
 
 ## [0.39.28](https://github.com/latechforce/engine/compare/v0.39.27...v0.39.28) (2025-04-03)
 
-
 ### Bug Fixes
 
-* update waitForAutomationsHistories params ([52f7816](https://github.com/latechforce/engine/commit/52f7816283d1a13e16819108c66b8fb68e046617))
+- update waitForAutomationsHistories params ([52f7816](https://github.com/latechforce/engine/commit/52f7816283d1a13e16819108c66b8fb68e046617))
 
 ## [0.39.27](https://github.com/latechforce/engine/compare/v0.39.26...v0.39.27) (2025-04-03)
 
-
 ### Bug Fixes
 
-* add green test: getFieldAsAttachment returns single attachment correctly ([fd85d7c](https://github.com/latechforce/engine/commit/fd85d7cc882af20a9fd29851717939240830bd15))
+- add green test: getFieldAsAttachment returns single attachment correctly ([fd85d7c](https://github.com/latechforce/engine/commit/fd85d7cc882af20a9fd29851717939240830bd15))
 
 ## [0.39.26](https://github.com/latechforce/engine/compare/v0.39.25...v0.39.26) (2025-04-03)
 
-
 ### Bug Fixes
 
-* add green test: should insert a row with an empty single select ([c197792](https://github.com/latechforce/engine/commit/c19779245320ca13dc0f8b5650b668bfbf5de719))
+- add green test: should insert a row with an empty single select ([c197792](https://github.com/latechforce/engine/commit/c19779245320ca13dc0f8b5650b668bfbf5de719))
 
 ## [0.39.25](https://github.com/latechforce/engine/compare/v0.39.24...v0.39.25) (2025-04-03)
 
-
 ### Bug Fixes
 
-* **Form:** add green test: should create a record with a single attachment input ([3f1415a](https://github.com/latechforce/engine/commit/3f1415a7899d0bd552c091ff7368ddfa14ccdc92))
-* **Form:** update snapshots ([7979054](https://github.com/latechforce/engine/commit/79790544929b54893bde8e92b72c25c8448f00e7))
-* qonto broken test ([04aac1c](https://github.com/latechforce/engine/commit/04aac1c225401e0f454f3b08ab770f3c6ac9a7b0))
+- **Form:** add green test: should create a record with a single attachment input ([3f1415a](https://github.com/latechforce/engine/commit/3f1415a7899d0bd552c091ff7368ddfa14ccdc92))
+- **Form:** update snapshots ([7979054](https://github.com/latechforce/engine/commit/79790544929b54893bde8e92b72c25c8448f00e7))
+- qonto broken test ([04aac1c](https://github.com/latechforce/engine/commit/04aac1c225401e0f454f3b08ab770f3c6ac9a7b0))
 
 ## [0.39.24](https://github.com/latechforce/engine/compare/v0.39.23...v0.39.24) (2025-04-02)
 
