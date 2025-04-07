@@ -4,6 +4,7 @@ import type {
   CreateWebhookSubscriptionParams,
   ListWebhookSubscriptionsParams,
   GetWebhookSubscriptionParams,
+  DeleteWebhookSubscriptionParams,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 
 export type ICalendlyIntegration = ICalendlySpi
@@ -27,5 +28,9 @@ export class CalendlySpi extends BaseSpi<ICalendlyIntegration> implements ICalen
 
   getWebhookSubscription = async (params: GetWebhookSubscriptionParams) => {
     return this._integration.getWebhookSubscription(params)
+  }
+
+  deleteWebhookSubscription = async (params: DeleteWebhookSubscriptionParams) => {
+    return this._integration.deleteWebhookSubscription(params)
   }
 }

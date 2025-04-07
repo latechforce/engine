@@ -13,6 +13,7 @@ import type {
   ListWebhookSubscriptionsResponse,
   GetWebhookSubscriptionParams,
   GetWebhookSubscriptionResponse,
+  DeleteWebhookSubscriptionParams,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
@@ -158,6 +159,22 @@ export class CalendlyIntegration implements ICalendlyIntegration {
 
       const response = await this._instance.get<GetWebhookSubscriptionResponse>(`${url.pathname}`)
       return { data: response.data }
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  deleteWebhookSubscription = async (
+    params: DeleteWebhookSubscriptionParams
+  ): Promise<IntegrationResponse<void>> => {
+    try {
+      const url = new URL(params.webhook_uri)
+
+      await this._instance.delete(`${url.pathname}`)
+      return { data: undefined }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         return this._errorMapper(error.response)

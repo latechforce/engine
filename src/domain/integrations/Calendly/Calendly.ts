@@ -8,6 +8,7 @@ import type {
   ListWebhookSubscriptionsResponse,
   GetWebhookSubscriptionParams,
   GetWebhookSubscriptionResponse,
+  DeleteWebhookSubscriptionParams,
 } from './CalendlyTypes'
 
 export class Calendly extends Integration<ICalendlySpi> {
@@ -42,6 +43,12 @@ export class Calendly extends Integration<ICalendlySpi> {
   ): Promise<GetWebhookSubscriptionResponse> => {
     const response = await this._spi.getWebhookSubscription(params)
     if (response.error) return this._throwError('getWebhookSubscription', response.error)
+    return response.data
+  }
+
+  deleteWebhookSubscription = async (params: DeleteWebhookSubscriptionParams): Promise<void> => {
+    const response = await this._spi.deleteWebhookSubscription(params)
+    if (response.error) return this._throwError('deleteWebhookSubscription', response.error)
     return response.data
   }
 }

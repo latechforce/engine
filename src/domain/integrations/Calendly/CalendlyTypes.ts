@@ -111,3 +111,7 @@ export type GetWebhookSubscriptionResponse = {
     creator: string
   }
 }
+
+export type DeleteWebhookSubscriptionParams = {
+  webhook_uri: string
+}
