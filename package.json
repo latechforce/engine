@@ -35,6 +35,7 @@
     "lint": "bunx eslint . --fix",
     "clean": "rm -rf dist && rm -rf node_modules && rm -rf bun.lock && rm -rf tmp",
     "build:schema": "bunx typescript-json-schema ./tsconfig.json AppSchema --out ./schema/app.schema.json --required --noExtraProps --strictNullChecks",
+    "build:docs": "generate-schema-doc --config-file ./docs/jsfh-config.yaml ./schema/app.schema.json ./docs/index.html",
     "build:types": "bunx tsc --project script/tsconfig.json && bun script/fix-types-paths.ts",
     "build:engine": "bun build --entrypoints ./src/index.ts ./src/bun.ts ./src/infrastructure/instrument/bun/index.ts ./src/infrastructure/test/bun/index.ts --outdir ./dist --target bun --packages external --splitting",
     "build": "bun run build:schema && bun run build:engine && bun run build:types",
@@ -47,8 +48,7 @@
     "test:ui:snapshots": "bun test src/infrastructure/components  --bail --update-snapshots",
     "semantic-release": "semantic-release",
     "storybook": "concurrently \"bunx @tailwindcss/cli -i ./.storybook/input.css -o ./.storybook/output.css --watch\" \"storybook dev -p 6006\"",
-    "build-storybook": "storybook build",
-    "build:docs": "generate-schema-doc --config template=js_offline ./schema/app.schema.json ./docs/index.html"
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",

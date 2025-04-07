@@ -81,6 +81,7 @@ jobs:
 
   build-docs:
     name: Build Docs
+    needs: release
     runs-on: ubuntu-latest
 
     permissions:

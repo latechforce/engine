@@ -39,7 +39,7 @@ We recommend you to use our [starter kit](https://github.com/latechforce/engine-
 
 You can configure your app from a JSON object. This object contains the configuration of the tables, automations, drivers, integrations, forms, etc...
 
-You can [explore the configuration here](https://json-schema.app/view/%23?url=https%3A%2F%2Fraw.githubusercontent.com%2Flatechforce%2Fengine%2Frefs%2Fheads%2Fmain%2Fschema%2Fapp.schema.json).
+You can [explore the configuration here](https://engine.latechforce.com/).
 
 We invite you to navigate into the [`examples/`](https://github.com/latechforce/engine/tree/main/examples) folder to see some examples.
 
