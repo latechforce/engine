@@ -1,1775 +1,2036 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "additionalProperties": false,
-  "definitions": {
-    "AirtableConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "apiKey": {
-          "type": "string"
-        },
-        "baseId": {
-          "type": "string"
-        }
-      },
-      "required": ["apiKey", "baseId"],
-      "type": "object"
-    },
-    "BucketConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": ["name"],
-      "type": "object"
-    },
-    "DatabaseConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "$ref": "#/definitions/DatabaseDriverName"
-        },
-        "url": {
-          "type": "string"
-        }
-      },
-      "required": ["driver", "url"],
-      "type": "object"
-    },
-    "DatabaseDriverName": {
-      "enum": ["PostgreSQL", "SQLite"],
-      "type": "string"
-    },
-    "FormConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "inputs": {
-          "items": {
-            "$ref": "#/definitions/InputConfig"
-          },
-          "type": "array"
-        },
-        "name": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "submitLabel": {
-          "type": "string"
-        },
-        "successMessage": {
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        }
-      },
-      "required": ["inputs", "name", "path", "table"],
-      "type": "object"
-    },
-    "GoCardlessCreatePayment": {
-      "additionalProperties": false,
-      "properties": {
-        "amount": {
-          "type": "number"
-        },
-        "charge_date": {
-          "type": "string"
-        },
-        "currency": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "mandate": {
-          "type": "string"
-        },
-        "metadata": {
-          "$ref": "#/definitions/Record<string,string>"
-        },
-        "reference": {
-          "type": "string"
-        },
-        "retry_if_possible": {
-          "type": "boolean"
-        }
-      },
-      "required": ["amount", "currency", "mandate"],
-      "type": "object"
-    },
-    "GoCardlessListPayment": {
-      "additionalProperties": false,
-      "properties": {
-        "after": {
-          "type": "string"
-        },
-        "before": {
-          "type": "string"
-        },
-        "limit": {
-          "type": "number"
-        },
-        "mandate": {
-          "type": "string"
-        },
-        "status": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoCardlessProductionConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "accessToken": {
-          "type": "string"
-        },
-        "environment": {
-          "const": "production",
-          "type": "string"
-        }
-      },
-      "required": ["accessToken", "environment"],
-      "type": "object"
-    },
-    "GoCardlessSandboxConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "accessToken": {
-          "type": "string"
-        },
-        "environment": {
-          "const": "sandbox",
-          "type": "string"
-        }
-      },
-      "required": ["accessToken", "environment"],
-      "type": "object"
-    },
-    "GoogleMailConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "password": {
-          "type": "string"
-        },
-        "user": {
-          "type": "string"
-        }
-      },
-      "required": ["password", "user"],
-      "type": "object"
-    },
-    "GoogleMailEmailOptions": {
-      "additionalProperties": false,
-      "properties": {
-        "bcc": {
-          "type": "string"
-        },
-        "cc": {
-          "type": "string"
-        },
-        "from": {
-          "type": "string"
-        },
-        "html": {
-          "type": "string"
-        },
-        "subject": {
-          "type": "string"
-        },
-        "text": {
-          "type": "string"
-        },
-        "to": {
-          "type": "string"
-        }
-      },
-      "required": ["to"],
-      "type": "object"
-    },
-    "IAction": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/ICreateRecordDatabaseAction"
-        },
-        {
-          "$ref": "#/definitions/IRunJavascriptCodeAction"
-        },
-        {
-          "$ref": "#/definitions/IRunTypescriptCodeAction"
-        },
-        {
-          "$ref": "#/definitions/IReadRecordDatabaseAction"
-        },
-        {
-          "$ref": "#/definitions/IGetCompanyPappersAction"
-        },
-        {
-          "$ref": "#/definitions/ICreateClientQontoAction"
-        },
-        {
-          "$ref": "#/definitions/IUpdatePageNotionAction"
-        },
-        {
-          "$ref": "#/definitions/ISendEmailGoogleMailAction"
-        },
-        {
-          "$ref": "#/definitions/ICreatePaymentGoCardlessAction"
-        },
-        {
-          "$ref": "#/definitions/IListPaymentsGoCardlessAction"
-        },
-        {
-          "$ref": "#/definitions/IRetrieveAttachmentQontoAction"
-        }
-      ]
-    },
-    "IApiCalledHttpTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "auth": {
-          "const": "ApiKey",
-          "type": "string"
-        },
-        "event": {
-          "const": "ApiCalled",
-          "type": "string"
-        },
-        "input": {
-          "$ref": "#/definitions/JSONSchema"
-        },
-        "output": {
-          "$ref": "#/definitions/TemplateObject"
-        },
-        "path": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Http",
-          "type": "string"
-        }
-      },
-      "required": ["event", "path", "service"],
-      "type": "object"
-    },
-    "IAutomation": {
-      "additionalProperties": false,
-      "properties": {
-        "actions": {
-          "items": {
-            "$ref": "#/definitions/IAction"
-          },
-          "type": "array"
-        },
-        "description": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "summary": {
-          "type": "string"
-        },
-        "trigger": {
-          "$ref": "#/definitions/ITrigger"
-        }
-      },
-      "required": ["actions", "name", "trigger"],
-      "type": "object"
-    },
-    "ICheckboxField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Checkbox",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "ICreateClientQontoAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "CreateClient",
-          "type": "string"
-        },
-        "client": {
-          "$ref": "#/definitions/QontoCreateClient"
-        },
-        "integration": {
-          "const": "Qonto",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "client", "integration", "name"],
-      "type": "object"
-    },
-    "ICreatePaymentGoCardlessAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "CreatePayment",
-          "type": "string"
-        },
-        "integration": {
-          "const": "GoCardless",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "payment": {
-          "$ref": "#/definitions/GoCardlessCreatePayment"
-        }
-      },
-      "required": ["action", "integration", "name", "payment"],
-      "type": "object"
-    },
-    "ICreateRecordDatabaseAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "CreateRecord",
-          "type": "string"
-        },
-        "fields": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "name": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Database",
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "fields", "name", "service", "table"],
-      "type": "object"
-    },
-    "ICronTimeTickedScheduleTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "cronTime": {
-          "type": "string"
-        },
-        "event": {
-          "const": "CronTimeTicked",
-          "type": "string"
-        },
-        "service": {
-          "const": "Schedule",
-          "type": "string"
-        }
-      },
-      "required": ["cronTime", "event", "service"],
-      "type": "object"
-    },
-    "IDateTimeField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "DateTime",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IEmailField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Email",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IField": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/IDateTimeField"
-        },
-        {
-          "$ref": "#/definitions/IEmailField"
-        },
-        {
-          "$ref": "#/definitions/ILongTextField"
-        },
-        {
-          "$ref": "#/definitions/ISingleLineTextField"
-        },
-        {
-          "$ref": "#/definitions/INumberField"
-        },
-        {
-          "$ref": "#/definitions/IFormulaField"
-        },
-        {
-          "$ref": "#/definitions/ISingleSelectField"
-        },
-        {
-          "$ref": "#/definitions/ISingleLinkedRecordField"
-        },
-        {
-          "$ref": "#/definitions/IMultipleLinkedRecordField"
-        },
-        {
-          "$ref": "#/definitions/IRollupField"
-        },
-        {
-          "$ref": "#/definitions/ICheckboxField"
-        },
-        {
-          "$ref": "#/definitions/IMultipleSelectField"
-        },
-        {
-          "$ref": "#/definitions/IMultipleAttachmentField"
-        },
-        {
-          "$ref": "#/definitions/IUrlField"
-        },
-        {
-          "$ref": "#/definitions/ISingleAttachmentField"
-        }
-      ]
-    },
-    "IFormulaField": {
-      "additionalProperties": false,
-      "properties": {
-        "formula": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "output": {
-          "$ref": "#/definitions/IOutputField"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Formula",
-          "type": "string"
-        }
-      },
-      "required": ["formula", "name", "output", "type"],
-      "type": "object"
-    },
-    "IGetCompanyPappersAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "GetCompany",
-          "type": "string"
-        },
-        "integration": {
-          "const": "Pappers",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "siret": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "integration", "name", "siret"],
-      "type": "object"
-    },
-    "IIntegrations": {
-      "additionalProperties": false,
-      "properties": {
-        "airtable": {
-          "$ref": "#/definitions/AirtableConfig"
-        },
-        "gocardless": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/GoCardlessSandboxConfig"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "definitions": {
+        "AirtableConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": {
+                    "type": "string"
+                },
+                "baseId": {
+                    "type": "string"
+                }
             },
-            {
-              "$ref": "#/definitions/GoCardlessProductionConfig"
-            }
-          ]
+            "required": [
+                "apiKey",
+                "baseId"
+            ],
+            "type": "object"
         },
-        "google": {
-          "additionalProperties": false,
-          "properties": {
-            "mail": {
-              "$ref": "#/definitions/GoogleMailConfig"
-            }
-          },
-          "type": "object"
-        },
-        "notion": {
-          "$ref": "#/definitions/NotionConfig"
-        },
-        "pappers": {
-          "$ref": "#/definitions/PappersConfig"
-        },
-        "phantombuster": {
-          "$ref": "#/definitions/PhantombusterConfig"
-        },
-        "qonto": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/QontoSandboxConfig"
+        "BucketConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
             },
-            {
-              "$ref": "#/definitions/QontoProductionConfig"
-            }
-          ]
-        }
-      },
-      "type": "object"
-    },
-    "IListPaymentsGoCardlessAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "ListPayments",
-          "type": "string"
+            "required": [
+                "name"
+            ],
+            "type": "object"
         },
-        "integration": {
-          "const": "GoCardless",
-          "type": "string"
+        "DatabaseConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "$ref": "#/definitions/DatabaseDriverName"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "driver",
+                "url"
+            ],
+            "type": "object"
         },
-        "name": {
-          "type": "string"
-        },
-        "params": {
-          "$ref": "#/definitions/GoCardlessListPayment"
-        }
-      },
-      "required": ["action", "integration", "name", "params"],
-      "type": "object"
-    },
-    "ILongTextField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "LongText",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IMultipleAttachmentField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "MultipleAttachment",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IMultipleLinkedRecordField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "table": {
-          "type": "string"
-        },
-        "type": {
-          "const": "MultipleLinkedRecord",
-          "type": "string"
-        }
-      },
-      "required": ["name", "table", "type"],
-      "type": "object"
-    },
-    "IMultipleSelectField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "options": {
-          "items": {
+        "DatabaseDriverName": {
+            "enum": [
+                "PostgreSQL",
+                "SQLite"
+            ],
             "type": "string"
-          },
-          "type": "array"
         },
-        "required": {
-          "type": "boolean"
+        "FormConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "inputs": {
+                    "items": {
+                        "$ref": "#/definitions/InputConfig"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "submitLabel": {
+                    "type": "string"
+                },
+                "successMessage": {
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "inputs",
+                "name",
+                "path",
+                "table"
+            ],
+            "type": "object"
         },
-        "type": {
-          "const": "MultipleSelect",
-          "type": "string"
+        "GoCardlessCreatePayment": {
+            "additionalProperties": false,
+            "properties": {
+                "amount": {
+                    "type": "number"
+                },
+                "charge_date": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "mandate": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/Record<string,string>"
+                },
+                "reference": {
+                    "type": "string"
+                },
+                "retry_if_possible": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "amount",
+                "currency",
+                "mandate"
+            ],
+            "type": "object"
+        },
+        "GoCardlessListPayment": {
+            "additionalProperties": false,
+            "properties": {
+                "after": {
+                    "type": "string"
+                },
+                "before": {
+                    "type": "string"
+                },
+                "limit": {
+                    "type": "number"
+                },
+                "mandate": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "GoCardlessProductionConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "environment": {
+                    "const": "production",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "accessToken",
+                "environment"
+            ],
+            "type": "object"
+        },
+        "GoCardlessSandboxConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "accessToken": {
+                    "type": "string"
+                },
+                "environment": {
+                    "const": "sandbox",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "accessToken",
+                "environment"
+            ],
+            "type": "object"
+        },
+        "GoogleMailConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "user": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "password",
+                "user"
+            ],
+            "type": "object"
+        },
+        "GoogleMailEmailOptions": {
+            "additionalProperties": false,
+            "properties": {
+                "bcc": {
+                    "type": "string"
+                },
+                "cc": {
+                    "type": "string"
+                },
+                "from": {
+                    "type": "string"
+                },
+                "html": {
+                    "type": "string"
+                },
+                "subject": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "to": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "to"
+            ],
+            "type": "object"
+        },
+        "IAction": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/ICreateRecordDatabaseAction"
+                },
+                {
+                    "$ref": "#/definitions/IRunJavascriptCodeAction"
+                },
+                {
+                    "$ref": "#/definitions/IRunTypescriptCodeAction"
+                },
+                {
+                    "$ref": "#/definitions/IReadRecordDatabaseAction"
+                },
+                {
+                    "$ref": "#/definitions/IGetCompanyPappersAction"
+                },
+                {
+                    "$ref": "#/definitions/ICreateClientQontoAction"
+                },
+                {
+                    "$ref": "#/definitions/IUpdatePageNotionAction"
+                },
+                {
+                    "$ref": "#/definitions/ISendEmailGoogleMailAction"
+                },
+                {
+                    "$ref": "#/definitions/ICreatePaymentGoCardlessAction"
+                },
+                {
+                    "$ref": "#/definitions/IListPaymentsGoCardlessAction"
+                },
+                {
+                    "$ref": "#/definitions/IRetrieveAttachmentQontoAction"
+                }
+            ]
+        },
+        "IApiCalledHttpTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "auth": {
+                    "const": "ApiKey",
+                    "type": "string"
+                },
+                "event": {
+                    "const": "ApiCalled",
+                    "type": "string"
+                },
+                "input": {
+                    "$ref": "#/definitions/JSONSchema"
+                },
+                "output": {
+                    "$ref": "#/definitions/TemplateObject"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Http",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "path",
+                "service"
+            ],
+            "type": "object"
+        },
+        "IAutomation": {
+            "additionalProperties": false,
+            "properties": {
+                "actions": {
+                    "items": {
+                        "$ref": "#/definitions/IAction"
+                    },
+                    "type": "array"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "trigger": {
+                    "$ref": "#/definitions/ITrigger"
+                }
+            },
+            "required": [
+                "actions",
+                "name",
+                "trigger"
+            ],
+            "type": "object"
+        },
+        "ICheckboxField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Checkbox",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ICreateClientQontoAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "CreateClient",
+                    "type": "string"
+                },
+                "client": {
+                    "$ref": "#/definitions/QontoCreateClient"
+                },
+                "integration": {
+                    "const": "Qonto",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "client",
+                "integration",
+                "name"
+            ],
+            "type": "object"
+        },
+        "ICreatePaymentGoCardlessAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "CreatePayment",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "GoCardless",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "payment": {
+                    "$ref": "#/definitions/GoCardlessCreatePayment"
+                }
+            },
+            "required": [
+                "action",
+                "integration",
+                "name",
+                "payment"
+            ],
+            "type": "object"
+        },
+        "ICreateRecordDatabaseAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "CreateRecord",
+                    "type": "string"
+                },
+                "fields": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Database",
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "fields",
+                "name",
+                "service",
+                "table"
+            ],
+            "type": "object"
+        },
+        "ICronTimeTickedScheduleTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "cronTime": {
+                    "type": "string"
+                },
+                "event": {
+                    "const": "CronTimeTicked",
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Schedule",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cronTime",
+                "event",
+                "service"
+            ],
+            "type": "object"
+        },
+        "IDateTimeField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "DateTime",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IEmailField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Email",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IField": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/IDateTimeField"
+                },
+                {
+                    "$ref": "#/definitions/IEmailField"
+                },
+                {
+                    "$ref": "#/definitions/ILongTextField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleLineTextField"
+                },
+                {
+                    "$ref": "#/definitions/INumberField"
+                },
+                {
+                    "$ref": "#/definitions/IFormulaField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleSelectField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleLinkedRecordField"
+                },
+                {
+                    "$ref": "#/definitions/IMultipleLinkedRecordField"
+                },
+                {
+                    "$ref": "#/definitions/IRollupField"
+                },
+                {
+                    "$ref": "#/definitions/ICheckboxField"
+                },
+                {
+                    "$ref": "#/definitions/IMultipleSelectField"
+                },
+                {
+                    "$ref": "#/definitions/IMultipleAttachmentField"
+                },
+                {
+                    "$ref": "#/definitions/IUrlField"
+                },
+                {
+                    "$ref": "#/definitions/ISingleAttachmentField"
+                }
+            ]
+        },
+        "IFormulaField": {
+            "additionalProperties": false,
+            "properties": {
+                "formula": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "output": {
+                    "$ref": "#/definitions/IOutputField"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Formula",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "formula",
+                "name",
+                "output",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IGetCompanyPappersAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "GetCompany",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Pappers",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "siret": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "integration",
+                "name",
+                "siret"
+            ],
+            "type": "object"
+        },
+        "IIntegrations": {
+            "additionalProperties": false,
+            "properties": {
+                "airtable": {
+                    "$ref": "#/definitions/AirtableConfig"
+                },
+                "gocardless": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/GoCardlessSandboxConfig"
+                        },
+                        {
+                            "$ref": "#/definitions/GoCardlessProductionConfig"
+                        }
+                    ]
+                },
+                "google": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "mail": {
+                            "$ref": "#/definitions/GoogleMailConfig"
+                        }
+                    },
+                    "type": "object"
+                },
+                "notion": {
+                    "$ref": "#/definitions/NotionConfig"
+                },
+                "pappers": {
+                    "$ref": "#/definitions/PappersConfig"
+                },
+                "phantombuster": {
+                    "$ref": "#/definitions/PhantombusterConfig"
+                },
+                "qonto": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/QontoSandboxConfig"
+                        },
+                        {
+                            "$ref": "#/definitions/QontoProductionConfig"
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "IListPaymentsGoCardlessAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "ListPayments",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "GoCardless",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "params": {
+                    "$ref": "#/definitions/GoCardlessListPayment"
+                }
+            },
+            "required": [
+                "action",
+                "integration",
+                "name",
+                "params"
+            ],
+            "type": "object"
+        },
+        "ILongTextField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "LongText",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IMultipleAttachmentField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "MultipleAttachment",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IMultipleLinkedRecordField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "table": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "MultipleLinkedRecord",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "table",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IMultipleSelectField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "options": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "MultipleSelect",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "options",
+                "type"
+            ],
+            "type": "object"
+        },
+        "INumberField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Number",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IOutputField": {
+            "additionalProperties": false,
+            "properties": {
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "enum": [
+                        "DateTime",
+                        "LongText",
+                        "Number",
+                        "SingleLineText"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "type": "object"
+        },
+        "IPageCreatedNotionTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "event": {
+                    "const": "TablePageCreated",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Notion",
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "integration",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IReadRecordDatabaseAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "ReadRecord",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Database",
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "id",
+                "name",
+                "service",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IRecordCreatedDatabaseTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "event": {
+                    "const": "RecordCreated",
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Database",
+                    "type": "string"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "service",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IRetrieveAttachmentQontoAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "RetrieveAttachment",
+                    "type": "string"
+                },
+                "attachmentId": {
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Qonto",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "attachmentId",
+                "integration",
+                "name"
+            ],
+            "type": "object"
+        },
+        "IRollupField": {
+            "additionalProperties": false,
+            "properties": {
+                "formula": {
+                    "type": "string"
+                },
+                "linkedRecordField": {
+                    "type": "string"
+                },
+                "multipleLinkedRecord": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "output": {
+                    "$ref": "#/definitions/IOutputField"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Rollup",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "formula",
+                "linkedRecordField",
+                "multipleLinkedRecord",
+                "name",
+                "output",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IRunJavascriptCodeAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "RunJavascript",
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "env": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "input": {
+                    "$ref": "#/definitions/TemplateObject"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Code",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "code",
+                "name",
+                "service"
+            ],
+            "type": "object"
+        },
+        "IRunTypescriptCodeAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "RunTypescript",
+                    "type": "string"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "env": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "input": {
+                    "$ref": "#/definitions/TemplateObject"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Code",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "code",
+                "name",
+                "service"
+            ],
+            "type": "object"
+        },
+        "ISendEmailGoogleMailAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "SendEmail",
+                    "type": "string"
+                },
+                "email": {
+                    "$ref": "#/definitions/GoogleMailEmailOptions"
+                },
+                "integration": {
+                    "const": "GoogleMail",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "email",
+                "integration",
+                "name"
+            ],
+            "type": "object"
+        },
+        "ISingleAttachmentField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "SingleAttachment",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ISingleLineTextField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "SingleLineText",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ISingleLinkedRecordField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "table": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "SingleLinkedRecord",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "table",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ISingleSelectField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "options": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "SingleSelect",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "options",
+                "type"
+            ],
+            "type": "object"
+        },
+        "ITable": {
+            "additionalProperties": false,
+            "properties": {
+                "fields": {
+                    "items": {
+                        "$ref": "#/definitions/IField"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "fields",
+                "name"
+            ],
+            "type": "object"
+        },
+        "ITrigger": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/IApiCalledHttpTrigger"
+                },
+                {
+                    "$ref": "#/definitions/IRecordCreatedDatabaseTrigger"
+                },
+                {
+                    "$ref": "#/definitions/IWebhookCalledHttpTrigger"
+                },
+                {
+                    "$ref": "#/definitions/IPageCreatedNotionTrigger"
+                },
+                {
+                    "$ref": "#/definitions/ICronTimeTickedScheduleTrigger"
+                }
+            ]
+        },
+        "IUpdatePageNotionAction": {
+            "additionalProperties": false,
+            "properties": {
+                "action": {
+                    "const": "UpdatePage",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Notion",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "page": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "action",
+                "id",
+                "integration",
+                "name",
+                "page",
+                "table"
+            ],
+            "type": "object"
+        },
+        "IUrlField": {
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "onMigration": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "replace": {
+                            "type": "string"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "const": "Url",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "name",
+                "type"
+            ],
+            "type": "object"
+        },
+        "IWebhookCalledHttpTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "auth": {
+                    "const": "ApiKey",
+                    "type": "string"
+                },
+                "event": {
+                    "const": "WebhookCalled",
+                    "type": "string"
+                },
+                "path": {
+                    "type": "string"
+                },
+                "service": {
+                    "const": "Http",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "path",
+                "service"
+            ],
+            "type": "object"
+        },
+        "InputConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "field": {
+                    "type": "string"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "maxLength": {
+                    "type": "number"
+                },
+                "minLength": {
+                    "type": "number"
+                },
+                "placeholder": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "field"
+            ],
+            "type": "object"
+        },
+        "JSONSchema": {
+            "additionalProperties": false,
+            "properties": {
+                "additionalProperties": {
+                    "type": "boolean"
+                },
+                "enum": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "items": {
+                    "$ref": "#/definitions/JSONSchema"
+                },
+                "oneOf": {
+                    "items": {
+                        "$ref": "#/definitions/JSONSchema"
+                    },
+                    "type": "array"
+                },
+                "properties": {
+                    "$ref": "#/definitions/JSONSchemaProperties"
+                },
+                "required": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "type": {
+                    "enum": [
+                        "array",
+                        "boolean",
+                        "number",
+                        "object",
+                        "string"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "JSONSchemaProperties": {
+            "additionalProperties": {
+                "$ref": "#/definitions/JSONSchema"
+            },
+            "type": "object"
+        },
+        "LoggerConfig": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/LoggerElasticSearchConfig"
+                },
+                {
+                    "$ref": "#/definitions/LoggerConsoleConfig"
+                },
+                {
+                    "$ref": "#/definitions/LoggerFileConfig"
+                }
+            ]
+        },
+        "LoggerConsoleConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "Console",
+                    "type": "string"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "silent": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "driver"
+            ],
+            "type": "object"
+        },
+        "LoggerElasticSearchConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "ElasticSearch",
+                    "type": "string"
+                },
+                "index": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "silent": {
+                    "type": "boolean"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "driver",
+                "index",
+                "url"
+            ],
+            "type": "object"
+        },
+        "LoggerFileConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "File",
+                    "type": "string"
+                },
+                "filename": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "silent": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "driver",
+                "filename"
+            ],
+            "type": "object"
+        },
+        "MonitorConsoleConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "Console",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "driver"
+            ],
+            "type": "object"
+        },
+        "NotionConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "pollingInterval": {
+                    "type": "number"
+                },
+                "token": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "token"
+            ],
+            "type": "object"
+        },
+        "Omit<MonitorSentryConfig,\"appName\"|\"appVersion\">": {
+            "additionalProperties": false,
+            "properties": {
+                "driver": {
+                    "const": "Sentry",
+                    "type": "string"
+                },
+                "dsn": {
+                    "type": "string"
+                },
+                "environment": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "driver",
+                "dsn",
+                "environment"
+            ],
+            "type": "object"
+        },
+        "Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKeys": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "baseUrl": {
+                    "type": "string"
+                },
+                "env": {
+                    "type": "string"
+                },
+                "idleTimeout": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "monitors": {
+                    "items": {
+                        "enum": [
+                            "Console",
+                            "Sentry"
+                        ],
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "port": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "sslCert": {
+                    "type": "string"
+                },
+                "sslKey": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "PappersConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "apiKey"
+            ],
+            "type": "object"
+        },
+        "PhantombusterConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "apiKey": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "apiKey"
+            ],
+            "type": "object"
+        },
+        "QontoBillingAddress": {
+            "additionalProperties": false,
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "country_code": {
+                    "type": "string"
+                },
+                "province_code": {
+                    "type": "string"
+                },
+                "street_address": {
+                    "type": "string"
+                },
+                "zip_code": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "city",
+                "country_code",
+                "province_code",
+                "street_address",
+                "zip_code"
+            ],
+            "type": "object"
+        },
+        "QontoCreateClient": {
+            "additionalProperties": false,
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "billing_address": {
+                    "$ref": "#/definitions/QontoBillingAddress"
+                },
+                "city": {
+                    "type": "string"
+                },
+                "country_code": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "delivery_address": {
+                    "$ref": "#/definitions/QontoDeliveryAddress"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
+                "locale": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tax_identification_number": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "vat_number": {
+                    "type": "string"
+                },
+                "zip_code": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "address",
+                "city",
+                "country_code",
+                "currency",
+                "locale",
+                "type",
+                "zip_code"
+            ],
+            "type": "object"
+        },
+        "QontoDeliveryAddress": {
+            "additionalProperties": false,
+            "properties": {
+                "city": {
+                    "type": "string"
+                },
+                "country_code": {
+                    "type": "string"
+                },
+                "province_code": {
+                    "type": "string"
+                },
+                "street_address": {
+                    "type": "string"
+                },
+                "zip_code": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "city",
+                "country_code",
+                "province_code",
+                "street_address",
+                "zip_code"
+            ],
+            "type": "object"
+        },
+        "QontoProductionConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "environment": {
+                    "const": "production",
+                    "type": "string"
+                },
+                "organisationSlug": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "environment",
+                "organisationSlug",
+                "secretKey"
+            ],
+            "type": "object"
+        },
+        "QontoSandboxConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "environment": {
+                    "const": "sandbox",
+                    "type": "string"
+                },
+                "organisationSlug": {
+                    "type": "string"
+                },
+                "secretKey": {
+                    "type": "string"
+                },
+                "stagingToken": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "environment",
+                "organisationSlug",
+                "secretKey",
+                "stagingToken"
+            ],
+            "type": "object"
+        },
+        "Record<string,string>": {
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "TemplateObject": {
+            "additionalProperties": {
+                "$ref": "#/definitions/TemplateValue"
+            },
+            "type": "object"
+        },
+        "TemplateValue": {
+            "anyOf": [
+                {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "number": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "number"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "boolean": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "boolean"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "json": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "json"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "$ref": "#/definitions/TemplateObject"
+                },
+                {
+                    "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                    ]
+                }
+            ]
+        },
+        "ThemeConfigNone": {
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "const": "none",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "type": "object"
+        },
+        "ThemeConfigTailwindCSS": {
+            "additionalProperties": false,
+            "properties": {
+                "base": {
+                    "type": "string"
+                },
+                "type": {
+                    "const": "tailwindcss",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "type": "object"
+        },
+        "TunnelNgrokConfig": {
+            "additionalProperties": false,
+            "properties": {
+                "authToken": {
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Ngrok",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "authToken",
+                "integration"
+            ],
+            "type": "object"
         }
-      },
-      "required": ["name", "options", "type"],
-      "type": "object"
     },
-    "INumberField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
+    "properties": {
+        "automations": {
+            "items": {
+                "$ref": "#/definitions/IAutomation"
+            },
+            "type": "array"
+        },
+        "buckets": {
+            "items": {
+                "$ref": "#/definitions/BucketConfig"
+            },
+            "type": "array"
+        },
+        "database": {
+            "$ref": "#/definitions/DatabaseConfig"
         },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Number",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IOutputField": {
-      "additionalProperties": false,
-      "properties": {
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "enum": ["DateTime", "LongText", "Number", "SingleLineText"],
-          "type": "string"
-        }
-      },
-      "required": ["type"],
-      "type": "object"
-    },
-    "IPageCreatedNotionTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "event": {
-          "const": "TablePageCreated",
-          "type": "string"
-        },
-        "integration": {
-          "const": "Notion",
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["event", "integration", "table"],
-      "type": "object"
-    },
-    "IReadRecordDatabaseAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "ReadRecord",
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Database",
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "id", "name", "service", "table"],
-      "type": "object"
-    },
-    "IRecordCreatedDatabaseTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "event": {
-          "const": "RecordCreated",
-          "type": "string"
-        },
-        "service": {
-          "const": "Database",
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["event", "service", "table"],
-      "type": "object"
-    },
-    "IRetrieveAttachmentQontoAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "RetrieveAttachment",
-          "type": "string"
-        },
-        "attachmentId": {
-          "type": "string"
-        },
-        "integration": {
-          "const": "Qonto",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "attachmentId", "integration", "name"],
-      "type": "object"
-    },
-    "IRollupField": {
-      "additionalProperties": false,
-      "properties": {
-        "formula": {
-          "type": "string"
-        },
-        "linkedRecordField": {
-          "type": "string"
-        },
-        "multipleLinkedRecord": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "output": {
-          "$ref": "#/definitions/IOutputField"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Rollup",
-          "type": "string"
-        }
-      },
-      "required": [
-        "formula",
-        "linkedRecordField",
-        "multipleLinkedRecord",
-        "name",
-        "output",
-        "type"
-      ],
-      "type": "object"
-    },
-    "IRunJavascriptCodeAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "RunJavascript",
-          "type": "string"
-        },
-        "code": {
-          "type": "string"
-        },
-        "env": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "input": {
-          "$ref": "#/definitions/TemplateObject"
-        },
-        "name": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Code",
-          "type": "string"
-        }
-      },
-      "required": ["action", "code", "name", "service"],
-      "type": "object"
-    },
-    "IRunTypescriptCodeAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "RunTypescript",
-          "type": "string"
-        },
-        "code": {
-          "type": "string"
-        },
-        "env": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "input": {
-          "$ref": "#/definitions/TemplateObject"
-        },
-        "name": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Code",
-          "type": "string"
-        }
-      },
-      "required": ["action", "code", "name", "service"],
-      "type": "object"
-    },
-    "ISendEmailGoogleMailAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "SendEmail",
-          "type": "string"
-        },
-        "email": {
-          "$ref": "#/definitions/GoogleMailEmailOptions"
-        },
-        "integration": {
-          "const": "GoogleMail",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "email", "integration", "name"],
-      "type": "object"
-    },
-    "ISingleAttachmentField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "SingleAttachment",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "ISingleLineTextField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "SingleLineText",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "ISingleLinkedRecordField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "table": {
-          "type": "string"
-        },
-        "type": {
-          "const": "SingleLinkedRecord",
-          "type": "string"
-        }
-      },
-      "required": ["name", "table", "type"],
-      "type": "object"
-    },
-    "ISingleSelectField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "options": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "SingleSelect",
-          "type": "string"
-        }
-      },
-      "required": ["name", "options", "type"],
-      "type": "object"
-    },
-    "ITable": {
-      "additionalProperties": false,
-      "properties": {
-        "fields": {
-          "items": {
-            "$ref": "#/definitions/IField"
-          },
-          "type": "array"
-        },
-        "name": {
-          "type": "string"
-        },
-        "schema": {
-          "type": "string"
-        }
-      },
-      "required": ["fields", "name"],
-      "type": "object"
-    },
-    "ITrigger": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/IApiCalledHttpTrigger"
-        },
-        {
-          "$ref": "#/definitions/IRecordCreatedDatabaseTrigger"
-        },
-        {
-          "$ref": "#/definitions/IWebhookCalledHttpTrigger"
-        },
-        {
-          "$ref": "#/definitions/IPageCreatedNotionTrigger"
-        },
-        {
-          "$ref": "#/definitions/ICronTimeTickedScheduleTrigger"
-        }
-      ]
-    },
-    "IUpdatePageNotionAction": {
-      "additionalProperties": false,
-      "properties": {
-        "action": {
-          "const": "UpdatePage",
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "integration": {
-          "const": "Notion",
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "page": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": ["action", "id", "integration", "name", "page", "table"],
-      "type": "object"
-    },
-    "IUrlField": {
-      "additionalProperties": false,
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "onMigration": {
-          "additionalProperties": false,
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "type": {
-          "const": "Url",
-          "type": "string"
-        }
-      },
-      "required": ["name", "type"],
-      "type": "object"
-    },
-    "IWebhookCalledHttpTrigger": {
-      "additionalProperties": false,
-      "properties": {
-        "auth": {
-          "const": "ApiKey",
-          "type": "string"
-        },
-        "event": {
-          "const": "WebhookCalled",
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "service": {
-          "const": "Http",
-          "type": "string"
-        }
-      },
-      "required": ["event", "path", "service"],
-      "type": "object"
-    },
-    "InputConfig": {
-      "additionalProperties": false,
-      "properties": {
         "description": {
-          "type": "string"
-        },
-        "field": {
-          "type": "string"
-        },
-        "label": {
-          "type": "string"
-        },
-        "maxLength": {
-          "type": "number"
-        },
-        "minLength": {
-          "type": "number"
-        },
-        "placeholder": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        }
-      },
-      "required": ["field"],
-      "type": "object"
-    },
-    "JSONSchema": {
-      "additionalProperties": false,
-      "properties": {
-        "additionalProperties": {
-          "type": "boolean"
-        },
-        "enum": {
-          "items": {
             "type": "string"
-          },
-          "type": "array"
         },
-        "items": {
-          "$ref": "#/definitions/JSONSchema"
-        },
-        "oneOf": {
-          "items": {
-            "$ref": "#/definitions/JSONSchema"
-          },
-          "type": "array"
-        },
-        "properties": {
-          "$ref": "#/definitions/JSONSchemaProperties"
-        },
-        "required": {
-          "items": {
+        "engine": {
             "type": "string"
-          },
-          "type": "array"
         },
-        "type": {
-          "enum": ["array", "boolean", "number", "object", "string"],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "JSONSchemaProperties": {
-      "additionalProperties": {
-        "$ref": "#/definitions/JSONSchema"
-      },
-      "type": "object"
-    },
-    "LoggerConfig": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/LoggerElasticSearchConfig"
+        "forms": {
+            "items": {
+                "$ref": "#/definitions/FormConfig"
+            },
+            "type": "array"
         },
-        {
-          "$ref": "#/definitions/LoggerConsoleConfig"
+        "integrations": {
+            "$ref": "#/definitions/IIntegrations"
         },
-        {
-          "$ref": "#/definitions/LoggerFileConfig"
-        }
-      ]
-    },
-    "LoggerConsoleConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "Console",
-          "type": "string"
-        },
-        "level": {
-          "type": "string"
-        },
-        "silent": {
-          "type": "boolean"
-        }
-      },
-      "required": ["driver"],
-      "type": "object"
-    },
-    "LoggerElasticSearchConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "ElasticSearch",
-          "type": "string"
-        },
-        "index": {
-          "type": "string"
-        },
-        "level": {
-          "type": "string"
-        },
-        "silent": {
-          "type": "boolean"
-        },
-        "url": {
-          "type": "string"
-        }
-      },
-      "required": ["driver", "index", "url"],
-      "type": "object"
-    },
-    "LoggerFileConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "File",
-          "type": "string"
-        },
-        "filename": {
-          "type": "string"
-        },
-        "level": {
-          "type": "string"
-        },
-        "silent": {
-          "type": "boolean"
-        }
-      },
-      "required": ["driver", "filename"],
-      "type": "object"
-    },
-    "MonitorConsoleConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "Console",
-          "type": "string"
-        }
-      },
-      "required": ["driver"],
-      "type": "object"
-    },
-    "NotionConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "pollingInterval": {
-          "type": "number"
-        },
-        "token": {
-          "type": "string"
-        }
-      },
-      "required": ["token"],
-      "type": "object"
-    },
-    "Omit<MonitorSentryConfig,\"appName\"|\"appVersion\">": {
-      "additionalProperties": false,
-      "properties": {
-        "driver": {
-          "const": "Sentry",
-          "type": "string"
-        },
-        "dsn": {
-          "type": "string"
-        },
-        "environment": {
-          "type": "string"
-        }
-      },
-      "required": ["driver", "dsn", "environment"],
-      "type": "object"
-    },
-    "Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">": {
-      "additionalProperties": false,
-      "properties": {
-        "apiKeys": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "baseUrl": {
-          "type": "string"
-        },
-        "env": {
-          "type": "string"
-        },
-        "idleTimeout": {
-          "type": ["string", "number"]
+        "loggers": {
+            "items": {
+                "$ref": "#/definitions/LoggerConfig"
+            },
+            "type": "array"
         },
         "monitors": {
-          "items": {
-            "enum": ["Console", "Sentry"],
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "port": {
-          "type": ["string", "number"]
-        },
-        "sslCert": {
-          "type": "string"
-        },
-        "sslKey": {
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "PappersConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "apiKey": {
-          "type": "string"
-        }
-      },
-      "required": ["apiKey"],
-      "type": "object"
-    },
-    "PhantombusterConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "apiKey": {
-          "type": "string"
-        }
-      },
-      "required": ["apiKey"],
-      "type": "object"
-    },
-    "QontoBillingAddress": {
-      "additionalProperties": false,
-      "properties": {
-        "city": {
-          "type": "string"
-        },
-        "country_code": {
-          "type": "string"
-        },
-        "province_code": {
-          "type": "string"
-        },
-        "street_address": {
-          "type": "string"
-        },
-        "zip_code": {
-          "type": "string"
-        }
-      },
-      "required": ["city", "country_code", "province_code", "street_address", "zip_code"],
-      "type": "object"
-    },
-    "QontoCreateClient": {
-      "additionalProperties": false,
-      "properties": {
-        "address": {
-          "type": "string"
-        },
-        "billing_address": {
-          "$ref": "#/definitions/QontoBillingAddress"
-        },
-        "city": {
-          "type": "string"
-        },
-        "country_code": {
-          "type": "string"
-        },
-        "currency": {
-          "type": "string"
-        },
-        "delivery_address": {
-          "$ref": "#/definitions/QontoDeliveryAddress"
-        },
-        "email": {
-          "type": "string"
-        },
-        "first_name": {
-          "type": "string"
-        },
-        "last_name": {
-          "type": "string"
-        },
-        "locale": {
-          "type": "string"
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/MonitorConsoleConfig"
+                    },
+                    {
+                        "$ref": "#/definitions/Omit<MonitorSentryConfig,\"appName\"|\"appVersion\">"
+                    }
+                ]
+            },
+            "type": "array"
         },
         "name": {
-          "type": "string"
-        },
-        "tax_identification_number": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string"
-        },
-        "vat_number": {
-          "type": "string"
-        },
-        "zip_code": {
-          "type": "string"
-        }
-      },
-      "required": ["address", "city", "country_code", "currency", "locale", "type", "zip_code"],
-      "type": "object"
-    },
-    "QontoDeliveryAddress": {
-      "additionalProperties": false,
-      "properties": {
-        "city": {
-          "type": "string"
-        },
-        "country_code": {
-          "type": "string"
-        },
-        "province_code": {
-          "type": "string"
-        },
-        "street_address": {
-          "type": "string"
-        },
-        "zip_code": {
-          "type": "string"
-        }
-      },
-      "required": ["city", "country_code", "province_code", "street_address", "zip_code"],
-      "type": "object"
-    },
-    "QontoProductionConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "environment": {
-          "const": "production",
-          "type": "string"
-        },
-        "organisationSlug": {
-          "type": "string"
-        },
-        "secretKey": {
-          "type": "string"
-        }
-      },
-      "required": ["environment", "organisationSlug", "secretKey"],
-      "type": "object"
-    },
-    "QontoSandboxConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "environment": {
-          "const": "sandbox",
-          "type": "string"
-        },
-        "organisationSlug": {
-          "type": "string"
-        },
-        "secretKey": {
-          "type": "string"
-        },
-        "stagingToken": {
-          "type": "string"
-        }
-      },
-      "required": ["environment", "organisationSlug", "secretKey", "stagingToken"],
-      "type": "object"
-    },
-    "Record<string,string>": {
-      "additionalProperties": false,
-      "type": "object"
-    },
-    "TemplateObject": {
-      "additionalProperties": {
-        "$ref": "#/definitions/TemplateValue"
-      },
-      "type": "object"
-    },
-    "TemplateValue": {
-      "anyOf": [
-        {
-          "items": {
             "type": "string"
-          },
-          "type": "array"
         },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "number": {
-              "type": "string"
-            }
-          },
-          "required": ["number"],
-          "type": "object"
+        "server": {
+            "$ref": "#/definitions/Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">"
         },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "boolean": {
-              "type": "string"
-            }
-          },
-          "required": ["boolean"],
-          "type": "object"
+        "tables": {
+            "items": {
+                "$ref": "#/definitions/ITable"
+            },
+            "type": "array"
         },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "json": {
-              "type": "string"
-            }
-          },
-          "required": ["json"],
-          "type": "object"
+        "theme": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/ThemeConfigNone"
+                },
+                {
+                    "$ref": "#/definitions/ThemeConfigTailwindCSS"
+                }
+            ]
         },
-        {
-          "$ref": "#/definitions/TemplateObject"
+        "tunnel": {
+            "$ref": "#/definitions/TunnelNgrokConfig"
         },
-        {
-          "type": ["string", "number", "boolean"]
+        "version": {
+            "type": "string"
         }
-      ]
     },
-    "ThemeConfigNone": {
-      "additionalProperties": false,
-      "properties": {
-        "type": {
-          "const": "none",
-          "type": "string"
-        }
-      },
-      "required": ["type"],
-      "type": "object"
-    },
-    "ThemeConfigTailwindCSS": {
-      "additionalProperties": false,
-      "properties": {
-        "base": {
-          "type": "string"
-        },
-        "type": {
-          "const": "tailwindcss",
-          "type": "string"
-        }
-      },
-      "required": ["type"],
-      "type": "object"
-    },
-    "TunnelNgrokConfig": {
-      "additionalProperties": false,
-      "properties": {
-        "authToken": {
-          "type": "string"
-        },
-        "integration": {
-          "const": "Ngrok",
-          "type": "string"
-        }
-      },
-      "required": ["authToken", "integration"],
-      "type": "object"
-    }
-  },
-  "properties": {
-    "automations": {
-      "items": {
-        "$ref": "#/definitions/IAutomation"
-      },
-      "type": "array"
-    },
-    "buckets": {
-      "items": {
-        "$ref": "#/definitions/BucketConfig"
-      },
-      "type": "array"
-    },
-    "database": {
-      "$ref": "#/definitions/DatabaseConfig"
-    },
-    "description": {
-      "type": "string"
-    },
-    "engine": {
-      "type": "string"
-    },
-    "forms": {
-      "items": {
-        "$ref": "#/definitions/FormConfig"
-      },
-      "type": "array"
-    },
-    "integrations": {
-      "$ref": "#/definitions/IIntegrations"
-    },
-    "loggers": {
-      "items": {
-        "$ref": "#/definitions/LoggerConfig"
-      },
-      "type": "array"
-    },
-    "monitors": {
-      "items": {
-        "anyOf": [
-          {
-            "$ref": "#/definitions/MonitorConsoleConfig"
-          },
-          {
-            "$ref": "#/definitions/Omit<MonitorSentryConfig,\"appName\"|\"appVersion\">"
-          }
-        ]
-      },
-      "type": "array"
-    },
-    "name": {
-      "type": "string"
-    },
-    "server": {
-      "$ref": "#/definitions/Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">"
-    },
-    "tables": {
-      "items": {
-        "$ref": "#/definitions/ITable"
-      },
-      "type": "array"
-    },
-    "theme": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/ThemeConfigNone"
-        },
-        {
-          "$ref": "#/definitions/ThemeConfigTailwindCSS"
-        }
-      ]
-    },
-    "tunnel": {
-      "$ref": "#/definitions/TunnelNgrokConfig"
-    },
-    "version": {
-      "type": "string"
-    }
-  },
-  "required": ["engine", "name", "version"],
-  "type": "object"
+    "required": [
+        "engine",
+        "name",
+        "version"
+    ],
+    "type": "object"
 }
+
