@@ -7,6 +7,7 @@ import type { IForm } from './IForm'
 
 /**
  * App configuration
+ * @title App configuration
  * @description This is the configuration of the app.
  */
 export interface Config extends IServices {
