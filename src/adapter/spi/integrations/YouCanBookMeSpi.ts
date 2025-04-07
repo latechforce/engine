@@ -12,4 +12,8 @@ export class YouCanBookMeSpi extends BaseSpi<IYouCanBookMeIntegration> implement
   getProfile = async (profileId: string) => {
     return this._integration.getProfile(profileId)
   }
+
+  updateProfile = async (profileId: string, profile: Partial<Profile>) => {
+    return this._integration.updateProfile(profileId, profile)
+  }
 }

@@ -97,6 +97,50 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
     )
   }
 
+  updateProfile = async (
+    profileId: string,
+    profile: Partial<Profile>
+  ): Promise<IntegrationResponse<Profile>> => {
+    const existingProfile = this.db
+      .query<Profile, string>('SELECT * FROM profiles WHERE id = ?')
+      .get(profileId)
+    if (!existingProfile) {
+      return { error: { status: 404, message: 'Profile not found' } }
+    }
+
+    const updatedProfile: Profile = { ...existingProfile, ...profile }
+    this.db.run(
+      `UPDATE profiles SET 
+        title = ?, 
+        description = ?, 
+        subdomain = ?, 
+        logo = ?, 
+        timeZoneOverride = ?, 
+        captchaActive = ?, 
+        accessCode = ?, 
+        timeZone = ?, 
+        locale = ?, 
+        status = ?, 
+        brandingType = ? 
+      WHERE id = ?`,
+      [
+        updatedProfile.title ?? '',
+        updatedProfile.description ?? '',
+        updatedProfile.subdomain ?? '',
+        updatedProfile.logo ?? '',
+        updatedProfile.timeZoneOverride ? 1 : 0,
+        updatedProfile.captchaActive ? 1 : 0,
+        updatedProfile.accessCode ?? '',
+        updatedProfile.timeZone ?? '',
+        updatedProfile.locale ?? '',
+        updatedProfile.status ?? 'ONLINE',
+        updatedProfile.brandingType ?? 'NO_BRANDING',
+        profileId,
+      ]
+    )
+    return { data: updatedProfile }
+  }
+
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     const profile = this.db
       .query<YouCanBookMeConfig, string>('SELECT * FROM profiles WHERE id = ?')

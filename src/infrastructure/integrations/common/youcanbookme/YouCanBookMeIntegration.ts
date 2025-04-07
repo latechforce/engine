@@ -35,7 +35,7 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
-      await this._instance.get(`/${this._userId}`)
+      await this._instance.get(`/profiles/${this._userId}`)
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         return this._errorMapper(error.response)
@@ -46,7 +46,22 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
 
   getProfile = async (profileId: string): Promise<IntegrationResponse<Profile>> => {
     try {
-      const response = await this._instance.get<Profile>(`/${profileId}`)
+      const response = await this._instance.get<Profile>(`/profiles/${profileId}`)
+      return { data: response.data }
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  updateProfile = async (
+    profileId: string,
+    profile: Partial<Profile>
+  ): Promise<IntegrationResponse<Profile>> => {
+    try {
+      const response = await this._instance.patch<Profile>(`/profiles/${profileId}`, profile)
       return { data: response.data }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
