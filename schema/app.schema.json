@@ -1947,14 +1947,17 @@
             "type": "object"
         }
     },
+    "description": "This is the configuration of the app.",
     "properties": {
         "automations": {
+            "description": "This is the list of automations of the app.",
             "items": {
                 "$ref": "#/definitions/IAutomation"
             },
             "type": "array"
         },
         "buckets": {
+            "description": "This is the list of buckets of the app.",
             "items": {
                 "$ref": "#/definitions/BucketConfig"
             },
@@ -1964,19 +1967,23 @@
             "$ref": "#/definitions/DatabaseConfig"
         },
         "description": {
+            "description": "This is the description of the app.",
             "type": "string"
         },
         "engine": {
+            "description": "This is the version of the engine.",
             "type": "string"
         },
         "forms": {
+            "description": "This is the list of forms of the app.",
             "items": {
                 "$ref": "#/definitions/FormConfig"
             },
             "type": "array"
         },
         "integrations": {
-            "$ref": "#/definitions/IIntegrations"
+            "$ref": "#/definitions/IIntegrations",
+            "description": "This is the list of integrations of the app."
         },
         "loggers": {
             "items": {
@@ -1998,12 +2005,14 @@
             "type": "array"
         },
         "name": {
+            "description": "This is the name of the app.",
             "type": "string"
         },
         "server": {
             "$ref": "#/definitions/Omit<ServerConfig,\"appName\"|\"appVersion\"|\"appDescription\">"
         },
         "tables": {
+            "description": "This is the list of tables of the app.",
             "items": {
                 "$ref": "#/definitions/ITable"
             },
@@ -2023,6 +2032,7 @@
             "$ref": "#/definitions/TunnelNgrokConfig"
         },
         "version": {
+            "description": "This is the version of the app.",
             "type": "string"
         }
     },
