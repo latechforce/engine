@@ -53,7 +53,7 @@ jobs:
       - run: bun run lint
       - run: bun run build
       - run: bun run test
- 
+
   release:
     name: Create Release
     needs: test
@@ -78,3 +78,51 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: bunx semantic-release
+
+  build-docs:
+    name: Build Docs
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
+
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install json-schema-for-humans
+        run: pip install json-schema-for-humans
+
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.5
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build schema
+        run: bun run build:schema
+
+      - name: Build documentation
+        run: bun run build:docs
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Commit and push if changed
+        run: |
+          git add .
+          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: update generated documentation [skip ci]" && git push)

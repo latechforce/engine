@@ -48,7 +48,7 @@
     "semantic-release": "semantic-release",
     "storybook": "concurrently \"bunx @tailwindcss/cli -i ./.storybook/input.css -o ./.storybook/output.css --watch\" \"storybook dev -p 6006\"",
     "build-storybook": "storybook build",
-    "build:docs": "generate-schema-doc ./schema/app.schema.json ./docs"
+    "build:docs": "generate-schema-doc --config template=js_offline ./schema/app.schema.json ./docs/index.html"
   },
   "dependencies": {
     "@elysiajs/cors": "^1.2.0",
