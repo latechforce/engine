@@ -1,3 +1,7 @@
 export type YouCanBookMeConfig = {
-  apiKey: string
+  baseUrl?: string
+  user: {
+    username: string
+    password: string
+  }
 }
