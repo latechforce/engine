@@ -1,8 +1,9 @@
 import type { IYouCanBookMeIntegration } from '/adapter/spi/integrations/YouCanBookMeSpi'
-import type { IntegrationResponseError } from '/domain/integrations/base'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
-import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 import type { YouCanBookMeError } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
+import type { Profile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
+import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
 export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   private _instance: AxiosInstance
@@ -11,8 +12,11 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   constructor(config?: YouCanBookMeConfig) {
     this._instance = axios.create({
       baseURL: config?.baseUrl ?? 'https://api.youcanbook.me/v1',
+      auth: {
+        username: config?.user.username ?? '',
+        password: config?.user.password ?? '',
+      },
       headers: {
-        Authorization: `Basic ${Buffer.from(`${config?.user.username}:${config?.user.password}`).toString('base64')}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
@@ -32,6 +36,18 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._instance.get(`/${this._userId}`)
+    } catch (error) {
+      if (error instanceof AxiosError && error.response) {
+        return this._errorMapper(error.response)
+      }
+      throw error
+    }
+  }
+
+  getProfile = async (profileId: string): Promise<IntegrationResponse<Profile>> => {
+    try {
+      const response = await this._instance.get<Profile>(`/${profileId}`)
+      return { data: response.data }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         return this._errorMapper(error.response)
