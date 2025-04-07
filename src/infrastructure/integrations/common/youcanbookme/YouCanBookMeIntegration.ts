@@ -6,6 +6,7 @@ import type { YouCanBookMeError } from '/domain/integrations/YouCanBookMe/YouCan
 
 export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   private _instance: AxiosInstance
+  private _userId: string
 
   constructor(config?: YouCanBookMeConfig) {
     this._instance = axios.create({
@@ -16,23 +17,21 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
         Accept: 'application/json',
       },
     })
+    this._userId = config?.user.username ?? ''
   }
 
-  private _errorMapper = (
-    response: AxiosResponse<{ errors: YouCanBookMeError[] }>
-  ): IntegrationResponseError => {
-    const [error] = response.data.errors
+  private _errorMapper = (response: AxiosResponse<YouCanBookMeError>): IntegrationResponseError => {
     return {
       error: {
         status: response.status,
-        message: error.message,
+        message: response.data.message,
       },
     }
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
-      await this._instance.get('/profiles')
+      await this._instance.get(`/${this._userId}`)
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
         return this._errorMapper(error.response)
