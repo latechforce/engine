@@ -1,12 +1,22 @@
 import type { ConfigError } from '../Error/Config'
-import type { Table } from '../Table'
-import type { Input as InputComponent } from '/domain/components/Form/Input'
-import type { SingleLineTextInput } from '/domain/components/Form/Input/SingleLineTextInput'
-import type { CheckboxInput } from '/domain/components/Form/Input/CheckboxInput'
-import type { SingleSelectInput } from '/domain/components/Form/Input/SingleSelectInput'
-import type { MultipleAttachmentInput } from '/domain/components/Form/Input/MultipleAttachmentInput'
-import type { Field } from '/domain/entities/Field'
-import type { LongTextInput } from '/domain/components/Form/Input/LongTextInput'
+import type { Table } from '../Table/'
+import type {
+  CheckboxInput,
+  FileInput,
+  SelectInput,
+  TextareaInput,
+  TextInput,
+} from '/domain/components/Form/Input'
+import {
+  EmailField,
+  SingleLineTextField,
+  LongTextField,
+  CheckboxField,
+  SingleSelectField,
+  MultipleAttachmentField,
+  SingleAttachmentField,
+  type Field,
+} from '/domain/entities/Field'
 
 export interface InputConfig {
   field: string
@@ -19,17 +29,16 @@ export interface InputConfig {
 }
 
 export interface InputComponents {
-  SingleLineTextInput: SingleLineTextInput
-  LongTextInput: LongTextInput
+  TextInput: TextInput
+  TextareaInput: TextareaInput
   CheckboxInput: CheckboxInput
-  SingleSelectInput: SingleSelectInput
-  MultipleAttachmentInput: MultipleAttachmentInput
+  SelectInput: SelectInput
+  FileInput: FileInput
 }
 
 export class Input {
   field: Field
-  options: string[] = []
-  InputComponent: InputComponent
+  Component: React.ComponentType
 
   constructor(
     public config: InputConfig,
@@ -39,33 +48,46 @@ export class Input {
     const field = table.fields.find((field) => field.name === config.field)
     if (!field) throw new Error(`Field ${config.field} not found`)
     this.field = field
-    const {
-      SingleLineTextInput,
-      CheckboxInput,
-      SingleSelectInput,
-      MultipleAttachmentInput,
-      LongTextInput,
-    } = this._components
-    const { type } = this.field.config
-    switch (type) {
-      case 'SingleLineText':
-        this.InputComponent = SingleLineTextInput
-        break
-      case 'LongText':
-        this.InputComponent = LongTextInput
-        break
-      case 'Checkbox':
-        this.InputComponent = CheckboxInput
-        break
-      case 'SingleSelect':
-        this.InputComponent = SingleSelectInput
-        this.options = this.field.config.options
-        break
-      case 'MultipleAttachment':
-        this.InputComponent = MultipleAttachmentInput
-        break
-      default:
-        throw new Error(`Unsupported input type: ${type}`)
+    const { TextInput, CheckboxInput, SelectInput, FileInput, TextareaInput } = this._components
+    const props = {
+      field: config.field,
+      label: config.label,
+      description: config.description,
+      required: config.required || field.required,
+    }
+    if (field instanceof SingleLineTextField || field instanceof EmailField) {
+      this.Component = () => (
+        <TextInput
+          {...props}
+          type={field instanceof EmailField ? 'email' : 'text'}
+          placeholder={config.placeholder}
+          maxLength={config.maxLength}
+          minLength={config.minLength}
+        />
+      )
+    } else if (field instanceof LongTextField) {
+      this.Component = () => (
+        <TextareaInput
+          {...props}
+          placeholder={config.placeholder}
+          maxLength={config.maxLength}
+          minLength={config.minLength}
+        />
+      )
+    } else if (field instanceof CheckboxField) {
+      this.Component = () => <CheckboxInput {...props} />
+    } else if (field instanceof SingleSelectField) {
+      this.Component = () => <SelectInput {...props} options={field.options} />
+    } else if (field instanceof MultipleAttachmentField) {
+      this.Component = () => (
+        <FileInput {...props} multiple={true} placeholder={config.placeholder} />
+      )
+    } else if (field instanceof SingleAttachmentField) {
+      this.Component = () => (
+        <FileInput {...props} multiple={false} placeholder={config.placeholder} />
+      )
+    } else {
+      throw new Error(`Unsupported input type: ${field.constructor.name}`)
     }
   }
 
@@ -74,19 +96,7 @@ export class Input {
   }
 
   render = (): React.ReactElement => {
-    const { field, label, description, placeholder, required, minLength, maxLength } = this.config
-    const Input = this.InputComponent
-    return (
-      <Input
-        field={field}
-        label={label}
-        description={description}
-        placeholder={placeholder}
-        required={required || this.field.config.required}
-        options={this.options}
-        minLength={minLength}
-        maxLength={maxLength}
-      />
-    )
+    const Input = this.Component
+    return <Input />
   }
 }

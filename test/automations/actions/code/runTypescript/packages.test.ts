@@ -11,6 +11,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getDate',
@@ -53,6 +54,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'getDateLocale',
@@ -97,6 +99,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'parseXml',
@@ -150,6 +153,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'axios',
@@ -193,6 +197,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'https',
@@ -236,6 +241,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'fsExtra',
@@ -279,6 +285,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'path',
@@ -322,6 +329,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'crypto',
@@ -365,6 +373,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'lodash',
@@ -408,6 +417,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'slugify',
@@ -451,6 +461,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'sodium',
@@ -494,6 +505,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'notion',
@@ -537,6 +549,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'airtable',
@@ -580,6 +593,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'papaparse',
@@ -623,6 +637,7 @@ mock.request(({ app, request }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'puppeteer',
@@ -656,6 +671,95 @@ mock.request(({ app, request }) => {
 
       // WHEN
       const response = await request.post(`${url}/api/automation/puppeteer`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with MistralAI package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'mistral',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'mistral',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { Mistral },
+                  } = context
+                  const mistral = new Mistral()
+                  return { exist: !!mistral.chat }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/mistral`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
+    it('should run a Typescript code with ExcelJS package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'exceljs',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'exceljs',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { ExcelJS },
+                  } = context
+                  return { exist: !!ExcelJS.Workbook }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/exceljs`)
 
       // THEN
       expect(response.exist).toBeTruthy()

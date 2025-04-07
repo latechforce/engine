@@ -1,7 +1,7 @@
 import type { Logger } from '/domain/services/Logger'
 import type { Server } from '/domain/services/Server'
 import type { Database } from '/domain/services/Database'
-import type { Table } from '../Table'
+import type { Table } from '../Table/'
 import type { Bucket } from '../Bucket'
 import type { Automation } from '../Automation'
 import type { Queue } from '/domain/services/Queue'
@@ -18,6 +18,7 @@ import type { Client } from '/domain/services/Client'
 export interface AppConfig {
   name: string
   version: string
+  engine: string
   description?: string
   integrations?: IIntegrations
 }
@@ -52,6 +53,7 @@ type Status = 'stopped' | 'starting' | 'started' | 'stopping'
 export class BaseApp {
   public name: string
   public version: string
+  public engine: string
   public description?: string
   public logger: Logger
   protected _status: Status = 'stopped'
@@ -62,9 +64,10 @@ export class BaseApp {
     protected _entities: AppEntities,
     protected _integrations: AppIntegrations
   ) {
-    const { name, version, description } = _config
+    const { name, version, engine, description } = _config
     this.name = name
     this.version = version
+    this.engine = engine
     this.description = description
     this.logger = _services.logger
   }

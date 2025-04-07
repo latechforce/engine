@@ -6,6 +6,7 @@ import type { ITable } from '/domain/interfaces/ITable'
 const fullConfig: Config = {
   name: 'App',
   version: '1.0.0',
+  engine: '1.0.0',
   automations: [
     {
       name: 'ApiCalled',
@@ -221,6 +222,10 @@ const fullConfig: Config = {
           },
         },
         {
+          name: 'single_attachment',
+          type: 'SingleAttachment',
+        },
+        {
           name: 'multiple_attachment',
           type: 'MultipleAttachment',
         },
@@ -295,6 +300,7 @@ type FirstTableFieldName =
   | 'text_formula_reference'
   | 'single_select'
   | 'multiple_select'
+  | 'single_attachment'
   | 'multiple_attachment'
   | 'single_linked_record'
   | 'multiple_linked_record'
@@ -307,6 +313,7 @@ type FirstTableFieldName =
 export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
   name: string
   version: string
+  engine: string
   tables: ITable[]
 } {
   const firstTable = fullConfig.tables?.find((table) => table.name === 'first_table')
@@ -316,6 +323,7 @@ export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
   return {
     name: 'First Table',
     version: '1.0.0',
+    engine: '1.0.0',
     tables: [
       {
         ...firstTable,
@@ -328,6 +336,7 @@ export function getFirstTableConfig(fields: FirstTableFieldName[] = ['name']): {
 export function getFirstAndSecondTableConfig(fields: FirstTableFieldName[] = ['name']): {
   name: string
   version: string
+  engine: string
   tables: ITable[]
 } {
   const firstTable = fullConfig.tables?.find((table) => table.name === 'first_table')
@@ -338,6 +347,7 @@ export function getFirstAndSecondTableConfig(fields: FirstTableFieldName[] = ['n
   return {
     name: 'First and Second Table',
     version: '1.0.0',
+    engine: '1.0.0',
     tables: [
       {
         ...firstTable,
@@ -351,6 +361,7 @@ export function getFirstAndSecondTableConfig(fields: FirstTableFieldName[] = ['n
 export function getFirstBucketConfig(): {
   name: string
   version: string
+  engine: string
   buckets: IBucket[]
 } {
   const firstBucket = fullConfig.buckets?.find((bucket) => bucket.name === 'first_bucket')
@@ -360,6 +371,7 @@ export function getFirstBucketConfig(): {
   return {
     name: 'First Bucket',
     version: '1.0.0',
+    engine: '1.0.0',
     buckets: [firstBucket],
   }
 }
@@ -367,6 +379,7 @@ export function getFirstBucketConfig(): {
 export function getAutomationConfig(name: AutomationName): {
   name: string
   version: string
+  engine: string
   automations: IAutomation[]
   server: {
     apiKeys: string[]
@@ -379,6 +392,7 @@ export function getAutomationConfig(name: AutomationName): {
   return {
     name,
     version: '1.0.0',
+    engine: '1.0.0',
     automations: [automation],
     server: {
       apiKeys: ['test-key'],

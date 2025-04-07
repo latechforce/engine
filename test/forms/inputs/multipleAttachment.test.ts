@@ -9,6 +9,7 @@ mock.page(({ app, browser, drivers }) => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       forms: [
         {
           name: 'form',
@@ -54,8 +55,8 @@ mock.page(({ app, browser, drivers }) => {
       const { url } = await app.start(config)
 
       // Create two test files
-      const filePath1 = '/tmp/test1.txt'
-      const filePath2 = '/tmp/test2.txt'
+      const filePath1 = './tmp/test1.txt'
+      const filePath2 = './tmp/test2.csv'
       await Bun.write(filePath1, 'Hello, world!')
       await Bun.write(filePath2, 'Hello, world 2!')
 
@@ -73,8 +74,10 @@ mock.page(({ app, browser, drivers }) => {
       expect(records).toHaveLength(1)
       expect(records[0].fields.multiple_attachment).toHaveLength(2)
       expect(records[0].fields.multiple_attachment?.[0].name).toBe('test1.txt')
+      expect(records[0].fields.multiple_attachment?.[0].mime_type).toBe('text/plain')
       expect(records[0].fields.multiple_attachment?.[0].url).toStartWith(url)
-      expect(records[0].fields.multiple_attachment?.[1].name).toBe('test2.txt')
+      expect(records[0].fields.multiple_attachment?.[1].name).toBe('test2.csv')
+      expect(records[0].fields.multiple_attachment?.[1].mime_type).toBe('text/csv')
       expect(records[0].fields.multiple_attachment?.[1].url).toStartWith(url)
     })
   })

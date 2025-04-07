@@ -495,14 +495,17 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     return Object.keys(record).reduce((acc: RecordFields, key) => {
       const value = record[key]
       const field = this.fields.find((f) => f.name === key)
-      if (value === undefined || value === null) return acc
-      if (key in acc) {
+      if (value === undefined || value === null || value === '') {
+        acc[key] = null
+      } else if (key in acc) {
         if (field?.type === 'DateTime') {
           if (value instanceof Date) acc[key] = value
           else acc[key] = new Date(String(value))
         } else if (field?.type === 'MultipleSelect' && Array.isArray(value)) {
           acc[key] = '{' + value.join(',') + '}'
         } else if (field?.type === 'MultipleAttachment' && Array.isArray(value)) {
+          acc[key] = JSON.stringify(value)
+        } else if (field?.type === 'SingleAttachment' && value) {
           acc[key] = JSON.stringify(value)
         }
       }
@@ -528,6 +531,9 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           break
         case 'MultipleAttachment':
           acc[key] = value ? JSON.parse(String(value)) : []
+          break
+        case 'SingleAttachment':
+          acc[key] = value ? JSON.parse(String(value)) : null
           break
         case 'Rollup':
           if (field.output.type === 'Number') {
@@ -711,6 +717,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
           table: field.table,
         }
       case 'MultipleAttachment':
+        return {
+          ...column,
+          type: 'TEXT',
+        }
+      case 'SingleAttachment':
         return {
           ...column,
           type: 'TEXT',

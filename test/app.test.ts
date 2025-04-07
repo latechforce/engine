@@ -19,6 +19,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       loggers: [],
     }
     const app = new MockedApp()
@@ -36,6 +37,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       server: { port: '6543' },
       loggers: [],
     }
@@ -49,11 +51,33 @@ describe('start', () => {
     await startedApp.stop()
   })
 
+  it('should start an app on a base url', async () => {
+    // GIVEN
+    const config: Config = {
+      name: 'App',
+      version: '1.0.0',
+      engine: '1.0.0',
+      server: {
+        baseUrl: 'http://custom-url.com',
+      },
+      loggers: [],
+    }
+    const app = new MockedApp()
+
+    // WHEN
+    const startedApp = await app.start(config)
+
+    // THEN
+    expect(startedApp.url).toBe('http://custom-url.com')
+    await startedApp.stop()
+  })
+
   it('should check the app running status through /api/health endpoint', async () => {
     // GIVEN
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       loggers: [],
     }
     const app = new MockedApp()
@@ -72,6 +96,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       description: '{{ env.DESCRIPTION }}',
       server: { port: '{{env.PORT}}' },
       loggers: [],
@@ -92,6 +117,7 @@ describe('start', () => {
     const config: Config = {
       name: 'App',
       version: '{{ env.VERSION "1.0.0" }}',
+      engine: '{{ env.ENGINE "1.0.0" }}',
       server: { port: '{{env.PORT "6543"}}' },
       loggers: [],
     }
@@ -113,6 +139,7 @@ describe('stop', () => {
     const config: Config = {
       name: 'App',
       version: '1.0.0',
+      engine: '1.0.0',
       loggers: [],
     }
     const app = new MockedApp()

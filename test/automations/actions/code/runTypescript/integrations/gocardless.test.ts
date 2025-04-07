@@ -12,6 +12,7 @@ mock.request(({ app, request, integrations }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'createPayment',
@@ -65,6 +66,7 @@ mock.request(({ app, request, integrations }) => {
       const config: Config = {
         name: 'App',
         version: '1.0.0',
+        engine: '1.0.0',
         automations: [
           {
             name: 'listPayments',

@@ -18,6 +18,7 @@ import type { SingleLineTextField } from '/domain/entities/Field/SingleLineText'
 import { MultipleSelectFieldMapper } from './MultipleSelectMapper'
 import { MultipleAttachmentFieldMapper } from './MultipleAttachmentMapper'
 import { UrlFieldMapper } from './UrlMapper'
+import { SingleAttachmentFieldMapper } from './SingleAttachmentMapper'
 
 export class FieldMapper {
   static toEntity(config: IField, fields: IField[]): Field {
@@ -45,6 +46,8 @@ export class FieldMapper {
         return MultipleLinkedRecordFieldMapper.toEntity(config)
       case 'MultipleAttachment':
         return MultipleAttachmentFieldMapper.toEntity(config)
+      case 'SingleAttachment':
+        return SingleAttachmentFieldMapper.toEntity(config)
       case 'Rollup':
         return RollupFieldMapper.toEntity(config, fields)
       case 'Checkbox':

@@ -6,7 +6,7 @@ import { type IServerDriver } from './ServerSpi'
 import { type IQueueDriver } from './QueueSpi'
 import { type ITemplateCompilerDriver } from './TemplateCompilerSpi'
 import { type ICodeCompilerDriver } from './CodeCompilerSpi'
-import { type IFileSystemDriver } from './FileSystemSpi'
+import { type ISystemDriver } from './SystemSpi'
 import { type IStorageDriver } from './StorageSpi'
 import { type IMonitorDriver } from './MonitorSpi'
 import { type ITunnelDriver } from './TunnelSpi'
@@ -37,7 +37,7 @@ export interface Drivers {
   idGenerator: () => IIdGeneratorDriver
   schemaValidator: () => ISchemaValidatorDriver
   templateCompiler: () => ITemplateCompilerDriver
-  fileSystem: () => IFileSystemDriver
+  system: () => ISystemDriver
   fetcher: () => IFetcherDriver
   cron: () => ICronDriver
   client: () => IClientDriver

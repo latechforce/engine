@@ -10,6 +10,7 @@ import type { Server } from '/domain/services/Server'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type { NotionUser } from './NotionUser'
 import type { NotionTablePageProperties } from './NotionTablePage'
+import type { System } from '/domain/services/System'
 
 export interface NotionConfig {
   token: string
@@ -20,6 +21,7 @@ export interface NotionServices extends NotionTableServices {
   storage: Storage
   server: Server
   templateCompiler: TemplateCompiler
+  system: System
 }
 
 export interface INotionSpi {

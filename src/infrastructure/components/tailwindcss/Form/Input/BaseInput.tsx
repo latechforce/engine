@@ -38,7 +38,7 @@ export const InputContext = ({
 }: InputContextProps) => {
   return (
     <div>
-      {label ? <InputLabel label={label} field={field} required={required} /> : null}
+      <InputLabel label={label ?? field} field={field} required={required} />
       {description ? <InputDescription description={description} /> : null}
       {children}
     </div>

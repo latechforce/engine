@@ -11,6 +11,7 @@ import {
 } from '/domain/services/Template'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type { Monitor } from '/domain/services/Monitor'
+import type { System } from '/domain/services/System'
 
 export interface ApiCalledHttpTriggerConfig extends BaseTriggerConfig {
   path: string
@@ -25,6 +26,7 @@ export interface ApiCalledHttpTriggerServices {
   server: Server
   templateCompiler: TemplateCompiler
   monitor: Monitor
+  system: System
 }
 
 export class ApiCalledHttpTrigger implements BaseTrigger {
@@ -41,7 +43,8 @@ export class ApiCalledHttpTrigger implements BaseTrigger {
 
   get path() {
     const { path } = this._config
-    return `/api/automation/${path}`
+    const { system } = this._services
+    return system.joinPath(`/api/automation`, path)
   }
 
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {

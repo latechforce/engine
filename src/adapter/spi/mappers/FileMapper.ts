@@ -8,6 +8,6 @@ export class FileMapper {
 
   static toEntity = (file: FileDto, endpoint: string) => {
     const url = `${endpoint}/${file.id}`
-    return new File(file.id, file.name, file.data, url, file.created_at)
+    return new File(file.id, file.name, file.mime_type, file.data, url, file.created_at)
   }
 }

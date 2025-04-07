@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
 import puppeteer, { type Browser, type Page } from 'puppeteer'
 import { DatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver'
-import { StorageDriver } from '/infrastructure/drivers/common/StorageDriver'
+import { StorageDriver } from '/infrastructure/drivers/bun/StorageDriver'
 import { NotionIntegration } from '/infrastructure/integrations/bun/mocks/notion/NotionIntegration.mock'
 import { QontoIntegration } from '/infrastructure/integrations/bun/mocks/qonto/QontoIntegration.mock'
 import { PappersIntegration } from '/infrastructure/integrations/bun/mocks/pappers/PappersIntegration.mock'
@@ -116,7 +116,10 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     const request = {
       get: async <T = any>(url: string, options: RequestInit = {}): Promise<T> => {
         return fetch(url, options)
-          .then((res) => res.json())
+          .then((res) => {
+            const headers = new Headers(options.headers)
+            return headers.get('Accept') !== 'application/json' ? res.text() : res.json()
+          })
           .catch((error) => {
             console.error(error)
             return error

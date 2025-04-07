@@ -12,6 +12,7 @@ import { WebhookCalledHttpTriggerMapper } from './http/WebhookCalledMapper'
 import { TablePageCreatedNotionTriggerMapper } from './notion/TablePageCreatedMapper'
 import { CronTimeTickedScheduleTriggerMapper } from './schedule/CronTimeTicked'
 import type { Cron } from '/domain/services/Cron'
+import type { System } from '/domain/services/System'
 
 type TriggerMapperConfig = ITrigger & {
   automation: string
@@ -26,6 +27,7 @@ export interface TriggerMapperServices {
   templateCompiler: TemplateCompiler
   monitor: Monitor
   cron: Cron
+  system: System
 }
 
 export interface TriggerMapperIntegrations {

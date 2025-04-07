@@ -23,6 +23,6 @@
     },
     "esModuleInterop": false
   },
-  "include": ["src", "test", "script"],
+  "include": ["src", "test", "script", "src/domain/entities/Table/index.ts"],
   "exclude": ["node_modules", "dist"]
 }

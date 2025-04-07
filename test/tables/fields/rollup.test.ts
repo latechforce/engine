@@ -30,7 +30,7 @@ mock.request(({ app, request, drivers }) => {
   })
 
   describe('on POST', () => {
-    it.only('should create a record with a rollup as a number', async () => {
+    it('should create a record with a rollup as a number', async () => {
       // GIVEN
       const config = getFirstAndSecondTableConfig(['multiple_linked_record', 'number_rollup'])
       const { url } = await app.start(config)

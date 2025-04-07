@@ -51,7 +51,7 @@ mock.request(({ app, request }) => {
       instancePath: '/single_select',
       keyword: 'enum',
       message: 'must be equal to one of the allowed values',
-      params: { allowedValues: ['Red', 'Blue', 'Green'] },
+      params: { allowedValues: ['Red', 'Blue', 'Green', ''] },
       schemaPath: '#/properties/single_select/enum',
     })
   })

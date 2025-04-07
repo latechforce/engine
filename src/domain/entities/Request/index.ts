@@ -6,3 +6,5 @@ import type { DeleteRequest } from './Delete'
 export type Request = GetRequest | PostRequest | PatchRequest | DeleteRequest
 
 export type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE'
+
+export type { GetRequest, PostRequest, PatchRequest, DeleteRequest }
