@@ -71,6 +71,7 @@ jobs:
 
   release:
     name: Publish Package to NPM
+    needs: test
     runs-on: ubuntu-latest
 
     permissions:
