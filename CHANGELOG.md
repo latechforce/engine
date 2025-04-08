@@ -1,3 +1,15 @@
+# [0.42.0](https://github.com/latechforce/engine/compare/v0.41.0...v0.42.0) (2025-04-08)
+
+
+### Bug Fixes
+
+* set required api params ([5535886](https://github.com/latechforce/engine/commit/5535886d0327e09db720cf7b7a1a034bdffd41a4))
+
+
+### Features
+
+* **Calendly:** add green test: should start an automation ([f415c39](https://github.com/latechforce/engine/commit/f415c39ae82655b932e03bf400d4354702d8dd36))
+
 # [0.41.0](https://github.com/latechforce/engine/compare/v0.40.0...v0.41.0) (2025-04-08)
 
 
