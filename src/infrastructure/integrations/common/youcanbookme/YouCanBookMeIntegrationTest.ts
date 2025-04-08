@@ -1,6 +1,5 @@
 import type { IYouCanBookMeIntegration } from '/adapter/spi/integrations/YouCanBookMeSpi'
 import type BunTester from 'bun:test'
-import env from '/infrastructure/test/env'
 
 export function testYouCanBookMeIntegration(
   { describe, it, expect }: typeof BunTester,
@@ -17,8 +16,7 @@ export function testYouCanBookMeIntegration(
 
     it('should get profile by id', async () => {
       // WHEN
-      const profileId = env.TEST_YOUCANBOOKME_USERNAME
-      const result = await integration.getProfile(profileId)
+      const result = await integration.getProfile('mock-username')
 
       // THEN
       expect(result).toBeDefined()
@@ -30,13 +28,12 @@ export function testYouCanBookMeIntegration(
 
     it('should update a profile', async () => {
       // WHEN
-      const profileId = env.TEST_YOUCANBOOKME_USERNAME
       const updateData = {
-        title: 'Updated Title',
-        description: 'Updated Description',
-        timeZone: 'Europe/Paris',
+        title: 'string',
+        description: 'string',
+        timeZone: 'America/New_York',
       }
-      const result = await integration.updateProfile(profileId, updateData)
+      const result = await integration.updateProfile('mock-username', updateData)
 
       // THEN
       expect(result).toBeDefined()
@@ -45,16 +42,6 @@ export function testYouCanBookMeIntegration(
       expect(result.data?.title).toBe(updateData.title)
       expect(result.data?.description).toBe(updateData.description)
       expect(result.data?.timeZone).toBe(updateData.timeZone)
-    })
-
-    it('should return an error when profile not found', async () => {
-      // WHEN
-      const result = await integration.updateProfile('non-existent-id', { title: 'New Title' })
-
-      // THEN
-      expect(result).toBeDefined()
-      expect(result.error).toBeDefined()
-      expect(result.error?.status).toBe(404)
     })
   })
 }

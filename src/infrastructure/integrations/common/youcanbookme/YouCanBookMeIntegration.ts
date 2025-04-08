@@ -2,7 +2,7 @@ import type { IYouCanBookMeIntegration } from '/adapter/spi/integrations/YouCanB
 import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 import type { YouCanBookMeError } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
-import type { Profile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
+import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
 
 export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
@@ -44,9 +44,9 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
     }
   }
 
-  getProfile = async (profileId: string): Promise<IntegrationResponse<Profile>> => {
+  getProfile = async (profileId: string): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
     try {
-      const response = await this._instance.get<Profile>(`/profiles/${profileId}`)
+      const response = await this._instance.get<YouCanBookMeProfile>(`/profiles/${profileId}`)
       return { data: response.data }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {
@@ -58,10 +58,13 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
 
   updateProfile = async (
     profileId: string,
-    profile: Partial<Profile>
-  ): Promise<IntegrationResponse<Profile>> => {
+    profile: Partial<YouCanBookMeProfile>
+  ): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
     try {
-      const response = await this._instance.patch<Profile>(`/profiles/${profileId}`, profile)
+      const response = await this._instance.patch<YouCanBookMeProfile>(
+        `/profiles/${profileId}`,
+        profile
+      )
       return { data: response.data }
     } catch (error) {
       if (error instanceof AxiosError && error.response) {

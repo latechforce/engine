@@ -41,6 +41,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     }
   }
 
+  // TODO: Add a method to manage a OAuth2 authentification for V2 API
+
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       // Using the /users endpoint as it's a lightweight call to verify authentication

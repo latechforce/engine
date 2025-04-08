@@ -3,8 +3,9 @@ import { testCalendlyIntegration } from '/infrastructure/integrations/common/cal
 import BunTester from 'bun:test'
 
 export const integration = new CalendlyIntegration({
+  baseUrl: ':memory:',
   user: {
-    accessToken: ':memory:',
+    accessToken: 'https://api.calendly.com/users/123',
   },
 })
 

@@ -15,7 +15,7 @@ export interface YouCanBookMeError {
   type: string
 }
 
-export interface Profile {
+export interface YouCanBookMeProfile {
   id: string
   createdBy: string
   accountId: string

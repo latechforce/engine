@@ -16,10 +16,9 @@ import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfi
 
 export class CalendlyIntegration implements ICalendlyIntegration {
   private db: Database
-  private userId: string = 'https://api.calendly.com/users/123'
 
-  constructor(_config?: CalendlyConfig) {
-    this.db = new Database(_config?.user?.accessToken || ':memory:')
+  constructor(private _config?: CalendlyConfig) {
+    this.db = new Database(_config?.baseUrl || ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS users (
         uri TEXT PRIMARY KEY,
@@ -56,7 +55,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     const user = this.db
       .query<CalendlyConfig, string>('SELECT * FROM users WHERE uri = ?')
-      .get(this.userId)
+      .get(this._config?.user.accessToken ?? '')
     if (!user) {
       return { error: { status: 404, message: 'User not found' } }
     }
@@ -192,7 +191,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
     const user = this.db
       .query<CalendlyUser, string>('SELECT * FROM users WHERE uri = ?')
-      .get(this.userId)
+      .get(this._config?.user.accessToken ?? '')
     if (!user) {
       return { error: { status: 404, message: 'User not found' } }
     }
