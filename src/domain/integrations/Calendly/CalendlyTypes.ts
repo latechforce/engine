@@ -41,9 +41,9 @@ export type WebhookEvents =
   | 'routing_form_submission.created'
 
 export type ListWebhookSubscriptionsParams = {
-  organization?: CalendlyOrganizationResourceUrl
+  organization: CalendlyOrganizationResourceUrl
   user?: CalendlyUserResourceUrl
-  scope?: CalendlyScope
+  scope: CalendlyScope
   count?: number
   pageToken?: string
 }

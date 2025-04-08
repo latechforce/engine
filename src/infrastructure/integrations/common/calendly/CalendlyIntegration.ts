@@ -114,9 +114,9 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         '/webhook_subscriptions',
         {
           params: {
-            ...(params.organization && { organization: params.organization }),
+            organization: params.organization,
+            scope: params.scope,
             ...(params.user && { user: params.user }),
-            ...(params.scope && { scope: params.scope }),
             ...(params.count && { count: params.count }),
             ...(params.pageToken && { page_token: params.pageToken }),
           },
