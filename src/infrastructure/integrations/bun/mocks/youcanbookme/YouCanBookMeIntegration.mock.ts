@@ -8,7 +8,7 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   private db: Database
 
   constructor(private _config?: YouCanBookMeConfig) {
-    this.db = new Database(_config?.baseUrl + ':memory:')
+    this.db = new Database(_config?.baseUrl ?? ':memory:')
     this.db.run(`CREATE TABLE IF NOT EXISTS profiles (
       id TEXT PRIMARY KEY,
       createdBy TEXT,

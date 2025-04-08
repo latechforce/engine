@@ -18,7 +18,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   private db: Database
 
   constructor(private _config?: CalendlyConfig) {
-    this.db = new Database(_config?.baseUrl || ':memory:')
+    this.db = new Database(_config?.baseUrl ?? ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS users (
         uri TEXT PRIMARY KEY,

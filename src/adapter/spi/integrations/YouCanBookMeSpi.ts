@@ -1,6 +1,6 @@
 import { BaseSpi } from './base'
 import type { IYouCanBookMeSpi } from '/domain/integrations/YouCanBookMe/IYouCanBookMeSpi'
-import type { Profile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
+import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 
 export type IYouCanBookMeIntegration = IYouCanBookMeSpi
 
@@ -13,7 +13,7 @@ export class YouCanBookMeSpi extends BaseSpi<IYouCanBookMeIntegration> implement
     return this._integration.getProfile(profileId)
   }
 
-  updateProfile = async (profileId: string, profile: Partial<Profile>) => {
+  updateProfile = async (profileId: string, profile: Partial<YouCanBookMeProfile>) => {
     return this._integration.updateProfile(profileId, profile)
   }
 }

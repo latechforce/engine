@@ -1,10 +1,9 @@
 # [0.40.0](https://github.com/latechforce/engine/compare/v0.39.35...v0.40.0) (2025-04-08)
 
-
 ### Features
 
-* add Calendly deleteWebhookSubscription API client method ([19244f4](https://github.com/latechforce/engine/commit/19244f4424ee2f4afad39f52b84d54478f76c7fd))
-* **webhook:** add getWebhookSubscription api client entrypoint ([8f7d7e6](https://github.com/latechforce/engine/commit/8f7d7e6b985b62e8685bfdfd5ba481f15d1cd46b))
+- add Calendly deleteWebhookSubscription API client method ([19244f4](https://github.com/latechforce/engine/commit/19244f4424ee2f4afad39f52b84d54478f76c7fd))
+- **webhook:** add getWebhookSubscription api client entrypoint ([8f7d7e6](https://github.com/latechforce/engine/commit/8f7d7e6b985b62e8685bfdfd5ba481f15d1cd46b))
 
 ## [0.39.35](https://github.com/latechforce/engine/compare/v0.39.34...v0.39.35) (2025-04-03)
 
