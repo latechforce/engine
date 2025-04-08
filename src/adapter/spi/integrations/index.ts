@@ -7,6 +7,7 @@ import type { GoogleMailConfig } from '/domain/integrations/Google/GoogleMail'
 import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
+import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 
 import type { IPappersIntegration } from './PappersSpi'
 import type { INotionIntegration } from './NotionSpi'
@@ -17,6 +18,7 @@ import type { IGoogleMailIntegration } from './GoogleMailSpi'
 import type { IGoCardlessIntegration } from './GoCardlessSpi'
 import type { IPhantombusterIntegration } from './PhantombusterSpi'
 import type { ICalendlyIntegration } from './CalendlySpi'
+import type { IYouCanBookMeIntegration } from './YouCanBookMeSpi'
 
 export interface Integrations {
   airtable: (config?: AirtableConfig) => IAirtableIntegration
@@ -28,4 +30,5 @@ export interface Integrations {
   gocardless: (config?: GoCardlessConfig) => IGoCardlessIntegration
   phantombuster: (config?: PhantombusterConfig) => IPhantombusterIntegration
   calendly: (config?: CalendlyConfig) => ICalendlyIntegration
+  youCanBookMe: (config?: YouCanBookMeConfig) => IYouCanBookMeIntegration
 }

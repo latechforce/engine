@@ -1,8 +1,5 @@
 export type CalendlyConfig = {
-  /**
-   * Personal access token for Calendly API authentication
-   * See: https://developer.calendly.com/getting-started
-   */
+  baseUrl?: string
   user: {
     accessToken: string
   }
