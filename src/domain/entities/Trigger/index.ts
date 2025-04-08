@@ -4,6 +4,7 @@ import type { RecordCreatedDatabaseTrigger } from './database/RecordCreated'
 import type { WebhookCalledHttpTrigger } from './http/WebhookCalled'
 import type { CronTimeTickedScheduleTrigger } from './schedule/CronTimeTicked'
 import type { InviteeCreatedCalendlyTrigger } from './calendly/InviteeCreated'
+import type { BookingCreatedTrigger } from './youCanBookMe/BookingCreated'
 
 export type Trigger =
   | WebhookCalledHttpTrigger
@@ -12,3 +13,4 @@ export type Trigger =
   | TablePageCreatedNotionTrigger
   | CronTimeTickedScheduleTrigger
   | InviteeCreatedCalendlyTrigger
+  | BookingCreatedTrigger

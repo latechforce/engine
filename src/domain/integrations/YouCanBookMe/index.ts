@@ -13,6 +13,12 @@ export class YouCanBookMe extends Integration<IYouCanBookMeSpi> {
     return response.data
   }
 
+  currentProfile = async (): Promise<YouCanBookMeProfile> => {
+    const response = await this._spi.currentProfile()
+    if (response.error) return this._throwError('currentProfile', response.error)
+    return response.data
+  }
+
   updateProfile = async (
     profileId: string,
     profile: Partial<YouCanBookMeProfile>

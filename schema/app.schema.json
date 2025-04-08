@@ -326,6 +326,24 @@
             ],
             "type": "object"
         },
+        "IBookingCreatedTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "event": {
+                    "const": "BookingCreated",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "YouCanBookMe",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "integration"
+            ],
+            "type": "object"
+        },
         "ICheckboxField": {
             "additionalProperties": false,
             "properties": {
@@ -699,6 +717,34 @@
                             "$ref": "#/definitions/QontoProductionConfig"
                         }
                     ]
+                },
+                "youCanBookMe": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "baseUrl": {
+                            "type": "string"
+                        },
+                        "user": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "password": {
+                                    "type": "string"
+                                },
+                                "username": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "password",
+                                "username"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "user"
+                    ],
+                    "type": "object"
                 }
             },
             "type": "object"
@@ -1342,6 +1388,9 @@
                 },
                 {
                     "$ref": "#/definitions/IInviteeCreatedTrigger"
+                },
+                {
+                    "$ref": "#/definitions/IBookingCreatedTrigger"
                 }
             ]
         },

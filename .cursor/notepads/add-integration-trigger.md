@@ -1,5 +1,9 @@
 # Steps to Add a New Integration Trigger
 
+## Inputs:
+
+- [Nom]: Name of the integration, replace `NewIntegration` by the name of the integration
+
 ## 1. Domain Layer
 
 1. Create trigger interface in `src/domain/interfaces/ITrigger/newIntegration/INewEvent.ts`:

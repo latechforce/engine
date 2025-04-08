@@ -8,7 +8,6 @@ import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios
 export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   private _instance: AxiosInstance
   private _userId: string
-
   constructor(config?: YouCanBookMeConfig) {
     this._instance = axios.create({
       baseURL: config?.baseUrl ?? 'https://api.youcanbook.me/v1',
@@ -34,14 +33,11 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
-    try {
-      await this._instance.get(`/profiles/${this._userId}`)
-    } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+    const response = await this.currentProfile()
+    if (response.error) {
+      return response
     }
+    return undefined
   }
 
   getProfile = async (profileId: string): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
@@ -72,5 +68,9 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
       }
       throw error
     }
+  }
+
+  currentProfile = async (): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
+    return await this.getProfile(this._userId)
   }
 }

@@ -131,6 +131,14 @@ const fullConfig: Config = {
       },
       actions: [],
     },
+    {
+      name: 'YouCanBookMeBookingCreated',
+      trigger: {
+        integration: 'YouCanBookMe',
+        event: 'BookingCreated',
+      },
+      actions: [],
+    },
   ],
   tables: [
     {
@@ -294,6 +302,7 @@ type AutomationName =
   | 'WebhookCalledWithApiKeyAuth'
   | 'CronTimeTicked'
   | 'CalendlyInviteeCreated'
+  | 'YouCanBookMeBookingCreated'
 
 type FirstTableFieldName =
   | 'name'

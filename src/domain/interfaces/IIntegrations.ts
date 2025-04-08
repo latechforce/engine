@@ -6,6 +6,7 @@ import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
 import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import type { CalendlyConfig } from '../integrations/Calendly/CalendlyConfig'
+import type { YouCanBookMeConfig } from '../integrations/YouCanBookMe/YouCanBookMeConfig'
 
 export interface IIntegrations {
   airtable?: AirtableConfig
@@ -18,4 +19,5 @@ export interface IIntegrations {
   gocardless?: GoCardlessConfig
   phantombuster?: PhantombusterConfig
   calendly?: CalendlyConfig
+  youCanBookMe?: YouCanBookMeConfig
 }

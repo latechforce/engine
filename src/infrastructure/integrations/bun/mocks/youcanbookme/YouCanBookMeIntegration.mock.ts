@@ -120,4 +120,13 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
     )
     return { data: updatedProfile }
   }
+
+  currentProfile = async (): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
+    if (!this._config?.user.username) {
+      return {
+        error: { status: 500, message: 'Implementation configuration error: username is required' },
+      }
+    }
+    return await this.getProfile(this._config.user.username)
+  }
 }

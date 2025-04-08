@@ -3,6 +3,7 @@ import type { IntegrationResponse } from '../base'
 import type { YouCanBookMeProfile } from './YouCanBookMeTypes'
 
 export interface IYouCanBookMeSpi extends BaseSpi {
+  currentProfile: () => Promise<IntegrationResponse<YouCanBookMeProfile>>
   getProfile: (profileId: string) => Promise<IntegrationResponse<YouCanBookMeProfile>>
   updateProfile: (
     profileId: string,

@@ -4,6 +4,7 @@ import type { IWebhookCalledHttpTrigger } from './http/IWebhookCalled'
 import type { IPageCreatedNotionTrigger } from './notion/ITablePageCreated'
 import type { ICronTimeTickedScheduleTrigger } from './schedule/ICronTimeTicked'
 import type { IInviteeCreatedTrigger } from './calendly/IInviteeCreated'
+import type { IBookingCreatedTrigger } from './youCanBookMe/IBookingCreated'
 
 export type ITrigger =
   | IApiCalledHttpTrigger
@@ -12,3 +13,4 @@ export type ITrigger =
   | IPageCreatedNotionTrigger
   | ICronTimeTickedScheduleTrigger
   | IInviteeCreatedTrigger
+  | IBookingCreatedTrigger
