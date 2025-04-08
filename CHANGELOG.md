@@ -1,3 +1,10 @@
+## [0.42.1](https://github.com/latechforce/engine/compare/v0.42.0...v0.42.1) (2025-04-08)
+
+
+### Bug Fixes
+
+* **CI:** add better readable CI ([0e35a3b](https://github.com/latechforce/engine/commit/0e35a3bceb9445372ed8e3bdf2a0c605d76c04be))
+
 # [0.42.0](https://github.com/latechforce/engine/compare/v0.41.0...v0.42.0) (2025-04-08)
 
 
