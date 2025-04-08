@@ -18,8 +18,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   private db: Database
   private userId: string = 'https://api.calendly.com/users/123'
 
-  constructor(private _config?: CalendlyConfig) {
-    this.db = new Database(':memory:')
+  constructor(_config?: CalendlyConfig) {
+    this.db = new Database(_config?.user?.accessToken || ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS users (
         uri TEXT PRIMARY KEY,
@@ -34,28 +34,6 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         slug TEXT
       )
     `)
-
-    // TODO: remove this line to be configured in the test, not in the code
-    this.db.run(
-      `
-      INSERT INTO users (
-        uri, name, email, scheduling_url, timezone, avatar_url, 
-        created_at, updated_at, current_organization, slug
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `,
-      [
-        this.userId,
-        'John Doe',
-        'john@example.com',
-        'https://calendly.com/johndoe',
-        'America/New_York',
-        'https://example.com/avatar.jpg',
-        '2023-01-01T00:00:00Z',
-        '2023-01-01T00:00:00Z',
-        'https://api.calendly.com/organizations/ABCDEF',
-        'johndoe',
-      ]
-    )
 
     // Table pour stocker les webhooks
     this.db.run(`
@@ -73,82 +51,6 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         creator TEXT NOT NULL
       )
     `)
-
-    // TODO: remove this line to be configured in the test, not in the code
-    this.db.run(
-      `
-        INSERT INTO WebhookSubscriptions (
-          uri, callback_url, created_at, updated_at, retry_started_at,
-        state, events, scope, organization, user, creator
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `,
-      [
-        // Webhook 1
-        'https://api.calendly.com/webhook_subscriptions/123',
-        'https://example.com/webhook1',
-        '2023-01-01T00:00:00Z',
-        '2023-01-01T00:00:00Z',
-        null,
-        'active',
-        JSON.stringify(['invitee.created', 'invitee.canceled']),
-        'organization',
-        'https://api.calendly.com/organizations/ABCDEF',
-        null,
-        'https://api.calendly.com/users/123',
-
-        // Webhook 2
-        'https://api.calendly.com/webhook_subscriptions/456',
-        'https://example.com/webhook2',
-        '2023-02-01T00:00:00Z',
-        '2023-02-01T00:00:00Z',
-        null,
-        'active',
-        JSON.stringify(['invitee.created']),
-        'user',
-        'https://api.calendly.com/organizations/ABCDEF',
-        'https://api.calendly.com/users/456',
-        'https://api.calendly.com/users/456',
-
-        // Webhook 3
-        'https://api.calendly.com/webhook_subscriptions/789',
-        'https://example.com/webhook3',
-        '2023-03-01T00:00:00Z',
-        '2023-03-01T00:00:00Z',
-        '2023-03-02T00:00:00Z',
-        'disabled',
-        JSON.stringify(['invitee.canceled']),
-        'organization',
-        'https://api.calendly.com/organizations/ABCDEF',
-        null,
-        'https://api.calendly.com/users/789',
-
-        // Webhook 4
-        'https://api.calendly.com/webhook_subscriptions/abc',
-        'https://example.com/webhook4',
-        '2023-04-01T00:00:00Z',
-        '2023-04-01T00:00:00Z',
-        null,
-        'active',
-        JSON.stringify(['invitee_no_show.created']),
-        'user',
-        'https://api.calendly.com/organizations/ABCDEF',
-        'https://api.calendly.com/users/abc',
-        'https://api.calendly.com/users/abc',
-
-        // Webhook 5
-        'https://api.calendly.com/webhook_subscriptions/def',
-        'https://example.com/webhook5',
-        '2023-05-01T00:00:00Z',
-        '2023-05-01T00:00:00Z',
-        null,
-        'active',
-        JSON.stringify(['routing_form_submission.created']),
-        'organization',
-        'https://api.calendly.com/organizations/ABCDEF',
-        null,
-        'https://api.calendly.com/users/def',
-      ]
-    )
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
@@ -159,6 +61,30 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       return { error: { status: 404, message: 'User not found' } }
     }
     return undefined
+  }
+
+  createUser = async (user: CalendlyUser): Promise<IntegrationResponse<CalendlyUser>> => {
+    this.db.run(
+      `
+      INSERT INTO users (
+        uri, name, email, scheduling_url, timezone, avatar_url, 
+        created_at, updated_at, current_organization, slug
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+      [
+        user.uri,
+        user.name,
+        user.email,
+        user.scheduling_url,
+        user.timezone,
+        user.avatar_url,
+        user.created_at,
+        user.updated_at,
+        user.current_organization,
+        user.slug,
+      ]
+    )
+    return { data: user }
   }
 
   createWebhookSubscription = async (

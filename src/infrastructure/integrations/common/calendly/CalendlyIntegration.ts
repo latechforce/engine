@@ -79,19 +79,21 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         ...(params.user && { user: params.user }),
       })
 
+      const resource = response.data.resource
+
       return {
         data: {
-          uri: response.data.uri,
-          callbackUrl: response.data.callback_url,
-          createdAt: response.data.created_at,
-          updatedAt: response.data.updated_at,
-          retryStartedAt: response.data.retry_started_at,
-          state: response.data.state,
-          events: response.data.events,
-          scope: response.data.scope,
-          organization: response.data.organization,
-          user: response.data.user,
-          creator: response.data.creator,
+          uri: resource.uri,
+          callbackUrl: resource.callback_url,
+          createdAt: resource.created_at,
+          updatedAt: resource.updated_at,
+          retryStartedAt: resource.retry_started_at,
+          state: resource.state,
+          events: resource.events,
+          scope: resource.scope,
+          organization: resource.organization,
+          user: resource.user,
+          creator: resource.creator,
         },
       }
     } catch (error: unknown) {
