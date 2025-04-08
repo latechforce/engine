@@ -31,6 +31,7 @@ import { ThemeMapper } from './Services/ThemeMapper'
 import { ClientMapper } from './Services/ClientMapper'
 import type { Components } from '/domain/components'
 import { SystemMapper } from './Services/SystemMapper'
+import { CalendlyMapper } from './Integration/CalendlyMapper'
 
 export class AppMapper {
   static toEntity = (
@@ -95,6 +96,7 @@ export class AppMapper {
       { idGenerator, logger, storage, server, templateCompiler, fetcher, system },
       config.integrations?.notion
     )
+    const calendly = CalendlyMapper.toIntegration(integrations, config.integrations?.calendly)
     const airtable = AirtableMapper.toIntegration(integrations, config.integrations?.airtable)
     const pappers = PappersMapper.toIntegration(integrations, config.integrations?.pappers)
     const qonto = QontoMapper.toIntegration(integrations, config.integrations?.qonto)
@@ -138,7 +140,7 @@ export class AppMapper {
         system,
       },
       { tables },
-      { notion, pappers, qonto, googleMail, gocardless }
+      { notion, pappers, qonto, googleMail, gocardless, calendly }
     )
     const forms = FormMapper.toManyEntities(
       config.forms,

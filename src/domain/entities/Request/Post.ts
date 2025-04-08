@@ -12,6 +12,13 @@ export class PostRequest extends BaseRequest {
     this.body = params.body
   }
 
+  getBodyAsObject = (): Record<string, unknown> => {
+    if (typeof this.body !== 'object' || this.body === null) {
+      throw new Error('Body is not an object')
+    }
+    return this.body as Record<string, unknown>
+  }
+
   getFromBody = (key: string): string | number | boolean | undefined => {
     const { body } = this
     if (typeof body === 'object' && body && key in body) {

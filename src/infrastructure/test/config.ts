@@ -123,6 +123,14 @@ const fullConfig: Config = {
       },
       actions: [],
     },
+    {
+      name: 'CalendlyInviteeCreated',
+      trigger: {
+        integration: 'Calendly',
+        event: 'InviteeCreated',
+      },
+      actions: [],
+    },
   ],
   tables: [
     {
@@ -285,6 +293,7 @@ type AutomationName =
   | 'WebhookCalled'
   | 'WebhookCalledWithApiKeyAuth'
   | 'CronTimeTicked'
+  | 'CalendlyInviteeCreated'
 
 type FirstTableFieldName =
   | 'name'

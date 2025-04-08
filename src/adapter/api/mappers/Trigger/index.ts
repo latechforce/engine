@@ -13,6 +13,8 @@ import { TablePageCreatedNotionTriggerMapper } from './notion/TablePageCreatedMa
 import { CronTimeTickedScheduleTriggerMapper } from './schedule/CronTimeTicked'
 import type { Cron } from '/domain/services/Cron'
 import type { System } from '/domain/services/System'
+import { InviteeCreatedCalendlyTriggerMapper } from './calendly/InviteeCreatedMapper'
+import type { Calendly } from '/domain/integrations/Calendly'
 
 type TriggerMapperConfig = ITrigger & {
   automation: string
@@ -32,6 +34,7 @@ export interface TriggerMapperServices {
 
 export interface TriggerMapperIntegrations {
   notion: Notion
+  calendly: Calendly
 }
 
 export class TriggerMapper {
@@ -41,7 +44,6 @@ export class TriggerMapper {
     integrations: TriggerMapperIntegrations
   ): Trigger {
     const { event } = config
-
     switch (event) {
       case 'RecordCreated':
         return RecordCreatedDatabaseTriggerMapper.toEntity(config, services)
@@ -53,6 +55,8 @@ export class TriggerMapper {
         return TablePageCreatedNotionTriggerMapper.toEntity(config, services, integrations)
       case 'CronTimeTicked':
         return CronTimeTickedScheduleTriggerMapper.toEntity(config, services)
+      case 'InviteeCreated':
+        return InviteeCreatedCalendlyTriggerMapper.toEntity(config, services, integrations)
       default:
         throw new Error(`TriggerMapper: trigger ${event} not found`)
     }

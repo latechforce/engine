@@ -638,6 +638,30 @@
                 "airtable": {
                     "$ref": "#/definitions/AirtableConfig"
                 },
+                "calendly": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "baseUrl": {
+                            "type": "string"
+                        },
+                        "user": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "accessToken": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "accessToken"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "user"
+                    ],
+                    "type": "object"
+                },
                 "gocardless": {
                     "anyOf": [
                         {
@@ -677,6 +701,24 @@
                     ]
                 }
             },
+            "type": "object"
+        },
+        "IInviteeCreatedTrigger": {
+            "additionalProperties": false,
+            "properties": {
+                "event": {
+                    "const": "InviteeCreated",
+                    "type": "string"
+                },
+                "integration": {
+                    "const": "Calendly",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "event",
+                "integration"
+            ],
             "type": "object"
         },
         "IListPaymentsGoCardlessAction": {
@@ -1297,6 +1339,9 @@
                 },
                 {
                     "$ref": "#/definitions/ICronTimeTickedScheduleTrigger"
+                },
+                {
+                    "$ref": "#/definitions/IInviteeCreatedTrigger"
                 }
             ]
         },

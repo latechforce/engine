@@ -3,6 +3,7 @@ import type { IRecordCreatedDatabaseTrigger } from './database/IRecordCreated'
 import type { IWebhookCalledHttpTrigger } from './http/IWebhookCalled'
 import type { IPageCreatedNotionTrigger } from './notion/ITablePageCreated'
 import type { ICronTimeTickedScheduleTrigger } from './schedule/ICronTimeTicked'
+import type { IInviteeCreatedTrigger } from './calendly/IInviteeCreated'
 
 export type ITrigger =
   | IApiCalledHttpTrigger
@@ -10,3 +11,4 @@ export type ITrigger =
   | IWebhookCalledHttpTrigger
   | IPageCreatedNotionTrigger
   | ICronTimeTickedScheduleTrigger
+  | IInviteeCreatedTrigger

@@ -22,6 +22,8 @@ import { GoCardlessIntegration } from '/infrastructure/integrations/bun/mocks/go
 import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import { PhantombusterIntegration } from '/infrastructure/integrations/bun/mocks/phantombuster/PhantombusterIntegration.mock'
+import { CalendlyIntegration } from '/infrastructure/integrations/bun/mocks/calendly/CalendlyIntegration.mock'
+import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -40,6 +42,7 @@ type IntegrationType =
   | 'GoogleMail'
   | 'GoCardless'
   | 'Phantombuster'
+  | 'Calendly'
 
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
@@ -67,7 +70,9 @@ type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
             ? GoCardlessIntegration
             : I extends 'Phantombuster'
               ? PhantombusterIntegration
-              : never
+              : I extends 'Calendly'
+                ? CalendlyIntegration
+                : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -292,6 +297,16 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
       }
       extendsConfig.integrations = {}
       if ('integrations' in this.options) {
+        if (this.options.integrations.includes('Calendly')) {
+          const config: CalendlyConfig = {
+            baseUrl: await getTestDbUrl('calendly'),
+            user: {
+              accessToken: 'test',
+            },
+          }
+          integrations.calendly = new CalendlyIntegration(config)
+          extendsConfig.integrations.calendly = config
+        }
         if (this.options.integrations.includes('Notion')) {
           const config: NotionConfig = {
             token: await getTestDbUrl('notion'),
