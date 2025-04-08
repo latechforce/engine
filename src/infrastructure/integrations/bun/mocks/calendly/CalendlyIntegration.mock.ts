@@ -3,6 +3,9 @@ import type {
   CalendlyUser,
   CreateWebhookSubscriptionParams,
   CreateWebhookSubscriptionResponse,
+  DeleteWebhookSubscriptionParams,
+  GetWebhookSubscriptionParams,
+  GetWebhookSubscriptionResponse,
   ListWebhookSubscriptionsParams,
   ListWebhookSubscriptionsResponse,
   WebhookSubscriptionItem,
@@ -13,14 +16,46 @@ import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfi
 
 export class CalendlyIntegration implements ICalendlyIntegration {
   private db: Database
+  private userId: string = 'https://api.calendly.com/users/123'
 
   constructor(private _config?: CalendlyConfig) {
     this.db = new Database(':memory:')
-    this.db.run(`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)`)
-    const userId = this._config?.user.accessToken ?? ''
+    this.db.run(`
+      CREATE TABLE IF NOT EXISTS users (
+        uri TEXT PRIMARY KEY,
+        name TEXT,
+        email TEXT,
+        scheduling_url TEXT,
+        timezone TEXT,
+        avatar_url TEXT,
+        created_at TEXT,
+        updated_at TEXT,
+        current_organization TEXT,
+        slug TEXT
+      )
+    `)
 
     // TODO: remove this line to be configured in the test, not in the code
-    this.db.run(`INSERT INTO users (id) VALUES (?)`, [userId])
+    this.db.run(
+      `
+      INSERT INTO users (
+        uri, name, email, scheduling_url, timezone, avatar_url, 
+        created_at, updated_at, current_organization, slug
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+      [
+        this.userId,
+        'John Doe',
+        'john@example.com',
+        'https://calendly.com/johndoe',
+        'America/New_York',
+        'https://example.com/avatar.jpg',
+        '2023-01-01T00:00:00Z',
+        '2023-01-01T00:00:00Z',
+        'https://api.calendly.com/organizations/ABCDEF',
+        'johndoe',
+      ]
+    )
 
     // Table pour stocker les webhooks
     this.db.run(`
@@ -118,8 +153,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     const user = this.db
-      .query<CalendlyConfig, string>('SELECT * FROM users WHERE id = ?')
-      .get(this._config?.user.accessToken ?? '')
+      .query<CalendlyConfig, string>('SELECT * FROM users WHERE uri = ?')
+      .get(this.userId)
     if (!user) {
       return { error: { status: 404, message: 'User not found' } }
     }
@@ -191,10 +226,47 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     }
   }
 
+  getWebhookSubscription = async (
+    params: GetWebhookSubscriptionParams
+  ): Promise<IntegrationResponse<GetWebhookSubscriptionResponse>> => {
+    const result = this.db
+      .query<WebhookSubscriptionItem, string>('SELECT * FROM WebhookSubscriptions WHERE uri = ?')
+      .get(params.webhook_uri)
+
+    if (!result) {
+      return { error: { status: 404, message: 'Webhook subscription not found' } }
+    }
+
+    return {
+      data: {
+        resource: {
+          uri: result.uri,
+          callback_url: result.callback_url,
+          created_at: result.created_at,
+          updated_at: result.updated_at,
+          retry_started_at: result.retry_started_at,
+          state: result.state,
+          events: result.events,
+          scope: result.scope,
+          organization: result.organization,
+          user: result.user || '',
+          creator: result.creator,
+        },
+      },
+    }
+  }
+
+  deleteWebhookSubscription = async (
+    params: DeleteWebhookSubscriptionParams
+  ): Promise<IntegrationResponse<void>> => {
+    this.db.run(`DELETE FROM WebhookSubscriptions WHERE uri = ?`, [params.webhook_uri])
+    return { data: undefined }
+  }
+
   currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
     const user = this.db
-      .query<CalendlyUser, string>('SELECT * FROM users WHERE id = ?')
-      .get(this._config?.user.accessToken ?? '')
+      .query<CalendlyUser, string>('SELECT * FROM users WHERE uri = ?')
+      .get(this.userId)
     if (!user) {
       return { error: { status: 404, message: 'User not found' } }
     }
