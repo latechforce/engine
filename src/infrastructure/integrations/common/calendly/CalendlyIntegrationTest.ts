@@ -15,13 +15,18 @@ export function testCalendlyIntegration(
   let webhookUri: string
 
   beforeAll(async () => {
-    const currentUser = await integration.currentUser()
+    const currentUserData = await integration.currentUser()
+    const currentUser = currentUserData.data
+
+    expect(currentUser).toBeDefined()
+    assertIsDefined<CalendlyUser>(currentUser)
+
     const result = await integration
       .listWebhookSubscriptions({
         scope: 'user',
-        organization: currentUser.data?.current_organization,
+        organization: currentUser.current_organization,
         count: 10,
-        user: currentUser.data?.uri,
+        user: currentUser.uri,
       })
       .catch(() => ({
         data: {
@@ -95,14 +100,18 @@ export function testCalendlyIntegration(
 
     it('should be able to list webhook subscriptions', async () => {
       // GIVEN
-      const currentUser = await integration.currentUser()
+      const currentUserData = await integration.currentUser()
+      const currentUser = currentUserData.data
+
+      expect(currentUser).toBeDefined()
+      assertIsDefined<CalendlyUser>(currentUser)
 
       // WHEN
       const result = await integration.listWebhookSubscriptions({
         scope: 'user',
-        organization: currentUser.data?.current_organization,
+        organization: currentUser.current_organization,
         count: 10,
-        user: currentUser.data?.uri,
+        user: currentUser.uri,
       })
 
       // THEN
