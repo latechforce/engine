@@ -1,3 +1,24 @@
+# [0.41.0](https://github.com/latechforce/engine/compare/v0.40.0...v0.41.0) (2025-04-08)
+
+
+### Bug Fixes
+
+* **Calendly:** add green tests ([98c4360](https://github.com/latechforce/engine/commit/98c4360162d7ef752e673e569432efcb4fe61ae1))
+* lint ([d3b0196](https://github.com/latechforce/engine/commit/d3b019643d8ee880e0a4569d942fda0300494d4a))
+* update .env.example ([4edcf31](https://github.com/latechforce/engine/commit/4edcf31030c1d3e93951f9db25a1be39f2c777b1))
+* **YouCanBookMe:** add green test: should update a profile ([7b7b080](https://github.com/latechforce/engine/commit/7b7b0805f4558c59b0a7b02a4b37e0d3acfbdbfb))
+
+
+### Features
+
+* **calendly:** add api baseUrl as integration config ([6827dd7](https://github.com/latechforce/engine/commit/6827dd71ac7a1464fc88d055a63fa69f7ed355af))
+* **calendly:** add api baseUrl as integration configuration ([778b879](https://github.com/latechforce/engine/commit/778b8794ea6392bdd025c0b1052815cccb04dc6a))
+* **youcanbookme:** add basic integration ([181bb29](https://github.com/latechforce/engine/commit/181bb29c86121833c8c57ddbfdbaf2e628fe99b3))
+* **youcanbookme:** add get profile method ([30eb060](https://github.com/latechforce/engine/commit/30eb060181ef6f11bc500fde09eecc8385d210b8))
+* **youcanbookme:** add infrastructure integration ([bc8d1a9](https://github.com/latechforce/engine/commit/bc8d1a96fc2c689fa55bbe52dcb32bd50ad32b45))
+* **youcanbookme:** add integration ([ae67da5](https://github.com/latechforce/engine/commit/ae67da595c279b4cb7811ba8ffb40a3695327f91))
+* **youcanbookme:** add update partial profile method ([e128a59](https://github.com/latechforce/engine/commit/e128a59c58cef35e87295833419a94716c656f6f))
+
 # [0.40.0](https://github.com/latechforce/engine/compare/v0.39.35...v0.40.0) (2025-04-08)
 
 ### Features
