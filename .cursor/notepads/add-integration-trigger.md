@@ -198,10 +198,6 @@ mock.request(({ app, drivers, integrations }) => {
       // GIVEN
       const config = {
         ...getAutomationConfig('NewIntegrationNewEvent'),
-        server: {
-          baseUrl: 'http://localhost:3001',
-          port: 3001,
-        },
       }
       await app.start(config)
 
