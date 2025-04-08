@@ -1,5 +1,5 @@
 import { BaseSpi } from './base'
-import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe'
+import type { IntegrationResponse } from '/domain/integrations/base'
 import type { IYouCanBookMeSpi } from '/domain/integrations/YouCanBookMe/IYouCanBookMeSpi'
 import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 
@@ -11,6 +11,10 @@ export class YouCanBookMeSpi
 {
   constructor(integration: IYouCanBookMeIntegration) {
     super(integration)
+  }
+
+  currentProfile = async (): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
+    return this._integration.currentProfile()
   }
 
   getProfile = async (profileId: string) => {

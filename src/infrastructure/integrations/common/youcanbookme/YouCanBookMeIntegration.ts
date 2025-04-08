@@ -44,6 +44,7 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
     } catch (error) {
       return this._responseError(error)
     }
+    return undefined
   }
 
   getProfile = async (profileId: string): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
@@ -68,5 +69,9 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
     } catch (error) {
       return this._responseError(error)
     }
+  }
+
+  currentProfile = async (): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
+    return await this.getProfile(this._userId)
   }
 }

@@ -32,6 +32,7 @@ import type { Components } from '/domain/components'
 import { SystemMapper } from './Services/SystemMapper'
 import { CalendlyMapper } from './Integration/CalendlyMapper'
 import type { ConfigSchema } from '../schemas/ConfigSchema'
+import { YouCanBookMeMapper } from './Integration/YouCanBookMeMapper'
 
 export class AppMapper {
   static toEntity = (
@@ -91,6 +92,10 @@ export class AppMapper {
     const airtable = AirtableMapper.toIntegration(integrations, schema.integrations?.airtable)
     const pappers = PappersMapper.toIntegration(integrations, schema.integrations?.pappers)
     const qonto = QontoMapper.toIntegration(integrations, schema.integrations?.qonto)
+    const youCanBookMe = YouCanBookMeMapper.toIntegration(
+      integrations,
+      config.integrations?.youCanBookMe
+    )
     const phantombuster = PhantombusterMapper.toIntegration(
       integrations,
       schema.integrations?.phantombuster
@@ -131,7 +136,7 @@ export class AppMapper {
         system,
       },
       { tables },
-      { notion, pappers, qonto, googleMail, gocardless, calendly }
+      { notion, pappers, qonto, googleMail, gocardless, calendly, youCanBookMe }
     )
     const forms = FormMapper.toManyEntities(
       schema.forms,
