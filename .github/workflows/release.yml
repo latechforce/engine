@@ -123,6 +123,11 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+      - name: Fetch and merge latest changes
+        run: |
+          git fetch origin main
+          git merge origin/main --no-edit
+
       - name: Commit and push if changed
         run: |
           git add .
