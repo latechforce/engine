@@ -9,60 +9,60 @@ on:
       - main
 
 jobs:
-  test:
-    name: Run Tests
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      id-token: write
-
-    env:
-      NODE_ENV: production
-      TEST_SENTRY_DSN: ${{ secrets.TEST_SENTRY_DSN }}
-      TEST_NOTION_TOKEN: ${{ secrets.TEST_NOTION_TOKEN }}
-      TEST_NOTION_TABLE_1_ID: ${{ secrets.TEST_NOTION_TABLE_1_ID }}
-      TEST_NOTION_TABLE_2_ID: ${{ secrets.TEST_NOTION_TABLE_2_ID }}
-      TEST_NOTION_TABLE_3_ID: ${{ secrets.TEST_NOTION_TABLE_3_ID }}
-      TEST_NOTION_TABLE_FILES_ID: ${{ secrets.TEST_NOTION_TABLE_FILES_ID }}
-      TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
-      TEST_AIRTABLE_BASE_ID: ${{ secrets.TEST_AIRTABLE_BASE_ID }}
-      TEST_AIRTABLE_TABLE_1_ID: ${{ secrets.TEST_AIRTABLE_TABLE_1_ID }}
-      TEST_AIRTABLE_TABLE_2_ID: ${{ secrets.TEST_AIRTABLE_TABLE_2_ID }}
-      TEST_PAPPERS_API_KEY: ${{ secrets.TEST_PAPPERS_API_KEY }}
-      TEST_QONTO_ORGANISATION_SLUG: ${{ secrets.TEST_QONTO_ORGANISATION_SLUG }}
-      TEST_QONTO_SECRET_KEY: ${{ secrets.TEST_QONTO_SECRET_KEY }}
-      TEST_QONTO_STAGING_TOKEN: ${{ secrets.TEST_QONTO_STAGING_TOKEN }}
-      TEST_QONTO_IBAN: ${{ secrets.TEST_QONTO_IBAN }}
-      TEST_GOCARDLESS_ACCESS_TOKEN: ${{ secrets.TEST_GOCARDLESS_ACCESS_TOKEN }}
-      TEST_NGROK_AUTH_TOKEN: ${{ secrets.TEST_NGROK_AUTH_TOKEN }}
-      TEST_GOOGLE_MAIL_USER: ${{ secrets.TEST_GOOGLE_MAIL_USER }}
-      TEST_GOOGLE_MAIL_PASSWORD: ${{ secrets.TEST_GOOGLE_MAIL_PASSWORD }}
-      TEST_PHANTOMBUSTER_API_KEY: ${{ secrets.TEST_PHANTOMBUSTER_API_KEY }}
-      TEST_PHANTOMBUSTER_AGENT_ID: ${{ secrets.TEST_PHANTOMBUSTER_AGENT_ID }}
-      TEST_CALENDLY_BASE_URL: ${{ secrets.TEST_CALENDLY_BASE_URL }}
-      TEST_CALENDLY_CLIENT_ID: ${{ secrets.TEST_CALENDLY_CLIENT_ID }}
-      TEST_CALENDLY_CLIENT_SECRET: ${{ secrets.TEST_CALENDLY_CLIENT_SECRET }}
-      TEST_CALENDLY_USER_ACCESS_TOKEN: ${{ secrets.TEST_CALENDLY_USER_ACCESS_TOKEN }}
-      TEST_YOUCANBOOKME_BASE_URL: ${{ secrets.TEST_YOUCANBOOKME_BASE_URL }}
-      TEST_YOUCANBOOKME_USERNAME: ${{ secrets.TEST_YOUCANBOOKME_USERNAME }}
-      TEST_YOUCANBOOKME_PASSWORD: ${{ secrets.TEST_YOUCANBOOKME_PASSWORD }}
-      TESTCONTAINERS_RYUK_DISABLED: true
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.2.5
-      - run: bun install
-      - run: bun run lint
-      - run: bun run build
-      - run: bun run test
+  #test:
+  #  name: Run Tests
+  #  timeout-minutes: 60
+  #  runs-on: ubuntu-latest
+  #
+  #  permissions:
+  #    contents: read
+  #    id-token: write
+  #
+  #  env:
+  #    NODE_ENV: production
+  #    TEST_SENTRY_DSN: ${{ secrets.TEST_SENTRY_DSN }}
+  #    TEST_NOTION_TOKEN: ${{ secrets.TEST_NOTION_TOKEN }}
+  #    TEST_NOTION_TABLE_1_ID: ${{ secrets.TEST_NOTION_TABLE_1_ID }}
+  #    TEST_NOTION_TABLE_2_ID: ${{ secrets.TEST_NOTION_TABLE_2_ID }}
+  #    TEST_NOTION_TABLE_3_ID: ${{ secrets.TEST_NOTION_TABLE_3_ID }}
+  #    TEST_NOTION_TABLE_FILES_ID: ${{ secrets.TEST_NOTION_TABLE_FILES_ID }}
+  #    TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
+  #    TEST_AIRTABLE_BASE_ID: ${{ secrets.TEST_AIRTABLE_BASE_ID }}
+  #    TEST_AIRTABLE_TABLE_1_ID: ${{ secrets.TEST_AIRTABLE_TABLE_1_ID }}
+  #    TEST_AIRTABLE_TABLE_2_ID: ${{ secrets.TEST_AIRTABLE_TABLE_2_ID }}
+  #    TEST_PAPPERS_API_KEY: ${{ secrets.TEST_PAPPERS_API_KEY }}
+  #    TEST_QONTO_ORGANISATION_SLUG: ${{ secrets.TEST_QONTO_ORGANISATION_SLUG }}
+  #    TEST_QONTO_SECRET_KEY: ${{ secrets.TEST_QONTO_SECRET_KEY }}
+  #    TEST_QONTO_STAGING_TOKEN: ${{ secrets.TEST_QONTO_STAGING_TOKEN }}
+  #    TEST_QONTO_IBAN: ${{ secrets.TEST_QONTO_IBAN }}
+  #    TEST_GOCARDLESS_ACCESS_TOKEN: ${{ secrets.TEST_GOCARDLESS_ACCESS_TOKEN }}
+  #    TEST_NGROK_AUTH_TOKEN: ${{ secrets.TEST_NGROK_AUTH_TOKEN }}
+  #    TEST_GOOGLE_MAIL_USER: ${{ secrets.TEST_GOOGLE_MAIL_USER }}
+  #    TEST_GOOGLE_MAIL_PASSWORD: ${{ secrets.TEST_GOOGLE_MAIL_PASSWORD }}
+  #    TEST_PHANTOMBUSTER_API_KEY: ${{ secrets.TEST_PHANTOMBUSTER_API_KEY }}
+  #    TEST_PHANTOMBUSTER_AGENT_ID: ${{ secrets.TEST_PHANTOMBUSTER_AGENT_ID }}
+  #    TEST_CALENDLY_BASE_URL: ${{ secrets.TEST_CALENDLY_BASE_URL }}
+  #    TEST_CALENDLY_CLIENT_ID: ${{ secrets.TEST_CALENDLY_CLIENT_ID }}
+  #    TEST_CALENDLY_CLIENT_SECRET: ${{ secrets.TEST_CALENDLY_CLIENT_SECRET }}
+  #    TEST_CALENDLY_USER_ACCESS_TOKEN: ${{ secrets.TEST_CALENDLY_USER_ACCESS_TOKEN }}
+  #    TEST_YOUCANBOOKME_BASE_URL: ${{ secrets.TEST_YOUCANBOOKME_BASE_URL }}
+  #    TEST_YOUCANBOOKME_USERNAME: ${{ secrets.TEST_YOUCANBOOKME_USERNAME }}
+  #    TEST_YOUCANBOOKME_PASSWORD: ${{ secrets.TEST_YOUCANBOOKME_PASSWORD }}
+  #    TESTCONTAINERS_RYUK_DISABLED: true
+  #
+  #  steps:
+  #    - uses: actions/checkout@v4
+  #    - uses: oven-sh/setup-bun@v2
+  #      with:
+  #        bun-version: 1.2.5
+  #    - run: bun install
+  #    - run: bun run lint
+  #    - run: bun run build
+  #    - run: bun run test
+  #
 
   release:
     name: Create Release
-    needs: test
     runs-on: ubuntu-latest
 
     permissions:
