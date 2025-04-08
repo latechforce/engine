@@ -71,6 +71,8 @@ jobs:
 
     env:
       NODE_ENV: production
+      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
       - uses: actions/checkout@v4
@@ -80,9 +82,6 @@ jobs:
       - run: bun install
       - run: bun run build
       - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: bunx semantic-release
 
   build-docs:
