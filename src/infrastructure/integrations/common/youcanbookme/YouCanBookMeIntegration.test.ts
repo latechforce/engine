@@ -6,6 +6,7 @@ import BunTester from 'bun:test'
 const { TEST_YOUCANBOOKME_BASE_URL, TEST_YOUCANBOOKME_USERNAME, TEST_YOUCANBOOKME_PASSWORD } = env
 
 export const integration = new YouCanBookMeIntegration({
+  name: 'test',
   baseUrl: TEST_YOUCANBOOKME_BASE_URL,
   user: {
     username: TEST_YOUCANBOOKME_USERNAME,

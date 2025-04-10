@@ -3,7 +3,7 @@ import type {
   GoogleMailConfig,
   GoogleMailEmailOptions,
   GoogleMailEmailResponse,
-} from '/domain/integrations/Google/GoogleMail'
+} from '../../../../../domain/integrations/Google/Mail/GoogleMail'
 import type { IGoogleMailIntegration } from '/adapter/spi/integrations/GoogleMailSpi'
 
 export class GoogleMailIntegration implements IGoogleMailIntegration {

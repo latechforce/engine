@@ -7,8 +7,8 @@ import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouC
 export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   private db: Database
 
-  constructor(private _config?: YouCanBookMeConfig) {
-    this.db = new Database(_config?.baseUrl ?? ':memory:')
+  constructor(public config: YouCanBookMeConfig) {
+    this.db = new Database(config.baseUrl ?? ':memory:')
     this.db.run(`CREATE TABLE IF NOT EXISTS profiles (
       id TEXT PRIMARY KEY,
       createdBy TEXT,
@@ -34,7 +34,7 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     const profile = this.db
       .query<YouCanBookMeConfig, string>('SELECT * FROM profiles WHERE id = ?')
-      .get(this._config?.user.username ?? '')
+      .get(this.config.user.username)
     if (!profile) {
       return { error: { status: 404, message: 'Profile not found' } }
     }

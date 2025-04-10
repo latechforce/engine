@@ -1,21 +1,5 @@
-export type ConvertToAirtableTableRecordFields<T> = {
-  [K in keyof T]: AirtableTableRecordFieldValue
-}
-
-export interface AirtableTableRecordFields {
-  [key: string]: AirtableTableRecordFieldValue
-}
-
-export type AirtableTableRecordFieldFile = { name: string; url: string }
-
-export type AirtableTableRecordFieldValue =
-  | string
-  | number
-  | boolean
-  | AirtableTableRecordFieldValue[]
-  | AirtableTableRecordFieldFile[]
-  | null
-  | undefined
+import type { AirtableTableRecordFields } from './AirtableTypes'
+import type { AirtableTableRecordFieldFile, AirtableTableRecordFieldValue } from './AirtableTypes'
 
 export class AirtableTableRecord<T extends AirtableTableRecordFields = AirtableTableRecordFields> {
   constructor(

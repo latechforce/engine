@@ -14,11 +14,11 @@ export function testPhantombusterIntegration(
       const agentId = TEST_PHANTOMBUSTER_AGENT_ID
 
       // WHEN
-      const output = await integration.fetchAgentOutput(agentId)
+      const result = await integration.fetchAgentOutput(agentId)
 
       // THEN
-      expect(output.containerId).toBeDefined()
-      expect(output.status).toBe('finished')
+      expect(result.data?.containerId).toBeDefined()
+      expect(result.data?.status).toBe('finished')
     })
 
     it('should handle non-existent agent', async () => {

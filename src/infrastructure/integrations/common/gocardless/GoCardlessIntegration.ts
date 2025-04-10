@@ -9,15 +9,29 @@ import type {
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
 export class GoCardlessIntegration implements IGoCardlessIntegration {
-  private _instance?: AxiosInstance
+  private _instance: AxiosInstance
 
-  constructor(private _config?: GoCardlessConfig) {}
-
-  getConfig = (): GoCardlessConfig => {
-    if (!this._config) {
-      throw new Error('GoCardless config not set')
+  constructor(public config: GoCardlessConfig) {
+    const headers = {
+      Authorization: `Bearer ${config.accessToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'GoCardless-Version': '2015-07-06',
     }
-    return this._config
+    switch (config.environment) {
+      case 'sandbox':
+        this._instance = axios.create({
+          baseURL: 'https://api-sandbox.gocardless.com/',
+          headers,
+        })
+        break
+      case 'production':
+        this._instance = axios.create({
+          baseURL: 'https://api.gocardless.com/',
+          headers,
+        })
+        break
+    }
   }
 
   createPayment = async (payment: GoCardlessCreatePayment): Promise<GoCardlessPayment> => {

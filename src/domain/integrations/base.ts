@@ -1,4 +1,12 @@
-export interface BaseSpi {
+import { ConfigError, type ConfigErrorEntity } from '../entities/Error/Config'
+
+export type BaseConfig = {
+  name: string
+  baseUrl?: string
+}
+
+export interface BaseSpi<T extends BaseConfig> {
+  config: T
   checkConfiguration: () => Promise<IntegrationResponseError | undefined>
 }
 
@@ -17,19 +25,43 @@ export interface IntegrationResponseError {
 
 export type IntegrationResponse<T> = IntegrationResponseData<T> | IntegrationResponseError
 
-export class Integration<T extends BaseSpi> {
-  private _isConfigurationChecked = false
+export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
+  private _isAccountValidated: { [key: string]: boolean } = {}
 
-  constructor(protected _spi: T) {}
+  constructor(private _spis: T[]) {}
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
-    if (this._isConfigurationChecked) return
-    const response = await this._spi.checkConfiguration()
-    this._isConfigurationChecked = true
-    return response
+  protected _spi = (account: string): T => {
+    const spi = this._spis.find((spi) => spi.config.name === account)
+    if (!spi) {
+      throw new Error(`Account not found for name: ${account}`)
+    }
+    return spi
   }
 
-  protected _throwError = (method: string, error: IntegrationResponseError['error']) => {
+  protected _config = (account: string): C => {
+    return this._spi(account).config
+  }
+
+  validate = async (params: {
+    account: string
+    entity: ConfigErrorEntity
+    name: string
+  }): Promise<ConfigError[]> => {
+    const { account, entity, name } = params
+    if (this._isAccountValidated[account]) return []
+    const spi = this._spis.find((spi) => spi.config.name === account)
+    if (!spi) {
+      return [new ConfigError({ entity, name, message: 'Account not found' })]
+    }
+    const response = await spi.checkConfiguration()
+    if (response?.error) {
+      return [new ConfigError({ entity, name, message: response.error.message || 'Unknown error' })]
+    }
+    this._isAccountValidated[account] = true
+    return []
+  }
+
+  static throwError = (method: string, error: IntegrationResponseError['error']) => {
     throw new Error(
       `${error.status} error from ${this.constructor.name} ${method} API: ${error.message}`
     )

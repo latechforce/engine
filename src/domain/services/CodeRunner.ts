@@ -1,20 +1,20 @@
 import type { Table } from '/domain/entities/Table'
 import type { FilterConfig } from '/domain/entities/Filter'
-import type { Notion, NotionCodeRunnerIntegration } from '/domain/integrations/Notion'
+import type {
+  Notion,
+  NotionCodeRunner,
+  NotionCodeRunnerTable,
+  NotionTablePageProperties,
+} from '/domain/integrations/Notion'
 import type { Record, UpdateRecordFields } from '/domain/entities/Record'
 import { Logger } from '/domain/services/Logger'
 import type { RecordFields } from '/domain/entities/Record'
-import type { Airtable, AirtableCodeRunnerIntegration } from '/domain/integrations/Airtable'
+import type { Airtable, AirtableCodeRunner } from '/domain/integrations/Airtable'
 import type { Fetcher } from './Fetcher'
-import type { Qonto, QontoCodeRunnerIntegration } from '../integrations/Qonto'
-import type { GoCardless, GoCardlessCodeRunnerIntegration } from '../integrations/GoCardless'
-import type {
-  Phantombuster,
-  PhantombusterCodeRunnerIntegration,
-} from '../integrations/Phantombuster'
-import type { Pappers, PappersCodeRunnerIntegration } from '../integrations/Pappers'
-import type { NotionCodeRunnerIntegrationTable } from '../integrations/Notion/NotionTable'
-import type { NotionTablePageProperties } from '../integrations/Notion/NotionTablePage'
+import type { Qonto, QontoCodeRunner } from '../integrations/Qonto'
+import type { GoCardless, GoCardlessCodeRunner } from '../integrations/GoCardless'
+import type { Phantombuster, PhantombusterCodeRunner } from '../integrations/Phantombuster'
+import type { Pappers, PappersCodeRunner } from '../integrations/Pappers'
 import type { File } from '../entities/File'
 
 export interface ICodeRunnerSpi {
@@ -61,17 +61,17 @@ export interface CodeRunnerContextServices {
   fetcher: CodeRunnerContextServicesFetcher
 }
 
-export type CodeRunnerContextIntegrationsNotion = NotionCodeRunnerIntegration
+export type CodeRunnerContextIntegrationsNotion = NotionCodeRunner
 export type CodeRunnerContextIntegrationsNotionTable<T extends NotionTablePageProperties> =
-  NotionCodeRunnerIntegrationTable<T>
+  NotionCodeRunnerTable<T>
 
 export interface CodeRunnerContextIntegrations {
-  notion: NotionCodeRunnerIntegration
-  airtable: AirtableCodeRunnerIntegration
-  qonto: QontoCodeRunnerIntegration
-  gocardless: GoCardlessCodeRunnerIntegration
-  pappers: PappersCodeRunnerIntegration
-  phantombuster: PhantombusterCodeRunnerIntegration
+  notion: NotionCodeRunner
+  airtable: AirtableCodeRunner
+  qonto: QontoCodeRunner
+  gocardless: GoCardlessCodeRunner
+  pappers: PappersCodeRunner
+  phantombuster: PhantombusterCodeRunner
 }
 
 export interface CodeRunnerContextPackages {

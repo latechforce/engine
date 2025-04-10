@@ -3,10 +3,11 @@ import { QontoIntegration } from './QontoIntegration.mock'
 import BunTester from 'bun:test'
 
 const integration = new QontoIntegration({
-  environment: 'sandbox',
+  name: 'test',
+  baseUrl: ':memory:',
   stagingToken: 'test',
   organisationSlug: 'test',
-  secretKey: ':memory:',
+  secretKey: 'test',
 })
 
 await integration.createOrganization('test', 'test')

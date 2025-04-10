@@ -6,6 +6,7 @@ import BunTester from 'bun:test'
 const { TEST_PHANTOMBUSTER_API_KEY } = env
 
 export const integration = new PhantombusterIntegration({
+  name: 'test',
   apiKey: TEST_PHANTOMBUSTER_API_KEY,
 })
 

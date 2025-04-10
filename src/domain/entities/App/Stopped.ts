@@ -16,7 +16,20 @@ export class StoppedApp extends BaseApp {
     integrations: AppIntegrations
   ) {
     super(config, services, entities, integrations)
-    this._setStatus('stopped')
+  }
+
+  validate = async (): Promise<void> => {
+    const { tables, automations, buckets, forms } = this._entities
+    const errors: Promise<ConfigError[]>[] = []
+    errors.push(...tables.map((table) => table.validate()))
+    errors.push(...buckets.map((bucket) => bucket.validate()))
+    errors.push(...automations.map((automation) => automation.validate()))
+    errors.push(...forms.map((form) => form.validate()))
+    if (errors.length > 0) {
+      this.logger.error('❌ config schema is invalid', { errors })
+      throw new Error(JSON.stringify(errors, null, 2))
+    }
+    this.logger.debug('✅ config schema is valid')
   }
 
   init = async (): Promise<void> => {
@@ -32,17 +45,7 @@ export class StoppedApp extends BaseApp {
       if (forms.length > 0) await theme.init()
       await client.init()
     })
-  }
-
-  validateConfig = async (): Promise<ConfigError[]> => {
-    await this.init()
-    const { tables, automations, buckets, forms } = this._entities
-    const errors: Promise<ConfigError[]>[] = []
-    errors.push(...tables.map((table) => table.validateConfig()))
-    errors.push(...buckets.map((bucket) => bucket.validateConfig()))
-    errors.push(...automations.map((automation) => automation.validateConfig()))
-    errors.push(...forms.map((form) => form.validateConfig()))
-    return Promise.all(errors).then((errors) => errors.flat())
+    this.logger.debug('✅ app is initialized')
   }
 
   start = async ({ isTest = false } = {}): Promise<StartedApp> => {

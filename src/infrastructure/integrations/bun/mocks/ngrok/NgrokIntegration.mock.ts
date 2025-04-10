@@ -5,16 +5,16 @@ import { Database } from 'bun:sqlite'
 export class NgrokIntegration implements INgrokIntegration {
   private db: Database
 
-  constructor(private _config?: NgrokConfig) {
-    this.db = new Database('file::memory:?cache=shared')
+  constructor(public config: NgrokConfig) {
+    this.db = new Database(config.baseUrl ?? ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS Config (
         key TEXT PRIMARY KEY,
         value TEXT NOT NULL
       )
     `)
-    if (this._config) {
-      this.saveConfig(this._config)
+    if (this.config) {
+      this.saveConfig(this.config)
     }
   }
 

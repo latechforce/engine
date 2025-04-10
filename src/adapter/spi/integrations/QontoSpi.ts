@@ -4,10 +4,11 @@ import type {
 } from '/domain/integrations/Qonto/QontoTypes'
 import { BaseSpi } from './base'
 import type { IQontoSpi } from '/domain/integrations/Qonto/IQontoSpi'
+import type { QontoConfig } from '/domain/integrations/Qonto'
 
 export type IQontoIntegration = IQontoSpi
 
-export class QontoSpi extends BaseSpi<IQontoIntegration> implements IQontoSpi {
+export class QontoSpi extends BaseSpi<QontoConfig, IQontoIntegration> implements IQontoSpi {
   constructor(integration: IQontoIntegration) {
     super(integration)
   }

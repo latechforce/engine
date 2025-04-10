@@ -41,6 +41,14 @@ export class Automation {
     return this._config.name
   }
 
+  validate = async (): Promise<ConfigError[]> => {
+    const { trigger, actions } = this._entities
+    const errors: Promise<ConfigError[]>[] = []
+    errors.push(trigger.validate())
+    for (const action of actions) errors.push(action.validate())
+    return Promise.all(errors).then((errors) => errors.flat())
+  }
+
   init = async () => {
     const { trigger, actions } = this._entities
     const { logger } = this._services
@@ -48,14 +56,6 @@ export class Automation {
     await trigger.init(this.run)
     logger.debug(`initializing automation "${this.name}"`)
     for (const action of actions) await action.init()
-  }
-
-  validateConfig = async (): Promise<ConfigError[]> => {
-    const { trigger, actions } = this._entities
-    const errors: Promise<ConfigError[]>[] = []
-    errors.push(trigger.validateConfig())
-    for (const action of actions) errors.push(action.validateConfig())
-    return Promise.all(errors).then((errors) => errors.flat())
   }
 
   run = async (triggerData: object) => {

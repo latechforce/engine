@@ -1,22 +1,23 @@
+import { BaseSpi, type BaseIntegration } from './base'
 import {
   AirtableTableSpi,
   type IAirtableTableIntegration,
 } from '/adapter/spi/integrations/AirtableTableSpi'
 import type { IAirtableSpi, AirtableConfig } from '/domain/integrations/Airtable'
-import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
+import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTypes'
 
-export interface IAirtableIntegration {
-  getConfig: () => AirtableConfig
+export interface IAirtableIntegration extends BaseIntegration<AirtableConfig> {
   getTable: <T extends AirtableTableRecordFields>(
     id: string
   ) => Promise<IAirtableTableIntegration<T>>
 }
 
-export class AirtableSpi implements IAirtableSpi {
-  constructor(private _integration: IAirtableIntegration) {}
-
-  getConfig = () => {
-    return this._integration.getConfig()
+export class AirtableSpi
+  extends BaseSpi<AirtableConfig, IAirtableIntegration>
+  implements IAirtableSpi
+{
+  constructor(integration: IAirtableIntegration) {
+    super(integration)
   }
 
   getTable = async <T extends AirtableTableRecordFields>(id: string) => {

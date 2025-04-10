@@ -25,12 +25,12 @@ export function testAirtableTableIntegration(
   describe('insert', () => {
     it('should insert a record in a table', async () => {
       // WHEN
-      const record = await table1.insert({
+      const result = await table1.insert({
         name: nanoid(),
       })
 
       // THEN
-      expect(record.id).toBeDefined()
+      expect(result.data?.id).toBeDefined()
     })
 
     it('should throw an error if a field in not in the database schema', async () => {
@@ -52,10 +52,10 @@ export function testAirtableTableIntegration(
       const name = 'Hello World'
 
       // WHEN
-      const record = await table1.insert({ name })
+      const result = await table1.insert({ name })
 
       // THEN
-      expect(record.fields.name).toBe(name)
+      expect(result.data?.fields.name).toBe(name)
     })
 
     it('should insert a record in a table with a number field', async () => {
@@ -63,10 +63,10 @@ export function testAirtableTableIntegration(
       const number = 123
 
       // WHEN
-      const record = await table1.insert({ number })
+      const result = await table1.insert({ number })
 
       // THEN
-      expect(record.fields.number).toBe(number)
+      expect(result.data?.fields.number).toBe(number)
     })
 
     it('should insert a record in a table with a number field from a string', async () => {
@@ -74,18 +74,18 @@ export function testAirtableTableIntegration(
       const number = '123'
 
       // WHEN
-      const record = await table1.insert({ number })
+      const result = await table1.insert({ number })
 
       // THEN
-      expect(record.fields.number as unknown as number).toBe(123)
+      expect(result.data?.fields.number as unknown as number).toBe(123)
     })
 
     it('should insert a record in a table with an empty number field', async () => {
       // WHEN
-      const record = await table1.insert({ number: null })
+      const result = await table1.insert({ number: null })
 
       // THEN
-      expect(record.fields.number).toBeNull()
+      expect(result.data?.fields.number).toBeNull()
     })
 
     it('should insert a record in a table with a boolean field', async () => {
@@ -93,10 +93,10 @@ export function testAirtableTableIntegration(
       const boolean = true
 
       // WHEN
-      const record = await table1.insert({ boolean })
+      const result = await table1.insert({ boolean })
 
       // THEN
-      expect(record.fields.boolean).toBe(boolean)
+      expect(result.data?.fields.boolean).toBe(boolean)
     })
 
     it('should insert a record in a table with a boolean field from a string', async () => {
@@ -104,10 +104,10 @@ export function testAirtableTableIntegration(
       const boolean = 'false'
 
       // WHEN
-      const record = await table1.insert({ boolean })
+      const result = await table1.insert({ boolean })
 
       // THEN
-      expect(record.fields.boolean as unknown as boolean).toBe(false)
+      expect(result.data?.fields.boolean as unknown as boolean).toBe(false)
     })
 
     it('should insert a record in a table with a text field', async () => {
@@ -116,18 +116,18 @@ export function testAirtableTableIntegration(
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 
       // WHEN
-      const record = await table1.insert({ text })
+      const result = await table1.insert({ text })
 
       // THEN
-      expect(record.fields.text).toBe(text)
+      expect(result.data?.fields.text).toBe(text)
     })
 
     it('should insert a record in a table with an empty text field', async () => {
       // WHEN
-      const record = await table1.insert({ text: null })
+      const result = await table1.insert({ text: null })
 
       // THEN
-      expect(record.fields.text).toBeNull()
+      expect(result.data?.fields.text).toBeNull()
     })
 
     it('should insert a record in a table with an URL field', async () => {
@@ -135,18 +135,18 @@ export function testAirtableTableIntegration(
       const url = 'https://example.com'
 
       // WHEN
-      const record = await table1.insert({ url })
+      const result = await table1.insert({ url })
 
       // THEN
-      expect(record.fields.url).toBe(url)
+      expect(result.data?.fields.url).toBe(url)
     })
 
     it('should insert a record in a table with an empty URL field', async () => {
       // WHEN
-      const record = await table1.insert({ url: null })
+      const result = await table1.insert({ url: null })
 
       // THEN
-      expect(record.fields.url).toBeNull()
+      expect(result.data?.fields.url).toBeNull()
     })
 
     it('should insert a record in a table with an email field', async () => {
@@ -154,18 +154,18 @@ export function testAirtableTableIntegration(
       const email = 'test@test.com'
 
       // WHEN
-      const record = await table1.insert({ email })
+      const result = await table1.insert({ email })
 
       // THEN
-      expect(record.fields.email).toBe(email)
+      expect(result.data?.fields.email).toBe(email)
     })
 
     it('should insert a record in a table with an empty email field', async () => {
       // WHEN
-      const record = await table1.insert({ email: null })
+      const result = await table1.insert({ email: null })
 
       // THEN
-      expect(record.fields.email).toBeNull()
+      expect(result.data?.fields.email).toBeNull()
     })
 
     it('should insert a record in a table with an phone field', async () => {
@@ -173,18 +173,18 @@ export function testAirtableTableIntegration(
       const phone = '+33612345678'
 
       // WHEN
-      const record = await table1.insert({ phone })
+      const result = await table1.insert({ phone })
 
       // THEN
-      expect(record.fields.phone).toBe(phone)
+      expect(result.data?.fields.phone).toBe(phone)
     })
 
     it('should insert a record in a table with an empty phone field', async () => {
       // WHEN
-      const record = await table1.insert({ phone: null })
+      const result = await table1.insert({ phone: null })
 
       // THEN
-      expect(record.fields.phone).toBeNull()
+      expect(result.data?.fields.phone).toBeNull()
     })
 
     it('should insert a record in a table with a single_select field', async () => {
@@ -192,10 +192,10 @@ export function testAirtableTableIntegration(
       const single_select = '1'
 
       // WHEN
-      const record = await table1.insert({ single_select })
+      const result = await table1.insert({ single_select })
 
       // THEN
-      expect(record.fields.single_select).toBe(single_select)
+      expect(result.data?.fields.single_select).toBe(single_select)
     })
 
     it('should insert a record in a table with a multi_select field', async () => {
@@ -203,10 +203,10 @@ export function testAirtableTableIntegration(
       const multi_select = ['1', '2']
 
       // WHEN
-      const record = await table1.insert({ multi_select })
+      const result = await table1.insert({ multi_select })
 
       // THEN
-      expect(record.fields.multi_select).toStrictEqual(multi_select)
+      expect(result.data?.fields.multi_select).toStrictEqual(multi_select)
     })
 
     it('should insert a record in a table with a date field', async () => {
@@ -214,10 +214,10 @@ export function testAirtableTableIntegration(
       const date = new Date(2018, 8, 22, 15, 0, 0).toISOString()
 
       // WHEN
-      const record = await table1.insert({ date })
+      const result = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date).toBe(date)
+      expect(result.data?.fields.date).toBe(date)
     })
 
     it('should insert a record in a table with a date field from a date string', async () => {
@@ -225,10 +225,10 @@ export function testAirtableTableIntegration(
       const date = '2018-09-22'
 
       // WHEN
-      const record = await table1.insert({ date })
+      const result = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date).toBe('2018-09-22T00:00:00.000Z')
+      expect(result.data?.fields.date).toBe('2018-09-22T00:00:00.000Z')
     })
 
     it('should insert a record in a table with a date field from a date and time string', async () => {
@@ -236,10 +236,10 @@ export function testAirtableTableIntegration(
       const date = '2018-09-22T15:00:00'
 
       // WHEN
-      const record = await table1.insert({ date })
+      const result = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date).toBe('2018-09-22T15:00:00.000Z')
+      expect(result.data?.fields.date).toBe('2018-09-22T15:00:00.000Z')
     })
 
     it('should insert a record in a table with a date field from a date, time and milliseconds string without Z', async () => {
@@ -247,10 +247,10 @@ export function testAirtableTableIntegration(
       const date = '2018-09-22T15:00:00.000'
 
       // WHEN
-      const record = await table1.insert({ date })
+      const result = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date).toBe('2018-09-22T15:00:00.000Z')
+      expect(result.data?.fields.date).toBe('2018-09-22T15:00:00.000Z')
     })
 
     it('should insert a record in a table with a date field from a date, time and milliseconds string', async () => {
@@ -258,10 +258,10 @@ export function testAirtableTableIntegration(
       const date = '2018-09-22T15:00:00.000Z'
 
       // WHEN
-      const record = await table1.insert({ date })
+      const result = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date).toBe('2018-09-22T15:00:00.000Z')
+      expect(result.data?.fields.date).toBe('2018-09-22T15:00:00.000Z')
     })
 
     it('should insert a record in a table with a date field from a timestamp', async () => {
@@ -270,10 +270,10 @@ export function testAirtableTableIntegration(
       const timestamp = +date
 
       // WHEN
-      const record = await table1.insert({ date: timestamp })
+      const result = await table1.insert({ date: timestamp })
 
       // THEN
-      expect(String(record.fields.date)).toBe(date.toISOString())
+      expect(String(result.data?.fields.date)).toBe(date.toISOString())
     })
 
     it('should insert a record in a table with a date field and a null value', async () => {
@@ -281,10 +281,10 @@ export function testAirtableTableIntegration(
       const date = null
 
       // WHEN
-      const record = await table1.insert({ date })
+      const result = await table1.insert({ date })
 
       // THEN
-      expect(record.fields.date).toBeNull()
+      expect(result.data?.fields.date).toBeNull()
     })
   })
 
@@ -292,133 +292,143 @@ export function testAirtableTableIntegration(
     it('should retrieve a record in a table', async () => {
       // GIVEN
       const name = nanoid()
-      const { id } = await table1.insert({ name })
+      const { data: { id } = {} } = await table1.insert({ name })
+      if (!id) throw new Error('id is undefined')
 
       // WHEN
-      const record = await table1.retrieve(id)
+      const result = await table1.retrieve(id)
 
       // THEN
-      expect(record.fields.name).toBe(name)
+      expect(result.data?.fields.name).toBe(name)
     })
 
     it('should retrieve a record in a table with a created_time', async () => {
       // GIVEN
       const name = nanoid()
-      const { id } = await table1.insert({ name })
+      const { data: { id } = {} } = await table1.insert({ name })
+      if (!id) throw new Error('id is undefined')
 
       // WHEN
-      const record = await table1.retrieve(id)
+      const result = await table1.retrieve(id)
 
       // THEN
-      expect(record.created_time).toBeDefined()
+      expect(result.data?.created_time).toBeDefined()
     })
   })
 
   describe('update', () => {
     it('should update a record in a table with a title field', async () => {
       // GIVEN
-      const { id } = await table1.insert({ name: 'John' })
+      const { data: { id } = {} } = await table1.insert({ name: 'John' })
+      if (!id) throw new Error('id is undefined')
       const name = 'John Doe'
 
       // WHEN
-      const record = await table1.update(id, { name })
+      const result = await table1.update(id, { name })
 
       // THEN
-      expect(record.fields.name).toBe(name)
+      expect(result.data?.fields.name).toBe(name)
     })
 
     it('should update a record in a table with a number field', async () => {
       // GIVEN
-      const { id } = await table1.insert({ number: 456 })
+      const { data: { id } = {} } = await table1.insert({ number: 456 })
+      if (!id) throw new Error('id is undefined')
       const number = 123
 
       // WHEN
-      const record = await table1.update(id, { number })
+      const result = await table1.update(id, { number })
 
       // THEN
-      expect(record.fields.number).toBe(number)
+      expect(result.data?.fields.number).toBe(number)
     })
 
     it('should update a record in a table with a boolean field', async () => {
       // GIVEN
-      const { id } = await table1.insert({ boolean: false })
+      const { data: { id } = {} } = await table1.insert({ boolean: false })
+      if (!id) throw new Error('id is undefined')
       const boolean = true
 
       // WHEN
-      const record = await table1.update(id, { boolean })
+      const result = await table1.update(id, { boolean })
 
       // THEN
-      expect(record.fields.boolean).toBe(boolean)
+      expect(result.data?.fields.boolean).toBe(boolean)
     })
 
     it('should update a record in a table with a text field', async () => {
       // GIVEN
-      const { id } = await table1.insert({
+      const { data: { id } = {} } = await table1.insert({
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       })
+      if (!id) throw new Error('id is undefined')
       const text =
         'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
 
       // WHEN
-      const record = await table1.update(id, { text })
+      const result = await table1.update(id, { text })
 
       // THEN
-      expect(record.fields.text).toBe(text)
+      expect(result.data?.fields.text).toBe(text)
     })
 
     it('should update a record in a table with a single_select field', async () => {
       // GIVEN
-      const { id } = await table1.insert({ single_select: '1' })
+      const { data: { id } = {} } = await table1.insert({ single_select: '1' })
+      if (!id) throw new Error('id is undefined')
       const single_select = '2'
 
       // WHEN
-      const record = await table1.update(id, { single_select })
+      const result = await table1.update(id, { single_select })
 
       // THEN
-      expect(record.fields.single_select).toBe(single_select)
+      expect(result.data?.fields.single_select).toBe(single_select)
     })
 
     it('should update a record in a table with a multi_select field', async () => {
       // GIVEN
-      const { id } = await table1.insert({ multi_select: ['1', '2'] })
+      const { data: { id } = {} } = await table1.insert({ multi_select: ['1', '2'] })
+      if (!id) throw new Error('id is undefined')
       const multi_select = ['3', '4']
 
       // WHEN
-      const record = await table1.update(id, { multi_select })
+      const result = await table1.update(id, { multi_select })
 
       // THEN
-      expect(record.fields.multi_select).toStrictEqual(multi_select)
+      expect(result.data?.fields.multi_select).toStrictEqual(multi_select)
     })
 
     it('should update a record in a table with a date field', async () => {
       // GIVEN
-      const { id } = await table1.insert({ date: '2000-01-01T00:00:00' })
+      const { data: { id } = {} } = await table1.insert({ date: '2000-01-01T00:00:00' })
+      if (!id) throw new Error('id is undefined')
       const date = new Date(2018, 8, 22, 15, 0, 0).toISOString()
 
       // WHEN
-      const record = await table1.update(id, { date })
+      const result = await table1.update(id, { date })
 
       // THEN
-      expect(record.fields.date).toBe(date)
+      expect(result.data?.fields.date).toBe(date)
     })
 
     it('should update a record in a table with a date field and a null value', async () => {
       // GIVEN
-      const { id } = await table1.insert({ date: '2000-01-01T00:00:00' })
+      const { data: { id } = {} } = await table1.insert({ date: '2000-01-01T00:00:00' })
+      if (!id) throw new Error('id is undefined')
       const date = null
 
       // WHEN
-      const record = await table1.update(id, { date })
+      const result = await table1.update(id, { date })
 
       // THEN
-      expect(record.fields.date).toBeNull()
+      expect(result.data?.fields.date).toBeNull()
     })
   })
 
   describe('insertMany', () => {
     it('should insert many records in a table with a title field', async () => {
       // WHEN
-      const ids = await table1.insertMany([
+      const { data: records = [] } = await table1.insertMany([
         {
           name: nanoid(),
         },
@@ -431,14 +441,14 @@ export function testAirtableTableIntegration(
       ])
 
       // THEN
-      expect(ids).toHaveLength(3)
+      expect(records).toHaveLength(3)
     })
   })
 
   describe('updateMany', () => {
     it('should update many records in a table with a title field', async () => {
       // GIVEN
-      const recordInserted = await table1.insertMany([
+      const { data: recordInserted = [] } = await table1.insertMany([
         {
           name: '1',
         },
@@ -451,7 +461,7 @@ export function testAirtableTableIntegration(
       ])
 
       // WHEN
-      const recordsUpdated = await table1.updateMany(
+      const { data: recordsUpdated = [] } = await table1.updateMany(
         recordInserted.map((record) => ({ id: record.id, fields: { name: 'John Doe' } }))
       )
 
@@ -468,13 +478,15 @@ export function testAirtableTableIntegration(
     it('should delete a record in a table', async () => {
       // GIVEN
       const name = nanoid()
-      const { id } = await table1.insert({ name })
+      const { data: { id } = {} } = await table1.insert({ name })
+      if (!id) throw new Error('id is undefined')
 
       // WHEN
       await table1.delete(id)
 
       // THEN
-      expect(table1.retrieve(id)).rejects.toThrow()
+      const result = await table1.retrieve(id)
+      expect(result.error).toBeDefined()
     })
   })
 
@@ -495,7 +507,7 @@ export function testAirtableTableIntegration(
       await table1.insertMany(values)
 
       // WHEN
-      const records = await table1.list({
+      const { data: records = [] } = await table1.list({
         or: values.map((value) => ({
           field: 'name',
           operator: 'Is',
@@ -510,14 +522,15 @@ export function testAirtableTableIntegration(
     it('should throw an error if filter field does not exist', async () => {
       // GIVEN
       const name = nanoid()
-      const record = await table1.insert({ name })
+      const { data: { id } = {} } = await table1.insert({ name })
+      if (!id) throw new Error('id is undefined')
 
       // WHEN
       const call = async () =>
         table1.list({
           field: 'invalid',
           operator: 'Is',
-          value: record.id,
+          value: id,
         })
 
       // THEN
@@ -527,13 +540,14 @@ export function testAirtableTableIntegration(
     it('should list records in a table with a Is filter', async () => {
       // GIVEN
       const name = nanoid()
-      const record = await table1.insert({ name })
+      const { data: { id } = {} } = await table1.insert({ name })
+      if (!id) throw new Error('id is undefined')
 
       // WHEN
-      const records = await table1.list({
+      const { data: records = [] } = await table1.list({
         field: 'id',
         operator: 'Is',
-        value: record.id,
+        value: id,
       })
 
       // THEN
@@ -542,27 +556,30 @@ export function testAirtableTableIntegration(
 
     it('should list records in a table with multiple Is filters', async () => {
       // GIVEN
-      const record1 = await table1.insert({ name: nanoid() })
-      const record2 = await table1.insert({ name: nanoid() })
-      const record3 = await table1.insert({ name: nanoid() })
+      const { data: { id: id1 } = {} } = await table1.insert({ name: nanoid() })
+      if (!id1) throw new Error('id is undefined')
+      const { data: { id: id2 } = {} } = await table1.insert({ name: nanoid() })
+      if (!id2) throw new Error('id is undefined')
+      const { data: { id: id3 } = {} } = await table1.insert({ name: nanoid() })
+      if (!id3) throw new Error('id is undefined')
 
       // WHEN
-      const records = await table1.list({
+      const { data: records = [] } = await table1.list({
         or: [
           {
             field: 'id',
             operator: 'Is',
-            value: record1.id,
+            value: id1,
           },
           {
             field: 'id',
             operator: 'Is',
-            value: record2.id,
+            value: id2,
           },
           {
             field: 'id',
             operator: 'Is',
-            value: record3.id,
+            value: id3,
           },
         ],
       })
@@ -573,16 +590,17 @@ export function testAirtableTableIntegration(
 
     it('should list records in a table with a IsAfter filter', async () => {
       // GIVEN
-      const record = await table1.insert({ date: new Date().toISOString() })
+      const { data: { id } = {} } = await table1.insert({ date: new Date().toISOString() })
+      if (!id) throw new Error('id is undefined')
       const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
 
       // WHEN
-      const records = await table1.list({
+      const { data: records = [] } = await table1.list({
         and: [
           {
             field: 'id',
             operator: 'Is',
-            value: record.id,
+            value: id,
           },
           {
             field: 'date',
@@ -598,16 +616,17 @@ export function testAirtableTableIntegration(
 
     it('should not list records in a table with a IsAfter filter', async () => {
       // GIVEN
-      const record = await table1.insert({ date: new Date().toISOString() })
+      const { data: { id } = {} } = await table1.insert({ date: new Date().toISOString() })
+      if (!id) throw new Error('id is undefined')
       const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
 
       // WHEN
-      const records = await table1.list({
+      const { data: records = [] } = await table1.list({
         and: [
           {
             field: 'id',
             operator: 'Is',
-            value: record.id,
+            value: id,
           },
           {
             field: 'date',
@@ -623,16 +642,17 @@ export function testAirtableTableIntegration(
 
     it('should list records in a table with a IsBefore filter', async () => {
       // GIVEN
-      const record = await table1.insert({ date: new Date().toISOString() })
+      const { data: { id } = {} } = await table1.insert({ date: new Date().toISOString() })
+      if (!id) throw new Error('id is undefined')
       const tomorrow = format(addDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
 
       // WHEN
-      const records = await table1.list({
+      const { data: records = [] } = await table1.list({
         and: [
           {
             field: 'id',
             operator: 'Is',
-            value: record.id,
+            value: id,
           },
           {
             field: 'date',
@@ -648,16 +668,17 @@ export function testAirtableTableIntegration(
 
     it('should not list records in a table with a IsBefore filter', async () => {
       // GIVEN
-      const record = await table1.insert({ date: new Date().toISOString() })
+      const { data: { id } = {} } = await table1.insert({ date: new Date().toISOString() })
+      if (!id) throw new Error('id is undefined')
       const yesterday = format(subDays(new Date(), 1), 'yyyy-MM-dd') + 'T23:59:59'
 
       // WHEN
-      const records = await table1.list({
+      const { data: records = [] } = await table1.list({
         and: [
           {
             field: 'id',
             operator: 'Is',
-            value: record.id,
+            value: id,
           },
           {
             field: 'date',
@@ -680,7 +701,7 @@ export function testAirtableTableIntegration(
       }))
 
       // WHEN
-      const records = await table1.insertMany(values)
+      const { data: records = [] } = await table1.insertMany(values)
 
       // THEN
       expect(records).toHaveLength(100)

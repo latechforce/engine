@@ -36,9 +36,12 @@ mock.request(({ app, drivers }) => {
       await app.start({
         ...config,
         integrations: {
-          notion: {
-            token: ':memory:',
-          },
+          notion: [
+            {
+              name: 'notion_files',
+              token: ':memory:',
+            },
+          ],
         },
       })
 

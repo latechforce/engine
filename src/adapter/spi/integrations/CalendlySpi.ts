@@ -6,10 +6,14 @@ import type {
   GetWebhookSubscriptionParams,
   DeleteWebhookSubscriptionParams,
 } from '/domain/integrations/Calendly/CalendlyTypes'
+import type { CalendlyConfig } from '/domain/integrations/Calendly'
 
 export type ICalendlyIntegration = ICalendlySpi
 
-export class CalendlySpi extends BaseSpi<ICalendlyIntegration> implements ICalendlySpi {
+export class CalendlySpi
+  extends BaseSpi<CalendlyConfig, ICalendlyIntegration>
+  implements ICalendlySpi
+{
   constructor(integration: ICalendlyIntegration) {
     super(integration)
   }

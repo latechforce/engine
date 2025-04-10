@@ -3,7 +3,7 @@ import type {
   GoogleMailConfig,
   GoogleMailEmailOptions,
   GoogleMailEmailResponse,
-} from '/domain/integrations/Google/GoogleMail'
+} from '../../../../../../domain/integrations/Google/Mail/GoogleMail'
 import type { IGoogleMailIntegration } from '/adapter/spi/integrations/GoogleMailSpi'
 
 type Email = {
@@ -17,8 +17,8 @@ type Email = {
 export class GoogleMailIntegration implements IGoogleMailIntegration {
   private db: Database
 
-  constructor(private _config?: GoogleMailConfig) {
-    this.db = new Database(_config?.password ?? ':memory:')
+  constructor(public config: GoogleMailConfig) {
+    this.db = new Database(config.baseUrl ?? ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS emails (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,13 +28,6 @@ export class GoogleMailIntegration implements IGoogleMailIntegration {
         timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `)
-  }
-
-  getConfig = (): GoogleMailConfig => {
-    if (!this._config) {
-      throw new Error('Google Mail config not set')
-    }
-    return this._config
   }
 
   sendEmail = async (options: GoogleMailEmailOptions): Promise<GoogleMailEmailResponse> => {

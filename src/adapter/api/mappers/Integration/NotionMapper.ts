@@ -6,10 +6,12 @@ export class NotionMapper {
   static toIntegration(
     integrations: Integrations,
     services: NotionServices,
-    config?: NotionConfig
+    configs: NotionConfig[] = []
   ): Notion {
-    const driver = integrations.notion(config)
-    const spi = new NotionSpi(driver)
-    return new Notion(spi, services)
+    const spis = configs.map((config) => {
+      const driver = integrations.notion(config)
+      return new NotionSpi(driver)
+    })
+    return new Notion(spis, services)
   }
 }

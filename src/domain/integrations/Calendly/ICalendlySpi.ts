@@ -1,4 +1,5 @@
 import type { BaseSpi, IntegrationResponse } from '../base'
+import type { CalendlyConfig } from './CalendlyConfig'
 import type {
   CalendlyUser,
   CreateWebhookSubscriptionParams,
@@ -10,7 +11,7 @@ import type {
   DeleteWebhookSubscriptionParams,
 } from './CalendlyTypes'
 
-export interface ICalendlySpi extends BaseSpi {
+export interface ICalendlySpi extends BaseSpi<CalendlyConfig> {
   currentUser: () => Promise<IntegrationResponse<CalendlyUser>>
   createWebhookSubscription: (
     params: CreateWebhookSubscriptionParams

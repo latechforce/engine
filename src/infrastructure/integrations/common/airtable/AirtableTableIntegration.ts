@@ -1,16 +1,18 @@
 import type { FilterDto } from '/domain/entities/Filter'
-import {
-  type AirtableTableRecordFields,
-  type AirtableTableRecordFieldValue,
-} from '/domain/integrations/Airtable/AirtableTableRecord'
 import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
 import type { Table, FieldSet, Record } from 'airtable'
 import { chunk } from 'lodash'
-import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
 import type { QueryParams } from 'airtable/lib/query_params'
-import type { AirtableField, AirtableBaseSchemaTable } from './AirtableIntegration'
 import { formatISO, parse } from 'date-fns'
 import type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
+import type {
+  AirtableTableRecordFields,
+  AirtableTableRecordFieldValue,
+  UpdateAirtableTableRecord,
+  AirtableField,
+} from '/domain/integrations/Airtable'
+import type { AirtableBaseSchemaTable } from '/domain/integrations/Airtable'
+import { AirtableIntegration } from './AirtableIntegration'
 
 export class AirtableTableIntegration<T extends AirtableTableRecordFields>
   implements IAirtableTableIntegration<T>
@@ -27,69 +29,123 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
   }
 
   insert = async (record: T) => {
-    const fields = this._preprocessFields(record)
-    const insertedRecord = await this._api.create(fields, { typecast: true })
-    return this._postprocessRecord(insertedRecord)
+    try {
+      const fields = this._preprocessFields(record)
+      const insertedRecord = await this._api.create(fields, { typecast: true })
+      return {
+        data: this._postprocessRecord(insertedRecord),
+      }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   insertMany = async (records: T[]) => {
-    const chunks = chunk(records, 10)
-    const recordsToInsert = []
-    for (const chunk of chunks) {
-      const recordsFields = chunk.map((fields) => ({
-        fields: this._preprocessFields(fields),
-      }))
-      recordsToInsert.push(this._api.create(recordsFields, { typecast: true }))
+    try {
+      const chunks = chunk(records, 10)
+      const recordsToInsert = []
+      for (const chunk of chunks) {
+        const recordsFields = chunk.map((fields) => ({
+          fields: this._preprocessFields(fields),
+        }))
+        recordsToInsert.push(this._api.create(recordsFields, { typecast: true }))
+      }
+      const insertedRecords = await Promise.all(recordsToInsert)
+      const data = insertedRecords.flat().map((record) => this._postprocessRecord(record))
+      return {
+        data,
+      }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
     }
-    const insertedRecords = await Promise.all(recordsToInsert)
-    return insertedRecords.flat().map((record) => this._postprocessRecord(record))
   }
 
   update = async (id: string, record: Partial<T>) => {
-    const fields = this._preprocessFields(record)
-    const updatedRecord = await this._api.update(id, fields, { typecast: true })
-    return this._postprocessRecord(updatedRecord)
+    try {
+      const fields = this._preprocessFields(record)
+      const updatedRecord = await this._api.update(id, fields, { typecast: true })
+      const data = this._postprocessRecord(updatedRecord)
+      return {
+        data,
+      }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   updateMany = async (records: UpdateAirtableTableRecord<T>[]) => {
-    const chunks = chunk(records, 10)
-    const recordsToUpdate = []
-    for (const chunk of chunks) {
-      const recordsFields = chunk.map(({ id, fields }) => ({
-        id,
-        fields: this._preprocessFields(fields),
-      }))
-      recordsToUpdate.push(this._api.update(recordsFields, { typecast: true }))
+    try {
+      const chunks = chunk(records, 10)
+      const recordsToUpdate = []
+      for (const chunk of chunks) {
+        const recordsFields = chunk.map(({ id, fields }) => ({
+          id,
+          fields: this._preprocessFields(fields),
+        }))
+        recordsToUpdate.push(this._api.update(recordsFields, { typecast: true }))
+      }
+      const updatedRecord = await Promise.all(recordsToUpdate)
+      const data = updatedRecord.flat().map((record) => this._postprocessRecord(record))
+      return {
+        data,
+      }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
     }
-    const updatedRecord = await Promise.all(recordsToUpdate)
-    return updatedRecord.flat().map((record) => this._postprocessRecord(record))
   }
 
   retrieve = async (id: string) => {
-    const record = await this._api.find(id)
-    return this._postprocessRecord(record)
+    try {
+      const record = await this._api.find(id)
+      return {
+        data: this._postprocessRecord(record),
+      }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   delete = async (id: string) => {
-    await this._api.destroy(id)
+    try {
+      await this._api.destroy(id)
+      return {
+        data: undefined,
+      }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   deleteMany = async (ids: string[]) => {
-    const chunks = chunk(ids, 10)
-    const recordsToDelete = []
-    for (const chunk of chunks) {
-      recordsToDelete.push(this._api.destroy(chunk))
+    try {
+      const chunks = chunk(ids, 10)
+      const recordsToDelete = []
+      for (const chunk of chunks) {
+        recordsToDelete.push(this._api.destroy(chunk))
+      }
+      await Promise.all(recordsToDelete)
+      return {
+        data: undefined,
+      }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
     }
-    await Promise.all(recordsToDelete)
   }
 
   list = async (filter?: FilterDto) => {
-    const query: QueryParams<FieldSet> = {}
-    if (filter) {
-      query.filterByFormula = this._convertFilter(filter)
+    try {
+      const query: QueryParams<FieldSet> = {}
+      if (filter) {
+        query.filterByFormula = this._convertFilter(filter)
+      }
+      const records = await this._api.select(query).all()
+      const data = records.map((record) => this._postprocessRecord(record))
+      return {
+        data,
+      }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
     }
-    const records = await this._api.select(query).all()
-    return records.map((record) => this._postprocessRecord(record))
   }
 
   private _preprocessFields = (fields: AirtableTableRecordFields): FieldSet => {

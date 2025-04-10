@@ -111,6 +111,7 @@ const fullConfig: Config = {
         integration: 'Notion',
         event: 'TablePageCreated',
         table: 'first_table',
+        account: 'notion',
       },
       actions: [],
     },
@@ -128,6 +129,7 @@ const fullConfig: Config = {
       trigger: {
         integration: 'Calendly',
         event: 'InviteeCreated',
+        account: 'calendly',
       },
       actions: [],
     },

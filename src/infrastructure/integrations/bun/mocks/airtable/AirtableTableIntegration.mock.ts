@@ -1,7 +1,5 @@
 import type { FilterDto } from '/domain/entities/Filter'
-import { type AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
-import type { UpdateAirtableTableRecord } from '/domain/integrations/Airtable/AirtableTable'
 import type { TableObject } from './AirtableIntegration.mock'
 import type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
 import type { PersistedRecordFieldsDto } from '/adapter/spi/dtos/RecordDto'
@@ -9,6 +7,11 @@ import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/Data
 import type { IField } from '/domain/interfaces/IField'
 import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '/domain/entities/Record'
+import type {
+  AirtableTableRecordFields,
+  UpdateAirtableTableRecord,
+} from '/domain/integrations/Airtable'
+import { AirtableIntegration } from '/infrastructure/integrations/common/airtable/AirtableIntegration'
 
 export class AirtableTableIntegration<T extends AirtableTableRecordFields>
   implements IAirtableTableIntegration<T>
@@ -39,64 +42,108 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
   }
 
   insert = async (record: T) => {
-    const id = this._getId()
-    await this._db.insert({
-      id,
-      fields: this._preprocess(record),
-      created_at: new Date().toISOString(),
-    })
-    return this.retrieve(id)
+    try {
+      const id = this._getId()
+      await this._db.insert({
+        id,
+        fields: this._preprocess(record),
+        created_at: new Date().toISOString(),
+      })
+      return this.retrieve(id)
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   insertMany = async (records: T[]) => {
-    const pagesToInsert = records.map((record) => ({
-      id: this._getId(),
-      fields: this._preprocess(record),
-      created_at: new Date().toISOString(),
-    }))
-    await this._db.insertMany(pagesToInsert)
-    return Promise.all(pagesToInsert.map((page) => this.retrieve(page.id)))
+    try {
+      const recordsToInsert = records.map((record) => ({
+        id: this._getId(),
+        fields: this._preprocess(record),
+        created_at: new Date().toISOString(),
+      }))
+      await this._db.insertMany(recordsToInsert)
+      return this.list({
+        or: recordsToInsert.map((record) => ({
+          field: 'id',
+          operator: 'Is',
+          value: record.id,
+        })),
+      })
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   update = async (id: string, record: Partial<T>) => {
-    const fields = this._preprocess(record)
-    await this._db.update({
-      id,
-      fields,
-      updated_at: new Date().toISOString(),
-    })
-    return this.retrieve(id)
+    try {
+      const fields = this._preprocess(record)
+      await this._db.update({
+        id,
+        fields,
+        updated_at: new Date().toISOString(),
+      })
+      return this.retrieve(id)
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   updateMany = async (pages: UpdateAirtableTableRecord<T>[]) => {
-    const pagesToUpdate = pages.map(({ id, fields }) => ({
-      id,
-      fields: this._preprocess(fields),
-      updated_at: new Date().toISOString(),
-    }))
-    await this._db.updateMany(pagesToUpdate)
-    return Promise.all(pagesToUpdate.map((page) => this.retrieve(page.id)))
+    try {
+      const recordsToUpdate = pages.map(({ id, fields }) => ({
+        id,
+        fields: this._preprocess(fields),
+        updated_at: new Date().toISOString(),
+      }))
+      await this._db.updateMany(recordsToUpdate)
+      return this.list({
+        or: recordsToUpdate.map((record) => ({
+          field: 'id',
+          operator: 'Is',
+          value: record.id,
+        })),
+      })
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   retrieve = async (id: string) => {
-    const record = await this._db.readById(id)
-    if (!record) throw new Error(`Record not found: ${id}`)
-    return this._postprocess(record)
+    try {
+      const record = await this._db.readById(id)
+      if (!record) throw { statusCode: 404, message: 'Record not found' }
+      return { data: this._postprocess(record) }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   delete = async (id: string) => {
-    await this._db.delete(id)
+    try {
+      await this._db.delete(id)
+      return { data: undefined }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   deleteMany = async (ids: string[]) => {
-    const recordToDelete: Promise<void>[] = []
-    for (const id of ids) recordToDelete.push(this.delete(id))
-    return Promise.all(recordToDelete)
+    try {
+      for (const id of ids) await this._db.delete(id)
+      return { data: undefined }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   list = async (filter?: FilterDto) => {
-    const records = await this._db.list(filter)
-    return records.map((record) => this._postprocess(record))
+    try {
+      const records = await this._db.list(filter)
+      return { data: records.map((record) => this._postprocess(record)) }
+    } catch (error) {
+      return AirtableIntegration.responseError(error)
+    }
   }
 
   private _getId = () => {

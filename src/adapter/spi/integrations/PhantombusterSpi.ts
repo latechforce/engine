@@ -1,19 +1,20 @@
 import type {
   IPhantombusterSpi,
-  PhantombusterConfig,
   PhantombusterAgentOutput,
+  PhantombusterConfig,
 } from '/domain/integrations/Phantombuster'
-
-export interface IPhantombusterIntegration {
-  getConfig: () => PhantombusterConfig
-  fetchAgentOutput: (agentId: string) => Promise<PhantombusterAgentOutput>
+import { BaseSpi, type BaseIntegration } from './base'
+import type { IntegrationResponse } from '/domain/integrations/base'
+export interface IPhantombusterIntegration extends BaseIntegration<PhantombusterConfig> {
+  fetchAgentOutput: (agentId: string) => Promise<IntegrationResponse<PhantombusterAgentOutput>>
 }
 
-export class PhantombusterSpi implements IPhantombusterSpi {
-  constructor(private _integration: IPhantombusterIntegration) {}
-
-  getConfig = () => {
-    return this._integration.getConfig()
+export class PhantombusterSpi
+  extends BaseSpi<PhantombusterConfig, IPhantombusterIntegration>
+  implements IPhantombusterSpi
+{
+  constructor(integration: IPhantombusterIntegration) {
+    super(integration)
   }
 
   fetchAgentOutput = async (agentId: string) => {

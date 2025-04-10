@@ -3,6 +3,7 @@ import { testYouCanBookMeIntegration } from '/infrastructure/integrations/common
 import BunTester from 'bun:test'
 
 export const integration = new YouCanBookMeIntegration({
+  name: 'test',
   baseUrl: ':memory:',
   user: {
     username: 'mock-username',

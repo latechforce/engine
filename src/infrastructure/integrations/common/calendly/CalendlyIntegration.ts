@@ -15,30 +15,33 @@ import type {
   GetWebhookSubscriptionResponse,
   DeleteWebhookSubscriptionParams,
 } from '/domain/integrations/Calendly/CalendlyTypes'
-import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
+import axios, { AxiosError, type AxiosInstance } from 'axios'
 
 export class CalendlyIntegration implements ICalendlyIntegration {
   private _instance: AxiosInstance
 
-  constructor(config?: CalendlyConfig) {
+  constructor(public config: CalendlyConfig) {
     this._instance = axios.create({
-      baseURL: config?.baseUrl ?? 'https://api.calendly.com',
+      baseURL: config.baseUrl ?? 'https://api.calendly.com',
       headers: {
-        Authorization: `Bearer ${config?.user.accessToken}`,
+        Authorization: `Bearer ${config.user.accessToken}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
     })
   }
 
-  private _errorMapper = (response: AxiosResponse): IntegrationResponseError => {
-    const { title, message } = response.data as CalendlyError
-    return {
-      error: {
-        status: response.status,
-        message: `${title}: ${message}`,
-      },
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof AxiosError && error.response) {
+      const { title, message } = error.response.data as CalendlyError
+      return {
+        error: {
+          status: error.response.status,
+          message: `${title}: ${message}`,
+        },
+      }
     }
+    throw error
   }
 
   // TODO: Add a method to manage a OAuth2 authentification for V2 API
@@ -48,10 +51,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       // Using the /users endpoint as it's a lightweight call to verify authentication
       await this._instance.get<CalendlyUserResponse>('/users/me')
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -62,10 +62,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         data: response.data.resource,
       }
     } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -99,10 +96,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         },
       }
     } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -148,10 +142,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
         },
       }
     } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -164,10 +155,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       const response = await this._instance.get<GetWebhookSubscriptionResponse>(`${url.pathname}`)
       return { data: response.data }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -180,10 +168,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       await this._instance.delete(`${url.pathname}`)
       return { data: undefined }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 }

@@ -7,8 +7,10 @@ import {
 } from './AirtableTestSamples'
 
 export const integration = new AirtableIntegration({
-  apiKey: ':memory:',
-  baseId: 'test',
+  name: 'test',
+  apiKey: 'test',
+  databaseId: 'test',
+  baseUrl: ':memory:',
 })
 
 await integration.addTable<AirtableTableSample1>(
@@ -19,3 +21,4 @@ await integration.addTable<AirtableTableSample2>(
   airtableTableSample2.name,
   airtableTableSample2.fields
 )
+await integration.addUser({ apiKey: 'test' })

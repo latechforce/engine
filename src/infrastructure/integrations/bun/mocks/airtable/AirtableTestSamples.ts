@@ -1,4 +1,4 @@
-import type { ConvertToAirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
+import type { ConvertToAirtableTableRecordFields } from '/domain/integrations/Airtable'
 import type { ITable } from '/domain/interfaces/ITable'
 
 export type AirtableTableSample1 = ConvertToAirtableTableRecordFields<{

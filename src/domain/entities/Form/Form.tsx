@@ -38,7 +38,7 @@ export class Form {
     await server.post(this.path, this.post)
   }
 
-  validateConfig = async (): Promise<ConfigError[]> => {
+  validate = async (): Promise<ConfigError[]> => {
     return []
   }
 

@@ -91,7 +91,7 @@ export class Input {
     }
   }
 
-  validateConfig = async (): Promise<ConfigError[]> => {
+  validate = async (): Promise<ConfigError[]> => {
     return []
   }
 

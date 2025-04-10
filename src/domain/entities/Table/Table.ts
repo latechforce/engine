@@ -70,7 +70,7 @@ export class Table {
     await this.bucket.init()
   }
 
-  validateConfig = async (): Promise<ConfigError[]> => {
+  validate = async (): Promise<ConfigError[]> => {
     return []
   }
 

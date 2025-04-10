@@ -2,7 +2,7 @@
 
 ## 1. Domain Layer
 
-1. Create trigger interface in `src/domain/interfaces/ITrigger/newIntegration/INewEvent.ts`:
+1. Create trigger interface in `src/domain/interfaces/ITrigger/integrations/newIntegration/INewEvent.ts`:
 
 ```typescript
 export interface INewEventTrigger {
@@ -18,7 +18,7 @@ import type { INewEventTrigger } from './newIntegration/INewEvent'
 export type ITrigger /* ... */ = INewEventTrigger
 ```
 
-3. Create trigger entity in `src/domain/entities/Trigger/newIntegration/NewEvent.ts`:
+3. Create trigger entity in `src/domain/entities/Trigger/integrations/newIntegration/NewEvent.ts`:
 
 ```typescript
 import type { Queue } from '/domain/services/Queue'
@@ -39,12 +39,40 @@ export interface NewEventTriggerIntegrations {
   newIntegration: NewIntegration
 }
 
-export class NewEventTrigger implements BaseTrigger {
+export class NewEventTrigger extends BaseTrigger<NewEventTriggerConfig> {
   constructor(
-    private _config: NewEventTriggerConfig,
+    config: NewEventTriggerConfig,
     private _services: NewEventTriggerServices,
     private _integrations: NewEventTriggerIntegrations
-  ) {}
+  ) {
+    super(config)
+  }
+
+  validate = async () => {
+    const { newIntegration } = this._integrations
+    const { account } = this._config
+    const accountExist = await newIntegration.checkAccountExist(account)
+    if (!accountExist) {
+      return [
+        new ConfigError({
+          entity: 'Trigger',
+          name: 'NewEventTrigger',
+          message: 'Account not found',
+        }),
+      ]
+    }
+    const response = await newIntegration.checkConfiguration(account)
+    if (response?.error) {
+      return [
+        new ConfigError({
+          entity: 'Trigger',
+          name: 'NewEventTrigger',
+          message: response.error.message || 'Unknown error',
+        }),
+      ]
+    }
+    return []
+  }
 
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {
     const { queue } = this._services
@@ -54,10 +82,6 @@ export class NewEventTrigger implements BaseTrigger {
     // Add integration-specific initialization here
 
     queue.job(automation, run)
-  }
-
-  validateConfig = async () => {
-    return []
   }
 
   onTriggerCalled = async (request: PostRequest) => {
@@ -77,7 +101,7 @@ export type Trigger /* ... */ = NewEventTrigger
 
 ## 3. API Layer
 
-1. Create trigger mapper in `src/adapter/api/mappers/Trigger/newIntegration/NewEventMapper.ts`:
+1. Create trigger mapper in `src/adapter/api/mappers/Trigger/integrations/newIntegration/NewEventMapper.ts`:
 
 ```typescript
 import {
@@ -179,7 +203,7 @@ if (this.options.integrations.includes('NewIntegration')) {
 
 ## 6. Create Test File
 
-Create `test/automations/triggers/newIntegration/newEvent.test.ts`:
+Create `test/automations/triggers/integrations/newIntegration/newEvent.test.ts`:
 
 ```typescript
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'

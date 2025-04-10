@@ -4,9 +4,11 @@ import { Calendly } from '/domain/integrations/Calendly'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 
 export class CalendlyMapper {
-  static toIntegration(integrations: Integrations, config?: CalendlyConfig): Calendly {
-    const driver = integrations.calendly(config)
-    const spi = new CalendlySpi(driver)
-    return new Calendly(spi)
+  static toIntegration(integrations: Integrations, configs: CalendlyConfig[] = []): Calendly {
+    const spis = configs.map((config) => {
+      const driver = integrations.calendly(config)
+      return new CalendlySpi(driver)
+    })
+    return new Calendly(spis)
   }
 }

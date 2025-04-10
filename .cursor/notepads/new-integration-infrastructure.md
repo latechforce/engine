@@ -25,18 +25,21 @@ import { NewIntegration, type NewIntegrationError } from 'newintegration'
 export class NewIntegrationIntegration implements INotionIntegration {
   private _newIntegration: NewIntegration
 
-  constructor(private _config?: NewIntegrationConfig) {
+  constructor(public config: NewIntegrationConfig) {
     // Reuse the configuration keys in the /domain/integrations/NewIntegration/NewIntegrationConfig.ts
-    this._newIntegration = new NewIntegration(this._config)
+    this._newIntegration = new NewIntegration(this.config)
   }
 
-  private _errorMapper = (error: NewIntegrationError): IntegrationResponseError => {
-    // Replace with the error type of the integration in the /domain/integrations/NewIntegration/NewIntegrationTypes.ts
-    const {} = error
-    return {
-      // Map the NewIntegrationError with the IntegrationResponseError of the /domain/integration/base.ts file
-      error: {},
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof NewIntegrationError) {
+      // Replace with the error type of the integration in the /domain/integrations/NewIntegration/NewIntegrationTypes.ts
+      const {} = error
+      return {
+        // Map the NewIntegrationError with the IntegrationResponseError of the /domain/integration/base.ts file
+        error: {},
+      }
     }
+    throw error
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
@@ -44,10 +47,7 @@ export class NewIntegrationIntegration implements INotionIntegration {
       // Replace with the most basic method of the integration, only to check the authentication
       await this._newIntegration.get('/user')
     } catch (error) {
-      if (error instanceof NewIntegrationError) {
-        return this._errorMapper(error)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 }
@@ -66,7 +66,7 @@ import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios
 export class NewIntegrationIntegration implements INewIntegrationIntegration {
   private _instance: AxiosInstance
 
-  constructor(config?: NewIntegrationConfig) {
+  constructor(public config: NewIntegrationConfig) {
     const headers = {
       // Fill with the authentication method of the integration following the OpenAPI definition
       // Reuse the configuration keys in the /domain/integrations/NewIntegration/NewIntegrationConfig.ts
@@ -83,15 +83,16 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
 
   // Don't change the methods parameters
 
-  private _errorMapper = (
-    response: AxiosResponse<{ errors: NewIntegrationError[] }>
-  ): IntegrationResponseError => {
-    // Replace with the error type of the integration in the /domain/integrations/NewIntegration/NewIntegrationTypes.ts
-    const [{}] = response.data.errors
-    return {
-      // Map the NewIntegrationError with the IntegrationResponseError of the /domain/integration/base.ts file
-      error: {},
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof AxiosError && error.response) {
+      // Replace with the error type of the integration in the /domain/integrations/NewIntegration/NewIntegrationTypes.ts
+      const [{}] = error.response.data.errors
+      return {
+        // Map the NewIntegrationError with the IntegrationResponseError of the /domain/integration/base.ts file
+        error: {},
+      }
     }
+    throw error
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
@@ -99,10 +100,7 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
       // Replace with the most basic and costless method of the integration, only to check the authentication
       await this._instance.get('/user')
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 }
@@ -115,10 +113,10 @@ Update the `src/infrastructure/integrations/common/index.ts` file to add the new
 ```typescript
 import type { Integrations } from '/adapter/spi/integrations'
 import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
-import type { INewIntegrationIntegration } from './newIntegration/NewIntegrationIntegration'
+import type { NewIntegrationIntegration } from './newIntegration/NewIntegrationIntegration'
 
 export const integrations: Integrations = {
-  newIntegration: (config?: NewIntegrationConfig) => INewIntegrationIntegration,
+  newIntegration: (config: NewIntegrationConfig) => new NewIntegrationIntegration(config),
 }
 ```
 
@@ -135,8 +133,8 @@ import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/N
 export class NewIntegrationIntegration implements INewIntegrationIntegration {
   private db: Database
 
-  constructor(private _config?: NewIntegrationConfig) {
-    this.db = new Database(_config?.apiKey ?? ':memory:')
+  constructor(public config: NewIntegrationConfig) {
+    this.db = new Database(config.baseUrl ?? ':memory:')
     // Replace with the table name of the ressource used in the checkConfiguration method of the integration in /infrastructure/integrations/common/newIntegration/NewIntegrationIntegration.ts
     this.db.run(`CREATE TABLE IF NOT EXISTS {ressource} (id TEXT PRIMARY KEY)`)
   }
@@ -144,7 +142,7 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     const user = this.db
       .query<NewIntegrationConfig, string>('SELECT * FROM {ressource} WHERE id = ?')
-      .get(this._config?.apiKey ?? '')
+      .get(this.config.apiKey)
     if (!user) {
       return { error: { status: 404, code: 'not_found', detail: '{ressource} not found' } }
     }
@@ -160,9 +158,9 @@ Update the `src/infrastructure/integrations/bun/mocks/index.ts` file to add the 
 ```typescript
 import type { Integrations } from '/adapter/spi/integrations'
 import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
-import type { INewIntegrationIntegration } from './newIntegration/NewIntegrationIntegration.mock'
+import type { NewIntegrationIntegration } from './newIntegration/NewIntegrationIntegration.mock'
 
 export const mocks: Integrations = {
-  newIntegration: (config?: NewIntegrationConfig) => INewIntegrationIntegration,
+  newIntegration: (config: NewIntegrationConfig) => new NewIntegrationIntegration(config),
 }
 ```

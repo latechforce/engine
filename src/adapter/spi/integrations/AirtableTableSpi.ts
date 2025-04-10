@@ -1,25 +1,31 @@
 import { type Filter, type FilterDto } from '/domain/entities/Filter'
 import type {
-  IAirtableTableSpi,
   UpdateAirtableTableRecord,
-} from '/domain/integrations/Airtable/AirtableTable'
+  AirtableTableRecordFields,
+} from '/domain/integrations/Airtable/AirtableTypes'
 import { FilterMapper } from '../mappers/FilterMapper'
-import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 import { AirtableTableRecordMapper } from '../mappers/AirtableTableRecordMapper'
 import type { AirtableTableRecordDto } from '../dtos/AirtableTableRecordDto'
+import type { IAirtableTableSpi } from '/domain/integrations/Airtable/IAirtableTableSpi'
+import type { IntegrationResponse } from '/domain/integrations/base'
 
 export interface IAirtableTableIntegration<
   T extends AirtableTableRecordFields = AirtableTableRecordFields,
 > {
   id: string
   name: string
-  insert: (record: T) => Promise<AirtableTableRecordDto<T>>
-  insertMany: (records: T[]) => Promise<AirtableTableRecordDto<T>[]>
-  update: (id: string, fields: Partial<T>) => Promise<AirtableTableRecordDto<T>>
-  updateMany: (records: UpdateAirtableTableRecord<T>[]) => Promise<AirtableTableRecordDto<T>[]>
-  retrieve: (id: string) => Promise<AirtableTableRecordDto<T>>
-  delete: (id: string) => Promise<void>
-  list: (filter?: FilterDto) => Promise<AirtableTableRecordDto<T>[]>
+  insert: (record: T) => Promise<IntegrationResponse<AirtableTableRecordDto<T>>>
+  insertMany: (records: T[]) => Promise<IntegrationResponse<AirtableTableRecordDto<T>[]>>
+  update: (
+    id: string,
+    fields: Partial<T>
+  ) => Promise<IntegrationResponse<AirtableTableRecordDto<T>>>
+  updateMany: (
+    records: UpdateAirtableTableRecord<T>[]
+  ) => Promise<IntegrationResponse<AirtableTableRecordDto<T>[]>>
+  retrieve: (id: string) => Promise<IntegrationResponse<AirtableTableRecordDto<T>>>
+  delete: (id: string) => Promise<IntegrationResponse<void>>
+  list: (filter?: FilterDto) => Promise<IntegrationResponse<AirtableTableRecordDto<T>[]>>
 }
 
 export class AirtableTableSpi<T extends AirtableTableRecordFields> implements IAirtableTableSpi<T> {
@@ -34,36 +40,79 @@ export class AirtableTableSpi<T extends AirtableTableRecordFields> implements IA
   }
 
   insert = async (record: T) => {
-    const dto = await this._integration.insert(record)
-    return AirtableTableRecordMapper.toEntity<T>(dto)
+    const response = await this._integration.insert(record)
+    if (!response.error) {
+      return {
+        data: AirtableTableRecordMapper.toEntity<T>(response.data),
+        error: undefined,
+      }
+    }
+    return response
   }
 
   insertMany = async (records: T[]) => {
-    const dtos = await this._integration.insertMany(records)
-    return AirtableTableRecordMapper.toManyEntities<T>(dtos)
+    const response = await this._integration.insertMany(records)
+    if (!response.error) {
+      return {
+        data: AirtableTableRecordMapper.toManyEntities<T>(response.data),
+        error: undefined,
+      }
+    }
+    return response
   }
 
   update = async (id: string, record: Partial<T>) => {
-    const dto = await this._integration.update(id, record)
-    return AirtableTableRecordMapper.toEntity<T>(dto)
+    const response = await this._integration.update(id, record)
+    if (!response.error) {
+      return {
+        data: AirtableTableRecordMapper.toEntity<T>(response.data),
+        error: undefined,
+      }
+    }
+    return response
   }
 
   updateMany = async (records: UpdateAirtableTableRecord<T>[]) => {
-    const dtos = await this._integration.updateMany(records)
-    return AirtableTableRecordMapper.toManyEntities<T>(dtos)
+    const response = await this._integration.updateMany(records)
+    if (!response.error) {
+      return {
+        data: AirtableTableRecordMapper.toManyEntities<T>(response.data),
+        error: undefined,
+      }
+    }
+    return response
   }
 
   retrieve = async (id: string) => {
-    const dto = await this._integration.retrieve(id)
-    return AirtableTableRecordMapper.toEntity<T>(dto)
+    const response = await this._integration.retrieve(id)
+    if (!response.error) {
+      return {
+        data: AirtableTableRecordMapper.toEntity<T>(response.data),
+        error: undefined,
+      }
+    }
+    return response
   }
 
   delete = async (id: string) => {
-    return this._integration.delete(id)
+    const response = await this._integration.delete(id)
+    if (!response.error) {
+      return {
+        data: undefined,
+        error: undefined,
+      }
+    }
+    return response
   }
 
   list = async (filter?: Filter) => {
-    const dtos = await this._integration.list(filter ? FilterMapper.toDto(filter) : undefined)
-    return AirtableTableRecordMapper.toManyEntities<T>(dtos)
+    const response = await this._integration.list(filter ? FilterMapper.toDto(filter) : undefined)
+    if (!response.error) {
+      return {
+        data: AirtableTableRecordMapper.toManyEntities<T>(response.data),
+        error: undefined,
+      }
+    }
+    return response
   }
 }

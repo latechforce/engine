@@ -6,18 +6,24 @@ import type {
   GoCardlessListPayment,
   GoCardlessPaymentList,
 } from '/domain/integrations/GoCardless'
+import { BaseSpi, type BaseIntegration } from './base'
+import type { IntegrationResponse } from '/domain/integrations/base'
 
-export interface IGoCardlessIntegration {
-  getConfig: () => GoCardlessConfig
-  createPayment: (payment: GoCardlessCreatePayment) => Promise<GoCardlessPayment>
-  listPayments: (params?: GoCardlessListPayment) => Promise<GoCardlessPaymentList>
+export interface IGoCardlessIntegration extends BaseIntegration<GoCardlessConfig> {
+  createPayment: (
+    payment: GoCardlessCreatePayment
+  ) => Promise<IntegrationResponse<GoCardlessPayment>>
+  listPayments: (
+    params?: GoCardlessListPayment
+  ) => Promise<IntegrationResponse<GoCardlessPaymentList>>
 }
 
-export class GoCardlessSpi implements IGoCardlessSpi {
-  constructor(private _integration: IGoCardlessIntegration) {}
-
-  getConfig = () => {
-    return this._integration.getConfig()
+export class GoCardlessSpi
+  extends BaseSpi<GoCardlessConfig, IGoCardlessIntegration>
+  implements IGoCardlessSpi
+{
+  constructor(integration: IGoCardlessIntegration) {
+    super(integration)
   }
 
   createPayment = async (payment: GoCardlessCreatePayment) => {

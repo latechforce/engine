@@ -4,6 +4,7 @@ import env from '../../../test/env'
 import BunTester from 'bun:test'
 
 const integration = new NgrokIntegration({
+  name: 'test',
   authToken: env.TEST_NGROK_AUTH_TOKEN,
 })
 

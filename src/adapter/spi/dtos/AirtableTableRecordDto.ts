@@ -1,4 +1,4 @@
-import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
+import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTypes'
 
 export interface AirtableTableRecordDto<T extends AirtableTableRecordFields> {
   id: string

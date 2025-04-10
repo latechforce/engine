@@ -2,22 +2,24 @@ import {
   NotionTableSpi,
   type INotionTableIntegration,
 } from '/adapter/spi/integrations/NotionTableSpi'
-import type { INotionSpi, NotionConfig } from '/domain/integrations/Notion'
+import type {
+  INotionSpi,
+  NotionConfig,
+  NotionTablePageProperties,
+  NotionUser,
+} from '/domain/integrations/Notion'
 import { NotionUserMapper } from '../mappers/NotionUserMapper'
 import type { NotionUserDto } from '../dtos/NotionUserDto'
-import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
-
-export interface INotionIntegration {
-  getConfig: () => NotionConfig
+import { BaseSpi, type BaseIntegration } from './base'
+import type { IntegrationResponse } from '/domain/integrations/base'
+export interface INotionIntegration extends BaseIntegration<NotionConfig> {
   getTable: <T extends NotionTablePageProperties>(id: string) => Promise<INotionTableIntegration<T>>
-  listAllUsers: () => Promise<NotionUserDto[]>
+  listAllUsers: () => Promise<IntegrationResponse<NotionUserDto[]>>
 }
 
-export class NotionSpi implements INotionSpi {
-  constructor(private _integration: INotionIntegration) {}
-
-  getConfig = () => {
-    return this._integration.getConfig()
+export class NotionSpi extends BaseSpi<NotionConfig, INotionIntegration> implements INotionSpi {
+  constructor(integration: INotionIntegration) {
+    super(integration)
   }
 
   getTable = async <T extends NotionTablePageProperties>(id: string) => {
@@ -25,8 +27,17 @@ export class NotionSpi implements INotionSpi {
     return new NotionTableSpi<T>(page)
   }
 
-  listAllUsers = async () => {
-    const dto = await this._integration.listAllUsers()
-    return NotionUserMapper.toManyEntities(dto)
+  listAllUsers = async (): Promise<IntegrationResponse<NotionUser[]>> => {
+    const response = await this._integration.listAllUsers()
+    if (response.data) {
+      return {
+        data: NotionUserMapper.toManyEntities(response.data),
+        error: undefined,
+      }
+    }
+    return {
+      data: undefined,
+      error: response.error,
+    }
   }
 }

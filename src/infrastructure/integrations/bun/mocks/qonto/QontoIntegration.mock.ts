@@ -16,8 +16,8 @@ import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
 export class QontoIntegration implements IQontoIntegration {
   private db: Database
 
-  constructor(private _config?: QontoConfig) {
-    this.db = new Database(_config?.secretKey ?? ':memory:')
+  constructor(public config: QontoConfig) {
+    this.db = new Database(config.baseUrl ?? ':memory:')
     this.db.run(`CREATE TABLE IF NOT EXISTS Organizations (id TEXT PRIMARY KEY, legal_name TEXT)`)
     this.db.run(`
       CREATE TABLE IF NOT EXISTS Clients (
@@ -76,7 +76,7 @@ export class QontoIntegration implements IQontoIntegration {
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     const organization = this.db
       .query<QontoOrganization, string>('SELECT * FROM Organizations WHERE id = ?')
-      .get(this._config?.organisationSlug ?? '')
+      .get(this.config.organisationSlug)
     if (!organization) {
       return { error: { status: 404, message: 'Organization not found' } }
     }

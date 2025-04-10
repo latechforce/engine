@@ -6,6 +6,7 @@ import BunTester from 'bun:test'
 const { TEST_PAPPERS_API_KEY } = env
 
 export const integration = new PappersIntegration({
+  name: 'test',
   apiKey: TEST_PAPPERS_API_KEY,
 })
 

@@ -5,17 +5,10 @@ import ngrok from '@ngrok/ngrok'
 export class NgrokIntegration implements INgrokIntegration {
   constructor(private _config?: NgrokConfig) {}
 
-  getConfig = (): NgrokConfig => {
-    if (!this._config) {
-      throw new Error('Ngrok config not set')
-    }
-    return this._config
-  }
-
   start = async (port: number): Promise<string> => {
     const listener = await ngrok.connect({
       addr: port,
-      authtoken: this.getConfig().authToken,
+      authtoken: this._config?.authToken,
     })
     const url = listener.url()
     if (!url) {

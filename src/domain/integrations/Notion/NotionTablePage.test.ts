@@ -1,5 +1,6 @@
 import { beforeEach, it, describe, expect } from 'bun:test'
-import { NotionTablePage, type NotionTablePagePropertyFile } from './NotionTablePage'
+import { NotionTablePage } from './NotionTablePage'
+import type { NotionTablePagePropertyFile } from './NotionTypes'
 
 type MockProperties = {
   title: string | null

@@ -4,9 +4,14 @@ import { YouCanBookMe } from '/domain/integrations/YouCanBookMe'
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 
 export class YouCanBookMeMapper {
-  static toIntegration(integrations: Integrations, config?: YouCanBookMeConfig): YouCanBookMe {
-    const driver = integrations.youCanBookMe(config)
-    const spi = new YouCanBookMeSpi(driver)
-    return new YouCanBookMe(spi)
+  static toIntegration(
+    integrations: Integrations,
+    configs: YouCanBookMeConfig[] = []
+  ): YouCanBookMe {
+    const spis = configs.map((config) => {
+      const driver = integrations.youCanBookMe(config)
+      return new YouCanBookMeSpi(driver)
+    })
+    return new YouCanBookMe(spis)
   }
 }

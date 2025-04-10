@@ -2,38 +2,38 @@ import type { IPappersIntegration } from '/adapter/spi/integrations/PappersSpi'
 import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
 import type { PappersEntreprise } from '/domain/integrations/Pappers/PappersTypes'
-import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
+import axios, { AxiosError, type AxiosInstance } from 'axios'
+import { join } from 'path'
 
 export class PappersIntegration implements IPappersIntegration {
   private _instance: AxiosInstance
 
-  constructor(private _config?: PappersConfig) {
+  constructor(public config: PappersConfig) {
+    const { apiKey, baseUrl = 'https://api.pappers.fr' } = config
     this._instance = axios.create({
-      baseURL: 'https://api.pappers.fr/v2',
+      baseURL: join(baseUrl, 'v2'),
       headers: {
         'Content-Type': 'application/json',
-        'api-key': _config?.apiKey,
+        'api-key': apiKey,
       },
     })
   }
 
-  private _errorMapper = (response: AxiosResponse): IntegrationResponseError => {
-    return {
-      error: {
-        status: response.status,
-        message: response.data.error,
-      },
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof AxiosError && error.response) {
+      const { status, data } = error.response
+      return {
+        error: { status, message: data.error },
+      }
     }
+    throw error
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._instance.get('/suivi-jetons')
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -44,10 +44,7 @@ export class PappersIntegration implements IPappersIntegration {
         data: response.data,
       }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 }

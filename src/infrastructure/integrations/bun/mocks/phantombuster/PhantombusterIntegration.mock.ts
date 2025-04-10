@@ -1,4 +1,5 @@
 import type { IPhantombusterIntegration } from '/adapter/spi/integrations/PhantombusterSpi'
+import type { IntegrationResponse } from '/domain/integrations/base'
 import type {
   PhantombusterConfig,
   PhantombusterAgentOutput,
@@ -8,8 +9,8 @@ import { Database } from 'bun:sqlite'
 export class PhantombusterIntegration implements IPhantombusterIntegration {
   private db: Database
 
-  constructor(private _config?: PhantombusterConfig) {
-    this.db = new Database(_config?.apiKey ?? ':memory:')
+  constructor(public config: PhantombusterConfig) {
+    this.db = new Database(config.baseUrl ?? ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS agent_outputs (
         id TEXT PRIMARY KEY,
@@ -18,21 +19,17 @@ export class PhantombusterIntegration implements IPhantombusterIntegration {
     `)
   }
 
-  getConfig = (): PhantombusterConfig => {
-    if (!this._config) {
-      throw new Error('Phantombuster config not set')
-    }
-    return this._config
-  }
-
-  fetchAgentOutput = async (agentId: string): Promise<PhantombusterAgentOutput> => {
+  fetchAgentOutput = async (
+    agentId: string
+  ): Promise<IntegrationResponse<PhantombusterAgentOutput>> => {
     const result = this.db
       .query<{ data: string }, [string]>('SELECT data FROM agent_outputs WHERE id = ?')
       .get(agentId)
     if (!result) {
       throw new Error(`Agent not found`)
     }
-    return JSON.parse(result.data)
+    const data = JSON.parse(result.data)
+    return { data }
   }
 
   addAgentOutput = async (id: string, output: PhantombusterAgentOutput): Promise<void> => {

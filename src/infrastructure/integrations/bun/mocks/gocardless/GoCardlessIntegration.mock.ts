@@ -1,4 +1,5 @@
 import type { IGoCardlessIntegration } from '/adapter/spi/integrations/GoCardlessSpi'
+import type { IntegrationResponse } from '/domain/integrations/base'
 import type {
   GoCardlessPayment,
   GoCardlessConfig,
@@ -26,8 +27,8 @@ type PaymentRow = {
 export class GoCardlessIntegration implements IGoCardlessIntegration {
   private db: Database
 
-  constructor(private _config?: GoCardlessConfig) {
-    this.db = new Database(_config?.accessToken ?? ':memory:')
+  constructor(public config: GoCardlessConfig) {
+    this.db = new Database(config.baseUrl ?? ':memory:')
     this.db.run(`
       CREATE TABLE IF NOT EXISTS Payments (
         id TEXT PRIMARY KEY,
@@ -46,14 +47,13 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
     `)
   }
 
-  getConfig = (): GoCardlessConfig => {
-    if (!this._config) {
-      throw new Error('GoCardless config not set')
-    }
-    return this._config
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    return undefined
   }
 
-  createPayment = async (payment: GoCardlessCreatePayment): Promise<GoCardlessPayment> => {
+  createPayment = async (
+    payment: GoCardlessCreatePayment
+  ): Promise<IntegrationResponse<GoCardlessPayment>> => {
     const id = `PM${Date.now()}${Math.random().toString(36).substring(2, 10)}`
     const createdAt = new Date().toISOString()
     const chargeDate = new Date()
@@ -81,31 +81,35 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
       ]
     )
     return {
-      id,
-      amount: payment.amount,
-      currency: payment.currency,
-      status: 'pending_submission',
-      charge_date: payment.charge_date || chargeDate.toISOString(),
-      created_at: createdAt,
-      metadata: payment.metadata,
-      reference: payment.reference || null,
-      description: payment.description || null,
-      links: {
-        mandate: payment.mandate,
-        creditor: 'CR123',
+      data: {
+        id,
+        amount: payment.amount,
+        currency: payment.currency,
+        status: 'pending_submission',
+        charge_date: payment.charge_date || chargeDate.toISOString(),
+        created_at: createdAt,
+        metadata: payment.metadata,
+        reference: payment.reference || null,
+        description: payment.description || null,
+        links: {
+          mandate: payment.mandate,
+          creditor: 'CR123',
+        },
+        amount_refunded: 0,
+        fx: {
+          fx_currency: 'EUR',
+          fx_amount: null,
+          exchange_rate: null,
+          estimated_exchange_rate: '1.1234567890',
+        },
+        retry_if_possible: payment.retry_if_possible ?? false,
       },
-      amount_refunded: 0,
-      fx: {
-        fx_currency: 'EUR',
-        fx_amount: null,
-        exchange_rate: null,
-        estimated_exchange_rate: '1.1234567890',
-      },
-      retry_if_possible: payment.retry_if_possible ?? false,
     }
   }
 
-  listPayments = async (params: GoCardlessListPayment = {}): Promise<GoCardlessPaymentList> => {
+  listPayments = async (
+    params: GoCardlessListPayment = {}
+  ): Promise<IntegrationResponse<GoCardlessPaymentList>> => {
     const limit = params.limit || 10
     const after = params.after
     const before = params.before
@@ -157,13 +161,15 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
     }))
 
     return {
-      payments,
-      meta: {
-        cursors: {
-          before: rows[0]?.created_at || null,
-          after: rows[rows.length - 1]?.created_at || null,
+      data: {
+        payments,
+        meta: {
+          cursors: {
+            before: rows[0]?.created_at || null,
+            after: rows[rows.length - 1]?.created_at || null,
+          },
+          limit,
         },
-        limit,
       },
     }
   }

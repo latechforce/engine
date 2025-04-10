@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, mock } from 'bun:test'
-import { AirtableTable, type IAirtableTableSpi } from './AirtableTable'
+import { AirtableTable } from './AirtableTable'
+import type { IAirtableTableSpi } from './IAirtableTableSpi'
 import type { FilterConfig } from '/domain/entities/Filter'
 import { FilterMapper } from '/domain/entities/Filter'
 
@@ -11,13 +12,13 @@ beforeEach(() => {
   spi = {
     id: 'tableid',
     name: 'Table Name',
-    insert: mock(),
-    insertMany: mock(),
-    update: mock(),
-    updateMany: mock(),
-    retrieve: mock(),
-    delete: mock(),
-    list: mock(),
+    insert: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    insertMany: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    update: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    updateMany: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    retrieve: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    delete: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    list: mock(async () => ({ data: { id: 'record-id' } })) as any,
   }
   airtableTable = new AirtableTable(spi)
 })

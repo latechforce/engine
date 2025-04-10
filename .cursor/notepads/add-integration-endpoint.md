@@ -46,13 +46,16 @@ import { Integration } from '../base'
 import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 
 export class NewIntegration extends Integration<INewIntegrationSpi> {
-  constructor(spi: INewIntegrationSpi) {
-    super(spi)
+  constructor(spis: INewIntegrationSpi[]) {
+    super(spis)
   }
 
-  newMethod = async (params: NewMethodParams): Promise<IntegrationResponse<NewMethodResponse>> => {
-    const response = await this._spi.newMethod(params)
-    if (response.error) return this._throwError('newMethod', response.error)
+  newMethod = async (
+    account: string,
+    params: NewMethodParams
+  ): Promise<IntegrationResponse<NewMethodResponse>> => {
+    const response = await this._spi(account).newMethod(params)
+    if (response.error) return Integration.throwError('newMethod', response.error)
     return response.data
   }
 }

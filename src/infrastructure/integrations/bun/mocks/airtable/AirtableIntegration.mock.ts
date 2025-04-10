@@ -1,12 +1,11 @@
 import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import { AirtableTableIntegration } from './AirtableTableIntegration.mock'
-import type { AirtableConfig } from '/domain/integrations/Airtable'
+import type { AirtableConfig, AirtableTableRecordFields } from '/domain/integrations/Airtable'
 import { SQLiteDatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteDriver'
 import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
 import slugify from 'slugify'
-import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTableRecord'
 
 export interface TableObject extends RecordFields {
   name: string
@@ -16,9 +15,10 @@ export interface TableObject extends RecordFields {
 export class AirtableIntegration implements IAirtableIntegration {
   private _db: SQLiteDatabaseDriver
   private _tables?: SQLiteDatabaseTableDriver
+  private _users?: SQLiteDatabaseTableDriver
 
-  constructor(private _config?: AirtableConfig) {
-    this._db = new SQLiteDatabaseDriver({ url: _config?.apiKey ?? ':memory:', driver: 'SQLite' })
+  constructor(public config: AirtableConfig) {
+    this._db = new SQLiteDatabaseDriver({ url: config.baseUrl ?? ':memory:', driver: 'SQLite' })
   }
 
   connect = async () => {
@@ -40,13 +40,30 @@ export class AirtableIntegration implements IAirtableIntegration {
       await this._tables.create()
       await this._tables.createView()
     }
+    this._users = this._db.table({
+      name: 'users',
+      fields: [{ name: 'apiKey', type: 'SingleLineText' }],
+    })
+    if (!(await this._users.exists())) {
+      await this._users.create()
+      await this._users.createView()
+    }
   }
 
-  getConfig = (): AirtableConfig => {
-    if (!this._config) {
-      throw new Error('Airtable config not set')
+  checkConfiguration = async () => {
+    const user = await this._users?.readById(this.config.apiKey)
+    if (!user) {
+      return { error: { status: 404, message: 'User not found' } }
     }
-    return this._config
+    return undefined
+  }
+
+  addUser = async (user: { apiKey: string }) => {
+    await this._users?.insert({
+      id: user.apiKey,
+      fields: { apiKey: user.apiKey },
+      created_at: new Date().toISOString(),
+    })
   }
 
   getTable = async <T extends AirtableTableRecordFields>(tableName: string) => {

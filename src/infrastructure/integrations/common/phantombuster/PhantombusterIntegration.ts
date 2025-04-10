@@ -1,53 +1,54 @@
 import type { IPhantombusterIntegration } from '/adapter/spi/integrations/PhantombusterSpi'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type {
   PhantombusterConfig,
   PhantombusterAgentOutput,
 } from '/domain/integrations/Phantombuster'
-import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
+import axios, { AxiosError, type AxiosInstance } from 'axios'
+import { join } from 'path'
 
 export class PhantombusterIntegration implements IPhantombusterIntegration {
-  private _instance?: AxiosInstance
+  private _instance: AxiosInstance
 
-  constructor(private _config?: PhantombusterConfig) {}
-
-  getConfig = (): PhantombusterConfig => {
-    if (!this._config) {
-      throw new Error('Phantombuster config not set')
+  constructor(public config: PhantombusterConfig) {
+    const { apiKey, baseUrl = 'https://api.phantombuster.com' } = config
+    const headers = {
+      'X-Phantombuster-Key': apiKey,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     }
-    return this._config
+    this._instance = axios.create({
+      baseURL: join(baseUrl, 'api/v2'),
+      headers,
+    })
   }
 
-  fetchAgentOutput = async (agentId: string): Promise<PhantombusterAgentOutput> => {
-    const response = await this._api()
-      .get(`/agents/fetch-output?id=${agentId}`)
-      .catch((error) => {
-        return error.response
-      })
-    if (response.status === 200) {
-      return response.data
-    } else {
-      return this._throwError(response)
-    }
-  }
-
-  private _api = (): AxiosInstance => {
-    if (!this._instance) {
-      const config = this.getConfig()
-      const headers = {
-        'X-Phantombuster-Key': config.apiKey,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof AxiosError && error.response) {
+      const [{ status, detail }] = error.response.data.errors
+      return {
+        error: { status, message: detail },
       }
-      this._instance = axios.create({
-        baseURL: 'https://api.phantombuster.com/api/v2',
-        headers,
-      })
     }
-    return this._instance
+    throw error
   }
 
-  private _throwError = (response: AxiosResponse) => {
-    const { error } = response.data
-    throw new Error(`Error fetching data from Phantombuster API: ${error}`)
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    try {
+      await this._instance.get('/me')
+    } catch (error) {
+      return this._responseError(error)
+    }
+  }
+
+  fetchAgentOutput = async (
+    agentId: string
+  ): Promise<IntegrationResponse<PhantombusterAgentOutput>> => {
+    try {
+      const response = await this._instance.get(`/agents/fetch-output?id=${agentId}`)
+      return { data: response.data }
+    } catch (error) {
+      return this._responseError(error)
+    }
   }
 }

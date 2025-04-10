@@ -18,7 +18,7 @@ export type INewIntegrationIntegration = INewIntegrationSpi
 
 // Just duplicate the template without filling it
 export class NewIntegrationSpi
-  extends BaseSpi<INewIntegrationIntegration>
+  extends BaseSpi<NewIntegrationConfig, INewIntegrationIntegration>
   implements INewIntegrationSpi
 {
   constructor(integration: INewIntegrationIntegration) {
@@ -36,7 +36,7 @@ import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/N
 import type { INewIntegrationIntegration } from './NewIntegrationSpi'
 
 export interface Integrations {
-  newIntegration: (config?: NewIntegrationConfig) => INewIntegrationIntegration
+  newIntegration: (config: NewIntegrationConfig) => INewIntegrationIntegration
 }
 ```
 
@@ -51,10 +51,15 @@ import { NewIntegration } from '/domain/integrations/NewIntegration'
 import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
 
 export class NewIntegrationMapper {
-  static toIntegration(integrations: Integrations, config?: NewIntegrationConfig): NewIntegration {
-    const driver = integrations.newIntegration(config)
-    const spi = new NewIntegrationSpi(driver)
-    return new NewIntegration(spi)
+  static toIntegration(
+    integrations: Integrations,
+    configs: NewIntegrationConfig[] = []
+  ): NewIntegration[] {
+    const spis = configs.map((config) => {
+      const driver = integrations.newIntegration(config)
+      return new NewIntegrationSpi(driver)
+    })
+    return new NewIntegration(spis)
   }
 }
 ```

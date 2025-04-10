@@ -65,6 +65,7 @@ import BunTester from 'bun:test'
 const { TEST_NEW_INTEGRATION_API_KEY } = env
 
 export const integration = new NewIntegrationIntegration({
+  name: 'test',
   // Replace with the configuration keys of the integration in the /domain/integrations/NewIntegration/NewIntegrationConfig.ts
   apiKey: TEST_NEW_INTEGRATION_API_KEY,
 })
@@ -82,6 +83,7 @@ import { testNewIntegrationIntegration } from '/infrastructure/integrations/comm
 import BunTester from 'bun:test'
 
 export const integration = new NewIntegrationIntegration({
+  name: 'test',
   // Replace with the configuration keys of the integration in the /domain/integrations/NewIntegration/NewIntegrationConfig.ts
   apiKey: ':memory:',
 })

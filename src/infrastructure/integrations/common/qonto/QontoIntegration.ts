@@ -9,53 +9,47 @@ import {
   type QontoAttachment,
   type QontoError,
 } from '/domain/integrations/Qonto/QontoTypes'
-import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
-
+import axios, { AxiosError, type AxiosInstance } from 'axios'
+import { join } from 'path'
 export class QontoIntegration implements IQontoIntegration {
   private _instance: AxiosInstance
 
-  constructor(config?: QontoConfig) {
-    const headers = {
-      Authorization: `${config?.organisationSlug}:${config?.secretKey}`,
+  constructor(public config: QontoConfig) {
+    const {
+      baseUrl = 'https://thirdparty.qonto.com',
+      organisationSlug,
+      secretKey,
+      stagingToken,
+    } = config
+    const headers: { [key: string]: string } = {
+      Authorization: `${organisationSlug}:${secretKey}`,
       'Content-Type': 'application/json',
       Accept: 'application/json',
     }
-    switch (config?.environment) {
-      case 'sandbox':
-        this._instance = axios.create({
-          baseURL: 'https://thirdparty-sandbox.staging.qonto.co/v2',
-          headers: {
-            ...headers,
-            'X-Qonto-Staging-Token': config?.stagingToken,
-          },
-        })
-        break
-      default:
-        this._instance = axios.create({
-          baseURL: 'https://thirdparty.qonto.com/v2',
-          headers,
-        })
-        break
+    if (stagingToken) {
+      headers['X-Qonto-Staging-Token'] = stagingToken
     }
+    this._instance = axios.create({
+      baseURL: join(baseUrl, 'v2'),
+      headers,
+    })
   }
 
-  private _errorMapper = (
-    response: AxiosResponse<{ errors: QontoError[] }>
-  ): IntegrationResponseError => {
-    const [{ status, detail }] = response.data.errors
-    return {
-      error: { status, message: detail },
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof AxiosError && error.response) {
+      const [{ status, detail }] = error.response.data.errors as QontoError[]
+      return {
+        error: { status, message: detail },
+      }
     }
+    throw error
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._instance.get('/organization')
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -64,10 +58,7 @@ export class QontoIntegration implements IQontoIntegration {
       const response = await this._instance.post<{ client: QontoClient }>('/clients', client)
       return { data: response.data.client }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -79,10 +70,7 @@ export class QontoIntegration implements IQontoIntegration {
       )
       return { data: response.data.client_invoice }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -93,10 +81,7 @@ export class QontoIntegration implements IQontoIntegration {
       )
       return { data: response.data.client_invoices }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -107,10 +92,7 @@ export class QontoIntegration implements IQontoIntegration {
       )
       return { data: response.data.attachment }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 }

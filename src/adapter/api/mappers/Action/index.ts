@@ -2,38 +2,38 @@ import type { Action } from '/domain/entities/Action'
 import {
   RunJavascriptCodeActionMapper,
   type RunJavascriptCodeActionMapperServices,
-} from './code/RunJavascriptMapper'
+} from './services/code/RunJavascriptMapper'
 import {
   RunTypescriptCodeActionMapper,
   type RunTypescriptCodeActionMapperServices,
-} from './code/RunTypescriptMapper'
+} from './services/code/RunTypescriptMapper'
 import {
   CreateRecordDatabaseActionMapper,
   type CreateRecordDatabaseActionMapperEntities,
   type CreateRecordDatabaseActionMapperServices,
-} from './database/CreateRecordMapper'
+} from './services/database/CreateRecordMapper'
 import type { IAction } from '/domain/interfaces/IAction'
-import { ReadRecordDatabaseActionMapper } from './database/ReadRecordMapper'
+import { ReadRecordDatabaseActionMapper } from './services/database/ReadRecordMapper'
 import {
   GetCompanyPappersActionMapper,
   type GetCompanyPappersActionMapperIntegrations,
-} from './pappers/GetCompanyMapper'
+} from './integrations/pappers/GetCompanyMapper'
 import {
   CreateClientQontoActionMapper,
   type CreateClientQontoActionMapperIntegrations,
-} from './qonto/CreateClientMapper'
+} from './integrations/qonto/CreateClientMapper'
 import {
   UpdatePageNotionActionMapper,
   type UpdatePageNotionActionMapperIntegrations,
-} from './notion/UpdatePage'
-import { SendEmailGoogleMailActionMapper } from './googleMail/SendEmailMapper'
-import type { SendEmailGoogleMailActionIntegrations } from '/domain/entities/Action/googleMail/SendEmail'
+} from './integrations/notion/UpdatePage'
+import { SendEmailGoogleMailActionMapper } from './integrations/googleMail/SendEmailMapper'
+import type { SendEmailGoogleMailActionIntegrations } from '/domain/entities/Action/integrations/googleMail/SendEmail'
 import {
   CreatePaymentGoCardlessActionMapper,
   type CreatePaymentGoCardlessActionMapperIntegrations,
-} from './gocardless/CreatePaymentMapper'
-import { ListPaymentsGoCardlessActionMapper } from './gocardless/ListPaymentsMapper'
-import { RetrieveAttachmentQontoActionMapper } from './qonto/RetrieveAttachmentMapper'
+} from './integrations/gocardless/CreatePaymentMapper'
+import { ListPaymentsGoCardlessActionMapper } from './integrations/gocardless/ListPaymentsMapper'
+import { RetrieveAttachmentQontoActionMapper } from './integrations/qonto/RetrieveAttachmentMapper'
 
 export type ActionMapperServices = CreateRecordDatabaseActionMapperServices &
   RunJavascriptCodeActionMapperServices &

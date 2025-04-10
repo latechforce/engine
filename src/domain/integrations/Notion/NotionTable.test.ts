@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeEach, mock } from 'bun:test'
 import { NotionTable } from './NotionTable'
-import type { INotionTableSpi, NotionTableServices } from './NotionTable'
+import type { NotionTableServices } from './NotionTable'
 import type { NotionConfig } from '.'
 import type { Bucket } from '/domain/entities/Bucket'
 import type { FilterConfig } from '/domain/entities/Filter'
 import { FilterMapper } from '/domain/entities/Filter'
+import type { INotionTableSpi } from './INotionTableSpi'
 
 let spi: INotionTableSpi
 let services: NotionTableServices

@@ -25,9 +25,9 @@ export class NotionIntegration implements INotionIntegration {
   private _tables?: SQLiteDatabaseTableDriver
   private _users?: SQLiteDatabaseTableDriver
 
-  constructor(private _config?: NotionConfig) {
+  constructor(public config: NotionConfig) {
     this._db = new SQLiteDatabaseDriver({
-      url: _config?.token ?? ':memory:',
+      url: config.baseUrl ?? ':memory:',
       driver: 'SQLite',
     })
   }

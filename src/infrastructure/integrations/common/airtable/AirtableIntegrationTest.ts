@@ -4,14 +4,15 @@ import type BunTester from 'bun:test'
 import { AirtableIntegration } from './AirtableIntegration'
 
 export const integration = new AirtableIntegration({
+  name: 'test',
   apiKey: env.TEST_AIRTABLE_API_KEY,
-  baseId: env.TEST_AIRTABLE_BASE_ID,
+  databaseId: env.TEST_AIRTABLE_BASE_ID,
 })
 
 export const testTable = await integration.getTable(env.TEST_AIRTABLE_TABLE_1_ID)
 
 export const cleanTestTable = async () => {
-  const records = await testTable.list()
+  const { data: records = [] } = await testTable.list()
   await testTable.deleteMany(records.map((record) => record.id))
 }
 
@@ -24,6 +25,13 @@ export function testAirtableIntegration(
   const { TABLE_ID } = env
 
   if (teardown) afterAll(teardown)
+
+  describe('checkConfiguration', () => {
+    it('should check the configuration', async () => {
+      const response = await integration.checkConfiguration()
+      expect(response).toBeUndefined()
+    })
+  })
 
   describe('getTable', () => {
     it('should get a table', async () => {

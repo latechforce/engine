@@ -5,7 +5,18 @@ export interface BaseTriggerConfig {
   automation: string
 }
 
-export interface BaseTrigger {
-  init: (run: (triggerData: object) => Promise<AutomationContext>) => Promise<void>
-  validateConfig: () => Promise<ConfigError[]>
+export interface BaseTriggerIntegrationConfig extends BaseTriggerConfig {
+  account: string
+}
+
+export class BaseTrigger<T extends BaseTriggerConfig> {
+  constructor(protected _config: T) {}
+
+  validate = async (): Promise<ConfigError[]> => {
+    return []
+  }
+
+  init = async (_run: (triggerData: object) => Promise<AutomationContext>): Promise<void> => {
+    throw new Error('Not implemented')
+  }
 }

@@ -42,7 +42,7 @@ export interface INewIntegrationSpi extends BaseSpi {}
 
 ## Step 4: Domain Integration
 
-Create a new file in `src/domain/integrations/NewIntegration/index.ts` to implement the integration:
+Create a new file in `src/domain/integrations/NewIntegration/NewIntegration.ts` to implement the integration:
 
 ```typescript
 import type { INewIntegrationSpi } from './INewIntegrationSpi'
@@ -50,8 +50,19 @@ import { Integration } from '../base'
 
 // Just duplicate the template without filling it
 export class NewIntegration extends Integration<INewIntegrationSpi> {
-  constructor(spi: INewIntegrationSpi) {
-    super(spi)
+  constructor(spis: INewIntegrationSpi[]) {
+    super(spis)
   }
 }
+```
+
+## Step 5: Domain Integration index
+
+Create a new file in `src/domain/integrations/NewIntegration/index.ts` to export the integration:
+
+```typescript
+export * from './NewIntegration'
+export * from './NewIntegrationConfig'
+export * from './NewIntegrationTypes'
+export * from './INewIntegrationSpi'
 ```

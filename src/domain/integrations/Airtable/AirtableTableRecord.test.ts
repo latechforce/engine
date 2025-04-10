@@ -1,5 +1,6 @@
 import { beforeEach, it, describe, expect } from 'bun:test'
-import { AirtableTableRecord, type AirtableTableRecordFieldFile } from './AirtableTableRecord'
+import { AirtableTableRecord } from './AirtableTableRecord'
+import type { AirtableTableRecordFieldFile } from './AirtableTypes'
 
 type MockProperties = {
   singleLineText: string | null

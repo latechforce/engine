@@ -8,8 +8,8 @@ import type { IntegrationResponse } from '/domain/integrations/base'
 export class PappersIntegration implements IPappersIntegration {
   private db: Database
 
-  constructor(private _config?: PappersConfig) {
-    this.db = new Database(_config?.apiKey ?? ':memory:')
+  constructor(public config: PappersConfig) {
+    this.db = new Database(config.baseUrl ?? ':memory:')
     this.db.run(`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)`)
     this.db.run(`
       CREATE TABLE IF NOT EXISTS companies (
@@ -20,7 +20,7 @@ export class PappersIntegration implements IPappersIntegration {
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
-    const user = this.db.query('SELECT * FROM users WHERE id = ?').get(this._config?.apiKey ?? '')
+    const user = this.db.query('SELECT * FROM users WHERE id = ?').get(this.config.apiKey ?? '')
     if (!user) {
       return { error: { status: 404 } }
     }

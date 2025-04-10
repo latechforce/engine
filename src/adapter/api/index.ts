@@ -23,6 +23,7 @@ export default class {
 
   start = async (config: unknown): Promise<StartedApp> => {
     const stoppedApp = await this._validateOrThrow(config)
+    await stoppedApp.init()
     const startedApp = await stoppedApp.start()
     return startedApp
   }
@@ -50,11 +51,7 @@ export default class {
       this._components,
       config
     )
-    await stoppedApp.logger.init()
-    stoppedApp.logger.debug('✅ config schema is valid')
-    const errors = await stoppedApp.validateConfig()
-    if (errors.length > 0) throw new Error(JSON.stringify(errors, null, 2))
-    stoppedApp.logger.debug('✅ config dependancies are valids')
+    await stoppedApp.validate()
     return stoppedApp
   }
 

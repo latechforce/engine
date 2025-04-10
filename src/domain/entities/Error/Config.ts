@@ -1,13 +1,15 @@
+export type ConfigErrorEntity =
+  | 'Action'
+  | 'Component'
+  | 'Field'
+  | 'Table'
+  | 'Automation'
+  | 'Page'
+  | 'Trigger'
+  | 'Integration'
+
 export interface ConfigErrorParams {
-  entity:
-    | 'Action'
-    | 'Component'
-    | 'Field'
-    | 'Table'
-    | 'Automation'
-    | 'Page'
-    | 'Trigger'
-    | 'Integration'
+  entity: ConfigErrorEntity
   name: string
   message: string
 }

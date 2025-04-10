@@ -55,7 +55,7 @@ export class Bucket {
     await server.get(this.filePath, this.get)
   }
 
-  validateConfig = async (): Promise<ConfigError[]> => {
+  validate = async (): Promise<ConfigError[]> => {
     return []
   }
 

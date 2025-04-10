@@ -3,13 +3,13 @@ import type { IntegrationResponse, IntegrationResponseError } from '/domain/inte
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 import type { YouCanBookMeError } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
-import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
+import axios, { AxiosError, type AxiosInstance } from 'axios'
 
 export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   private _instance: AxiosInstance
   private _userId: string
 
-  constructor(config?: YouCanBookMeConfig) {
+  constructor(public config: YouCanBookMeConfig) {
     this._instance = axios.create({
       baseURL: config?.baseUrl ?? 'https://api.youcanbook.me/v1',
       auth: {
@@ -24,23 +24,24 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
     this._userId = config?.user.username ?? ''
   }
 
-  private _errorMapper = (response: AxiosResponse<YouCanBookMeError>): IntegrationResponseError => {
-    return {
-      error: {
-        status: response.status,
-        message: response.data.message,
-      },
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof AxiosError && error.response) {
+      const { message } = error.response.data as YouCanBookMeError
+      return {
+        error: {
+          status: error.response.status,
+          message: `${message}`,
+        },
+      }
     }
+    throw error
   }
 
   checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._instance.get(`/profiles/${this._userId}`)
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -49,10 +50,7 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
       const response = await this._instance.get<YouCanBookMeProfile>(`/profiles/${profileId}`)
       return { data: response.data }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 
@@ -67,10 +65,7 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
       )
       return { data: response.data }
     } catch (error) {
-      if (error instanceof AxiosError && error.response) {
-        return this._errorMapper(error.response)
-      }
-      throw error
+      return this._responseError(error)
     }
   }
 }
