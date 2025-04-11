@@ -6,9 +6,9 @@ import type { IIntegrations } from './IIntegrations'
 import type { IForm } from './IForm'
 
 /**
- * App configuration
- * @title App configuration
- * @description This is the configuration of the app.
+ * Engine configuration
+ * @title Engine configuration
+ * @description This is the configuration of the engine.
  */
 export interface Config extends IServices {
   /**
