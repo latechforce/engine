@@ -18,13 +18,13 @@ beforeEach(() => {
   spi = {
     id: 'table-id',
     name: 'Test Table',
-    insert: mock(),
-    insertMany: mock(),
-    update: mock(),
-    updateMany: mock(),
-    retrieve: mock(),
-    archive: mock(),
-    list: mock(),
+    insert: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    insertMany: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    update: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    updateMany: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    retrieve: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    archive: mock(async () => ({ data: { id: 'record-id' } })) as any,
+    list: mock(async () => ({ data: { id: 'record-id' } })) as any,
   }
   services = {
     // @ts-expect-error mock
@@ -401,7 +401,7 @@ describe('startPolling', () => {
     // GIVEN
     const mockListener = mock(async () => {})
     // @ts-expect-error mock
-    spi.list.mockResolvedValue([{ id: 'page-1', created_time: '2023-01-01T12:00:00Z' }])
+    spi.list.mockResolvedValue({ data: [{ id: 'page-1', created_time: '2023-01-01T12:00:00Z' }] })
     await notionTable.onInsert(mockListener)
 
     // WHEN
@@ -454,7 +454,7 @@ describe('onInsert', () => {
     const mockCallback = mock(async () => {})
     const page = { id: 'page-1', title: 'Test Page' }
     // @ts-expect-error mock
-    spi.list.mockResolvedValue([page])
+    spi.list.mockResolvedValue({ data: [page] })
 
     await notionTable.onInsert(mockCallback)
 
