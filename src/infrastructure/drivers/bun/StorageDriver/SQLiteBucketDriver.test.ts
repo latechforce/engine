@@ -5,11 +5,7 @@ import { SQLiteDatabaseDriver } from '../DatabaseDriver/SQLite/SQLiteDriver'
 
 const setup = async () => {
   const sqliteDatabase = new SQLiteDatabaseDriver({ url: ':memory:', driver: 'SQLite' })
-  const bucket = new SQLiteStorageBucketDriver(
-    'test',
-    async (query) => sqliteDatabase.query(query),
-    async (query) => sqliteDatabase.exec(query)
-  )
+  const bucket = new SQLiteStorageBucketDriver('test', sqliteDatabase.query, sqliteDatabase.exec)
   return bucket
 }
 

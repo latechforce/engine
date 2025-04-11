@@ -1,8 +1,4 @@
-import {
-  BaseAction,
-  type BaseActionIntegrationConfig,
-  type BaseActionServices,
-} from '/domain/entities/Action/base'
+import { type BaseActionServices } from '/domain/entities/Action/base'
 import type { AutomationContext } from '/domain/entities/Automation/Context'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import type {
@@ -15,6 +11,7 @@ import {
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
 } from '/domain/services/Template'
+import { BaseIntegrationAction, type BaseActionIntegrationConfig } from '../base'
 
 type GoCardlessListPaymentsAsTemplateObjectCompiled =
   ConvertToTemplateObjectCompiled<GoCardlessListPayment>
@@ -36,7 +33,7 @@ export interface ListPaymentsGoCardlessActionIntegrations {
 type Input = { params: GoCardlessListPayment }
 type Output = GoCardlessPaymentList
 
-export class ListPaymentsGoCardlessAction extends BaseAction<Input, Output> {
+export class ListPaymentsGoCardlessAction extends BaseIntegrationAction<Input, Output> {
   private _params: GoCardlessListPaymentsAsTemplateObjectCompiled
 
   constructor(

@@ -1,4 +1,4 @@
-import { type BaseActionIntegrationConfig } from '/domain/entities/Action/base'
+import { type BaseActionIntegrationConfig } from '/domain/entities/Action/integrations/base'
 import type { AutomationContext } from '/domain/entities/Automation/Context'
 import { Template } from '/domain/services/Template'
 import type { PappersEntreprise } from '/domain/integrations/Pappers/PappersTypes'

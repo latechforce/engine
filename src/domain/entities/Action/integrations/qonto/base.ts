@@ -1,10 +1,7 @@
 import type { Qonto } from '/domain/integrations/Qonto'
-import {
-  BaseAction,
-  type BaseActionIntegrationConfig,
-  type BaseActionServices,
-} from '/domain/entities/Action/base'
+import { type BaseActionServices } from '/domain/entities/Action/base'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import { BaseIntegrationAction, type BaseActionIntegrationConfig } from '../base'
 
 export interface BaseQontoActionServices extends BaseActionServices {
   templateCompiler: TemplateCompiler
@@ -14,7 +11,10 @@ export interface BaseQontoActionIntegrations {
   qonto: Qonto
 }
 
-export class BaseQontoAction<I extends object, O extends object> extends BaseAction<I, O> {
+export class BaseQontoAction<I extends object, O extends object> extends BaseIntegrationAction<
+  I,
+  O
+> {
   constructor(
     protected _config: BaseActionIntegrationConfig,
     services: BaseQontoActionServices,

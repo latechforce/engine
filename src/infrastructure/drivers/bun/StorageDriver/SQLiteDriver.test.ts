@@ -9,10 +9,7 @@ const setup = async (): Promise<IStorageDriver> => {
     driver: 'SQLite',
     url: ':memory:',
   })
-  return new SQLiteStorageDriver(
-    async (query) => db.query(query),
-    async (query) => db.exec(query)
-  )
+  return new SQLiteStorageDriver(db.query, db.exec)
 }
 
 testStorageDriver(BunTester, setup)

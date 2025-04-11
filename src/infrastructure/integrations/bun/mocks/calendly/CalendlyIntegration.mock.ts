@@ -55,8 +55,6 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
         { name: 'scheduling_url', type: 'SingleLineText' },
         { name: 'timezone', type: 'SingleLineText' },
         { name: 'avatar_url', type: 'SingleLineText' },
-        { name: 'created_at', type: 'DateTime' },
-        { name: 'updated_at', type: 'DateTime' },
         { name: 'current_organization', type: 'SingleLineText' },
         { name: 'slug', type: 'SingleLineText' },
       ],
@@ -67,8 +65,6 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
       fields: [
         { name: 'uri', type: 'SingleLineText' },
         { name: 'callback_url', type: 'SingleLineText' },
-        { name: 'created_at', type: 'DateTime' },
-        { name: 'updated_at', type: 'DateTime' },
         { name: 'retry_started_at', type: 'DateTime' },
         { name: 'state', type: 'SingleLineText' },
         { name: 'events', type: 'LongText' },

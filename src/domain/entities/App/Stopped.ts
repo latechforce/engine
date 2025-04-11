@@ -20,11 +20,12 @@ export class StoppedApp extends BaseApp {
 
   validate = async (): Promise<void> => {
     const { tables, automations, buckets, forms } = this._entities
-    const errors: Promise<ConfigError[]>[] = []
-    errors.push(...tables.map((table) => table.validate()))
-    errors.push(...buckets.map((bucket) => bucket.validate()))
-    errors.push(...automations.map((automation) => automation.validate()))
-    errors.push(...forms.map((form) => form.validate()))
+    const promises: Promise<ConfigError[]>[] = []
+    promises.push(...tables.map((table) => table.validate()))
+    promises.push(...buckets.map((bucket) => bucket.validate()))
+    promises.push(...automations.map((automation) => automation.validate()))
+    promises.push(...forms.map((form) => form.validate()))
+    const errors = await Promise.all(promises).then((results) => results.flat())
     if (errors.length > 0) {
       this.logger.error('❌ config schema is invalid', { errors })
       throw new Error(JSON.stringify(errors, null, 2))

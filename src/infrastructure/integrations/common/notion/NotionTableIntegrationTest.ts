@@ -763,15 +763,15 @@ export function testNotionTableIntegration(
       if (insertResponse.error) throw insertResponse.error
 
       // WHEN
-      const call = async () =>
-        table1.list({
-          field: 'invalid',
-          operator: 'Is',
-          value: insertResponse.data.id,
-        })
+      const response = await table1.list({
+        field: 'invalid',
+        operator: 'Is',
+        value: insertResponse.data.id,
+      })
 
       // THEN
-      await expect(call()).rejects.toThrow('Field "invalid" does not exist')
+      expect(response.error).toBeDefined()
+      expect(response.error?.message).toBe('Field "invalid" does not exist')
     })
 
     it('should list pages in a table with a Is filter on a formula', async () => {

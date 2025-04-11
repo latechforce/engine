@@ -26,6 +26,13 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
     this._properties = JSON.parse(_table.fields.properties)
   }
 
+  private _responseError = (error: unknown) => {
+    if (error instanceof Error) {
+      return { error: { status: 500, message: error.message } }
+    }
+    throw error
+  }
+
   ensure = async () => {
     const exist = await this._db.exists()
     if (!exist) {
@@ -46,43 +53,60 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
     await this._db.createView()
   }
 
-  insert = async (page: T) => {
-    const id = this._getId()
-    await this._db.insert({
-      id,
-      fields: this._preprocess(page),
-      created_at: new Date().toISOString(),
-    })
-    return this.retrieve(id)
+  insert = async (page: T): Promise<IntegrationResponse<NotionTablePageDto<T>>> => {
+    try {
+      const id = this._getId()
+      await this._db.insert({
+        id,
+        fields: this._preprocess(page),
+        created_at: new Date().toISOString(),
+      })
+      return this.retrieve(id)
+    } catch (error) {
+      return this._responseError(error)
+    }
   }
 
-  insertMany = async (pages: T[]) => {
-    const pagesToInsert = pages.map((page) => ({
-      id: this._getId(),
-      fields: this._preprocess(page),
-      created_at: new Date().toISOString(),
-    }))
-    await this._db.insertMany(pagesToInsert)
-    return this.list({
-      or: pagesToInsert.map((page) => ({
-        field: 'id',
-        operator: 'Is',
-        value: page.id,
-      })),
-    })
+  insertMany = async (pages: T[]): Promise<IntegrationResponse<NotionTablePageDto<T>[]>> => {
+    try {
+      const pagesToInsert = pages.map((page) => ({
+        id: this._getId(),
+        fields: this._preprocess(page),
+        created_at: new Date().toISOString(),
+      }))
+      await this._db.insertMany(pagesToInsert)
+      return this.list({
+        or: pagesToInsert.map((page) => ({
+          field: 'id',
+          operator: 'Is',
+          value: page.id,
+        })),
+      })
+    } catch (error) {
+      return this._responseError(error)
+    }
   }
 
-  update = async (id: string, page: Partial<T>) => {
-    const fields = this._preprocess(page)
-    await this._db.update({
-      id,
-      fields,
-      updated_at: new Date().toISOString(),
-    })
-    return this.retrieve(id)
+  update = async (
+    id: string,
+    page: Partial<T>
+  ): Promise<IntegrationResponse<NotionTablePageDto<T>>> => {
+    try {
+      const fields = this._preprocess(page)
+      await this._db.update({
+        id,
+        fields,
+        updated_at: new Date().toISOString(),
+      })
+      return this.retrieve(id)
+    } catch (error) {
+      return this._responseError(error)
+    }
   }
 
-  updateMany = async (pages: { id: string; page: Partial<T> }[]) => {
+  updateMany = async (
+    pages: { id: string; page: Partial<T> }[]
+  ): Promise<IntegrationResponse<NotionTablePageDto<T>[]>> => {
     try {
       const pagesToUpdate = pages.map(({ id, page }) => ({
         id,
@@ -98,21 +122,21 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
         })),
       })
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  retrieve = async (id: string) => {
+  retrieve = async (id: string): Promise<IntegrationResponse<NotionTablePageDto<T>>> => {
     try {
       const record = await this._db.readById(id)
       if (!record) throw new Error(`Record not found: ${id}`)
       return { data: this._postprocess(record) }
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  archive = async (id: string) => {
+  archive = async (id: string): Promise<IntegrationResponse<void>> => {
     try {
       await this._db.update({
         id,
@@ -123,27 +147,27 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
       })
       return { data: undefined }
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  archiveMany = async (ids: string[]) => {
+  archiveMany = async (ids: string[]): Promise<IntegrationResponse<void>> => {
     try {
       const pagesArchived: Promise<IntegrationResponse<void>>[] = []
       for (const id of ids) pagesArchived.push(this.archive(id))
       await Promise.all(pagesArchived)
       return { data: undefined }
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  list = async (filter?: FilterDto) => {
+  list = async (filter?: FilterDto): Promise<IntegrationResponse<NotionTablePageDto<T>[]>> => {
     try {
       const records = await this._db.list(filter)
       return { data: records.map((record) => this._postprocess(record)) }
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 

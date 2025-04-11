@@ -43,6 +43,14 @@ export class AirtableIntegration implements IAirtableIntegration {
   }
 
   static responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof Error) {
+      return {
+        error: {
+          status: 500,
+          message: error.message,
+        },
+      }
+    }
     if (AirtableIntegration.isAirtableError(error)) {
       const { statusCode, message } = error
       return {

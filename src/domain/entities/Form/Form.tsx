@@ -32,14 +32,14 @@ export class Form {
     this.timestamp = String(+Date.now())
   }
 
+  validate = async (): Promise<ConfigError[]> => {
+    return []
+  }
+
   init = async () => {
     const { server } = this._services
     await server.get(this.path, this.get)
     await server.post(this.path, this.post)
-  }
-
-  validate = async (): Promise<ConfigError[]> => {
-    return []
   }
 
   post = async (request: PostRequest): Promise<JsxResponse> => {

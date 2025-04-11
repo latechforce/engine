@@ -38,7 +38,7 @@ export class BaseMockIntegration {
       return {
         error: {
           status: 401,
-          message: 'Invalid token',
+          message: 'Test connection failed',
         },
       }
     }

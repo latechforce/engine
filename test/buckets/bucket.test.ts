@@ -39,7 +39,8 @@ mock.request(({ app, drivers }) => {
           notion: [
             {
               name: 'notion_files',
-              token: ':memory:',
+              baseUrl: ':memory:',
+              token: 'test',
             },
           ],
         },

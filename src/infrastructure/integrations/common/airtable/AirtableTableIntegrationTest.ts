@@ -35,16 +35,16 @@ export function testAirtableTableIntegration(
 
     it('should throw an error if a field in not in the database schema', async () => {
       // WHEN
-      const call = () =>
-        table1.insert({
-          name: nanoid(),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-expect-error
-          invalid: 'invalid',
-        })
+      const response = await table1.insert({
+        name: nanoid(),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        invalid: 'invalid',
+      })
 
       // THEN
-      expect(call()).rejects.toThrow('Field "invalid" not found in schema')
+      expect(response.error).toBeDefined()
+      expect(response.error?.message).toBe('Field "invalid" not found in schema')
     })
 
     it('should insert a record in a table with a title field', async () => {
@@ -526,15 +526,15 @@ export function testAirtableTableIntegration(
       if (!id) throw new Error('id is undefined')
 
       // WHEN
-      const call = async () =>
-        table1.list({
-          field: 'invalid',
-          operator: 'Is',
-          value: id,
-        })
+      const response = await table1.list({
+        field: 'invalid',
+        operator: 'Is',
+        value: id,
+      })
 
       // THEN
-      expect(call()).rejects.toThrow('Field "invalid" does not exist')
+      expect(response.error).toBeDefined()
+      expect(response.error?.message).toBe('Field "invalid" does not exist')
     })
 
     it('should list records in a table with a Is filter', async () => {

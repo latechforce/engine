@@ -10,6 +10,8 @@ export const integration = new CalendlyIntegration({
   },
 })
 
+await integration.createToken('https://api.calendly.com/users/123')
+
 await integration.createUser({
   uri: 'https://api.calendly.com/users/123',
   name: 'John Doe',

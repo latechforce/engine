@@ -72,7 +72,7 @@ mock.request(({ app, request, integrations }) => {
       const call = async () => app.start(extendConfig)
 
       // THEN
-      expect(call()).rejects.toThrow('Qonto configuration is invalid')
+      expect(call()).rejects.toThrow('Test connection failed')
     })
   })
 

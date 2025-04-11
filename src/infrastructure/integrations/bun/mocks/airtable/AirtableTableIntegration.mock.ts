@@ -11,6 +11,7 @@ import type {
   AirtableTableRecordFields,
   UpdateAirtableTableRecord,
 } from '/domain/integrations/Airtable'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 
 export class AirtableTableIntegration<T extends AirtableTableRecordFields>
   implements IAirtableTableIntegration<T>
@@ -26,6 +27,23 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
     this.id = _table.id
     this.name = _table.fields.name
     this._fields = JSON.parse(_table.fields.fields)
+  }
+
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof Error) {
+      return { error: { status: 500, message: error.message } }
+    }
+    if (
+      typeof error === 'object' &&
+      error !== null &&
+      'message' in error &&
+      typeof error.message === 'string' &&
+      'status' in error &&
+      typeof error.status === 'number'
+    ) {
+      return { error: { status: error.status, message: error.message } }
+    }
+    throw error
   }
 
   ensure = async () => {
@@ -48,7 +66,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
     await this._db.createView()
   }
 
-  insert = async (record: T) => {
+  insert = async (record: T): Promise<IntegrationResponse<AirtableTableRecordDto<T>>> => {
     try {
       const id = this._getId()
       await this._db.insert({
@@ -58,11 +76,11 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       })
       return this.retrieve(id)
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  insertMany = async (records: T[]) => {
+  insertMany = async (records: T[]): Promise<IntegrationResponse<AirtableTableRecordDto<T>[]>> => {
     try {
       const recordsToInsert = records.map((record) => ({
         id: this._getId(),
@@ -78,11 +96,14 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
         })),
       })
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  update = async (id: string, record: Partial<T>) => {
+  update = async (
+    id: string,
+    record: Partial<T>
+  ): Promise<IntegrationResponse<AirtableTableRecordDto<T>>> => {
     try {
       const fields = this._preprocess(record)
       await this._db.update({
@@ -92,11 +113,13 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       })
       return this.retrieve(id)
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  updateMany = async (pages: UpdateAirtableTableRecord<T>[]) => {
+  updateMany = async (
+    pages: UpdateAirtableTableRecord<T>[]
+  ): Promise<IntegrationResponse<AirtableTableRecordDto<T>[]>> => {
     try {
       const recordsToUpdate = pages.map(({ id, fields }) => ({
         id,
@@ -112,44 +135,44 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
         })),
       })
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  retrieve = async (id: string) => {
+  retrieve = async (id: string): Promise<IntegrationResponse<AirtableTableRecordDto<T>>> => {
     try {
       const record = await this._db.readById(id)
-      if (!record) throw { statusCode: 404, message: 'Record not found' }
+      if (!record) throw { status: 404, message: 'Record not found' }
       return { data: this._postprocess(record) }
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  delete = async (id: string) => {
+  delete = async (id: string): Promise<IntegrationResponse<void>> => {
     try {
       await this._db.delete(id)
       return { data: undefined }
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  deleteMany = async (ids: string[]) => {
+  deleteMany = async (ids: string[]): Promise<IntegrationResponse<void>> => {
     try {
       for (const id of ids) await this._db.delete(id)
       return { data: undefined }
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 
-  list = async (filter?: FilterDto) => {
+  list = async (filter?: FilterDto): Promise<IntegrationResponse<AirtableTableRecordDto<T>[]>> => {
     try {
       const records = await this._db.list(filter)
       return { data: records.map((record) => this._postprocess(record)) }
     } catch (error) {
-      return { error: { status: 500, message: String(error) } }
+      return this._responseError(error)
     }
   }
 

@@ -50,13 +50,13 @@ export class Bucket {
     return server.baseUrl + this.path
   }
 
+  validate = async (): Promise<ConfigError[]> => {
+    return []
+  }
+
   init = async () => {
     const { server } = this._services
     await server.get(this.filePath, this.get)
-  }
-
-  validate = async (): Promise<ConfigError[]> => {
-    return []
   }
 
   save = async (fileProperties: FileProperties): Promise<File> => {

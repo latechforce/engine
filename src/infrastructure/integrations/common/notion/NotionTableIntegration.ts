@@ -37,19 +37,28 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
   }
 
   insert = async (page: T) => {
-    const properties = this._preprocessProperties(page)
-    const response = await NotionIntegration.retry(() =>
-      this._api.pages.create({
-        parent: {
-          database_id: this._database.id,
+    try {
+      const properties = this._preprocessProperties(page)
+      const response = await NotionIntegration.retry(() =>
+        this._api.pages.create({
+          parent: {
+            database_id: this._database.id,
+          },
+          properties,
+        })
+      )
+      if (response.error) return response
+      return {
+        data: this._postprocessPage(this._throwIfNotPageObjectResponse(response.data)),
+        error: undefined,
+      }
+    } catch (error) {
+      return {
+        error: {
+          status: 500,
+          message: error instanceof Error ? error.message : 'Failed to create page',
         },
-        properties,
-      })
-    )
-    if (response.error) return response
-    return {
-      data: this._postprocessPage(this._throwIfNotPageObjectResponse(response.data)),
-      error: undefined,
+      }
     }
   }
 
@@ -86,20 +95,28 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
     id: string,
     page: Partial<T>
   ): Promise<IntegrationResponse<NotionTablePageDto<T>>> => {
-    const properties = this._preprocessProperties(page)
-    const response = await NotionIntegration.retry(() =>
-      this._api.pages.update({
-        page_id: id,
-        properties,
-      })
-    )
-    if (response.error) return response
-    return {
-      data: this._postprocessPage(this._throwIfNotPageObjectResponse(response.data)),
-      error: undefined,
+    try {
+      const properties = this._preprocessProperties(page)
+      const response = await NotionIntegration.retry(() =>
+        this._api.pages.update({
+          page_id: id,
+          properties,
+        })
+      )
+      if (response.error) return response
+      return {
+        data: this._postprocessPage(this._throwIfNotPageObjectResponse(response.data)),
+        error: undefined,
+      }
+    } catch (error) {
+      return {
+        error: {
+          status: 500,
+          message: error instanceof Error ? error.message : 'Failed to update page',
+        },
+      }
     }
   }
-
   updateMany = async (
     pages: { id: string; page: Partial<T> }[]
   ): Promise<IntegrationResponse<NotionTablePageDto<T>[]>> => {
@@ -179,28 +196,37 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
   }
 
   list = async (filter?: FilterDto): Promise<IntegrationResponse<NotionTablePageDto<T>[]>> => {
-    const query: QueryDatabaseParameters = {
-      database_id: this._database.id,
-    }
-    if (filter) {
-      query.filter = this._convertFilter(filter)
-    }
-    let pages: QueryDatabaseResponse['results'] = []
-    let cursor: string | undefined = undefined
-    do {
-      const response = await NotionIntegration.retry(() =>
-        this._api.databases.query({
-          ...query,
-          start_cursor: cursor,
-        })
-      )
-      if (response.error) return response
-      pages = pages.concat(response.data.results)
-      cursor = response.data.has_more ? (response.data.next_cursor ?? undefined) : undefined
-    } while (cursor)
-    return {
-      data: pages.map((page) => this._postprocessPage(this._throwIfNotPageObjectResponse(page))),
-      error: undefined,
+    try {
+      const query: QueryDatabaseParameters = {
+        database_id: this._database.id,
+      }
+      if (filter) {
+        query.filter = this._convertFilter(filter)
+      }
+      let pages: QueryDatabaseResponse['results'] = []
+      let cursor: string | undefined = undefined
+      do {
+        const response = await NotionIntegration.retry(() =>
+          this._api.databases.query({
+            ...query,
+            start_cursor: cursor,
+          })
+        )
+        if (response.error) return response
+        pages = pages.concat(response.data.results)
+        cursor = response.data.has_more ? (response.data.next_cursor ?? undefined) : undefined
+      } while (cursor)
+      return {
+        data: pages.map((page) => this._postprocessPage(this._throwIfNotPageObjectResponse(page))),
+        error: undefined,
+      }
+    } catch (error) {
+      return {
+        error: {
+          status: 500,
+          message: error instanceof Error ? error.message : 'Failed to list pages',
+        },
+      }
     }
   }
 

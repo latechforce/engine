@@ -1,4 +1,4 @@
-import { BaseAction, type BaseActionServices } from '/domain/entities/Action/base'
+import { type BaseActionServices } from '/domain/entities/Action/base'
 import type { AutomationContext } from '/domain/entities/Automation/Context'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import {
@@ -12,7 +12,10 @@ import type {
   NotionTablePageProperties,
 } from '/domain/integrations/Notion'
 import type { NotionTable } from '/domain/integrations/Notion/NotionTable'
-import type { BaseActionIntegrationConfig } from '/domain/entities/Action/base'
+import {
+  BaseIntegrationAction,
+  type BaseActionIntegrationConfig,
+} from '/domain/entities/Action/integrations/base'
 
 type NotionTablePagePropertiesAsTemplateObjectCompiled =
   ConvertToTemplateObjectCompiled<NotionTablePageProperties>
@@ -36,7 +39,7 @@ export interface UpdatePageNotionActionIntegrations {
 type Input = { id: string; page: NotionTablePagePropertiesAsTemplateObjectFilled }
 type Output = NotionTablePageJson
 
-export class UpdatePageNotionAction extends BaseAction<Input, Output> {
+export class UpdatePageNotionAction extends BaseIntegrationAction<Input, Output> {
   private _id: Template
   private _page: NotionTablePagePropertiesAsTemplateObjectCompiled
   private _table?: NotionTable

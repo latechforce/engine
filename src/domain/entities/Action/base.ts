@@ -10,10 +10,6 @@ export interface BaseActionConfig {
   name: string
 }
 
-export interface BaseActionIntegrationConfig extends BaseActionConfig {
-  account: string
-}
-
 export interface BaseActionServices {
   logger: Logger
   monitor: Monitor
@@ -30,7 +26,7 @@ export class BaseAction<Input extends object, Output extends object> {
   }
 
   validate = async (): Promise<ConfigError[]> => {
-    throw new Error('Method not implemented.')
+    return []
   }
 
   init = async () => {}
