@@ -27,6 +27,7 @@ mock.request(({ app, request }) => {
                 name: 'sendEmail',
                 integration: 'GoogleMail',
                 action: 'SendEmail',
+                account: 'googlemail',
                 email: {
                   from: 'test@test.com',
                   to: 'test@test.com',

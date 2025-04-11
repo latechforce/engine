@@ -27,14 +27,18 @@ describe('addTable', () => {
 
   it('should read data with real Notion table config', async () => {
     // GIVEN
-    const { id } = await table.insert({
+    const response = await table.insert({
       'Email de contact': 'test',
     })
+    if (response.error) {
+      throw new Error(response.error.message)
+    }
+    const { id } = response.data
 
     // WHEN
     const page = await table.retrieve(id)
 
     // THEN
-    expect(page.properties['Email de contact']).toBe('test')
+    expect(page.data?.properties['Email de contact']).toBe('test')
   })
 })

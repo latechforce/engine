@@ -1,13 +1,14 @@
 import type { FilterDto } from '/domain/entities/Filter'
 import type { NotionTablePageDto } from '/adapter/spi/dtos/NotionTablePageDto'
 import type { INotionTableIntegration } from '/adapter/spi/integrations/NotionTableSpi'
-import { type NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
+import { type NotionTablePageProperties } from '/domain/integrations/Notion'
 import type { TableObject } from './NotionIntegration.mock'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { PersistedRecordFieldsDto } from '/adapter/spi/dtos/RecordDto'
 import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
+import type { IntegrationResponse } from '/domain/integrations/base'
 
 export class NotionTableIntegration<T extends NotionTablePageProperties>
   implements INotionTableIntegration<T>
@@ -23,6 +24,14 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
     this.id = _table.id
     this.name = _table.fields.title
     this._properties = JSON.parse(_table.fields.properties)
+  }
+
+  ensure = async () => {
+    const exist = await this._db.exists()
+    if (!exist) {
+      await this._db.create()
+      await this._db.createView()
+    }
   }
 
   exists = async () => {
@@ -54,7 +63,13 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
       created_at: new Date().toISOString(),
     }))
     await this._db.insertMany(pagesToInsert)
-    return Promise.all(pagesToInsert.map((page) => this.retrieve(page.id)))
+    return this.list({
+      or: pagesToInsert.map((page) => ({
+        field: 'id',
+        operator: 'Is',
+        value: page.id,
+      })),
+    })
   }
 
   update = async (id: string, page: Partial<T>) => {
@@ -68,40 +83,68 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
   }
 
   updateMany = async (pages: { id: string; page: Partial<T> }[]) => {
-    const pagesToUpdate = pages.map(({ id, page }) => ({
-      id,
-      fields: this._preprocess(page),
-      updated_at: new Date().toISOString(),
-    }))
-    await this._db.updateMany(pagesToUpdate)
-    return Promise.all(pagesToUpdate.map((page) => this.retrieve(page.id)))
+    try {
+      const pagesToUpdate = pages.map(({ id, page }) => ({
+        id,
+        fields: this._preprocess(page),
+        updated_at: new Date().toISOString(),
+      }))
+      await this._db.updateMany(pagesToUpdate)
+      return this.list({
+        or: pagesToUpdate.map((page) => ({
+          field: 'id',
+          operator: 'Is',
+          value: page.id,
+        })),
+      })
+    } catch (error) {
+      return { error: { status: 500, message: String(error) } }
+    }
   }
 
   retrieve = async (id: string) => {
-    const record = await this._db.readById(id)
-    if (!record) throw new Error(`Record not found: ${id}`)
-    return this._postprocess(record)
+    try {
+      const record = await this._db.readById(id)
+      if (!record) throw new Error(`Record not found: ${id}`)
+      return { data: this._postprocess(record) }
+    } catch (error) {
+      return { error: { status: 500, message: String(error) } }
+    }
   }
 
   archive = async (id: string) => {
-    await this._db.update({
-      id,
-      fields: {
-        archived: true,
-      },
-      updated_at: new Date().toISOString(),
-    })
+    try {
+      await this._db.update({
+        id,
+        fields: {
+          archived: true,
+        },
+        updated_at: new Date().toISOString(),
+      })
+      return { data: undefined }
+    } catch (error) {
+      return { error: { status: 500, message: String(error) } }
+    }
   }
 
   archiveMany = async (ids: string[]) => {
-    const pagesArchived: Promise<void>[] = []
-    for (const id of ids) pagesArchived.push(this.archive(id))
-    return Promise.all(pagesArchived)
+    try {
+      const pagesArchived: Promise<IntegrationResponse<void>>[] = []
+      for (const id of ids) pagesArchived.push(this.archive(id))
+      await Promise.all(pagesArchived)
+      return { data: undefined }
+    } catch (error) {
+      return { error: { status: 500, message: String(error) } }
+    }
   }
 
   list = async (filter?: FilterDto) => {
-    const records = await this._db.list(filter)
-    return records.map((record) => this._postprocess(record))
+    try {
+      const records = await this._db.list(filter)
+      return { data: records.map((record) => this._postprocess(record)) }
+    } catch (error) {
+      return { error: { status: 500, message: String(error) } }
+    }
   }
 
   private _getId = () => {

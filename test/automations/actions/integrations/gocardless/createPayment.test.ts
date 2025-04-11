@@ -27,6 +27,7 @@ mock.request(({ app, request }) => {
                 name: 'createPayment',
                 integration: 'GoCardless',
                 action: 'CreatePayment',
+                account: 'gocardless',
                 payment: {
                   amount: 1000,
                   currency: 'EUR',

@@ -25,6 +25,7 @@ mock.request(({ app, request, integrations }) => {
             name: 'getCompany',
             integration: 'Pappers',
             action: 'GetCompany',
+            account: 'pappers',
             siret: '44306184100047',
           },
         ],
@@ -42,9 +43,13 @@ mock.request(({ app, request, integrations }) => {
       const extendConfig: Config = {
         ...config,
         integrations: {
-          pappers: {
-            apiKey: './tmp/new-api-key',
-          },
+          pappers: [
+            {
+              name: 'pappers',
+              baseUrl: './tmp/new-api-key',
+              apiKey: 'new-api-key',
+            },
+          ],
         },
       }
 

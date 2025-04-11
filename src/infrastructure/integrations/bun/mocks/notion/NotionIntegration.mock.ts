@@ -2,12 +2,13 @@ import type { INotionIntegration } from '/adapter/spi/integrations/NotionSpi'
 import { NotionTableIntegration } from './NotionTableIntegration.mock'
 import type { NotionConfig } from '/domain/integrations/Notion'
 import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
-import { SQLiteDatabaseDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteDriver'
-import { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
+import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
 import slugify from 'slugify'
-import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
+import type { NotionTablePageProperties } from '/domain/integrations/Notion'
+import { BaseMockIntegration } from '../base'
+import type { IntegrationResponse } from '/domain/integrations/base'
 
 export interface TableObject extends RecordFields {
   title: string
@@ -20,20 +21,12 @@ export interface UserObject extends RecordFields {
   avatarUrl: string | null
 }
 
-export class NotionIntegration implements INotionIntegration {
-  private _db: SQLiteDatabaseDriver
-  private _tables?: SQLiteDatabaseTableDriver
-  private _users?: SQLiteDatabaseTableDriver
+export class NotionIntegration extends BaseMockIntegration implements INotionIntegration {
+  private _tables: SQLiteDatabaseTableDriver
+  private _users: SQLiteDatabaseTableDriver
 
   constructor(public config: NotionConfig) {
-    this._db = new SQLiteDatabaseDriver({
-      url: config.baseUrl ?? ':memory:',
-      driver: 'SQLite',
-    })
-  }
-
-  connect = async () => {
-    await this._db.connect()
+    super(config, config.token)
     this._tables = this._db.table({
       name: 'tables',
       fields: [
@@ -47,6 +40,7 @@ export class NotionIntegration implements INotionIntegration {
         },
       ],
     })
+    this._tables.ensureSync()
     this._users = this._db.table({
       name: 'users',
       fields: [
@@ -64,27 +58,12 @@ export class NotionIntegration implements INotionIntegration {
         },
       ],
     })
-    if (!(await this._tables.exists())) {
-      await this._tables.create()
-      await this._tables.createView()
-    }
-    if (!(await this._users.exists())) {
-      await this._users.create()
-      await this._users.createView()
-    }
-  }
-
-  getConfig = () => {
-    if (!this._config) {
-      throw new Error('Notion config not set')
-    }
-    return this._config
+    this._users.ensureSync()
   }
 
   getTable = async <T extends NotionTablePageProperties>(tableName: string) => {
     const id = this._slugify(tableName)
-    const tables = await this._tablesOrThrow()
-    const table = await tables.readById<TableObject>(id)
+    const table = await this._tables.readById<TableObject>(id)
     if (!table) {
       throw new Error('Table not found')
     }
@@ -97,41 +76,41 @@ export class NotionIntegration implements INotionIntegration {
       }),
       table
     )
-    const exist = await notionTable.exists()
-    if (!exist) {
-      await notionTable.create()
-      await notionTable.createView()
-    }
+    await notionTable.ensure()
     return notionTable
   }
 
-  listAllUsers = async (): Promise<NotionUserDto[]> => {
-    const users = await this._usersOrThrow()
-    const list = await users.list<UserObject>()
-    return list.map((user) => ({
-      id: user.id,
-      email: user.fields.email,
-      name: user.fields.name || '',
-      avatarUrl: user.fields.avatarUrl || '',
-    }))
+  listAllUsers = async (): Promise<IntegrationResponse<NotionUserDto[]>> => {
+    try {
+      const list = await this._users.list<UserObject>()
+      return {
+        data: list.map((user) => ({
+          id: user.id,
+          email: user.fields.email,
+          name: user.fields.name || '',
+          avatarUrl: user.fields.avatarUrl || '',
+        })),
+      }
+    } catch (error) {
+      return { error: { status: 500, message: String(error) } }
+    }
   }
 
   addTable = async <T extends NotionTablePageProperties>(name: string, properties: IField[]) => {
-    const tables = await this._tablesOrThrow()
     const id = this._slugify(name)
-    const table = await tables.readById<TableObject>(id)
-    if (!table)
-      await tables.insert<TableObject>({
+    const table = await this._tables.readById<TableObject>(id)
+    if (!table) {
+      await this._tables.insert<TableObject>({
         id,
         fields: { title: name, properties: JSON.stringify(properties) },
         created_at: new Date().toISOString(),
       })
+    }
     return this.getTable<T>(name)
   }
 
   addUser = async (user: NotionUserDto) => {
-    const users = await this._usersOrThrow()
-    await users.insert<UserObject>({
+    await this._users.insert<UserObject>({
       id: user.id,
       fields: {
         email: user.email,
@@ -144,25 +123,5 @@ export class NotionIntegration implements INotionIntegration {
 
   private _slugify = (name: string) => {
     return slugify(name, { lower: true, replacement: '_', strict: true })
-  }
-
-  private _tablesOrThrow = async () => {
-    if (!this._tables) {
-      await this.connect()
-      if (!this._tables) {
-        throw new Error('Tables table not found')
-      }
-    }
-    return this._tables
-  }
-
-  private _usersOrThrow = async () => {
-    if (!this._users) {
-      await this.connect()
-      if (!this._users) {
-        throw new Error('Users table not found')
-      }
-    }
-    return this._users
   }
 }

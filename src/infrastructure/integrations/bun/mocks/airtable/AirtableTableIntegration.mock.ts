@@ -11,7 +11,6 @@ import type {
   AirtableTableRecordFields,
   UpdateAirtableTableRecord,
 } from '/domain/integrations/Airtable'
-import { AirtableIntegration } from '/infrastructure/integrations/common/airtable/AirtableIntegration'
 
 export class AirtableTableIntegration<T extends AirtableTableRecordFields>
   implements IAirtableTableIntegration<T>
@@ -27,6 +26,14 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
     this.id = _table.id
     this.name = _table.fields.name
     this._fields = JSON.parse(_table.fields.fields)
+  }
+
+  ensure = async () => {
+    const exist = await this._db.exists()
+    if (!exist) {
+      await this._db.create()
+      await this._db.createView()
+    }
   }
 
   exists = async () => {
@@ -51,7 +58,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       })
       return this.retrieve(id)
     } catch (error) {
-      return AirtableIntegration.responseError(error)
+      return { error: { status: 500, message: String(error) } }
     }
   }
 
@@ -71,7 +78,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
         })),
       })
     } catch (error) {
-      return AirtableIntegration.responseError(error)
+      return { error: { status: 500, message: String(error) } }
     }
   }
 
@@ -85,7 +92,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       })
       return this.retrieve(id)
     } catch (error) {
-      return AirtableIntegration.responseError(error)
+      return { error: { status: 500, message: String(error) } }
     }
   }
 
@@ -105,7 +112,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
         })),
       })
     } catch (error) {
-      return AirtableIntegration.responseError(error)
+      return { error: { status: 500, message: String(error) } }
     }
   }
 
@@ -115,7 +122,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       if (!record) throw { statusCode: 404, message: 'Record not found' }
       return { data: this._postprocess(record) }
     } catch (error) {
-      return AirtableIntegration.responseError(error)
+      return { error: { status: 500, message: String(error) } }
     }
   }
 
@@ -124,7 +131,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       await this._db.delete(id)
       return { data: undefined }
     } catch (error) {
-      return AirtableIntegration.responseError(error)
+      return { error: { status: 500, message: String(error) } }
     }
   }
 
@@ -133,7 +140,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       for (const id of ids) await this._db.delete(id)
       return { data: undefined }
     } catch (error) {
-      return AirtableIntegration.responseError(error)
+      return { error: { status: 500, message: String(error) } }
     }
   }
 
@@ -142,7 +149,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
       const records = await this._db.list(filter)
       return { data: records.map((record) => this._postprocess(record)) }
     } catch (error) {
-      return AirtableIntegration.responseError(error)
+      return { error: { status: 500, message: String(error) } }
     }
   }
 

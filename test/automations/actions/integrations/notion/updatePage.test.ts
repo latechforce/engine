@@ -45,6 +45,7 @@ mock.request(({ app, request, integrations, drivers }) => {
                 name: 'updatePage',
                 integration: 'Notion',
                 action: 'UpdatePage',
+                account: 'notion',
                 table: notionTableSample1.name,
                 id: '{{trigger.body.id}}',
                 page: {
@@ -57,7 +58,11 @@ mock.request(({ app, request, integrations, drivers }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.notion.getTable(notionTableSample1.name)
-      const { id } = await table.insert({ name: 'John' })
+      const insertResponse = await table.insert({ name: 'John' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       await request.post(`${url}/api/automation/update-page`, {
@@ -66,7 +71,10 @@ mock.request(({ app, request, integrations, drivers }) => {
 
       // THEN
       const response = await table.retrieve(id)
-      expect(response.properties.name).toBe('John Doe')
+      if (response.error) {
+        throw new Error(response.error.message)
+      }
+      expect(response.data.properties.name).toBe('John Doe')
     })
   })
 
@@ -84,6 +92,7 @@ mock.request(({ app, request, integrations, drivers }) => {
               integration: 'Notion',
               event: 'TablePageCreated',
               table: notionTableSample3.name,
+              account: 'notion',
             },
             actions: [
               {
@@ -92,6 +101,7 @@ mock.request(({ app, request, integrations, drivers }) => {
                 action: 'UpdatePage',
                 table: notionTableSample3.name,
                 id: '{{trigger.id}}',
+                account: 'notion',
                 page: {
                   '[App] Nom': '{{lookup trigger.properties "[App] Nom" }} updated',
                 },

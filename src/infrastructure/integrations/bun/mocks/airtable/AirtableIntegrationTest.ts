@@ -21,4 +21,4 @@ await integration.addTable<AirtableTableSample2>(
   airtableTableSample2.name,
   airtableTableSample2.fields
 )
-await integration.addUser({ apiKey: 'test' })
+await integration.createToken('test')

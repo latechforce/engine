@@ -49,7 +49,7 @@ mock.request(({ app, request, integrations }) => {
                 ) {
                   const { qonto } = context.integrations
                   const { createClient } = context.inputData
-                  const client = await qonto.createClient(createClient)
+                  const client = await qonto.createClient('qonto', createClient)
                   return { client }
                 }),
               },
@@ -105,7 +105,10 @@ mock.request(({ app, request, integrations }) => {
                 ) {
                   const { qonto } = context.integrations
                   const { createClientInvoice } = context.inputData
-                  const clientInvoice = await qonto.createClientInvoice(createClientInvoice)
+                  const clientInvoice = await qonto.createClientInvoice(
+                    'qonto',
+                    createClientInvoice
+                  )
                   return { clientInvoice }
                 }),
               },
@@ -153,7 +156,7 @@ mock.request(({ app, request, integrations }) => {
                 name: 'runJavascriptCode',
                 code: String(async function (context: CodeRunnerContext) {
                   const { qonto } = context.integrations
-                  const clientInvoices = await qonto.listClientInvoices()
+                  const clientInvoices = await qonto.listClientInvoices('qonto')
                   return { clientInvoices }
                 }),
               },
@@ -208,7 +211,7 @@ mock.request(({ app, request, integrations }) => {
                 code: String(async function (context: CodeRunnerContext<{ attachmentId: string }>) {
                   const { qonto } = context.integrations
                   const { attachmentId } = context.inputData
-                  const attachment = await qonto.retrieveAttachment(attachmentId)
+                  const attachment = await qonto.retrieveAttachment('qonto', attachmentId)
                   return { attachment }
                 }),
               },

@@ -57,7 +57,7 @@ mock.request(({ app, request, integrations }) => {
                   const { inputData, integrations, env } = context
                   const { name } = inputData
                   const { airtable } = integrations
-                  const table = await airtable.getTable(env.TEST_AIRTABLE_TABLE_1_ID)
+                  const table = await airtable.getTable('airtable', env.TEST_AIRTABLE_TABLE_1_ID)
                   const user = await table.insert({ name })
                   return { user }
                 }),
@@ -77,7 +77,7 @@ mock.request(({ app, request, integrations }) => {
       const table = await integrations.airtable.getTable(airtableTableSample1.name)
       const user = await table.retrieve(response.user.id)
       expect(response.user.fields.name).toBe('John')
-      expect(user.fields.name).toBe('John')
+      expect(user.data?.fields.name).toBe('John')
     })
 
     it('should run a Typescript code with a Airtable database record update', async () => {
@@ -124,7 +124,7 @@ mock.request(({ app, request, integrations }) => {
                   const { inputData, integrations, env } = context
                   const { name, id } = inputData
                   const { airtable } = integrations
-                  const table = await airtable.getTable(env.TEST_AIRTABLE_TABLE_1_ID)
+                  const table = await airtable.getTable('airtable', env.TEST_AIRTABLE_TABLE_1_ID)
                   const user = await table.update(id, { name })
                   return { user }
                 }),
@@ -135,7 +135,11 @@ mock.request(({ app, request, integrations }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.airtable.getTable(airtableTableSample1.name)
-      const { id } = await table.insert({ name: 'John' })
+      const insertResponse = await table.insert({ name: 'John' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       const response = await request.post(`${url}/api/automation/update-user`, {
@@ -146,7 +150,7 @@ mock.request(({ app, request, integrations }) => {
       // THEN
       const user = await table.retrieve(response.user.id)
       expect(response.user.fields.name).toBe('John Doe')
-      expect(user.fields.name).toBe('John Doe')
+      expect(user.data?.fields.name).toBe('John Doe')
     })
 
     it('should run a Typescript code with a Airtable database record retrieve', async () => {
@@ -190,7 +194,10 @@ mock.request(({ app, request, integrations }) => {
                   const { airtable } = integrations
                   const { id } = inputData
                   type User = { name: string }
-                  const table = await airtable.getTable<User>(env.TEST_AIRTABLE_TABLE_1_ID)
+                  const table = await airtable.getTable<User>(
+                    'airtable',
+                    env.TEST_AIRTABLE_TABLE_1_ID
+                  )
                   const user = await table.retrieve(id)
                   return { user }
                 }),
@@ -201,7 +208,11 @@ mock.request(({ app, request, integrations }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.airtable.getTable(airtableTableSample1.name)
-      const { id } = await table.insert({ name: 'John Doe' })
+      const insertResponse = await table.insert({ name: 'John Doe' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-user`, {
@@ -252,7 +263,7 @@ mock.request(({ app, request, integrations }) => {
                   const { inputData, integrations, env } = context
                   const { airtable } = integrations
                   const { id } = inputData
-                  const table = await airtable.getTable(env.TEST_AIRTABLE_TABLE_1_ID)
+                  const table = await airtable.getTable('airtable', env.TEST_AIRTABLE_TABLE_1_ID)
                   await table.delete(id)
                   const user = await table.retrieve(id)
                   return { user }
@@ -264,7 +275,11 @@ mock.request(({ app, request, integrations }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.airtable.getTable(airtableTableSample1.name)
-      const { id } = await table.insert({ name: 'John Doe' })
+      const insertResponse = await table.insert({ name: 'John Doe' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       const response = await request.post(`${url}/api/automation/delete-user`, {
@@ -317,7 +332,10 @@ mock.request(({ app, request, integrations }) => {
                   const { airtable } = context.integrations
                   const { ids } = context.inputData
                   type User = { name: string }
-                  const table = await airtable.getTable<User>(context.env.TEST_AIRTABLE_TABLE_1_ID)
+                  const table = await airtable.getTable<User>(
+                    'airtable',
+                    context.env.TEST_AIRTABLE_TABLE_1_ID
+                  )
                   const users = await table.list({
                     field: 'id',
                     operator: 'IsAnyOf',
@@ -340,7 +358,7 @@ mock.request(({ app, request, integrations }) => {
 
       // WHEN
       const response = await request.post(`${url}/api/automation/list-users`, {
-        ids: users.map((user) => user.id),
+        ids: users.data?.map((user) => user.id),
       })
 
       // THEN
@@ -389,7 +407,7 @@ mock.request(({ app, request, integrations }) => {
                   const { inputData, integrations, env } = context
                   const { airtable } = integrations
                   const { id } = inputData
-                  const table = await airtable.getTable(env.TEST_AIRTABLE_TABLE_1_ID)
+                  const table = await airtable.getTable('airtable', env.TEST_AIRTABLE_TABLE_1_ID)
                   const record = await table.retrieve(id)
                   if (!record) throw new Error('Record not found')
                   const field: string | null = record.getSingleLineText('name')
@@ -402,7 +420,11 @@ mock.request(({ app, request, integrations }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.airtable.getTable(airtableTableSample1.name)
-      const { id } = await table.insert({ name: 'John Doe' })
+      const insertResponse = await table.insert({ name: 'John Doe' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-field`, {

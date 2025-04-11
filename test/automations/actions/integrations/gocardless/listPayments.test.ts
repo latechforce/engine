@@ -28,6 +28,7 @@ mock.request(({ app, request }) => {
                 name: 'listPayments',
                 integration: 'GoCardless',
                 action: 'ListPayments',
+                account: 'gocardless',
                 params: {
                   limit: 10,
                   status: 'pending_submission',

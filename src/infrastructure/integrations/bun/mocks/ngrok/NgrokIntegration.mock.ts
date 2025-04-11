@@ -1,66 +1,37 @@
 import type { INgrokIntegration } from '/adapter/spi/integrations/NgrokSpi'
 import type { NgrokConfig } from '/domain/integrations/Ngrok'
-import { Database } from 'bun:sqlite'
+import { BaseMockIntegration } from '../base'
+import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 
-export class NgrokIntegration implements INgrokIntegration {
-  private db: Database
+export class NgrokIntegration extends BaseMockIntegration implements INgrokIntegration {
+  private _configs: SQLiteDatabaseTableDriver
 
   constructor(public config: NgrokConfig) {
-    this.db = new Database(config.baseUrl ?? ':memory:')
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS Config (
-        key TEXT PRIMARY KEY,
-        value TEXT NOT NULL
-      )
-    `)
-    if (this.config) {
-      this.saveConfig(this.config)
-    }
-  }
-
-  private saveConfig = (config: NgrokConfig): void => {
-    this.db.run(
-      `
-      INSERT OR REPLACE INTO Config (key, value)
-      VALUES ('authToken', ?)
-    `,
-      [config.authToken]
-    )
-  }
-
-  private getConfigFromDb = (): NgrokConfig => {
-    const result = this.db
-      .query<{ value: string }, []>(`SELECT value FROM Config WHERE key = 'authToken'`)
-      .get()
-    if (!result) {
-      throw new Error('Ngrok config not set in database')
-    }
-    return { authToken: result.value }
-  }
-
-  getConfig = (): NgrokConfig => {
-    if (this._config) {
-      return this._config
-    }
-    return this.getConfigFromDb()
+    super(config, config.authToken)
+    this._configs = this._db.table({
+      name: 'configs',
+      fields: [
+        { name: 'key', type: 'SingleLineText' },
+        { name: 'value', type: 'SingleLineText' },
+      ],
+    })
+    this._configs.ensureSync()
   }
 
   start = async (port: number): Promise<string> => {
     const url = `http://localhost:${port}`
-    this.db.run(
-      `
-      INSERT INTO Config (key, value)
-      VALUES ('lastStartedUrl', ?)
-      ON CONFLICT(key) DO UPDATE SET value = excluded.value
-    `,
-      [url]
-    )
+    this._configs.insert({
+      id: 'lastStartedUrl',
+      created_at: new Date().toISOString(),
+      fields: {
+        key: 'lastStartedUrl',
+        value: url,
+      },
+    })
     return url
   }
 
   stop = async (): Promise<void> => {
-    this.db.run(`
-      DELETE FROM Config WHERE key = 'lastStartedUrl'
-    `)
+    this._configs.delete('lastStartedUrl')
   }
 }

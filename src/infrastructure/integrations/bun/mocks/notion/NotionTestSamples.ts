@@ -2,7 +2,7 @@ import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
 import type {
   ConvertToNotionTablePageProperties,
   NotionTablePagePropertyFile,
-} from '/domain/integrations/Notion/NotionTablePage'
+} from '/domain/integrations/Notion'
 import type { ITable } from '/domain/interfaces/ITable'
 import env from '/infrastructure/test/env'
 

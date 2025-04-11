@@ -20,6 +20,7 @@ import { GoCardlessIntegration } from './gocardless/GoCardlessIntegration.mock'
 import { PhantombusterIntegration } from './phantombuster/PhantombusterIntegration.mock'
 import { CalendlyIntegration } from './calendly/CalendlyIntegration.mock'
 import { YouCanBookMeIntegration } from './youcanbookme/YouCanBookMeIntegration.mock'
+import { BaseMockIntegration } from './base'
 
 export const mocks: Integrations = {
   airtable: (config: AirtableConfig) => new AirtableIntegration(config),
@@ -33,3 +34,5 @@ export const mocks: Integrations = {
   calendly: (config: CalendlyConfig) => new CalendlyIntegration(config),
   youCanBookMe: (config: YouCanBookMeConfig) => new YouCanBookMeIntegration(config),
 }
+
+export { BaseMockIntegration }

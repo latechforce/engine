@@ -1,6 +1,8 @@
 import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi'
 import type {
   CalendlyUser,
+  CalendlyScope,
+  CalendlyWebhookState,
   CreateWebhookSubscriptionParams,
   CreateWebhookSubscriptionResponse,
   DeleteWebhookSubscriptionParams,
@@ -8,81 +10,92 @@ import type {
   GetWebhookSubscriptionResponse,
   ListWebhookSubscriptionsParams,
   ListWebhookSubscriptionsResponse,
-  WebhookSubscriptionItem,
 } from '/domain/integrations/Calendly/CalendlyTypes'
-import { Database } from 'bun:sqlite'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
+import type { IntegrationResponse } from '/domain/integrations/base'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
+import { BaseMockIntegration } from '../base'
+import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
+import type { RecordFields } from '/domain/entities/Record'
 
-export class CalendlyIntegration implements ICalendlyIntegration {
-  private db: Database
+type UserRecordFields = RecordFields & {
+  uri: string
+  name: string
+  email: string
+  scheduling_url: string
+  timezone: string
+  avatar_url: string
+  current_organization: string
+  slug: string
+}
+
+type WebhookSubscriptionRecordFields = RecordFields & {
+  uri: string
+  callback_url: string
+  retry_started_at: string | null
+  state: string
+  events: string
+  scope: string
+  organization: string
+  user: string | null
+  creator: string
+}
+
+export class CalendlyIntegration extends BaseMockIntegration implements ICalendlyIntegration {
+  private _users: SQLiteDatabaseTableDriver
+  private _webhooks: SQLiteDatabaseTableDriver
 
   constructor(public config: CalendlyConfig) {
-    this.db = new Database(config.baseUrl ?? ':memory:')
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS users (
-        uri TEXT PRIMARY KEY,
-        name TEXT,
-        email TEXT,
-        scheduling_url TEXT,
-        timezone TEXT,
-        avatar_url TEXT,
-        created_at TEXT,
-        updated_at TEXT,
-        current_organization TEXT,
-        slug TEXT
-      )
-    `)
-
-    // Table pour stocker les webhooks
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS WebhookSubscriptions (
-        uri TEXT PRIMARY KEY,
-        callback_url TEXT NOT NULL,
-        created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL,
-        retry_started_at TEXT,
-        state TEXT NOT NULL,
-        events TEXT NOT NULL,
-        scope TEXT NOT NULL,
-        organization TEXT NOT NULL,
-        user TEXT,
-        creator TEXT NOT NULL
-      )
-    `)
-  }
-
-  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
-    const user = this.db
-      .query<CalendlyConfig, string>('SELECT * FROM users WHERE uri = ?')
-      .get(this.config.user.accessToken ?? '')
-    if (!user) {
-      return { error: { status: 404, message: 'User not found' } }
-    }
-    return undefined
+    super(config, config.user.accessToken)
+    this._users = this._db.table({
+      name: 'users',
+      fields: [
+        { name: 'uri', type: 'SingleLineText' },
+        { name: 'name', type: 'SingleLineText' },
+        { name: 'email', type: 'SingleLineText' },
+        { name: 'scheduling_url', type: 'SingleLineText' },
+        { name: 'timezone', type: 'SingleLineText' },
+        { name: 'avatar_url', type: 'SingleLineText' },
+        { name: 'created_at', type: 'DateTime' },
+        { name: 'updated_at', type: 'DateTime' },
+        { name: 'current_organization', type: 'SingleLineText' },
+        { name: 'slug', type: 'SingleLineText' },
+      ],
+    })
+    this._users.ensureSync()
+    this._webhooks = this._db.table({
+      name: 'WebhookSubscriptions',
+      fields: [
+        { name: 'uri', type: 'SingleLineText' },
+        { name: 'callback_url', type: 'SingleLineText' },
+        { name: 'created_at', type: 'DateTime' },
+        { name: 'updated_at', type: 'DateTime' },
+        { name: 'retry_started_at', type: 'DateTime' },
+        { name: 'state', type: 'SingleLineText' },
+        { name: 'events', type: 'LongText' },
+        { name: 'scope', type: 'SingleLineText' },
+        { name: 'organization', type: 'SingleLineText' },
+        { name: 'user', type: 'SingleLineText' },
+        { name: 'creator', type: 'SingleLineText' },
+      ],
+    })
+    this._webhooks.ensureSync()
   }
 
   createUser = async (user: CalendlyUser): Promise<IntegrationResponse<CalendlyUser>> => {
-    this.db.run(
-      `
-      INSERT INTO users (
-        uri, name, email, scheduling_url, timezone, avatar_url, 
-        created_at, updated_at, current_organization, slug
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `,
-      [
-        user.uri,
-        user.name,
-        user.email,
-        user.scheduling_url,
-        user.timezone,
-        user.avatar_url,
-        user.created_at,
-        user.updated_at,
-        user.current_organization,
-        user.slug,
-      ]
-    )
+    await this._users.insert({
+      id: user.uri,
+      created_at: new Date().toISOString(),
+      fields: {
+        uri: user.uri,
+        name: user.name,
+        email: user.email,
+        scheduling_url: user.scheduling_url,
+        timezone: user.timezone,
+        avatar_url: user.avatar_url,
+        current_organization: user.current_organization,
+        slug: user.slug,
+      },
+    })
     return { data: user }
   }
 
@@ -106,27 +119,21 @@ export class CalendlyIntegration implements ICalendlyIntegration {
       creator: 'mock-user',
     }
 
-    this.db.run(
-      `
-      INSERT INTO WebhookSubscriptions (
-        uri, callback_url, created_at, updated_at, retry_started_at,
-        state, events, scope, organization, user, creator
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `,
-      [
-        subscription.uri,
-        subscription.callbackUrl,
-        subscription.createdAt,
-        subscription.updatedAt,
-        subscription.retryStartedAt,
-        subscription.state,
-        JSON.stringify(subscription.events),
-        subscription.scope,
-        subscription.organization,
-        subscription.user,
-        subscription.creator,
-      ]
-    )
+    await this._webhooks.insert({
+      id: uri,
+      created_at: now,
+      fields: {
+        uri,
+        callback_url: subscription.callbackUrl,
+        retry_started_at: subscription.retryStartedAt,
+        state: subscription.state,
+        events: JSON.stringify(subscription.events),
+        scope: subscription.scope,
+        organization: subscription.organization,
+        user: subscription.user,
+        creator: subscription.creator,
+      },
+    })
 
     return { data: subscription }
   }
@@ -134,12 +141,22 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   listWebhookSubscriptions = async (
     _params: ListWebhookSubscriptionsParams
   ): Promise<IntegrationResponse<ListWebhookSubscriptionsResponse>> => {
-    const result = this.db
-      .query<WebhookSubscriptionItem, []>('SELECT * FROM WebhookSubscriptions')
-      .all()
+    const result = await this._webhooks.list<WebhookSubscriptionRecordFields>()
     return {
       data: {
-        collection: result,
+        collection: result.map((row) => ({
+          uri: row.fields.uri,
+          callback_url: row.fields.callback_url,
+          created_at: row.created_at,
+          updated_at: row.updated_at ?? row.created_at,
+          retry_started_at: row.fields.retry_started_at,
+          state: row.fields.state as CalendlyWebhookState,
+          events: JSON.parse(row.fields.events),
+          scope: row.fields.scope as CalendlyScope,
+          organization: row.fields.organization,
+          user: row.fields.user,
+          creator: row.fields.creator,
+        })),
         pagination: {
           count: result.length,
           next_page: '1',
@@ -154,9 +171,9 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   getWebhookSubscription = async (
     params: GetWebhookSubscriptionParams
   ): Promise<IntegrationResponse<GetWebhookSubscriptionResponse>> => {
-    const result = this.db
-      .query<WebhookSubscriptionItem, string>('SELECT * FROM WebhookSubscriptions WHERE uri = ?')
-      .get(params.webhook_uri)
+    const result = await this._webhooks.readById<WebhookSubscriptionRecordFields>(
+      params.webhook_uri
+    )
 
     if (!result) {
       return { error: { status: 404, message: 'Webhook subscription not found' } }
@@ -165,17 +182,17 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     return {
       data: {
         resource: {
-          uri: result.uri,
-          callback_url: result.callback_url,
+          uri: result.fields.uri,
+          callback_url: result.fields.callback_url,
           created_at: result.created_at,
-          updated_at: result.updated_at,
-          retry_started_at: result.retry_started_at,
-          state: result.state,
-          events: result.events,
-          scope: result.scope,
-          organization: result.organization,
-          user: result.user || '',
-          creator: result.creator,
+          updated_at: result.updated_at ?? result.created_at,
+          retry_started_at: result.fields.retry_started_at,
+          state: result.fields.state as CalendlyWebhookState,
+          events: JSON.parse(result.fields.events),
+          scope: result.fields.scope as CalendlyScope,
+          organization: result.fields.organization,
+          user: result.fields.user || '',
+          creator: result.fields.creator,
         },
       },
     }
@@ -184,17 +201,30 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   deleteWebhookSubscription = async (
     params: DeleteWebhookSubscriptionParams
   ): Promise<IntegrationResponse<void>> => {
-    this.db.run(`DELETE FROM WebhookSubscriptions WHERE uri = ?`, [params.webhook_uri])
+    await this._webhooks.delete(params.webhook_uri)
     return { data: undefined }
   }
 
   currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
-    const user = this.db
-      .query<CalendlyUser, string>('SELECT * FROM users WHERE uri = ?')
-      .get(this.config.user.accessToken ?? '')
+    const user = await this._users.readById<UserRecordFields>(this.config.user.accessToken ?? '')
     if (!user) {
       return { error: { status: 404, message: 'User not found' } }
     }
-    return { data: user }
+    return {
+      data: {
+        uri: user.fields.uri,
+        name: user.fields.name,
+        email: user.fields.email,
+        scheduling_url: user.fields.scheduling_url,
+        timezone: user.fields.timezone,
+        avatar_url: user.fields.avatar_url,
+        created_at: user.created_at,
+        updated_at: user.updated_at ?? user.created_at,
+        current_organization: user.fields.current_organization,
+        slug: user.fields.slug,
+        resource_type: 'user',
+        locale: 'en',
+      },
+    }
   }
 }

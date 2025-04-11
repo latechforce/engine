@@ -43,7 +43,7 @@ mock.request(({ app, request, integrations }) => {
                 ) {
                   const { gocardless } = context.integrations
                   const { createPayment } = context.inputData
-                  const payment = await gocardless.createPayment(createPayment)
+                  const payment = await gocardless.createPayment('gocardless', createPayment)
                   return { payment }
                 }),
               },
@@ -87,7 +87,7 @@ mock.request(({ app, request, integrations }) => {
                 code: String(async function (context: CodeRunnerContext<{}>) {
                   const { gocardless } = context.integrations
 
-                  const result = await gocardless.listPayments({
+                  const result = await gocardless.listPayments('gocardless', {
                     limit: 10,
                     status: 'pending_submission',
                   })
@@ -108,7 +108,7 @@ mock.request(({ app, request, integrations }) => {
       expect(response.payments).toBeDefined()
       expect(Array.isArray(response.payments)).toBe(true)
       expect(response.meta.limit).toBe(10)
-      expect(response.payments[0].id).toBe(payment.id)
+      expect(response.payments[0].id).toBe(payment.data?.id)
     })
   })
 })

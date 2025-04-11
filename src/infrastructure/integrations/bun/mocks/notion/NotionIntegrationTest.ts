@@ -10,9 +10,12 @@ import {
 } from './NotionTestSamples'
 
 export const integration = new NotionIntegration({
-  token: ':memory:',
+  name: 'test',
+  baseUrl: ':memory:',
+  token: 'test',
 })
 
+await integration.createToken('test')
 await integration.addTable<NotionTableSample1>(notionTableSample1.name, notionTableSample1.fields)
 await integration.addTable<NotionTableSample2>(notionTableSample2.name, notionTableSample2.fields)
 await integration.addTable<NotionTableSample3>(notionTableSample3.name, notionTableSample3.fields)

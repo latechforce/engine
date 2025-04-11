@@ -57,7 +57,7 @@ mock.request(({ app, request, integrations }) => {
                   const { inputData, integrations, env } = context
                   const { name } = inputData
                   const { notion } = integrations
-                  const table = await notion.getTable(env.TEST_NOTION_TABLE_1_ID)
+                  const table = await notion.getTable('notion', env.TEST_NOTION_TABLE_1_ID)
                   const user = await table.insert({ name })
                   return { user }
                 }),
@@ -77,7 +77,7 @@ mock.request(({ app, request, integrations }) => {
       const table = await integrations.notion.getTable(notionTableSample1.name)
       const user = await table.retrieve(response.user.id)
       expect(response.user.properties.name).toBe('John')
-      expect(user.properties.name).toBe('John')
+      expect(user.data?.properties.name).toBe('John')
     })
 
     it('should run a Typescript code with a Notion database page update', async () => {
@@ -124,7 +124,7 @@ mock.request(({ app, request, integrations }) => {
                   const { inputData, integrations, env } = context
                   const { name, id } = inputData
                   const { notion } = integrations
-                  const table = await notion.getTable(env.TEST_NOTION_TABLE_1_ID)
+                  const table = await notion.getTable('notion', env.TEST_NOTION_TABLE_1_ID)
                   const user = await table.update(id, { name })
                   return { user }
                 }),
@@ -135,7 +135,11 @@ mock.request(({ app, request, integrations }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.notion.getTable(notionTableSample1.name)
-      const { id } = await table.insert({ name: 'John' })
+      const insertResponse = await table.insert({ name: 'John' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       const response = await request.post(`${url}/api/automation/update-user`, {
@@ -146,7 +150,7 @@ mock.request(({ app, request, integrations }) => {
       // THEN
       const user = await table.retrieve(response.user.id)
       expect(response.user.properties.name).toBe('John Doe')
-      expect(user.properties.name).toBe('John Doe')
+      expect(user.data?.properties.name).toBe('John Doe')
     })
 
     it('should run a Typescript code with a Notion database page retrieve', async () => {
@@ -190,7 +194,7 @@ mock.request(({ app, request, integrations }) => {
                   const { notion } = integrations
                   const { id } = inputData
                   type User = { name: string }
-                  const table = await notion.getTable<User>(env.TEST_NOTION_TABLE_1_ID)
+                  const table = await notion.getTable<User>('notion', env.TEST_NOTION_TABLE_1_ID)
                   const user = await table.retrieve(id)
                   return { user }
                 }),
@@ -201,7 +205,11 @@ mock.request(({ app, request, integrations }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.notion.getTable(notionTableSample1.name)
-      const { id } = await table.insert({ name: 'John Doe' })
+      const insertResponse = await table.insert({ name: 'John Doe' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-user`, {
@@ -252,7 +260,7 @@ mock.request(({ app, request, integrations }) => {
                   const { inputData, integrations, env } = context
                   const { notion } = integrations
                   const { id } = inputData
-                  const table = await notion.getTable(env.TEST_NOTION_TABLE_1_ID)
+                  const table = await notion.getTable('notion', env.TEST_NOTION_TABLE_1_ID)
                   await table.archive(id)
                   const user = await table.retrieve(id)
                   return { user }
@@ -264,7 +272,11 @@ mock.request(({ app, request, integrations }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.notion.getTable(notionTableSample1.name)
-      const { id } = await table.insert({ name: 'John Doe' })
+      const insertResponse = await table.insert({ name: 'John Doe' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-user`, {
@@ -317,7 +329,10 @@ mock.request(({ app, request, integrations }) => {
                   const { notion } = context.integrations
                   const { ids } = context.inputData
                   type User = { name: string }
-                  const table = await notion.getTable<User>(context.env.TEST_NOTION_TABLE_1_ID)
+                  const table = await notion.getTable<User>(
+                    'notion',
+                    context.env.TEST_NOTION_TABLE_1_ID
+                  )
                   const users = await table.list({
                     field: 'id',
                     operator: 'IsAnyOf',
@@ -340,7 +355,7 @@ mock.request(({ app, request, integrations }) => {
 
       // WHEN
       const response = await request.post(`${url}/api/automation/list-users`, {
-        ids: users.map((user) => user.id),
+        ids: users.data?.map((user) => user.id),
       })
 
       // THEN
@@ -391,7 +406,7 @@ mock.request(({ app, request, integrations }) => {
                   const { inputData, integrations, env } = context
                   const { notion } = integrations
                   const { id } = inputData
-                  const table = await notion.getTable(env.TEST_NOTION_TABLE_1_ID)
+                  const table = await notion.getTable('notion', env.TEST_NOTION_TABLE_1_ID)
                   const page = await table.retrieve(id)
                   if (!page) throw new Error('Page not found')
                   const property: string | null = page.getTitle('name')
@@ -404,7 +419,11 @@ mock.request(({ app, request, integrations }) => {
       }
       const { url } = await app.start(config)
       const table = await integrations.notion.getTable(notionTableSample1.name)
-      const { id } = await table.insert({ name: 'John Doe' })
+      const insertResponse = await table.insert({ name: 'John Doe' })
+      if (insertResponse.error) {
+        throw new Error(insertResponse.error.message)
+      }
+      const { id } = insertResponse.data
 
       // WHEN
       const response = await request.post(`${url}/api/automation/read-property`, {
@@ -442,7 +461,7 @@ mock.request(({ app, request, integrations }) => {
                 code: String(async function (context: CodeRunnerContext) {
                   const { integrations } = context
                   const { notion } = integrations
-                  const users = await notion.listAllUsers()
+                  const users = await notion.listAllUsers('notion')
                   return { users }
                 }),
               },
