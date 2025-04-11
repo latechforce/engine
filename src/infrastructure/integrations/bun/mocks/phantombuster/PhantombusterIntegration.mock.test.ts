@@ -6,8 +6,12 @@ import env from '/infrastructure/test/env'
 const { TEST_PHANTOMBUSTER_AGENT_ID } = env
 
 export const integration = new PhantombusterIntegration({
-  apiKey: ':memory:',
+  name: 'phantombuster',
+  baseUrl: ':memory:',
+  apiKey: 'test',
 })
+
+await integration.createToken('test')
 
 await integration.addAgentOutput(TEST_PHANTOMBUSTER_AGENT_ID, {
   containerId: 'test',

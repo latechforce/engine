@@ -1,45 +1,55 @@
+import { BaseMockIntegration } from '../base'
 import type { IPhantombusterIntegration } from '/adapter/spi/integrations/PhantombusterSpi'
 import type { IntegrationResponse } from '/domain/integrations/base'
 import type {
   PhantombusterConfig,
   PhantombusterAgentOutput,
 } from '/domain/integrations/Phantombuster'
-import { Database } from 'bun:sqlite'
+import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 
-export class PhantombusterIntegration implements IPhantombusterIntegration {
-  private db: Database
+type AgentOutputRecordFields = {
+  data: string
+}
+
+export class PhantombusterIntegration
+  extends BaseMockIntegration
+  implements IPhantombusterIntegration
+{
+  private _agentOutputs: SQLiteDatabaseTableDriver
 
   constructor(public config: PhantombusterConfig) {
-    this.db = new Database(config.baseUrl ?? ':memory:')
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS agent_outputs (
-        id TEXT PRIMARY KEY,
-        data TEXT NOT NULL
-      )
-    `)
+    super(config, config.apiKey)
+    this._agentOutputs = this._db.table({
+      name: 'agent_outputs',
+      fields: [{ name: 'data', type: 'SingleLineText' }],
+    })
+    this._agentOutputs.ensureSync()
   }
 
   fetchAgentOutput = async (
     agentId: string
   ): Promise<IntegrationResponse<PhantombusterAgentOutput>> => {
-    const result = this.db
-      .query<{ data: string }, [string]>('SELECT data FROM agent_outputs WHERE id = ?')
-      .get(agentId)
+    const result = await this._agentOutputs.readById<AgentOutputRecordFields>(agentId)
     if (!result) {
-      throw new Error(`Agent not found`)
+      return {
+        error: {
+          status: 400,
+          message: 'Agent not found',
+        },
+      }
     }
-    const data = JSON.parse(result.data)
+    const data = JSON.parse(result.fields.data)
     return { data }
   }
 
   addAgentOutput = async (id: string, output: PhantombusterAgentOutput): Promise<void> => {
     const data = JSON.stringify(output)
-    this.db.run(
-      `
-      INSERT OR REPLACE INTO agent_outputs (id, data)
-      VALUES (?, ?)
-    `,
-      [id, data]
-    )
+    await this._agentOutputs.insert({
+      id,
+      created_at: new Date().toISOString(),
+      fields: {
+        data,
+      },
+    })
   }
 }

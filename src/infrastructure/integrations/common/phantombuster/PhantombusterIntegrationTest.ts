@@ -26,10 +26,11 @@ export function testPhantombusterIntegration(
       const agentId = 'non-existent-agent'
 
       // WHEN
-      const call = () => integration.fetchAgentOutput(agentId)
+      const response = await integration.fetchAgentOutput(agentId)
 
       // THEN
-      expect(call()).rejects.toThrow('Agent not found')
+      expect(response.error?.status).toBe(400)
+      expect(response.error?.message).toBe('Agent not found')
     })
   })
 }

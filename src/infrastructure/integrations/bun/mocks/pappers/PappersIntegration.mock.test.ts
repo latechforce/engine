@@ -4,10 +4,12 @@ import { testPappersIntegration } from '/infrastructure/integrations/common/papp
 import BunTester from 'bun:test'
 
 const integration = new PappersIntegration({
-  apiKey: ':memory:',
+  apiKey: 'test',
+  baseUrl: ':memory:',
+  name: 'pappers',
 })
 
-await integration.createUser(':memory:')
+await integration.createToken('test')
 await integration.addCompany(pappersCompanySample)
 
 testPappersIntegration(BunTester, integration)

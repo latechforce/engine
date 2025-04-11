@@ -1,3 +1,8 @@
+export interface PhantombusterError {
+  status: string
+  error: string
+}
+
 export interface PhantombusterAgentOutput {
   containerId: string
   status: 'starting' | 'running' | 'finished' | 'unknown' | 'launch error'

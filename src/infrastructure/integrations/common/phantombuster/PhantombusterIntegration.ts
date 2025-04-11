@@ -3,6 +3,7 @@ import type { IntegrationResponse, IntegrationResponseError } from '/domain/inte
 import type {
   PhantombusterConfig,
   PhantombusterAgentOutput,
+  PhantombusterError,
 } from '/domain/integrations/Phantombuster'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import { join } from 'path'
@@ -25,9 +26,9 @@ export class PhantombusterIntegration implements IPhantombusterIntegration {
 
   private _responseError = (error: unknown): IntegrationResponseError => {
     if (error instanceof AxiosError && error.response) {
-      const [{ status, detail }] = error.response.data.errors
+      const { error: message } = error.response.data as PhantombusterError
       return {
-        error: { status, message: detail },
+        error: { status: error.response.status, message },
       }
     }
     throw error

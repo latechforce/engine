@@ -1,59 +1,51 @@
 import type { IPappersIntegration } from '/adapter/spi/integrations/PappersSpi'
-import { Database } from 'bun:sqlite'
 import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
 import type { PappersEntreprise } from '/domain/integrations/Pappers/PappersTypes'
-import type { IntegrationResponseError } from '/domain/integrations/base'
 import type { IntegrationResponse } from '/domain/integrations/base'
+import { BaseMockIntegration } from '../base'
+import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 
-export class PappersIntegration implements IPappersIntegration {
-  private db: Database
+export class PappersIntegration extends BaseMockIntegration implements IPappersIntegration {
+  private _companies: SQLiteDatabaseTableDriver
 
   constructor(public config: PappersConfig) {
-    this.db = new Database(config.baseUrl ?? ':memory:')
-    this.db.run(`CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY)`)
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS companies (
-        siret TEXT PRIMARY KEY,
-        data TEXT NOT NULL
-      )
-    `)
-  }
-
-  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
-    const user = this.db.query('SELECT * FROM users WHERE id = ?').get(this.config.apiKey ?? '')
-    if (!user) {
-      return { error: { status: 404 } }
-    }
-    return undefined
-  }
-
-  createUser = async (id: string): Promise<void> => {
-    this.db.run(`INSERT INTO users (id) VALUES (?)`, [id])
+    super(config, config.apiKey)
+    this._companies = this._db.table({
+      name: 'companies',
+      fields: [
+        { name: 'siret', type: 'SingleLineText' },
+        { name: 'data', type: 'SingleLineText' },
+      ],
+    })
+    this._companies.ensureSync()
   }
 
   getCompany = async (siret: string): Promise<IntegrationResponse<PappersEntreprise>> => {
-    const result = this.db
-      .query<{ data: string }, [string]>('SELECT data FROM companies WHERE siret = ?')
-      .get(siret)
+    const result = await this._companies.read({
+      field: 'siret',
+      operator: 'Is',
+      value: siret,
+    })
     if (!result) {
       return {
         error: {
           status: 404,
+          message: 'Company not found',
         },
       }
     }
-    const companyData: PappersEntreprise = JSON.parse(result.data)
+    const companyData: PappersEntreprise = JSON.parse(result.fields.data as string)
     return { data: companyData }
   }
 
   addCompany = async (company: PappersEntreprise): Promise<void> => {
-    const data = JSON.stringify(company)
-    this.db.run(
-      `
-      INSERT OR REPLACE INTO companies (siret, data)
-      VALUES (?, ?)
-    `,
-      [company.siege.siret, data]
-    )
+    await this._companies.insert({
+      id: company.siege.siret,
+      created_at: new Date().toISOString(),
+      fields: {
+        siret: company.siege.siret,
+        data: JSON.stringify(company),
+      },
+    })
   }
 }
