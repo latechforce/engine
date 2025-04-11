@@ -7,84 +7,73 @@ import type {
   QontoAttachment,
 } from '/domain/integrations/Qonto/QontoTypes'
 import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
-import { Database } from 'bun:sqlite'
 import fsExtra from 'fs-extra'
 import PDFDocument from 'pdfkit'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
+import type { IntegrationResponse } from '/domain/integrations/base'
 import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
+import { BaseMockIntegration } from '../base'
+import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
+import type { RecordFields } from '/domain/entities/Record'
 
-export class QontoIntegration implements IQontoIntegration {
-  private db: Database
+export class QontoIntegration extends BaseMockIntegration implements IQontoIntegration {
+  private _clients: SQLiteDatabaseTableDriver
+  private _clientInvoices: SQLiteDatabaseTableDriver
+  private _attachments: SQLiteDatabaseTableDriver
 
   constructor(public config: QontoConfig) {
-    this.db = new Database(config.baseUrl ?? ':memory:')
-    this.db.run(`CREATE TABLE IF NOT EXISTS Organizations (id TEXT PRIMARY KEY, legal_name TEXT)`)
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS Clients (
-        id TEXT PRIMARY KEY,
-        type TEXT NOT NULL,
-        email TEXT,
-        vat_number TEXT,
-        tax_identification_number TEXT,
-        address TEXT NOT NULL,
-        city TEXT NOT NULL,
-        zip_code TEXT NOT NULL,
-        country_code TEXT NOT NULL,
-        billing_address TEXT,
-        delivery_address TEXT,
-        name TEXT,
-        first_name TEXT,
-        last_name TEXT,
-        created_at TEXT NOT NULL,
-        locale TEXT NOT NULL
-      )
-    `)
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS ClientInvoices (
-        id TEXT PRIMARY KEY,
-        client_id TEXT NOT NULL,
-        issue_date TEXT NOT NULL,
-        performance_date TEXT,
-        due_date TEXT NOT NULL,
-        status TEXT NOT NULL,
-        number TEXT,
-        purchase_order TEXT,
-        terms_and_conditions TEXT,
-        header TEXT,
-        footer TEXT,
-        currency TEXT NOT NULL,
-        total_amount_value TEXT,
-        total_amount_currency TEXT,
-        vat_amount_value TEXT,
-        vat_amount_currency TEXT,
-        created_at TEXT NOT NULL,
-        attachment_id TEXT
-      )
-    `)
-    this.db.run(`
-      CREATE TABLE IF NOT EXISTS Attachments (
-        id TEXT PRIMARY KEY,
-        file_name TEXT NOT NULL,
-        file_size INTEGER NOT NULL,
-        file_content_type TEXT NOT NULL,
-        url TEXT NOT NULL,
-        created_at TEXT NOT NULL
-      )
-    `)
-  }
-
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
-    const organization = this.db
-      .query<QontoOrganization, string>('SELECT * FROM Organizations WHERE id = ?')
-      .get(this.config.organisationSlug)
-    if (!organization) {
-      return { error: { status: 404, message: 'Organization not found' } }
-    }
-    return undefined
-  }
-
-  createOrganization = async (id: string, legalName: string): Promise<void> => {
-    this.db.run(`INSERT INTO Organizations (id, legal_name) VALUES (?, ?)`, [id, legalName])
+    super(config, config.secretKey)
+    this._clients = this._db.table({
+      name: 'clients',
+      fields: [
+        { name: 'type', type: 'SingleLineText' },
+        { name: 'email', type: 'SingleLineText' },
+        { name: 'vat_number', type: 'SingleLineText' },
+        { name: 'tax_identification_number', type: 'SingleLineText' },
+        { name: 'address', type: 'SingleLineText' },
+        { name: 'city', type: 'SingleLineText' },
+        { name: 'zip_code', type: 'SingleLineText' },
+        { name: 'country_code', type: 'SingleLineText' },
+        { name: 'billing_address', type: 'SingleLineText' },
+        { name: 'delivery_address', type: 'SingleLineText' },
+        { name: 'name', type: 'SingleLineText' },
+        { name: 'first_name', type: 'SingleLineText' },
+        { name: 'last_name', type: 'SingleLineText' },
+        { name: 'locale', type: 'SingleLineText' },
+      ],
+    })
+    this._clients.ensureSync()
+    this._clientInvoices = this._db.table({
+      name: 'client_invoices',
+      fields: [
+        { name: 'client_id', type: 'SingleLineText' },
+        { name: 'issue_date', type: 'SingleLineText' },
+        { name: 'performance_date', type: 'SingleLineText' },
+        { name: 'due_date', type: 'SingleLineText' },
+        { name: 'status', type: 'SingleLineText' },
+        { name: 'number', type: 'SingleLineText' },
+        { name: 'purchase_order', type: 'SingleLineText' },
+        { name: 'terms_and_conditions', type: 'SingleLineText' },
+        { name: 'header', type: 'SingleLineText' },
+        { name: 'footer', type: 'SingleLineText' },
+        { name: 'currency', type: 'SingleLineText' },
+        { name: 'total_amount_value', type: 'SingleLineText' },
+        { name: 'total_amount_currency', type: 'SingleLineText' },
+        { name: 'vat_amount_value', type: 'SingleLineText' },
+        { name: 'vat_amount_currency', type: 'SingleLineText' },
+        { name: 'attachment_id', type: 'SingleLineText' },
+      ],
+    })
+    this._clientInvoices.ensureSync()
+    this._attachments = this._db.table({
+      name: 'attachments',
+      fields: [
+        { name: 'file_name', type: 'SingleLineText' },
+        { name: 'file_size', type: 'SingleLineText' },
+        { name: 'file_content_type', type: 'SingleLineText' },
+        { name: 'url', type: 'SingleLineText' },
+      ],
+    })
+    this._attachments.ensureSync()
   }
 
   createClient = async (client: QontoCreateClient): Promise<IntegrationResponse<QontoClient>> => {
@@ -92,33 +81,26 @@ export class QontoIntegration implements IQontoIntegration {
     const createdAt = new Date().toISOString()
     const billingAddress = client.billing_address ? JSON.stringify(client.billing_address) : null
     const deliveryAddress = client.delivery_address ? JSON.stringify(client.delivery_address) : null
-    this.db.run(
-      `
-      INSERT INTO Clients (
-        id, type, email, vat_number, tax_identification_number, address, city, zip_code, 
-        country_code, billing_address, delivery_address, name, first_name, last_name, 
-        created_at, locale
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `,
-      [
-        id,
-        client.type,
-        client.email || null,
-        client.vat_number || null,
-        client.tax_identification_number || null,
-        client.address,
-        client.city,
-        client.zip_code,
-        client.country_code,
-        billingAddress,
-        deliveryAddress,
-        client.name || null,
-        client.first_name || null,
-        client.last_name || null,
-        createdAt,
-        client.locale,
-      ]
-    )
+    await this._clients.insert({
+      id,
+      created_at: createdAt,
+      fields: {
+        type: client.type,
+        email: client.email || '',
+        vat_number: client.vat_number || '',
+        tax_identification_number: client.tax_identification_number || '',
+        address: client.address,
+        city: client.city,
+        zip_code: client.zip_code,
+        country_code: client.country_code,
+        billing_address: billingAddress,
+        delivery_address: deliveryAddress,
+        name: client.name || '',
+        first_name: client.first_name || '',
+        last_name: client.last_name || '',
+        locale: client.locale,
+      },
+    })
     const createdClient: QontoClient =
       client.type === 'company'
         ? {
@@ -154,7 +136,6 @@ export class QontoIntegration implements IQontoIntegration {
             created_at: createdAt,
             locale: client.locale,
           }
-
     return { data: createdClient }
   }
 
@@ -183,62 +164,49 @@ export class QontoIntegration implements IQontoIntegration {
       file_content_type: 'application/pdf',
       url: `file:/${path}`,
     }
-    this.db.run(
-      'INSERT INTO Attachments (id, file_name, file_size, file_content_type, url, created_at) VALUES (?, ?, ?, ?, ?, ?)',
-      [
-        mockAttachment.id,
-        mockAttachment.file_name,
-        mockAttachment.file_size,
-        mockAttachment.file_content_type,
-        mockAttachment.url,
-        mockAttachment.created_at,
-      ]
-    )
-
-    this.db.run(
-      `
-      INSERT INTO ClientInvoices (
-        id, client_id, issue_date, performance_date, due_date, status, number, purchase_order, 
-        terms_and_conditions, header, footer, currency, total_amount_value, total_amount_currency, 
-        vat_amount_value, vat_amount_currency, created_at, attachment_id
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `,
-      [
-        id,
-        invoice.client_id,
-        invoice.issue_date,
-        invoice.performance_date || null,
-        invoice.due_date,
-        invoice.status || 'unpaid',
-        invoice.number,
-        invoice.purchase_order || null,
-        invoice.terms_and_conditions || null,
-        invoice.header || null,
-        invoice.footer || null,
-        invoice.currency,
-        invoice.items
-          .reduce(
-            (acc, item) => acc + parseFloat(item.unit_price.value) * parseFloat(item.quantity),
-            0
-          )
-          .toFixed(2), // Total Amount Value
-        invoice.currency,
-        invoice.items
-          .reduce(
-            (acc, item) =>
-              acc +
-              parseFloat(item.unit_price.value) *
-                parseFloat(item.quantity) *
-                parseFloat(item.vat_rate),
-            0
-          )
-          .toFixed(2), // VAT Amount Value
-        invoice.currency,
-        createdAt,
-        attachmentId,
-      ]
-    )
-
+    await this._attachments.insert({
+      id: attachmentId,
+      created_at: createdAt,
+      fields: {
+        file_name: mockAttachment.file_name,
+        file_size: mockAttachment.file_size.toString(),
+        file_content_type: mockAttachment.file_content_type,
+        url: mockAttachment.url,
+      },
+    })
+    const totalAmount = invoice.items
+      .reduce((acc, item) => acc + parseFloat(item.unit_price.value) * parseFloat(item.quantity), 0)
+      .toFixed(2)
+    const vatAmount = invoice.items
+      .reduce(
+        (acc, item) =>
+          acc +
+          parseFloat(item.unit_price.value) * parseFloat(item.quantity) * parseFloat(item.vat_rate),
+        0
+      )
+      .toFixed(2)
+    await this._clientInvoices.insert({
+      id,
+      created_at: createdAt,
+      fields: {
+        client_id: invoice.client_id,
+        issue_date: invoice.issue_date,
+        performance_date: invoice.performance_date || '',
+        due_date: invoice.due_date,
+        status: invoice.status || 'unpaid',
+        number: invoice.number || '',
+        purchase_order: invoice.purchase_order || '',
+        terms_and_conditions: invoice.terms_and_conditions || '',
+        header: invoice.header || '',
+        footer: invoice.footer || '',
+        currency: invoice.currency,
+        total_amount_value: totalAmount,
+        total_amount_currency: invoice.currency,
+        vat_amount_value: vatAmount,
+        vat_amount_currency: invoice.currency,
+        attachment_id: attachmentId,
+      },
+    })
     return {
       data: {
         id,
@@ -255,10 +223,10 @@ export class QontoIntegration implements IQontoIntegration {
         header: invoice.header || '',
         footer: invoice.footer || '',
         currency: invoice.currency,
-        total_amount: { value: '0.00', currency: invoice.currency },
-        total_amount_cents: 0,
-        vat_amount: { value: '0.00', currency: invoice.currency },
-        vat_amount_cents: 0,
+        total_amount: { value: totalAmount, currency: invoice.currency },
+        total_amount_cents: parseFloat(totalAmount) * 100,
+        vat_amount: { value: vatAmount, currency: invoice.currency },
+        vat_amount_cents: parseFloat(vatAmount) * 100,
         issue_date: invoice.issue_date,
         due_date: invoice.due_date,
         performance_date: invoice.performance_date || '',
@@ -301,22 +269,50 @@ export class QontoIntegration implements IQontoIntegration {
   }
 
   listClientInvoices = async (): Promise<IntegrationResponse<QontoClientInvoice[]>> => {
-    const result = this.db
-      .query<
-        QontoClientInvoice & {
-          total_amount_value: string
-          total_amount_currency: string
-          vat_amount_value: string
-          vat_amount_currency: string
-        },
-        []
-      >('SELECT * FROM ClientInvoices')
-      .all()
+    const invoices = await this._clientInvoices.list<RecordFields>()
     return {
-      data: result.map((row) => ({
-        ...row,
-        total_amount: { value: row.total_amount_value, currency: row.total_amount_currency },
-        vat_amount: { value: row.vat_amount_value, currency: row.vat_amount_currency },
+      data: invoices.map((row) => ({
+        id: row.id,
+        organization_id: 'org-placeholder',
+        number: String(row.fields.number),
+        purchase_order: String(row.fields.purchase_order),
+        status: String(row.fields.status) as 'draft' | 'unpaid' | 'paid' | 'canceled',
+        invoice_url: `https://pay.qonto.com/invoices/${row.id}`,
+        contact_email: 'contact@example.com',
+        terms_and_conditions: String(row.fields.terms_and_conditions),
+        discount_conditions: '',
+        late_payment_penalties: '',
+        legal_fixed_compensation: '',
+        header: String(row.fields.header),
+        footer: String(row.fields.footer),
+        currency: String(row.fields.currency),
+        total_amount: {
+          value: String(row.fields.total_amount_value),
+          currency: String(row.fields.total_amount_currency),
+        },
+        total_amount_cents: parseFloat(String(row.fields.total_amount_value)) * 100,
+        vat_amount: {
+          value: String(row.fields.vat_amount_value),
+          currency: String(row.fields.vat_amount_currency),
+        },
+        vat_amount_cents: parseFloat(String(row.fields.vat_amount_value)) * 100,
+        issue_date: String(row.fields.issue_date),
+        due_date: String(row.fields.due_date),
+        performance_date: String(row.fields.performance_date),
+        created_at: row.created_at,
+        finalized_at: row.created_at,
+        paid_at: '',
+        stamp_duty_amount: '',
+        items: [],
+        client: { id: String(row.fields.client_id), name: 'Client Placeholder' } as QontoClient,
+        payment_methods: [],
+        credit_notes_ids: [],
+        organization: { id: 'org-placeholder', legal_name: 'Org Name' } as QontoOrganization,
+        einvoicing_status: 'pending',
+        welfare_fund: { type: '', rate: '' },
+        withholding_tax: { reason: '', rate: '', payment_reason: '', amount: '' },
+        payment_reporting: { conditions: '', method: '' },
+        attachment_id: String(row.fields.attachment_id),
       })),
     }
   }
@@ -324,9 +320,19 @@ export class QontoIntegration implements IQontoIntegration {
   retrieveAttachment = async (
     attachmentId: string
   ): Promise<IntegrationResponse<QontoAttachment | undefined>> => {
-    const attachment = this.db
-      .query<QontoAttachment, string>('SELECT * FROM Attachments WHERE id = ?')
-      .get(attachmentId)
-    return { data: attachment ?? undefined }
+    const attachment = await this._attachments.readById<RecordFields>(attachmentId)
+    if (!attachment) {
+      return { data: undefined }
+    }
+    return {
+      data: {
+        id: attachment.id,
+        created_at: attachment.created_at,
+        file_name: String(attachment.fields.file_name),
+        file_size: parseInt(String(attachment.fields.file_size)),
+        file_content_type: String(attachment.fields.file_content_type),
+        url: String(attachment.fields.url),
+      },
+    }
   }
 }

@@ -17,7 +17,7 @@ import type { AirtableConfig } from '/domain/integrations/Airtable'
 import { MockedApp } from './MockedApp'
 import { MockedFetcherDriver } from './MockedFetcherDriver'
 import { GoogleMailIntegration } from '/infrastructure/integrations/bun/mocks/google/mail/GoogleMailIntegration.mock'
-import type { GoogleMailConfig } from '../../../domain/integrations/Google/Mail/GoogleMail'
+import type { GoogleMailConfig } from '/domain/integrations/Google/Mail'
 import { GoCardlessIntegration } from '/infrastructure/integrations/bun/mocks/gocardless/GoCardlessIntegration.mock'
 import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
@@ -309,85 +309,96 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           ]
           integrations.calendly = new CalendlyIntegration(configs[0])
           extendsConfig.integrations.calendly = configs
+          await integrations.calendly.createToken(configs[0].user.accessToken)
         }
         if (this.options.integrations.includes('Notion')) {
           const configs: NotionConfig[] = [
             {
               name: 'notion',
-              token: await getTestDbUrl('notion'),
+              baseUrl: await getTestDbUrl('notion'),
+              token: 'test',
               pollingInterval: 1,
             },
           ]
           integrations.notion = new NotionIntegration(configs[0])
           extendsConfig.integrations.notion = configs
+          await integrations.notion.createToken(configs[0].token)
         }
         if (this.options.integrations.includes('Airtable')) {
           const configs: AirtableConfig[] = [
             {
               name: 'airtable',
-              apiKey: await getTestDbUrl('airtable'),
-              baseId: 'test',
+              baseUrl: await getTestDbUrl('airtable'),
+              apiKey: 'test',
+              databaseId: 'test',
             },
           ]
           integrations.airtable = new AirtableIntegration(configs[0])
           extendsConfig.integrations.airtable = configs
+          await integrations.airtable.createToken(configs[0].apiKey)
         }
         if (this.options.integrations.includes('Qonto')) {
           const configs: QontoConfig[] = [
             {
               name: 'qonto',
-              environment: 'production',
+              baseUrl: await getTestDbUrl('qonto'),
               organisationSlug: 'test',
-              secretKey: await getTestDbUrl('qonto'),
+              secretKey: 'test',
             },
           ]
           integrations.qonto = new QontoIntegration(configs[0])
           extendsConfig.integrations.qonto = configs
-          await integrations.qonto.createOrganization(configs[0].organisationSlug, 'Org Name')
+          await integrations.qonto.createToken(configs[0].secretKey)
         }
         if (this.options.integrations.includes('GoogleMail')) {
           const configs: GoogleMailConfig[] = [
             {
               name: 'googlemail',
+              baseUrl: await getTestDbUrl('googlemail'),
               user: 'test',
-              password: await getTestDbUrl('googlemail'),
+              password: 'test',
             },
           ]
           integrations.googleMail = new GoogleMailIntegration(configs[0])
           if (!extendsConfig.integrations.google) extendsConfig.integrations.google = {}
           extendsConfig.integrations.google.mail = configs
+          await integrations.googleMail.createToken(configs[0].user)
         }
         if (this.options.integrations.includes('Pappers')) {
           const configs: PappersConfig[] = [
             {
               name: 'pappers',
-              apiKey: await getTestDbUrl('pappers'),
+              baseUrl: await getTestDbUrl('pappers'),
+              apiKey: 'test',
             },
           ]
           integrations.pappers = new PappersIntegration(configs[0])
           extendsConfig.integrations.pappers = configs
-          await integrations.pappers.createUser(configs[0].apiKey)
+          await integrations.pappers.createToken(configs[0].apiKey)
         }
         if (this.options.integrations.includes('GoCardless')) {
           const configs: GoCardlessConfig[] = [
             {
               name: 'gocardless',
-              environment: 'production',
-              accessToken: await getTestDbUrl('gocardless'),
+              baseUrl: await getTestDbUrl('gocardless'),
+              accessToken: 'test',
             },
           ]
           integrations.gocardless = new GoCardlessIntegration(configs[0])
           extendsConfig.integrations.gocardless = configs
+          await integrations.gocardless.createToken(configs[0].accessToken)
         }
         if (this.options.integrations.includes('Phantombuster')) {
           const configs: PhantombusterConfig[] = [
             {
               name: 'phantombuster',
-              apiKey: await getTestDbUrl('phantombuster'),
+              baseUrl: await getTestDbUrl('phantombuster'),
+              apiKey: 'test',
             },
           ]
           integrations.phantombuster = new PhantombusterIntegration(configs[0])
           extendsConfig.integrations.phantombuster = configs
+          await integrations.phantombuster.createToken(configs[0].apiKey)
         }
       }
       let startedApp: StartedApp | undefined

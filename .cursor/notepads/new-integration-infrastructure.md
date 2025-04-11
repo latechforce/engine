@@ -42,7 +42,7 @@ export class NewIntegrationIntegration implements INotionIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       // Replace with the most basic method of the integration, only to check the authentication
       await this._newIntegration.get('/user')
@@ -62,21 +62,22 @@ import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIn
 import type { IntegrationResponseError } from '/domain/integrations/base'
 import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
 import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
+import { join } from 'path'
 
 export class NewIntegrationIntegration implements INewIntegrationIntegration {
   private _instance: AxiosInstance
 
   constructor(public config: NewIntegrationConfig) {
+    const { baseUrl = 'https://api.newIntegration.com', apiKey } = config
     const headers = {
       // Fill with the authentication method of the integration following the OpenAPI definition
       // Reuse the configuration keys in the /domain/integrations/NewIntegration/NewIntegrationConfig.ts
-      Authorization: `{token}`,
+      Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
       Accept: 'application/json',
     }
     this._instance = axios.create({
-      // Replace with the base URL of the integration following the OpenAPI definition
-      baseURL: 'https://newIntegration.com/api',
+      baseURL: join(baseUrl, 'v1'),
       headers,
     })
   }
@@ -95,7 +96,7 @@ export class NewIntegrationIntegration implements INewIntegrationIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       // Replace with the most basic and costless method of the integration, only to check the authentication
       await this._instance.get('/user')
@@ -126,27 +127,16 @@ Create a new file in `src/infrastructure/integrations/bun/mocks/newIntegration/N
 
 ```typescript
 import type { INewIntegrationIntegration } from '/adapter/spi/integrations/NewIntegrationSpi'
-import { Database } from 'bun:sqlite'
 import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+import { BaseMockIntegration } from '../base'
 
-export class NewIntegrationIntegration implements INewIntegrationIntegration {
-  private db: Database
-
+export class NewIntegrationIntegration
+  extends BaseMockIntegration
+  implements INewIntegrationIntegration
+{
   constructor(public config: NewIntegrationConfig) {
-    this.db = new Database(config.baseUrl ?? ':memory:')
-    // Replace with the table name of the ressource used in the checkConfiguration method of the integration in /infrastructure/integrations/common/newIntegration/NewIntegrationIntegration.ts
-    this.db.run(`CREATE TABLE IF NOT EXISTS {ressource} (id TEXT PRIMARY KEY)`)
-  }
-
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
-    const user = this.db
-      .query<NewIntegrationConfig, string>('SELECT * FROM {ressource} WHERE id = ?')
-      .get(this.config.apiKey)
-    if (!user) {
-      return { error: { status: 404, code: 'not_found', detail: '{ressource} not found' } }
-    }
-    return undefined
+    super(config, config.apiKey)
   }
 }
 ```

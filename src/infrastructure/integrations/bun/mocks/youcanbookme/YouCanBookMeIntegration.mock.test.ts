@@ -11,6 +11,8 @@ export const integration = new YouCanBookMeIntegration({
   },
 })
 
+await integration.createToken('mock-username')
+
 await integration.createProfile({
   id: 'mock-username',
   createdBy: 'mock-creator',

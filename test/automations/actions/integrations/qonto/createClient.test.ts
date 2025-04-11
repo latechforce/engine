@@ -24,6 +24,7 @@ mock.request(({ app, request }) => {
             name: 'createClient',
             integration: 'Qonto',
             action: 'CreateClient',
+            account: 'qonto',
             client: {
               name: 'John Doe',
               type: 'company',
@@ -48,11 +49,14 @@ mock.request(({ app, request }) => {
       const extendConfig: Config = {
         ...config,
         integrations: {
-          qonto: {
-            organisationSlug: 'new-organization-slug',
-            secretKey: ':memory:',
-            environment: 'production',
-          },
+          qonto: [
+            {
+              name: 'qonto',
+              baseUrl: ':memory:',
+              organisationSlug: 'new-organization-slug',
+              secretKey: 'invalid-secret-key',
+            },
+          ],
         },
       }
 

@@ -3,7 +3,7 @@ import type { DatabaseConfig, DatabaseEventType } from '/domain/services/Databas
 import type { EventDto } from '/adapter/spi/dtos/EventDto'
 import { PostgreSQLDatabaseDriver } from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriver'
 import type { ITable } from '/domain/interfaces/ITable'
-import { SQLiteDatabaseDriver } from './SQLiteDriver'
+import { SQLiteDatabaseDriver } from './SQLite/SQLiteDriver'
 import type { AutomationHistoryRecord } from '/domain/entities/Automation/History'
 
 export class DatabaseDriver implements IDatabaseDriver {

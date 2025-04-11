@@ -5,10 +5,10 @@ export function testPappersIntegration(
   { describe, it, expect }: typeof BunTester,
   integration: IPappersIntegration
 ) {
-  describe('checkConfiguration', () => {
-    it('should check configuration', async () => {
+  describe('testConnection', () => {
+    it('should test connection', async () => {
       // WHEN
-      const result = await integration.checkConfiguration()
+      const result = await integration.testConnection()
 
       // THEN
       expect(result).toBeUndefined()

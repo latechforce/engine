@@ -21,7 +21,7 @@ export class NotionIntegration implements INotionIntegration {
     })
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     const response = await NotionIntegration.retry(() => this._notion.users.me({}))
     if (response.error) return response
     return undefined

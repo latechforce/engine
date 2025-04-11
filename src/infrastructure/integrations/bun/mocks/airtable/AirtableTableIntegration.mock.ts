@@ -3,7 +3,7 @@ import type { IAirtableTableIntegration } from '/adapter/spi/integrations/Airtab
 import type { TableObject } from './AirtableIntegration.mock'
 import type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
 import type { PersistedRecordFieldsDto } from '/adapter/spi/dtos/RecordDto'
-import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
+import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { IField } from '/domain/interfaces/IField'
 import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '/domain/entities/Record'

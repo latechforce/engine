@@ -4,11 +4,11 @@ import { SQLiteDatabaseDriver } from './SQLiteDriver'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import { testDatabaseDriver } from '/infrastructure/drivers/common/DatabaseDriver/DatabaseDriverTest'
 
-const setup = async (): Promise<IDatabaseDriver> => {
+const setup = async () => {
   return new SQLiteDatabaseDriver({
     driver: 'SQLite',
     url: ':memory:',
-  })
+  }) as unknown as Promise<IDatabaseDriver>
 }
 
 it('should create a database file in a folder that not exists', async () => {

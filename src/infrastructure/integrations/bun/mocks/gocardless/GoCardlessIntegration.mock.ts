@@ -47,7 +47,7 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
     `)
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     return undefined
   }
 

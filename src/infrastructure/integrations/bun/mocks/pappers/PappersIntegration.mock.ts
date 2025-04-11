@@ -19,7 +19,7 @@ export class PappersIntegration implements IPappersIntegration {
     `)
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     const user = this.db.query('SELECT * FROM users WHERE id = ?').get(this.config.apiKey ?? '')
     if (!user) {
       return { error: { status: 404 } }

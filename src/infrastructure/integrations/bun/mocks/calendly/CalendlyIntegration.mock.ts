@@ -52,7 +52,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     `)
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     const user = this.db
       .query<CalendlyConfig, string>('SELECT * FROM users WHERE uri = ?')
       .get(this.config.user.accessToken ?? '')

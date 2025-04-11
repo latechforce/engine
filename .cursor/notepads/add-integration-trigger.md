@@ -61,7 +61,7 @@ export class NewEventTrigger extends BaseTrigger<NewEventTriggerConfig> {
         }),
       ]
     }
-    const response = await newIntegration.checkConfiguration(account)
+    const response = await newIntegration.testConnection(account)
     if (response?.error) {
       return [
         new ConfigError({

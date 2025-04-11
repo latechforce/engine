@@ -29,7 +29,7 @@ export class PappersIntegration implements IPappersIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._instance.get('/suivi-jetons')
     } catch (error) {

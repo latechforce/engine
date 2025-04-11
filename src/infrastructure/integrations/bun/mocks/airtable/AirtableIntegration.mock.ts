@@ -1,8 +1,8 @@
 import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
 import { AirtableTableIntegration } from './AirtableTableIntegration.mock'
 import type { AirtableConfig, AirtableTableRecordFields } from '/domain/integrations/Airtable'
-import { SQLiteDatabaseDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteDriver'
-import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLiteTableDriver'
+import { SQLiteDatabaseDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteDriver'
+import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
 import type { IField } from '/domain/interfaces/IField'
 import slugify from 'slugify'
@@ -50,7 +50,7 @@ export class AirtableIntegration implements IAirtableIntegration {
     }
   }
 
-  checkConfiguration = async () => {
+  testConnection = async () => {
     const user = await this._users?.readById(this.config.apiKey)
     if (!user) {
       return { error: { status: 404, message: 'User not found' } }

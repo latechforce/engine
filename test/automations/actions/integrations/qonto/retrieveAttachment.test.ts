@@ -42,6 +42,7 @@ mock.request(({ app, request, integrations }) => {
               name: 'retrieveAttachment',
               integration: 'Qonto',
               action: 'RetrieveAttachment',
+              account: 'qonto',
               attachmentId: invoice.attachment_id!,
             },
           ],
@@ -56,11 +57,14 @@ mock.request(({ app, request, integrations }) => {
       const extendConfig: Config = {
         ...config,
         integrations: {
-          qonto: {
-            organisationSlug: 'new-organization-slug',
-            secretKey: ':memory:',
-            environment: 'production',
-          },
+          qonto: [
+            {
+              name: 'qonto',
+              baseUrl: ':memory:',
+              organisationSlug: 'new-organization-slug',
+              secretKey: 'invalid-secret-key',
+            },
+          ],
         },
       }
 

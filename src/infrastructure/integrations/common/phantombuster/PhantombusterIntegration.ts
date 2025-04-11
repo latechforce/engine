@@ -33,7 +33,7 @@ export class PhantombusterIntegration implements IPhantombusterIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._instance.get('/me')
     } catch (error) {

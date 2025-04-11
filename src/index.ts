@@ -42,7 +42,7 @@ export {
   type NotionTablePageProperties,
   type NotionTablePagePropertyValue,
   type ConvertToNotionTablePageProperties,
-} from '/domain/integrations/Notion/NotionTablePage'
+} from '/domain/integrations/Notion'
 export type { NotionUser } from '/domain/integrations/Notion/NotionUser'
 export type { NotionTablePageDto } from '/adapter/spi/dtos/NotionTablePageDto'
 export {
@@ -50,7 +50,7 @@ export {
   type AirtableTableRecordFields,
   type AirtableTableRecordFieldValue,
   type ConvertToAirtableTableRecordFields,
-} from '/domain/integrations/Airtable/AirtableTableRecord'
+} from '/domain/integrations/Airtable'
 export type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
 export {
   type QontoCreateClient,

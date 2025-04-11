@@ -7,11 +7,11 @@ let airtable: Airtable
 
 beforeEach(() => {
   // GIVEN
-  config = { apiKey: '1234', baseId: '1234', name: 'test' }
+  config = { apiKey: '1234', databaseId: '1234', name: 'test' }
   spi = {
     getTable: mock(),
     config,
-    checkConfiguration: mock(),
+    testConnection: mock(),
   }
   airtable = new Airtable([spi])
 })
@@ -22,7 +22,7 @@ describe('validate', () => {
     await airtable.validate({ account: config.name, entity: 'Integration', name: 'Airtable' })
 
     // THEN
-    expect(spi.checkConfiguration).toHaveBeenCalledWith()
+    expect(spi.testConnection).toHaveBeenCalledWith()
   })
 })
 

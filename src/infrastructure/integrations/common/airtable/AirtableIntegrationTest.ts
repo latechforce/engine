@@ -26,9 +26,9 @@ export function testAirtableIntegration(
 
   if (teardown) afterAll(teardown)
 
-  describe('checkConfiguration', () => {
+  describe('testConnection', () => {
     it('should check the configuration', async () => {
-      const response = await integration.checkConfiguration()
+      const response = await integration.testConnection()
       expect(response).toBeUndefined()
     })
   })

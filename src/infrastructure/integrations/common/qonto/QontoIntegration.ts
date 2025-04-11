@@ -11,6 +11,7 @@ import {
 } from '/domain/integrations/Qonto/QontoTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import { join } from 'path'
+
 export class QontoIntegration implements IQontoIntegration {
   private _instance: AxiosInstance
 
@@ -45,7 +46,7 @@ export class QontoIntegration implements IQontoIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._instance.get('/organization')
     } catch (error) {

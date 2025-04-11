@@ -1,5 +1,4 @@
 import { Database } from 'bun:sqlite'
-import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
 import type { FilterDto } from '/domain/entities/Filter'
 import type { RecordFields, RecordFieldValue } from '/domain/entities/Record'
 import type {
@@ -10,32 +9,9 @@ import type {
 import type { ITable } from '/domain/interfaces/ITable'
 import type { IField } from '/domain/interfaces/IField'
 import slugify from 'slugify'
-
-interface ColumnInfo {
-  name: string
-  type: string
-  required: number
-}
-
-interface Column {
-  name: string
-  type: 'TEXT' | 'TIMESTAMP' | 'NUMERIC' | 'BOOLEAN' | 'TEXT[]'
-  formula?: string
-  options?: string[]
-  required?: boolean
-  table?: string
-  tableField?: string
-  onMigration?: {
-    replace?: string
-  }
-}
-
-type Row = {
-  id: string
-  created_at: number
-  updated_at?: number
-  [key: string]: RecordFieldValue
-}
+import type { ColumnInfo, Row } from './SQLiteTypes'
+import type { Column } from './SQLiteTypes'
+import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
 
 export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
   public name: string
@@ -51,7 +27,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     private _db: Database
   ) {
     this.name = config.name
-    this.schema = config.schema || 'public'
+    this.schema = config.schema ?? 'public'
     this.nameWithSchema = `${this.schema}_${this.name}`
     this.view = `${this.name}_view`
     this.viewWithSchema = `${this.schema}_${this.view}`
@@ -75,22 +51,38 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     this.columns = this.fields.map(this._convertFieldToColumn)
   }
 
-  exists = async () => {
+  ensureSync = (): void => {
+    const exists = this.existsSync()
+    if (!exists) {
+      this.createSync()
+      this.createViewSync()
+    }
+  }
+
+  ensure = async (): Promise<void> => {
+    return this.ensureSync()
+  }
+
+  existsSync = (): boolean => {
     const result = this._db
       .prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name = ?`)
       .all(this.nameWithSchema)
     return result.length > 0
   }
 
-  create = async () => {
+  exists = async (): Promise<boolean> => {
+    return this.existsSync()
+  }
+
+  createSync = () => {
     try {
       this._db.exec('BEGIN TRANSACTION')
-      const exists = await this.exists()
+      const exists = this.existsSync()
       if (exists) throw new Error(`Table "${this.name}" already exists`)
       const tableColumns = this._buildColumnsQuery(this.columns)
       const tableQuery = `CREATE TABLE ${this.nameWithSchema} (${tableColumns})`
       this._db.exec(tableQuery)
-      await this._createManyToManyTables()
+      this._createManyToManyTables()
       this._db.exec('COMMIT')
     } catch (e) {
       this._db.exec('ROLLBACK')
@@ -98,7 +90,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  migrate = async () => {
+  create = async (): Promise<void> => {
+    return this.createSync()
+  }
+
+  migrateSync = () => {
     try {
       this._db.exec('BEGIN TRANSACTION')
       const existingColumns = this._getExistingColumns()
@@ -159,7 +155,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         this._db.exec(`ALTER TABLE ${tempTableName} RENAME TO ${this.nameWithSchema}`)
         this._db.exec(`PRAGMA defer_foreign_keys = OFF`)
       }
-      await this._createManyToManyTables()
+      this._createManyToManyTables()
       this._db.exec('COMMIT')
     } catch (e) {
       console.log(e)
@@ -168,7 +164,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  createView = async () => {
+  migrate = async (): Promise<void> => {
+    return this.migrateSync()
+  }
+
+  createViewSync = () => {
     try {
       this._db.exec('BEGIN TRANSACTION')
       this._db.exec(`DROP VIEW IF EXISTS ${this.viewWithSchema}`)
@@ -210,14 +210,22 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  dropView = async () => {
+  createView = async (): Promise<void> => {
+    return this.createViewSync()
+  }
+
+  dropViewSync = () => {
     this._db.exec(`DROP VIEW IF EXISTS "${this.viewWithSchema}"`)
   }
 
-  insert = async <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
+  dropView = async (): Promise<void> => {
+    return this.dropViewSync()
+  }
+
+  insertSync = <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
     try {
       this._db.exec('BEGIN TRANSACTION')
-      await this._insert<T>(record)
+      this._insert<T>(record)
       this._db.exec('COMMIT')
     } catch (e) {
       this._db.exec('ROLLBACK')
@@ -225,10 +233,14 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  insertMany = async <T extends RecordFields>(records: RecordFieldsToCreateDto<T>[]) => {
+  insert = async <T extends RecordFields>(record: RecordFieldsToCreateDto<T>): Promise<void> => {
+    return this.insertSync(record)
+  }
+
+  insertManySync = <T extends RecordFields>(records: RecordFieldsToCreateDto<T>[]) => {
     try {
       this._db.exec('BEGIN TRANSACTION')
-      for (const record of records) await this._insert<T>(record)
+      for (const record of records) this._insert<T>(record)
       this._db.exec('COMMIT')
     } catch (e) {
       this._db.exec('ROLLBACK')
@@ -236,10 +248,16 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  update = async <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>) => {
+  insertMany = async <T extends RecordFields>(
+    records: RecordFieldsToCreateDto<T>[]
+  ): Promise<void> => {
+    return this.insertManySync(records)
+  }
+
+  updateSync = <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>) => {
     try {
       this._db.exec('BEGIN TRANSACTION')
-      await this._update<T>(record)
+      this._update<T>(record)
       this._db.exec('COMMIT')
     } catch (e) {
       this._db.exec('ROLLBACK')
@@ -247,10 +265,14 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  updateMany = async <T extends RecordFields>(records: RecordFieldsToUpdateDto<T>[]) => {
+  update = async <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>): Promise<void> => {
+    return this.updateSync(record)
+  }
+
+  updateManySync = <T extends RecordFields>(records: RecordFieldsToUpdateDto<T>[]) => {
     try {
       this._db.exec('BEGIN TRANSACTION')
-      for (const record of records) await this._update<T>(record)
+      for (const record of records) this._update<T>(record)
       this._db.exec('COMMIT')
     } catch (e) {
       this._db.exec('ROLLBACK')
@@ -258,7 +280,13 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  delete = async (id: string) => {
+  updateMany = async <T extends RecordFields>(
+    records: RecordFieldsToUpdateDto<T>[]
+  ): Promise<void> => {
+    return this.updateManySync(records)
+  }
+
+  deleteSync = (id: string) => {
     try {
       const values = [id]
       const query = `DELETE FROM ${this.nameWithSchema} WHERE id = ?`
@@ -268,7 +296,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  read = async <T extends RecordFields>(filter: FilterDto) => {
+  delete = async (id: string): Promise<void> => {
+    return this.deleteSync(id)
+  }
+
+  readSync = <T extends RecordFields>(filter: FilterDto) => {
     const { conditions, values } = this._convertFilterToConditions(filter)
     if (!conditions) return
     const query = `SELECT * FROM ${this.viewWithSchema} ${conditions.length > 0 ? `WHERE ${conditions}` : ''} LIMIT 1`
@@ -276,13 +308,25 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     return record ? this._postprocess<T>(record) : undefined
   }
 
-  readById = async <T extends RecordFields>(id: string) => {
+  read = async <T extends RecordFields>(
+    filter: FilterDto
+  ): Promise<PersistedRecordFieldsDto<T> | undefined> => {
+    return this.readSync(filter)
+  }
+
+  readByIdSync = <T extends RecordFields>(id: string) => {
     const query = `SELECT * FROM ${this.viewWithSchema} WHERE id = ?`
     const record = this._db.prepare(query).get(id) as Row | undefined
     return record ? this._postprocess<T>(record) : undefined
   }
 
-  list = async <T extends RecordFields>(filter?: FilterDto) => {
+  readById = async <T extends RecordFields>(
+    id: string
+  ): Promise<PersistedRecordFieldsDto<T> | undefined> => {
+    return this.readByIdSync(id)
+  }
+
+  listSync = <T extends RecordFields>(filter?: FilterDto) => {
     const { conditions, values } = filter
       ? this._convertFilterToConditions(filter)
       : { conditions: '', values: [] }
@@ -296,7 +340,13 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     return records.map(this._postprocess<T>)
   }
 
-  private _insert = async <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
+  list = async <T extends RecordFields>(
+    filter?: FilterDto
+  ): Promise<PersistedRecordFieldsDto<T>[]> => {
+    return this.listSync(filter)
+  }
+
+  private _insert = <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
     const { id, created_at, fields } = record
     const { staticColumns, manyToManyColumns } = this._splitColumns({ id, created_at, ...fields })
     const preprocessedFields = this._preprocess(staticColumns)
@@ -306,11 +356,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     const query = `INSERT INTO ${this.nameWithSchema} (${keys.join(', ')}) VALUES (${placeholders})`
     this._db.prepare(query).run(...values)
     if (Object.keys(manyToManyColumns).length > 0) {
-      await this._insertManyToManyColumns(record.id, manyToManyColumns)
+      this._insertManyToManyColumns(record.id, manyToManyColumns)
     }
   }
 
-  private _update = async <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>) => {
+  private _update = <T extends RecordFields>(record: RecordFieldsToUpdateDto<T>) => {
     const { id, updated_at, fields } = record
     const { staticColumns, manyToManyColumns } = this._splitColumns({ id, updated_at, ...fields })
     const preprocessedFields = this._preprocess(staticColumns)
@@ -320,7 +370,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     const query = `UPDATE ${this.nameWithSchema} SET ${setString} WHERE id = ?`
     this._db.prepare(query).run(...values, record.id)
     if (Object.keys(manyToManyColumns).length > 0) {
-      await this._updateManyToManyColumns(record.id, manyToManyColumns)
+      this._updateManyToManyColumns(record.id, manyToManyColumns)
     }
   }
 
@@ -356,7 +406,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     return [this.nameWithSchema, column.table].sort().join('_') + '_' + this._slugify(column.name)
   }
 
-  private _createManyToManyTables = async () => {
+  private _createManyToManyTables = () => {
     for (const column of this.columns) {
       if (column.type === 'TEXT[]' && column.table) {
         const manyToManyTableName = this._getManyToManyTableName(column)
@@ -396,7 +446,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     return { staticColumns, manyToManyColumns }
   }
 
-  private _insertManyToManyColumns = async (
+  private _insertManyToManyColumns = (
     recordId: string,
     manyToManyColumns: { [key: string]: string[] }
   ) => {
@@ -412,7 +462,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  private _updateManyToManyColumns = async (
+  private _updateManyToManyColumns = (
     recordId: string,
     manyToManyColumns: { [key: string]: string[] }
   ) => {

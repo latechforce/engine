@@ -1,6 +1,5 @@
 import { Database } from 'bun:sqlite'
 import fs from 'fs-extra'
-import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type {
   DatabaseConfig,
   DatabaseDriverName,
@@ -9,6 +8,7 @@ import type {
 import type { EventDto, EventNotificationDto } from '/adapter/spi/dtos/EventDto'
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
 import type { ITable } from '/domain/interfaces/ITable'
+import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 
 interface Notification {
   id: number
@@ -31,7 +31,7 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     this.db = db
   }
 
-  connect = async (): Promise<void> => {
+  connectSync = (): void => {
     if (this._interval) clearInterval(this._interval)
     this.db.run(`
       CREATE TABLE IF NOT EXISTS tables_notifications (
@@ -61,19 +61,31 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     this._interval = setInterval(emitNotification, 500)
   }
 
-  disconnect = async (): Promise<void> => {
+  connect = async (): Promise<void> => {
+    return this.connectSync()
+  }
+
+  disconnectSync = (): void => {
     if (this._interval) clearInterval(this._interval)
     this.db.close()
   }
 
-  exec = async (query: string): Promise<void> => {
+  disconnect = async (): Promise<void> => {
+    return this.disconnectSync()
+  }
+
+  execSync = (query: string): void => {
     this.db.run(query)
   }
 
-  query = async <T>(
+  exec = async (query: string): Promise<void> => {
+    return this.execSync(query)
+  }
+
+  querySync = <T>(
     text: string,
     values: (string | number | Buffer | Date)[] = []
-  ): Promise<{ rows: T[]; rowCount: number }> => {
+  ): { rows: T[]; rowCount: number } => {
     const stmt = this.db.prepare(text)
     const isSelect = text.trim().toUpperCase().startsWith('SELECT')
     const parsedValues = values.map((value) => {
@@ -91,6 +103,13 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     }
   }
 
+  query = async <T>(
+    text: string,
+    values: (string | number | Buffer | Date)[] = []
+  ): Promise<{ rows: T[]; rowCount: number }> => {
+    return this.querySync(text, values)
+  }
+
   table = (table: ITable) => {
     return new SQLiteDatabaseTableDriver(table, this.db)
   }
@@ -101,7 +120,7 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     }
   }
 
-  setupTriggers = async (tablesWithSchema: string[]) => {
+  setupTriggersSync = (tablesWithSchema: string[]): void => {
     for (const tableWithSchema of tablesWithSchema) {
       this.db.run(`
         -- Trigger for INSERT
@@ -129,5 +148,9 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
         END;
       `)
     }
+  }
+
+  setupTriggers = async (tables: string[]): Promise<void> => {
+    return this.setupTriggersSync(tables)
   }
 }

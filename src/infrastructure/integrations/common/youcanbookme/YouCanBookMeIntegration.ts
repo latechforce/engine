@@ -4,24 +4,24 @@ import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCa
 import type { YouCanBookMeError } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
+import { join } from 'path'
 
 export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   private _instance: AxiosInstance
-  private _userId: string
 
   constructor(public config: YouCanBookMeConfig) {
+    const { baseUrl = 'https://api.youcanbook.me', user } = config
     this._instance = axios.create({
-      baseURL: config?.baseUrl ?? 'https://api.youcanbook.me/v1',
+      baseURL: join(baseUrl, 'v1'),
       auth: {
-        username: config?.user.username ?? '',
-        password: config?.user.password ?? '',
+        username: user.username,
+        password: user.password,
       },
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
     })
-    this._userId = config?.user.username ?? ''
   }
 
   private _responseError = (error: unknown): IntegrationResponseError => {
@@ -37,9 +37,10 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
-      await this._instance.get(`/profiles/${this._userId}`)
+      const { username } = this.config.user
+      await this._instance.get(`/profiles/${username}`)
     } catch (error) {
       return this._responseError(error)
     }

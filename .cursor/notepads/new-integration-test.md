@@ -20,9 +20,9 @@ export function testNewIntegrationIntegration(
   integration: INewIntegrationIntegration
 ) {
   describe('NewIntegrationIntegration', () => {
-    it('should be able to check configuration', async () => {
+    it('should be able to test connection', async () => {
       // WHEN
-      const result = await integration.checkConfiguration()
+      const result = await integration.testConnection()
 
       // THEN
       expect(result).toBeUndefined()

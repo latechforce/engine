@@ -10,6 +10,6 @@ const integration = new QontoIntegration({
   secretKey: 'test',
 })
 
-await integration.createOrganization('test', 'test')
+await integration.createToken('test')
 
 testQontoIntegration(BunTester, integration)

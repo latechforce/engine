@@ -1,8 +1,9 @@
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
-import { testDatabaseTableDriver } from '../../common/DatabaseDriver/DatabaseTableDriverTest'
+import { testDatabaseTableDriver } from '../../../common/DatabaseDriver/DatabaseTableDriverTest'
 import BunTester from 'bun:test'
-import { getFirstAndSecondTableConfig } from '../../../test/config'
+import { getFirstAndSecondTableConfig } from '../../../../test/config'
 import { SQLiteDatabaseDriver } from './SQLiteDriver'
+import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
 
 const setup = async () => {
   // GIVEN
@@ -16,8 +17,14 @@ const setup = async () => {
     'multiple_select',
     'single_select',
   ])
-  const firstTable = new SQLiteDatabaseTableDriver(firstTableConfig, sqliteDatabase.db)
-  const secondTable = new SQLiteDatabaseTableDriver(secondTableConfig, sqliteDatabase.db)
+  const firstTable = new SQLiteDatabaseTableDriver(
+    firstTableConfig,
+    sqliteDatabase.db
+  ) as unknown as IDatabaseTableDriver
+  const secondTable = new SQLiteDatabaseTableDriver(
+    secondTableConfig,
+    sqliteDatabase.db
+  ) as unknown as IDatabaseTableDriver
   return { firstTable, secondTable }
 }
 

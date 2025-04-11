@@ -7,7 +7,7 @@ export type BaseConfig = {
 
 export interface BaseSpi<T extends BaseConfig> {
   config: T
-  checkConfiguration: () => Promise<IntegrationResponseError | undefined>
+  testConnection: () => Promise<IntegrationResponseError | undefined>
 }
 
 export interface IntegrationResponseData<D> {
@@ -53,7 +53,7 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
     if (!spi) {
       return [new ConfigError({ entity, name, message: 'Account not found' })]
     }
-    const response = await spi.checkConfiguration()
+    const response = await spi.testConnection()
     if (response?.error) {
       return [new ConfigError({ entity, name, message: response.error.message || 'Unknown error' })]
     }

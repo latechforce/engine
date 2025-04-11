@@ -36,7 +36,7 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._instance.get('/health_check')
     } catch (error) {

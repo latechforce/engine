@@ -55,7 +55,7 @@ export class AirtableIntegration implements IAirtableIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._airtable.meta.get('/')
     } catch (error) {

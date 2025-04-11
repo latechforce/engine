@@ -31,7 +31,7 @@ export class GoogleMailIntegration implements IGoogleMailIntegration {
     throw error
   }
 
-  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       await this._transporter.verify()
     } catch (error) {
