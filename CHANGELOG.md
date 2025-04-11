@@ -1,3 +1,10 @@
+# [0.43.0](https://github.com/latechforce/engine/compare/v0.42.1...v0.43.0) (2025-04-11)
+
+
+### Features
+
+* **Integrations:** can have multiple account for triggers and actions integrations ([b237946](https://github.com/latechforce/engine/commit/b23794611e5a9ed3876de2f7de001b53f4faf3b1))
+
 ## [0.42.1](https://github.com/latechforce/engine/compare/v0.42.0...v0.42.1) (2025-04-08)
 
 ### Bug Fixes
