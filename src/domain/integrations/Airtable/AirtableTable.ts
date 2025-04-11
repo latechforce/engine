@@ -56,4 +56,31 @@ export class AirtableTable<T extends AirtableTableRecordFields = AirtableTableRe
     if (response.error) return Integration.throwError('list', response.error)
     return response.data
   }
+
+  insertManyWithRollback = async (records: T[]): Promise<AirtableTableRecord<T>[]> => {
+    const insertedRecords: AirtableTableRecord<T>[] = []
+
+    try {
+      for (const record of records) {
+        const response = await this._spi.insert(record)
+        if (response.error) {
+          throw new Error(`Failed to insert record: ${response.error.message}`)
+        }
+        insertedRecords.push(response.data)
+      }
+      return insertedRecords
+    } catch (error) {
+      // Rollback: Delete all successfully inserted records
+      for (const record of insertedRecords) {
+        try {
+          await this._spi.delete(record.id)
+        } catch (deleteError) {
+          console.error(`Failed to delete record during rollback: ${deleteError}`)
+        }
+      }
+      throw new Error(
+        `Batch insertion failed: ${error.message}. All inserted records have been deleted.`
+      )
+    }
+  }
 }

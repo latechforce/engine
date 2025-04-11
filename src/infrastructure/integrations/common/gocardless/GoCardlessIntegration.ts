@@ -1,4 +1,5 @@
 import type { IGoCardlessIntegration } from '/adapter/spi/integrations/GoCardlessSpi'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type {
   GoCardlessPayment,
   GoCardlessConfig,
@@ -6,38 +7,49 @@ import type {
   GoCardlessListPayment,
   GoCardlessPaymentList,
 } from '/domain/integrations/GoCardless'
-import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
+import axios, { AxiosError, type AxiosInstance } from 'axios'
 
 export class GoCardlessIntegration implements IGoCardlessIntegration {
   private _instance: AxiosInstance
 
   constructor(public config: GoCardlessConfig) {
+    const { accessToken, baseUrl = 'https://api.gocardless.com' } = config
     const headers = {
-      Authorization: `Bearer ${config.accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
       Accept: 'application/json',
       'GoCardless-Version': '2015-07-06',
     }
-    switch (config.environment) {
-      case 'sandbox':
-        this._instance = axios.create({
-          baseURL: 'https://api-sandbox.gocardless.com/',
-          headers,
-        })
-        break
-      case 'production':
-        this._instance = axios.create({
-          baseURL: 'https://api.gocardless.com/',
-          headers,
-        })
-        break
+    this._instance = axios.create({
+      baseURL: baseUrl,
+      headers,
+    })
+  }
+
+  private _responseError = (error: unknown): IntegrationResponseError => {
+    if (error instanceof AxiosError && error.response) {
+      const { status, data } = error.response
+      return {
+        error: { status, message: data.error },
+      }
+    }
+    throw error
+  }
+
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    try {
+      await this._instance.get('/health_check')
+    } catch (error) {
+      return this._responseError(error)
     }
   }
 
-  createPayment = async (payment: GoCardlessCreatePayment): Promise<GoCardlessPayment> => {
-    const { mandate, ...rest } = payment
-    const response = await this._api()
-      .post('/payments', {
+  createPayment = async (
+    payment: GoCardlessCreatePayment
+  ): Promise<IntegrationResponse<GoCardlessPayment>> => {
+    try {
+      const { mandate, ...rest } = payment
+      const response = await this._instance.post('/payments', {
         payments: {
           ...rest,
           links: {
@@ -45,67 +57,24 @@ export class GoCardlessIntegration implements IGoCardlessIntegration {
           },
         },
       })
-      .catch((error) => {
-        return error.response
-      })
-    if (response.status === 201) {
-      return response.data.payments
-    } else {
-      return this._throwError(response)
-    }
-  }
-
-  listPayments = async (params: GoCardlessListPayment = {}): Promise<GoCardlessPaymentList> => {
-    const response = await this._api()
-      .get('/payments', { params })
-      .catch((error) => {
-        return error.response
-      })
-    if (response.status === 200) {
       return {
-        payments: response.data.payments,
-        meta: response.data.meta,
+        data: response.data.payments,
       }
-    } else {
-      return this._throwError(response)
+    } catch (error) {
+      return this._responseError(error)
     }
   }
 
-  private _api = (): AxiosInstance => {
-    if (!this._instance) {
-      const config = this.getConfig()
-      const headers = {
-        Authorization: `Bearer ${config.accessToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'GoCardless-Version': '2015-07-06',
+  listPayments = async (
+    params: GoCardlessListPayment = {}
+  ): Promise<IntegrationResponse<GoCardlessPaymentList>> => {
+    try {
+      const response = await this._instance.get('/payments', { params })
+      return {
+        data: response.data,
       }
-      switch (config.environment) {
-        case 'sandbox':
-          this._instance = axios.create({
-            baseURL: 'https://api-sandbox.gocardless.com/',
-            headers,
-          })
-          break
-        case 'production':
-          this._instance = axios.create({
-            baseURL: 'https://api.gocardless.com/',
-            headers,
-          })
-          break
-      }
+    } catch (error) {
+      return this._responseError(error)
     }
-    return this._instance
-  }
-
-  private _throwError = (response: AxiosResponse) => {
-    const {
-      code,
-      message,
-      errors: [{ field, message: detail }] = [{ field: '', message: '' }],
-    } = response.data.error
-    throw new Error(
-      `Error "${code}" fetching data from GoCardless ${this.getConfig().environment} API: ${message}${detail ? ', ' + field + ' ' + detail : ''}`
-    )
   }
 }

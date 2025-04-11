@@ -17,10 +17,11 @@ export function testGoogleMailIntegration(
       }
 
       // WHEN
-      const email = await integration.sendEmail(options)
+      const result = await integration.sendEmail(options)
+      if (result.error) throw new Error('Error sending email')
 
       // THEN
-      expect(email.messageId).toBeDefined()
+      expect(result.data?.messageId).toBeDefined()
     })
   })
 }

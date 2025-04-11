@@ -4,7 +4,7 @@ import type { INotionTableIntegration } from '/adapter/spi/integrations/NotionTa
 import {
   type NotionTablePageProperties,
   type NotionTablePagePropertyValue,
-} from '/domain/integrations/Notion/NotionTablePage'
+} from '/domain/integrations/Notion'
 import { Client } from '@notionhq/client'
 import type {
   CreatePageParameters,
@@ -19,6 +19,8 @@ import type {
   PartialPageObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints'
 import { format, parse, formatISO } from 'date-fns'
+import { NotionIntegration } from './NotionIntegration'
+import type { IntegrationResponse } from '/domain/integrations/base'
 
 export class NotionTableIntegration<T extends NotionTablePageProperties>
   implements INotionTableIntegration<T>
@@ -28,8 +30,7 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
 
   constructor(
     private _api: Client,
-    private _database: DatabaseObjectResponse,
-    private _retry: <T>(fn: () => Promise<T>) => Promise<T>
+    private _database: DatabaseObjectResponse
   ) {
     this.id = this._database.id.replace(/-/g, '')
     this.name = this._database.title.map((title) => title.plain_text).join('')
@@ -37,7 +38,7 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
 
   insert = async (page: T) => {
     const properties = this._preprocessProperties(page)
-    const insertedPage = await this._retry(() =>
+    const response = await NotionIntegration.retry(() =>
       this._api.pages.create({
         parent: {
           database_id: this._database.id,
@@ -45,53 +46,139 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
         properties,
       })
     )
-    return this._postprocessPage(this._throwIfNotPageObjectResponse(insertedPage))
+    if (response.error) return response
+    return {
+      data: this._postprocessPage(this._throwIfNotPageObjectResponse(response.data)),
+      error: undefined,
+    }
   }
 
-  insertMany = async (pages: T[]) => {
-    const pagesinserted: Promise<NotionTablePageDto<T>>[] = []
-    for (const page of pages) pagesinserted.push(this.insert(page))
-    return Promise.all(pagesinserted)
+  insertMany = async (pages: T[]): Promise<IntegrationResponse<NotionTablePageDto<T>[]>> => {
+    const createdPages: NotionTablePageDto<T>[] = []
+    const createdIds: string[] = []
+    try {
+      const results = await Promise.all(
+        pages.map(async (page) => {
+          const response = await this.insert(page)
+          if (response.error) {
+            throw response.error
+          }
+          createdIds.push(response.data.id)
+          return response.data
+        })
+      )
+      createdPages.push(...results)
+      return {
+        data: createdPages,
+      }
+    } catch (error) {
+      await Promise.all(createdIds.map((id) => this.archive(id)))
+      return {
+        error: {
+          status: 500,
+          message: error instanceof Error ? error.message : 'Failed to create pages',
+        },
+      }
+    }
   }
 
-  update = async (id: string, page: Partial<T>) => {
+  update = async (
+    id: string,
+    page: Partial<T>
+  ): Promise<IntegrationResponse<NotionTablePageDto<T>>> => {
     const properties = this._preprocessProperties(page)
-    const updatedPage = await this._retry(() =>
+    const response = await NotionIntegration.retry(() =>
       this._api.pages.update({
         page_id: id,
         properties,
       })
     )
-    return this._postprocessPage(this._throwIfNotPageObjectResponse(updatedPage))
+    if (response.error) return response
+    return {
+      data: this._postprocessPage(this._throwIfNotPageObjectResponse(response.data)),
+      error: undefined,
+    }
   }
 
-  updateMany = async (pages: { id: string; page: Partial<T> }[]) => {
-    const pagesUpdated: Promise<NotionTablePageDto<T>>[] = []
-    for (const { id, page } of pages) pagesUpdated.push(this.update(id, page))
-    return Promise.all(pagesUpdated)
+  updateMany = async (
+    pages: { id: string; page: Partial<T> }[]
+  ): Promise<IntegrationResponse<NotionTablePageDto<T>[]>> => {
+    const updatedPages: NotionTablePageDto<T>[] = []
+    const updatedIds: string[] = []
+    try {
+      const results = await Promise.all(
+        pages.map(async ({ id, page }) => {
+          const response = await this.update(id, page)
+          if (response.error) {
+            throw response.error
+          }
+          updatedIds.push(response.data.id)
+          return response.data
+        })
+      )
+      updatedPages.push(...results)
+      return {
+        data: updatedPages,
+        error: undefined,
+      }
+    } catch (error) {
+      const previousPages = await Promise.all(updatedIds.map((id) => this.retrieve(id)))
+      const previousPagesData = previousPages
+        .filter((page): page is { data: NotionTablePageDto<T> } => 'data' in page)
+        .map((page) => page.data)
+      await Promise.all(
+        previousPagesData.map((prevPage) => this.update(prevPage.id, prevPage.properties))
+      )
+      return {
+        error: {
+          status: 500,
+          message: error instanceof Error ? error.message : 'Failed to update pages',
+        },
+      }
+    }
   }
 
-  retrieve = async (id: string) => {
-    const page = await this._retry(() => this._api.pages.retrieve({ page_id: id }))
-    return this._postprocessPage(this._throwIfNotPageObjectResponse(page))
+  retrieve = async (id: string): Promise<IntegrationResponse<NotionTablePageDto<T>>> => {
+    const response = await NotionIntegration.retry(() => this._api.pages.retrieve({ page_id: id }))
+    if (response.error) return response
+    return {
+      data: this._postprocessPage(this._throwIfNotPageObjectResponse(response.data)),
+      error: undefined,
+    }
   }
 
-  archive = async (id: string) => {
-    await this._retry(() =>
+  archive = async (id: string): Promise<IntegrationResponse<void>> => {
+    const response = await NotionIntegration.retry(() =>
       this._api.pages.update({
         page_id: id,
         archived: true,
       })
     )
+    if (response.error) return response
+    return {
+      data: undefined,
+      error: undefined,
+    }
   }
 
-  archiveMany = async (ids: string[]) => {
-    const pagesArchived: Promise<void>[] = []
-    for (const id of ids) pagesArchived.push(this.archive(id))
-    return Promise.all(pagesArchived)
+  archiveMany = async (ids: string[]): Promise<IntegrationResponse<void>> => {
+    const responses = await Promise.all(ids.map((id) => this.archive(id)))
+    const errors = responses.filter((response) => response.error)
+    if (errors.length > 0) {
+      return {
+        error: {
+          status: 500,
+          message: 'Failed to archive pages',
+        },
+      }
+    }
+    return {
+      data: undefined,
+      error: undefined,
+    }
   }
 
-  list = async (filter?: FilterDto) => {
+  list = async (filter?: FilterDto): Promise<IntegrationResponse<NotionTablePageDto<T>[]>> => {
     const query: QueryDatabaseParameters = {
       database_id: this._database.id,
     }
@@ -101,16 +188,20 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
     let pages: QueryDatabaseResponse['results'] = []
     let cursor: string | undefined = undefined
     do {
-      const response = await this._retry(() =>
+      const response = await NotionIntegration.retry(() =>
         this._api.databases.query({
           ...query,
           start_cursor: cursor,
         })
       )
-      pages = pages.concat(response.results)
-      cursor = response.has_more ? (response.next_cursor ?? undefined) : undefined
+      if (response.error) return response
+      pages = pages.concat(response.data.results)
+      cursor = response.data.has_more ? (response.data.next_cursor ?? undefined) : undefined
     } while (cursor)
-    return pages.map((page) => this._postprocessPage(this._throwIfNotPageObjectResponse(page)))
+    return {
+      data: pages.map((page) => this._postprocessPage(this._throwIfNotPageObjectResponse(page))),
+      error: undefined,
+    }
   }
 
   private _preprocessProperties = (properties: Partial<T>): CreatePageParameters['properties'] => {

@@ -4,65 +4,64 @@ import { NotionTableIntegration } from './NotionTableIntegration'
 import type { NotionConfig } from '/domain/integrations/Notion'
 import type {
   DatabaseObjectResponse,
+  ListUsersResponse,
   PartialDatabaseObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints'
 import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
-import type { NotionTablePageProperties } from '/domain/integrations/Notion/NotionTablePage'
+import type { NotionTablePageProperties } from '/domain/integrations/Notion'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 
 export class NotionIntegration implements INotionIntegration {
-  private _notion?: Client
+  private _notion: Client
 
-  constructor(private _config?: NotionConfig) {}
+  constructor(public config: NotionConfig) {
+    const { token } = config
+    this._notion = new Client({
+      auth: token,
+    })
+  }
 
-  getConfig = () => {
-    if (!this._config) {
-      throw new Error('Notion config not set')
-    }
-    return this._config
+  checkConfiguration = async (): Promise<IntegrationResponseError | undefined> => {
+    const response = await NotionIntegration.retry(() => this._notion.users.me({}))
+    if (response.error) return response
+    return undefined
   }
 
   getTable = async <T extends NotionTablePageProperties = NotionTablePageProperties>(
     id: string
   ) => {
-    const api = this._api()
-    const database = await this._retry(() =>
-      api.databases.retrieve({
+    const response = await NotionIntegration.retry(() =>
+      this._notion.databases.retrieve({
         database_id: id,
       })
     )
+    if (response.error) throw response.error
     return new NotionTableIntegration<T>(
-      api,
-      this._throwIfNotDatabaseObjectResponse(database),
-      this._retry
+      this._notion,
+      this._throwIfNotDatabaseObjectResponse(response.data)
     )
   }
 
-  listAllUsers = async (): Promise<NotionUserDto[]> => {
-    const api = this._api()
-    const users = await this._retry(() => api.users.list({}))
-    return users.results
-      .filter((user) => user.type === 'person')
-      .map((user) => {
-        if (!user.person?.email) {
-          throw new Error('Notion user is missing person email')
-        }
-        return {
-          id: user.id,
-          email: user.person.email,
-          name: user.name,
-          avatarUrl: user.avatar_url,
-        }
-      })
-  }
-
-  private _api = (): Client => {
-    if (!this._notion) {
-      const { token } = this.getConfig()
-      this._notion = new Client({
-        auth: token,
-      })
+  listAllUsers = async (): Promise<IntegrationResponse<NotionUserDto[]>> => {
+    const response = await NotionIntegration.retry<ListUsersResponse>(() =>
+      this._notion.users.list({})
+    )
+    if (response.error) return response
+    return {
+      data: response.data.results
+        .filter((user) => user.type === 'person')
+        .map((user) => {
+          if (!user.person?.email) {
+            throw new Error('Notion user is missing person email')
+          }
+          return {
+            id: user.id,
+            email: user.person.email,
+            name: user.name,
+            avatarUrl: user.avatar_url,
+          }
+        }),
     }
-    return this._notion
   }
 
   private _throwIfNotDatabaseObjectResponse(
@@ -74,10 +73,13 @@ export class NotionIntegration implements INotionIntegration {
     throw new Error('Not a PageObjectResponse')
   }
 
-  private _retry = async <T>(fn: () => Promise<T>, retries = 3): Promise<T> => {
+  static retry = async <T>(fn: () => Promise<T>, retries = 3): Promise<IntegrationResponse<T>> => {
     for (let attempt = 0; attempt < retries; attempt++) {
       try {
-        return await fn()
+        const data = await fn()
+        return {
+          data,
+        }
       } catch (error) {
         if (isNotionClientError(error)) {
           const headers = 'headers' in error ? (error.headers as Headers) : undefined
@@ -91,7 +93,12 @@ export class NotionIntegration implements INotionIntegration {
               if (attempt < retries - 1) {
                 await new Promise((resolve) => setTimeout(resolve, 2000))
               } else {
-                throw new Error('Failed after multiple conflict errors')
+                return {
+                  error: {
+                    status: 500,
+                    message: 'Failed after multiple conflict errors',
+                  },
+                }
               }
               break
             default:
@@ -102,7 +109,12 @@ export class NotionIntegration implements INotionIntegration {
             if (attempt < retries - 1) {
               await new Promise((resolve) => setTimeout(resolve, 10000))
             } else {
-              throw new Error(`Failed after multiple 502 errors`)
+              return {
+                error: {
+                  status: 502,
+                  message: `Failed after multiple 502 errors`,
+                },
+              }
             }
           } else {
             throw error
@@ -112,6 +124,11 @@ export class NotionIntegration implements INotionIntegration {
         }
       }
     }
-    throw new Error('Failed after multiple retries')
+    return {
+      error: {
+        status: 500,
+        message: 'Failed after multiple retries',
+      },
+    }
   }
 }

@@ -4,6 +4,7 @@ import { testGoogleMailIntegration } from './GoogleMailIntegrationTest'
 import env from '/infrastructure/test/env'
 
 const integration = new GoogleMailIntegration({
+  name: 'test',
   user: env.TEST_GOOGLE_MAIL_USER,
   password: env.TEST_GOOGLE_MAIL_PASSWORD,
 })

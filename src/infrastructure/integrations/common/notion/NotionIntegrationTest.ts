@@ -4,6 +4,7 @@ import { NotionIntegration } from './NotionIntegration'
 import env from '../../../test/env'
 
 export const integration = new NotionIntegration({
+  name: 'test',
   token: env.TEST_NOTION_TOKEN,
   pollingInterval: 10,
 })
@@ -11,14 +12,17 @@ export const integration = new NotionIntegration({
 export const testTable = await integration.getTable(env.TEST_NOTION_TABLE_1_ID)
 
 export const cleanTestsTables = async () => {
-  const pages = await testTable.list()
-  await testTable.archiveMany(pages.map((page) => page.id))
+  const response = await testTable.list()
+  if (response.error) throw response.error
+  await testTable.archiveMany(response.data.map((page) => page.id))
   const testTable2 = await integration.getTable(env.TEST_NOTION_TABLE_2_ID)
-  const pages2 = await testTable.list()
-  await testTable2.archiveMany(pages2.map((page) => page.id))
+  const response2 = await testTable2.list()
+  if (response2.error) throw response2.error
+  await testTable2.archiveMany(response2.data.map((page) => page.id))
   const testTable3 = await integration.getTable(env.TEST_NOTION_TABLE_3_ID)
-  const pages3 = await testTable.list()
-  await testTable3.archiveMany(pages3.map((page) => page.id))
+  const response3 = await testTable3.list()
+  if (response3.error) throw response3.error
+  await testTable3.archiveMany(response3.data.map((page) => page.id))
 }
 
 export function testNotionIntegration(
@@ -44,10 +48,11 @@ export function testNotionIntegration(
   describe('listAllUsers', () => {
     it('should retrieve all the users of a workspace', async () => {
       // WHEN
-      const users = await integration.listAllUsers()
+      const response = await integration.listAllUsers()
+      if (response.error) throw response.error
 
       // THEN
-      expect(users.length > 0).toBeTruthy()
+      expect(response.data.length > 0).toBeTruthy()
     })
   })
 }

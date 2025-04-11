@@ -15,7 +15,9 @@ export function testGoCardlessIntegration(
   describe('createPayment', () => {
     it('should create a payment', async () => {
       // WHEN
-      payment = await integration.createPayment(goCardlessCreatePaymentSample)
+      const response = await integration.createPayment(goCardlessCreatePaymentSample)
+      if (response.error) throw new Error('Error creating payment')
+      payment = response.data
 
       // THEN
       expect(payment?.id).toBeDefined()
@@ -26,12 +28,13 @@ export function testGoCardlessIntegration(
     it('should list payments', async () => {
       // WHEN
       const result = await integration.listPayments(goCardlessListPaymentsSample)
+      if (result.error) throw new Error('Error listing payments')
 
       // THEN
-      expect(result.payments).toBeDefined()
-      expect(Array.isArray(result.payments)).toBe(true)
-      expect(result.meta.limit).toBeDefined()
-      expect(result.payments[0].id).toBe(payment.id)
+      expect(result.data.payments).toBeDefined()
+      expect(Array.isArray(result.data.payments)).toBe(true)
+      expect(result.data.meta.limit).toBeDefined()
+      expect(result.data.payments[0].id).toBe(payment.id)
     })
   })
 }
