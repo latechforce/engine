@@ -1,209 +1,2728 @@
 {
-  "type": "object",
-  "properties": {
-    "name": {
-      "type": "string",
-      "description": "This is the name of the app.",
-      "examples": [
-        "My App"
-      ]
-    },
-    "version": {
-      "type": "string",
-      "description": "This is the version of the app.",
-      "examples": [
-        "1.0.0"
-      ]
-    },
-    "engine": {
-      "type": "string",
-      "description": "This is the version of the engine.",
-      "examples": [
-        "1.0.0"
-      ]
-    },
-    "description": {
-      "type": "string",
-      "description": "This is the description of the app.",
-      "examples": [
-        "My App description"
-      ]
-    },
-    "forms": {
-      "type": "array",
-      "items": {
-        "$ref": "./IForm.schema.json"
-      },
-      "description": "This is the list of forms of the app."
-    },
-    "tables": {
-      "type": "array",
-      "items": {
-        "$ref": "./ITable.schema.json"
-      },
-      "description": "This is the list of tables of the app."
-    },
-    "buckets": {
-      "type": "array",
-      "items": {
-        "$ref": "./IBucket.schema.json"
-      },
-      "description": "This is the list of buckets of the app."
-    },
-    "automations": {
-      "type": "array",
-      "items": {
-        "$ref": "./IAutomation.schema.json"
-      },
-      "description": "This is the list of automations of the app."
-    },
-    "integrations": {
-      "$ref": "./IIntegrations.schema.json",
-      "description": "This is the list of integrations of the app."
-    },
-    "server": {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/ConfigSchema",
+  "definitions": {
+    "ConfigSchema": {
       "type": "object",
       "properties": {
-        "apiKeys": {
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "engine": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "forms": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FormSchema"
+          }
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TableSchema"
+          }
+        },
+        "buckets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BucketSchema"
+          }
+        },
+        "automations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AutomationSchema"
+          }
+        },
+        "integrations": {
+          "$ref": "#/definitions/IntegrationsSchema"
+        },
+        "server": {
+          "type": "object",
+          "properties": {
+            "apiKeys": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "port": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "idleTimeout": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "baseUrl": {
+              "type": "string"
+            },
+            "sslCert": {
+              "type": "string"
+            },
+            "sslKey": {
+              "type": "string"
+            },
+            "env": {
+              "type": "string"
+            },
+            "monitors": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "Sentry",
+                  "Console"
+                ]
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "database": {
+          "type": "object",
+          "properties": {
+            "driver": {
+              "type": "string",
+              "enum": [
+                "PostgreSQL",
+                "SQLite"
+              ]
+            },
+            "url": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "driver",
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        "monitors": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "driver": {
+                    "type": "string",
+                    "const": "Sentry"
+                  },
+                  "dsn": {
+                    "type": "string"
+                  },
+                  "environment": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "driver",
+                  "dsn",
+                  "environment"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "driver": {
+                    "type": "string",
+                    "const": "Console"
+                  }
+                },
+                "required": [
+                  "driver"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "loggers": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "level": {
+                    "type": "string"
+                  },
+                  "silent": {
+                    "type": "boolean"
+                  },
+                  "driver": {
+                    "type": "string",
+                    "const": "Console"
+                  }
+                },
+                "required": [
+                  "driver"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "level": {
+                    "type": "string"
+                  },
+                  "silent": {
+                    "type": "boolean"
+                  },
+                  "driver": {
+                    "type": "string",
+                    "const": "File"
+                  },
+                  "filename": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "driver",
+                  "filename"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "level": {
+                    "type": "string"
+                  },
+                  "silent": {
+                    "type": "boolean"
+                  },
+                  "driver": {
+                    "type": "string",
+                    "const": "ElasticSearch"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "index": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "driver",
+                  "url",
+                  "index"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "tunnel": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "baseUrl": {
+              "type": "string"
+            },
+            "authToken": {
+              "type": "string"
+            },
+            "integration": {
+              "type": "string",
+              "const": "Ngrok"
+            }
+          },
+          "required": [
+            "authToken",
+            "integration",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "theme": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "none"
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "tailwindcss"
+                },
+                "base": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "engine"
+      ],
+      "additionalProperties": false,
+      "description": "This is the configuration of the engine.",
+      "title": "Engine configuration"
+    },
+    "FormSchema": {
+      "description": "Type alias for form configuration",
+      "title": "Form configuration",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "table": {
+          "type": "string"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "placeholder": {
+                "type": "string"
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "minLength": {
+                "type": "number"
+              },
+              "maxLength": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "field"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "submitLabel": {
+          "type": "string"
+        },
+        "successMessage": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "path",
+        "table",
+        "inputs"
+      ],
+      "additionalProperties": false
+    },
+    "TableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The unique identifier for the table",
+          "examples": [
+            "users"
+          ]
+        },
+        "schema": {
+          "type": "string",
+          "description": "The database schema where the table is located",
+          "examples": [
+            "public"
+          ]
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FieldSchema"
+          },
+          "description": "Array of field definitions for the table",
+          "examples": [
+            [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              }
+            ]
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "fields"
+      ],
+      "additionalProperties": false,
+      "description": "Defines the structure of a database table",
+      "title": "Table configuration"
+    },
+    "FieldSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/DateTimeFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/EmailFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/FormulaFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/LongTextFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/MultipleLinkedRecordFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/NumberFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/RollupFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/SingleLineTextFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/SingleLinkedRecordFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/SingleSelectFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/MultipleSelectFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/CheckboxFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/MultipleAttachmentFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/UrlFieldSchema"
+        },
+        {
+          "$ref": "#/definitions/SingleAttachmentFieldSchema"
+        }
+      ],
+      "description": "Union type of all possible field types that can be used in forms and tables",
+      "examples": [
+        {
+          "type": "SingleLineText",
+          "name": "fullName",
+          "label": "Full Name",
+          "required": true
+        },
+        {
+          "type": "Email",
+          "name": "email",
+          "label": "Email Address",
+          "required": true,
+          "unique": true
+        },
+        {
+          "type": "Number",
+          "name": "age",
+          "label": "Age",
+          "min": 0,
+          "max": 120
+        },
+        {
+          "type": "SingleSelect",
+          "name": "status",
+          "label": "Status",
+          "options": [
+            "Active",
+            "Inactive",
+            "Pending"
+          ]
+        }
+      ],
+      "title": "Field types"
+    },
+    "DateTimeFieldSchema": {
+      "description": "Represents a date and time field in forms and tables",
+      "examples": [
+        {
+          "type": "DateTime",
+          "name": "appointmentTime",
+          "required": true
+        }
+      ],
+      "title": "DateTime field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "DateTime"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "EmailFieldSchema": {
+      "description": "Represents a field that stores an email address",
+      "examples": [
+        {
+          "type": "Email",
+          "name": "email",
+          "required": true
+        }
+      ],
+      "title": "Email field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Email"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "FormulaFieldSchema": {
+      "description": "Represents a calculated field in forms and tables",
+      "examples": [
+        {
+          "type": "Formula",
+          "name": "totalPrice",
+          "formula": "price * quantity"
+        }
+      ],
+      "title": "Formula field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Formula"
+        },
+        "formula": {
+          "type": "string"
+        },
+        "output": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Number",
+                "LongText",
+                "SingleLineText",
+                "DateTime"
+              ]
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "onMigration": {
+              "type": "object",
+              "properties": {
+                "replace": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "formula",
+        "name",
+        "output",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "LongTextFieldSchema": {
+      "description": "Represents a field that stores multiple lines of text",
+      "examples": [
+        {
+          "type": "LongText",
+          "name": "description",
+          "required": true
+        }
+      ],
+      "title": "Long text field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "LongText"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MultipleLinkedRecordFieldSchema": {
+      "description": "Represents a field that can link to multiple records from another table",
+      "examples": [
+        {
+          "type": "MultipleLinkedRecord",
+          "name": "projects",
+          "required": true,
+          "table": "projects"
+        }
+      ],
+      "title": "Multiple linked record field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "MultipleLinkedRecord"
+        },
+        "table": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "table",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "NumberFieldSchema": {
+      "description": "Represents a field that stores numeric values",
+      "examples": [
+        {
+          "type": "Number",
+          "name": "age",
+          "required": true
+        }
+      ],
+      "title": "Number field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Number"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "RollupFieldSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "multipleLinkedRecord": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "const": "Rollup"
+        },
+        "formula": {
+          "type": "string"
+        },
+        "linkedRecordField": {
+          "type": "string"
+        },
+        "output": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Number",
+                "LongText",
+                "SingleLineText",
+                "DateTime"
+              ]
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "onMigration": {
+              "type": "object",
+              "properties": {
+                "replace": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "formula",
+        "linkedRecordField",
+        "multipleLinkedRecord",
+        "name",
+        "output",
+        "type"
+      ],
+      "description": "Represents a field that aggregates data from linked records",
+      "examples": [
+        {
+          "type": "Rollup",
+          "name": "totalSales",
+          "required": false,
+          "multipleLinkedRecord": "orders",
+          "linkedRecordField": "amount",
+          "formula": "sum(amount)",
+          "output": {
+            "type": "Number",
+            "name": "totalSales"
+          }
+        }
+      ],
+      "title": "Rollup field"
+    },
+    "SingleLineTextFieldSchema": {
+      "description": "Represents a field that stores a single line of text",
+      "examples": [
+        {
+          "type": "SingleLineText",
+          "name": "title",
+          "required": true
+        }
+      ],
+      "title": "Single line text field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "SingleLineText"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SingleLinkedRecordFieldSchema": {
+      "description": "Represents a field that can link to a single record from another table",
+      "examples": [
+        {
+          "type": "SingleLinkedRecord",
+          "name": "manager",
+          "required": true,
+          "table": "users"
+        }
+      ],
+      "title": "Single linked record field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "SingleLinkedRecord"
+        },
+        "table": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "table",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SingleSelectFieldSchema": {
+      "description": "Represents a field that allows selecting one option from a predefined list",
+      "examples": [
+        {
+          "type": "SingleSelect",
+          "name": "status",
+          "required": true,
+          "options": [
+            "Active",
+            "Inactive",
+            "Pending"
+          ]
+        }
+      ],
+      "title": "Single select field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "SingleSelect"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "options",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MultipleSelectFieldSchema": {
+      "description": "Represents a field that allows selecting multiple options from a predefined list",
+      "examples": [
+        {
+          "type": "MultipleSelect",
+          "name": "interests",
+          "required": true,
+          "options": [
+            "Sports",
+            "Music",
+            "Travel"
+          ]
+        }
+      ],
+      "title": "Multiple select field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "MultipleSelect"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "options",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "CheckboxFieldSchema": {
+      "description": "Represents a boolean checkbox field in forms and tables",
+      "examples": [
+        {
+          "type": "Checkbox",
+          "name": "termsAccepted",
+          "required": true
+        }
+      ],
+      "title": "Checkbox field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Checkbox"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "MultipleAttachmentFieldSchema": {
+      "description": "Represents a field that can store multiple file attachments",
+      "examples": [
+        {
+          "type": "MultipleAttachment",
+          "name": "documents",
+          "required": true
+        }
+      ],
+      "title": "Multiple attachment field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "MultipleAttachment"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "UrlFieldSchema": {
+      "description": "Represents a field that stores a URL",
+      "examples": [
+        {
+          "type": "Url",
+          "name": "website",
+          "required": true
+        }
+      ],
+      "title": "URL field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Url"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "SingleAttachmentFieldSchema": {
+      "description": "Represents a field that can store a single file attachment",
+      "examples": [
+        {
+          "type": "SingleAttachment",
+          "name": "profilePicture",
+          "required": true
+        }
+      ],
+      "title": "Single attachment field",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "SingleAttachment"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "BucketSchema": {
+      "description": "Type alias for bucket storage configuration",
+      "title": "Bucket configuration",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "AutomationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "trigger": {
+          "$ref": "#/definitions/TriggerSchema",
+          "description": "The event or condition that starts the automation",
+          "examples": [
+            {
+              "service": "Http",
+              "trigger": "ApiCalled",
+              "method": "POST",
+              "path": "/webhook",
+              "headers": {
+                "Content-Type": "application/json"
+              }
+            }
+          ]
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActionSchema"
+          },
+          "description": "List of actions to be executed when the trigger is activated",
+          "examples": [
+            [
+              {
+                "service": "Database",
+                "action": "CreateRecord",
+                "table": "users",
+                "fields": {
+                  "name": "{{trigger.payload.name}}",
+                  "email": "{{trigger.payload.email}}"
+                }
+              },
+              {
+                "integration": "GoogleMail",
+                "action": "SendEmail",
+                "email": {
+                  "to": "{{trigger.payload.email}}",
+                  "subject": "Welcome to our platform",
+                  "text": "Hello {{trigger.payload.name}}!"
+                }
+              }
+            ]
+          ]
+        }
+      },
+      "required": [
+        "actions",
+        "name",
+        "trigger"
+      ],
+      "additionalProperties": false,
+      "description": "Defines an automation workflow with triggers and actions",
+      "title": "Automation configuration"
+    },
+    "TriggerSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ApiCalledHttpTriggerSchema"
+        },
+        {
+          "$ref": "#/definitions/RecordCreatedDatabaseTriggerSchema"
+        },
+        {
+          "$ref": "#/definitions/WebhookCalledHttpTriggerSchema"
+        },
+        {
+          "$ref": "#/definitions/TablePageCreatedNotionTriggerSchema"
+        },
+        {
+          "$ref": "#/definitions/CronTimeTickedScheduleTriggerSchema"
+        },
+        {
+          "$ref": "#/definitions/InviteeCreatedTriggerSchema"
+        }
+      ],
+      "description": "Union type of all possible triggers that can start automations",
+      "examples": [
+        {
+          "service": "Http",
+          "trigger": "ApiCalled",
+          "method": "POST",
+          "path": "/api/webhook",
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        },
+        {
+          "service": "Database",
+          "trigger": "RecordCreated",
+          "table": "users",
+          "conditions": {
+            "status": "active"
+          }
+        },
+        {
+          "service": "Schedule",
+          "trigger": "CronTimeTicked",
+          "cron": "0 9 * * *"
+        }
+      ],
+      "title": "Trigger types"
+    },
+    "ApiCalledHttpTriggerSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "input": {
+          "$ref": "#/definitions/JSONSchema"
+        },
+        "output": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "number"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "boolean": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "boolean"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "json": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "json"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "$ref": "#/definitions/TemplateObject"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "not": {}
+              }
+            ]
+          }
+        },
+        "auth": {
+          "type": "string",
+          "const": "ApiKey"
+        },
+        "service": {
+          "type": "string",
+          "const": "Http"
+        },
+        "event": {
+          "type": "string",
+          "const": "ApiCalled"
+        }
+      },
+      "required": [
+        "event",
+        "path",
+        "service"
+      ],
+      "additionalProperties": false
+    },
+    "JSONSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "string",
+            "number",
+            "boolean",
+            "array",
+            "object"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/JSONSchema"
+          }
+        },
+        "enum": {
           "type": "array",
           "items": {
             "type": "string"
           }
         },
-        "port": {
-          "type": [
-            "string",
-            "number"
-          ]
+        "items": {
+          "$ref": "#/definitions/JSONSchema"
         },
-        "idleTimeout": {
-          "type": [
-            "string",
-            "number"
-          ]
+        "required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
-        "baseUrl": {
-          "type": "string"
+        "additionalProperties": {
+          "type": "boolean"
         },
-        "sslCert": {
-          "type": "string"
-        },
-        "sslKey": {
-          "type": "string"
-        },
-        "env": {
-          "type": "string"
-        },
-        "monitors": {
-          "$ref": "./MonitorDrivers.schema.json"
+        "oneOf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JSONSchema"
+          }
         }
       },
+      "additionalProperties": false
+    },
+    "RecordCreatedDatabaseTriggerSchema": {
+      "type": "object",
+      "properties": {
+        "table": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string",
+          "const": "Database"
+        },
+        "event": {
+          "type": "string",
+          "const": "RecordCreated"
+        }
+      },
+      "required": [
+        "event",
+        "service",
+        "table"
+      ],
+      "additionalProperties": false
+    },
+    "WebhookCalledHttpTriggerSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "auth": {
+          "type": "string",
+          "const": "ApiKey"
+        },
+        "service": {
+          "type": "string",
+          "const": "Http"
+        },
+        "event": {
+          "type": "string",
+          "const": "WebhookCalled"
+        }
+      },
+      "required": [
+        "event",
+        "path",
+        "service"
+      ],
+      "additionalProperties": false
+    },
+    "TablePageCreatedNotionTriggerSchema": {
+      "type": "object",
+      "properties": {
+        "table": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "integration": {
+          "type": "string",
+          "const": "Notion"
+        },
+        "event": {
+          "type": "string",
+          "const": "TablePageCreated"
+        }
+      },
+      "required": [
+        "account",
+        "event",
+        "integration",
+        "table"
+      ],
+      "additionalProperties": false
+    },
+    "CronTimeTickedScheduleTriggerSchema": {
+      "type": "object",
+      "properties": {
+        "cronTime": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string",
+          "const": "Schedule"
+        },
+        "event": {
+          "type": "string",
+          "const": "CronTimeTicked"
+        }
+      },
+      "required": [
+        "cronTime",
+        "event",
+        "service"
+      ],
+      "additionalProperties": false
+    },
+    "InviteeCreatedTriggerSchema": {
+      "type": "object",
+      "properties": {
+        "account": {
+          "type": "string"
+        },
+        "integration": {
+          "type": "string",
+          "const": "Calendly"
+        },
+        "event": {
+          "type": "string",
+          "const": "InviteeCreated"
+        }
+      },
+      "required": [
+        "account",
+        "event",
+        "integration"
+      ],
+      "additionalProperties": false
+    },
+    "ActionSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ActionIntegrationSchema"
+        },
+        {
+          "$ref": "#/definitions/ActionServiceSchema"
+        }
+      ],
+      "description": "Union type of all possible actions that can be performed in automations",
+      "examples": [
+        {
+          "service": "Database",
+          "action": "ReadRecord",
+          "table": "users",
+          "id": "user_123"
+        }
+      ],
+      "title": "Action types"
+    },
+    "ActionIntegrationSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/GetCompanyPappersActionSchema"
+        },
+        {
+          "$ref": "#/definitions/CreateClientQontoActionSchema"
+        },
+        {
+          "$ref": "#/definitions/UpdatePageNotionActionSchema"
+        },
+        {
+          "$ref": "#/definitions/SendEmailGoogleMailActionSchema"
+        },
+        {
+          "$ref": "#/definitions/CreatePaymentGoCardlessActionSchema"
+        },
+        {
+          "$ref": "#/definitions/ListPaymentsGoCardlessActionSchema"
+        },
+        {
+          "$ref": "#/definitions/RetrieveAttachmentQontoActionSchema"
+        }
+      ]
+    },
+    "GetCompanyPappersActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "siret": {
+          "type": "string"
+        },
+        "integration": {
+          "type": "string",
+          "const": "Pappers"
+        },
+        "action": {
+          "type": "string",
+          "const": "GetCompany"
+        }
+      },
+      "required": [
+        "account",
+        "action",
+        "integration",
+        "name",
+        "siret"
+      ],
       "additionalProperties": false,
-      "description": "Configuration for the application server",
+      "description": "Retrieves company information using Pappers integration",
       "examples": [
         {
-          "port": 3000,
-          "baseUrl": "https://api.example.com",
-          "apiKeys": [
-            "secret-key-1",
-            "secret-key-2"
-          ]
+          "integration": "Pappers",
+          "action": "GetCompany",
+          "siren": "123456789"
         }
-      ]
+      ],
+      "title": "Get Company Pappers Action"
     },
-    "database": {
-      "$ref": "./DatabaseConfig.schema.json",
-      "description": "Configuration for the database connection",
-      "examples": [
-        {
-          "driver": "PostgreSQL",
-          "url": "postgresql://user:password@localhost:5432/mydb?sslmode=require"
-        }
-      ]
-    },
-    "monitors": {
-      "type": "array",
-      "items": {
-        "anyOf": [
-          {
-            "type": "object",
-            "properties": {
-              "driver": {
-                "type": "string",
-                "const": "Sentry"
+    "CreateClientQontoActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "client": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "currency": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "vat_number": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "first_name": {
+              "type": "string"
+            },
+            "last_name": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string"
+            },
+            "tax_identification_number": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "zip_code": {
+              "type": "string"
+            },
+            "country_code": {
+              "type": "string"
+            },
+            "billing_address": {
+              "type": "object",
+              "properties": {
+                "street_address": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "zip_code": {
+                  "type": "string"
+                },
+                "province_code": {
+                  "type": "string"
+                },
+                "country_code": {
+                  "type": "string"
+                }
               },
-              "dsn": {
+              "required": [
+                "street_address",
+                "city",
+                "zip_code",
+                "province_code",
+                "country_code"
+              ],
+              "additionalProperties": false
+            },
+            "delivery_address": {
+              "type": "object",
+              "properties": {
+                "street_address": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "zip_code": {
+                  "type": "string"
+                },
+                "province_code": {
+                  "type": "string"
+                },
+                "country_code": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "street_address",
+                "city",
+                "zip_code",
+                "province_code",
+                "country_code"
+              ],
+              "additionalProperties": false
+            },
+            "locale": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "address",
+            "city",
+            "country_code",
+            "currency",
+            "locale",
+            "type",
+            "zip_code"
+          ]
+        },
+        "integration": {
+          "type": "string",
+          "const": "Qonto"
+        },
+        "action": {
+          "type": "string",
+          "const": "CreateClient"
+        }
+      },
+      "required": [
+        "account",
+        "action",
+        "client",
+        "integration",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "Creates a new client in Qonto with the specified details",
+      "examples": [
+        {
+          "integration": "Qonto",
+          "action": "CreateClient",
+          "client": {
+            "name": "{{trigger.payload.companyName}}",
+            "email": "{{trigger.payload.email}}",
+            "phone": "{{trigger.payload.phone}}",
+            "address": {
+              "street": "{{trigger.payload.street}}",
+              "city": "{{trigger.payload.city}}",
+              "postalCode": "{{trigger.payload.postalCode}}",
+              "country": "{{trigger.payload.country}}"
+            }
+          }
+        }
+      ],
+      "title": "Create Qonto Client Action"
+    },
+    "UpdatePageNotionActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "table": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "page": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "integration": {
+          "type": "string",
+          "const": "Notion"
+        },
+        "action": {
+          "type": "string",
+          "const": "UpdatePage"
+        }
+      },
+      "required": [
+        "account",
+        "action",
+        "id",
+        "integration",
+        "name",
+        "page",
+        "table"
+      ],
+      "additionalProperties": false,
+      "description": "Updates a page in Notion with the specified properties",
+      "examples": [
+        {
+          "integration": "Notion",
+          "action": "UpdatePage",
+          "pageId": "{{trigger.payload.pageId}}",
+          "properties": {
+            "title": "{{trigger.payload.title}}",
+            "status": "{{trigger.payload.status}}"
+          }
+        }
+      ],
+      "title": "Update Notion Page Action"
+    },
+    "SendEmailGoogleMailActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "email": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string"
+            },
+            "to": {
+              "type": "string"
+            },
+            "cc": {
+              "type": "string"
+            },
+            "bcc": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "html": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "to"
+          ],
+          "additionalProperties": false
+        },
+        "integration": {
+          "type": "string",
+          "const": "GoogleMail"
+        },
+        "action": {
+          "type": "string",
+          "const": "SendEmail"
+        }
+      },
+      "required": [
+        "account",
+        "action",
+        "email",
+        "integration",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "Sends an email using Google Mail integration",
+      "examples": [
+        {
+          "integration": "GoogleMail",
+          "action": "SendEmail",
+          "email": {
+            "to": "recipient@example.com",
+            "subject": "Test Email",
+            "text": "This is a test email"
+          }
+        }
+      ],
+      "title": "Send Email Google Mail Action"
+    },
+    "CreatePaymentGoCardlessActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "payment": {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number"
+            },
+            "currency": {
+              "type": "string"
+            },
+            "charge_date": {
+              "type": "string"
+            },
+            "reference": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            "retry_if_possible": {
+              "type": "boolean"
+            },
+            "mandate": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "amount",
+            "currency",
+            "mandate"
+          ],
+          "additionalProperties": false
+        },
+        "integration": {
+          "type": "string",
+          "const": "GoCardless"
+        },
+        "action": {
+          "type": "string",
+          "const": "CreatePayment"
+        }
+      },
+      "required": [
+        "account",
+        "action",
+        "integration",
+        "name",
+        "payment"
+      ],
+      "additionalProperties": false,
+      "description": "Creates a new payment in GoCardless with the specified details",
+      "examples": [
+        {
+          "integration": "GoCardless",
+          "action": "CreatePayment",
+          "payment": {
+            "amount": 1000,
+            "currency": "EUR",
+            "description": "Monthly subscription",
+            "mandate": "{{trigger.payload.mandateId}}",
+            "metadata": {
+              "orderId": "{{trigger.payload.orderId}}",
+              "customerId": "{{trigger.payload.customerId}}"
+            }
+          }
+        }
+      ],
+      "title": "Create GoCardless Payment Action"
+    },
+    "ListPaymentsGoCardlessActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "params": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": "number"
+            },
+            "after": {
+              "type": "string"
+            },
+            "before": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "mandate": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "integration": {
+          "type": "string",
+          "const": "GoCardless"
+        },
+        "action": {
+          "type": "string",
+          "const": "ListPayments"
+        }
+      },
+      "required": [
+        "account",
+        "action",
+        "integration",
+        "name",
+        "params"
+      ],
+      "additionalProperties": false,
+      "description": "Lists payments using GoCardless integration with optional filters",
+      "examples": [
+        {
+          "integration": "GoCardless",
+          "action": "ListPayments",
+          "filters": {
+            "status": "paid",
+            "limit": 10
+          }
+        }
+      ],
+      "title": "List Payments GoCardless Action"
+    },
+    "RetrieveAttachmentQontoActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "attachmentId": {
+          "type": "string"
+        },
+        "integration": {
+          "type": "string",
+          "const": "Qonto"
+        },
+        "action": {
+          "type": "string",
+          "const": "RetrieveAttachment"
+        }
+      },
+      "required": [
+        "account",
+        "action",
+        "attachmentId",
+        "integration",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "Retrieves an attachment using Qonto integration",
+      "examples": [
+        {
+          "integration": "Qonto",
+          "action": "RetrieveAttachment",
+          "attachmentId": "att_123456789"
+        }
+      ],
+      "title": "Retrieve Attachment Qonto Action"
+    },
+    "ActionServiceSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RunJavascriptCodeActionSchema"
+        },
+        {
+          "$ref": "#/definitions/RunTypescriptCodeActionSchema"
+        },
+        {
+          "$ref": "#/definitions/CreateRecordDatabaseActionSchema"
+        },
+        {
+          "$ref": "#/definitions/ReadRecordDatabaseActionSchema"
+        }
+      ]
+    },
+    "RunJavascriptCodeActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "input": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
                 "type": "string"
               },
-              "environment": {
+              {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "number"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "boolean": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "boolean"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "json": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "json"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "$ref": "#/definitions/TemplateObject"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "not": {}
+              }
+            ]
+          }
+        },
+        "env": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "service": {
+          "type": "string",
+          "const": "Code"
+        },
+        "action": {
+          "type": "string",
+          "const": "RunJavascript"
+        }
+      },
+      "required": [
+        "action",
+        "code",
+        "name",
+        "service"
+      ],
+      "additionalProperties": false,
+      "description": "Executes JavaScript code with the specified input",
+      "examples": [
+        {
+          "service": "Code",
+          "action": "RunJavascript",
+          "code": "return { result: input.value * 2 }",
+          "input": {
+            "value": 5
+          }
+        }
+      ],
+      "title": "Run JavaScript Code Action"
+    },
+    "RunTypescriptCodeActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        },
+        "input": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "number"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "boolean": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "boolean"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "json": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "json"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "$ref": "#/definitions/TemplateObject"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "not": {}
+              }
+            ]
+          }
+        },
+        "env": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "service": {
+          "type": "string",
+          "const": "Code"
+        },
+        "action": {
+          "type": "string",
+          "const": "RunTypescript"
+        }
+      },
+      "required": [
+        "action",
+        "code",
+        "name",
+        "service"
+      ],
+      "additionalProperties": false,
+      "description": "Executes TypeScript code with the specified input",
+      "examples": [
+        {
+          "service": "Code",
+          "action": "RunTypescript",
+          "code": "return { result: input.value * 2 }",
+          "input": {
+            "value": 5
+          }
+        }
+      ],
+      "title": "Run TypeScript Code Action"
+    },
+    "CreateRecordDatabaseActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "table": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string",
+          "const": "Database"
+        },
+        "action": {
+          "type": "string",
+          "const": "CreateRecord"
+        }
+      },
+      "required": [
+        "action",
+        "fields",
+        "name",
+        "service",
+        "table"
+      ],
+      "additionalProperties": false,
+      "description": "Creates a new record in the specified database table with the given fields",
+      "examples": [
+        {
+          "service": "Database",
+          "action": "CreateRecord",
+          "table": "users",
+          "fields": {
+            "name": "{{trigger.payload.name}}",
+            "email": "{{trigger.payload.email}}",
+            "role": "customer",
+            "createdAt": "{{now}}"
+          }
+        }
+      ],
+      "title": "Create Database Record Action"
+    },
+    "ReadRecordDatabaseActionSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "table": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string",
+          "const": "Database"
+        },
+        "action": {
+          "type": "string",
+          "const": "ReadRecord"
+        }
+      },
+      "required": [
+        "action",
+        "id",
+        "name",
+        "service",
+        "table"
+      ],
+      "additionalProperties": false,
+      "description": "Reads a record from the specified database table",
+      "examples": [
+        {
+          "service": "Database",
+          "action": "ReadRecord",
+          "table": "users",
+          "id": "user_123"
+        }
+      ],
+      "title": "Read Record Database Action"
+    },
+    "IntegrationsSchema": {
+      "type": "object",
+      "properties": {
+        "airtable": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "apiKey": {
+                "type": "string"
+              },
+              "databaseId": {
                 "type": "string"
               }
             },
             "required": [
-              "driver",
-              "dsn",
-              "environment"
+              "apiKey",
+              "databaseId",
+              "name"
             ],
             "additionalProperties": false
           },
-          {
-            "$ref": "./MonitorConsoleConfig.schema.json"
-          }
-        ]
-      },
-      "description": "Array of monitoring service configurations",
-      "examples": [
-        {
-          "0": {
-            "driver": "Sentry",
-            "dsn": "https://examplePublicKey@o0.ingest.sentry.io/0",
-            "environment": "production"
+          "description": "Configurations for Airtable integration",
+          "examples": [
+            [
+              {
+                "name": "main-database",
+                "apiKey": "key1234567890ABCD",
+                "databaseId": "app1234567890ABCD"
+              }
+            ]
+          ]
+        },
+        "notion": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "token": {
+                "type": "string"
+              },
+              "pollingInterval": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "name",
+              "token"
+            ],
+            "additionalProperties": false
           },
-          "1": {
-            "driver": "Console"
-          }
+          "description": "Configurations for Notion integration",
+          "examples": [
+            [
+              {
+                "name": "project-management",
+                "token": "secret_1234567890ABCD",
+                "pollingInterval": 300000
+              }
+            ]
+          ]
+        },
+        "pappers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "apiKey": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "apiKey",
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Configurations for Pappers company data integration",
+          "examples": [
+            [
+              {
+                "name": "company-data",
+                "apiKey": "1234567890ABCD"
+              }
+            ]
+          ]
+        },
+        "qonto": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "organisationSlug": {
+                "type": "string"
+              },
+              "secretKey": {
+                "type": "string"
+              },
+              "stagingToken": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "organisationSlug",
+              "secretKey"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Configurations for Qonto banking integration",
+          "examples": [
+            [
+              {
+                "name": "business-account",
+                "organisationSlug": "my-company",
+                "secretKey": "1234567890ABCD",
+                "stagingToken": "staging_1234567890ABCD"
+              }
+            ]
+          ]
+        },
+        "google": {
+          "type": "object",
+          "properties": {
+            "mail": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "baseUrl": {
+                    "type": "string"
+                  },
+                  "user": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "password",
+                  "user"
+                ],
+                "additionalProperties": false
+              },
+              "description": "Configurations for Gmail integration",
+              "examples": [
+                [
+                  {
+                    "name": "support-email",
+                    "user": "support@company.com",
+                    "password": "app-specific-password"
+                  }
+                ]
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "description": "Configurations for Google services integration"
+        },
+        "gocardless": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "accessToken": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accessToken",
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Configurations for GoCardless payment integration",
+          "examples": [
+            [
+              {
+                "name": "payment-processing",
+                "accessToken": "live_1234567890ABCD"
+              }
+            ]
+          ]
+        },
+        "phantombuster": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "apiKey": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "apiKey",
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Configurations for Phantombuster automation integration",
+          "examples": [
+            [
+              {
+                "name": "linkedin-automation",
+                "apiKey": "1234567890ABCD"
+              }
+            ]
+          ]
+        },
+        "calendly": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "baseUrl": {
+                "type": "string"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "accessToken": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accessToken"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "name",
+              "user"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Configurations for Calendly scheduling integration",
+          "examples": [
+            [
+              {
+                "name": "scheduling",
+                "user": {
+                  "accessToken": "1234567890ABCD"
+                }
+              }
+            ]
+          ]
         }
-      ]
-    },
-    "loggers": {
-      "$ref": "./LoggersConfig.schema.json",
-      "description": "Configuration for application logging",
-      "examples": [
-        {
-          "0": {
-            "driver": "Console",
-            "level": "info"
-          }
-        }
-      ]
-    },
-    "tunnel": {
-      "$ref": "./TunnelConfig.schema.json",
-      "description": "Configuration for network tunneling",
-      "examples": [
-        {
-          "integration": "Ngrok",
-          "authtoken": "your-ngrok-token"
-        }
-      ]
-    },
-    "theme": {
-      "$ref": "./ThemeConfig.schema.json",
-      "description": "Configuration for application theming",
-      "examples": [
-        {
-          "type": "tailwindcss",
-          "base": "src/styles/base.css"
-        }
-      ]
+      },
+      "additionalProperties": false,
+      "description": "Defines configurations for various third-party service integrations",
+      "title": "Integrations configuration"
     }
-  },
-  "required": [
-    "name",
-    "version",
-    "engine"
-  ],
-  "additionalProperties": false,
-  "description": "This is the configuration of the engine.",
-  "title": "Engine configuration"
+  }
 }
