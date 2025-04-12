@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "table": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string",
+      "const": "Database"
+    },
+    "action": {
+      "type": "string",
+      "const": "CreateRecord"
+    }
+  },
+  "required": [
+    "action",
+    "fields",
+    "name",
+    "service",
+    "table"
+  ],
+  "additionalProperties": false,
+  "description": "Creates a new record in the specified database table with the given fields",
+  "examples": [
+    {
+      "service": "Database",
+      "action": "CreateRecord",
+      "table": "users",
+      "fields": {
+        "name": "{{trigger.payload.name}}",
+        "email": "{{trigger.payload.email}}",
+        "role": "customer",
+        "createdAt": "{{now}}"
+      }
+    }
+  ],
+  "title": "Create Database Record Action"
+}

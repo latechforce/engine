@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "onMigration": {
+      "type": "object",
+      "properties": {
+        "replace": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "string",
+      "const": "SingleLineText"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "additionalProperties": false,
+  "description": "Represents a single-line text field in forms and tables",
+  "examples": [
+    {
+      "type": "SingleLineText",
+      "name": "firstName",
+      "required": true
+    }
+  ],
+  "title": "Single line text field"
+}

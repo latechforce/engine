@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "table": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "integration": {
+      "type": "string",
+      "const": "Notion"
+    },
+    "event": {
+      "type": "string",
+      "const": "TablePageCreated"
+    }
+  },
+  "required": [
+    "account",
+    "event",
+    "integration",
+    "table"
+  ],
+  "additionalProperties": false
+}

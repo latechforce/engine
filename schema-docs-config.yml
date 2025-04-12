@@ -1,0 +1,4 @@
+template_name: md
+markdown_options:
+  no_html: true
+  collapse_long_descriptions: true

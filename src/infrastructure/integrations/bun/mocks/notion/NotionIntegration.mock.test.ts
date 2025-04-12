@@ -18,7 +18,7 @@ describe('addTable', () => {
   it('should add a table with real Notion table config', async () => {
     // WHEN
     const call = async () => {
-      table = await integration.addTable(notionTableSample3.name, notionTableSample3.fields)
+      table = await integration.addTableFromSchema(notionTableSample3)
     }
 
     // THEN

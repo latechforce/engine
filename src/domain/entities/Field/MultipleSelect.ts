@@ -1,19 +1,19 @@
-import type { IMultipleSelectField } from '/domain/interfaces/IField/IMultipleSelect'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
 
-interface MultipleSelectFieldParams extends IBaseField {
+export interface MultipleSelectFieldConfig extends BaseFieldConfig {
+  type: 'MultipleSelect'
   options: string[]
 }
 
 export class MultipleSelectField extends BaseField {
   options: string[]
 
-  constructor(config: MultipleSelectFieldParams) {
+  constructor(config: Omit<MultipleSelectFieldConfig, 'type'>) {
     super(config)
     this.options = config.options
   }
 
-  get config(): IMultipleSelectField {
+  get config(): MultipleSelectFieldConfig {
     return {
       ...super.config,
       type: 'MultipleSelect',

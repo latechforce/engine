@@ -1,0 +1,6 @@
+export * from './pappers/GetCompany'
+export * from './qonto/CreateClient'
+export * from './notion/UpdatePage'
+export * from './googleMail/SendEmail'
+export * from './gocardless/CreatePayment'
+export * from './gocardless/ListPayments'

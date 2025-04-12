@@ -1,0 +1,48 @@
+{
+  "anyOf": [
+    {
+      "$ref": "./ITrigger/IApiCalledHttpTrigger.schema.json"
+    },
+    {
+      "$ref": "./ITrigger/IRecordCreatedDatabaseTrigger.schema.json"
+    },
+    {
+      "$ref": "./ITrigger/IWebhookCalledHttpTrigger.schema.json"
+    },
+    {
+      "$ref": "./ITrigger/IPageCreatedNotionTrigger.schema.json"
+    },
+    {
+      "$ref": "./ITrigger/ICronTimeTickedScheduleTrigger.schema.json"
+    },
+    {
+      "$ref": "./ITrigger/IInviteeCreatedTrigger.schema.json"
+    }
+  ],
+  "description": "Union type of all possible triggers that can start automations",
+  "examples": [
+    {
+      "service": "Http",
+      "trigger": "ApiCalled",
+      "method": "POST",
+      "path": "/api/webhook",
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    },
+    {
+      "service": "Database",
+      "trigger": "RecordCreated",
+      "table": "users",
+      "conditions": {
+        "status": "active"
+      }
+    },
+    {
+      "service": "Schedule",
+      "trigger": "CronTimeTicked",
+      "cron": "0 9 * * *"
+    }
+  ],
+  "title": "Trigger types"
+}

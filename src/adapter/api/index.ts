@@ -1,6 +1,6 @@
 import { AppMapper } from './mappers/AppMapper'
 import type { StoppedApp } from '/domain/entities/App/Stopped'
-import type { Config } from '/domain/interfaces'
+import type { ConfigSchema } from './schemas/ConfigSchema'
 import type { SchemaError } from '/domain/entities/Error/Schema'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { SchemaValidator } from '/domain/services/SchemaValidator'
@@ -29,22 +29,22 @@ export default class {
   }
 
   private _getSchemaErrors = (config: unknown): SchemaError[] => {
-    return this._schemaValidator.validateAppSchema(config)
+    return this._schemaValidator.validateConfigSchema(config)
   }
 
-  private _isConfig = (config: unknown): config is Config => {
+  private _isConfig = (config: unknown): config is ConfigSchema => {
     return this._getSchemaErrors(config).length === 0
   }
 
-  private _validateSchemaOrThrow = (config: unknown): Config => {
+  private _validateSchemaOrThrow = (config: unknown): ConfigSchema => {
     if (!this._isConfig(config)) {
-      const errors = this._schemaValidator.validateAppSchema(config)
+      const errors = this._schemaValidator.validateConfigSchema(config)
       throw new Error(JSON.stringify(errors, null, 2))
     }
     return { ...config }
   }
 
-  private _validateConfigOrThrow = async (config: Config): Promise<StoppedApp> => {
+  private _validateConfigOrThrow = async (config: ConfigSchema): Promise<StoppedApp> => {
     const stoppedApp = AppMapper.toEntity(
       this._drivers,
       this._integrations,

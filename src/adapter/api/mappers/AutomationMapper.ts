@@ -1,16 +1,16 @@
 import { Automation } from '/domain/entities/Automation'
-import type { IAutomation } from '../../../domain/interfaces/IAutomation'
+import type { AutomationSchema } from '../schemas/AutomationSchema'
 import {
   ActionMapper,
   type ActionMapperServices,
   type ActionMapperEntities,
   type ActionMapperIntegrations,
-} from './Action'
+} from './ActionMapper'
 import {
   TriggerMapper,
   type TriggerMapperServices,
   type TriggerMapperIntegrations,
-} from './Trigger'
+} from './TriggerMapper'
 import type { Database } from '/domain/services/Database'
 
 export type AutomationMapperServices = ActionMapperServices &
@@ -24,7 +24,7 @@ export type AutomationMapperIntegrations = TriggerMapperIntegrations & ActionMap
 
 export class AutomationMapper {
   static toEntity = (
-    config: IAutomation,
+    schema: AutomationSchema,
     services: AutomationMapperServices,
     entities: AutomationMapperEntities,
     integrations: AutomationMapperIntegrations
@@ -45,12 +45,8 @@ export class AutomationMapper {
     } = services
     const { notion, pappers, qonto, googleMail, gocardless, calendly } = integrations
     const trigger = TriggerMapper.toEntity(
-      {
-        ...config.trigger,
-        automation: config.name,
-        summary: config.summary,
-        description: config.description,
-      },
+      schema.trigger,
+      schema,
       {
         server,
         queue,
@@ -66,7 +62,7 @@ export class AutomationMapper {
       }
     )
     const actions = ActionMapper.toManyEntities(
-      config.actions,
+      schema.actions,
       {
         idGenerator,
         templateCompiler,
@@ -84,15 +80,15 @@ export class AutomationMapper {
         gocardless,
       }
     )
-    return new Automation(config, { logger, monitor, idGenerator, database }, { trigger, actions })
+    return new Automation(schema, { logger, monitor, idGenerator, database }, { trigger, actions })
   }
 
   static toManyEntities = (
-    configs: IAutomation[] = [],
+    schemas: AutomationSchema[] = [],
     services: AutomationMapperServices,
     entities: AutomationMapperEntities,
     integrations: AutomationMapperIntegrations
   ) => {
-    return configs.map((config) => this.toEntity(config, services, entities, integrations))
+    return schemas.map((schema) => this.toEntity(schema, services, entities, integrations))
   }
 }

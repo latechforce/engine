@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "attachmentId": {
+      "type": "string"
+    },
+    "integration": {
+      "type": "string",
+      "const": "Qonto"
+    },
+    "action": {
+      "type": "string",
+      "const": "RetrieveAttachment"
+    }
+  },
+  "required": [
+    "account",
+    "action",
+    "attachmentId",
+    "integration",
+    "name"
+  ],
+  "additionalProperties": false,
+  "description": "Retrieves a specific attachment from Qonto using its ID",
+  "examples": [
+    {
+      "integration": "Qonto",
+      "action": "RetrieveAttachment",
+      "attachmentId": "{{trigger.payload.attachmentId}}"
+    }
+  ],
+  "title": "Retrieve Qonto Attachment Action"
+}

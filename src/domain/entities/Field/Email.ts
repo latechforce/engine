@@ -1,12 +1,15 @@
-import type { IEmailField } from '/domain/interfaces/IField/IEmail'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
+
+export interface EmailFieldConfig extends BaseFieldConfig {
+  type: 'Email'
+}
 
 export class EmailField extends BaseField {
-  constructor(config: IBaseField) {
+  constructor(config: Omit<EmailFieldConfig, 'type'>) {
     super(config)
   }
 
-  get config(): IEmailField {
+  get config(): EmailFieldConfig {
     return {
       ...super.config,
       type: 'Email',

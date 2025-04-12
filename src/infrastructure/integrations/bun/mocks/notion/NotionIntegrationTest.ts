@@ -4,9 +4,6 @@ import {
   notionTableSample2,
   notionTableSample3,
   notionUserSample,
-  type NotionTableSample1,
-  type NotionTableSample2,
-  type NotionTableSample3,
 } from './NotionTestSamples'
 
 export const integration = new NotionIntegration({
@@ -16,7 +13,7 @@ export const integration = new NotionIntegration({
 })
 
 await integration.createToken('test')
-await integration.addTable<NotionTableSample1>(notionTableSample1.name, notionTableSample1.fields)
-await integration.addTable<NotionTableSample2>(notionTableSample2.name, notionTableSample2.fields)
-await integration.addTable<NotionTableSample3>(notionTableSample3.name, notionTableSample3.fields)
+await integration.addTableFromSchema(notionTableSample1)
+await integration.addTableFromSchema(notionTableSample2)
+await integration.addTableFromSchema(notionTableSample3)
 await integration.addUser(notionUserSample)

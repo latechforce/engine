@@ -7,7 +7,7 @@ import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/Database
 import type { PersistedRecordFieldsDto } from '/adapter/spi/dtos/RecordDto'
 import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '/domain/entities/Record'
-import type { IField } from '/domain/interfaces/IField'
+import type { FieldConfig } from '/domain/entities/Field'
 import type { IntegrationResponse } from '/domain/integrations/base'
 
 export class NotionTableIntegration<T extends NotionTablePageProperties>
@@ -15,7 +15,7 @@ export class NotionTableIntegration<T extends NotionTablePageProperties>
 {
   readonly id: string
   readonly name: string
-  private _properties: IField[]
+  private _properties: FieldConfig[]
 
   constructor(
     private _db: SQLiteDatabaseTableDriver,

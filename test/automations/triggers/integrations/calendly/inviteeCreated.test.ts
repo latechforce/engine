@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationConfig } from '/test/config'
+import { getAutomationSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['Calendly'] })
 
@@ -26,7 +26,7 @@ mock.request(({ app, drivers, integrations }) => {
     it('should start an automation', async () => {
       // GIVEN
       const config = {
-        ...getAutomationConfig('CalendlyInviteeCreated'),
+        ...getAutomationSchema('CalendlyInviteeCreated'),
         server: {
           baseUrl: 'http://localhost:6001',
           port: 6001,

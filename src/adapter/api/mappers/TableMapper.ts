@@ -1,5 +1,5 @@
-import { Table } from '/domain/entities/Table'
-import type { ITable } from '/domain/interfaces/ITable'
+import { Table, type TableConfig } from '/domain/entities/Table'
+import type { TableSchema } from '../schemas/TableSchema'
 import { FieldMapper } from './Field'
 import type { Server } from '/domain/services/Server'
 import type { Database } from '/domain/services/Database'
@@ -22,8 +22,8 @@ export interface TableMapperServices {
 }
 
 export class TableMapper {
-  static toEntity = (config: ITable, services: TableMapperServices) => {
-    const { name } = config
+  static toEntity = (schema: TableSchema, services: TableMapperServices): Table => {
+    const { name } = schema
     const {
       server,
       database,
@@ -34,10 +34,12 @@ export class TableMapper {
       storage,
       system,
     } = services
-    const fields = FieldMapper.toManyEntities(config.fields)
+    const fields = FieldMapper.toManyEntities(schema.fields)
     return new Table(
       {
         name,
+        schema: schema.schema,
+        fields: FieldMapper.toManyConfigs(schema.fields),
       },
       {
         server,
@@ -53,7 +55,19 @@ export class TableMapper {
     )
   }
 
-  static toManyEntities = (configs: ITable[] = [], services: TableMapperServices) => {
-    return configs.map((config) => this.toEntity(config, services))
+  static toConfig = (schema: TableSchema): TableConfig => {
+    return {
+      name: schema.name,
+      schema: schema.schema,
+      fields: FieldMapper.toManyConfigs(schema.fields),
+    }
+  }
+
+  static toManyEntities = (schemas: TableSchema[] = [], services: TableMapperServices): Table[] => {
+    return schemas.map((schema) => this.toEntity(schema, services))
+  }
+
+  static toManyConfigs = (schemas: TableSchema[] = []): TableConfig[] => {
+    return schemas.map((schema) => this.toConfig(schema))
   }
 }

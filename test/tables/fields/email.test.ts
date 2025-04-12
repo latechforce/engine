@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with an email', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['email'])
+      const config = getFirstTableSchema(['email'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -22,7 +22,7 @@ mock.request(({ app, request }) => {
     it('should create a record with an email', async () => {
       // GIVEN
       const email = 'test@test.com'
-      const config = getFirstTableConfig(['email'])
+      const config = getFirstTableSchema(['email'])
       const { url } = await app.start(config)
 
       // WHEN

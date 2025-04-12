@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -8,19 +8,19 @@ mock.request(({ app, request, drivers }) => {
   describe('on start', () => {
     it('should create a table', async () => {
       // GIVEN
-      const config = getFirstTableConfig()
+      const config = getFirstTableSchema()
 
       // WHEN
       await app.start(config)
 
       // THEN
-      expect(drivers.database.table(config.tables[0]).exists()).resolves.toBe(true)
+      expect(drivers.database.tableFromSchema(config.tables[0]).exists()).resolves.toBe(true)
     })
 
     it('should connect to an existing table', async () => {
       // GIVEN
-      const config = getFirstTableConfig()
-      await drivers.database.table(config.tables[0]).create()
+      const config = getFirstTableSchema()
+      await drivers.database.tableFromSchema(config.tables[0]).create()
 
       // WHEN
       const startedApp = await app.start(config)
@@ -31,8 +31,8 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate an existing table with a new field', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name', 'long_text'])
-      await drivers.database.table(getFirstTableConfig(['name']).tables[0]).create()
+      const config = getFirstTableSchema(['name', 'long_text'])
+      await drivers.database.tableFromSchema(config.tables[0]).create()
 
       // WHEN
       const startedApp = await app.start(config)
@@ -43,8 +43,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table with a renamed field', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name_after_migration'])
-      const table = drivers.database.table(getFirstTableConfig(['name_before_migration']).tables[0])
+      const config = getFirstTableSchema(['name_after_migration'])
+      const table = drivers.database.tableFromSchema(
+        getFirstTableSchema(['name_before_migration']).tables[0]
+      )
       await table.create()
       await table.insert({
         id: '1',
@@ -56,15 +58,15 @@ mock.request(({ app, request, drivers }) => {
       await app.start(config)
 
       // THEN
-      const record = await drivers.database.table(config.tables[0]).readById('1')
+      const record = await drivers.database.tableFromSchema(config.tables[0]).readById('1')
       expect(record?.fields.name_after_migration).toBe('test')
       expect(record?.fields.name_before_migration).toBeUndefined()
     })
 
     it('should migrate a table with a renamed field that has already be renamed', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name_after_migration'])
-      const table = drivers.database.table(config.tables[0])
+      const config = getFirstTableSchema(['name_after_migration'])
+      const table = drivers.database.tableFromSchema(config.tables[0])
       await table.create()
       await table.insert({
         id: '1',
@@ -81,8 +83,8 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table with existing records', async () => {
       // GIVEN
-      const config = getFirstTableConfig()
-      const table = drivers.database.table(config.tables[0])
+      const config = getFirstTableSchema()
+      const table = drivers.database.tableFromSchema(config.tables[0])
       await table.create()
       await table.insertMany([
         { id: '1', fields: { name: 'John' }, created_at: new Date().toISOString() },
@@ -103,7 +105,7 @@ mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should return an error if table does not exist', async () => {
       // GIVEN
-      const config = getFirstTableConfig()
+      const config = getFirstTableSchema()
       const { url } = await app.start(config)
 
       // WHEN
@@ -117,7 +119,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should create a record in database when posting on table api', async () => {
       // GIVEN
-      const config = getFirstTableConfig()
+      const config = getFirstTableSchema()
       const { url } = await app.start(config)
 
       // WHEN
@@ -127,7 +129,7 @@ mock.request(({ app, request, drivers }) => {
 
       // THEN
       const record = await drivers.database
-        .table(config.tables[0])
+        .tableFromSchema(config.tables[0])
         .read({ field: 'name', operator: 'Is', value: 'John' })
       expect(record).toBeDefined()
       expect(record!.id).toBeDefined()
@@ -136,7 +138,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should get a created record when posting on table api', async () => {
       // GIVEN
-      const config = getFirstTableConfig()
+      const config = getFirstTableSchema()
       const { url } = await app.start(config)
 
       // WHEN
@@ -152,7 +154,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should create a record with an id with a length of 27', async () => {
       // GIVEN
-      const config = getFirstTableConfig()
+      const config = getFirstTableSchema()
       const { url } = await app.start(config)
 
       // WHEN
@@ -162,7 +164,7 @@ mock.request(({ app, request, drivers }) => {
 
       // THEN
       const record = await drivers.database
-        .table(config.tables[0])
+        .tableFromSchema(config.tables[0])
         .read({ field: 'name', operator: 'Is', value: 'John' })
       expect(record).toBeDefined()
       expect(record!.id).toHaveLength(27)
@@ -170,7 +172,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should create a record with a date field', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['date'])
+      const config = getFirstTableSchema(['date'])
       const { url } = await app.start(config)
       const date = new Date().toISOString()
 

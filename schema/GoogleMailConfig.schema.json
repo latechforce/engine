@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "baseUrl": {
+      "type": "string"
+    },
+    "user": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "password",
+    "user"
+  ],
+  "additionalProperties": false
+}

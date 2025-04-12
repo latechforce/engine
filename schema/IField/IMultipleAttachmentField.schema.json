@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "onMigration": {
+      "type": "object",
+      "properties": {
+        "replace": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "string",
+      "const": "MultipleAttachment"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "additionalProperties": false,
+  "description": "Represents a field that can store multiple file attachments",
+  "examples": [
+    {
+      "type": "MultipleAttachment",
+      "name": "documents",
+      "required": false
+    }
+  ],
+  "title": "Multiple attachment field"
+}

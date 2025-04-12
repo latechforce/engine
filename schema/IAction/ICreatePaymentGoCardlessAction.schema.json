@@ -1,0 +1,48 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "payment": {
+      "$ref": "./GoCardlessCreatePayment.schema.json"
+    },
+    "integration": {
+      "type": "string",
+      "const": "GoCardless"
+    },
+    "action": {
+      "type": "string",
+      "const": "CreatePayment"
+    }
+  },
+  "required": [
+    "account",
+    "action",
+    "integration",
+    "name",
+    "payment"
+  ],
+  "additionalProperties": false,
+  "description": "Creates a new payment in GoCardless with the specified details",
+  "examples": [
+    {
+      "integration": "GoCardless",
+      "action": "CreatePayment",
+      "payment": {
+        "amount": 1000,
+        "currency": "EUR",
+        "description": "Monthly subscription",
+        "mandate": "{{trigger.payload.mandateId}}",
+        "metadata": {
+          "orderId": "{{trigger.payload.orderId}}",
+          "customerId": "{{trigger.payload.customerId}}"
+        }
+      }
+    }
+  ],
+  "title": "Create GoCardless Payment Action"
+}

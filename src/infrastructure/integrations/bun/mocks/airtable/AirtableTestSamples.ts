@@ -1,5 +1,5 @@
 import type { ConvertToAirtableTableRecordFields } from '/domain/integrations/Airtable'
-import type { ITable } from '/domain/interfaces/ITable'
+import type { TableConfig } from '/domain/entities/Table'
 
 export type AirtableTableSample1 = ConvertToAirtableTableRecordFields<{
   name?: string | null
@@ -15,7 +15,7 @@ export type AirtableTableSample1 = ConvertToAirtableTableRecordFields<{
   date?: string | null | Date | number
 }>
 
-export const airtableTableSample1: ITable = {
+export const airtableTableSample1: TableConfig = {
   name: 'table_1',
   fields: [
     {
@@ -72,7 +72,7 @@ export type AirtableTableSample2 = ConvertToAirtableTableRecordFields<{
   name?: string | null
 }>
 
-export const airtableTableSample2: ITable = {
+export const airtableTableSample2: TableConfig = {
   name: 'table_2',
   fields: [
     {

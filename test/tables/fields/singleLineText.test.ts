@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a single line text', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name'])
+      const config = getFirstTableSchema(['name'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -22,7 +22,7 @@ mock.request(({ app, request }) => {
     it('should create a record with a single line text', async () => {
       // GIVEN
       const name = 'John Doe'
-      const config = getFirstTableConfig(['name'])
+      const config = getFirstTableSchema(['name'])
       const { url } = await app.start(config)
 
       // WHEN

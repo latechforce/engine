@@ -1,12 +1,15 @@
-import type { ISingleLineTextField } from '/domain/interfaces/IField/ISingleLineText'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
+
+export interface SingleLineTextFieldConfig extends BaseFieldConfig {
+  type: 'SingleLineText'
+}
 
 export class SingleLineTextField extends BaseField {
-  constructor(config: IBaseField) {
+  constructor(config: Omit<SingleLineTextFieldConfig, 'type'>) {
     super(config)
   }
 
-  get config(): ISingleLineTextField {
+  get config(): SingleLineTextFieldConfig {
     return {
       ...super.config,
       type: 'SingleLineText',

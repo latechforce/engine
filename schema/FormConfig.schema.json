@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "table": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "./InputConfig.schema.json"
+      }
+    },
+    "submitLabel": {
+      "type": "string"
+    },
+    "successMessage": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "path",
+    "table",
+    "inputs"
+  ],
+  "additionalProperties": false
+}

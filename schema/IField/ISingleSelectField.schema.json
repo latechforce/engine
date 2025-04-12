@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "onMigration": {
+      "type": "object",
+      "properties": {
+        "replace": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "string",
+      "const": "SingleSelect"
+    },
+    "options": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "options",
+    "type"
+  ],
+  "additionalProperties": false,
+  "description": "Represents a field that can store a single selected option from a predefined list",
+  "examples": [
+    {
+      "type": "SingleSelect",
+      "name": "status",
+      "required": true,
+      "options": [
+        "Active",
+        "Inactive",
+        "Pending"
+      ]
+    }
+  ],
+  "title": "Single select field"
+}

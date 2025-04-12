@@ -1,19 +1,19 @@
-import type { ISingleLinkedRecordField } from '/domain/interfaces/IField/ISingleLinkedRecord'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
 
-interface SingleLinkedRecordFieldConfig extends IBaseField {
+export interface SingleLinkedRecordFieldConfig extends BaseFieldConfig {
+  type: 'SingleLinkedRecord'
   table: string
 }
 
 export class SingleLinkedRecordField extends BaseField {
   table: string
 
-  constructor(config: SingleLinkedRecordFieldConfig) {
+  constructor(config: Omit<SingleLinkedRecordFieldConfig, 'type'>) {
     super(config)
     this.table = config.table
   }
 
-  get config(): ISingleLinkedRecordField {
+  get config(): SingleLinkedRecordFieldConfig {
     return {
       ...super.config,
       type: 'SingleLinkedRecord',

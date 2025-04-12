@@ -6,8 +6,7 @@ import { IsTextFilter } from '/domain/entities/Filter/text/Is'
 import { OrFilter } from '/domain/entities/Filter/Or'
 import type { RecordFields, UpdateRecordFields } from '/domain/entities/Record'
 import type { IdGenerator } from './IdGenerator'
-import type { ITable } from '/domain/interfaces/ITable'
-
+import type { TableConfig } from '/domain/entities/Table'
 export interface DatabaseTableServices {
   logger: Logger
   idGenerator: IdGenerator
@@ -41,7 +40,7 @@ export class DatabaseTable {
   constructor(
     spi: IDatabaseSpi,
     private _services: DatabaseTableServices,
-    config: ITable
+    config: TableConfig
   ) {
     this._table = spi.table(config)
     this._logger = _services.logger

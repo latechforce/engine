@@ -1,0 +1,38 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "onMigration": {
+      "type": "object",
+      "properties": {
+        "replace": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "string",
+      "const": "LongText"
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "additionalProperties": false,
+  "description": "Represents a multi-line text field in forms and tables",
+  "examples": [
+    {
+      "type": "LongText",
+      "name": "description",
+      "required": false
+    }
+  ],
+  "title": "Long text field"
+}

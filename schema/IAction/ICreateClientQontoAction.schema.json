@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "client": {
+      "$ref": "./QontoCreateClient.schema.json"
+    },
+    "integration": {
+      "type": "string",
+      "const": "Qonto"
+    },
+    "action": {
+      "type": "string",
+      "const": "CreateClient"
+    }
+  },
+  "required": [
+    "account",
+    "action",
+    "client",
+    "integration",
+    "name"
+  ],
+  "additionalProperties": false,
+  "description": "Creates a new client in Qonto with the specified details",
+  "examples": [
+    {
+      "integration": "Qonto",
+      "action": "CreateClient",
+      "client": {
+        "name": "{{trigger.payload.companyName}}",
+        "email": "{{trigger.payload.email}}",
+        "phone": "{{trigger.payload.phone}}",
+        "address": {
+          "street": "{{trigger.payload.street}}",
+          "city": "{{trigger.payload.city}}",
+          "postalCode": "{{trigger.payload.postalCode}}",
+          "country": "{{trigger.payload.country}}"
+        }
+      }
+    }
+  ],
+  "title": "Create Qonto Client Action"
+}

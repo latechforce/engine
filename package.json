@@ -34,8 +34,8 @@
     "format": "bunx prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "lint": "bunx eslint . --fix",
     "clean": "rm -rf dist && rm -rf node_modules && rm -rf bun.lock && rm -rf tmp",
-    "build:schema": "bunx typescript-json-schema ./tsconfig.json AppSchema --out ./schema/app.schema.json --required --noExtraProps --strictNullChecks --jsDoc",
-    "build:docs": "generate-schema-doc --config-file ./docs/jsfh-config.yaml ./schema/app.schema.json ./docs/index.html",
+    "build:schema": "bun script/build-schema.ts",
+    "build:docs": "generate-schema-doc ./schema/app.schema.json ./website/docs/app.md --config-file schema-docs-config.yml",
     "build:types": "bunx tsc --project script/tsconfig.json && bun script/fix-types-paths.ts",
     "build:engine": "bun build --entrypoints ./src/index.ts ./src/bun.ts ./src/infrastructure/instrument/bun/index.ts ./src/infrastructure/test/bun/index.ts --outdir ./dist --target bun --packages external --splitting",
     "build": "bun run build:schema && bun run build:engine && bun run build:types",
@@ -132,6 +132,7 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "semantic-release": "^24.2.3",
     "storybook": "^8.6.12",
+    "ts-json-schema-generator": "^2.4.0",
     "typescript-eslint": "^8.29.1",
     "typescript-json-schema": "^0.65.1",
     "vitest": "^3.1.1"

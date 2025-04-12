@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "limit": {
+      "type": "number"
+    },
+    "after": {
+      "type": "string"
+    },
+    "before": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "mandate": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

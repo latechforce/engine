@@ -1,16 +1,17 @@
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
 import { testDatabaseTableDriver } from '../../../common/DatabaseDriver/DatabaseTableDriverTest'
 import BunTester from 'bun:test'
-import { getFirstAndSecondTableConfig } from '../../../../test/config'
+import { getFirstAndSecondTableSchema } from '/test/common'
 import { SQLiteDatabaseDriver } from './SQLiteDriver'
 import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
+import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 const setup = async () => {
   // GIVEN
   const sqliteDatabase = new SQLiteDatabaseDriver({ url: ':memory:', driver: 'SQLite' })
   const {
-    tables: [firstTableConfig, secondTableConfig],
-  } = getFirstAndSecondTableConfig([
+    tables: [firstTableSchema, secondTableSchema],
+  } = getFirstAndSecondTableSchema([
     'name',
     'multiple_linked_record',
     'number_rollup',
@@ -18,11 +19,11 @@ const setup = async () => {
     'single_select',
   ])
   const firstTable = new SQLiteDatabaseTableDriver(
-    firstTableConfig,
+    TableMapper.toConfig(firstTableSchema),
     sqliteDatabase.db
   ) as unknown as IDatabaseTableDriver
   const secondTable = new SQLiteDatabaseTableDriver(
-    secondTableConfig,
+    TableMapper.toConfig(secondTableSchema),
     sqliteDatabase.db
   ) as unknown as IDatabaseTableDriver
   return { firstTable, secondTable }

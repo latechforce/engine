@@ -11,9 +11,9 @@ const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['Notion'] 
 
 mock.request(({ app, request, integrations, drivers }) => {
   beforeEach(async () => {
-    await integrations.notion.addTable(notionTableSample1.name, notionTableSample1.fields)
-    await integrations.notion.addTable(notionTableSample2.name, notionTableSample2.fields)
-    await integrations.notion.addTable(notionTableSample3.name, notionTableSample3.fields)
+    await integrations.notion.addTableFromSchema(notionTableSample1)
+    await integrations.notion.addTableFromSchema(notionTableSample2)
+    await integrations.notion.addTableFromSchema(notionTableSample3)
     await integrations.notion.addUser(notionUserSample)
   })
 

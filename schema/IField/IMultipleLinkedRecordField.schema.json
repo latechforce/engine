@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "onMigration": {
+      "type": "object",
+      "properties": {
+        "replace": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "string",
+      "const": "MultipleLinkedRecord"
+    },
+    "table": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "table",
+    "type"
+  ],
+  "additionalProperties": false,
+  "description": "Represents a field that can link to multiple records from another table",
+  "examples": [
+    {
+      "type": "MultipleLinkedRecord",
+      "name": "assignedTasks",
+      "required": false,
+      "table": "tasks"
+    }
+  ],
+  "title": "Multiple linked record field"
+}

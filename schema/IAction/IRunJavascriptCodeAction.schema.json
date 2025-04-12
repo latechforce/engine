@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "input": {
+      "$ref": "./TemplateObject.schema.json"
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "service": {
+      "type": "string",
+      "const": "Code"
+    },
+    "action": {
+      "type": "string",
+      "const": "RunJavascript"
+    }
+  },
+  "required": [
+    "action",
+    "code",
+    "name",
+    "service"
+  ],
+  "additionalProperties": false,
+  "description": "Executes JavaScript code with optional input and environment variables",
+  "examples": [
+    {
+      "service": "Code",
+      "action": "RunJavascript",
+      "code": "return { result: input.value * 2 }",
+      "input": {
+        "value": 5
+      },
+      "env": {
+        "API_KEY": "{{secrets.apiKey}}"
+      }
+    }
+  ],
+  "title": "Run JavaScript Code Action"
+}

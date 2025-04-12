@@ -1,5 +1,5 @@
 import Ajv, { type ErrorObject } from 'ajv'
-import appSchema from '../../../../schema/app.schema.json'
+import configSchema from '../../../../schema/config.schema.json'
 import type { ISchemaValidatorDriver } from '/adapter/spi/drivers/SchemaValidatorSpi'
 import type { JSONSchema } from '/domain/services/SchemaValidator'
 
@@ -10,8 +10,8 @@ export class SchemaValidatorDriver implements ISchemaValidatorDriver {
     this._ajv = new Ajv({ allErrors: true, allowUnionTypes: true })
   }
 
-  validateAppSchema = (data: unknown) => {
-    const validate = this._ajv.compile(appSchema)
+  validateConfigSchema = (data: unknown) => {
+    const validate = this._ajv.compile(configSchema)
     if (validate(data)) return []
     return this._returnErrors(validate.errors)
   }

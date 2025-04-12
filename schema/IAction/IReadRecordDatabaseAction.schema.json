@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "table": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string",
+      "const": "Database"
+    },
+    "action": {
+      "type": "string",
+      "const": "ReadRecord"
+    }
+  },
+  "required": [
+    "action",
+    "id",
+    "name",
+    "service",
+    "table"
+  ],
+  "additionalProperties": false,
+  "description": "Retrieves a record from the specified database table by its ID",
+  "examples": [
+    {
+      "service": "Database",
+      "action": "ReadRecord",
+      "table": "users",
+      "id": "{{trigger.payload.userId}}"
+    }
+  ],
+  "title": "Read Database Record Action"
+}

@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "driver": {
+      "$ref": "./DatabaseDriverName.schema.json"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "driver",
+    "url"
+  ],
+  "additionalProperties": false
+}

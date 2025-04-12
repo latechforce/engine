@@ -1,14 +1,15 @@
-import type { ISingleAttachmentField } from '/domain/interfaces/IField/ISingleAttachment'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
 
-interface SingleAttachmentFieldParams extends IBaseField {}
+export interface SingleAttachmentFieldConfig extends BaseFieldConfig {
+  type: 'SingleAttachment'
+}
 
 export class SingleAttachmentField extends BaseField {
-  constructor(config: SingleAttachmentFieldParams) {
+  constructor(config: Omit<SingleAttachmentFieldConfig, 'type'>) {
     super(config)
   }
 
-  get config(): ISingleAttachmentField {
+  get config(): SingleAttachmentFieldConfig {
     return {
       ...super.config,
       type: 'SingleAttachment',

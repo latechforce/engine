@@ -3,8 +3,8 @@ import type {
   ConvertToNotionTablePageProperties,
   NotionTablePagePropertyFile,
 } from '/domain/integrations/Notion'
-import type { ITable } from '/domain/interfaces/ITable'
-import env from '/infrastructure/test/env'
+import env from '/test/env'
+import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 export type NotionTableSample1 = ConvertToNotionTablePageProperties<{
   name?: string | null
@@ -26,7 +26,7 @@ export type NotionTableSample1 = ConvertToNotionTablePageProperties<{
   archived?: boolean | null
 }>
 
-export const notionTableSample1: ITable = {
+export const notionTableSample1: TableSchema = {
   name: 'table_1',
   fields: [
     {
@@ -116,7 +116,7 @@ export type NotionTableSample2 = ConvertToNotionTablePageProperties<{
   name?: string
 }>
 
-export const notionTableSample2: ITable = {
+export const notionTableSample2: TableSchema = {
   name: 'table_2',
   fields: [
     {
@@ -132,7 +132,7 @@ export type NotionTableSample3 = ConvertToNotionTablePageProperties<{
   '[App] Nom'?: string
 }>
 
-export const notionTableSample3: ITable = {
+export const notionTableSample3: TableSchema = {
   name: env.TEST_NOTION_TABLE_3_ID,
   fields: [
     {

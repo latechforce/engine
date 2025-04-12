@@ -1,12 +1,15 @@
-import type { INumberField } from '/domain/interfaces/IField/INumber'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
+
+export interface NumberFieldConfig extends BaseFieldConfig {
+  type: 'Number'
+}
 
 export class NumberField extends BaseField {
-  constructor(config: IBaseField) {
+  constructor(config: Omit<NumberFieldConfig, 'type'>) {
     super(config)
   }
 
-  get config(): INumberField {
+  get config(): NumberFieldConfig {
     return {
       ...super.config,
       type: 'Number',

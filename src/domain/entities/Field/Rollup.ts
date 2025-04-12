@@ -1,16 +1,22 @@
-import type { IRollupField } from '/domain/interfaces/IField/IRollup'
-import { BaseField, type IBaseField } from './base'
-import type { DateTimeField } from './DateTime'
-import type { LongTextField } from './LongText'
-import type { MultipleLinkedRecordField } from './MultipleLinkedRecord'
-import type { NumberField } from './Number'
-import type { SingleLineTextField } from './SingleLineText'
+import { BaseField, type BaseFieldConfig } from './base'
+import { DateTimeField, type DateTimeFieldConfig } from './DateTime'
+import { LongTextField, type LongTextFieldConfig } from './LongText'
+import {
+  MultipleLinkedRecordField,
+  type MultipleLinkedRecordFieldConfig,
+} from './MultipleLinkedRecord'
+import { NumberField, type NumberFieldConfig } from './Number'
+import { SingleLineTextField, type SingleLineTextFieldConfig } from './SingleLineText'
 
-interface RollupFieldConfig extends IBaseField {
+export interface RollupFieldConfig extends BaseFieldConfig {
+  type: 'Rollup'
   formula: string
-  multipleLinkedRecord: MultipleLinkedRecordField
+  multipleLinkedRecord: MultipleLinkedRecordFieldConfig
   linkedRecordField: string
-  output: NumberField | LongTextField | SingleLineTextField | DateTimeField
+  output: Omit<
+    NumberFieldConfig | LongTextFieldConfig | SingleLineTextFieldConfig | DateTimeFieldConfig,
+    'name'
+  >
 }
 
 export class RollupField extends BaseField {
@@ -19,24 +25,37 @@ export class RollupField extends BaseField {
   linkedRecordField: string
   output: NumberField | LongTextField | SingleLineTextField | DateTimeField
 
-  constructor(config: RollupFieldConfig) {
+  constructor(config: Omit<RollupFieldConfig, 'type'>) {
     super(config)
-    this.formula = config.formula
-    this.multipleLinkedRecord = config.multipleLinkedRecord
-    this.linkedRecordField = config.linkedRecordField
-    this.output = config.output
+    const { name, output, formula, linkedRecordField } = config
+    this.formula = formula
+    this.multipleLinkedRecord = new MultipleLinkedRecordField(config.multipleLinkedRecord)
+    this.linkedRecordField = linkedRecordField
+    switch (config.output.type) {
+      case 'Number':
+        this.output = new NumberField({ ...output, name })
+        break
+      case 'LongText':
+        this.output = new LongTextField({ ...output, name })
+        break
+      case 'SingleLineText':
+        this.output = new SingleLineTextField({ ...output, name })
+        break
+      case 'DateTime':
+        this.output = new DateTimeField({ ...output, name })
+    }
   }
 
   get table() {
     return this.multipleLinkedRecord.table
   }
 
-  get config(): IRollupField {
+  get config(): RollupFieldConfig {
     return {
       ...super.config,
       type: 'Rollup',
       formula: this.formula,
-      multipleLinkedRecord: this.multipleLinkedRecord.name,
+      multipleLinkedRecord: this.multipleLinkedRecord.config,
       linkedRecordField: this.linkedRecordField,
       output: this.output.config,
     }

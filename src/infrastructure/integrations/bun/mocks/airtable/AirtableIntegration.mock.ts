@@ -3,7 +3,7 @@ import { AirtableTableIntegration } from './AirtableTableIntegration.mock'
 import type { AirtableConfig, AirtableTableRecordFields } from '/domain/integrations/Airtable'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
-import type { IField } from '/domain/interfaces/IField'
+import type { FieldConfig } from '/domain/entities/Field'
 import { BaseMockIntegration } from '../base'
 import slugify from 'slugify'
 
@@ -52,7 +52,7 @@ export class AirtableIntegration extends BaseMockIntegration implements IAirtabl
     return airtableTable
   }
 
-  addTable = async <T extends AirtableTableRecordFields>(name: string, fields: IField[]) => {
+  addTable = async <T extends AirtableTableRecordFields>(name: string, fields: FieldConfig[]) => {
     const id = this._slugify(name)
     await this._tables.insert<TableObject>({
       id,

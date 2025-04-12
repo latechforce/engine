@@ -1,0 +1,10 @@
+{
+  "anyOf": [
+    {
+      "$ref": "./ThemeConfigNone.schema.json"
+    },
+    {
+      "$ref": "./ThemeConfigTailwindCSS.schema.json"
+    }
+  ]
+}

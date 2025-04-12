@@ -1,4 +1,4 @@
-import type { IBucket } from '/domain/interfaces/IBucket'
+import type { BucketSchema } from '../schemas/BucketSchema'
 import type { Server } from '/domain/services/Server'
 import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
@@ -15,11 +15,11 @@ export interface BucketMapperServices {
 }
 
 export class BucketMapper {
-  static toEntity = (config: IBucket, services: BucketMapperServices) => {
-    return new Bucket(config, services)
+  static toEntity = (schema: BucketSchema, services: BucketMapperServices) => {
+    return new Bucket(schema, services)
   }
 
-  static toManyEntities = (configs: IBucket[] = [], services: BucketMapperServices) => {
-    return configs.map((config) => this.toEntity(config, services))
+  static toManyEntities = (schemas: BucketSchema[] = [], services: BucketMapperServices) => {
+    return schemas.map((schema) => this.toEntity(schema, services))
   }
 }

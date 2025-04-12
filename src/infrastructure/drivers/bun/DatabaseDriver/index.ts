@@ -2,9 +2,11 @@ import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type { DatabaseConfig, DatabaseEventType } from '/domain/services/Database'
 import type { EventDto } from '/adapter/spi/dtos/EventDto'
 import { PostgreSQLDatabaseDriver } from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriver'
-import type { ITable } from '/domain/interfaces/ITable'
 import { SQLiteDatabaseDriver } from './SQLite/SQLiteDriver'
 import type { AutomationHistoryRecord } from '/domain/entities/Automation/History'
+import type { TableConfig } from '/domain/entities/Table'
+import type { TableSchema } from '/adapter/api/schemas/TableSchema'
+import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 export class DatabaseDriver implements IDatabaseDriver {
   private _db: PostgreSQLDatabaseDriver | SQLiteDatabaseDriver
@@ -43,8 +45,12 @@ export class DatabaseDriver implements IDatabaseDriver {
     return this._db.query(text, values)
   }
 
-  table(table: ITable) {
+  table(table: TableConfig) {
     return this._db.table(table)
+  }
+
+  tableFromSchema(schema: TableSchema) {
+    return this._db.table(TableMapper.toConfig(schema))
   }
 
   on = (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => {

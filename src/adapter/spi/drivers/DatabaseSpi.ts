@@ -10,13 +10,15 @@ import type {
 } from '/domain/services/Database'
 import type { EventDto } from '../dtos/EventDto'
 import { EventMapper } from '../mappers/EventMapper'
-import type { ITable } from '/domain/interfaces/ITable'
+import type { TableConfig } from '/domain/entities/Table'
+import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 export interface IDatabaseDriver {
   driver: DatabaseDriverName
   connect: () => Promise<void>
   disconnect: () => Promise<void>
-  table: (table: ITable) => IDatabaseTableDriver
+  table: (table: TableConfig) => IDatabaseTableDriver
+  tableFromSchema: (schema: TableSchema) => IDatabaseTableDriver
   exec: DatabaseExec
   query: DatabaseQuery
   on: (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => void
@@ -26,7 +28,7 @@ export interface IDatabaseDriver {
 export class DatabaseSpi implements IDatabaseSpi {
   constructor(private _driver: IDatabaseDriver) {}
 
-  table = (table: ITable) => {
+  table = (table: TableConfig) => {
     const databaseTableDriver = this._driver.table(table)
     return new DatabaseTableSpi(databaseTableDriver)
   }

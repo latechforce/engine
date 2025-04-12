@@ -1,7 +1,7 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
-import type { ITable } from '/domain/interfaces/ITable'
+import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 const mock = new Mock(Tester, { drivers: ['Database', 'Storage'] })
 
@@ -9,7 +9,10 @@ mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should run a Typescript code with a database insert', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -62,7 +65,7 @@ mock.request(({ app, request, drivers }) => {
       })
 
       // THEN
-      const user = await drivers.database.table(table).readById(response.user.id)
+      const user = await drivers.database.tableFromSchema(table).readById(response.user.id)
       expect(response.user.fields.name).toBe('John')
       expect(user?.fields.name).toBe('John')
     })
@@ -128,7 +131,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database update', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -179,7 +185,7 @@ mock.request(({ app, request, drivers }) => {
       }
       const { url } = await app.start(config)
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '1', fields: { name: 'John' }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -189,14 +195,17 @@ mock.request(({ app, request, drivers }) => {
       })
 
       // THEN
-      const user = await drivers.database.table(table).readById(response.user.id)
+      const user = await drivers.database.tableFromSchema(table).readById(response.user.id)
       expect(response.user.fields.name).toBe('John Doe')
       expect(user?.fields.name).toBe('John Doe')
     })
 
     it('should run a Typescript code with a database many update', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -249,10 +258,10 @@ mock.request(({ app, request, drivers }) => {
       }
       const { url } = await app.start(config)
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '1', fields: { name: 'John' }, created_at: new Date().toISOString() })
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '2', fields: { name: 'John' }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -268,7 +277,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -320,7 +332,7 @@ mock.request(({ app, request, drivers }) => {
       }
       const { url } = await app.start(config)
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -334,7 +346,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read by id', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -382,7 +397,7 @@ mock.request(({ app, request, drivers }) => {
       }
       const { url } = await app.start(config)
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -396,7 +411,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read file by id', async () => {
       // GIVEN
-      const table: ITable = {
+      const table: TableSchema = {
         name: 'users',
         fields: [{ name: 'attachments', type: 'MultipleAttachment' }],
       }
@@ -452,7 +467,7 @@ mock.request(({ app, request, drivers }) => {
         created_at: new Date(),
         mime_type: 'text/plain',
       })
-      await drivers.database.table(table).insert({
+      await drivers.database.tableFromSchema(table).insert({
         id: '1',
         fields: {
           attachments: [
@@ -479,7 +494,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read with a string field', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -524,7 +542,7 @@ mock.request(({ app, request, drivers }) => {
       }
       const { url } = await app.start(config)
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -538,7 +556,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read with a number field', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'age', type: 'Number' }] }
+      const table: TableSchema = { name: 'users', fields: [{ name: 'age', type: 'Number' }] }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -585,7 +603,7 @@ mock.request(({ app, request, drivers }) => {
       }
       const { url } = await app.start(config)
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '1', fields: { age: 35 }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -599,7 +617,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read with a boolean field', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'valid', type: 'Checkbox' }] }
+      const table: TableSchema = { name: 'users', fields: [{ name: 'valid', type: 'Checkbox' }] }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -646,7 +664,7 @@ mock.request(({ app, request, drivers }) => {
       }
       const { url } = await app.start(config)
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '1', fields: { valid: true }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -660,7 +678,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read with a Date field', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'birthdate', type: 'DateTime' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'birthdate', type: 'DateTime' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -706,7 +727,7 @@ mock.request(({ app, request, drivers }) => {
       const { url } = await app.start(config)
       const birthdate = new Date()
       await drivers.database
-        .table(table)
+        .tableFromSchema(table)
         .insert({ id: '1', fields: { birthdate }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -720,7 +741,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database list', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -756,7 +780,7 @@ mock.request(({ app, request, drivers }) => {
         ],
       }
       const { url } = await app.start(config)
-      await drivers.database.table(table).insertMany([
+      await drivers.database.tableFromSchema(table).insertMany([
         { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
         { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
         { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
@@ -776,7 +800,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database list with is filter', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -815,7 +842,7 @@ mock.request(({ app, request, drivers }) => {
         ],
       }
       const { url } = await app.start(config)
-      await drivers.database.table(table).insertMany([
+      await drivers.database.tableFromSchema(table).insertMany([
         { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
         { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
         { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
@@ -831,7 +858,10 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database list with isAnyOf filter', async () => {
       // GIVEN
-      const table: ITable = { name: 'users', fields: [{ name: 'name', type: 'SingleLineText' }] }
+      const table: TableSchema = {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
+      }
       const config: Config = {
         name: 'App',
         version: '1.0.0',
@@ -870,7 +900,7 @@ mock.request(({ app, request, drivers }) => {
         ],
       }
       const { url } = await app.start(config)
-      await drivers.database.table(table).insertMany([
+      await drivers.database.tableFromSchema(table).insertMany([
         { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
         { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
         { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },

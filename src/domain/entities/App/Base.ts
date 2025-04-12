@@ -10,7 +10,7 @@ import type { Storage } from '/domain/services/Storage'
 import type { Monitor } from '/domain/services/Monitor'
 import type { Notion } from '/domain/integrations/Notion'
 import type { CodeCompiler } from '/domain/services/CodeCompiler'
-import type { IIntegrations } from '/domain/interfaces/IIntegrations'
+import type { IntegrationsConfig } from '/domain/integrations'
 import type { Cron } from '/domain/services/Cron'
 import type { Form } from '../Form'
 import type { Theme } from '/domain/services/Theme'
@@ -20,7 +20,7 @@ export interface AppConfig {
   version: string
   engine: string
   description?: string
-  integrations?: IIntegrations
+  integrations?: IntegrationsConfig
 }
 
 export interface AppServices {

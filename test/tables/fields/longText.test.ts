@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a long text', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['long_text'])
+      const config = getFirstTableSchema(['long_text'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -23,7 +23,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const long_text =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-      const config = getFirstTableConfig(['long_text'])
+      const config = getFirstTableSchema(['long_text'])
       const { url } = await app.start(config)
 
       // WHEN

@@ -1,12 +1,15 @@
-import type { IUrlField } from '/domain/interfaces/IField/IUrl'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
+
+export interface UrlFieldConfig extends BaseFieldConfig {
+  type: 'Url'
+}
 
 export class UrlField extends BaseField {
-  constructor(config: IBaseField) {
+  constructor(config: Omit<UrlFieldConfig, 'type'>) {
     super(config)
   }
 
-  get config(): IUrlField {
+  get config(): UrlFieldConfig {
     return {
       ...super.config,
       type: 'Url',

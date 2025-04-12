@@ -207,7 +207,7 @@ Create `test/automations/triggers/integrations/newIntegration/newEvent.test.ts`:
 ```typescript
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationConfig } from '/test/config'
+import { getAutomationSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['NewIntegration'] })
 
@@ -220,7 +220,7 @@ mock.request(({ app, drivers, integrations }) => {
     it('should start an automation', async () => {
       // GIVEN
       const config = {
-        ...getAutomationConfig('NewIntegrationNewEvent'),
+        ...getAutomationSchema('NewIntegrationNewEvent'),
       }
       await app.start(config)
 

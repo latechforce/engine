@@ -14,22 +14,22 @@ import type { IServerDriver } from './adapter/spi/drivers/ServerSpi'
 import type { IStorageDriver } from './adapter/spi/drivers/StorageSpi'
 import type { StorageConfig } from './domain/services/Storage'
 
-export type { Config } from '/domain/interfaces'
-export type { IAutomation as Automation } from '/domain/interfaces/IAutomation'
-export type { IAction as Action } from '/domain/interfaces/IAction'
-export type { ITrigger as Trigger } from '/domain/interfaces/ITrigger'
-export type { ITable as Table } from '/domain/interfaces/ITable'
-export type { IField as Field } from '/domain/interfaces/IField'
+export type { ConfigSchema as Config } from '/adapter/api/schemas/ConfigSchema'
+export type { AutomationSchema as Automation } from '/adapter/api/schemas/AutomationSchema'
+export type { ActionSchema as Action } from '/adapter/api/schemas/ActionSchema'
+export type { TriggerSchema as Trigger } from '/adapter/api/schemas/TriggerSchema'
+export type { TableSchema as Table } from '/adapter/api/schemas/TableSchema'
+export type { FieldSchema as Field } from '/adapter/api/schemas/FieldSchema'
 export type { FilterConfig as Filter } from '/domain/entities/Filter'
-export type { IBucket as Bucket } from '/domain/interfaces/IBucket'
-export type { IForm as Form } from '/domain/interfaces/IForm'
+export type { BucketSchema as Bucket } from '/adapter/api/schemas/BucketSchema'
+export type { FormSchema as Form } from '/adapter/api/schemas/FormSchema'
 export type {
   DatabaseConfig as Database,
   LoggersConfig as Loggers,
   MonitorsConfig as Monitors,
   ServerConfig as Server,
   TunnelConfig as Tunnel,
-} from '/domain/interfaces/IServices'
+} from '/domain/services'
 export type {
   CodeRunnerContext,
   CodeRunnerContextServicesDatabase as DatabaseIntegration,

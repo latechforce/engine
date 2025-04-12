@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "baseUrl": {
+      "type": "string"
+    },
+    "apiKey": {
+      "type": "string"
+    },
+    "databaseId": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "apiKey",
+    "databaseId",
+    "name"
+  ],
+  "additionalProperties": false
+}

@@ -1,19 +1,19 @@
-import type { ISingleSelectField } from '/domain/interfaces/IField/ISingleSelect'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
 
-interface SingleSelectFieldParams extends IBaseField {
+export interface SingleSelectFieldConfig extends BaseFieldConfig {
+  type: 'SingleSelect'
   options: string[]
 }
 
 export class SingleSelectField extends BaseField {
   options: string[]
 
-  constructor(config: SingleSelectFieldParams) {
+  constructor(config: Omit<SingleSelectFieldConfig, 'type'>) {
     super(config)
     this.options = config.options
   }
 
-  get config(): ISingleSelectField {
+  get config(): SingleSelectFieldConfig {
     return {
       ...super.config,
       type: 'SingleSelect',

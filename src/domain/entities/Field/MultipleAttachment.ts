@@ -1,14 +1,15 @@
-import type { IMultipleAttachmentField } from '/domain/interfaces/IField/IMultipleAttachment'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
 
-interface MultipleAttachmentFieldParams extends IBaseField {}
+export interface MultipleAttachmentFieldConfig extends BaseFieldConfig {
+  type: 'MultipleAttachment'
+}
 
 export class MultipleAttachmentField extends BaseField {
-  constructor(config: MultipleAttachmentFieldParams) {
+  constructor(config: Omit<MultipleAttachmentFieldConfig, 'type'>) {
     super(config)
   }
 
-  get config(): IMultipleAttachmentField {
+  get config(): MultipleAttachmentFieldConfig {
     return {
       ...super.config,
       type: 'MultipleAttachment',

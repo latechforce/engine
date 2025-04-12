@@ -1,0 +1,39 @@
+{
+  "anyOf": [
+    {
+      "$ref": "./IAction/IRunJavascriptCodeAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/IRunTypescriptCodeAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/ICreateRecordDatabaseAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/IReadRecordDatabaseAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/IGetCompanyPappersAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/ICreateClientQontoAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/IUpdatePageNotionAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/ISendEmailGoogleMailAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/ICreatePaymentGoCardlessAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/IListPaymentsGoCardlessAction.schema.json"
+    },
+    {
+      "$ref": "./IAction/IRetrieveAttachmentQontoAction.schema.json"
+    }
+  ],
+  "description": "Union type of all possible actions that can be performed in automations",
+  "title": "Action types"
+}

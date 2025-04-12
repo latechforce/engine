@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with an url', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['url'])
+      const config = getFirstTableSchema(['url'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -22,7 +22,7 @@ mock.request(({ app, request }) => {
     it('should create a record with an url', async () => {
       // GIVEN
       const urlField = 'https://test.com'
-      const config = getFirstTableConfig(['url'])
+      const config = getFirstTableSchema(['url'])
       const { url } = await app.start(config)
 
       // WHEN

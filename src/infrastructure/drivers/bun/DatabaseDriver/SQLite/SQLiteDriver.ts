@@ -7,8 +7,10 @@ import type {
 } from '/domain/services/Database'
 import type { EventDto, EventNotificationDto } from '/adapter/spi/dtos/EventDto'
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
-import type { ITable } from '/domain/interfaces/ITable'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
+import type { TableConfig } from '/domain/entities/Table'
+import { TableMapper } from '/adapter/api/mappers/TableMapper'
+import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 interface Notification {
   id: number
@@ -110,8 +112,12 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
     return this.querySync(text, values)
   }
 
-  table = (table: ITable) => {
+  table = (table: TableConfig) => {
     return new SQLiteDatabaseTableDriver(table, this.db)
+  }
+
+  tableFromSchema = (schema: TableSchema) => {
+    return this.table(TableMapper.toConfig(schema))
   }
 
   on = (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => {

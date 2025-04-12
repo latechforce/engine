@@ -1,12 +1,15 @@
-import type { ILongTextField } from '/domain/interfaces/IField/ILongText'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
+
+export interface LongTextFieldConfig extends BaseFieldConfig {
+  type: 'LongText'
+}
 
 export class LongTextField extends BaseField {
-  constructor(config: IBaseField) {
+  constructor(config: Omit<LongTextFieldConfig, 'type'>) {
     super(config)
   }
 
-  get config(): ILongTextField {
+  get config(): LongTextFieldConfig {
     return {
       ...super.config,
       type: 'LongText',

@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a multiple select', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['multiple_select'])
+      const config = getFirstTableSchema(['multiple_select'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -22,7 +22,7 @@ mock.request(({ app, request }) => {
     it('should create a record with a multiple select', async () => {
       // GIVEN
       const multiple_select = ['Red', 'Blue']
-      const config = getFirstTableConfig(['multiple_select'])
+      const config = getFirstTableSchema(['multiple_select'])
       const { url } = await app.start(config)
 
       // WHEN
@@ -37,7 +37,7 @@ mock.request(({ app, request }) => {
     it('should not create a record with a wrong value in a multiple select', async () => {
       // GIVEN
       const multiple_select = ['Yellow']
-      const config = getFirstTableConfig(['multiple_select'])
+      const config = getFirstTableSchema(['multiple_select'])
       const { url } = await app.start(config)
 
       // WHEN

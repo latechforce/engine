@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "cronTime": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string",
+      "const": "Schedule"
+    },
+    "event": {
+      "type": "string",
+      "const": "CronTimeTicked"
+    }
+  },
+  "required": [
+    "cronTime",
+    "event",
+    "service"
+  ],
+  "additionalProperties": false
+}

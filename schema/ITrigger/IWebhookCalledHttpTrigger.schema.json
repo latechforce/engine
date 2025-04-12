@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string"
+    },
+    "auth": {
+      "$ref": "./ServerMethodOptionsAuth.schema.json"
+    },
+    "service": {
+      "type": "string",
+      "const": "Http"
+    },
+    "event": {
+      "type": "string",
+      "const": "WebhookCalled"
+    }
+  },
+  "required": [
+    "event",
+    "path",
+    "service"
+  ],
+  "additionalProperties": false
+}

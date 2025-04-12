@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationConfig, getFirstTableConfig } from '/test/config'
+import { getAutomationSchema, getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -9,13 +9,13 @@ mock.request(({ app, drivers }) => {
     it('should start an automation', async () => {
       // GIVEN
       const config = {
-        ...getFirstTableConfig(),
-        ...getAutomationConfig('FirstDatabaseTableRecordCreated'),
+        ...getFirstTableSchema(),
+        ...getAutomationSchema('FirstDatabaseTableRecordCreated'),
       }
       await app.start(config)
 
       // WHEN
-      await drivers.database.table(config.tables[0]).insert({
+      await drivers.database.tableFromSchema(config.tables[0]).insert({
         id: '1',
         fields: { name: 'John' },
         created_at: new Date().toISOString(),

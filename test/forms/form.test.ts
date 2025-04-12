@@ -117,7 +117,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should create a record when the form is submitted', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const table = drivers.database.table(config.tables![0])
+      const table = drivers.database.tableFromSchema(config.tables![0])
       const { url } = await app.start(config)
 
       // WHEN

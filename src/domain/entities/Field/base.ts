@@ -1,21 +1,25 @@
-import type { IBaseField } from '/domain/interfaces/IField/base'
+export interface BaseFieldConfig {
+  name: string
+  required?: boolean
+  onMigration?: {
+    replace?: string
+  }
+}
 
-export type { IBaseField }
-
-export class BaseField implements IBaseField {
+export class BaseField implements BaseFieldConfig {
   name: string
   required?: boolean
   onMigration?: {
     replace?: string
   }
 
-  constructor(config: IBaseField) {
+  constructor(config: BaseFieldConfig) {
     this.name = config.name
     this.required = config.required
     this.onMigration = config.onMigration
   }
 
-  get config(): IBaseField {
+  get config(): BaseFieldConfig {
     return {
       name: this.name,
       required: this.required,

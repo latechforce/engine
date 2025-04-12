@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a single select', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['single_select'])
+      const config = getFirstTableSchema(['single_select'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -22,7 +22,7 @@ mock.request(({ app, request }) => {
     it('should create a record with a single select', async () => {
       // GIVEN
       const single_select = 'Red'
-      const config = getFirstTableConfig(['single_select'])
+      const config = getFirstTableSchema(['single_select'])
       const { url } = await app.start(config)
 
       // WHEN
@@ -38,7 +38,7 @@ mock.request(({ app, request }) => {
   it('should not create a record with a wrong value in a single select', async () => {
     // GIVEN
     const single_select = 'Yellow'
-    const config = getFirstTableConfig(['single_select'])
+    const config = getFirstTableSchema(['single_select'])
     const { url } = await app.start(config)
 
     // WHEN

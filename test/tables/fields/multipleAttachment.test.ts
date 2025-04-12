@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a multiple select', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['multiple_attachment'])
+      const config = getFirstTableSchema(['multiple_attachment'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -27,7 +27,7 @@ mock.request(({ app, request }) => {
           url: 'https://example.com/file1.txt',
         },
       ]
-      const config = getFirstTableConfig(['multiple_attachment'])
+      const config = getFirstTableSchema(['multiple_attachment'])
       const { url } = await app.start(config)
 
       // WHEN

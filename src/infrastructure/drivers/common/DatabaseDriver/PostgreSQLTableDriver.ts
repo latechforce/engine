@@ -7,8 +7,8 @@ import type {
   RecordFieldsToCreateDto,
   RecordFieldsToUpdateDto,
 } from '/adapter/spi/dtos/RecordDto'
-import type { ITable } from '/domain/interfaces/ITable'
-import type { IField } from '/domain/interfaces/IField'
+import type { TableConfig } from '/domain/entities/Table'
+import type { FieldConfig } from '/domain/entities/Field'
 
 interface ColumnInfo {
   name: string
@@ -42,11 +42,11 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
   public nameWithSchema: string
   public view: string
   public viewWithSchema: string
-  public fields: IField[] = []
+  public fields: FieldConfig[] = []
   public columns: Column[]
 
   constructor(
-    config: ITable,
+    config: TableConfig,
     private _db: pg.Pool
   ) {
     this.name = config.name
@@ -175,7 +175,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
         .map((field) => {
           const column = this._convertFieldToColumn(field)
           if (field.type === 'Rollup') {
-            const linkedRecordField = this._getLinkedRecordField(field.multipleLinkedRecord)
+            const linkedRecordField = field.multipleLinkedRecord
             const values = `${linkedRecordField.table}_view.${field.linkedRecordField}`
             const formula = this._convertFormula(field.formula, values)
             const linkedRecordColumn = this._convertFieldToColumn(linkedRecordField)
@@ -640,7 +640,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       throw new Error('Linked record not found')
     return linkedRecord
   }
-  private _convertFieldToColumn = (field: IField): Column => {
+  private _convertFieldToColumn = (field: FieldConfig): Column => {
     const column = {
       name: field.name,
       required: field.required,
@@ -648,7 +648,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     }
     let rollupTable: string | undefined
     if (field.type === 'Rollup') {
-      rollupTable = this._getLinkedRecordField(field.multipleLinkedRecord).table
+      rollupTable = field.multipleLinkedRecord.table
     }
     switch (field.type) {
       case 'SingleLineText':
@@ -684,7 +684,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       case 'Formula':
         return {
           ...column,
-          type: this._convertFieldToColumn({ name: field.name, ...field.output }).type,
+          type: this._convertFieldToColumn({ ...field.output, name: field.name }).type,
           formula: field.formula,
         }
       case 'Checkbox':
@@ -729,7 +729,7 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       case 'Rollup':
         return {
           ...column,
-          type: this._convertFieldToColumn({ name: field.name, ...field.output }).type,
+          type: this._convertFieldToColumn({ ...field.output, name: field.name }).type,
           formula: field.formula,
           table: rollupTable,
           tableField: field.linkedRecordField,

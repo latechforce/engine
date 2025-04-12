@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "driver": {
+      "type": "string",
+      "const": "Console"
+    }
+  },
+  "required": [
+    "driver"
+  ],
+  "additionalProperties": false
+}

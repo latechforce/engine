@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "input": {
+      "$ref": "./TemplateObject.schema.json"
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "service": {
+      "type": "string",
+      "const": "Code"
+    },
+    "action": {
+      "type": "string",
+      "const": "RunTypescript"
+    }
+  },
+  "required": [
+    "action",
+    "code",
+    "name",
+    "service"
+  ],
+  "additionalProperties": false,
+  "description": "Executes TypeScript code with type checking and optional input",
+  "title": "Run TypeScript Code Action"
+}

@@ -1,12 +1,15 @@
-import type { IDateTimeField } from '/domain/interfaces/IField/IDateTime'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
+
+export interface DateTimeFieldConfig extends BaseFieldConfig {
+  type: 'DateTime'
+}
 
 export class DateTimeField extends BaseField {
-  constructor(config: IBaseField) {
+  constructor(config: Omit<DateTimeFieldConfig, 'type'>) {
     super(config)
   }
 
-  get config(): IDateTimeField {
+  get config(): DateTimeFieldConfig {
     return {
       ...super.config,
       type: 'DateTime',

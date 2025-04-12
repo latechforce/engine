@@ -1,0 +1,10 @@
+{
+  "$ref": "./BucketConfig.schema.json",
+  "description": "Type alias for bucket storage configuration",
+  "examples": [
+    {
+      "name": "user-documents"
+    }
+  ],
+  "title": "Bucket configuration"
+}

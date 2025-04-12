@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationConfig, getFirstTableConfig } from '/test/config'
+import { getAutomationSchema, getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['Notion'] })
 
@@ -9,13 +9,10 @@ mock.request(({ app, drivers, integrations }) => {
     it('should start an automation', async () => {
       // GIVEN
       const config = {
-        ...getFirstTableConfig(),
-        ...getAutomationConfig('FirstNotionTablePageCreated'),
+        ...getFirstTableSchema(),
+        ...getAutomationSchema('FirstNotionTablePageCreated'),
       }
-      const table = await integrations.notion.addTable(
-        config.tables[0].name,
-        config.tables[0].fields
-      )
+      const table = await integrations.notion.addTableFromSchema(config.tables[0])
       await app.start(config)
 
       // WHEN
@@ -31,13 +28,10 @@ mock.request(({ app, drivers, integrations }) => {
     it('should return the created time of the created page', async () => {
       // GIVEN
       const config = {
-        ...getFirstTableConfig(),
-        ...getAutomationConfig('FirstNotionTablePageCreated'),
+        ...getFirstTableSchema(),
+        ...getAutomationSchema('FirstNotionTablePageCreated'),
       }
-      const table = await integrations.notion.addTable(
-        config.tables[0].name,
-        config.tables[0].fields
-      )
+      const table = await integrations.notion.addTableFromSchema(config.tables[0])
       await app.start(config)
 
       // WHEN
@@ -54,13 +48,10 @@ mock.request(({ app, drivers, integrations }) => {
     it('should return a property with specials characteres of the created page', async () => {
       // GIVEN
       const config = {
-        ...getFirstTableConfig(['Champs avec charactères (spéciaux)']),
-        ...getAutomationConfig('FirstNotionTablePageCreated'),
+        ...getFirstTableSchema(['Champs avec charactères (spéciaux)']),
+        ...getAutomationSchema('FirstNotionTablePageCreated'),
       }
-      const table = await integrations.notion.addTable(
-        config.tables[0].name,
-        config.tables[0].fields
-      )
+      const table = await integrations.notion.addTableFromSchema(config.tables[0])
       await app.start(config)
 
       // WHEN

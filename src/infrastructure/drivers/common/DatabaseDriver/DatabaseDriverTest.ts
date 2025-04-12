@@ -1,5 +1,6 @@
+import { TableMapper } from '/adapter/api/mappers/TableMapper'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
-import { getFirstTableConfig } from '../../../test/config'
+import { getFirstTableSchema } from '/test/common'
 import type BunTester from 'bun:test'
 
 export function testDatabaseDriver(
@@ -8,7 +9,7 @@ export function testDatabaseDriver(
   teardown?: () => Promise<void>
 ) {
   let database: IDatabaseDriver
-  const config = getFirstTableConfig()
+  const config = getFirstTableSchema()
 
   beforeAll(async () => {
     database = await setup()
@@ -21,7 +22,7 @@ export function testDatabaseDriver(
 
   describe('table', () => {
     it('should return a table driver', async () => {
-      expect(database.table(config.tables[0])).toBeDefined()
+      expect(database.table(TableMapper.toConfig(config.tables[0]))).toBeDefined()
     })
   })
 }

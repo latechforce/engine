@@ -4,7 +4,6 @@ import type { SchemaError } from '../Error/Schema'
 import type { Field } from '../Field'
 import type { DatabaseTable } from '/domain/services/DatabaseTable'
 import type { JSONSchema } from '/domain/services/SchemaValidator'
-import type { ITable } from '/domain/interfaces/ITable'
 import { FilterMapper, filterSchema } from '../Filter'
 import type { ConfigError } from '../Error/Config'
 import type { FilterConfig } from '../Filter'
@@ -51,7 +50,7 @@ export class Table {
     this._validateData = schemaValidator.validate
   }
 
-  get config(): ITable {
+  get config(): TableConfig {
     return {
       name: this.name,
       fields: this.fields.map((field) => field.config),

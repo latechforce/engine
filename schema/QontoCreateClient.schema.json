@@ -1,0 +1,110 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "currency": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "vat_number": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "tax_identification_number": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "zip_code": {
+      "type": "string"
+    },
+    "country_code": {
+      "type": "string"
+    },
+    "billing_address": {
+      "type": "object",
+      "properties": {
+        "street_address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "zip_code": {
+          "type": "string"
+        },
+        "province_code": {
+          "type": "string"
+        },
+        "country_code": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "street_address",
+        "city",
+        "zip_code",
+        "province_code",
+        "country_code"
+      ],
+      "additionalProperties": false
+    },
+    "delivery_address": {
+      "type": "object",
+      "properties": {
+        "street_address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "zip_code": {
+          "type": "string"
+        },
+        "province_code": {
+          "type": "string"
+        },
+        "country_code": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "street_address",
+        "city",
+        "zip_code",
+        "province_code",
+        "country_code"
+      ],
+      "additionalProperties": false
+    },
+    "locale": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "address",
+    "city",
+    "country_code",
+    "currency",
+    "locale",
+    "type",
+    "zip_code"
+  ]
+}

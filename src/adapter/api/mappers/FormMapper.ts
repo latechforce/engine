@@ -1,4 +1,4 @@
-import type { IForm } from '/domain/interfaces/IForm'
+import type { FormSchema } from '../schemas/FormSchema'
 import {
   Form,
   type FormComponents,
@@ -14,20 +14,20 @@ export type FormMapperComponents = FormComponents
 
 export class FormMapper {
   static toEntity = (
-    config: IForm,
+    schema: FormSchema,
     services: FormMapperServices,
     entities: FormMapperEntities,
     components: FormMapperComponents
   ) => {
-    return new Form(config, services, entities, components)
+    return new Form(schema, services, entities, components)
   }
 
   static toManyEntities = (
-    configs: IForm[] = [],
+    schemas: FormSchema[] = [],
     services: FormMapperServices,
     entities: FormMapperEntities,
     components: FormMapperComponents
   ) => {
-    return configs.map((config) => this.toEntity(config, services, entities, components))
+    return schemas.map((schema) => this.toEntity(schema, services, entities, components))
   }
 }

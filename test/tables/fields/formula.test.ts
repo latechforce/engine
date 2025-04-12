@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableConfig } from '/test/config'
+import { getFirstTableSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -8,7 +8,7 @@ mock.request(({ app, request, drivers }) => {
   describe('on start', () => {
     it('should create a table with a text formula', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name', 'text_formula'])
+      const config = getFirstTableSchema(['name', 'text_formula'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -19,7 +19,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should create a table with a number formula', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['number', 'number_formula'])
+      const config = getFirstTableSchema(['number', 'number_formula'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -30,8 +30,8 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table with a new formula', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name', 'text_formula'])
-      await drivers.database.table(getFirstTableConfig(['name']).tables[0]).create()
+      const config = getFirstTableSchema(['name', 'text_formula'])
+      await drivers.database.tableFromSchema(getFirstTableSchema(['name']).tables[0]).create()
 
       // WHEN
       const { url } = await app.start(config)
@@ -45,7 +45,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table with an updated formula', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name', 'text_formula'])
+      const config = getFirstTableSchema(['name', 'text_formula'])
       await drivers.database
         .table({
           name: config.tables[0].name,
@@ -75,7 +75,7 @@ mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should create a record with a text formula', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name', 'text_formula'])
+      const config = getFirstTableSchema(['name', 'text_formula'])
       const { url } = await app.start(config)
 
       // WHEN
@@ -89,7 +89,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should create a record with a number formula', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['number', 'number_formula'])
+      const config = getFirstTableSchema(['number', 'number_formula'])
       const { url } = await app.start(config)
 
       // WHEN
@@ -103,7 +103,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should create a record with a text formula referencing another text formula', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['name', 'text_formula', 'text_formula_reference'])
+      const config = getFirstTableSchema(['name', 'text_formula', 'text_formula_reference'])
       const { url } = await app.start(config)
 
       // WHEN
@@ -117,7 +117,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should create a record with a number formula referencing another number formula', async () => {
       // GIVEN
-      const config = getFirstTableConfig(['number', 'number_formula', 'number_formula_reference'])
+      const config = getFirstTableSchema(['number', 'number_formula', 'number_formula_reference'])
       const { url } = await app.start(config)
 
       // WHEN

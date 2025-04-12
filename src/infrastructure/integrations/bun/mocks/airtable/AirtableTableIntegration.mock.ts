@@ -4,7 +4,7 @@ import type { TableObject } from './AirtableIntegration.mock'
 import type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
 import type { PersistedRecordFieldsDto } from '/adapter/spi/dtos/RecordDto'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { IField } from '/domain/interfaces/IField'
+import type { FieldConfig } from '/domain/entities/Field'
 import { customAlphabet } from 'nanoid'
 import type { RecordFields } from '/domain/entities/Record'
 import type {
@@ -18,7 +18,7 @@ export class AirtableTableIntegration<T extends AirtableTableRecordFields>
 {
   readonly id: string
   readonly name: string
-  private _fields: IField[]
+  private _fields: FieldConfig[]
 
   constructor(
     private _db: SQLiteDatabaseTableDriver,

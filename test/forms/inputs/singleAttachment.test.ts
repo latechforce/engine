@@ -51,7 +51,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should create a record with a single attachment input', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const table = drivers.database.table(config.tables![0])
+      const table = drivers.database.tableFromSchema(config.tables![0])
       const { url } = await app.start(config)
 
       // Create two test files
@@ -78,7 +78,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should be able to download a submitted single attachment', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const table = drivers.database.table(config.tables![0])
+      const table = drivers.database.tableFromSchema(config.tables![0])
       const { url } = await app.start(config)
 
       // Create two test files

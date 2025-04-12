@@ -1,25 +1,32 @@
 import BunTester from 'bun:test'
 import { testDatabaseTableDriver } from './DatabaseTableDriverTest'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
-import { getFirstAndSecondTableConfig } from '../../../test/config'
+import { getFirstAndSecondTableSchema } from '../../../test/common/schema'
 import { getPostgresDatabase, teardownPostgres } from './PostgreSQLDriverTestSetup'
 import type { PostgreSQLDatabaseDriver } from './PostgreSQLDriver'
+import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 let postgresDatabase: PostgreSQLDatabaseDriver
 
 const setup = async () => {
   postgresDatabase = await getPostgresDatabase()
   const {
-    tables: [firstTableConfig, secondTableConfig],
-  } = getFirstAndSecondTableConfig([
+    tables: [firstTableSchema, secondTableSchema],
+  } = getFirstAndSecondTableSchema([
     'name',
     'multiple_linked_record',
     'number_rollup',
     'multiple_select',
     'single_select',
   ])
-  const firstTable = new PostgreSQLDatabaseTableDriver(firstTableConfig, postgresDatabase.db)
-  const secondTable = new PostgreSQLDatabaseTableDriver(secondTableConfig, postgresDatabase.db)
+  const firstTable = new PostgreSQLDatabaseTableDriver(
+    TableMapper.toConfig(firstTableSchema),
+    postgresDatabase.db
+  )
+  const secondTable = new PostgreSQLDatabaseTableDriver(
+    TableMapper.toConfig(secondTableSchema),
+    postgresDatabase.db
+  )
   return { firstTable, secondTable }
 }
 

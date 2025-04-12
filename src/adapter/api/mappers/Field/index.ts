@@ -1,83 +1,87 @@
-import type { IField } from '/domain/interfaces/IField'
-import type { Field } from '/domain/entities/Field'
-import { DateTimeFieldMapper } from './DateTimeMapper'
-import { EmailFieldMapper } from './EmailMapper'
-import { FormulaFieldMapper } from './FormulaMapper'
-import { LongTextFieldMapper } from './LongTextMapper'
-import { MultipleLinkedRecordFieldMapper } from './MultipleLinkedRecordMapper'
-import { NumberFieldMapper } from './NumberMapper'
+import type { Field, FieldConfig } from '/domain/entities/Field'
+import { SingleLineTextField } from '/domain/entities/Field/SingleLineText'
+import { LongTextField } from '/domain/entities/Field/LongText'
+import { DateTimeField } from '/domain/entities/Field/DateTime'
+import { EmailField } from '/domain/entities/Field/Email'
+import { NumberField } from '/domain/entities/Field/Number'
+import { FormulaField } from '/domain/entities/Field/Formula'
+import { SingleSelectField } from '/domain/entities/Field/SingleSelect'
+import { MultipleSelectField } from '/domain/entities/Field/MultipleSelect'
+import { SingleLinkedRecordField } from '/domain/entities/Field/SingleLinkedRecord'
+import { MultipleLinkedRecordField } from '/domain/entities/Field/MultipleLinkedRecord'
+import { MultipleAttachmentField } from '/domain/entities/Field/MultipleAttachment'
+import { SingleAttachmentField } from '/domain/entities/Field/SingleAttachment'
+import { CheckboxField } from '/domain/entities/Field/Checkbox'
+import { UrlField } from '/domain/entities/Field/Url'
 import { RollupFieldMapper } from './RollupMapper'
-import { SingleLineTextFieldMapper } from './SingleLineTextMapper'
-import { SingleLinkedRecordFieldMapper } from './SingleLinkedRecordMapper'
-import { SingleSelectFieldMapper } from './SingleSelectMapper'
-import { CheckboxFieldMapper } from './CheckboxMapper'
-import type { DateTimeField } from '/domain/entities/Field/DateTime'
-import type { LongTextField } from '/domain/entities/Field/LongText'
-import type { NumberField } from '/domain/entities/Field/Number'
-import type { SingleLineTextField } from '/domain/entities/Field/SingleLineText'
-import { MultipleSelectFieldMapper } from './MultipleSelectMapper'
-import { MultipleAttachmentFieldMapper } from './MultipleAttachmentMapper'
-import { UrlFieldMapper } from './UrlMapper'
-import { SingleAttachmentFieldMapper } from './SingleAttachmentMapper'
+import type { FieldSchema } from '../../schemas/FieldSchema'
 
 export class FieldMapper {
-  static toEntity(config: IField, fields: IField[]): Field {
+  static toEntity(config: FieldSchema, fields: FieldSchema[]): Field {
     const { type } = config
     switch (type) {
       case 'SingleLineText':
-        return SingleLineTextFieldMapper.toEntity(config)
+        return new SingleLineTextField(config)
       case 'LongText':
-        return LongTextFieldMapper.toEntity(config)
+        return new LongTextField(config)
       case 'DateTime':
-        return DateTimeFieldMapper.toEntity(config)
+        return new DateTimeField(config)
       case 'Email':
-        return EmailFieldMapper.toEntity(config)
+        return new EmailField(config)
       case 'Number':
-        return NumberFieldMapper.toEntity(config)
+        return new NumberField(config)
       case 'Formula':
-        return FormulaFieldMapper.toEntity(config)
+        return new FormulaField(config)
       case 'SingleSelect':
-        return SingleSelectFieldMapper.toEntity(config)
+        return new SingleSelectField(config)
       case 'MultipleSelect':
-        return MultipleSelectFieldMapper.toEntity(config)
+        return new MultipleSelectField(config)
       case 'SingleLinkedRecord':
-        return SingleLinkedRecordFieldMapper.toEntity(config)
+        return new SingleLinkedRecordField(config)
       case 'MultipleLinkedRecord':
-        return MultipleLinkedRecordFieldMapper.toEntity(config)
+        return new MultipleLinkedRecordField(config)
       case 'MultipleAttachment':
-        return MultipleAttachmentFieldMapper.toEntity(config)
+        return new MultipleAttachmentField(config)
       case 'SingleAttachment':
-        return SingleAttachmentFieldMapper.toEntity(config)
+        return new SingleAttachmentField(config)
       case 'Rollup':
         return RollupFieldMapper.toEntity(config, fields)
       case 'Checkbox':
-        return CheckboxFieldMapper.toEntity(config)
+        return new CheckboxField(config)
       case 'Url':
-        return UrlFieldMapper.toEntity(config)
+        return new UrlField(config)
       default:
         throw new Error(`FieldMapper: type ${type} not found`)
     }
   }
 
+  static toConfig(schema: FieldSchema, fields: FieldSchema[]): FieldConfig {
+    return this.toEntity(schema, fields).config
+  }
+
   static toOutputEntity(
-    config: IField
+    config: FieldSchema
   ): DateTimeField | SingleLineTextField | LongTextField | NumberField {
     const { type } = config
     switch (type) {
       case 'DateTime':
-        return DateTimeFieldMapper.toEntity(config)
+        return new DateTimeField(config)
       case 'SingleLineText':
-        return SingleLineTextFieldMapper.toEntity(config)
+        return new SingleLineTextField(config)
       case 'LongText':
-        return LongTextFieldMapper.toEntity(config)
+        return new LongTextField(config)
       case 'Number':
-        return NumberFieldMapper.toEntity(config)
+        return new NumberField(config)
       default:
         throw new Error(`FieldMapper: type ${type} not found`)
     }
   }
 
-  static toManyEntities(configs: IField[]): Field[] {
+  static toManyEntities(configs: FieldSchema[]): Field[] {
     return configs.map((config) => this.toEntity(config, configs))
+  }
+
+  static toManyConfigs(schemas: FieldSchema[]): FieldConfig[] {
+    return schemas.map((schema) => this.toConfig(schema, schemas))
   }
 }

@@ -4,11 +4,13 @@ import type { NotionConfig } from '/domain/integrations/Notion'
 import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
 import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
-import type { IField } from '/domain/interfaces/IField'
 import slugify from 'slugify'
 import type { NotionTablePageProperties } from '/domain/integrations/Notion'
 import { BaseMockIntegration } from '../base'
 import type { IntegrationResponse } from '/domain/integrations/base'
+import type { TableConfig } from '/domain/entities/Table'
+import { TableMapper } from '/adapter/api/mappers/TableMapper'
+import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 export interface TableObject extends RecordFields {
   title: string
@@ -96,17 +98,22 @@ export class NotionIntegration extends BaseMockIntegration implements INotionInt
     }
   }
 
-  addTable = async <T extends NotionTablePageProperties>(name: string, properties: IField[]) => {
-    const id = this._slugify(name)
+  addTable = async <T extends NotionTablePageProperties>(config: TableConfig) => {
+    const id = this._slugify(config.name)
     const table = await this._tables.readById<TableObject>(id)
     if (!table) {
       await this._tables.insert<TableObject>({
         id,
-        fields: { title: name, properties: JSON.stringify(properties) },
+        fields: { title: config.name, properties: JSON.stringify(config.fields) },
         created_at: new Date().toISOString(),
       })
     }
-    return this.getTable<T>(name)
+    return this.getTable<T>(config.name)
+  }
+
+  addTableFromSchema = async <T extends NotionTablePageProperties>(schema: TableSchema) => {
+    const config = TableMapper.toConfig(schema)
+    return this.addTable<T>(config)
   }
 
   addUser = async (user: NotionUserDto) => {

@@ -1,10 +1,10 @@
 import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
-import { getFirstAndSecondTableConfig } from '../../../test/config'
+import { getFirstAndSecondTableSchema } from '../../../test/common/schema'
 import type BunTester from 'bun:test'
 
 const {
-  tables: [, secondTableConfig],
-} = getFirstAndSecondTableConfig(['name', 'multiple_linked_record', 'number_rollup'])
+  tables: [, secondTableSchema],
+} = getFirstAndSecondTableSchema(['name', 'multiple_linked_record', 'number_rollup'])
 
 export function testDatabaseTableDriver(
   { describe, beforeAll, afterAll, it, expect }: typeof BunTester,
@@ -38,7 +38,7 @@ export function testDatabaseTableDriver(
     it('should not create a table if already exist', async () => {
       // THEN
       expect(secondTable.create()).rejects.toThrowError(
-        `Table "${secondTableConfig.name}" already exists`
+        `Table "${secondTableSchema.name}" already exists`
       )
     })
 

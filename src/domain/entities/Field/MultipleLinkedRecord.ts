@@ -1,19 +1,19 @@
-import type { IMultipleLinkedRecordField } from '/domain/interfaces/IField/IMultipleLinkedRecord'
-import { BaseField, type IBaseField } from './base'
+import { BaseField, type BaseFieldConfig } from './base'
 
-interface MultipleLinkedRecordFieldConfig extends IBaseField {
+export interface MultipleLinkedRecordFieldConfig extends BaseFieldConfig {
+  type: 'MultipleLinkedRecord'
   table: string
 }
 
 export class MultipleLinkedRecordField extends BaseField {
   table: string
 
-  constructor(config: MultipleLinkedRecordFieldConfig) {
+  constructor(config: Omit<MultipleLinkedRecordFieldConfig, 'type'>) {
     super(config)
     this.table = config.table
   }
 
-  get config(): IMultipleLinkedRecordField {
+  get config(): MultipleLinkedRecordFieldConfig {
     return {
       ...super.config,
       type: 'MultipleLinkedRecord',

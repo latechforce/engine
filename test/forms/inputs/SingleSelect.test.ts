@@ -51,7 +51,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should create a record with a single select input', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const table = drivers.database.table(config.tables![0])
+      const table = drivers.database.tableFromSchema(config.tables![0])
       const { url } = await app.start(config)
 
       // WHEN
@@ -69,7 +69,7 @@ mock.page(({ app, browser, drivers }) => {
     it('should create a record with an empty select input', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const table = drivers.database.table(config.tables![0])
+      const table = drivers.database.tableFromSchema(config.tables![0])
       const { url } = await app.start(config)
 
       // WHEN

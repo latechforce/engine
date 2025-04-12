@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationConfig } from '/test/config'
+import { getAutomationSchema } from '/test/common'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should run an automation', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalled')
+      const config = getAutomationSchema('ApiCalled')
       const { url } = await app.start(config)
 
       // WHEN
@@ -20,7 +20,7 @@ mock.request(({ app, request }) => {
 
     it('should not run an automation with auth', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalledWithApiKeyAuth')
+      const config = getAutomationSchema('ApiCalledWithApiKeyAuth')
       const { url } = await app.start(config)
 
       // WHEN
@@ -32,7 +32,7 @@ mock.request(({ app, request }) => {
 
     it('should run an automation with auth', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalledWithApiKeyAuth')
+      const config = getAutomationSchema('ApiCalledWithApiKeyAuth')
       const { url } = await app.start(config)
 
       // WHEN
@@ -50,7 +50,7 @@ mock.request(({ app, request }) => {
 
     it('should return a value', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalledWithReturnedValue')
+      const config = getAutomationSchema('ApiCalledWithReturnedValue')
       const { url } = await app.start(config)
 
       // WHEN
@@ -62,7 +62,7 @@ mock.request(({ app, request }) => {
 
     it('should return a error message', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalledWithError')
+      const config = getAutomationSchema('ApiCalledWithError')
       const { url } = await app.start(config)
 
       // WHEN
@@ -82,7 +82,7 @@ mock.request(({ app, request }) => {
 
     it('should return run an automation with a body', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalledWithSingleLineTextInput')
+      const config = getAutomationSchema('ApiCalledWithSingleLineTextInput')
       const { url } = await app.start(config)
 
       // WHEN
@@ -94,7 +94,7 @@ mock.request(({ app, request }) => {
 
     it('should return an invalid body error', async () => {
       // GIVEN
-      const config = getAutomationConfig('ApiCalledWithSingleLineTextInput')
+      const config = getAutomationSchema('ApiCalledWithSingleLineTextInput')
       const { url } = await app.start(config)
 
       // WHEN

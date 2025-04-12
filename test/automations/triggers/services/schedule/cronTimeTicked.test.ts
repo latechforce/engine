@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationConfig } from '/test/config'
+import { getAutomationSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -8,7 +8,7 @@ mock.request(({ app, drivers }) => {
   describe('on cron time ticked', () => {
     it('should start an automation', async () => {
       // GIVEN
-      const config = getAutomationConfig('CronTimeTicked')
+      const config = getAutomationSchema('CronTimeTicked')
       await app.start(config)
 
       // WHEN

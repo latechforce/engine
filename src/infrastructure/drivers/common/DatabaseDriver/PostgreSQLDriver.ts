@@ -7,7 +7,9 @@ import type {
 } from '/domain/services/Database'
 import type { EventDto } from '/adapter/spi/dtos/EventDto'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
-import type { ITable } from '/domain/interfaces/ITable'
+import type { TableConfig } from '/domain/entities/Table'
+import type { TableSchema } from '/adapter/api/schemas/TableSchema'
+import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
   public db: pg.Pool
@@ -65,8 +67,12 @@ export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
     return { rows, rowCount: rowCount || 0 }
   }
 
-  table = (table: ITable) => {
+  table = (table: TableConfig) => {
     return new PostgreSQLDatabaseTableDriver(table, this.db)
+  }
+
+  tableFromSchema = (schema: TableSchema) => {
+    return this.table(TableMapper.toConfig(schema))
   }
 
   on = (event: DatabaseEventType, callback: (eventDto: EventDto) => void) => {

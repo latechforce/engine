@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstAndSecondTableConfig } from '/test/config'
+import { getFirstAndSecondTableSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -8,7 +8,7 @@ mock.request(({ app, request, drivers }) => {
   describe('on start', () => {
     it('should create a table with a single linked record', async () => {
       // GIVEN
-      const config = getFirstAndSecondTableConfig(['single_linked_record'])
+      const config = getFirstAndSecondTableSchema(['single_linked_record'])
 
       // WHEN
       const startedApp = await app.start(config)
@@ -19,15 +19,15 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table with existing single linked record dependancies', async () => {
       // GIVEN
-      const config = getFirstAndSecondTableConfig(['name', 'single_linked_record'])
-      const secondTable = drivers.database.table(config.tables[1])
+      const config = getFirstAndSecondTableSchema(['name', 'single_linked_record'])
+      const secondTable = drivers.database.tableFromSchema(config.tables[1])
       await secondTable.create()
       await secondTable.insertMany([
         { id: '1', fields: { name: 'Row 1' }, created_at: new Date().toISOString() },
         { id: '2', fields: { name: 'Row 2' }, created_at: new Date().toISOString() },
         { id: '3', fields: { name: 'Row 3' }, created_at: new Date().toISOString() },
       ])
-      const firstTable = drivers.database.table(config.tables[0])
+      const firstTable = drivers.database.tableFromSchema(config.tables[0])
       await firstTable.create()
       await firstTable.insertMany([
         {
@@ -56,8 +56,8 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table after editing SingleTextField to SingleLinkedRecord', async () => {
       // GIVEN
-      const config = getFirstAndSecondTableConfig(['name', 'single_linked_record'])
-      const firstTable = drivers.database.table({
+      const config = getFirstAndSecondTableSchema(['name', 'single_linked_record'])
+      const firstTable = drivers.database.tableFromSchema({
         name: config.tables[0].name,
         fields: [
           { name: 'name', type: 'SingleLineText' },
@@ -68,7 +68,7 @@ mock.request(({ app, request, drivers }) => {
         ],
       })
       await firstTable.create()
-      const secondTable = drivers.database.table(config.tables[1])
+      const secondTable = drivers.database.tableFromSchema(config.tables[1])
       await secondTable.create()
       await secondTable.insert({
         id: '1',
@@ -91,9 +91,9 @@ mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should create a record with a single linked record', async () => {
       // GIVEN
-      const config = getFirstAndSecondTableConfig(['name', 'single_linked_record'])
+      const config = getFirstAndSecondTableSchema(['name', 'single_linked_record'])
       const { url } = await app.start(config)
-      await drivers.database.table(config.tables[1]).insert({
+      await drivers.database.tableFromSchema(config.tables[1]).insert({
         id: '1',
         fields: { name: 'Row 1' },
         created_at: new Date().toISOString(),

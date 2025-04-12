@@ -1,10 +1,9 @@
-import type { Table } from '/domain/entities/Table'
+import type { Table, TableConfig } from '/domain/entities/Table'
 import { DatabaseTable, type IDatabaseTableSpi } from './DatabaseTable'
 import type { Logger } from './Logger'
 import type { RealtimeEvent } from './Realtime'
 import type { Monitor } from './Monitor'
 import type { IdGenerator } from './IdGenerator'
-import type { ITable } from '/domain/interfaces/ITable'
 
 export type DatabaseDriverName = 'PostgreSQL' | 'SQLite'
 
@@ -32,7 +31,7 @@ export type DatabaseQuery = <T>(
 export type DatabaseExec = (query: string) => Promise<void>
 
 export interface IDatabaseSpi {
-  table: (table: ITable) => IDatabaseTableSpi
+  table: (table: TableConfig) => IDatabaseTableSpi
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   exec: DatabaseExec
@@ -54,7 +53,7 @@ export class Database {
     this.driver = driver
   }
 
-  table = (config: ITable): DatabaseTable => {
+  table = (config: TableConfig): DatabaseTable => {
     return new DatabaseTable(this._spi, this._services, config)
   }
 

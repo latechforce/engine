@@ -1,26 +1,43 @@
-import type { IFormulaField } from '/domain/interfaces/IField/IFormula'
-import { BaseField, type IBaseField } from './base'
-import type { DateTimeField } from './DateTime'
-import type { LongTextField } from './LongText'
-import type { NumberField } from './Number'
-import type { SingleLineTextField } from './SingleLineText'
+import { BaseField, type BaseFieldConfig } from './base'
+import { DateTimeField, type DateTimeFieldConfig } from './DateTime'
+import { LongTextField, type LongTextFieldConfig } from './LongText'
+import { NumberField, type NumberFieldConfig } from './Number'
+import { SingleLineTextField, type SingleLineTextFieldConfig } from './SingleLineText'
 
-interface FormulaFieldConfig extends IBaseField {
+export interface FormulaFieldConfig extends BaseFieldConfig {
+  type: 'Formula'
   formula: string
-  output: NumberField | LongTextField | SingleLineTextField | DateTimeField
+  output: Omit<
+    NumberFieldConfig | LongTextFieldConfig | SingleLineTextFieldConfig | DateTimeFieldConfig,
+    'name'
+  >
 }
 
 export class FormulaField extends BaseField {
   formula: string
   output: NumberField | LongTextField | SingleLineTextField | DateTimeField
 
-  constructor(config: FormulaFieldConfig) {
+  constructor(config: Omit<FormulaFieldConfig, 'type'>) {
     super(config)
-    this.formula = config.formula
-    this.output = config.output
+    const { name, output, formula } = config
+    this.formula = formula
+    switch (config.output.type) {
+      case 'Number':
+        this.output = new NumberField({ ...output, name })
+        break
+      case 'LongText':
+        this.output = new LongTextField({ ...output, name })
+        break
+      case 'SingleLineText':
+        this.output = new SingleLineTextField({ ...output, name })
+        break
+      case 'DateTime':
+        this.output = new DateTimeField({ ...output, name })
+        break
+    }
   }
 
-  get config(): IFormulaField {
+  get config(): FormulaFieldConfig {
     return {
       ...super.config,
       type: 'Formula',

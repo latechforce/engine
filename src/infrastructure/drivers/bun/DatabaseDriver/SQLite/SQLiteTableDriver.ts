@@ -6,12 +6,12 @@ import type {
   RecordFieldsToCreateDto,
   RecordFieldsToUpdateDto,
 } from '/adapter/spi/dtos/RecordDto'
-import type { ITable } from '/domain/interfaces/ITable'
-import type { IField } from '/domain/interfaces/IField'
 import slugify from 'slugify'
 import type { ColumnInfo, Row } from './SQLiteTypes'
 import type { Column } from './SQLiteTypes'
 import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
+import type { FieldConfig } from '/domain/entities/Field'
+import type { TableConfig } from '/domain/entities/Table'
 
 export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
   public name: string
@@ -19,11 +19,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
   public nameWithSchema: string
   public view: string
   public viewWithSchema: string
-  public fields: IField[]
+  public fields: FieldConfig[]
   public columns: Column[]
 
   constructor(
-    config: ITable,
+    config: TableConfig,
     private _db: Database
   ) {
     this.name = config.name
@@ -177,7 +177,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         .map((field) => {
           const column = this._convertFieldToColumn(field)
           if (field.type === 'Rollup') {
-            const linkedRecordField = this._getLinkedRecordField(field.multipleLinkedRecord)
+            const linkedRecordField = field.multipleLinkedRecord
             const values = `"${this.schema}_${linkedRecordField.table}_view".${field.linkedRecordField}`
             const formula = this._convertFormula(field.formula, values)
             const linkedRecordColumn = this._convertFieldToColumn(linkedRecordField)
@@ -649,17 +649,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
   }
 
-  private _getLinkedRecordField = (name: string) => {
-    const linkedRecord = this.fields.find((f) => f.name === name)
-    if (
-      !linkedRecord ||
-      (linkedRecord.type !== 'MultipleLinkedRecord' && linkedRecord.type !== 'SingleLinkedRecord')
-    )
-      throw new Error('Linked record not found')
-    return linkedRecord
-  }
-
-  private _convertFieldToColumn = (field: IField): Column => {
+  private _convertFieldToColumn = (field: FieldConfig): Column => {
     const column = {
       name: this._slugify(field.name),
       required: field.required,
@@ -667,7 +657,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     }
     let rollupTable: string | undefined
     if (field.type === 'Rollup') {
-      rollupTable = this._getLinkedRecordField(field.multipleLinkedRecord).table
+      rollupTable = field.multipleLinkedRecord.table
     }
     switch (field.type) {
       case 'SingleLineText':
@@ -703,7 +693,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       case 'Formula':
         return {
           ...column,
-          type: this._convertFieldToColumn({ name: field.name, ...field.output }).type,
+          type: this._convertFieldToColumn({ ...field.output, name: field.name }).type,
           formula: field.formula,
         }
       case 'Checkbox':
@@ -748,7 +738,7 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       case 'Rollup':
         return {
           ...column,
-          type: this._convertFieldToColumn({ name: field.name, ...field.output }).type,
+          type: this._convertFieldToColumn({ ...field.output, name: field.name }).type,
           formula: field.formula,
           table: rollupTable,
           tableField: field.linkedRecordField,

@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "table": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "page": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "integration": {
+      "type": "string",
+      "const": "Notion"
+    },
+    "action": {
+      "type": "string",
+      "const": "UpdatePage"
+    }
+  },
+  "required": [
+    "account",
+    "action",
+    "id",
+    "integration",
+    "name",
+    "page",
+    "table"
+  ],
+  "additionalProperties": false,
+  "description": "Updates the properties of a Notion page in the specified database",
+  "examples": [
+    {
+      "integration": "Notion",
+      "action": "UpdatePage",
+      "table": "projects",
+      "id": "{{trigger.payload.pageId}}",
+      "page": {
+        "status": "In Progress",
+        "assignee": "{{trigger.payload.user}}",
+        "dueDate": "{{trigger.payload.dueDate}}",
+        "priority": "High",
+        "description": "Project description with {{trigger.payload.details}}"
+      }
+    }
+  ],
+  "title": "Update Notion Page Action"
+}

@@ -1,0 +1,209 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "This is the name of the app.",
+      "examples": [
+        "My App"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "description": "This is the version of the app.",
+      "examples": [
+        "1.0.0"
+      ]
+    },
+    "engine": {
+      "type": "string",
+      "description": "This is the version of the engine.",
+      "examples": [
+        "1.0.0"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "This is the description of the app.",
+      "examples": [
+        "My App description"
+      ]
+    },
+    "forms": {
+      "type": "array",
+      "items": {
+        "$ref": "./IForm.schema.json"
+      },
+      "description": "This is the list of forms of the app."
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "$ref": "./ITable.schema.json"
+      },
+      "description": "This is the list of tables of the app."
+    },
+    "buckets": {
+      "type": "array",
+      "items": {
+        "$ref": "./IBucket.schema.json"
+      },
+      "description": "This is the list of buckets of the app."
+    },
+    "automations": {
+      "type": "array",
+      "items": {
+        "$ref": "./IAutomation.schema.json"
+      },
+      "description": "This is the list of automations of the app."
+    },
+    "integrations": {
+      "$ref": "./IIntegrations.schema.json",
+      "description": "This is the list of integrations of the app."
+    },
+    "server": {
+      "type": "object",
+      "properties": {
+        "apiKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "port": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "idleTimeout": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "sslCert": {
+          "type": "string"
+        },
+        "sslKey": {
+          "type": "string"
+        },
+        "env": {
+          "type": "string"
+        },
+        "monitors": {
+          "$ref": "./MonitorDrivers.schema.json"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Configuration for the application server",
+      "examples": [
+        {
+          "port": 3000,
+          "baseUrl": "https://api.example.com",
+          "apiKeys": [
+            "secret-key-1",
+            "secret-key-2"
+          ]
+        }
+      ]
+    },
+    "database": {
+      "$ref": "./DatabaseConfig.schema.json",
+      "description": "Configuration for the database connection",
+      "examples": [
+        {
+          "driver": "PostgreSQL",
+          "url": "postgresql://user:password@localhost:5432/mydb?sslmode=require"
+        }
+      ]
+    },
+    "monitors": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "driver": {
+                "type": "string",
+                "const": "Sentry"
+              },
+              "dsn": {
+                "type": "string"
+              },
+              "environment": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "driver",
+              "dsn",
+              "environment"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "$ref": "./MonitorConsoleConfig.schema.json"
+          }
+        ]
+      },
+      "description": "Array of monitoring service configurations",
+      "examples": [
+        {
+          "0": {
+            "driver": "Sentry",
+            "dsn": "https://examplePublicKey@o0.ingest.sentry.io/0",
+            "environment": "production"
+          },
+          "1": {
+            "driver": "Console"
+          }
+        }
+      ]
+    },
+    "loggers": {
+      "$ref": "./LoggersConfig.schema.json",
+      "description": "Configuration for application logging",
+      "examples": [
+        {
+          "0": {
+            "driver": "Console",
+            "level": "info"
+          }
+        }
+      ]
+    },
+    "tunnel": {
+      "$ref": "./TunnelConfig.schema.json",
+      "description": "Configuration for network tunneling",
+      "examples": [
+        {
+          "integration": "Ngrok",
+          "authtoken": "your-ngrok-token"
+        }
+      ]
+    },
+    "theme": {
+      "$ref": "./ThemeConfig.schema.json",
+      "description": "Configuration for application theming",
+      "examples": [
+        {
+          "type": "tailwindcss",
+          "base": "src/styles/base.css"
+        }
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "version",
+    "engine"
+  ],
+  "additionalProperties": false,
+  "description": "This is the configuration of the engine.",
+  "title": "Engine configuration"
+}

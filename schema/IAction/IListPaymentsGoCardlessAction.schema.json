@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "account": {
+      "type": "string"
+    },
+    "params": {
+      "$ref": "./GoCardlessListPayment.schema.json"
+    },
+    "integration": {
+      "type": "string",
+      "const": "GoCardless"
+    },
+    "action": {
+      "type": "string",
+      "const": "ListPayments"
+    }
+  },
+  "required": [
+    "account",
+    "action",
+    "integration",
+    "name",
+    "params"
+  ],
+  "additionalProperties": false,
+  "description": "Retrieves a list of payments from GoCardless based on specified filters",
+  "examples": [
+    {
+      "integration": "GoCardless",
+      "action": "ListPayments",
+      "filters": {
+        "status": "paid",
+        "created_at": {
+          "gte": "2024-01-01"
+        },
+        "mandate": "{{trigger.payload.mandateId}}",
+        "limit": 100,
+        "after": "{{trigger.payload.lastPaymentId}}"
+      }
+    }
+  ],
+  "title": "List GoCardless Payments Action"
+}

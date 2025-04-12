@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "onMigration": {
+      "type": "object",
+      "properties": {
+        "replace": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "string",
+      "const": "Formula"
+    },
+    "formula": {
+      "type": "string"
+    },
+    "output": {
+      "$ref": "./IField/IOutputField.schema.json"
+    }
+  },
+  "required": [
+    "formula",
+    "name",
+    "output",
+    "type"
+  ],
+  "additionalProperties": false,
+  "description": "Represents a calculated field in forms and tables",
+  "examples": [
+    {
+      "type": "Formula",
+      "name": "totalPrice",
+      "formula": "price * quantity"
+    }
+  ],
+  "title": "Formula field"
+}

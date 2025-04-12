@@ -1,0 +1,203 @@
+{
+  "type": "object",
+  "properties": {
+    "airtable": {
+      "type": "array",
+      "items": {
+        "$ref": "./AirtableConfig.schema.json"
+      },
+      "description": "Configurations for Airtable integration",
+      "examples": [
+        {
+          "0": {
+            "name": "main-database",
+            "apiKey": "key1234567890ABCD",
+            "databaseId": "app1234567890ABCD"
+          }
+        }
+      ]
+    },
+    "notion": {
+      "type": "array",
+      "items": {
+        "$ref": "./NotionConfig.schema.json"
+      },
+      "description": "Configurations for Notion integration",
+      "examples": [
+        {
+          "0": {
+            "name": "project-management",
+            "token": "secret_1234567890ABCD",
+            "pollingInterval": 300000
+          }
+        }
+      ]
+    },
+    "pappers": {
+      "type": "array",
+      "items": {
+        "$ref": "./PappersConfig.schema.json"
+      },
+      "description": "Configurations for Pappers company data integration",
+      "examples": [
+        {
+          "0": {
+            "name": "company-data",
+            "apiKey": "1234567890ABCD"
+          }
+        }
+      ]
+    },
+    "qonto": {
+      "type": "array",
+      "items": {
+        "$ref": "./QontoConfig.schema.json"
+      },
+      "description": "Configurations for Qonto banking integration",
+      "examples": [
+        {
+          "0": {
+            "name": "business-account",
+            "organisationSlug": "my-company",
+            "secretKey": "1234567890ABCD",
+            "stagingToken": "staging_1234567890ABCD"
+          }
+        }
+      ]
+    },
+    "google": {
+      "type": "object",
+      "properties": {
+        "mail": {
+          "type": "array",
+          "items": {
+            "$ref": "./GoogleMailConfig.schema.json"
+          },
+          "description": "Configurations for Gmail integration",
+          "examples": [
+            {
+              "0": {
+                "name": "support-email",
+                "user": "support@company.com",
+                "password": "app-specific-password"
+              }
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "Configurations for Google services integration"
+    },
+    "gocardless": {
+      "type": "array",
+      "items": {
+        "$ref": "./GoCardlessConfig.schema.json"
+      },
+      "description": "Configurations for GoCardless payment integration",
+      "examples": [
+        {
+          "0": {
+            "name": "payment-processing",
+            "accessToken": "live_1234567890ABCD"
+          }
+        }
+      ]
+    },
+    "phantombuster": {
+      "type": "array",
+      "items": {
+        "$ref": "./PhantombusterConfig.schema.json"
+      },
+      "description": "Configurations for Phantombuster automation integration",
+      "examples": [
+        {
+          "0": {
+            "name": "linkedin-automation",
+            "apiKey": "1234567890ABCD"
+          }
+        }
+      ]
+    },
+    "calendly": {
+      "type": "array",
+      "items": {
+        "$ref": "./CalendlyConfig.schema.json"
+      },
+      "description": "Configurations for Calendly scheduling integration",
+      "examples": [
+        {
+          "0": {
+            "name": "scheduling",
+            "user": {
+              "accessToken": "1234567890ABCD"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "description": "Defines configurations for various third-party service integrations",
+  "examples": [
+    {
+      "airtable": [
+        {
+          "name": "main-database",
+          "apiKey": "key1234567890ABCD",
+          "databaseId": "app1234567890ABCD"
+        }
+      ],
+      "notion": [
+        {
+          "name": "project-management",
+          "token": "secret_1234567890ABCD",
+          "pollingInterval": 300000
+        }
+      ],
+      "pappers": [
+        {
+          "name": "company-data",
+          "apiKey": "1234567890ABCD"
+        }
+      ],
+      "qonto": [
+        {
+          "name": "business-account",
+          "organisationSlug": "my-company",
+          "secretKey": "1234567890ABCD",
+          "stagingToken": "staging_1234567890ABCD"
+        }
+      ],
+      "google": {
+        "mail": [
+          {
+            "name": "support-email",
+            "user": "support@company.com",
+            "password": "app-specific-password"
+          }
+        ]
+      },
+      "gocardless": [
+        {
+          "name": "payment-processing",
+          "accessToken": "live_1234567890ABCD"
+        }
+      ],
+      "phantombuster": [
+        {
+          "name": "linkedin-automation",
+          "apiKey": "1234567890ABCD"
+        }
+      ],
+      "calendly": [
+        {
+          "name": "scheduling",
+          "user": {
+            "accessToken": "1234567890ABCD"
+          }
+        }
+      ]
+    }
+  ],
+  "title": "Integrations configuration"
+}

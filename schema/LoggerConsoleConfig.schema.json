@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "level": {
+      "type": "string"
+    },
+    "silent": {
+      "type": "boolean"
+    },
+    "driver": {
+      "type": "string",
+      "const": "Console"
+    }
+  },
+  "required": [
+    "driver"
+  ],
+  "additionalProperties": false
+}

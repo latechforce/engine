@@ -1,5 +1,4 @@
 import { StoppedApp } from '/domain/entities/App/Stopped'
-import type { Config } from '/domain/interfaces'
 import type { Drivers } from '/adapter/spi/drivers'
 import { TableMapper } from './TableMapper'
 import { AutomationMapper } from './AutomationMapper'
@@ -32,55 +31,56 @@ import { ClientMapper } from './Services/ClientMapper'
 import type { Components } from '/domain/components'
 import { SystemMapper } from './Services/SystemMapper'
 import { CalendlyMapper } from './Integration/CalendlyMapper'
+import type { ConfigSchema } from '../schemas/ConfigSchema'
 
 export class AppMapper {
   static toEntity = (
     drivers: Drivers,
     integrations: Integrations,
     components: Components,
-    config: Config
+    schema: ConfigSchema
   ) => {
     const {
       name: appName,
       version: appVersion,
       engine: appEngine,
       description: appDescription,
-    } = config
-    const logger = LoggerMapper.toService(drivers, config.loggers)
+    } = schema
+    const logger = LoggerMapper.toService(drivers, schema.loggers)
     const monitor = MonitorMapper.toService(
       drivers,
-      config.monitors?.map((monitor) => ({ ...monitor, appName, appVersion })),
+      schema.monitors?.map((monitor) => ({ ...monitor, appName, appVersion })),
       { logger }
     )
     const system = SystemMapper.toService(drivers)
-    const tunnel = TunnelMapper.toService(drivers, config.tunnel)
+    const tunnel = TunnelMapper.toService(drivers, schema.tunnel)
     const server = ServerMapper.toService(
       drivers,
-      { ...config.server, appName, appVersion, appDescription },
+      { ...schema.server, appName, appVersion, appDescription },
       { logger, monitor, tunnel }
     )
     const idGenerator = IdGeneratorMapper.toService(drivers)
     const fetcher = FetcherMapper.toService(drivers)
     const cron = CronMapper.toService(drivers)
     const client = ClientMapper.toService(drivers, { server })
-    const theme = ThemeMapper.toService(drivers, { server, logger }, config.theme)
+    const theme = ThemeMapper.toService(drivers, { server, logger }, schema.theme)
     const schemaValidator = SchemaValidatorMapper.toService(drivers)
     const templateCompiler = TemplateCompilerMapper.toService(drivers)
-    const database = DatabaseMapper.toService(drivers, config.database, {
+    const database = DatabaseMapper.toService(drivers, schema.database, {
       logger,
       monitor,
       idGenerator,
     })
     const queue = QueueMapper.toService(drivers, { logger, database, monitor })
     const storage = StorageMapper.toService(drivers, { logger, database })
-    const buckets = BucketMapper.toManyEntities(config.buckets, {
+    const buckets = BucketMapper.toManyEntities(schema.buckets, {
       server,
       storage,
       idGenerator,
       templateCompiler,
       system,
     })
-    const tables = TableMapper.toManyEntities(config.tables, {
+    const tables = TableMapper.toManyEntities(schema.tables, {
       database,
       server,
       idGenerator,
@@ -94,21 +94,21 @@ export class AppMapper {
     const notion = NotionMapper.toIntegration(
       integrations,
       { idGenerator, logger, storage, server, templateCompiler, fetcher, system },
-      config.integrations?.notion
+      schema.integrations?.notion
     )
-    const calendly = CalendlyMapper.toIntegration(integrations, config.integrations?.calendly)
-    const airtable = AirtableMapper.toIntegration(integrations, config.integrations?.airtable)
-    const pappers = PappersMapper.toIntegration(integrations, config.integrations?.pappers)
-    const qonto = QontoMapper.toIntegration(integrations, config.integrations?.qonto)
+    const calendly = CalendlyMapper.toIntegration(integrations, schema.integrations?.calendly)
+    const airtable = AirtableMapper.toIntegration(integrations, schema.integrations?.airtable)
+    const pappers = PappersMapper.toIntegration(integrations, schema.integrations?.pappers)
+    const qonto = QontoMapper.toIntegration(integrations, schema.integrations?.qonto)
     const phantombuster = PhantombusterMapper.toIntegration(
       integrations,
-      config.integrations?.phantombuster
+      schema.integrations?.phantombuster
     )
     const googleMail = GoogleMailMapper.toIntegration(
       integrations,
-      config.integrations?.google?.mail
+      schema.integrations?.google?.mail
     )
-    const gocardless = GoCardlessMapper.toIntegration(integrations, config.integrations?.gocardless)
+    const gocardless = GoCardlessMapper.toIntegration(integrations, schema.integrations?.gocardless)
     const javascriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger, fetcher },
@@ -124,7 +124,7 @@ export class AppMapper {
       { language: 'TypeScript' }
     )
     const automations = AutomationMapper.toManyEntities(
-      config.automations,
+      schema.automations,
       {
         logger,
         queue,
@@ -143,7 +143,7 @@ export class AppMapper {
       { notion, pappers, qonto, googleMail, gocardless, calendly }
     )
     const forms = FormMapper.toManyEntities(
-      config.forms,
+      schema.forms,
       { server, idGenerator, client, logger, system },
       { tables },
       components
@@ -154,7 +154,7 @@ export class AppMapper {
         version: appVersion,
         engine: appEngine,
         description: appDescription,
-        integrations: config.integrations,
+        integrations: schema.integrations,
       },
       {
         server,

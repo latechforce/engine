@@ -1,7 +1,7 @@
 import type { Server } from '/domain/services/Server'
 import type { Database } from '/domain/services/Database'
 import type { Storage } from '/domain/services/Storage'
-import type { Field } from '../Field'
+import type { Field, FieldConfig } from '../Field'
 import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
 import { IdGenerator } from '/domain/services/IdGenerator'
 import type { SchemaValidator } from '/domain/services/SchemaValidator'
@@ -10,6 +10,8 @@ import type { System } from '/domain/services/System'
 
 export interface TableConfig {
   name: string
+  schema?: string
+  fields: FieldConfig[]
 }
 
 export interface TableServices {

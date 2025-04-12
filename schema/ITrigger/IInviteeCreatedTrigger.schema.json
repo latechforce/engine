@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "account": {
+      "type": "string"
+    },
+    "integration": {
+      "type": "string",
+      "const": "Calendly"
+    },
+    "event": {
+      "type": "string",
+      "const": "InviteeCreated"
+    }
+  },
+  "required": [
+    "account",
+    "event",
+    "integration"
+  ],
+  "additionalProperties": false
+}
