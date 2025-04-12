@@ -22,6 +22,7 @@ function mergeSchemaWithConfig(schema: SchemaDefinition): SchemaDefinition {
     definitions: schema.definitions ? { ...schema.definitions } : {},
   }
   const definitionsToRemove = new Set<string>()
+  const processedDefinitions = new Set<string>()
 
   // Helper function to replace $ref with actual definition
   const replaceRefWithDefinition = (obj: SchemaDefinition): SchemaDefinition => {
@@ -36,12 +37,18 @@ function mergeSchemaWithConfig(schema: SchemaDefinition): SchemaDefinition {
           definitionsToRemove.add(refKey)
 
           const { $ref, ...rest } = obj
-          // Recursively process the referenced definition
-          const processedDefinition = replaceRefWithDefinition(refDefinition)
-          return {
-            ...processedDefinition,
-            ...rest,
+          // Only process the definition if we haven't already
+          if (!processedDefinitions.has(refKey)) {
+            processedDefinitions.add(refKey)
+            // Recursively process the referenced definition
+            const processedDefinition = replaceRefWithDefinition(refDefinition)
+            return {
+              ...processedDefinition,
+              ...rest,
+            }
           }
+          // If we've already processed this definition, just return the current object
+          return { ...rest }
         }
       }
     }
@@ -60,21 +67,25 @@ function mergeSchemaWithConfig(schema: SchemaDefinition): SchemaDefinition {
               if (refDefinition) {
                 // Mark the definition for removal
                 definitionsToRemove.add(refKey)
-                // Recursively process the referenced definition
-                const processedDefinition = replaceRefWithDefinition(refDefinition)
-                processedProperties[key] = {
-                  ...processedDefinition,
-                  ...propertyValue,
+                // Only process the definition if we haven't already
+                if (!processedDefinitions.has(refKey)) {
+                  processedDefinitions.add(refKey)
+                  // Recursively process the referenced definition
+                  const processedDefinition = replaceRefWithDefinition(refDefinition)
+                  processedProperties[key] = {
+                    ...processedDefinition,
+                    ...propertyValue,
+                  }
+                  // Remove $ref only if it was merged and doesn't end with Schema
+                  delete processedProperties[key].$ref
+                  return
                 }
-                // Remove $ref only if it was merged and doesn't end with Schema
-                delete processedProperties[key].$ref
-                return
               }
             }
           }
           processedProperties[key] = replaceRefWithDefinition(propertyValue)
         } else {
-          processedProperties[key] = { type: value as string }
+          processedProperties[key] = { type: value as unknown as string }
         }
       })
       obj.properties = processedProperties
@@ -93,26 +104,57 @@ function mergeSchemaWithConfig(schema: SchemaDefinition): SchemaDefinition {
     }
 
     // Handle anyOf, oneOf, allOf arrays
+    const processArrayOfObjects = (arr: unknown[]): unknown[] => {
+      return arr.map((item) => {
+        if (typeof item === 'object' && item !== null) {
+          const objItem = item as SchemaDefinition
+          if (objItem.$ref) {
+            const refKey = objItem.$ref.replace('#/definitions/', '')
+            if (!refKey.endsWith('Schema')) {
+              const refDefinition = merged.definitions[refKey] as SchemaDefinition
+              if (refDefinition) {
+                definitionsToRemove.add(refKey)
+                if (!processedDefinitions.has(refKey)) {
+                  processedDefinitions.add(refKey)
+                  const processedDefinition = replaceRefWithDefinition(refDefinition)
+                  const { $ref, ...rest } = objItem
+                  return {
+                    ...processedDefinition,
+                    ...rest,
+                  }
+                }
+                const { $ref, ...rest } = objItem
+                return { ...rest }
+              }
+            }
+          }
+          return replaceRefWithDefinition(objItem)
+        }
+        return item
+      })
+    }
+
     if (obj.anyOf && Array.isArray(obj.anyOf)) {
-      obj.anyOf = obj.anyOf.map((item: unknown) =>
-        typeof item === 'object' && item !== null
-          ? replaceRefWithDefinition(item as SchemaDefinition)
-          : item
-      )
+      obj.anyOf = processArrayOfObjects(obj.anyOf)
     }
     if (obj.oneOf && Array.isArray(obj.oneOf)) {
-      obj.oneOf = obj.oneOf.map((item: unknown) =>
-        typeof item === 'object' && item !== null
-          ? replaceRefWithDefinition(item as SchemaDefinition)
-          : item
-      )
+      obj.oneOf = processArrayOfObjects(obj.oneOf)
     }
     if (obj.allOf && Array.isArray(obj.allOf)) {
-      obj.allOf = obj.allOf.map((item: unknown) =>
-        typeof item === 'object' && item !== null
-          ? replaceRefWithDefinition(item as SchemaDefinition)
-          : item
-      )
+      obj.allOf = processArrayOfObjects(obj.allOf)
+    }
+
+    // Handle additionalProperties
+    if (obj.additionalProperties) {
+      if (typeof obj.additionalProperties === 'object' && obj.additionalProperties !== null) {
+        if (Array.isArray(obj.additionalProperties)) {
+          obj.additionalProperties = processArrayOfObjects(obj.additionalProperties)
+        } else {
+          obj.additionalProperties = replaceRefWithDefinition(
+            obj.additionalProperties as SchemaDefinition
+          )
+        }
+      }
     }
 
     return obj
