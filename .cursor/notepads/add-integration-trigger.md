@@ -192,12 +192,11 @@ type IntegrationType =
 if (this.options.integrations.includes('NewIntegration')) {
   const config: NewIntegrationConfig = {
     baseUrl: await getTestDbUrl('newIntegration'),
-    user: {
-      accessToken: 'test',
-    },
+    token: 'test',
   }
   integrations.newIntegration = new NewIntegrationIntegration(config)
   extendsConfig.integrations.newIntegration = config
+  await integrations.newIntegration.createToken('test')
 }
 ```
 

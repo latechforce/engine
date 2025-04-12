@@ -84,8 +84,9 @@ import BunTester from 'bun:test'
 
 export const integration = new NewIntegrationIntegration({
   name: 'test',
+  baseUrl: ':memory:',
   // Replace with the configuration keys of the integration in the /domain/integrations/NewIntegration/NewIntegrationConfig.ts
-  apiKey: ':memory:',
+  apiKey: 'test',
 })
 
 testNewIntegrationIntegration(BunTester, integration)
