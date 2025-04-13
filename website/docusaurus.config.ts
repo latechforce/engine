@@ -20,6 +20,7 @@ const config: Config = {
   organizationName: 'latechforce', // Usually your GitHub org/user name.
   projectName: 'engine', // Usually your repo name.
   trailingSlash: false,
+  deploymentBranch: 'main',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
