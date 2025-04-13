@@ -2,40 +2,24 @@
 
 Represents a boolean checkbox field in forms and tables
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| required | boolean | No |  |  |
+| onMigration | object | No |  |  |
+| type | string | Yes | `"Checkbox"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### required
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | boolean |
-| Required | No |
-
-### onMigration
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | No |
-
-### type
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Checkbox"` |
+```json
+{
+  "type": "Checkbox",
+  "name": "termsAccepted",
+  "required": true
+}
+```
 

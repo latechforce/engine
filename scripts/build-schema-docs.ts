@@ -10,35 +10,79 @@ function removeSchemaSuffix(name: string): string {
   return name.replace(/Schema$/, '')
 }
 
-function generateMarkdownForDefinition(name: string, schema: JSONSchema7): string {
-  let markdown = `# ${schema.title || removeSchemaSuffix(name)}\n\n`
+function findSchemaFile(ref: string, schemaFiles: SchemaFile[]): SchemaFile | undefined {
+  for (const file of schemaFiles) {
+    if (removeSchemaSuffix(file.ref) === ref) {
+      return file
+    }
+    if (file.children) {
+      const child = findSchemaFile(ref, file.children)
+      if (child) {
+        return child
+      }
+    }
+  }
+  return undefined
+}
+
+function generateMarkdownForDefinition(
+  ref: string,
+  schema: JSONSchema7,
+  schemaFiles: SchemaFile[]
+): string {
+  let markdown = ''
+  let sidebarPosition = 0
+
+  switch (schema.title) {
+    case 'Config':
+      sidebarPosition = 1
+      break
+    case 'Form':
+      sidebarPosition = 2
+      break
+    case 'Automation':
+      sidebarPosition = 3
+      break
+    case 'Table':
+      sidebarPosition = 4
+      break
+    case 'Bucket':
+      sidebarPosition = 5
+      break
+    case 'Integrations':
+      sidebarPosition = 6
+      break
+    default:
+      break
+  }
+
+  if (sidebarPosition > 0) {
+    markdown += `---
+  sidebar_position: ${sidebarPosition}
+---
+
+`
+  }
+
+  markdown += `# ${schema.title || removeSchemaSuffix(ref)}\n\n`
 
   if (schema.description) {
     markdown += `${schema.description}\n\n`
   }
 
-  // Add schema overview section
-  markdown += '## Schema Overview\n\n'
-  markdown += '| Property | Value |\n'
-  markdown += '|----------|-------|\n'
-  markdown += `| Type | \`${schema.type || 'any'}\` |\n`
-  if (schema.format) {
-    markdown += `| Format | \`${schema.format}\` |\n`
-  }
-  if (schema.default !== undefined) {
-    markdown += `| Default | \`${JSON.stringify(schema.default).replace(/`/g, '\\`')}\` |\n`
-  }
-  if (schema.const !== undefined) {
-    markdown += `| Const | \`${JSON.stringify(schema.const).replace(/`/g, '\\`')}\` |\n`
-  }
-  markdown += '\n'
-
   // Handle properties
   if (schema.properties) {
     markdown += '## Properties\n\n'
+    markdown += '| Property | Type | Required | Const | Description |\n'
+    markdown += '|----------|------|----------|-------|-------------|\n'
+
     Object.entries(schema.properties).forEach(([propName, propSchema]) => {
       if (isJSONSchema7(propSchema)) {
         const required = schema.required?.includes(propName) ? 'Yes' : 'No'
+        const constValue =
+          propSchema.const !== undefined
+            ? `\`${JSON.stringify(propSchema.const).replace(/`/g, '\\`')}\``
+            : ''
         let type = Array.isArray(propSchema.type)
           ? propSchema.type.join(' or ')
           : propSchema.type || 'any'
@@ -46,150 +90,66 @@ function generateMarkdownForDefinition(name: string, schema: JSONSchema7): strin
         // Handle $ref
         if (propSchema.$ref) {
           const refName = removeSchemaSuffix(propSchema.$ref.split('/').pop() || '')
-          type = `[${refName}](http://localhost:3000/docs/${refName.toLowerCase()})`
+          const file = findSchemaFile(refName, schemaFiles)
+          type = `[${refName}](/${file.docsPath})`
         }
 
-        markdown += `### ${propName}\n\n`
-        markdown += '| Property | Value |\n'
-        markdown += '|----------|-------|\n'
-        markdown += `| Type | ${type} |\n`
-        markdown += `| Required | ${required} |\n`
-
+        // Add format if available
         if (propSchema.format) {
-          markdown += `| Format | \`${propSchema.format}\` |\n`
+          type += ` (${propSchema.format})`
         }
-        if (propSchema.default !== undefined) {
-          markdown += `| Default | \`${JSON.stringify(propSchema.default).replace(/`/g, '\\`')}\` |\n`
-        }
-        if (propSchema.const !== undefined) {
-          markdown += `| Const | \`${JSON.stringify(propSchema.const).replace(/`/g, '\\`')}\` |\n`
-        }
-        if (propSchema.description) {
-          markdown += `| Description | ${propSchema.description.replace(/\|/g, '\\|')} |\n`
-        }
-        markdown += '\n'
 
-        // Add examples if available
-        if (Array.isArray(propSchema.examples) && propSchema.examples.length > 0) {
-          markdown += '#### Examples\n\n'
-          propSchema.examples.forEach((example, index) => {
-            const escapedExample = JSON.stringify(example, null, 2)
-              .replace(/`/g, '\\`')
-              .replace(/\|/g, '\\|')
-            markdown += `Example ${index + 1}:\n\n\`\`\`json\n${escapedExample}\n\`\`\`\n\n`
-          })
+        // Add default value if available
+        if (propSchema.default !== undefined) {
+          type += `\n\nDefault: \`${JSON.stringify(propSchema.default).replace(/`/g, '\\`')}\``
         }
 
         // Add enum values if available
         if (propSchema.enum) {
-          markdown += '#### Enum Values\n\n'
-          propSchema.enum.forEach((value) => {
-            markdown += `- \`${value}\`\n`
-          })
-          markdown += '\n'
-        }
-
-        // Add pattern if available
-        if (propSchema.pattern) {
-          markdown += '#### Pattern\n\n'
-          markdown += `\`${propSchema.pattern}\`\n\n`
+          type += `\n\nEnum: ${propSchema.enum.map((v) => `\`${v}\``).join(', ')}`
         }
 
         // Add constraints if available
         const constraints = []
-        if (propSchema.minimum !== undefined) constraints.push(`Minimum: \`${propSchema.minimum}\``)
-        if (propSchema.maximum !== undefined) constraints.push(`Maximum: \`${propSchema.maximum}\``)
+        if (propSchema.minimum !== undefined) constraints.push(`Min: ${propSchema.minimum}`)
+        if (propSchema.maximum !== undefined) constraints.push(`Max: ${propSchema.maximum}`)
         if (propSchema.minLength !== undefined)
-          constraints.push(`Min Length: \`${propSchema.minLength}\``)
+          constraints.push(`Min Length: ${propSchema.minLength}`)
         if (propSchema.maxLength !== undefined)
-          constraints.push(`Max Length: \`${propSchema.maxLength}\``)
-        if (propSchema.minItems !== undefined)
-          constraints.push(`Min Items: \`${propSchema.minItems}\``)
-        if (propSchema.maxItems !== undefined)
-          constraints.push(`Max Items: \`${propSchema.maxItems}\``)
-        if (propSchema.uniqueItems) constraints.push('Unique Items: `true`')
+          constraints.push(`Max Length: ${propSchema.maxLength}`)
+        if (propSchema.minItems !== undefined) constraints.push(`Min Items: ${propSchema.minItems}`)
+        if (propSchema.maxItems !== undefined) constraints.push(`Max Items: ${propSchema.maxItems}`)
+        if (propSchema.uniqueItems) constraints.push('Unique Items')
 
         if (constraints.length > 0) {
-          markdown += '#### Constraints\n\n'
-          constraints.forEach((constraint) => {
-            markdown += `- ${constraint}\n`
-          })
-          markdown += '\n'
+          type += `\n\nConstraints: ${constraints.join(', ')}`
         }
 
-        // Add anyOf if available
-        if (propSchema.anyOf) {
-          markdown += '#### Any Of\n\n'
-          propSchema.anyOf.forEach((subSchema, index) => {
-            if (isJSONSchema7(subSchema) && subSchema.$ref) {
-              const refName = removeSchemaSuffix(subSchema.$ref.split('/').pop() || '')
-              markdown += `${index + 1}. [${refName}](http://localhost:3000/docs/${refName.toLowerCase()})\n`
-            }
-          })
-          markdown += '\n'
+        // Add anyOf/allOf/oneOf if available
+        if (propSchema.anyOf || propSchema.allOf || propSchema.oneOf) {
+          const refs = []
+          if (propSchema.anyOf) refs.push(...propSchema.anyOf)
+          if (propSchema.allOf) refs.push(...propSchema.allOf)
+          if (propSchema.oneOf) refs.push(...propSchema.oneOf)
+
+          const refNames = refs
+            .filter((s): s is JSONSchema7 => isJSONSchema7(s) && !!s.$ref)
+            .map((s) => {
+              const refName = removeSchemaSuffix(s.$ref!.split('/').pop() || '')
+              const file = findSchemaFile(refName, schemaFiles)
+              return `[${refName}](/${file.docsPath})`
+            })
+
+          if (refNames.length > 0) {
+            type += `\n\nComposed of: ${refNames.join(', ')}`
+          }
         }
 
-        // Add allOf if available
-        if (propSchema.allOf) {
-          markdown += '#### All Of\n\n'
-          propSchema.allOf.forEach((subSchema, index) => {
-            if (isJSONSchema7(subSchema) && subSchema.$ref) {
-              const refName = removeSchemaSuffix(subSchema.$ref.split('/').pop() || '')
-              markdown += `${index + 1}. [${refName}](http://localhost:3000/docs/${refName.toLowerCase()})\n`
-            }
-          })
-          markdown += '\n'
-        }
-
-        // Add oneOf if available
-        if (propSchema.oneOf) {
-          markdown += '#### One Of\n\n'
-          propSchema.oneOf.forEach((subSchema, index) => {
-            if (isJSONSchema7(subSchema) && subSchema.$ref) {
-              const refName = removeSchemaSuffix(subSchema.$ref.split('/').pop() || '')
-              markdown += `${index + 1}. [${refName}](http://localhost:3000/docs/${refName.toLowerCase()})\n`
-            }
-          })
-          markdown += '\n'
-        }
+        const description = propSchema.description
+          ? propSchema.description.replace(/\|/g, '\\|')
+          : ''
+        markdown += `| ${propName} | ${type} | ${required} | ${constValue} | ${description} |\n`
       }
-    })
-  }
-
-  // Handle additional properties
-  if (schema.additionalProperties) {
-    markdown += '## Additional Properties\n\n'
-    markdown += '| Property | Value |\n'
-    markdown += '|----------|-------|\n'
-    if (typeof schema.additionalProperties === 'boolean') {
-      markdown += `| Allowed | ${schema.additionalProperties ? 'Yes' : 'No'} |\n`
-    } else if (isJSONSchema7(schema.additionalProperties)) {
-      markdown += `| Type | \`${schema.additionalProperties.type || 'any'}\` |\n`
-      if (schema.additionalProperties.description) {
-        markdown += `| Description | ${schema.additionalProperties.description.replace(/\|/g, '\\|')} |\n`
-      }
-    }
-    markdown += '\n'
-  }
-
-  // Handle pattern properties
-  if (schema.patternProperties) {
-    markdown += '## Pattern Properties\n\n'
-    markdown += '| Pattern | Type | Description |\n'
-    markdown += '|---------|------|-------------|\n'
-    Object.entries(schema.patternProperties).forEach(([pattern, patternSchema]) => {
-      if (isJSONSchema7(patternSchema)) {
-        markdown += `| \`${pattern}\` | \`${patternSchema.type || 'any'}\` | ${patternSchema.description?.replace(/\|/g, '\\|') || ''} |\n`
-      }
-    })
-    markdown += '\n'
-  }
-
-  // Handle enum values
-  if (schema.enum) {
-    markdown += '## Enum Values\n\n'
-    schema.enum.forEach((value) => {
-      markdown += `- \`${value}\`\n`
     })
     markdown += '\n'
   }
@@ -200,7 +160,8 @@ function generateMarkdownForDefinition(name: string, schema: JSONSchema7): strin
     schema.anyOf.forEach((subSchema, index) => {
       if (isJSONSchema7(subSchema) && subSchema.$ref) {
         const refName = removeSchemaSuffix(subSchema.$ref.split('/').pop() || '')
-        markdown += `${index + 1}. [${refName}](http://localhost:3000/docs/${refName.toLowerCase()})\n`
+        const file = findSchemaFile(refName, schemaFiles)
+        markdown += `${index + 1}. [${refName}](/${file.docsPath})\n`
       }
     })
     markdown += '\n'
@@ -212,7 +173,8 @@ function generateMarkdownForDefinition(name: string, schema: JSONSchema7): strin
     schema.allOf.forEach((subSchema, index) => {
       if (isJSONSchema7(subSchema) && subSchema.$ref) {
         const refName = removeSchemaSuffix(subSchema.$ref.split('/').pop() || '')
-        markdown += `${index + 1}. [${refName}](http://localhost:3000/docs/${refName.toLowerCase()})\n`
+        const file = findSchemaFile(refName, schemaFiles)
+        markdown += `${index + 1}. [${refName}](/${file.docsPath})\n`
       }
     })
     markdown += '\n'
@@ -224,7 +186,8 @@ function generateMarkdownForDefinition(name: string, schema: JSONSchema7): strin
     schema.oneOf.forEach((subSchema, index) => {
       if (isJSONSchema7(subSchema) && subSchema.$ref) {
         const refName = removeSchemaSuffix(subSchema.$ref.split('/').pop() || '')
-        markdown += `${index + 1}. [${refName}](http://localhost:3000/docs/${refName.toLowerCase()})\n`
+        const file = findSchemaFile(refName, schemaFiles)
+        markdown += `${index + 1}. [${refName}](/${file.docsPath})\n`
       }
     })
     markdown += '\n'
@@ -253,6 +216,17 @@ function generateMarkdownForDefinition(name: string, schema: JSONSchema7): strin
     })
   }
 
+  // Add schema examples if available
+  if (Array.isArray(schema.examples) && schema.examples.length > 0) {
+    markdown += '## Examples\n\n'
+    schema.examples.forEach((example, index) => {
+      const escapedExample = JSON.stringify(example, null, 2)
+        .replace(/`/g, '\\`')
+        .replace(/\|/g, '\\|')
+      markdown += `Example ${index + 1}:\n\n\`\`\`json\n${escapedExample}\n\`\`\`\n\n`
+    })
+  }
+
   return markdown
 }
 
@@ -260,8 +234,10 @@ interface SchemaFile {
   name: string
   parents: string[]
   path: string
+  ref: string
   isDirectory: boolean
   children?: SchemaFile[]
+  docsPath: string
 }
 
 function getSchemaFiles(dir: string, parents: string[] = []): SchemaFile[] {
@@ -271,75 +247,67 @@ function getSchemaFiles(dir: string, parents: string[] = []): SchemaFile[] {
     const stats = statSync(fullPath)
     const isDirectory = stats.isDirectory()
     const name = removeSchemaSuffix(basename(file, extname(file)))
+    const ref = (name !== 'index' ? name + parents.join('') : parents.join('')) + 'Schema'
+    const docsPath = join('docs', [...parents].reverse().join('/'), name !== 'index' ? name : '')
     return {
-      name,
+      name: name.toLowerCase(),
+      ref,
       parents,
       path: fullPath,
       isDirectory,
+      docsPath: docsPath.toLowerCase(),
       children: isDirectory ? getSchemaFiles(fullPath, [name, ...parents]) : undefined,
     }
   })
 }
 
-function main() {
-  try {
-    // Read the schema file
-    const schemaPath = join(process.cwd(), 'schema', 'config.schema.json')
-    const schemaContent = readFileSync(schemaPath, 'utf-8')
-    const schema = JSON.parse(schemaContent)
+// Read the schema file
+const schemaPath = join(process.cwd(), 'schema', 'config.schema.json')
+const schemaContent = readFileSync(schemaPath, 'utf-8')
+const schema = JSON.parse(schemaContent)
 
-    // Create docs directory if it doesn't exist
-    const docsDir = join(process.cwd(), 'website', 'docs')
+// Create docs directory if it doesn't exist
+const docsDir = join(process.cwd(), 'website', 'docs')
 
-    // Clear the docs directory if it exists
-    try {
-      rmSync(docsDir, { recursive: true, force: true })
-    } catch {
-      // Ignore error if directory doesn't exist
-    }
-
-    // Create fresh docs directory
-    mkdirSync(docsDir, { recursive: true })
-
-    // Process schema files from the schemas directory
-    const schemasDir = join(process.cwd(), 'src', 'adapter', 'api', 'schemas')
-    const schemaFiles = getSchemaFiles(schemasDir)
-
-    const processSchemaFiles = (schemaFiles: SchemaFile[], basePath: string) => {
-      for (const file of schemaFiles) {
-        if (file.isDirectory) {
-          // Create a subdirectory in docs for this schema type
-          const docsSubDir = join(basePath, file.name)
-          mkdirSync(docsSubDir, { recursive: true })
-
-          if (file.children) {
-            processSchemaFiles(file.children, docsSubDir)
-          }
-        } else {
-          try {
-            const definitionName =
-              (file.name !== 'index' ? file.name + file.parents.join('') : file.parents.join('')) +
-              'Schema'
-            const definitionSchema = schema.definitions[definitionName]
-            const integrationsMarkdown = generateMarkdownForDefinition(
-              definitionName,
-              definitionSchema
-            )
-            writeFileSync(join(basePath, `${file.name}.md`), integrationsMarkdown)
-            console.log(`Processing schema file: ${file.path.replace(schemasDir, '')}`)
-          } catch (error) {
-            console.error(`Error processing schema file ${file.path}:`, error)
-          }
-        }
-      }
-    }
-    processSchemaFiles(schemaFiles, docsDir)
-
-    console.log('Documentation generation completed successfully!')
-  } catch (error) {
-    console.error('Error generating documentation:', error)
-    process.exit(1)
-  }
+// Clear the docs directory if it exists
+try {
+  rmSync(docsDir, { recursive: true, force: true })
+} catch {
+  // Ignore error if directory doesn't exist
 }
 
-main()
+// Create fresh docs directory
+mkdirSync(docsDir, { recursive: true })
+
+// Process schema files from the schemas directory
+const schemasDir = join(process.cwd(), 'src', 'adapter', 'api', 'schemas')
+const schemaFiles = getSchemaFiles(schemasDir)
+
+const processSchemaFiles = (schemaFiles: SchemaFile[], basePath: string) => {
+  for (const file of schemaFiles) {
+    if (file.isDirectory) {
+      // Create a subdirectory in docs for this schema type
+      const docsSubDir = join(basePath, file.name)
+      mkdirSync(docsSubDir, { recursive: true })
+
+      if (file.children) {
+        processSchemaFiles(file.children, docsSubDir)
+      }
+    } else {
+      const definitionSchema = schema.definitions[file.ref]
+      if (!definitionSchema) {
+        throw new Error(`Definition ${file.ref} not found in schema`)
+      }
+      const integrationsMarkdown = generateMarkdownForDefinition(
+        file.ref,
+        definitionSchema,
+        schemaFiles
+      )
+      writeFileSync(join(basePath.toLowerCase(), `${file.name}.md`), integrationsMarkdown)
+      console.log(`Processing schema file: ${file.path.replace(schemasDir, '')}`)
+    }
+  }
+}
+processSchemaFiles(schemaFiles, docsDir)
+
+console.log('Documentation generation completed successfully!')

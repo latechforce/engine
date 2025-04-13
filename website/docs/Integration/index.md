@@ -1,68 +1,21 @@
+---
+  sidebar_position: 6
+---
+
 # Integrations
 
 Defines configurations for various third-party service integrations
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### airtable
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
-
-### notion
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
-
-### pappers
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
-
-### qonto
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
-
-### google
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | No |
-
-### gocardless
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
-
-### phantombuster
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
-
-### calendly
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| airtable | array | No |  |  |
+| notion | array | No |  |  |
+| pappers | array | No |  |  |
+| qonto | array | No |  |  |
+| google | [GoogleIntegration](/docs/integration/google) | No |  |  |
+| gocardless | array | No |  |  |
+| phantombuster | array | No |  |  |
+| calendly | array | No |  |  |
 

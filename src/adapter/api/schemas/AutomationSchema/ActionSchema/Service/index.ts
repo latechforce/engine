@@ -1,7 +1,5 @@
-import type { ReadRecordDatabaseServiceActionAutomationSchema } from './Database/ReadRecordSchema'
-import type { CreateRecordDatabaseServiceActionAutomationSchema } from './Database/CreateRecordSchema'
-import type { RunJavascriptCodeServiceActionAutomationSchema } from './Code/RunJavascriptSchema'
-import type { RunTypescriptCodeServiceActionAutomationSchema } from './Code/RunTypescriptSchema'
+import type { CodeServiceActionAutomationSchema } from './Code'
+import type { DatabaseServiceActionAutomationSchema } from './Database'
 
 /**
  * Service action type union
@@ -15,7 +13,5 @@ import type { RunTypescriptCodeServiceActionAutomationSchema } from './Code/RunT
  * }
  */
 export type ServiceActionAutomationSchema =
-  | RunJavascriptCodeServiceActionAutomationSchema
-  | RunTypescriptCodeServiceActionAutomationSchema
-  | CreateRecordDatabaseServiceActionAutomationSchema
-  | ReadRecordDatabaseServiceActionAutomationSchema
+  | CodeServiceActionAutomationSchema
+  | DatabaseServiceActionAutomationSchema

@@ -2,48 +2,26 @@
 
 Reads a record from the specified database table
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| id | string | Yes |  |  |
+| table | string | Yes |  |  |
+| service | string | Yes | `"Database"` |  |
+| action | string | Yes | `"ReadRecord"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### id
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### table
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### service
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Database"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"ReadRecord"` |
+```json
+{
+  "service": "Database",
+  "action": "ReadRecord",
+  "table": "users",
+  "id": "user_123"
+}
+```
 

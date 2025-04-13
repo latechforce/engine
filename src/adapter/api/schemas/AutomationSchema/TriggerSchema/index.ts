@@ -1,9 +1,5 @@
-import type { ApiCalledHttpServiceTriggerAutomationSchema } from './Service/Http/ApiCalledSchema'
-import type { RecordCreatedDatabaseServiceTriggerAutomationSchema } from './Service/Database/RecordCreatedSchema'
-import type { WebhookCalledHttpServiceTriggerAutomationSchema } from './Service/Http/WebhookCalledSchema'
-import type { TablePageCreatedNotionIntegrationTriggerAutomationSchema } from './Integration/Notion/TablePageCreatedSchema'
-import type { CronTimeTickedScheduleServiceTriggerAutomationSchema } from './Service/Schedule/CronTimeTickedSchema'
-import type { InviteeCreatedCalendlyIntegrationTriggerAutomationSchema } from './Integration/Calendly/InviteeCreatedSchema'
+import type { ServiceTriggerAutomationSchema } from './Service'
+import type { IntegrationTriggerAutomationSchema } from './Integration'
 
 /**
  * Trigger type union
@@ -17,9 +13,5 @@ import type { InviteeCreatedCalendlyIntegrationTriggerAutomationSchema } from '.
  * }
  */
 export type TriggerAutomationSchema =
-  | ApiCalledHttpServiceTriggerAutomationSchema
-  | RecordCreatedDatabaseServiceTriggerAutomationSchema
-  | WebhookCalledHttpServiceTriggerAutomationSchema
-  | TablePageCreatedNotionIntegrationTriggerAutomationSchema
-  | CronTimeTickedScheduleServiceTriggerAutomationSchema
-  | InviteeCreatedCalendlyIntegrationTriggerAutomationSchema
+  | ServiceTriggerAutomationSchema
+  | IntegrationTriggerAutomationSchema

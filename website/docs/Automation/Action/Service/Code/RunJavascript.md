@@ -2,55 +2,29 @@
 
 Executes JavaScript code with the specified input
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| code | string | Yes |  |  |
+| input | any | No |  |  |
+| env | object | No |  |  |
+| service | string | Yes | `"Code"` |  |
+| action | string | Yes | `"RunJavascript"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### code
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### input
-
-| Property | Value |
-|----------|-------|
-| Type | any |
-| Required | No |
-
-### env
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | No |
-
-### service
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Code"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"RunJavascript"` |
+```json
+{
+  "service": "Code",
+  "action": "RunJavascript",
+  "code": "return { result: input.value * 2 }",
+  "input": {
+    "value": 5
+  }
+}
+```
 

@@ -2,47 +2,30 @@
 
 Represents a field that allows selecting multiple options from a predefined list
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| required | boolean | No |  |  |
+| onMigration | object | No |  |  |
+| type | string | Yes | `"MultipleSelect"` |  |
+| options | array | Yes |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### required
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | boolean |
-| Required | No |
-
-### onMigration
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | No |
-
-### type
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"MultipleSelect"` |
-
-### options
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | Yes |
+```json
+{
+  "type": "MultipleSelect",
+  "name": "interests",
+  "required": true,
+  "options": [
+    "Sports",
+    "Music",
+    "Travel"
+  ]
+}
+```
 

@@ -2,48 +2,25 @@
 
 Retrieves an attachment using Qonto integration
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| account | string | Yes |  |  |
+| attachmentId | string | Yes |  |  |
+| integration | string | Yes | `"Qonto"` |  |
+| action | string | Yes | `"RetrieveAttachment"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### account
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### attachmentId
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### integration
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Qonto"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"RetrieveAttachment"` |
+```json
+{
+  "integration": "Qonto",
+  "action": "RetrieveAttachment",
+  "attachmentId": "att_123456789"
+}
+```
 

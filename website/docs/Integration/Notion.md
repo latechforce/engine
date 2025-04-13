@@ -2,39 +2,24 @@
 
 A configuration schema for Notion integration
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| baseUrl | string | No |  |  |
+| token | string | Yes |  |  |
+| pollingInterval | number | No |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### baseUrl
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | No |
-
-### token
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### pollingInterval
-
-| Property | Value |
-|----------|-------|
-| Type | number |
-| Required | No |
+```json
+{
+  "name": "project-management",
+  "token": "secret_1234567890ABCD",
+  "pollingInterval": 300000
+}
+```
 

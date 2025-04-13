@@ -2,40 +2,24 @@
 
 Represents a field that can store multiple file attachments
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| required | boolean | No |  |  |
+| onMigration | object | No |  |  |
+| type | string | Yes | `"MultipleAttachment"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### required
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | boolean |
-| Required | No |
-
-### onMigration
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | No |
-
-### type
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"MultipleAttachment"` |
+```json
+{
+  "type": "MultipleAttachment",
+  "name": "documents",
+  "required": true
+}
+```
 

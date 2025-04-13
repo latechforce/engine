@@ -2,47 +2,26 @@
 
 Represents a field that can link to multiple records from another table
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| required | boolean | No |  |  |
+| onMigration | object | No |  |  |
+| type | string | Yes | `"MultipleLinkedRecord"` |  |
+| table | string | Yes |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### required
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | boolean |
-| Required | No |
-
-### onMigration
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | No |
-
-### type
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"MultipleLinkedRecord"` |
-
-### table
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+```json
+{
+  "type": "MultipleLinkedRecord",
+  "name": "projects",
+  "required": true,
+  "table": "projects"
+}
+```
 

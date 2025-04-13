@@ -2,27 +2,33 @@
 
 Union type of all possible field types that can be used in forms and tables
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `any` |
-
 ## Any Of
 
-1. [DateTimeFieldTable](http://localhost:3000/docs/datetimefieldtable)
-2. [EmailFieldTable](http://localhost:3000/docs/emailfieldtable)
-3. [FormulaFieldTable](http://localhost:3000/docs/formulafieldtable)
-4. [LongTextFieldTable](http://localhost:3000/docs/longtextfieldtable)
-5. [MultipleLinkedRecordFieldTable](http://localhost:3000/docs/multiplelinkedrecordfieldtable)
-6. [NumberFieldTable](http://localhost:3000/docs/numberfieldtable)
-7. [RollupFieldTable](http://localhost:3000/docs/rollupfieldtable)
-8. [SingleLineTextFieldTable](http://localhost:3000/docs/singlelinetextfieldtable)
-9. [SingleLinkedRecordFieldTable](http://localhost:3000/docs/singlelinkedrecordfieldtable)
-10. [SingleSelectFieldTable](http://localhost:3000/docs/singleselectfieldtable)
-11. [MultipleSelectFieldTable](http://localhost:3000/docs/multipleselectfieldtable)
-12. [CheckboxFieldTable](http://localhost:3000/docs/checkboxfieldtable)
-13. [MultipleAttachmentFieldTable](http://localhost:3000/docs/multipleattachmentfieldtable)
-14. [UrlFieldTable](http://localhost:3000/docs/urlfieldtable)
-15. [SingleAttachmentFieldTable](http://localhost:3000/docs/singleattachmentfieldtable)
+1. [DateTimeFieldTable](/docs/table/field/datetime)
+2. [EmailFieldTable](/docs/table/field/email)
+3. [FormulaFieldTable](/docs/table/field/formula)
+4. [LongTextFieldTable](/docs/table/field/longtext)
+5. [MultipleLinkedRecordFieldTable](/docs/table/field/multiplelinkedrecord)
+6. [NumberFieldTable](/docs/table/field/number)
+7. [RollupFieldTable](/docs/table/field/rollup)
+8. [SingleLineTextFieldTable](/docs/table/field/singlelinetext)
+9. [SingleLinkedRecordFieldTable](/docs/table/field/singlelinkedrecord)
+10. [SingleSelectFieldTable](/docs/table/field/singleselect)
+11. [MultipleSelectFieldTable](/docs/table/field/multipleselect)
+12. [CheckboxFieldTable](/docs/table/field/checkbox)
+13. [MultipleAttachmentFieldTable](/docs/table/field/multipleattachment)
+14. [UrlFieldTable](/docs/table/field/url)
+15. [SingleAttachmentFieldTable](/docs/table/field/singleattachment)
+
+## Examples
+
+Example 1:
+
+```json
+{
+  "type": "SingleLineText",
+  "name": "full_name",
+  "required": true
+}
+```
 

@@ -1,10 +1,8 @@
-import type { CreatePaymentGoCardlessIntegrationActionAutomationSchema } from './GoCardless/CreatePaymentSchema'
-import type { ListPaymentsGoCardlessIntegrationActionAutomationSchema } from './GoCardless/ListPaymentsSchema'
-import type { SendEmailMailGoogleIntegrationActionAutomationSchema } from './Google/Mail/SendEmailSchema'
-import type { UpdatePageNotionIntegrationActionAutomationSchema } from './Notion/UpdatePageSchema'
-import type { GetCompanyPappersIntegrationActionAutomationSchema } from './Pappers/GetCompanySchema'
-import type { CreateClientQontoIntegrationActionAutomationSchema } from './Qonto/CreateClientSchema'
-import type { RetrieveAttachmentQontoIntegrationActionAutomationSchema } from './Qonto/RetrieveAttachmentSchema'
+import type { GoCardlessIntegrationActionAutomationSchema } from './GoCardless'
+import type { GoogleIntegrationActionAutomationSchema } from './Google'
+import type { NotionIntegrationActionAutomationSchema } from './Notion'
+import type { PappersIntegrationActionAutomationSchema } from './Pappers'
+import type { QontoIntegrationActionAutomationSchema } from './Qonto'
 
 /**
  * Integration action type union
@@ -18,10 +16,8 @@ import type { RetrieveAttachmentQontoIntegrationActionAutomationSchema } from '.
  * }
  */
 export type IntegrationActionAutomationSchema =
-  | GetCompanyPappersIntegrationActionAutomationSchema
-  | CreateClientQontoIntegrationActionAutomationSchema
-  | UpdatePageNotionIntegrationActionAutomationSchema
-  | SendEmailMailGoogleIntegrationActionAutomationSchema
-  | CreatePaymentGoCardlessIntegrationActionAutomationSchema
-  | ListPaymentsGoCardlessIntegrationActionAutomationSchema
-  | RetrieveAttachmentQontoIntegrationActionAutomationSchema
+  | PappersIntegrationActionAutomationSchema
+  | QontoIntegrationActionAutomationSchema
+  | NotionIntegrationActionAutomationSchema
+  | GoogleIntegrationActionAutomationSchema
+  | GoCardlessIntegrationActionAutomationSchema

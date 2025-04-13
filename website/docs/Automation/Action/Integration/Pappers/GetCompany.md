@@ -2,48 +2,25 @@
 
 Retrieves company information using Pappers integration
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| account | string | Yes |  |  |
+| siret | string | Yes |  |  |
+| integration | string | Yes | `"Pappers"` |  |
+| action | string | Yes | `"GetCompany"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### account
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### siret
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### integration
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Pappers"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"GetCompany"` |
+```json
+{
+  "integration": "Pappers",
+  "action": "GetCompany",
+  "siren": "123456789"
+}
+```
 

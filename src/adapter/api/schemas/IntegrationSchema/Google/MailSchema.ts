@@ -2,7 +2,7 @@ import type { GoogleMailConfig } from '/domain/integrations/Google/Mail'
 
 /**
  * Gmail configuration schema
- * @title Gmail
+ * @title Mail
  * @description A configuration schema for Gmail integration
  * @example
  * {

@@ -2,19 +2,23 @@
 
 Union type of all possible integration actions that can be performed in automations
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `any` |
-
 ## Any Of
 
-1. [GetCompanyPappersIntegrationActionAutomation](http://localhost:3000/docs/getcompanypappersintegrationactionautomation)
-2. [CreateClientQontoIntegrationActionAutomation](http://localhost:3000/docs/createclientqontointegrationactionautomation)
-3. [UpdatePageNotionIntegrationActionAutomation](http://localhost:3000/docs/updatepagenotionintegrationactionautomation)
-4. [SendEmailMailGoogleIntegrationActionAutomation](http://localhost:3000/docs/sendemailmailgoogleintegrationactionautomation)
-5. [CreatePaymentGoCardlessIntegrationActionAutomation](http://localhost:3000/docs/createpaymentgocardlessintegrationactionautomation)
-6. [ListPaymentsGoCardlessIntegrationActionAutomation](http://localhost:3000/docs/listpaymentsgocardlessintegrationactionautomation)
-7. [RetrieveAttachmentQontoIntegrationActionAutomation](http://localhost:3000/docs/retrieveattachmentqontointegrationactionautomation)
+1. [PappersIntegrationActionAutomation](/docs/automation/action/integration/pappers)
+2. [QontoIntegrationActionAutomation](/docs/automation/action/integration/qonto)
+3. [NotionIntegrationActionAutomation](/docs/automation/action/integration/notion)
+4. [GoogleIntegrationActionAutomation](/docs/automation/action/integration/google)
+5. [GoCardlessIntegrationActionAutomation](/docs/automation/action/integration/gocardless)
+
+## Examples
+
+Example 1:
+
+```json
+{
+  "service": "Integration",
+  "action": "GetCompany",
+  "companyId": "123"
+}
+```
 

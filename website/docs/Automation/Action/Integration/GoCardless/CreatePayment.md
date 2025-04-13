@@ -2,48 +2,34 @@
 
 Creates a new payment in GoCardless with the specified details
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| account | string | Yes |  |  |
+| payment | object | Yes |  |  |
+| integration | string | Yes | `"GoCardless"` |  |
+| action | string | Yes | `"CreatePayment"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### account
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### payment
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | Yes |
-
-### integration
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"GoCardless"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"CreatePayment"` |
+```json
+{
+  "integration": "GoCardless",
+  "action": "CreatePayment",
+  "payment": {
+    "amount": 1000,
+    "currency": "EUR",
+    "description": "Monthly subscription",
+    "mandate": "{{trigger.payload.mandateId}}",
+    "metadata": {
+      "orderId": "{{trigger.payload.orderId}}",
+      "customerId": "{{trigger.payload.customerId}}"
+    }
+  }
+}
+```
 

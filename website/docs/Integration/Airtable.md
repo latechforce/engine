@@ -2,39 +2,24 @@
 
 A configuration schema for Airtable integration
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| baseUrl | string | No |  |  |
+| apiKey | string | Yes |  |  |
+| databaseId | string | Yes |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### baseUrl
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | No |
-
-### apiKey
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### databaseId
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+```json
+{
+  "name": "main-database",
+  "apiKey": "key1234567890ABCD",
+  "databaseId": "app1234567890ABCD"
+}
+```
 

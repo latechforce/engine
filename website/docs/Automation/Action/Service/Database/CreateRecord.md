@@ -2,48 +2,31 @@
 
 Creates a new record in the specified database table with the given fields
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| fields | object | Yes |  |  |
+| table | string | Yes |  |  |
+| service | string | Yes | `"Database"` |  |
+| action | string | Yes | `"CreateRecord"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### fields
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | Yes |
-
-### table
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### service
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Database"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"CreateRecord"` |
+```json
+{
+  "service": "Database",
+  "action": "CreateRecord",
+  "table": "users",
+  "fields": {
+    "name": "{{trigger.payload.name}}",
+    "email": "{{trigger.payload.email}}",
+    "role": "customer",
+    "createdAt": "{{now}}"
+  }
+}
+```
 

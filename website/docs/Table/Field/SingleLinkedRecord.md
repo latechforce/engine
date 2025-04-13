@@ -2,47 +2,26 @@
 
 Represents a field that can link to a single record from another table
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| required | boolean | No |  |  |
+| onMigration | object | No |  |  |
+| type | string | Yes | `"SingleLinkedRecord"` |  |
+| table | string | Yes |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### required
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | boolean |
-| Required | No |
-
-### onMigration
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | No |
-
-### type
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"SingleLinkedRecord"` |
-
-### table
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+```json
+{
+  "type": "SingleLinkedRecord",
+  "name": "manager",
+  "required": true,
+  "table": "users"
+}
+```
 

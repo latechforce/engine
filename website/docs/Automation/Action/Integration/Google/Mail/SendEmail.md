@@ -2,48 +2,29 @@
 
 Sends an email using Google Mail integration
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| account | string | Yes |  |  |
+| email | object | Yes |  |  |
+| integration | string | Yes | `"GoogleMail"` |  |
+| action | string | Yes | `"SendEmail"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### account
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### email
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | Yes |
-
-### integration
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"GoogleMail"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"SendEmail"` |
+```json
+{
+  "integration": "GoogleMail",
+  "action": "SendEmail",
+  "email": {
+    "to": "recipient@example.com",
+    "subject": "Test Email",
+    "text": "This is a test email"
+  }
+}
+```
 

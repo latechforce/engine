@@ -2,14 +2,21 @@
 
 Union type of all possible actions that can be performed in automations
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `any` |
-
 ## Any Of
 
-1. [IntegrationActionAutomation](http://localhost:3000/docs/integrationactionautomation)
-2. [ServiceActionAutomation](http://localhost:3000/docs/serviceactionautomation)
+1. [IntegrationActionAutomation](/docs/automation/action/integration)
+2. [ServiceActionAutomation](/docs/automation/action/service)
+
+## Examples
+
+Example 1:
+
+```json
+{
+  "service": "Database",
+  "action": "ReadRecord",
+  "table": "users",
+  "id": "user_123"
+}
+```
 

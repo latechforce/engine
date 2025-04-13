@@ -1,47 +1,18 @@
+---
+  sidebar_position: 3
+---
+
 # Automation
 
 Defines an automation workflow with triggers and actions
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### summary
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | No |
-
-### description
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | No |
-
-### trigger
-
-| Property | Value |
-|----------|-------|
-| Type | [TriggerAutomation](http://localhost:3000/docs/triggerautomation) |
-| Required | Yes |
-
-### actions
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | Yes |
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| summary | string | No |  |  |
+| description | string | No |  |  |
+| trigger | [TriggerAutomation](/docs/automation/trigger) | Yes |  |  |
+| actions | array | Yes |  |  |
 

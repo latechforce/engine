@@ -2,39 +2,24 @@
 
 A configuration schema for Gmail integration
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| baseUrl | string | No |  |  |
+| user | string | Yes |  |  |
+| password | string | Yes |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### baseUrl
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | No |
-
-### user
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### password
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+```json
+{
+  "name": "support-email",
+  "user": "support@company.com",
+  "password": "app-specific-password"
+}
+```
 

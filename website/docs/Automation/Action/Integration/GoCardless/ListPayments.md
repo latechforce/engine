@@ -2,48 +2,28 @@
 
 Lists payments using GoCardless integration with optional filters
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| account | string | Yes |  |  |
+| params | object | Yes |  |  |
+| integration | string | Yes | `"GoCardless"` |  |
+| action | string | Yes | `"ListPayments"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### account
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### params
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | Yes |
-
-### integration
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"GoCardless"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"ListPayments"` |
+```json
+{
+  "integration": "GoCardless",
+  "action": "ListPayments",
+  "filters": {
+    "status": "paid",
+    "limit": 10
+  }
+}
+```
 

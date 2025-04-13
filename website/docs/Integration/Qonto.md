@@ -2,46 +2,26 @@
 
 A configuration schema for Qonto banking integration
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| baseUrl | string | No |  |  |
+| organisationSlug | string | Yes |  |  |
+| secretKey | string | Yes |  |  |
+| stagingToken | string | No |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### baseUrl
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | No |
-
-### organisationSlug
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### secretKey
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### stagingToken
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | No |
+```json
+{
+  "name": "business-account",
+  "organisationSlug": "my-company",
+  "secretKey": "1234567890ABCD",
+  "stagingToken": "staging_1234567890ABCD"
+}
+```
 

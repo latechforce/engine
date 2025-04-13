@@ -2,48 +2,35 @@
 
 Creates a new client in Qonto with the specified details
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| account | string | Yes |  |  |
+| client | object | Yes |  |  |
+| integration | string | Yes | `"Qonto"` |  |
+| action | string | Yes | `"CreateClient"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### account
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### client
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | Yes |
-
-### integration
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Qonto"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"CreateClient"` |
+```json
+{
+  "integration": "Qonto",
+  "action": "CreateClient",
+  "client": {
+    "name": "{{trigger.payload.companyName}}",
+    "email": "{{trigger.payload.email}}",
+    "phone": "{{trigger.payload.phone}}",
+    "address": {
+      "street": "{{trigger.payload.street}}",
+      "city": "{{trigger.payload.city}}",
+      "postalCode": "{{trigger.payload.postalCode}}",
+      "country": "{{trigger.payload.country}}"
+    }
+  }
+}
+```
 

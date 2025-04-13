@@ -2,62 +2,31 @@
 
 Updates a page in Notion with the specified properties
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| account | string | Yes |  |  |
+| table | string | Yes |  |  |
+| id | string | Yes |  |  |
+| page | object | Yes |  |  |
+| integration | string | Yes | `"Notion"` |  |
+| action | string | Yes | `"UpdatePage"` |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### account
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### table
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### id
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### page
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | Yes |
-
-### integration
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Notion"` |
-
-### action
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"UpdatePage"` |
+```json
+{
+  "integration": "Notion",
+  "action": "UpdatePage",
+  "pageId": "{{trigger.payload.pageId}}",
+  "properties": {
+    "title": "{{trigger.payload.title}}",
+    "status": "{{trigger.payload.status}}"
+  }
+}
+```
 

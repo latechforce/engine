@@ -2,54 +2,26 @@
 
 Represents a calculated field in forms and tables
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| required | boolean | No |  |  |
+| onMigration | object | No |  |  |
+| type | string | Yes | `"Formula"` |  |
+| formula | string | Yes |  |  |
+| output | object | Yes |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### required
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | boolean |
-| Required | No |
-
-### onMigration
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | No |
-
-### type
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-| Const | `"Formula"` |
-
-### formula
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
-
-### output
-
-| Property | Value |
-|----------|-------|
-| Type | object |
-| Required | Yes |
+```json
+{
+  "type": "Formula",
+  "name": "totalPrice",
+  "formula": "price * quantity"
+}
+```
 

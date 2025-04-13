@@ -2,32 +2,22 @@
 
 A configuration schema for Pappers integration
 
-## Schema Overview
-
-| Property | Value |
-|----------|-------|
-| Type | `object` |
-
 ## Properties
 
-### name
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| baseUrl | string | No |  |  |
+| apiKey | string | Yes |  |  |
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+## Examples
 
-### baseUrl
+Example 1:
 
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | No |
-
-### apiKey
-
-| Property | Value |
-|----------|-------|
-| Type | string |
-| Required | Yes |
+```json
+{
+  "name": "company-data",
+  "apiKey": "1234567890ABCD"
+}
+```
 
