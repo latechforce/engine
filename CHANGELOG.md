@@ -1,9 +1,8 @@
 ## [0.43.1](https://github.com/latechforce/engine/compare/v0.43.0...v0.43.1) (2025-04-13)
 
-
 ### Bug Fixes
 
-* complete CI ([cd864ed](https://github.com/latechforce/engine/commit/cd864eded996e77b0a1a33e676836fb6d884d0cc))
+- complete CI ([cd864ed](https://github.com/latechforce/engine/commit/cd864eded996e77b0a1a33e676836fb6d884d0cc))
 
 # [0.43.0](https://github.com/latechforce/engine/compare/v0.42.1...v0.43.0) (2025-04-11)
 

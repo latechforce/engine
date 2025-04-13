@@ -4,11 +4,11 @@ A configuration schema for Calendly scheduling integration
 
 ## Properties
 
-| Property | Type | Required | Const | Description |
-|----------|------|----------|-------|-------------|
-| name | string | Yes |  |  |
-| baseUrl | string | No |  |  |
-| user | object | Yes |  |  |
+| Property | Type   | Required | Const | Description |
+| -------- | ------ | -------- | ----- | ----------- |
+| name     | string | Yes      |       |             |
+| baseUrl  | string | No       |       |             |
+| user     | object | Yes      |       |             |
 
 ## Examples
 
@@ -22,4 +22,3 @@ Example 1:
   }
 }
 ```
-

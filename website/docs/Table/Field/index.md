@@ -31,4 +31,3 @@ Example 1:
   "required": true
 }
 ```
-

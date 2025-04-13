@@ -4,12 +4,12 @@ A configuration schema for Airtable integration
 
 ## Properties
 
-| Property | Type | Required | Const | Description |
-|----------|------|----------|-------|-------------|
-| name | string | Yes |  |  |
-| baseUrl | string | No |  |  |
-| apiKey | string | Yes |  |  |
-| databaseId | string | Yes |  |  |
+| Property   | Type   | Required | Const | Description |
+| ---------- | ------ | -------- | ----- | ----------- |
+| name       | string | Yes      |       |             |
+| baseUrl    | string | No       |       |             |
+| apiKey     | string | Yes      |       |             |
+| databaseId | string | Yes      |       |             |
 
 ## Examples
 
@@ -22,4 +22,3 @@ Example 1:
   "databaseId": "app1234567890ABCD"
 }
 ```
-

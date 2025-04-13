@@ -72,16 +72,10 @@
               }
             },
             "port": {
-              "type": [
-                "string",
-                "number"
-              ]
+              "type": ["string", "number"]
             },
             "idleTimeout": {
-              "type": [
-                "string",
-                "number"
-              ]
+              "type": ["string", "number"]
             },
             "baseUrl": {
               "type": "string"
@@ -99,10 +93,7 @@
               "type": "array",
               "items": {
                 "type": "string",
-                "enum": [
-                  "Sentry",
-                  "Console"
-                ]
+                "enum": ["Sentry", "Console"]
               }
             }
           },
@@ -115,19 +106,13 @@
           "properties": {
             "driver": {
               "type": "string",
-              "enum": [
-                "PostgreSQL",
-                "SQLite"
-              ]
+              "enum": ["PostgreSQL", "SQLite"]
             },
             "url": {
               "type": "string"
             }
           },
-          "required": [
-            "driver",
-            "url"
-          ],
+          "required": ["driver", "url"],
           "additionalProperties": false,
           "description": "The database of the engine",
           "title": "Database"
@@ -150,11 +135,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "driver",
-                  "dsn",
-                  "environment"
-                ],
+                "required": ["driver", "dsn", "environment"],
                 "additionalProperties": false
               },
               {
@@ -165,9 +146,7 @@
                     "const": "Console"
                   }
                 },
-                "required": [
-                  "driver"
-                ],
+                "required": ["driver"],
                 "additionalProperties": false
               }
             ]
@@ -193,9 +172,7 @@
                     "const": "Console"
                   }
                 },
-                "required": [
-                  "driver"
-                ],
+                "required": ["driver"],
                 "additionalProperties": false
               },
               {
@@ -215,10 +192,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "driver",
-                  "filename"
-                ],
+                "required": ["driver", "filename"],
                 "additionalProperties": false
               },
               {
@@ -241,11 +215,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "driver",
-                  "url",
-                  "index"
-                ],
+                "required": ["driver", "url", "index"],
                 "additionalProperties": false
               }
             ]
@@ -270,11 +240,7 @@
               "const": "Ngrok"
             }
           },
-          "required": [
-            "authToken",
-            "integration",
-            "name"
-          ],
+          "required": ["authToken", "integration", "name"],
           "additionalProperties": false,
           "description": "The tunnel of the engine",
           "title": "Tunnel"
@@ -289,9 +255,7 @@
                   "const": "none"
                 }
               },
-              "required": [
-                "type"
-              ],
+              "required": ["type"],
               "additionalProperties": false
             },
             {
@@ -305,9 +269,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "type"
-              ],
+              "required": ["type"],
               "additionalProperties": false
             }
           ],
@@ -315,11 +277,7 @@
           "title": "Themes"
         }
       },
-      "required": [
-        "name",
-        "version",
-        "engine"
-      ],
+      "required": ["name", "version", "engine"],
       "additionalProperties": false,
       "description": "This is the configuration of the engine.",
       "title": "Config"
@@ -356,12 +314,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "inputs",
-        "name",
-        "path",
-        "table"
-      ],
+      "required": ["inputs", "name", "path", "table"],
       "description": "Type alias for form configuration",
       "title": "Form"
     },
@@ -390,9 +343,7 @@
           "type": "number"
         }
       },
-      "required": [
-        "field"
-      ],
+      "required": ["field"],
       "additionalProperties": false,
       "description": "Type alias for input configuration",
       "title": "Input"
@@ -419,11 +370,7 @@
           }
         }
       },
-      "required": [
-        "actions",
-        "name",
-        "trigger"
-      ],
+      "required": ["actions", "name", "trigger"],
       "additionalProperties": false,
       "description": "Defines an automation workflow with triggers and actions",
       "title": "Automation"
@@ -482,11 +429,7 @@
           "const": "RecordCreated"
         }
       },
-      "required": [
-        "event",
-        "service",
-        "table"
-      ],
+      "required": ["event", "service", "table"],
       "additionalProperties": false,
       "description": "A trigger that fires when a record is created in a database",
       "title": "Record Created"
@@ -514,13 +457,7 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": [
-                "string",
-                "number",
-                "boolean",
-                "array",
-                "object"
-              ]
+              "enum": ["string", "number", "boolean", "array", "object"]
             },
             "properties": {
               "type": "object",
@@ -563,9 +500,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "number"
-                ],
+                "required": ["number"],
                 "additionalProperties": false
               },
               {
@@ -575,9 +510,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "boolean"
-                ],
+                "required": ["boolean"],
                 "additionalProperties": false
               },
               {
@@ -587,9 +520,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "json"
-                ],
+                "required": ["json"],
                 "additionalProperties": false
               },
               {},
@@ -624,11 +555,7 @@
           "const": "ApiCalled"
         }
       },
-      "required": [
-        "event",
-        "path",
-        "service"
-      ],
+      "required": ["event", "path", "service"],
       "additionalProperties": false,
       "description": "A trigger that fires when an API is called",
       "title": "Api Called"
@@ -649,11 +576,7 @@
           "const": "WebhookCalled"
         }
       },
-      "required": [
-        "event",
-        "path",
-        "service"
-      ],
+      "required": ["event", "path", "service"],
       "additionalProperties": false,
       "description": "A trigger that fires when a webhook is called",
       "title": "Webhook Called"
@@ -678,11 +601,7 @@
           "const": "CronTimeTicked"
         }
       },
-      "required": [
-        "cronTime",
-        "event",
-        "service"
-      ],
+      "required": ["cronTime", "event", "service"],
       "additionalProperties": false,
       "description": "A trigger that fires when a cron time is ticked",
       "title": "Cron Time Ticked"
@@ -719,11 +638,7 @@
           "const": "InviteeCreated"
         }
       },
-      "required": [
-        "account",
-        "event",
-        "integration"
-      ],
+      "required": ["account", "event", "integration"],
       "additionalProperties": false,
       "description": "A trigger that fires when an invitee is created in Calendly",
       "title": "Invitee Created"
@@ -751,12 +666,7 @@
           "const": "TablePageCreated"
         }
       },
-      "required": [
-        "account",
-        "event",
-        "integration",
-        "table"
-      ],
+      "required": ["account", "event", "integration", "table"],
       "additionalProperties": false,
       "description": "A trigger that fires when a table page is created in Notion",
       "title": "Table Page Created"
@@ -835,13 +745,7 @@
           "const": "GetCompany"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "integration",
-        "name",
-        "siret"
-      ],
+      "required": ["account", "action", "integration", "name", "siret"],
       "additionalProperties": false,
       "description": "Retrieves company information using Pappers integration",
       "examples": [
@@ -933,13 +837,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "street_address",
-                "city",
-                "zip_code",
-                "province_code",
-                "country_code"
-              ],
+              "required": ["street_address", "city", "zip_code", "province_code", "country_code"],
               "additionalProperties": false
             },
             "delivery_address": {
@@ -961,28 +859,14 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "street_address",
-                "city",
-                "zip_code",
-                "province_code",
-                "country_code"
-              ],
+              "required": ["street_address", "city", "zip_code", "province_code", "country_code"],
               "additionalProperties": false
             },
             "locale": {
               "type": "string"
             }
           },
-          "required": [
-            "address",
-            "city",
-            "country_code",
-            "currency",
-            "locale",
-            "type",
-            "zip_code"
-          ]
+          "required": ["address", "city", "country_code", "currency", "locale", "type", "zip_code"]
         },
         "integration": {
           "type": "string",
@@ -993,13 +877,7 @@
           "const": "CreateClient"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "client",
-        "integration",
-        "name"
-      ],
+      "required": ["account", "action", "client", "integration", "name"],
       "additionalProperties": false,
       "description": "Creates a new client in Qonto with the specified details",
       "examples": [
@@ -1042,13 +920,7 @@
           "const": "RetrieveAttachment"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "attachmentId",
-        "integration",
-        "name"
-      ],
+      "required": ["account", "action", "attachmentId", "integration", "name"],
       "additionalProperties": false,
       "description": "Retrieves an attachment using Qonto integration",
       "examples": [
@@ -1095,15 +967,7 @@
           "const": "UpdatePage"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "id",
-        "integration",
-        "name",
-        "page",
-        "table"
-      ],
+      "required": ["account", "action", "id", "integration", "name", "page", "table"],
       "additionalProperties": false,
       "description": "Updates a page in Notion with the specified properties",
       "examples": [
@@ -1163,9 +1027,7 @@
               "type": "string"
             }
           },
-          "required": [
-            "to"
-          ],
+          "required": ["to"],
           "additionalProperties": false
         },
         "integration": {
@@ -1177,13 +1039,7 @@
           "const": "SendEmail"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "email",
-        "integration",
-        "name"
-      ],
+      "required": ["account", "action", "email", "integration", "name"],
       "additionalProperties": false,
       "description": "Sends an email using Google Mail integration",
       "examples": [
@@ -1251,11 +1107,7 @@
               "type": "string"
             }
           },
-          "required": [
-            "amount",
-            "currency",
-            "mandate"
-          ],
+          "required": ["amount", "currency", "mandate"],
           "additionalProperties": false
         },
         "integration": {
@@ -1267,13 +1119,7 @@
           "const": "CreatePayment"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "integration",
-        "name",
-        "payment"
-      ],
+      "required": ["account", "action", "integration", "name", "payment"],
       "additionalProperties": false,
       "description": "Creates a new payment in GoCardless with the specified details",
       "examples": [
@@ -1333,13 +1179,7 @@
           "const": "ListPayments"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "integration",
-        "name",
-        "params"
-      ],
+      "required": ["account", "action", "integration", "name", "params"],
       "additionalProperties": false,
       "description": "Lists payments using GoCardless integration with optional filters",
       "examples": [
@@ -1410,12 +1250,7 @@
           "const": "RunJavascript"
         }
       },
-      "required": [
-        "action",
-        "code",
-        "name",
-        "service"
-      ],
+      "required": ["action", "code", "name", "service"],
       "additionalProperties": false,
       "description": "Executes JavaScript code with the specified input",
       "examples": [
@@ -1455,12 +1290,7 @@
           "const": "RunTypescript"
         }
       },
-      "required": [
-        "action",
-        "code",
-        "name",
-        "service"
-      ],
+      "required": ["action", "code", "name", "service"],
       "additionalProperties": false,
       "description": "Executes TypeScript code with the specified input",
       "examples": [
@@ -1508,13 +1338,7 @@
           "const": "ReadRecord"
         }
       },
-      "required": [
-        "action",
-        "id",
-        "name",
-        "service",
-        "table"
-      ],
+      "required": ["action", "id", "name", "service", "table"],
       "additionalProperties": false,
       "description": "Reads a record from the specified database table",
       "examples": [
@@ -1551,13 +1375,7 @@
           "const": "CreateRecord"
         }
       },
-      "required": [
-        "action",
-        "fields",
-        "name",
-        "service",
-        "table"
-      ],
+      "required": ["action", "fields", "name", "service", "table"],
       "additionalProperties": false,
       "description": "Creates a new record in the specified database table with the given fields",
       "examples": [
@@ -1581,16 +1399,12 @@
         "name": {
           "type": "string",
           "description": "The unique identifier for the table",
-          "examples": [
-            "users"
-          ]
+          "examples": ["users"]
         },
         "schema": {
           "type": "string",
           "description": "The database schema where the table is located",
-          "examples": [
-            "public"
-          ]
+          "examples": ["public"]
         },
         "fields": {
           "type": "array",
@@ -1609,10 +1423,7 @@
           ]
         }
       },
-      "required": [
-        "name",
-        "fields"
-      ],
+      "required": ["name", "fields"],
       "additionalProperties": false,
       "description": "Defines the structure of a database table",
       "title": "Table"
@@ -1698,10 +1509,7 @@
           "const": "DateTime"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a date and time field in forms and tables",
       "examples": [
@@ -1736,10 +1544,7 @@
           "const": "Email"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a field that stores an email address",
       "examples": [
@@ -1781,12 +1586,7 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": [
-                "Number",
-                "LongText",
-                "SingleLineText",
-                "DateTime"
-              ]
+              "enum": ["Number", "LongText", "SingleLineText", "DateTime"]
             },
             "required": {
               "type": "boolean"
@@ -1801,18 +1601,11 @@
               "additionalProperties": false
             }
           },
-          "required": [
-            "type"
-          ],
+          "required": ["type"],
           "additionalProperties": false
         }
       },
-      "required": [
-        "formula",
-        "name",
-        "output",
-        "type"
-      ],
+      "required": ["formula", "name", "output", "type"],
       "additionalProperties": false,
       "description": "Represents a calculated field in forms and tables",
       "examples": [
@@ -1847,10 +1640,7 @@
           "const": "LongText"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a field that stores multiple lines of text",
       "examples": [
@@ -1888,11 +1678,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "name",
-        "table",
-        "type"
-      ],
+      "required": ["name", "table", "type"],
       "additionalProperties": false,
       "description": "Represents a field that can link to multiple records from another table",
       "examples": [
@@ -1928,10 +1714,7 @@
           "const": "Number"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a field that stores numeric values",
       "examples": [
@@ -1965,12 +1748,7 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": [
-                "Number",
-                "LongText",
-                "SingleLineText",
-                "DateTime"
-              ]
+              "enum": ["Number", "LongText", "SingleLineText", "DateTime"]
             },
             "required": {
               "type": "boolean"
@@ -1985,9 +1763,7 @@
               "additionalProperties": false
             }
           },
-          "required": [
-            "type"
-          ],
+          "required": ["type"],
           "additionalProperties": false
         },
         "name": {
@@ -2054,10 +1830,7 @@
           "const": "SingleLineText"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a field that stores a single line of text",
       "examples": [
@@ -2095,11 +1868,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "name",
-        "table",
-        "type"
-      ],
+      "required": ["name", "table", "type"],
       "additionalProperties": false,
       "description": "Represents a field that can link to a single record from another table",
       "examples": [
@@ -2141,11 +1910,7 @@
           }
         }
       },
-      "required": [
-        "name",
-        "options",
-        "type"
-      ],
+      "required": ["name", "options", "type"],
       "additionalProperties": false,
       "description": "Represents a field that allows selecting one option from a predefined list",
       "examples": [
@@ -2153,11 +1918,7 @@
           "type": "SingleSelect",
           "name": "status",
           "required": true,
-          "options": [
-            "Active",
-            "Inactive",
-            "Pending"
-          ]
+          "options": ["Active", "Inactive", "Pending"]
         }
       ],
       "title": "Single select"
@@ -2191,11 +1952,7 @@
           }
         }
       },
-      "required": [
-        "name",
-        "options",
-        "type"
-      ],
+      "required": ["name", "options", "type"],
       "additionalProperties": false,
       "description": "Represents a field that allows selecting multiple options from a predefined list",
       "examples": [
@@ -2203,11 +1960,7 @@
           "type": "MultipleSelect",
           "name": "interests",
           "required": true,
-          "options": [
-            "Sports",
-            "Music",
-            "Travel"
-          ]
+          "options": ["Sports", "Music", "Travel"]
         }
       ],
       "title": "Multiple select"
@@ -2235,10 +1988,7 @@
           "const": "Checkbox"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a boolean checkbox field in forms and tables",
       "examples": [
@@ -2273,10 +2023,7 @@
           "const": "MultipleAttachment"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a field that can store multiple file attachments",
       "examples": [
@@ -2311,10 +2058,7 @@
           "const": "Url"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a field that stores a URL",
       "examples": [
@@ -2349,10 +2093,7 @@
           "const": "SingleAttachment"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
       "description": "Represents a field that can store a single file attachment",
       "examples": [
@@ -2371,9 +2112,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "additionalProperties": false,
       "description": "Type alias for bucket storage configuration",
       "title": "Bucket"
@@ -2447,11 +2186,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "apiKey",
-        "databaseId",
-        "name"
-      ],
+      "required": ["apiKey", "databaseId", "name"],
       "additionalProperties": false,
       "description": "A configuration schema for Airtable integration",
       "examples": [
@@ -2479,10 +2214,7 @@
           "type": "number"
         }
       },
-      "required": [
-        "name",
-        "token"
-      ],
+      "required": ["name", "token"],
       "additionalProperties": false,
       "description": "A configuration schema for Notion integration",
       "examples": [
@@ -2507,10 +2239,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "apiKey",
-        "name"
-      ],
+      "required": ["apiKey", "name"],
       "additionalProperties": false,
       "description": "A configuration schema for Pappers integration",
       "examples": [
@@ -2540,11 +2269,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "name",
-        "organisationSlug",
-        "secretKey"
-      ],
+      "required": ["name", "organisationSlug", "secretKey"],
       "additionalProperties": false,
       "description": "A configuration schema for Qonto banking integration",
       "examples": [
@@ -2587,11 +2312,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "name",
-        "password",
-        "user"
-      ],
+      "required": ["name", "password", "user"],
       "additionalProperties": false,
       "description": "A configuration schema for Gmail integration",
       "examples": [
@@ -2616,10 +2337,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "accessToken",
-        "name"
-      ],
+      "required": ["accessToken", "name"],
       "additionalProperties": false,
       "description": "A configuration schema for GoCardless payment integration",
       "examples": [
@@ -2643,10 +2361,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "apiKey",
-        "name"
-      ],
+      "required": ["apiKey", "name"],
       "additionalProperties": false,
       "description": "A configuration schema for Phantombuster automation integration",
       "examples": [
@@ -2673,16 +2388,11 @@
               "type": "string"
             }
           },
-          "required": [
-            "accessToken"
-          ],
+          "required": ["accessToken"],
           "additionalProperties": false
         }
       },
-      "required": [
-        "name",
-        "user"
-      ],
+      "required": ["name", "user"],
       "additionalProperties": false,
       "description": "A configuration schema for Calendly scheduling integration",
       "examples": [

@@ -4,13 +4,13 @@ Creates a new client in Qonto with the specified details
 
 ## Properties
 
-| Property | Type | Required | Const | Description |
-|----------|------|----------|-------|-------------|
-| name | string | Yes |  |  |
-| account | string | Yes |  |  |
-| client | object | Yes |  |  |
-| integration | string | Yes | `"Qonto"` |  |
-| action | string | Yes | `"CreateClient"` |  |
+| Property    | Type   | Required | Const            | Description |
+| ----------- | ------ | -------- | ---------------- | ----------- |
+| name        | string | Yes      |                  |             |
+| account     | string | Yes      |                  |             |
+| client      | object | Yes      |                  |             |
+| integration | string | Yes      | `"Qonto"`        |             |
+| action      | string | Yes      | `"CreateClient"` |             |
 
 ## Examples
 
@@ -33,4 +33,3 @@ Example 1:
   }
 }
 ```
-
