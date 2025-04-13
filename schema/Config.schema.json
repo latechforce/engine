@@ -2601,7 +2601,7 @@
           "password": "app-specific-password"
         }
       ],
-      "title": "Gmail"
+      "title": "Mail"
     },
     "GoCardlessIntegrationSchema": {
       "type": "object",

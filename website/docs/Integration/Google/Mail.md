@@ -1,4 +1,4 @@
-# Gmail
+# Mail
 
 A configuration schema for Gmail integration
 

@@ -100,8 +100,8 @@ jobs:
       - name: Create and publish release
         run: bunx semantic-release
 
-  build-docs:
-    name: Generate and Deploy Documentation
+  website:
+    name: Deploy Documentation to GitHub Pages
     needs: release
     runs-on: ubuntu-latest
 
@@ -120,14 +120,6 @@ jobs:
           ref: main
           token: ${{ secrets.GH_TOKEN }}
 
-      - name: Setup Python environment
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install documentation dependencies
-        run: pip install json-schema-for-humans
-
       - name: Setup Bun runtime
         uses: oven-sh/setup-bun@v2
         with:
@@ -136,23 +128,11 @@ jobs:
       - name: Install project dependencies
         run: bun install
 
-      - name: Generate JSON schema
-        run: bun run build:schema
+      - name: Build schema docs
+        run: bun run website:docs
 
-      - name: Build documentation
-        run: bun run build:docs
+      - name: Build website
+        run: bun run website:build
 
-      - name: Configure Git for documentation bot
-        run: |
-          git config --global user.name 'docs-bot'
-          git config --global user.email 'docs-bot@noreply.latechforce.com'
-
-      - name: Fetch and merge latest changes
-        run: |
-          git fetch origin main
-          git merge origin/main --no-edit
-
-      - name: Commit and push documentation updates
-        run: |
-          git add .
-          git diff --quiet && git diff --staged --quiet || (git commit -m "docs: update generated documentation [skip ci]" && git push)
+      - name: Deploy to GitHub Pages
+        run: bun run bewiste:deploy

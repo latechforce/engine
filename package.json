@@ -35,10 +35,18 @@
     "lint": "bunx eslint . --fix",
     "clean": "rm -rf dist && rm -rf node_modules && rm -rf bun.lock && rm -rf tmp",
     "build:schema": "bun scripts/build-schema.ts",
-    "build:docs": "bun run build:schema && bun scripts/build-schema-docs.ts",
     "build:types": "bunx tsc --project scripts/tsconfig.json && bun scripts/fix-types-paths.ts",
     "build:engine": "bun build --entrypoints ./src/index.ts ./src/bun.ts ./src/infrastructure/instrument/bun/index.ts ./src/infrastructure/test/bun/index.ts --outdir ./dist --target bun --packages external --splitting",
     "build": "bun run build:schema && bun run build:engine && bun run build:types",
+    "website:docs": "bun run build:schema && bun scripts/build-schema-docs.ts",
+    "website:build": "cd website && bun run build",
+    "website:deploy": "cd website && bun run deploy",
+    "website:start": "cd website && bun run start",
+    "website:serve": "cd website && bun run serve",
+    "website:clear": "cd website && bun run clear",
+    "website:write-translations": "cd website && bun run write-translations",
+    "website:write-heading-ids": "cd website && bun run write-heading-ids",
+    "website:typecheck": "cd website && bun run typecheck",
     "test": "bun test --bail --timeout 60000",
     "test:unit": "bun test src/adapter src/domain --bail",
     "test:integration": "bun test src/infrastructure --bail --timeout 30000",
@@ -81,7 +89,7 @@
     "mime-types": "^3.0.1",
     "minipass": "^7.1.2",
     "nanoid": "^5.1.5",
-    "nodemailer": "^6.10.0",
+    "nodemailer": "^6.10.1",
     "papaparse": "^5.5.2",
     "pdfkit": "^0.16.0",
     "pg": "^8.14.1",
@@ -118,7 +126,7 @@
     "@types/bun": "latest",
     "@types/nodemailer": "^6.4.17",
     "@types/pdfkit": "^0.13.9",
-    "@types/pg": "^8.11.11",
+    "@types/pg": "^8.11.12",
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
     "@vitest/browser": "^3.1.1",
@@ -139,7 +147,7 @@
     "vitest": "^3.1.1"
   },
   "peerDependencies": {
-    "typescript": "^5.5.4"
+    "typescript": "^5.8.3"
   },
   "engines": {
     "bun": "1.2.5"
