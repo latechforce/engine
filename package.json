@@ -91,7 +91,7 @@
     "nanoid": "^5.1.5",
     "nodemailer": "^6.10.1",
     "papaparse": "^5.5.2",
-    "pdfkit": "^0.16.0",
+    "pdfkit": "^0.17.0",
     "pg": "^8.14.1",
     "pg-boss": "^10.2.0",
     "postcss": "^8.5.3",

@@ -34,9 +34,9 @@
         "mime-types": "^3.0.1",
         "minipass": "^7.1.2",
         "nanoid": "^5.1.5",
-        "nodemailer": "^6.10.0",
+        "nodemailer": "^6.10.1",
         "papaparse": "^5.5.2",
-        "pdfkit": "^0.16.0",
+        "pdfkit": "^0.17.0",
         "pg": "^8.14.1",
         "pg-boss": "^10.2.0",
         "postcss": "^8.5.3",
@@ -71,7 +71,7 @@
         "@types/bun": "latest",
         "@types/nodemailer": "^6.4.17",
         "@types/pdfkit": "^0.13.9",
-        "@types/pg": "^8.11.11",
+        "@types/pg": "^8.11.12",
         "@types/react": "^19.1.1",
         "@types/react-dom": "^19.1.2",
         "@vitest/browser": "^3.1.1",
@@ -92,7 +92,7 @@
         "vitest": "^3.1.1",
       },
       "peerDependencies": {
-        "typescript": "^5.5.4",
+        "typescript": "^5.8.3",
       },
     },
   },
@@ -1679,7 +1679,7 @@
 
     "pathval": ["pathval@2.0.0", "", {}, "sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA=="],
 
-    "pdfkit": ["pdfkit@0.16.0", "", { "dependencies": { "crypto-js": "^4.2.0", "fontkit": "^2.0.4", "jpeg-exif": "^1.1.4", "linebreak": "^1.1.0", "png-js": "^1.0.0" } }, "sha512-oXMxkIqXH4uTAtohWdYA41i/f6i2ReB78uhgizN8H4hJEpgR3/Xjy3iu2InNAuwCIabN3PVs8P1D6G4+W2NH0A=="],
+    "pdfkit": ["pdfkit@0.17.0", "", { "dependencies": { "crypto-js": "^4.2.0", "fontkit": "^2.0.4", "jpeg-exif": "^1.1.4", "linebreak": "^1.1.0", "png-js": "^1.0.0" } }, "sha512-XRb2Bwtl+oIo+TOf4HOlbqIn6NBiYk8Um4FsfKXrgX9uZQILTbXDlbf0DEZQJxFqognrwIS5QFn5PsOxU8eLMA=="],
 
     "pend": ["pend@1.2.0", "", {}, "sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg=="],
 
