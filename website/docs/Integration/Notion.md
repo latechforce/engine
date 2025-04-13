@@ -4,12 +4,12 @@ A configuration schema for Notion integration
 
 ## Properties
 
-| Property        | Type   | Required | Const | Description |
-| --------------- | ------ | -------- | ----- | ----------- |
-| name            | string | Yes      |       |             |
-| baseUrl         | string | No       |       |             |
-| token           | string | Yes      |       |             |
-| pollingInterval | number | No       |       |             |
+| Property | Type | Required | Const | Description |
+|----------|------|----------|-------|-------------|
+| name | string | Yes |  |  |
+| baseUrl | string | No |  |  |
+| token | string | Yes |  |  |
+| pollingInterval | number | No |  |  |
 
 ## Examples
 
@@ -22,3 +22,4 @@ Example 1:
   "pollingInterval": 300000
 }
 ```
+
