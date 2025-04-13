@@ -12,4 +12,4 @@ import type { SingleSelectFieldConfig } from '/domain/entities/Field/SingleSelec
  *   options: ['Active', 'Inactive', 'Pending']
  * }
  */
-export type SingleSelectFieldSchema = SingleSelectFieldConfig
+export type SingleSelectFieldTableSchema = SingleSelectFieldConfig

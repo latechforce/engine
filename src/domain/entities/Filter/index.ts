@@ -1,4 +1,4 @@
-import type { JSONSchema } from '/domain/services/SchemaValidator'
+import type { SchemaValidatorJson } from '/domain/services/SchemaValidator'
 import {
   type BooleanFilter,
   booleanFilterSchemas,
@@ -65,7 +65,7 @@ export type Filter =
   | SelectFilter
   | TextFilter
 
-export const filterSchema: JSONSchema = {
+export const filterSchema: SchemaValidatorJson = {
   type: 'object',
   oneOf: [
     andFilterSchema,

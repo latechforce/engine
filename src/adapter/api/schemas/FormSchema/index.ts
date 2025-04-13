@@ -1,4 +1,4 @@
-import type { InputSchema } from './InputSchema'
+import type { InputFormSchema } from './InputSchema'
 import type { FormConfig } from '/domain/entities/Form'
 
 /**
@@ -6,6 +6,6 @@ import type { FormConfig } from '/domain/entities/Form'
  * @title Form
  * @description Type alias for form configuration
  */
-export type FormSchema = FormConfig & {
-  inputs: InputSchema[]
+export type FormSchema = Omit<FormConfig, 'inputs'> & {
+  inputs: InputFormSchema[]
 }

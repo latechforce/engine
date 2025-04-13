@@ -14,10 +14,10 @@ import { SingleAttachmentField } from '/domain/entities/Field/SingleAttachment'
 import { CheckboxField } from '/domain/entities/Field/Checkbox'
 import { UrlField } from '/domain/entities/Field/Url'
 import { RollupFieldMapper } from './RollupMapper'
-import type { FieldSchema } from '../../schemas/TableSchema/FieldSchema'
+import type { FieldTableSchema } from '../../schemas/TableSchema/FieldSchema'
 
 export class FieldMapper {
-  static toEntity(config: FieldSchema, fields: FieldSchema[]): Field {
+  static toEntity(config: FieldTableSchema, fields: FieldTableSchema[]): Field {
     const { type } = config
     switch (type) {
       case 'SingleLineText':
@@ -55,33 +55,33 @@ export class FieldMapper {
     }
   }
 
-  static toConfig(schema: FieldSchema, fields: FieldSchema[]): FieldConfig {
+  static toConfig(schema: FieldTableSchema, fields: FieldTableSchema[]): FieldConfig {
     return this.toEntity(schema, fields).config
   }
 
   static toOutputEntity(
-    config: FieldSchema
+    schema: FieldTableSchema
   ): DateTimeField | SingleLineTextField | LongTextField | NumberField {
-    const { type } = config
+    const { type } = schema
     switch (type) {
       case 'DateTime':
-        return new DateTimeField(config)
+        return new DateTimeField(schema)
       case 'SingleLineText':
-        return new SingleLineTextField(config)
+        return new SingleLineTextField(schema)
       case 'LongText':
-        return new LongTextField(config)
+        return new LongTextField(schema)
       case 'Number':
-        return new NumberField(config)
+        return new NumberField(schema)
       default:
         throw new Error(`FieldMapper: type ${type} not found`)
     }
   }
 
-  static toManyEntities(configs: FieldSchema[]): Field[] {
-    return configs.map((config) => this.toEntity(config, configs))
+  static toManyEntities(schemas: FieldTableSchema[]): Field[] {
+    return schemas.map((schema) => this.toEntity(schema, schemas))
   }
 
-  static toManyConfigs(schemas: FieldSchema[]): FieldConfig[] {
+  static toManyConfigs(schemas: FieldTableSchema[]): FieldConfig[] {
     return schemas.map((schema) => this.toConfig(schema, schemas))
   }
 }

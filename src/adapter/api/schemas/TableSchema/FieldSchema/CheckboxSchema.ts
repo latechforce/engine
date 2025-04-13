@@ -11,4 +11,4 @@ import type { CheckboxFieldConfig } from '/domain/entities/Field/Checkbox'
  *   required: true,
  * }
  */
-export type CheckboxFieldSchema = CheckboxFieldConfig
+export type CheckboxFieldTableSchema = CheckboxFieldConfig

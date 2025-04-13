@@ -1,10 +1,10 @@
 import { RollupField } from '/domain/entities/Field/Rollup'
 import { ConfigError } from '/domain/entities/Error/Config'
-import type { RollupFieldSchema } from '../../schemas/TableSchema/FieldSchema/RollupSchema'
-import type { FieldSchema } from '../../schemas/TableSchema/FieldSchema'
+import type { RollupFieldTableSchema } from '../../schemas/TableSchema/FieldSchema/RollupSchema'
+import type { FieldTableSchema } from '../../schemas/TableSchema/FieldSchema'
 
 export class RollupFieldMapper {
-  static toEntity = (config: RollupFieldSchema, fields: FieldSchema[]): RollupField => {
+  static toEntity = (config: RollupFieldTableSchema, fields: FieldTableSchema[]): RollupField => {
     const multipleLinkedRecord = fields.find((field) => field.name === config.multipleLinkedRecord)
     if (!multipleLinkedRecord || multipleLinkedRecord.type !== 'MultipleLinkedRecord') {
       throw new ConfigError({

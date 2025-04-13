@@ -1,11 +1,11 @@
-import type { JSONSchema } from '/domain/services/SchemaValidator'
+import type { SchemaValidatorJson } from '/domain/services/SchemaValidator'
 import { type Filter, type FilterDto } from '.'
 
 export type AndFilterConfig = {
   and: FilterDto[]
 }
 
-export const andFilterSchema: JSONSchema = {
+export const andFilterSchema: SchemaValidatorJson = {
   type: 'object',
   properties: {},
   required: ['and'],

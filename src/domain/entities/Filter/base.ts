@@ -1,13 +1,13 @@
-import type { JSONSchema } from '/domain/services/SchemaValidator'
+import type { SchemaValidatorJson } from '/domain/services/SchemaValidator'
 
 export type BaseFilterProps = {
   field: string
 }
 
 export function buildFilterSchema(
-  properties: JSONSchema['properties'],
-  required: JSONSchema['required'] = []
-): JSONSchema {
+  properties: SchemaValidatorJson['properties'],
+  required: SchemaValidatorJson['required'] = []
+): SchemaValidatorJson {
   return {
     type: 'object',
     properties: {

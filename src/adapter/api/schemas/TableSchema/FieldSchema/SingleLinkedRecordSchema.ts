@@ -12,4 +12,4 @@ import type { SingleLinkedRecordFieldConfig } from '/domain/entities/Field/Singl
  *   table: 'users'
  * }
  */
-export type SingleLinkedRecordFieldSchema = SingleLinkedRecordFieldConfig
+export type SingleLinkedRecordFieldTableSchema = SingleLinkedRecordFieldConfig

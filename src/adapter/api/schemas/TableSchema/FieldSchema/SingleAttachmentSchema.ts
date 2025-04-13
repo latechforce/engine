@@ -11,4 +11,4 @@ import type { SingleAttachmentFieldConfig } from '/domain/entities/Field/SingleA
  *   required: true
  * }
  */
-export type SingleAttachmentFieldSchema = SingleAttachmentFieldConfig
+export type SingleAttachmentFieldTableSchema = SingleAttachmentFieldConfig

@@ -11,4 +11,4 @@ import type { DateTimeFieldConfig } from '/domain/entities/Field/DateTime'
  *   required: true,
  * }
  */
-export type DateTimeFieldSchema = DateTimeFieldConfig
+export type DateTimeFieldTableSchema = DateTimeFieldConfig

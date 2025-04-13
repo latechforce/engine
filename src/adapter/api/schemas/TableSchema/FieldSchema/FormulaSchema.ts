@@ -11,4 +11,4 @@ import type { FormulaFieldConfig } from '/domain/entities/Field/Formula'
  *   formula: 'price * quantity',
  * }
  */
-export type FormulaFieldSchema = FormulaFieldConfig
+export type FormulaFieldTableSchema = FormulaFieldConfig

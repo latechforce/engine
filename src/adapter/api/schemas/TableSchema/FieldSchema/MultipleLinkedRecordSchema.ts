@@ -12,4 +12,4 @@ import type { MultipleLinkedRecordFieldConfig } from '/domain/entities/Field/Mul
  *   table: 'projects'
  * }
  */
-export type MultipleLinkedRecordFieldSchema = MultipleLinkedRecordFieldConfig
+export type MultipleLinkedRecordFieldTableSchema = MultipleLinkedRecordFieldConfig

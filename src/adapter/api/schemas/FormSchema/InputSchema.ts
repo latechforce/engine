@@ -5,4 +5,4 @@ import type { InputConfig } from '/domain/entities/Form/Input'
  * @title Input
  * @description Type alias for input configuration
  */
-export type InputSchema = InputConfig
+export type InputFormSchema = InputConfig

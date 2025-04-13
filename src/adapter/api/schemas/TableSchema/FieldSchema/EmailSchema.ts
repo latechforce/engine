@@ -11,4 +11,4 @@ import type { EmailFieldConfig } from '/domain/entities/Field/Email'
  *   required: true
  * }
  */
-export type EmailFieldSchema = EmailFieldConfig
+export type EmailFieldTableSchema = EmailFieldConfig

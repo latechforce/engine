@@ -18,6 +18,6 @@ import type { RollupFieldConfig } from '/domain/entities/Field/Rollup'
  *   }
  * }
  */
-export type RollupFieldSchema = Omit<RollupFieldConfig, 'multipleLinkedRecord'> & {
+export type RollupFieldTableSchema = Omit<RollupFieldConfig, 'multipleLinkedRecord'> & {
   multipleLinkedRecord: string
 }

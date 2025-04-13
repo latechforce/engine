@@ -11,4 +11,4 @@ import type { MultipleAttachmentFieldConfig } from '/domain/entities/Field/Multi
  *   required: true
  * }
  */
-export type MultipleAttachmentFieldSchema = MultipleAttachmentFieldConfig
+export type MultipleAttachmentFieldTableSchema = MultipleAttachmentFieldConfig

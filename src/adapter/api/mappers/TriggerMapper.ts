@@ -8,7 +8,7 @@ import type { Notion } from '/domain/integrations/Notion'
 import type { Cron } from '/domain/services/Cron'
 import type { System } from '/domain/services/System'
 import type { Calendly } from '/domain/integrations/Calendly'
-import type { TriggerSchema } from '../schemas/AutomationSchema/TriggerSchema'
+import type { TriggerAutomationSchema } from '../schemas/AutomationSchema/TriggerSchema'
 import { TablePageCreatedNotionTrigger } from '/domain/entities/Trigger/integrations/notion/TablePageCreated'
 import type { AutomationSchema } from '../schemas/AutomationSchema'
 import { InviteeCreatedCalendlyTrigger } from '/domain/entities/Trigger/integrations/calendly/InviteeCreated'
@@ -34,7 +34,7 @@ export interface TriggerMapperIntegrations {
 
 export class TriggerMapper {
   static toEntity(
-    schema: TriggerSchema,
+    schema: TriggerAutomationSchema,
     automationSchema: AutomationSchema,
     services: TriggerMapperServices,
     integrations: TriggerMapperIntegrations

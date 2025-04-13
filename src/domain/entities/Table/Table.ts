@@ -3,7 +3,7 @@ import { Bucket } from '../Bucket'
 import type { SchemaError } from '../Error/Schema'
 import type { Field } from '../Field'
 import type { DatabaseTable } from '/domain/services/DatabaseTable'
-import type { JSONSchema } from '/domain/services/SchemaValidator'
+import type { SchemaValidatorJson } from '/domain/services/SchemaValidator'
 import { FilterMapper, filterSchema } from '../Filter'
 import type { ConfigError } from '../Error/Config'
 import type { FilterConfig } from '../Filter'
@@ -31,7 +31,7 @@ export class Table {
   readonly recordPath: string
   readonly db: DatabaseTable
   readonly bucket: Bucket
-  private _validateData: (json: unknown, schema: JSONSchema) => SchemaError[]
+  private _validateData: (json: unknown, schema: SchemaValidatorJson) => SchemaError[]
 
   constructor(
     config: TableConfig,
@@ -192,9 +192,9 @@ export class Table {
     }
   }
 
-  private _getRecordSchema = (options?: { required: boolean }): JSONSchema => {
+  private _getRecordSchema = (options?: { required: boolean }): SchemaValidatorJson => {
     const { required = true } = options || {}
-    const schema: JSONSchema = {
+    const schema: SchemaValidatorJson = {
       type: 'object',
       properties: {},
       required: [],
@@ -274,7 +274,7 @@ export class Table {
     return schema
   }
 
-  private _validateDataType = <T>(data: unknown, schema: JSONSchema): data is T => {
+  private _validateDataType = <T>(data: unknown, schema: SchemaValidatorJson): data is T => {
     return this._validateData(data, schema).length === 0
   }
 

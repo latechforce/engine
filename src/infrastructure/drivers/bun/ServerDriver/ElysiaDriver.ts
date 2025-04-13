@@ -7,7 +7,7 @@ import type { DeleteDto, GetDto, PatchDto, PostDto, RequestDto } from '/adapter/
 import type { ServerConfig, ServerMethodOptions } from '/domain/services/Server'
 import type { Response as EngineResponse } from '/domain/entities/Response'
 import { JsonResponse } from '/domain/entities/Response/Json'
-import type { JSONSchema } from '/domain/services/SchemaValidator'
+import type { SchemaValidatorJson } from '/domain/services/SchemaValidator'
 import { isJsxResponse } from '/domain/entities/Response/Jsx'
 import { renderToString } from 'react-dom/server'
 
@@ -224,7 +224,7 @@ export class ElysiaDriver implements IServerDriver {
     return doc
   }
 
-  private _convertJSONSchemaToTSchema(schema: JSONSchema): TSchema {
+  private _convertJSONSchemaToTSchema(schema: SchemaValidatorJson): TSchema {
     if (!schema.type) {
       throw new Error('Invalid schema: type is required')
     }

@@ -11,4 +11,4 @@ import type { UrlFieldConfig } from '/domain/entities/Field/Url'
  *   required: true
  * }
  */
-export type UrlFieldSchema = UrlFieldConfig
+export type UrlFieldTableSchema = UrlFieldConfig

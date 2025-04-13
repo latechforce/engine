@@ -8,7 +8,7 @@ import type { DeleteRequest } from '/domain/entities/Request/Delete'
 import type { Request } from '/domain/entities/Request'
 import type { Monitor, MonitorDrivers } from './Monitor'
 import type { Tunnel } from './Tunnel'
-import type { JSONSchema } from './SchemaValidator'
+import type { SchemaValidatorJson } from './SchemaValidator'
 
 export interface ServerConfig {
   appName: string
@@ -34,8 +34,8 @@ export type ServerMethodOptionsAuth = 'ApiKey'
 
 export interface ServerMethodOptions {
   auth?: ServerMethodOptionsAuth
-  body?: JSONSchema
-  response?: JSONSchema
+  body?: SchemaValidatorJson
+  response?: SchemaValidatorJson
   detail?: {
     summary?: string
     description?: string

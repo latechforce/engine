@@ -1,4 +1,4 @@
-import type { FieldSchema } from './FieldSchema'
+import type { FieldTableSchema } from './FieldSchema'
 
 /**
  * Table configuration interface
@@ -23,5 +23,5 @@ export interface TableSchema {
    * @description Array of field definitions for the table
    * @example [{ name: "id", type: "string", required: true }]
    */
-  fields: FieldSchema[]
+  fields: FieldTableSchema[]
 }

@@ -16,6 +16,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | string |
 | Required | Yes |
+| Description | The name of the engine |
 
 ### version
 
@@ -23,6 +24,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | string |
 | Required | Yes |
+| Description | The version of the config |
 
 ### engine
 
@@ -30,6 +32,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | string |
 | Required | Yes |
+| Description | The version of the engine |
 
 ### description
 
@@ -37,6 +40,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | string |
 | Required | No |
+| Description | The description of the engine |
 
 ### forms
 
@@ -44,20 +48,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | array |
 | Required | No |
-
-### tables
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
-
-### buckets
-
-| Property | Value |
-|----------|-------|
-| Type | array |
-| Required | No |
+| Description | The forms of the engine |
 
 ### automations
 
@@ -65,13 +56,31 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | array |
 | Required | No |
+| Description | The automations of the engine |
+
+### tables
+
+| Property | Value |
+|----------|-------|
+| Type | array |
+| Required | No |
+| Description | The tables of the engine |
+
+### buckets
+
+| Property | Value |
+|----------|-------|
+| Type | array |
+| Required | No |
+| Description | The buckets of the engine |
 
 ### integrations
 
 | Property | Value |
 |----------|-------|
-| Type | [Integrations](http://localhost:3000/docs/integrations) |
+| Type | [Integration](http://localhost:3000/docs/integration) |
 | Required | No |
+| Description | The integrations of the engine |
 
 ### server
 
@@ -79,6 +88,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | object |
 | Required | No |
+| Description | The server of the engine |
 
 ### database
 
@@ -86,6 +96,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | object |
 | Required | No |
+| Description | The database of the engine |
 
 ### monitors
 
@@ -93,6 +104,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | array |
 | Required | No |
+| Description | The monitors of the engine |
 
 ### loggers
 
@@ -100,6 +112,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | array |
 | Required | No |
+| Description | The loggers of the engine |
 
 ### tunnel
 
@@ -107,6 +120,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | object |
 | Required | No |
+| Description | The tunnel of the engine |
 
 ### theme
 
@@ -114,6 +128,7 @@ This is the configuration of the engine.
 |----------|-------|
 | Type | any |
 | Required | No |
+| Description | The themes of the engine |
 
 #### Any Of
 

@@ -11,4 +11,4 @@ import type { SingleLineTextFieldConfig } from '/domain/entities/Field/SingleLin
  *   required: true
  * }
  */
-export type SingleLineTextFieldSchema = SingleLineTextFieldConfig
+export type SingleLineTextFieldTableSchema = SingleLineTextFieldConfig

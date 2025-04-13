@@ -6,43 +6,61 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the engine",
+          "title": "Name"
         },
         "version": {
-          "type": "string"
+          "type": "string",
+          "description": "The version of the config",
+          "title": "Config version"
         },
         "engine": {
-          "type": "string"
+          "type": "string",
+          "description": "The version of the engine",
+          "title": "Engine version"
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "The description of the engine",
+          "title": "Description"
         },
         "forms": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/FormSchema"
-          }
-        },
-        "tables": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/TableSchema"
-          }
-        },
-        "buckets": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/BucketSchema"
-          }
+          },
+          "description": "The forms of the engine",
+          "title": "Forms"
         },
         "automations": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/AutomationSchema"
-          }
+          },
+          "description": "The automations of the engine",
+          "title": "Automations"
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/TableSchema"
+          },
+          "description": "The tables of the engine",
+          "title": "Tables"
+        },
+        "buckets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BucketSchema"
+          },
+          "description": "The buckets of the engine",
+          "title": "Buckets"
         },
         "integrations": {
-          "$ref": "#/definitions/IntegrationsSchema"
+          "$ref": "#/definitions/IntegrationSchema",
+          "description": "The integrations of the engine",
+          "title": "Integrations"
         },
         "server": {
           "type": "object",
@@ -88,7 +106,9 @@
               }
             }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "The server of the engine",
+          "title": "Server"
         },
         "database": {
           "type": "object",
@@ -108,7 +128,9 @@
             "driver",
             "url"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "The database of the engine",
+          "title": "Database"
         },
         "monitors": {
           "type": "array",
@@ -149,7 +171,9 @@
                 "additionalProperties": false
               }
             ]
-          }
+          },
+          "description": "The monitors of the engine",
+          "title": "Monitors"
         },
         "loggers": {
           "type": "array",
@@ -225,7 +249,9 @@
                 "additionalProperties": false
               }
             ]
-          }
+          },
+          "description": "The loggers of the engine",
+          "title": "Loggers"
         },
         "tunnel": {
           "type": "object",
@@ -249,7 +275,9 @@
             "integration",
             "name"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "The tunnel of the engine",
+          "title": "Tunnel"
         },
         "theme": {
           "anyOf": [
@@ -282,7 +310,9 @@
               ],
               "additionalProperties": false
             }
-          ]
+          ],
+          "description": "The themes of the engine",
+          "title": "Themes"
         }
       },
       "required": [
@@ -301,34 +331,7 @@
         "inputs": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "field": {
-                "type": "string"
-              },
-              "label": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "placeholder": {
-                "type": "string"
-              },
-              "required": {
-                "type": "boolean"
-              },
-              "minLength": {
-                "type": "number"
-              },
-              "maxLength": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "field"
-            ],
-            "additionalProperties": false
+            "$ref": "#/definitions/InputFormSchema"
           }
         },
         "name": {
@@ -362,833 +365,37 @@
       "description": "Type alias for form configuration",
       "title": "Form"
     },
-    "TableSchema": {
+    "InputFormSchema": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "The unique identifier for the table",
-          "examples": [
-            "users"
-          ]
+        "field": {
+          "type": "string"
         },
-        "schema": {
-          "type": "string",
-          "description": "The database schema where the table is located",
-          "examples": [
-            "public"
-          ]
+        "label": {
+          "type": "string"
         },
-        "fields": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/FieldSchema"
-          },
-          "description": "Array of field definitions for the table",
-          "examples": [
-            [
-              {
-                "name": "id",
-                "type": "string",
-                "required": true
-              }
-            ]
-          ]
+        "description": {
+          "type": "string"
+        },
+        "placeholder": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "minLength": {
+          "type": "number"
+        },
+        "maxLength": {
+          "type": "number"
         }
       },
       "required": [
-        "name",
-        "fields"
+        "field"
       ],
       "additionalProperties": false,
-      "description": "Defines the structure of a database table",
-      "title": "Table"
-    },
-    "FieldSchema": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/DateTimeFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/EmailFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/FormulaFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/LongTextFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/MultipleLinkedRecordFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/NumberFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/RollupFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/SingleLineTextFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/SingleLinkedRecordFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/SingleSelectFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/MultipleSelectFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/CheckboxFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/MultipleAttachmentFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/UrlFieldSchema"
-        },
-        {
-          "$ref": "#/definitions/SingleAttachmentFieldSchema"
-        }
-      ],
-      "description": "Union type of all possible field types that can be used in forms and tables",
-      "examples": [
-        {
-          "type": "SingleLineText",
-          "name": "fullName",
-          "label": "Full Name",
-          "required": true
-        },
-        {
-          "type": "Email",
-          "name": "email",
-          "label": "Email Address",
-          "required": true,
-          "unique": true
-        },
-        {
-          "type": "Number",
-          "name": "age",
-          "label": "Age",
-          "min": 0,
-          "max": 120
-        },
-        {
-          "type": "SingleSelect",
-          "name": "status",
-          "label": "Status",
-          "options": [
-            "Active",
-            "Inactive",
-            "Pending"
-          ]
-        }
-      ],
-      "title": "Field"
-    },
-    "DateTimeFieldSchema": {
-      "description": "Represents a date and time field in forms and tables",
-      "examples": [
-        {
-          "type": "DateTime",
-          "name": "appointmentTime",
-          "required": true
-        }
-      ],
-      "title": "DateTime",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "DateTime"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "EmailFieldSchema": {
-      "description": "Represents a field that stores an email address",
-      "examples": [
-        {
-          "type": "Email",
-          "name": "email",
-          "required": true
-        }
-      ],
-      "title": "Email",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "Email"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "FormulaFieldSchema": {
-      "description": "Represents a calculated field in forms and tables",
-      "examples": [
-        {
-          "type": "Formula",
-          "name": "totalPrice",
-          "formula": "price * quantity"
-        }
-      ],
-      "title": "Formula",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "Formula"
-        },
-        "formula": {
-          "type": "string"
-        },
-        "output": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "Number",
-                "LongText",
-                "SingleLineText",
-                "DateTime"
-              ]
-            },
-            "required": {
-              "type": "boolean"
-            },
-            "onMigration": {
-              "type": "object",
-              "properties": {
-                "replace": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "required": [
-            "type"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "required": [
-        "formula",
-        "name",
-        "output",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "LongTextFieldSchema": {
-      "description": "Represents a field that stores multiple lines of text",
-      "examples": [
-        {
-          "type": "LongText",
-          "name": "description",
-          "required": true
-        }
-      ],
-      "title": "Long text",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "LongText"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "MultipleLinkedRecordFieldSchema": {
-      "description": "Represents a field that can link to multiple records from another table",
-      "examples": [
-        {
-          "type": "MultipleLinkedRecord",
-          "name": "projects",
-          "required": true,
-          "table": "projects"
-        }
-      ],
-      "title": "Multiple linked record",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "MultipleLinkedRecord"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "table",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "NumberFieldSchema": {
-      "description": "Represents a field that stores numeric values",
-      "examples": [
-        {
-          "type": "Number",
-          "name": "age",
-          "required": true
-        }
-      ],
-      "title": "Number",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "Number"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "RollupFieldSchema": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "multipleLinkedRecord": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string",
-          "const": "Rollup"
-        },
-        "formula": {
-          "type": "string"
-        },
-        "linkedRecordField": {
-          "type": "string"
-        },
-        "output": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "Number",
-                "LongText",
-                "SingleLineText",
-                "DateTime"
-              ]
-            },
-            "required": {
-              "type": "boolean"
-            },
-            "onMigration": {
-              "type": "object",
-              "properties": {
-                "replace": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "required": [
-            "type"
-          ],
-          "additionalProperties": false
-        },
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        }
-      },
-      "required": [
-        "formula",
-        "linkedRecordField",
-        "multipleLinkedRecord",
-        "name",
-        "output",
-        "type"
-      ],
-      "description": "Represents a field that aggregates data from linked records",
-      "examples": [
-        {
-          "type": "Rollup",
-          "name": "totalSales",
-          "required": false,
-          "multipleLinkedRecord": "orders",
-          "linkedRecordField": "amount",
-          "formula": "sum(amount)",
-          "output": {
-            "type": "Number",
-            "name": "totalSales"
-          }
-        }
-      ],
-      "title": "Rollup"
-    },
-    "SingleLineTextFieldSchema": {
-      "description": "Represents a field that stores a single line of text",
-      "examples": [
-        {
-          "type": "SingleLineText",
-          "name": "title",
-          "required": true
-        }
-      ],
-      "title": "Single line text",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "SingleLineText"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "SingleLinkedRecordFieldSchema": {
-      "description": "Represents a field that can link to a single record from another table",
-      "examples": [
-        {
-          "type": "SingleLinkedRecord",
-          "name": "manager",
-          "required": true,
-          "table": "users"
-        }
-      ],
-      "title": "Single linked record",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "SingleLinkedRecord"
-        },
-        "table": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "table",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "SingleSelectFieldSchema": {
-      "description": "Represents a field that allows selecting one option from a predefined list",
-      "examples": [
-        {
-          "type": "SingleSelect",
-          "name": "status",
-          "required": true,
-          "options": [
-            "Active",
-            "Inactive",
-            "Pending"
-          ]
-        }
-      ],
-      "title": "Single select",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "SingleSelect"
-        },
-        "options": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "name",
-        "options",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "MultipleSelectFieldSchema": {
-      "description": "Represents a field that allows selecting multiple options from a predefined list",
-      "examples": [
-        {
-          "type": "MultipleSelect",
-          "name": "interests",
-          "required": true,
-          "options": [
-            "Sports",
-            "Music",
-            "Travel"
-          ]
-        }
-      ],
-      "title": "Multiple select",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "MultipleSelect"
-        },
-        "options": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "name",
-        "options",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "CheckboxFieldSchema": {
-      "description": "Represents a boolean checkbox field in forms and tables",
-      "examples": [
-        {
-          "type": "Checkbox",
-          "name": "termsAccepted",
-          "required": true
-        }
-      ],
-      "title": "Checkbox",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "Checkbox"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "MultipleAttachmentFieldSchema": {
-      "description": "Represents a field that can store multiple file attachments",
-      "examples": [
-        {
-          "type": "MultipleAttachment",
-          "name": "documents",
-          "required": true
-        }
-      ],
-      "title": "Multiple attachment",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "MultipleAttachment"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "UrlFieldSchema": {
-      "description": "Represents a field that stores a URL",
-      "examples": [
-        {
-          "type": "Url",
-          "name": "website",
-          "required": true
-        }
-      ],
-      "title": "Url",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "Url"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "SingleAttachmentFieldSchema": {
-      "description": "Represents a field that can store a single file attachment",
-      "examples": [
-        {
-          "type": "SingleAttachment",
-          "name": "profilePicture",
-          "required": true
-        }
-      ],
-      "title": "Single attachment",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "required": {
-          "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "type": {
-          "type": "string",
-          "const": "SingleAttachment"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "BucketSchema": {
-      "description": "Type alias for bucket storage configuration",
-      "title": "Bucket",
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "additionalProperties": false
+      "description": "Type alias for input configuration",
+      "title": "Input"
     },
     "AutomationSchema": {
       "type": "object",
@@ -1203,48 +410,13 @@
           "type": "string"
         },
         "trigger": {
-          "$ref": "#/definitions/TriggerSchema",
-          "description": "The event or condition that starts the automation",
-          "examples": [
-            {
-              "service": "Http",
-              "trigger": "ApiCalled",
-              "method": "POST",
-              "path": "/webhook",
-              "headers": {
-                "Content-Type": "application/json"
-              }
-            }
-          ]
+          "$ref": "#/definitions/TriggerAutomationSchema"
         },
         "actions": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ActionSchema"
-          },
-          "description": "List of actions to be executed when the trigger is activated",
-          "examples": [
-            [
-              {
-                "service": "Database",
-                "action": "CreateRecord",
-                "table": "users",
-                "fields": {
-                  "name": "{{trigger.payload.name}}",
-                  "email": "{{trigger.payload.email}}"
-                }
-              },
-              {
-                "integration": "GoogleMail",
-                "action": "SendEmail",
-                "email": {
-                  "to": "{{trigger.payload.email}}",
-                  "subject": "Welcome to our platform",
-                  "text": "Hello {{trigger.payload.name}}!"
-                }
-              }
-            ]
-          ]
+            "$ref": "#/definitions/ActionAutomationSchema"
+          }
         }
       },
       "required": [
@@ -1256,25 +428,25 @@
       "description": "Defines an automation workflow with triggers and actions",
       "title": "Automation"
     },
-    "TriggerSchema": {
+    "TriggerAutomationSchema": {
       "anyOf": [
         {
-          "$ref": "#/definitions/ApiCalledHttpTriggerSchema"
+          "$ref": "#/definitions/ApiCalledHttpServiceTriggerAutomationSchema"
         },
         {
-          "$ref": "#/definitions/RecordCreatedDatabaseTriggerSchema"
+          "$ref": "#/definitions/RecordCreatedDatabaseServiceTriggerAutomationSchema"
         },
         {
-          "$ref": "#/definitions/WebhookCalledHttpTriggerSchema"
+          "$ref": "#/definitions/WebhookCalledHttpServiceTriggerAutomationSchema"
         },
         {
-          "$ref": "#/definitions/TablePageCreatedNotionTriggerSchema"
+          "$ref": "#/definitions/TablePageCreatedNotionIntegrationTriggerAutomationSchema"
         },
         {
-          "$ref": "#/definitions/CronTimeTickedScheduleTriggerSchema"
+          "$ref": "#/definitions/CronTimeTickedScheduleServiceTriggerAutomationSchema"
         },
         {
-          "$ref": "#/definitions/InviteeCreatedTriggerSchema"
+          "$ref": "#/definitions/InviteeCreatedCalendlyIntegrationTriggerAutomationSchema"
         }
       ],
       "description": "Union type of all possible triggers that can start automations",
@@ -1282,36 +454,56 @@
         {
           "service": "Http",
           "trigger": "ApiCalled",
-          "method": "POST",
-          "path": "/api/webhook",
-          "headers": {
-            "Content-Type": "application/json"
-          }
-        },
-        {
-          "service": "Database",
-          "trigger": "RecordCreated",
-          "table": "users",
-          "conditions": {
-            "status": "active"
-          }
-        },
-        {
-          "service": "Schedule",
-          "trigger": "CronTimeTicked",
-          "cron": "0 9 * * *"
+          "path": "/run-automation"
         }
       ],
       "title": "Trigger"
     },
-    "ApiCalledHttpTriggerSchema": {
+    "ApiCalledHttpServiceTriggerAutomationSchema": {
       "type": "object",
       "properties": {
         "path": {
           "type": "string"
         },
         "input": {
-          "$ref": "#/definitions/JSONSchema"
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "string",
+                "number",
+                "boolean",
+                "array",
+                "object"
+              ]
+            },
+            "properties": {
+              "type": "object",
+              "additionalProperties": {}
+            },
+            "enum": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "items": {},
+            "required": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "oneOf": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "additionalProperties": false
         },
         "output": {
           "type": "object",
@@ -1397,53 +589,7 @@
       "description": "A trigger that fires when an API is called",
       "title": "Api Called"
     },
-    "JSONSchema": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "string",
-            "number",
-            "boolean",
-            "array",
-            "object"
-          ]
-        },
-        "properties": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/JSONSchema"
-          }
-        },
-        "enum": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "items": {
-          "$ref": "#/definitions/JSONSchema"
-        },
-        "required": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "additionalProperties": {
-          "type": "boolean"
-        },
-        "oneOf": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/JSONSchema"
-          }
-        }
-      },
-      "additionalProperties": false
-    },
-    "RecordCreatedDatabaseTriggerSchema": {
+    "RecordCreatedDatabaseServiceTriggerAutomationSchema": {
       "type": "object",
       "properties": {
         "table": {
@@ -1467,7 +613,7 @@
       "description": "A trigger that fires when a record is created in a database",
       "title": "Record Created"
     },
-    "WebhookCalledHttpTriggerSchema": {
+    "WebhookCalledHttpServiceTriggerAutomationSchema": {
       "type": "object",
       "properties": {
         "path": {
@@ -1492,7 +638,7 @@
       "description": "A trigger that fires when a webhook is called",
       "title": "Webhook Called"
     },
-    "TablePageCreatedNotionTriggerSchema": {
+    "TablePageCreatedNotionIntegrationTriggerAutomationSchema": {
       "type": "object",
       "properties": {
         "table": {
@@ -1520,7 +666,7 @@
       "description": "A trigger that fires when a table page is created in Notion",
       "title": "Table Page Created"
     },
-    "CronTimeTickedScheduleTriggerSchema": {
+    "CronTimeTickedScheduleServiceTriggerAutomationSchema": {
       "type": "object",
       "properties": {
         "cronTime": {
@@ -1544,7 +690,7 @@
       "description": "A trigger that fires when a cron time is ticked",
       "title": "Cron Time Ticked"
     },
-    "InviteeCreatedTriggerSchema": {
+    "InviteeCreatedCalendlyIntegrationTriggerAutomationSchema": {
       "type": "object",
       "properties": {
         "account": {
@@ -1568,13 +714,13 @@
       "description": "A trigger that fires when an invitee is created in Calendly",
       "title": "Invitee Created"
     },
-    "ActionSchema": {
+    "ActionAutomationSchema": {
       "anyOf": [
         {
-          "$ref": "#/definitions/ActionIntegrationSchema"
+          "$ref": "#/definitions/IntegrationActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/ActionServiceSchema"
+          "$ref": "#/definitions/ServiceActionAutomationSchema"
         }
       ],
       "description": "Union type of all possible actions that can be performed in automations",
@@ -1588,32 +734,41 @@
       ],
       "title": "Action"
     },
-    "ActionIntegrationSchema": {
+    "IntegrationActionAutomationSchema": {
       "anyOf": [
         {
-          "$ref": "#/definitions/GetCompanyPappersActionSchema"
+          "$ref": "#/definitions/GetCompanyPappersIntegrationActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/CreateClientQontoActionSchema"
+          "$ref": "#/definitions/CreateClientQontoIntegrationActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/UpdatePageNotionActionSchema"
+          "$ref": "#/definitions/UpdatePageNotionIntegrationActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/SendEmailGoogleMailActionSchema"
+          "$ref": "#/definitions/SendEmailMailGoogleIntegrationActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/CreatePaymentGoCardlessActionSchema"
+          "$ref": "#/definitions/CreatePaymentGoCardlessIntegrationActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/ListPaymentsGoCardlessActionSchema"
+          "$ref": "#/definitions/ListPaymentsGoCardlessIntegrationActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/RetrieveAttachmentQontoActionSchema"
+          "$ref": "#/definitions/RetrieveAttachmentQontoIntegrationActionAutomationSchema"
         }
-      ]
+      ],
+      "description": "Union type of all possible integration actions that can be performed in automations",
+      "examples": [
+        {
+          "service": "Integration",
+          "action": "GetCompany",
+          "companyId": "123"
+        }
+      ],
+      "title": "Integration"
     },
-    "GetCompanyPappersActionSchema": {
+    "GetCompanyPappersIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -1652,7 +807,7 @@
       ],
       "title": "Get Company"
     },
-    "CreateClientQontoActionSchema": {
+    "CreateClientQontoIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -1808,7 +963,7 @@
       ],
       "title": "Create Client"
     },
-    "UpdatePageNotionActionSchema": {
+    "UpdatePageNotionIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -1862,7 +1017,7 @@
       ],
       "title": "Update Page"
     },
-    "SendEmailGoogleMailActionSchema": {
+    "SendEmailMailGoogleIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -1932,7 +1087,7 @@
       ],
       "title": "Send Email"
     },
-    "CreatePaymentGoCardlessActionSchema": {
+    "CreatePaymentGoCardlessIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -2015,7 +1170,7 @@
       ],
       "title": "Create Payment"
     },
-    "ListPaymentsGoCardlessActionSchema": {
+    "ListPaymentsGoCardlessIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -2075,7 +1230,7 @@
       ],
       "title": "List Payments"
     },
-    "RetrieveAttachmentQontoActionSchema": {
+    "RetrieveAttachmentQontoIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -2114,23 +1269,32 @@
       ],
       "title": "Retrieve Attachment"
     },
-    "ActionServiceSchema": {
+    "ServiceActionAutomationSchema": {
       "anyOf": [
         {
-          "$ref": "#/definitions/RunJavascriptCodeActionSchema"
+          "$ref": "#/definitions/RunJavascriptCodeServiceActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/RunTypescriptCodeActionSchema"
+          "$ref": "#/definitions/RunTypescriptCodeServiceActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/CreateRecordDatabaseActionSchema"
+          "$ref": "#/definitions/CreateRecordDatabaseServiceActionAutomationSchema"
         },
         {
-          "$ref": "#/definitions/ReadRecordDatabaseActionSchema"
+          "$ref": "#/definitions/ReadRecordDatabaseServiceActionAutomationSchema"
         }
-      ]
+      ],
+      "description": "Union type of all possible service actions that can be performed in automations",
+      "examples": [
+        {
+          "service": "Service",
+          "action": "RunJavascript",
+          "code": "console.log(\"Hello, world!\");"
+        }
+      ],
+      "title": "Service"
     },
-    "RunJavascriptCodeActionSchema": {
+    "RunJavascriptCodeServiceActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -2175,7 +1339,7 @@
       ],
       "title": "Run JavaScript"
     },
-    "RunTypescriptCodeActionSchema": {
+    "RunTypescriptCodeServiceActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -2220,7 +1384,7 @@
       ],
       "title": "Run TypeScript"
     },
-    "CreateRecordDatabaseActionSchema": {
+    "CreateRecordDatabaseServiceActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -2268,7 +1432,7 @@
       ],
       "title": "Create Record"
     },
-    "ReadRecordDatabaseActionSchema": {
+    "ReadRecordDatabaseServiceActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
@@ -2308,150 +1472,835 @@
       ],
       "title": "Read Record"
     },
-    "IntegrationsSchema": {
+    "TableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The unique identifier for the table",
+          "examples": [
+            "users"
+          ]
+        },
+        "schema": {
+          "type": "string",
+          "description": "The database schema where the table is located",
+          "examples": [
+            "public"
+          ]
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FieldTableSchema"
+          },
+          "description": "Array of field definitions for the table",
+          "examples": [
+            [
+              {
+                "name": "id",
+                "type": "string",
+                "required": true
+              }
+            ]
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "fields"
+      ],
+      "additionalProperties": false,
+      "description": "Defines the structure of a database table",
+      "title": "Table"
+    },
+    "FieldTableSchema": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/DateTimeFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/EmailFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/FormulaFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/LongTextFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/MultipleLinkedRecordFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/NumberFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/RollupFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/SingleLineTextFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/SingleLinkedRecordFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/SingleSelectFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/MultipleSelectFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/CheckboxFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/MultipleAttachmentFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/UrlFieldTableSchema"
+        },
+        {
+          "$ref": "#/definitions/SingleAttachmentFieldTableSchema"
+        }
+      ],
+      "description": "Union type of all possible field types that can be used in forms and tables",
+      "examples": [
+        {
+          "type": "SingleLineText",
+          "name": "full_name",
+          "required": true
+        }
+      ],
+      "title": "Field"
+    },
+    "DateTimeFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "DateTime"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a date and time field in forms and tables",
+      "examples": [
+        {
+          "type": "DateTime",
+          "name": "appointmentTime",
+          "required": true
+        }
+      ],
+      "title": "DateTime"
+    },
+    "EmailFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Email"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that stores an email address",
+      "examples": [
+        {
+          "type": "Email",
+          "name": "email",
+          "required": true
+        }
+      ],
+      "title": "Email"
+    },
+    "FormulaFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Formula"
+        },
+        "formula": {
+          "type": "string"
+        },
+        "output": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Number",
+                "LongText",
+                "SingleLineText",
+                "DateTime"
+              ]
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "onMigration": {
+              "type": "object",
+              "properties": {
+                "replace": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "formula",
+        "name",
+        "output",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a calculated field in forms and tables",
+      "examples": [
+        {
+          "type": "Formula",
+          "name": "totalPrice",
+          "formula": "price * quantity"
+        }
+      ],
+      "title": "Formula"
+    },
+    "LongTextFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "LongText"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that stores multiple lines of text",
+      "examples": [
+        {
+          "type": "LongText",
+          "name": "description",
+          "required": true
+        }
+      ],
+      "title": "Long text"
+    },
+    "MultipleLinkedRecordFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "MultipleLinkedRecord"
+        },
+        "table": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "table",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that can link to multiple records from another table",
+      "examples": [
+        {
+          "type": "MultipleLinkedRecord",
+          "name": "projects",
+          "required": true,
+          "table": "projects"
+        }
+      ],
+      "title": "Multiple linked record"
+    },
+    "NumberFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Number"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that stores numeric values",
+      "examples": [
+        {
+          "type": "Number",
+          "name": "age",
+          "required": true
+        }
+      ],
+      "title": "Number"
+    },
+    "RollupFieldTableSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "multipleLinkedRecord": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "const": "Rollup"
+        },
+        "formula": {
+          "type": "string"
+        },
+        "linkedRecordField": {
+          "type": "string"
+        },
+        "output": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "Number",
+                "LongText",
+                "SingleLineText",
+                "DateTime"
+              ]
+            },
+            "required": {
+              "type": "boolean"
+            },
+            "onMigration": {
+              "type": "object",
+              "properties": {
+                "replace": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "type"
+          ],
+          "additionalProperties": false
+        },
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "formula",
+        "linkedRecordField",
+        "multipleLinkedRecord",
+        "name",
+        "output",
+        "type"
+      ],
+      "description": "Represents a field that aggregates data from linked records",
+      "examples": [
+        {
+          "type": "Rollup",
+          "name": "totalSales",
+          "required": false,
+          "multipleLinkedRecord": "orders",
+          "linkedRecordField": "amount",
+          "formula": "sum(amount)",
+          "output": {
+            "type": "Number",
+            "name": "totalSales"
+          }
+        }
+      ],
+      "title": "Rollup"
+    },
+    "SingleLineTextFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "SingleLineText"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that stores a single line of text",
+      "examples": [
+        {
+          "type": "SingleLineText",
+          "name": "title",
+          "required": true
+        }
+      ],
+      "title": "Single line text"
+    },
+    "SingleLinkedRecordFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "SingleLinkedRecord"
+        },
+        "table": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "table",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that can link to a single record from another table",
+      "examples": [
+        {
+          "type": "SingleLinkedRecord",
+          "name": "manager",
+          "required": true,
+          "table": "users"
+        }
+      ],
+      "title": "Single linked record"
+    },
+    "SingleSelectFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "SingleSelect"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "options",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that allows selecting one option from a predefined list",
+      "examples": [
+        {
+          "type": "SingleSelect",
+          "name": "status",
+          "required": true,
+          "options": [
+            "Active",
+            "Inactive",
+            "Pending"
+          ]
+        }
+      ],
+      "title": "Single select"
+    },
+    "MultipleSelectFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "MultipleSelect"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "options",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that allows selecting multiple options from a predefined list",
+      "examples": [
+        {
+          "type": "MultipleSelect",
+          "name": "interests",
+          "required": true,
+          "options": [
+            "Sports",
+            "Music",
+            "Travel"
+          ]
+        }
+      ],
+      "title": "Multiple select"
+    },
+    "CheckboxFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Checkbox"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a boolean checkbox field in forms and tables",
+      "examples": [
+        {
+          "type": "Checkbox",
+          "name": "termsAccepted",
+          "required": true
+        }
+      ],
+      "title": "Checkbox"
+    },
+    "MultipleAttachmentFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "MultipleAttachment"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that can store multiple file attachments",
+      "examples": [
+        {
+          "type": "MultipleAttachment",
+          "name": "documents",
+          "required": true
+        }
+      ],
+      "title": "Multiple attachment"
+    },
+    "UrlFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "Url"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that stores a URL",
+      "examples": [
+        {
+          "type": "Url",
+          "name": "website",
+          "required": true
+        }
+      ],
+      "title": "Url"
+    },
+    "SingleAttachmentFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "onMigration": {
+          "type": "object",
+          "properties": {
+            "replace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "type": {
+          "type": "string",
+          "const": "SingleAttachment"
+        }
+      },
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "description": "Represents a field that can store a single file attachment",
+      "examples": [
+        {
+          "type": "SingleAttachment",
+          "name": "profilePicture",
+          "required": true
+        }
+      ],
+      "title": "Single attachment"
+    },
+    "BucketSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "Type alias for bucket storage configuration",
+      "title": "Bucket"
+    },
+    "IntegrationSchema": {
       "type": "object",
       "properties": {
         "airtable": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "baseUrl": {
-                "type": "string"
-              },
-              "apiKey": {
-                "type": "string"
-              },
-              "databaseId": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "apiKey",
-              "databaseId",
-              "name"
-            ],
-            "additionalProperties": false
-          },
-          "description": "Configurations for Airtable integration",
-          "examples": [
-            [
-              {
-                "name": "main-database",
-                "apiKey": "key1234567890ABCD",
-                "databaseId": "app1234567890ABCD"
-              }
-            ]
-          ]
+            "$ref": "#/definitions/AirtableIntegrationSchema"
+          }
         },
         "notion": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "baseUrl": {
-                "type": "string"
-              },
-              "token": {
-                "type": "string"
-              },
-              "pollingInterval": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "name",
-              "token"
-            ],
-            "additionalProperties": false
-          },
-          "description": "Configurations for Notion integration",
-          "examples": [
-            [
-              {
-                "name": "project-management",
-                "token": "secret_1234567890ABCD",
-                "pollingInterval": 300000
-              }
-            ]
-          ]
+            "$ref": "#/definitions/NotionIntegrationSchema"
+          }
         },
         "pappers": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "baseUrl": {
-                "type": "string"
-              },
-              "apiKey": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "apiKey",
-              "name"
-            ],
-            "additionalProperties": false
-          },
-          "description": "Configurations for Pappers company data integration",
-          "examples": [
-            [
-              {
-                "name": "company-data",
-                "apiKey": "1234567890ABCD"
-              }
-            ]
-          ]
+            "$ref": "#/definitions/PappersIntegrationSchema"
+          }
         },
         "qonto": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "baseUrl": {
-                "type": "string"
-              },
-              "organisationSlug": {
-                "type": "string"
-              },
-              "secretKey": {
-                "type": "string"
-              },
-              "stagingToken": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "name",
-              "organisationSlug",
-              "secretKey"
-            ],
-            "additionalProperties": false
-          },
-          "description": "Configurations for Qonto banking integration",
-          "examples": [
-            [
-              {
-                "name": "business-account",
-                "organisationSlug": "my-company",
-                "secretKey": "1234567890ABCD",
-                "stagingToken": "staging_1234567890ABCD"
-              }
-            ]
-          ]
+            "$ref": "#/definitions/QontoIntegrationSchema"
+          }
         },
         "google": {
           "type": "object",
@@ -2459,151 +2308,284 @@
             "mail": {
               "type": "array",
               "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "baseUrl": {
-                    "type": "string"
-                  },
-                  "user": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "name",
-                  "password",
-                  "user"
-                ],
-                "additionalProperties": false
-              },
-              "description": "Configurations for Gmail integration",
-              "examples": [
-                [
-                  {
-                    "name": "support-email",
-                    "user": "support@company.com",
-                    "password": "app-specific-password"
-                  }
-                ]
-              ]
+                "$ref": "#/definitions/MailGoogleIntegrationSchema"
+              }
             }
           },
-          "additionalProperties": false,
-          "description": "Configurations for Google services integration"
+          "additionalProperties": false
         },
         "gocardless": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "baseUrl": {
-                "type": "string"
-              },
-              "accessToken": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "accessToken",
-              "name"
-            ],
-            "additionalProperties": false
-          },
-          "description": "Configurations for GoCardless payment integration",
-          "examples": [
-            [
-              {
-                "name": "payment-processing",
-                "accessToken": "live_1234567890ABCD"
-              }
-            ]
-          ]
+            "$ref": "#/definitions/GoCardlessIntegrationSchema"
+          }
         },
         "phantombuster": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "baseUrl": {
-                "type": "string"
-              },
-              "apiKey": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "apiKey",
-              "name"
-            ],
-            "additionalProperties": false
-          },
-          "description": "Configurations for Phantombuster automation integration",
-          "examples": [
-            [
-              {
-                "name": "linkedin-automation",
-                "apiKey": "1234567890ABCD"
-              }
-            ]
-          ]
+            "$ref": "#/definitions/PhantombusterIntegrationSchema"
+          }
         },
         "calendly": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "baseUrl": {
-                "type": "string"
-              },
-              "user": {
-                "type": "object",
-                "properties": {
-                  "accessToken": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "accessToken"
-                ],
-                "additionalProperties": false
-              }
-            },
-            "required": [
-              "name",
-              "user"
-            ],
-            "additionalProperties": false
-          },
-          "description": "Configurations for Calendly scheduling integration",
-          "examples": [
-            [
-              {
-                "name": "scheduling",
-                "user": {
-                  "accessToken": "1234567890ABCD"
-                }
-              }
-            ]
-          ]
+            "$ref": "#/definitions/CalendlyIntegrationSchema"
+          }
         }
       },
       "additionalProperties": false,
       "description": "Defines configurations for various third-party service integrations",
       "title": "Integrations"
+    },
+    "AirtableIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string"
+        },
+        "databaseId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "apiKey",
+        "databaseId",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Airtable integration",
+      "examples": [
+        {
+          "name": "main-database",
+          "apiKey": "key1234567890ABCD",
+          "databaseId": "app1234567890ABCD"
+        }
+      ],
+      "title": "Airtable"
+    },
+    "NotionIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "pollingInterval": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "token"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Notion integration",
+      "examples": [
+        {
+          "name": "project-management",
+          "token": "secret_1234567890ABCD",
+          "pollingInterval": 300000
+        }
+      ],
+      "title": "Notion"
+    },
+    "PappersIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "apiKey",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Pappers integration",
+      "examples": [
+        {
+          "name": "company-data",
+          "apiKey": "1234567890ABCD"
+        }
+      ],
+      "title": "Pappers"
+    },
+    "QontoIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "organisationSlug": {
+          "type": "string"
+        },
+        "secretKey": {
+          "type": "string"
+        },
+        "stagingToken": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "organisationSlug",
+        "secretKey"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Qonto banking integration",
+      "examples": [
+        {
+          "name": "business-account",
+          "organisationSlug": "my-company",
+          "secretKey": "1234567890ABCD",
+          "stagingToken": "staging_1234567890ABCD"
+        }
+      ],
+      "title": "Qonto"
+    },
+    "MailGoogleIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "user": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "password",
+        "user"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Gmail integration",
+      "examples": [
+        {
+          "name": "support-email",
+          "user": "support@company.com",
+          "password": "app-specific-password"
+        }
+      ],
+      "title": "Gmail"
+    },
+    "GoCardlessIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "accessToken": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "accessToken",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for GoCardless payment integration",
+      "examples": [
+        {
+          "name": "payment-processing",
+          "accessToken": "live_1234567890ABCD"
+        }
+      ],
+      "title": "GoCardless"
+    },
+    "PhantombusterIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "apiKey",
+        "name"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Phantombuster automation integration",
+      "examples": [
+        {
+          "name": "linkedin-automation",
+          "apiKey": "1234567890ABCD"
+        }
+      ],
+      "title": "Phantombuster"
+    },
+    "CalendlyIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "accessToken": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "accessToken"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "name",
+        "user"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Calendly scheduling integration",
+      "examples": [
+        {
+          "name": "scheduling",
+          "user": {
+            "accessToken": "1234567890ABCD"
+          }
+        }
+      ],
+      "title": "Calendly"
     }
   }
 }

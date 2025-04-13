@@ -11,4 +11,4 @@ import type { NumberFieldConfig } from '/domain/entities/Field/Number'
  *   required: true
  * }
  */
-export type NumberFieldSchema = NumberFieldConfig
+export type NumberFieldTableSchema = NumberFieldConfig

@@ -12,4 +12,4 @@ import type { MultipleSelectFieldConfig } from '/domain/entities/Field/MultipleS
  *   options: ['Sports', 'Music', 'Travel']
  * }
  */
-export type MultipleSelectFieldSchema = MultipleSelectFieldConfig
+export type MultipleSelectFieldTableSchema = MultipleSelectFieldConfig

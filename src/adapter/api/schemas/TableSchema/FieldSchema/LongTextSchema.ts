@@ -11,4 +11,4 @@ import type { LongTextFieldConfig } from '/domain/entities/Field/LongText'
  *   required: true
  * }
  */
-export type LongTextFieldSchema = LongTextFieldConfig
+export type LongTextFieldTableSchema = LongTextFieldConfig

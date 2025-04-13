@@ -1,7 +1,10 @@
 import type { Server, ServerMethodOptionsAuth } from '/domain/services/Server'
 import { JsonResponse } from '/domain/entities/Response/Json'
 import type { PostRequest } from '/domain/entities/Request/Post'
-import type { JSONSchema, JSONSchemaProperties } from '/domain/services/SchemaValidator'
+import type {
+  SchemaValidatorJson,
+  SchemaValidatorJsonProperties,
+} from '/domain/services/SchemaValidator'
 import { AutomationContext } from '/domain/entities/Automation/Context'
 import { BaseTrigger, type BaseTriggerConfig } from '/domain/entities/Trigger/base'
 import {
@@ -15,7 +18,7 @@ import type { System } from '/domain/services/System'
 
 export interface ApiCalledHttpTriggerConfig extends BaseTriggerConfig {
   path: string
-  input?: JSONSchema
+  input?: SchemaValidatorJson
   output?: TemplateObject
   auth?: ServerMethodOptionsAuth
   summary?: string
@@ -94,14 +97,14 @@ export class ApiCalledHttpTrigger extends BaseTrigger<ApiCalledHttpTriggerConfig
     }
   }
 
-  private _getOutputProperties = (): JSONSchemaProperties => {
+  private _getOutputProperties = (): SchemaValidatorJsonProperties => {
     const { output } = this._config
     if (!output) {
       return {
         success: { type: 'boolean' },
       }
     }
-    return Object.keys(output).reduce((res: JSONSchemaProperties, key) => {
+    return Object.keys(output).reduce((res: SchemaValidatorJsonProperties, key) => {
       const value = output ? output[key] : undefined
       if (!value || typeof value === 'string') {
         res[key] = { type: 'string' }

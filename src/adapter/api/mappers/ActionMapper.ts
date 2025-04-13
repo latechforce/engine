@@ -1,4 +1,4 @@
-import type { ActionSchema } from '../schemas/AutomationSchema/ActionSchema'
+import type { ActionAutomationSchema } from '/adapter/api/schemas/AutomationSchema/ActionSchema'
 import { CreatePaymentGoCardlessAction } from '/domain/entities/Action/integrations/gocardless/CreatePayment'
 import { ListPaymentsGoCardlessAction } from '/domain/entities/Action/integrations/gocardless/ListPayments'
 import { SendEmailGoogleMailAction } from '/domain/entities/Action/integrations/googleMail/SendEmail'
@@ -38,7 +38,7 @@ export type ActionMapperIntegrations = {
 
 export class ActionMapper {
   static toEntity(
-    schema: ActionSchema,
+    schema: ActionAutomationSchema,
     services: ActionMapperServices,
     entities: ActionMapperEntities,
     integrations: ActionMapperIntegrations
@@ -102,7 +102,7 @@ export class ActionMapper {
   }
 
   static toManyEntities(
-    schemas: ActionSchema[],
+    schemas: ActionAutomationSchema[],
     services: ActionMapperServices,
     entities: ActionMapperEntities,
     integrations: ActionMapperIntegrations

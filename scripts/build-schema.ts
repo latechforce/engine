@@ -24,199 +24,95 @@ function mergeSchemaWithConfig(schema: SchemaDefinition): SchemaDefinition {
   const definitionsToRemove = new Set<string>()
   const processedDefinitions = new Set<string>()
 
-  // Helper function to replace $ref with actual definition
-  const replaceRefWithDefinition = (obj: SchemaDefinition): SchemaDefinition => {
-    // Handle direct $ref
-    if (obj.$ref) {
-      const refKey = obj.$ref.replace('#/definitions/', '')
-      // Replace all non-Schema definitions
+  // Helper function to process any object recursively
+  const processObject = (obj: unknown): unknown => {
+    if (typeof obj !== 'object' || obj === null) {
+      return obj
+    }
+
+    // Handle arrays
+    if (Array.isArray(obj)) {
+      return obj.map((item) => processObject(item))
+    }
+
+    const schemaObj = obj as SchemaDefinition
+
+    // Handle $ref
+    if (schemaObj.$ref) {
+      const refKey = schemaObj.$ref.replace('#/definitions/', '')
       if (!refKey.endsWith('Schema')) {
         const refDefinition = merged.definitions[refKey] as SchemaDefinition
         if (refDefinition) {
-          // Mark the definition for removal
           definitionsToRemove.add(refKey)
-
-          const { $ref, ...rest } = obj
-          // Only process the definition if we haven't already
           if (!processedDefinitions.has(refKey)) {
             processedDefinitions.add(refKey)
-            // Recursively process the referenced definition
-            const processedDefinition = replaceRefWithDefinition(refDefinition)
+            const { $ref, ...rest } = schemaObj
+            const processedDefinition = processObject(refDefinition) as SchemaDefinition
             return {
               ...processedDefinition,
               ...rest,
             }
           }
-          // If we've already processed this definition, just return the current object
-          return { ...rest }
+          const { $ref, ...rest } = schemaObj
+          return rest
         }
       }
     }
 
-    // Recursively process properties and items
-    if (obj.properties) {
-      const processedProperties: Record<string, SchemaDefinition | { type: string }> = {}
-      Object.entries(obj.properties).forEach(([key, value]) => {
-        if (typeof value === 'object' && value !== null) {
-          const propertyValue = value as SchemaDefinition
-          // Handle property that is a direct reference
-          if (propertyValue.$ref) {
-            const refKey = propertyValue.$ref.replace('#/definitions/', '')
-            if (!refKey.endsWith('Schema')) {
-              const refDefinition = merged.definitions[refKey] as SchemaDefinition
-              if (refDefinition) {
-                // Mark the definition for removal
-                definitionsToRemove.add(refKey)
-                // Only process the definition if we haven't already
-                if (!processedDefinitions.has(refKey)) {
-                  processedDefinitions.add(refKey)
-                  // Recursively process the referenced definition
-                  const processedDefinition = replaceRefWithDefinition(refDefinition)
-                  processedProperties[key] = {
-                    ...processedDefinition,
-                    ...propertyValue,
-                  }
-                  // Remove $ref only if it was merged and doesn't end with Schema
-                  delete processedProperties[key].$ref
-                  return
-                }
-              }
-            }
-          }
-          processedProperties[key] = replaceRefWithDefinition(propertyValue)
-        } else {
-          processedProperties[key] = { type: value as unknown as string }
-        }
+    // Process properties
+    if (schemaObj.properties) {
+      const processedProperties: Record<string, SchemaDefinition> = {}
+      Object.entries(schemaObj.properties).forEach(([key, value]) => {
+        processedProperties[key] = processObject(value) as SchemaDefinition
       })
-      obj.properties = processedProperties
+      schemaObj.properties = processedProperties
     }
 
-    if (obj.items) {
-      if (Array.isArray(obj.items)) {
-        obj.items = obj.items.map((item) =>
-          typeof item === 'object' && item !== null
-            ? replaceRefWithDefinition(item as SchemaDefinition)
-            : item
-        )
-      } else if (typeof obj.items === 'object' && obj.items !== null) {
-        obj.items = replaceRefWithDefinition(obj.items as SchemaDefinition)
+    // Process items
+    if (schemaObj.items) {
+      if (Array.isArray(schemaObj.items)) {
+        schemaObj.items = schemaObj.items.map((item) => processObject(item)) as SchemaDefinition[]
+      } else {
+        schemaObj.items = processObject(schemaObj.items) as SchemaDefinition
       }
     }
 
-    // Handle anyOf, oneOf, allOf arrays
-    const processArrayOfObjects = (arr: unknown[]): unknown[] => {
-      return arr.map((item) => {
-        if (typeof item === 'object' && item !== null) {
-          const objItem = item as SchemaDefinition
-          if (objItem.$ref) {
-            const refKey = objItem.$ref.replace('#/definitions/', '')
-            if (!refKey.endsWith('Schema')) {
-              const refDefinition = merged.definitions[refKey] as SchemaDefinition
-              if (refDefinition) {
-                definitionsToRemove.add(refKey)
-                if (!processedDefinitions.has(refKey)) {
-                  processedDefinitions.add(refKey)
-                  const processedDefinition = replaceRefWithDefinition(refDefinition)
-                  const { $ref, ...rest } = objItem
-                  return {
-                    ...processedDefinition,
-                    ...rest,
-                  }
-                }
-                const { $ref, ...rest } = objItem
-                return { ...rest }
-              }
-            }
-          }
-          return replaceRefWithDefinition(objItem)
-        }
-        return item
-      })
+    // Process anyOf, oneOf, allOf
+    if (schemaObj.anyOf && Array.isArray(schemaObj.anyOf)) {
+      schemaObj.anyOf = schemaObj.anyOf.map((item) => processObject(item)) as SchemaDefinition[]
+    }
+    if (schemaObj.oneOf && Array.isArray(schemaObj.oneOf)) {
+      schemaObj.oneOf = schemaObj.oneOf.map((item) => processObject(item)) as SchemaDefinition[]
+    }
+    if (schemaObj.allOf && Array.isArray(schemaObj.allOf)) {
+      schemaObj.allOf = schemaObj.allOf.map((item) => processObject(item)) as SchemaDefinition[]
     }
 
-    if (obj.anyOf && Array.isArray(obj.anyOf)) {
-      obj.anyOf = processArrayOfObjects(obj.anyOf)
-    }
-    if (obj.oneOf && Array.isArray(obj.oneOf)) {
-      obj.oneOf = processArrayOfObjects(obj.oneOf)
-    }
-    if (obj.allOf && Array.isArray(obj.allOf)) {
-      obj.allOf = processArrayOfObjects(obj.allOf)
+    // Process additionalProperties
+    if (schemaObj.additionalProperties) {
+      schemaObj.additionalProperties = processObject(
+        schemaObj.additionalProperties
+      ) as SchemaDefinition
     }
 
-    // Handle additionalProperties
-    if (obj.additionalProperties) {
-      if (typeof obj.additionalProperties === 'object' && obj.additionalProperties !== null) {
-        if (Array.isArray(obj.additionalProperties)) {
-          obj.additionalProperties = processArrayOfObjects(obj.additionalProperties)
-        } else {
-          obj.additionalProperties = replaceRefWithDefinition(
-            obj.additionalProperties as SchemaDefinition
-          )
-        }
-      }
-    }
-
-    return obj
+    return schemaObj
   }
 
-  // First pass: Process the root schema
+  // Process all definitions
+  Object.entries(merged.definitions).forEach(([key, value]) => {
+    if (key.endsWith('Schema') && typeof value === 'object' && value !== null) {
+      merged.definitions[key] = processObject(value)
+    }
+  })
+
+  // Process root schema
   if (merged.$ref) {
     const refKey = merged.$ref.replace('#/definitions/', '')
     if (refKey.endsWith('Schema')) {
       const rootSchema = merged.definitions[refKey] as SchemaDefinition
       if (rootSchema) {
-        // Process the root schema's properties
-        rootSchema.properties = replaceRefWithDefinition(rootSchema).properties
-        merged.definitions[refKey] = rootSchema
+        merged.definitions[refKey] = processObject(rootSchema)
       }
-    }
-  }
-
-  // Second pass: Find all Schema definitions
-  Object.entries(merged.definitions).forEach(([key, value]) => {
-    if (key.endsWith('Schema') && typeof value === 'object' && value !== null) {
-      const schemaDef = value as SchemaDefinition
-      const configKey = key.replace('Schema', 'Config')
-
-      // Get the corresponding Config definition
-      const configDef = merged.definitions[configKey] as SchemaDefinition | undefined
-
-      if (configDef) {
-        // Mark the Config definition for removal
-        definitionsToRemove.add(configKey)
-
-        // Remove the $ref property
-        delete schemaDef.$ref
-
-        // Merge properties from Config into Schema
-        Object.entries(configDef).forEach(([propKey, propValue]) => {
-          if (propKey !== '$ref') {
-            schemaDef[propKey] = propValue
-          }
-        })
-
-        // Replace any $ref in the schema definition with actual definitions
-        schemaDef.properties = replaceRefWithDefinition(schemaDef).properties
-
-        // Update the definition
-        merged.definitions[key] = schemaDef
-      }
-
-      // Process all properties in the schema definition even if there's no Config
-      if (schemaDef.properties) {
-        schemaDef.properties = replaceRefWithDefinition(schemaDef).properties
-      }
-    }
-  })
-
-  // Third pass: Process IntegrationsSchema and its nested references
-  const integrationsSchema = merged.definitions['IntegrationsSchema'] as
-    | SchemaDefinition
-    | undefined
-  if (integrationsSchema) {
-    if (integrationsSchema.properties) {
-      integrationsSchema.properties = replaceRefWithDefinition(integrationsSchema).properties
     }
   }
 

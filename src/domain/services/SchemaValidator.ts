@@ -1,24 +1,24 @@
 import type { SchemaError } from '/domain/entities/Error/Schema'
 
-type JSONSchemaType = 'string' | 'number' | 'boolean' | 'array' | 'object'
+type SchemaValidatorJsonType = 'string' | 'number' | 'boolean' | 'array' | 'object'
 
-export interface JSONSchemaProperties {
-  [key: string]: JSONSchema
+export interface SchemaValidatorJsonProperties {
+  [key: string]: SchemaValidatorJson
 }
 
-export interface JSONSchema {
-  type?: JSONSchemaType
-  properties?: JSONSchemaProperties
+export interface SchemaValidatorJson {
+  type?: SchemaValidatorJsonType
+  properties?: SchemaValidatorJsonProperties
   enum?: string[]
-  items?: JSONSchema
+  items?: SchemaValidatorJson
   required?: string[]
   additionalProperties?: boolean
-  oneOf?: JSONSchema[]
+  oneOf?: SchemaValidatorJson[]
 }
 
 export interface ISchemaValidatorSpi {
   validateConfigSchema(json: unknown): SchemaError[]
-  validate(json: unknown, schema: JSONSchema): SchemaError[]
+  validate(json: unknown, schema: SchemaValidatorJson): SchemaError[]
 }
 
 export class SchemaValidator {
@@ -28,7 +28,7 @@ export class SchemaValidator {
     return this._spi.validateConfigSchema(json)
   }
 
-  validate = (json: unknown, schema: JSONSchema) => {
+  validate = (json: unknown, schema: SchemaValidatorJson) => {
     return this._spi.validate(json, schema)
   }
 }

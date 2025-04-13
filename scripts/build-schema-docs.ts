@@ -1,5 +1,5 @@
-import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'fs'
-import { join } from 'path'
+import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync } from 'fs'
+import { join, basename, extname } from 'path'
 import { JSONSchema7, JSONSchema7Definition } from 'json-schema'
 
 function isJSONSchema7(schema: JSONSchema7Definition): schema is JSONSchema7 {
@@ -256,6 +256,31 @@ function generateMarkdownForDefinition(name: string, schema: JSONSchema7): strin
   return markdown
 }
 
+interface SchemaFile {
+  name: string
+  parents: string[]
+  path: string
+  isDirectory: boolean
+  children?: SchemaFile[]
+}
+
+function getSchemaFiles(dir: string, parents: string[] = []): SchemaFile[] {
+  const files = readdirSync(dir)
+  return files.map((file) => {
+    const fullPath = join(dir, file)
+    const stats = statSync(fullPath)
+    const isDirectory = stats.isDirectory()
+    const name = removeSchemaSuffix(basename(file, extname(file)))
+    return {
+      name,
+      parents,
+      path: fullPath,
+      isDirectory,
+      children: isDirectory ? getSchemaFiles(fullPath, [name, ...parents]) : undefined,
+    }
+  })
+}
+
 function main() {
   try {
     // Read the schema file
@@ -276,10 +301,39 @@ function main() {
     // Create fresh docs directory
     mkdirSync(docsDir, { recursive: true })
 
-    // Generate documentation for the Config schema
-    const configSchema = schema.definitions.ConfigSchema
-    const markdown = generateMarkdownForDefinition('Config', configSchema)
-    writeFileSync(join(docsDir, 'config.md'), markdown)
+    // Process schema files from the schemas directory
+    const schemasDir = join(process.cwd(), 'src', 'adapter', 'api', 'schemas')
+    const schemaFiles = getSchemaFiles(schemasDir)
+
+    const processSchemaFiles = (schemaFiles: SchemaFile[], basePath: string) => {
+      for (const file of schemaFiles) {
+        if (file.isDirectory) {
+          // Create a subdirectory in docs for this schema type
+          const docsSubDir = join(basePath, file.name)
+          mkdirSync(docsSubDir, { recursive: true })
+
+          if (file.children) {
+            processSchemaFiles(file.children, docsSubDir)
+          }
+        } else {
+          try {
+            const definitionName =
+              (file.name !== 'index' ? file.name + file.parents.join('') : file.parents.join('')) +
+              'Schema'
+            const definitionSchema = schema.definitions[definitionName]
+            const integrationsMarkdown = generateMarkdownForDefinition(
+              definitionName,
+              definitionSchema
+            )
+            writeFileSync(join(basePath, `${file.name}.md`), integrationsMarkdown)
+            console.log(`Processing schema file: ${file.path.replace(schemasDir, '')}`)
+          } catch (error) {
+            console.error(`Error processing schema file ${file.path}:`, error)
+          }
+        }
+      }
+    }
+    processSchemaFiles(schemaFiles, docsDir)
 
     console.log('Documentation generation completed successfully!')
   } catch (error) {

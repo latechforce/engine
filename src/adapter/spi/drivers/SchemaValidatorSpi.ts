@@ -1,10 +1,10 @@
-import type { ISchemaValidatorSpi, JSONSchema } from '/domain/services/SchemaValidator'
+import type { ISchemaValidatorSpi, SchemaValidatorJson } from '/domain/services/SchemaValidator'
 import type { SchemaErrorDto } from '../dtos/ErrorDto'
 import { ErrorMapper } from '../mappers/ErrorMapper'
 
 export interface ISchemaValidatorDriver {
   validateConfigSchema(json: unknown): SchemaErrorDto[]
-  validate(json: unknown, schema: JSONSchema): SchemaErrorDto[]
+  validate(json: unknown, schema: SchemaValidatorJson): SchemaErrorDto[]
 }
 
 export class SchemaValidatorSpi implements ISchemaValidatorSpi {
@@ -15,7 +15,7 @@ export class SchemaValidatorSpi implements ISchemaValidatorSpi {
     return ErrorMapper.toManySchemaEntities(errors)
   }
 
-  validate = (json: unknown, schema: JSONSchema) => {
+  validate = (json: unknown, schema: SchemaValidatorJson) => {
     const errors = this._driver.validate(json, schema)
     return ErrorMapper.toManySchemaEntities(errors)
   }
