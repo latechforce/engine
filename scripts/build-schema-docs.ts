@@ -209,7 +209,8 @@ function generateMarkdownForDefinition(
         markdown += '|----------|-------|\n'
         markdown += `| Type | \`${dependency.type || 'any'}\` |\n`
         if (dependency.description) {
-          markdown += `| Description | ${dependency.description.replace(/\|/g, '\\|')} |\n`
+          const escapedDescription = dependency.description.replace(/\\/g, '\\\\').replace(/\|/g, '\\|');
+          markdown += `| Description | ${escapedDescription} |\n`
         }
       }
       markdown += '\n'
