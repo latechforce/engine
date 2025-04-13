@@ -6,4 +6,3 @@ The Http service trigger.
 
 1. [ApiCalledHttpServiceTriggerAutomation](/docs/automation/trigger/service/http/apicalled)
 2. [WebhookCalledHttpServiceTriggerAutomation](/docs/automation/trigger/service/http/webhookcalled)
-

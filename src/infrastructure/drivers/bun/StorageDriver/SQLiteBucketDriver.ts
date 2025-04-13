@@ -51,7 +51,7 @@ export class SQLiteStorageBucketDriver implements IStorageBucketDriver {
     const file = result.rows[0]
     if (!file) return
     const created_at = new Date(file.created_at)
-    const data = Buffer.from(file.data)
+    const data = file.data instanceof Buffer ? file.data : Buffer.from(file.data)
     return { ...file, created_at, data }
   }
 }

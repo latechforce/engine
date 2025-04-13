@@ -4,13 +4,13 @@ Retrieves company information using Pappers integration
 
 ## Properties
 
-| Property | Type | Required | Const | Description |
-|----------|------|----------|-------|-------------|
-| name | string | Yes |  |  |
-| account | string | Yes |  |  |
-| siret | string | Yes |  |  |
-| integration | string | Yes | `"Pappers"` |  |
-| action | string | Yes | `"GetCompany"` |  |
+| Property    | Type   | Required | Const          | Description |
+| ----------- | ------ | -------- | -------------- | ----------- |
+| name        | string | Yes      |                |             |
+| account     | string | Yes      |                |             |
+| siret       | string | Yes      |                |             |
+| integration | string | Yes      | `"Pappers"`    |             |
+| action      | string | Yes      | `"GetCompany"` |             |
 
 ## Examples
 
@@ -23,4 +23,3 @@ Example 1:
   "siren": "123456789"
 }
 ```
-

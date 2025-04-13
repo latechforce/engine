@@ -4,13 +4,13 @@ Creates a new record in the specified database table with the given fields
 
 ## Properties
 
-| Property | Type | Required | Const | Description |
-|----------|------|----------|-------|-------------|
-| name | string | Yes |  |  |
-| fields | object | Yes |  |  |
-| table | string | Yes |  |  |
-| service | string | Yes | `"Database"` |  |
-| action | string | Yes | `"CreateRecord"` |  |
+| Property | Type   | Required | Const            | Description |
+| -------- | ------ | -------- | ---------------- | ----------- |
+| name     | string | Yes      |                  |             |
+| fields   | object | Yes      |                  |             |
+| table    | string | Yes      |                  |             |
+| service  | string | Yes      | `"Database"`     |             |
+| action   | string | Yes      | `"CreateRecord"` |             |
 
 ## Examples
 
@@ -29,4 +29,3 @@ Example 1:
   }
 }
 ```
-

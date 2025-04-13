@@ -4,13 +4,13 @@ Creates a new payment in GoCardless with the specified details
 
 ## Properties
 
-| Property | Type | Required | Const | Description |
-|----------|------|----------|-------|-------------|
-| name | string | Yes |  |  |
-| account | string | Yes |  |  |
-| payment | object | Yes |  |  |
-| integration | string | Yes | `"GoCardless"` |  |
-| action | string | Yes | `"CreatePayment"` |  |
+| Property    | Type   | Required | Const             | Description |
+| ----------- | ------ | -------- | ----------------- | ----------- |
+| name        | string | Yes      |                   |             |
+| account     | string | Yes      |                   |             |
+| payment     | object | Yes      |                   |             |
+| integration | string | Yes      | `"GoCardless"`    |             |
+| action      | string | Yes      | `"CreatePayment"` |             |
 
 ## Examples
 
@@ -32,4 +32,3 @@ Example 1:
   }
 }
 ```
-

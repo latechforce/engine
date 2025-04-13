@@ -21,4 +21,3 @@ Example 1:
   "companyId": "123"
 }
 ```
-

@@ -94,6 +94,9 @@ export class SQLiteDatabaseDriver implements IDatabaseDriver {
       if (value instanceof Date) {
         return value.getTime()
       }
+      if (value instanceof Buffer) {
+        return new Uint8Array(value)
+      }
       return value
     })
     if (isSelect) {
