@@ -14,7 +14,7 @@ import { SingleAttachmentField } from '/domain/entities/Field/SingleAttachment'
 import { CheckboxField } from '/domain/entities/Field/Checkbox'
 import { UrlField } from '/domain/entities/Field/Url'
 import { RollupFieldMapper } from './RollupMapper'
-import type { FieldSchema } from '../../schemas/FieldSchema'
+import type { FieldSchema } from '../../schemas/TableSchema/FieldSchema'
 
 export class FieldMapper {
   static toEntity(config: FieldSchema, fields: FieldSchema[]): Field {

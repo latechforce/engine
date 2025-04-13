@@ -16,13 +16,14 @@ import type { StorageConfig } from './domain/services/Storage'
 
 export type { ConfigSchema as Config } from '/adapter/api/schemas/ConfigSchema'
 export type { AutomationSchema as Automation } from '/adapter/api/schemas/AutomationSchema'
-export type { ActionSchema as Action } from '/adapter/api/schemas/ActionSchema'
-export type { TriggerSchema as Trigger } from '/adapter/api/schemas/TriggerSchema'
+export type { ActionSchema as Action } from '/adapter/api/schemas/AutomationSchema/ActionSchema'
+export type { TriggerSchema as Trigger } from '/adapter/api/schemas/AutomationSchema/TriggerSchema'
 export type { TableSchema as Table } from '/adapter/api/schemas/TableSchema'
-export type { FieldSchema as Field } from '/adapter/api/schemas/FieldSchema'
+export type { FieldSchema as Field } from '/adapter/api/schemas/TableSchema/FieldSchema'
 export type { FilterConfig as Filter } from '/domain/entities/Filter'
 export type { BucketSchema as Bucket } from '/adapter/api/schemas/BucketSchema'
 export type { FormSchema as Form } from '/adapter/api/schemas/FormSchema'
+export type { InputSchema as Input } from '/adapter/api/schemas/FormSchema/InputSchema'
 export type {
   DatabaseConfig as Database,
   LoggersConfig as Loggers,

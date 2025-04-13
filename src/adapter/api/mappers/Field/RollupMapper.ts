@@ -1,7 +1,7 @@
 import { RollupField } from '/domain/entities/Field/Rollup'
 import { ConfigError } from '/domain/entities/Error/Config'
-import type { RollupFieldSchema } from '../../schemas/FieldSchema/RollupSchema'
-import type { FieldSchema } from '../../schemas/FieldSchema'
+import type { RollupFieldSchema } from '../../schemas/TableSchema/FieldSchema/RollupSchema'
+import type { FieldSchema } from '../../schemas/TableSchema/FieldSchema'
 
 export class RollupFieldMapper {
   static toEntity = (config: RollupFieldSchema, fields: FieldSchema[]): RollupField => {

@@ -292,28 +292,12 @@
       ],
       "additionalProperties": false,
       "description": "This is the configuration of the engine.",
-      "title": "Engine configuration"
+      "title": "Config"
     },
     "FormSchema": {
-      "description": "Type alias for form configuration",
-      "title": "Form configuration",
       "type": "object",
+      "additionalProperties": false,
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
-        },
         "inputs": {
           "type": "array",
           "items": {
@@ -347,6 +331,21 @@
             "additionalProperties": false
           }
         },
+        "name": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "table": {
+          "type": "string"
+        },
         "submitLabel": {
           "type": "string"
         },
@@ -355,12 +354,13 @@
         }
       },
       "required": [
+        "inputs",
         "name",
         "path",
-        "table",
-        "inputs"
+        "table"
       ],
-      "additionalProperties": false
+      "description": "Type alias for form configuration",
+      "title": "Form"
     },
     "TableSchema": {
       "type": "object",
@@ -402,7 +402,7 @@
       ],
       "additionalProperties": false,
       "description": "Defines the structure of a database table",
-      "title": "Table configuration"
+      "title": "Table"
     },
     "FieldSchema": {
       "anyOf": [
@@ -485,7 +485,7 @@
           ]
         }
       ],
-      "title": "Field types"
+      "title": "Field"
     },
     "DateTimeFieldSchema": {
       "description": "Represents a date and time field in forms and tables",
@@ -496,7 +496,7 @@
           "required": true
         }
       ],
-      "title": "DateTime field",
+      "title": "DateTime",
       "type": "object",
       "properties": {
         "name": {
@@ -534,7 +534,7 @@
           "required": true
         }
       ],
-      "title": "Email field",
+      "title": "Email",
       "type": "object",
       "properties": {
         "name": {
@@ -572,7 +572,7 @@
           "formula": "price * quantity"
         }
       ],
-      "title": "Formula field",
+      "title": "Formula",
       "type": "object",
       "properties": {
         "name": {
@@ -645,7 +645,7 @@
           "required": true
         }
       ],
-      "title": "Long text field",
+      "title": "Long text",
       "type": "object",
       "properties": {
         "name": {
@@ -684,7 +684,7 @@
           "table": "projects"
         }
       ],
-      "title": "Multiple linked record field",
+      "title": "Multiple linked record",
       "type": "object",
       "properties": {
         "name": {
@@ -726,7 +726,7 @@
           "required": true
         }
       ],
-      "title": "Number field",
+      "title": "Number",
       "type": "object",
       "properties": {
         "name": {
@@ -841,7 +841,7 @@
           }
         }
       ],
-      "title": "Rollup field"
+      "title": "Rollup"
     },
     "SingleLineTextFieldSchema": {
       "description": "Represents a field that stores a single line of text",
@@ -852,7 +852,7 @@
           "required": true
         }
       ],
-      "title": "Single line text field",
+      "title": "Single line text",
       "type": "object",
       "properties": {
         "name": {
@@ -891,7 +891,7 @@
           "table": "users"
         }
       ],
-      "title": "Single linked record field",
+      "title": "Single linked record",
       "type": "object",
       "properties": {
         "name": {
@@ -938,7 +938,7 @@
           ]
         }
       ],
-      "title": "Single select field",
+      "title": "Single select",
       "type": "object",
       "properties": {
         "name": {
@@ -988,7 +988,7 @@
           ]
         }
       ],
-      "title": "Multiple select field",
+      "title": "Multiple select",
       "type": "object",
       "properties": {
         "name": {
@@ -1033,7 +1033,7 @@
           "required": true
         }
       ],
-      "title": "Checkbox field",
+      "title": "Checkbox",
       "type": "object",
       "properties": {
         "name": {
@@ -1071,7 +1071,7 @@
           "required": true
         }
       ],
-      "title": "Multiple attachment field",
+      "title": "Multiple attachment",
       "type": "object",
       "properties": {
         "name": {
@@ -1109,7 +1109,7 @@
           "required": true
         }
       ],
-      "title": "URL field",
+      "title": "Url",
       "type": "object",
       "properties": {
         "name": {
@@ -1147,7 +1147,7 @@
           "required": true
         }
       ],
-      "title": "Single attachment field",
+      "title": "Single attachment",
       "type": "object",
       "properties": {
         "name": {
@@ -1178,7 +1178,7 @@
     },
     "BucketSchema": {
       "description": "Type alias for bucket storage configuration",
-      "title": "Bucket configuration",
+      "title": "Bucket",
       "type": "object",
       "properties": {
         "name": {
@@ -1254,7 +1254,7 @@
       ],
       "additionalProperties": false,
       "description": "Defines an automation workflow with triggers and actions",
-      "title": "Automation configuration"
+      "title": "Automation"
     },
     "TriggerSchema": {
       "anyOf": [
@@ -1302,7 +1302,7 @@
           "cron": "0 9 * * *"
         }
       ],
-      "title": "Trigger types"
+      "title": "Trigger"
     },
     "ApiCalledHttpTriggerSchema": {
       "type": "object",
@@ -1393,7 +1393,9 @@
         "path",
         "service"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A trigger that fires when an API is called",
+      "title": "Api Called"
     },
     "JSONSchema": {
       "type": "object",
@@ -1461,7 +1463,9 @@
         "service",
         "table"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A trigger that fires when a record is created in a database",
+      "title": "Record Created"
     },
     "WebhookCalledHttpTriggerSchema": {
       "type": "object",
@@ -1484,7 +1488,9 @@
         "path",
         "service"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A trigger that fires when a webhook is called",
+      "title": "Webhook Called"
     },
     "TablePageCreatedNotionTriggerSchema": {
       "type": "object",
@@ -1510,7 +1516,9 @@
         "integration",
         "table"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A trigger that fires when a table page is created in Notion",
+      "title": "Table Page Created"
     },
     "CronTimeTickedScheduleTriggerSchema": {
       "type": "object",
@@ -1532,7 +1540,9 @@
         "event",
         "service"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A trigger that fires when a cron time is ticked",
+      "title": "Cron Time Ticked"
     },
     "InviteeCreatedTriggerSchema": {
       "type": "object",
@@ -1554,7 +1564,9 @@
         "event",
         "integration"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "A trigger that fires when an invitee is created in Calendly",
+      "title": "Invitee Created"
     },
     "ActionSchema": {
       "anyOf": [
@@ -1574,7 +1586,7 @@
           "id": "user_123"
         }
       ],
-      "title": "Action types"
+      "title": "Action"
     },
     "ActionIntegrationSchema": {
       "anyOf": [
@@ -1638,7 +1650,7 @@
           "siren": "123456789"
         }
       ],
-      "title": "Get Company Pappers Action"
+      "title": "Get Company"
     },
     "CreateClientQontoActionSchema": {
       "type": "object",
@@ -1794,7 +1806,7 @@
           }
         }
       ],
-      "title": "Create Qonto Client Action"
+      "title": "Create Client"
     },
     "UpdatePageNotionActionSchema": {
       "type": "object",
@@ -1848,7 +1860,7 @@
           }
         }
       ],
-      "title": "Update Notion Page Action"
+      "title": "Update Page"
     },
     "SendEmailGoogleMailActionSchema": {
       "type": "object",
@@ -1918,7 +1930,7 @@
           }
         }
       ],
-      "title": "Send Email Google Mail Action"
+      "title": "Send Email"
     },
     "CreatePaymentGoCardlessActionSchema": {
       "type": "object",
@@ -2001,7 +2013,7 @@
           }
         }
       ],
-      "title": "Create GoCardless Payment Action"
+      "title": "Create Payment"
     },
     "ListPaymentsGoCardlessActionSchema": {
       "type": "object",
@@ -2061,7 +2073,7 @@
           }
         }
       ],
-      "title": "List Payments GoCardless Action"
+      "title": "List Payments"
     },
     "RetrieveAttachmentQontoActionSchema": {
       "type": "object",
@@ -2100,7 +2112,7 @@
           "attachmentId": "att_123456789"
         }
       ],
-      "title": "Retrieve Attachment Qonto Action"
+      "title": "Retrieve Attachment"
     },
     "ActionServiceSchema": {
       "anyOf": [
@@ -2161,7 +2173,7 @@
           }
         }
       ],
-      "title": "Run JavaScript Code Action"
+      "title": "Run JavaScript"
     },
     "RunTypescriptCodeActionSchema": {
       "type": "object",
@@ -2206,7 +2218,7 @@
           }
         }
       ],
-      "title": "Run TypeScript Code Action"
+      "title": "Run TypeScript"
     },
     "CreateRecordDatabaseActionSchema": {
       "type": "object",
@@ -2254,7 +2266,7 @@
           }
         }
       ],
-      "title": "Create Database Record Action"
+      "title": "Create Record"
     },
     "ReadRecordDatabaseActionSchema": {
       "type": "object",
@@ -2294,7 +2306,7 @@
           "id": "user_123"
         }
       ],
-      "title": "Read Record Database Action"
+      "title": "Read Record"
     },
     "IntegrationsSchema": {
       "type": "object",
@@ -2591,7 +2603,7 @@
       },
       "additionalProperties": false,
       "description": "Defines configurations for various third-party service integrations",
-      "title": "Integrations configuration"
+      "title": "Integrations"
     }
   }
 }

@@ -9,7 +9,7 @@ import type { CalendlyConfig } from '/domain/integrations/Calendly'
 
 /**
  * Integrations configuration interface
- * @title Integrations configuration
+ * @title Integrations
  * @description Defines configurations for various third-party service integrations
  */
 export interface IntegrationsSchema {

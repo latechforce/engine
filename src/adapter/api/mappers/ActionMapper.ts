@@ -1,4 +1,4 @@
-import type { ActionSchema } from '../schemas/ActionSchema'
+import type { ActionSchema } from '../schemas/AutomationSchema/ActionSchema'
 import { CreatePaymentGoCardlessAction } from '/domain/entities/Action/integrations/gocardless/CreatePayment'
 import { ListPaymentsGoCardlessAction } from '/domain/entities/Action/integrations/gocardless/ListPayments'
 import { SendEmailGoogleMailAction } from '/domain/entities/Action/integrations/googleMail/SendEmail'

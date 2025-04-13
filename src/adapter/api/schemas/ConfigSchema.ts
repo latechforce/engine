@@ -14,7 +14,7 @@ import type { TunnelConfig } from '/domain/services/Tunnel'
 
 /**
  * Engine configuration
- * @title Engine configuration
+ * @title Config
  * @description This is the configuration of the engine.
  */
 export type ConfigSchema = {
