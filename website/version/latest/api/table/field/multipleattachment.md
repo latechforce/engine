@@ -1,19 +1,27 @@
 # Multiple attachment
 
+## Description
+
 Represents a field that can store multiple file attachments
 
 ## Properties
 
-| Property    | Type    | Required | Const                  | Description |
-| ----------- | ------- | -------- | ---------------------- | ----------- |
-| name        | string  | Yes      |                        |             |
-| required    | boolean | No       |                        |             |
-| onMigration | object  | No       |                        |             |
-| type        | string  | Yes      | `"MultipleAttachment"` |             |
+| Name        | Type                        | Required | Description |
+| ----------- | --------------------------- | -------- | ----------- |
+| name        | string                      | ✔       |             |
+| required    | boolean                     |          |             |
+| onMigration | Object                      |          |             |
+| type        | const: `MultipleAttachment` | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### onMigration
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| replace  | string |          |             |
+
+## Example
 
 ```json
 {

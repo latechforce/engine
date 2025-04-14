@@ -12,4 +12,4 @@ Engine is a powerful web app generator that helps you build modern applications 
 
 ## Getting Started
 
-To get started with Engine, check out our [Schema API documentation](/schema-api/intro) for technical details and configuration options.
+To get started with Engine, check out our [Schema API documentation](/api/config) for technical details and configuration options.

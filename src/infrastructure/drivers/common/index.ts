@@ -1,6 +1,6 @@
 import type { Drivers } from '/adapter/spi/drivers'
 import type { QueueConfig } from '/domain/services/Queue'
-import type { LoggersConfig } from '/domain/services/Logger'
+import type { LoggerConfig } from '/domain/services/Logger'
 import type { CodeCompilerConfig } from '/domain/services/CodeCompiler'
 import type { TunnelConfig } from '/domain/services/Tunnel'
 import type { ThemeConfig } from '/domain/services/Theme'
@@ -21,7 +21,7 @@ import { ThemeDriver } from './ThemeDriver'
 export const drivers: Omit<Drivers, 'database' | 'monitor' | 'server' | 'storage'> = {
   tunnel: (config?: TunnelConfig) => new TunnelDriver(config),
   queue: (config: QueueConfig) => new QueueDriver(config),
-  logger: (config: LoggersConfig) => new LoggerDriver(config),
+  logger: (config: LoggerConfig[]) => new LoggerDriver(config),
   codeCompiler: (config: CodeCompilerConfig) => new CodeCompilerDriver(config),
   theme: (config: ThemeConfig) => new ThemeDriver(config),
   templateCompiler: () => new TemplateCompilerDriver(),

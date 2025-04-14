@@ -1,20 +1,32 @@
 # List Payments
 
+## Description
+
 Lists payments using GoCardless integration with optional filters
 
 ## Properties
 
-| Property    | Type   | Required | Const            | Description |
-| ----------- | ------ | -------- | ---------------- | ----------- |
-| name        | string | Yes      |                  |             |
-| account     | string | Yes      |                  |             |
-| params      | object | Yes      |                  |             |
-| integration | string | Yes      | `"GoCardless"`   |             |
-| action      | string | Yes      | `"ListPayments"` |             |
+| Name        | Type                  | Required | Description |
+| ----------- | --------------------- | -------- | ----------- |
+| name        | string                | ✔       |             |
+| account     | string                | ✔       |             |
+| params      | Object                | ✔       |             |
+| integration | const: `GoCardless`   | ✔       |             |
+| action      | const: `ListPayments` | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### params
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| limit    | number |          |             |
+| after    | string |          |             |
+| before   | string |          |             |
+| status   | string |          |             |
+| mandate  | string |          |             |
+
+## Example
 
 ```json
 {

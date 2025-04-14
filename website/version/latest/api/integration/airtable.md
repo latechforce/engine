@@ -1,19 +1,19 @@
 # Airtable
 
+## Description
+
 A configuration schema for Airtable integration
 
 ## Properties
 
-| Property   | Type   | Required | Const | Description |
-| ---------- | ------ | -------- | ----- | ----------- |
-| name       | string | Yes      |       |             |
-| baseUrl    | string | No       |       |             |
-| apiKey     | string | Yes      |       |             |
-| databaseId | string | Yes      |       |             |
+| Name       | Type   | Required | Description |
+| ---------- | ------ | -------- | ----------- |
+| name       | string | ✔       |             |
+| baseUrl    | string |          |             |
+| apiKey     | string | ✔       |             |
+| databaseId | string | ✔       |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

@@ -1,20 +1,20 @@
 # Qonto
 
+## Description
+
 A configuration schema for Qonto banking integration
 
 ## Properties
 
-| Property         | Type   | Required | Const | Description |
-| ---------------- | ------ | -------- | ----- | ----------- |
-| name             | string | Yes      |       |             |
-| baseUrl          | string | No       |       |             |
-| organisationSlug | string | Yes      |       |             |
-| secretKey        | string | Yes      |       |             |
-| stagingToken     | string | No       |       |             |
+| Name             | Type   | Required | Description |
+| ---------------- | ------ | -------- | ----------- |
+| name             | string | ✔       |             |
+| baseUrl          | string |          |             |
+| organisationSlug | string | ✔       |             |
+| secretKey        | string | ✔       |             |
+| stagingToken     | string |          |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

@@ -10,13 +10,15 @@ describe('on start', () => {
       name: 'App',
       version: '1.0.0',
       engine: '1.0.0',
-      monitors: [
-        {
-          driver: 'Sentry',
-          dsn: env.TEST_SENTRY_DSN,
-          environment: 'test',
-        },
-      ],
+      services: {
+        monitors: [
+          {
+            driver: 'Sentry',
+            dsn: env.TEST_SENTRY_DSN,
+            environment: 'test',
+          },
+        ],
+      },
     }
     const app = new MockedApp()
 
@@ -34,13 +36,15 @@ describe('on start', () => {
       name: 'La Tech Force App',
       version: '1.0.0',
       engine: '1.0.0',
-      monitors: [
-        {
-          driver: 'Sentry',
-          dsn: env.TEST_SENTRY_DSN,
-          environment: 'test',
-        },
-      ],
+      services: {
+        monitors: [
+          {
+            driver: 'Sentry',
+            dsn: env.TEST_SENTRY_DSN,
+            environment: 'test',
+          },
+        ],
+      },
     }
     const app = new MockedApp()
 

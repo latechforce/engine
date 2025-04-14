@@ -27,11 +27,13 @@ describe('on start', () => {
           name: 'bucket',
         },
       ],
-      database: {
-        driver: 'PostgreSQL',
-        url,
+      services: {
+        database: {
+          driver: 'PostgreSQL',
+          url,
+        },
+        loggers: [],
       },
-      loggers: [],
     }
     const app = new MockedApp()
 
@@ -53,11 +55,13 @@ describe('on start', () => {
           name: 'bucket',
         },
       ],
-      database: {
-        driver: 'PostgreSQL',
-        url,
+      services: {
+        database: {
+          driver: 'PostgreSQL',
+          url,
+        },
+        loggers: [],
       },
-      loggers: [],
     }
     const app = new MockedApp()
     const startedApp = await app.start(config)

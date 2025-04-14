@@ -20,7 +20,9 @@ describe('start', () => {
       name: 'App',
       version: '1.0.0',
       engine: '1.0.0',
-      loggers: [],
+      services: {
+        loggers: [],
+      },
     }
     const app = new MockedApp()
 
@@ -38,8 +40,10 @@ describe('start', () => {
       name: 'App',
       version: '1.0.0',
       engine: '1.0.0',
-      server: { port: '6543' },
-      loggers: [],
+      services: {
+        server: { port: '6543' },
+        loggers: [],
+      },
     }
     const app = new MockedApp()
 
@@ -57,10 +61,12 @@ describe('start', () => {
       name: 'App',
       version: '1.0.0',
       engine: '1.0.0',
-      server: {
-        baseUrl: 'http://custom-url.com',
+      services: {
+        server: {
+          baseUrl: 'http://custom-url.com',
+        },
+        loggers: [],
       },
-      loggers: [],
     }
     const app = new MockedApp()
 
@@ -78,7 +84,9 @@ describe('start', () => {
       name: 'App',
       version: '1.0.0',
       engine: '1.0.0',
-      loggers: [],
+      services: {
+        loggers: [],
+      },
     }
     const app = new MockedApp()
     const startedApp = await app.start(config)
@@ -98,8 +106,10 @@ describe('start', () => {
       version: '1.0.0',
       engine: '1.0.0',
       description: '{{ env.DESCRIPTION }}',
-      server: { port: '{{env.PORT}}' },
-      loggers: [],
+      services: {
+        server: { port: '{{env.PORT}}' },
+        loggers: [],
+      },
     }
     const app = new MockedApp({ env: { PORT: '6543', DESCRIPTION: 'App' } })
 
@@ -118,8 +128,10 @@ describe('start', () => {
       name: 'App',
       version: '{{ env.VERSION "1.0.0" }}',
       engine: '{{ env.ENGINE "1.0.0" }}',
-      server: { port: '{{env.PORT "6543"}}' },
-      loggers: [],
+      services: {
+        server: { port: '{{env.PORT "6543"}}' },
+        loggers: [],
+      },
     }
     const app = new MockedApp()
 
@@ -140,7 +152,9 @@ describe('stop', () => {
       name: 'App',
       version: '1.0.0',
       engine: '1.0.0',
-      loggers: [],
+      services: {
+        loggers: [],
+      },
     }
     const app = new MockedApp()
     const startedApp = await app.start(config)

@@ -7,274 +7,55 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "The name of the engine",
-          "title": "Name"
+          "description": "The name of the engine"
         },
         "version": {
           "type": "string",
-          "description": "The version of the config",
-          "title": "Config version"
+          "description": "The version of the config"
         },
         "engine": {
           "type": "string",
-          "description": "The version of the engine",
-          "title": "Engine version"
+          "description": "The version of the engine"
         },
         "description": {
           "type": "string",
-          "description": "The description of the engine",
-          "title": "Description"
+          "description": "The description of the engine"
         },
         "forms": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/FormSchema"
           },
-          "description": "The forms of the engine",
-          "title": "Forms"
+          "description": "The forms of the engine"
         },
         "automations": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/AutomationSchema"
           },
-          "description": "The automations of the engine",
-          "title": "Automations"
+          "description": "The automations of the engine"
         },
         "tables": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/TableSchema"
           },
-          "description": "The tables of the engine",
-          "title": "Tables"
+          "description": "The tables of the engine"
         },
         "buckets": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/BucketSchema"
           },
-          "description": "The buckets of the engine",
-          "title": "Buckets"
+          "description": "The buckets of the engine"
         },
         "integrations": {
           "$ref": "#/definitions/IntegrationSchema",
-          "description": "The integrations of the engine",
-          "title": "Integrations"
+          "description": "The integrations of the engine"
         },
-        "server": {
-          "type": "object",
-          "properties": {
-            "apiKeys": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "port": {
-              "type": ["string", "number"]
-            },
-            "idleTimeout": {
-              "type": ["string", "number"]
-            },
-            "baseUrl": {
-              "type": "string"
-            },
-            "sslCert": {
-              "type": "string"
-            },
-            "sslKey": {
-              "type": "string"
-            },
-            "env": {
-              "type": "string"
-            },
-            "monitors": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "enum": ["Sentry", "Console"]
-              }
-            }
-          },
-          "additionalProperties": false,
-          "description": "The server of the engine",
-          "title": "Server"
-        },
-        "database": {
-          "type": "object",
-          "properties": {
-            "driver": {
-              "type": "string",
-              "enum": ["PostgreSQL", "SQLite"]
-            },
-            "url": {
-              "type": "string"
-            }
-          },
-          "required": ["driver", "url"],
-          "additionalProperties": false,
-          "description": "The database of the engine",
-          "title": "Database"
-        },
-        "monitors": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "type": "string",
-                    "const": "Sentry"
-                  },
-                  "dsn": {
-                    "type": "string"
-                  },
-                  "environment": {
-                    "type": "string"
-                  }
-                },
-                "required": ["driver", "dsn", "environment"],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "driver": {
-                    "type": "string",
-                    "const": "Console"
-                  }
-                },
-                "required": ["driver"],
-                "additionalProperties": false
-              }
-            ]
-          },
-          "description": "The monitors of the engine",
-          "title": "Monitors"
-        },
-        "loggers": {
-          "type": "array",
-          "items": {
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "level": {
-                    "type": "string"
-                  },
-                  "silent": {
-                    "type": "boolean"
-                  },
-                  "driver": {
-                    "type": "string",
-                    "const": "Console"
-                  }
-                },
-                "required": ["driver"],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "level": {
-                    "type": "string"
-                  },
-                  "silent": {
-                    "type": "boolean"
-                  },
-                  "driver": {
-                    "type": "string",
-                    "const": "File"
-                  },
-                  "filename": {
-                    "type": "string"
-                  }
-                },
-                "required": ["driver", "filename"],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "level": {
-                    "type": "string"
-                  },
-                  "silent": {
-                    "type": "boolean"
-                  },
-                  "driver": {
-                    "type": "string",
-                    "const": "ElasticSearch"
-                  },
-                  "url": {
-                    "type": "string"
-                  },
-                  "index": {
-                    "type": "string"
-                  }
-                },
-                "required": ["driver", "url", "index"],
-                "additionalProperties": false
-              }
-            ]
-          },
-          "description": "The loggers of the engine",
-          "title": "Loggers"
-        },
-        "tunnel": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "baseUrl": {
-              "type": "string"
-            },
-            "authToken": {
-              "type": "string"
-            },
-            "integration": {
-              "type": "string",
-              "const": "Ngrok"
-            }
-          },
-          "required": ["authToken", "integration", "name"],
-          "additionalProperties": false,
-          "description": "The tunnel of the engine",
-          "title": "Tunnel"
-        },
-        "theme": {
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "const": "none"
-                }
-              },
-              "required": ["type"],
-              "additionalProperties": false
-            },
-            {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "const": "tailwindcss"
-                },
-                "base": {
-                  "type": "string"
-                }
-              },
-              "required": ["type"],
-              "additionalProperties": false
-            }
-          ],
-          "description": "The themes of the engine",
-          "title": "Themes"
+        "services": {
+          "$ref": "#/definitions/ServiceSchema",
+          "description": "The services of the engine"
         }
       },
       "required": ["name", "version", "engine"],
@@ -2438,6 +2219,259 @@
       "additionalProperties": false,
       "description": "A configuration schema for YouCanBookMe scheduling integration",
       "title": "YouCanBookMe"
+    },
+    "ServiceSchema": {
+      "type": "object",
+      "properties": {
+        "server": {
+          "$ref": "#/definitions/ServerServiceSchema"
+        },
+        "database": {
+          "$ref": "#/definitions/DatabaseServiceSchema",
+          "description": "The database of the engine"
+        },
+        "monitors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MonitorServiceSchema"
+          },
+          "description": "The monitors of the engine"
+        },
+        "loggers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/LoggerServiceSchema"
+          },
+          "description": "The loggers of the engine"
+        },
+        "tunnel": {
+          "$ref": "#/definitions/TunnelServiceSchema",
+          "description": "The tunnel of the engine"
+        },
+        "theme": {
+          "$ref": "#/definitions/ThemeServiceSchema",
+          "description": "The themes of the engine"
+        }
+      },
+      "additionalProperties": false,
+      "description": "Defines configurations for various services",
+      "title": "Services"
+    },
+    "ServerServiceSchema": {
+      "type": "object",
+      "properties": {
+        "apiKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "port": {
+          "type": ["string", "number"]
+        },
+        "idleTimeout": {
+          "type": ["string", "number"]
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "sslCert": {
+          "type": "string"
+        },
+        "sslKey": {
+          "type": "string"
+        },
+        "monitors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Sentry", "Console"]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "description": "The server config for the engine",
+      "title": "Server"
+    },
+    "DatabaseServiceSchema": {
+      "type": "object",
+      "properties": {
+        "driver": {
+          "type": "string",
+          "enum": ["PostgreSQL", "SQLite"]
+        },
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": ["driver", "url"],
+      "additionalProperties": false,
+      "description": "The database config for the engine",
+      "title": "Database",
+      "default": {
+        "driver": "SQLite",
+        "url": ":memory:"
+      }
+    },
+    "MonitorServiceSchema": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "driver": {
+              "type": "string",
+              "const": "Sentry"
+            },
+            "dsn": {
+              "type": "string"
+            },
+            "environment": {
+              "type": "string"
+            }
+          },
+          "required": ["driver", "dsn", "environment"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "driver": {
+              "type": "string",
+              "const": "Console"
+            }
+          },
+          "required": ["driver"],
+          "additionalProperties": false
+        }
+      ],
+      "description": "The monitor config for the engine",
+      "title": "Monitor"
+    },
+    "LoggerServiceSchema": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "string"
+            },
+            "silent": {
+              "type": "boolean"
+            },
+            "driver": {
+              "type": "string",
+              "const": "Console"
+            }
+          },
+          "required": ["driver"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "string"
+            },
+            "silent": {
+              "type": "boolean"
+            },
+            "driver": {
+              "type": "string",
+              "const": "File"
+            },
+            "filename": {
+              "type": "string"
+            }
+          },
+          "required": ["driver", "filename"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "level": {
+              "type": "string"
+            },
+            "silent": {
+              "type": "boolean"
+            },
+            "driver": {
+              "type": "string",
+              "const": "ElasticSearch"
+            },
+            "url": {
+              "type": "string"
+            },
+            "index": {
+              "type": "string"
+            }
+          },
+          "required": ["driver", "url", "index"],
+          "additionalProperties": false
+        }
+      ],
+      "description": "The logger config for the engine",
+      "title": "Logger",
+      "default": {
+        "driver": "Console",
+        "level": "info"
+      }
+    },
+    "TunnelServiceSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "authToken": {
+          "type": "string"
+        },
+        "integration": {
+          "type": "string",
+          "const": "Ngrok"
+        }
+      },
+      "required": ["authToken", "integration", "name"],
+      "additionalProperties": false,
+      "description": "The tunnel config for the engine",
+      "title": "Tunnel"
+    },
+    "ThemeServiceSchema": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "none"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "tailwindcss"
+            },
+            "base": {
+              "type": "string"
+            }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        }
+      ],
+      "description": "The theme config for the engine",
+      "title": "Theme",
+      "default": {
+        "type": "tailwindcss"
+      }
     }
   }
 }

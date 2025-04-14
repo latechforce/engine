@@ -1,19 +1,27 @@
 # Url
 
+## Description
+
 Represents a field that stores a URL
 
 ## Properties
 
-| Property    | Type    | Required | Const   | Description |
-| ----------- | ------- | -------- | ------- | ----------- |
-| name        | string  | Yes      |         |             |
-| required    | boolean | No       |         |             |
-| onMigration | object  | No       |         |             |
-| type        | string  | Yes      | `"Url"` |             |
+| Name        | Type         | Required | Description |
+| ----------- | ------------ | -------- | ----------- |
+| name        | string       | ✔       |             |
+| required    | boolean      |          |             |
+| onMigration | Object       |          |             |
+| type        | const: `Url` | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### onMigration
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| replace  | string |          |             |
+
+## Example
 
 ```json
 {

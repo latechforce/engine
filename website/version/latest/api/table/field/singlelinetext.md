@@ -1,19 +1,27 @@
 # Single line text
 
+## Description
+
 Represents a field that stores a single line of text
 
 ## Properties
 
-| Property    | Type    | Required | Const              | Description |
-| ----------- | ------- | -------- | ------------------ | ----------- |
-| name        | string  | Yes      |                    |             |
-| required    | boolean | No       |                    |             |
-| onMigration | object  | No       |                    |             |
-| type        | string  | Yes      | `"SingleLineText"` |             |
+| Name        | Type                    | Required | Description |
+| ----------- | ----------------------- | -------- | ----------- |
+| name        | string                  | ✔       |             |
+| required    | boolean                 |          |             |
+| onMigration | Object                  |          |             |
+| type        | const: `SingleLineText` | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### onMigration
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| replace  | string |          |             |
+
+## Example
 
 ```json
 {

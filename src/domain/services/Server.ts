@@ -20,7 +20,6 @@ export interface ServerConfig {
   baseUrl?: string
   sslCert?: string
   sslKey?: string
-  env?: string
   monitors?: MonitorDrivers
 }
 
@@ -83,10 +82,6 @@ export class Server {
     private _config: ServerConfig
   ) {
     this._baseUrl = _config.baseUrl
-  }
-
-  get env() {
-    return this._config.env
   }
 
   get baseUrl() {

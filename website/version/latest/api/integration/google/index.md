@@ -1,9 +1,11 @@
 # Google
 
+## Description
+
 A configuration schema for Google integration
 
 ## Properties
 
-| Property | Type  | Required | Const | Description |
-| -------- | ----- | -------- | ----- | ----------- |
-| mail     | array | No       |       |             |
+| Name | Type                                          | Required | Description |
+| ---- | --------------------------------------------- | -------- | ----------- |
+| mail | Array of [Mail](/api/integration/google/mail) |          |             |

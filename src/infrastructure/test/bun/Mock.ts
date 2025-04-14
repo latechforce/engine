@@ -277,12 +277,13 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     }
 
     this.tester.beforeEach(async () => {
+      extendsConfig.services = {}
       if ('drivers' in this.options) {
         if (this.options.drivers.includes('Database')) {
           const config: DatabaseConfig = { driver: 'SQLite', url: await getTestDbUrl('database') }
           const database = new DatabaseDriver(config)
           drivers.database = database
-          extendsConfig.database = config
+          extendsConfig.services.database = config
         }
         if (this.options.drivers.includes('Storage')) {
           if (!drivers.database) {

@@ -1,20 +1,20 @@
 # Get Company
 
+## Description
+
 Retrieves company information using Pappers integration
 
 ## Properties
 
-| Property    | Type   | Required | Const          | Description |
-| ----------- | ------ | -------- | -------------- | ----------- |
-| name        | string | Yes      |                |             |
-| account     | string | Yes      |                |             |
-| siret       | string | Yes      |                |             |
-| integration | string | Yes      | `"Pappers"`    |             |
-| action      | string | Yes      | `"GetCompany"` |             |
+| Name        | Type                | Required | Description |
+| ----------- | ------------------- | -------- | ----------- |
+| name        | string              | ✔       |             |
+| account     | string              | ✔       |             |
+| siret       | string              | ✔       |             |
+| integration | const: `Pappers`    | ✔       |             |
+| action      | const: `GetCompany` | ✔       |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

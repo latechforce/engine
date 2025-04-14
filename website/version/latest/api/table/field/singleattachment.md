@@ -1,19 +1,27 @@
 # Single attachment
 
+## Description
+
 Represents a field that can store a single file attachment
 
 ## Properties
 
-| Property    | Type    | Required | Const                | Description |
-| ----------- | ------- | -------- | -------------------- | ----------- |
-| name        | string  | Yes      |                      |             |
-| required    | boolean | No       |                      |             |
-| onMigration | object  | No       |                      |             |
-| type        | string  | Yes      | `"SingleAttachment"` |             |
+| Name        | Type                      | Required | Description |
+| ----------- | ------------------------- | -------- | ----------- |
+| name        | string                    | ✔       |             |
+| required    | boolean                   |          |             |
+| onMigration | Object                    |          |             |
+| type        | const: `SingleAttachment` | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### onMigration
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| replace  | string |          |             |
+
+## Example
 
 ```json
 {

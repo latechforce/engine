@@ -49,7 +49,7 @@ export class StoppedApp extends BaseApp {
     this.logger.debug('✅ app is initialized')
   }
 
-  start = async ({ isTest = false } = {}): Promise<StartedApp> => {
+  start = async (): Promise<StartedApp> => {
     if (this._status !== 'stopped')
       throw new Error(`App is not stopped, current status is ${this._status}`)
     this._setStatus('starting')
@@ -68,26 +68,23 @@ export class StoppedApp extends BaseApp {
       this._config,
       this._services,
       this._entities,
-      this._integrations,
-      isTest
+      this._integrations
     )
-    if (!isTest && server.env === 'production') {
-      database.onError(async () => {
-        if (this._status === 'started') {
-          await startedApp.stop({ graceful: false })
-        }
-      })
-      process.on('SIGTERM', () => startedApp.onClose('SIGTERM'))
-      process.on('SIGINT', () => startedApp.onClose('SIGINT'))
-      process.on('uncaughtException', (error: Error) => {
-        monitor.captureException(error)
-        startedApp.onClose('UNCAUGHT_EXCEPTION')
-      })
-      process.on('unhandledRejection', (reason: Error) => {
-        monitor.captureException(reason)
-        startedApp.onClose('UNCAUGHT_REJECTION')
-      })
-    }
+    database.onError(async () => {
+      if (this._status === 'started') {
+        await startedApp.stop({ graceful: false })
+      }
+    })
+    process.on('SIGTERM', () => startedApp.onClose('SIGTERM'))
+    process.on('SIGINT', () => startedApp.onClose('SIGINT'))
+    process.on('uncaughtException', (error: Error) => {
+      monitor.captureException(error)
+      startedApp.onClose('UNCAUGHT_EXCEPTION')
+    })
+    process.on('unhandledRejection', (reason: Error) => {
+      monitor.captureException(reason)
+      startedApp.onClose('UNCAUGHT_REJECTION')
+    })
     logger.info(`🚀 App "${this.name}" started at ${startedApp.url}`)
     logger.info(`⚙️ Config version: ${this.version}`)
     logger.info(`⚙️ Engine version: ${this.engine}`)

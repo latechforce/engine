@@ -5,14 +5,15 @@ hide_table_of_contents: true
 # Engine
 
 > Engine is a web app generator that allows you to create web apps with a simple and intuitive schema.
-> It is built with TypeScript and Bun$
-> Ir is designed to be used by non-technical users to create web apps.
+> It is built with TypeScript and Bun.
+> It is designed to be used by non-technical users to create web apps.
 
 ## [Get started](/docs/intro) | [Schema API](/api/config) | [FAQ](https://github.com/latechforce/engine/discussions/categories/q-a) | [Contributing](https://github.com/latechforce/engine/blob/main/CONTRIBUTING.md)
 
 ## Installation
 
 ```bash
+bun init
 bun add @latechforce/engine
 ```
 
@@ -30,7 +31,7 @@ const config: Config = {
   engine: 'latest',
   forms: [
     {
-      name: 'My Form',
+      name: 'email_form',
       path: '/email',
       table: 'mailing_list',
       title: 'Email Form',

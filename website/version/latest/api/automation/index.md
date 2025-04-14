@@ -4,14 +4,16 @@ sidebar_position: 3
 
 # Automation
 
+## Description
+
 Defines an automation workflow with triggers and actions
 
 ## Properties
 
-| Property    | Type                                         | Required | Const | Description |
-| ----------- | -------------------------------------------- | -------- | ----- | ----------- |
-| name        | string                                       | Yes      |       |             |
-| summary     | string                                       | No       |       |             |
-| description | string                                       | No       |       |             |
-| trigger     | [TriggerAutomation](/api/automation/trigger) | Yes      |       |             |
-| actions     | array                                        | Yes      |       |             |
+| Name        | Type                                          | Required | Description |
+| ----------- | --------------------------------------------- | -------- | ----------- |
+| name        | string                                        | ✔       |             |
+| summary     | string                                        |          |             |
+| description | string                                        |          |             |
+| trigger     | Reference: [Trigger](/api/automation/trigger) | ✔       |             |
+| actions     | Array of [Action](/api/automation/action)     | ✔       |             |

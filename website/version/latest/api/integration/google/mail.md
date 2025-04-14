@@ -1,19 +1,19 @@
 # Mail
 
+## Description
+
 A configuration schema for Gmail integration
 
 ## Properties
 
-| Property | Type   | Required | Const | Description |
-| -------- | ------ | -------- | ----- | ----------- |
-| name     | string | Yes      |       |             |
-| baseUrl  | string | No       |       |             |
-| user     | string | Yes      |       |             |
-| password | string | Yes      |       |             |
+| Name     | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| name     | string | ✔       |             |
+| baseUrl  | string |          |             |
+| user     | string | ✔       |             |
+| password | string | ✔       |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

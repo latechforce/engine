@@ -1,20 +1,42 @@
 # Create Client
 
+## Description
+
 Creates a new client in Qonto with the specified details
 
 ## Properties
 
-| Property    | Type   | Required | Const            | Description |
-| ----------- | ------ | -------- | ---------------- | ----------- |
-| name        | string | Yes      |                  |             |
-| account     | string | Yes      |                  |             |
-| client      | object | Yes      |                  |             |
-| integration | string | Yes      | `"Qonto"`        |             |
-| action      | string | Yes      | `"CreateClient"` |             |
+| Name        | Type                  | Required | Description |
+| ----------- | --------------------- | -------- | ----------- |
+| name        | string                | ✔       |             |
+| account     | string                | ✔       |             |
+| client      | Object                | ✔       |             |
+| integration | const: `Qonto`        | ✔       |             |
+| action      | const: `CreateClient` | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### client
+
+| Property                  | Type   | Required | Description |
+| ------------------------- | ------ | -------- | ----------- |
+| currency                  | string | ✔       |             |
+| email                     | string |          |             |
+| vat_number                | string |          |             |
+| name                      | string |          |             |
+| first_name                | string |          |             |
+| last_name                 | string |          |             |
+| type                      | string | ✔       |             |
+| tax_identification_number | string |          |             |
+| address                   | string | ✔       |             |
+| city                      | string | ✔       |             |
+| zip_code                  | string | ✔       |             |
+| country_code              | string | ✔       |             |
+| billing_address           | Object |          |             |
+| delivery_address          | Object |          |             |
+| locale                    | string | ✔       |             |
+
+## Example
 
 ```json
 {

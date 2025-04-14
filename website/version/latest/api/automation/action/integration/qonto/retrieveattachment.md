@@ -1,20 +1,20 @@
 # Retrieve Attachment
 
+## Description
+
 Retrieves an attachment using Qonto integration
 
 ## Properties
 
-| Property     | Type   | Required | Const                  | Description |
-| ------------ | ------ | -------- | ---------------------- | ----------- |
-| name         | string | Yes      |                        |             |
-| account      | string | Yes      |                        |             |
-| attachmentId | string | Yes      |                        |             |
-| integration  | string | Yes      | `"Qonto"`              |             |
-| action       | string | Yes      | `"RetrieveAttachment"` |             |
+| Name         | Type                        | Required | Description |
+| ------------ | --------------------------- | -------- | ----------- |
+| name         | string                      | ✔       |             |
+| account      | string                      | ✔       |             |
+| attachmentId | string                      | ✔       |             |
+| integration  | const: `Qonto`              | ✔       |             |
+| action       | const: `RetrieveAttachment` | ✔       |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

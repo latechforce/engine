@@ -1,22 +1,22 @@
 # Update Page
 
+## Description
+
 Updates a page in Notion with the specified properties
 
 ## Properties
 
-| Property    | Type   | Required | Const          | Description |
-| ----------- | ------ | -------- | -------------- | ----------- |
-| name        | string | Yes      |                |             |
-| account     | string | Yes      |                |             |
-| table       | string | Yes      |                |             |
-| id          | string | Yes      |                |             |
-| page        | object | Yes      |                |             |
-| integration | string | Yes      | `"Notion"`     |             |
-| action      | string | Yes      | `"UpdatePage"` |             |
+| Name        | Type                | Required | Description |
+| ----------- | ------------------- | -------- | ----------- |
+| name        | string              | ✔       |             |
+| account     | string              | ✔       |             |
+| table       | string              | ✔       |             |
+| id          | string              | ✔       |             |
+| page        | Object              | ✔       |             |
+| integration | const: `Notion`     | ✔       |             |
+| action      | const: `UpdatePage` | ✔       |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

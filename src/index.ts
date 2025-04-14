@@ -7,7 +7,7 @@ import type { Integrations } from '/adapter/spi/integrations'
 import type { Components } from '/domain/components'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type { DatabaseConfig } from '/domain/services/Database'
-import type { MonitorsConfig } from './domain/services/Monitor'
+import type { MonitorConfig } from './domain/services/Monitor'
 import type { IMonitorDriver } from './adapter/spi/drivers/MonitorSpi'
 import type { ServerConfig } from './domain/services/Server'
 import type { IServerDriver } from './adapter/spi/drivers/ServerSpi'
@@ -26,8 +26,8 @@ export type { FormSchema as Form } from '/adapter/api/schemas/FormSchema'
 export type { InputFormSchema as Input } from '/adapter/api/schemas/FormSchema/InputSchema'
 export type {
   DatabaseConfig as Database,
-  LoggersConfig as Loggers,
-  MonitorsConfig as Monitors,
+  LoggerConfig as Logger,
+  MonitorConfig as Monitor,
   ServerConfig as Server,
   TunnelConfig as Tunnel,
 } from '/domain/services'
@@ -76,7 +76,7 @@ export default class extends App {
   constructor(options: {
     drivers: Partial<Drivers> & {
       database: (config: DatabaseConfig) => IDatabaseDriver
-      monitor: (config: MonitorsConfig) => IMonitorDriver
+      monitor: (config: MonitorConfig[]) => IMonitorDriver
       server: (config: ServerConfig) => IServerDriver
       storage: (config: StorageConfig) => IStorageDriver
     }

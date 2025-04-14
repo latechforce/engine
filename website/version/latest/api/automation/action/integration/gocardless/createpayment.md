@@ -1,20 +1,35 @@
 # Create Payment
 
+## Description
+
 Creates a new payment in GoCardless with the specified details
 
 ## Properties
 
-| Property    | Type   | Required | Const             | Description |
-| ----------- | ------ | -------- | ----------------- | ----------- |
-| name        | string | Yes      |                   |             |
-| account     | string | Yes      |                   |             |
-| payment     | object | Yes      |                   |             |
-| integration | string | Yes      | `"GoCardless"`    |             |
-| action      | string | Yes      | `"CreatePayment"` |             |
+| Name        | Type                   | Required | Description |
+| ----------- | ---------------------- | -------- | ----------- |
+| name        | string                 | ✔       |             |
+| account     | string                 | ✔       |             |
+| payment     | Object                 | ✔       |             |
+| integration | const: `GoCardless`    | ✔       |             |
+| action      | const: `CreatePayment` | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### payment
+
+| Property          | Type    | Required | Description |
+| ----------------- | ------- | -------- | ----------- |
+| amount            | number  | ✔       |             |
+| currency          | string  | ✔       |             |
+| charge_date       | string  |          |             |
+| reference         | string  |          |             |
+| description       | string  |          |             |
+| metadata          | Object  |          |             |
+| retry_if_possible | boolean |          |             |
+| mandate           | string  | ✔       |             |
+
+## Example
 
 ```json
 {

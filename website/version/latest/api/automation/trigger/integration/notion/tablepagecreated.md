@@ -1,12 +1,14 @@
 # Table Page Created
 
+## Description
+
 A trigger that fires when a table page is created in Notion
 
 ## Properties
 
-| Property    | Type   | Required | Const                | Description |
-| ----------- | ------ | -------- | -------------------- | ----------- |
-| table       | string | Yes      |                      |             |
-| account     | string | Yes      |                      |             |
-| integration | string | Yes      | `"Notion"`           |             |
-| event       | string | Yes      | `"TablePageCreated"` |             |
+| Name        | Type                      | Required | Description |
+| ----------- | ------------------------- | -------- | ----------- |
+| table       | string                    | ✔       |             |
+| account     | string                    | ✔       |             |
+| integration | const: `Notion`           | ✔       |             |
+| event       | const: `TablePageCreated` | ✔       |             |

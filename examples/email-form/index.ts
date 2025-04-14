@@ -7,7 +7,7 @@ const config: Config = {
   engine: 'latest',
   forms: [
     {
-      name: 'My Form',
+      name: 'email_form',
       path: '/email',
       table: 'mailing_list',
       title: 'Email Form',

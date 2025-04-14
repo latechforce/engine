@@ -4,10 +4,12 @@ sidebar_position: 5
 
 # Bucket
 
+## Description
+
 Type alias for bucket storage configuration
 
 ## Properties
 
-| Property | Type   | Required | Const | Description |
-| -------- | ------ | -------- | ----- | ----------- |
-| name     | string | Yes      |       |             |
+| Name | Type   | Required | Description |
+| ---- | ------ | -------- | ----------- |
+| name | string | ✔       |             |

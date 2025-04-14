@@ -1,19 +1,27 @@
 # Long text
 
+## Description
+
 Represents a field that stores multiple lines of text
 
 ## Properties
 
-| Property    | Type    | Required | Const        | Description |
-| ----------- | ------- | -------- | ------------ | ----------- |
-| name        | string  | Yes      |              |             |
-| required    | boolean | No       |              |             |
-| onMigration | object  | No       |              |             |
-| type        | string  | Yes      | `"LongText"` |             |
+| Name        | Type              | Required | Description |
+| ----------- | ----------------- | -------- | ----------- |
+| name        | string            | ✔       |             |
+| required    | boolean           |          |             |
+| onMigration | Object            |          |             |
+| type        | const: `LongText` | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### onMigration
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| replace  | string |          |             |
+
+## Example
 
 ```json
 {

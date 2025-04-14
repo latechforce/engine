@@ -1,15 +1,10 @@
 # Service
 
+## Description
+
 Union type of all possible service actions that can be performed in automations
 
-## Any Of
-
-1. [CodeServiceActionAutomation](/api/automation/action/service/code)
-2. [DatabaseServiceActionAutomation](/api/automation/action/service/database)
-
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

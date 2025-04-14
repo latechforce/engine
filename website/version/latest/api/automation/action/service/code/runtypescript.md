@@ -1,21 +1,21 @@
 # Run TypeScript
 
+## Description
+
 Executes TypeScript code with the specified input
 
 ## Properties
 
-| Property | Type   | Required | Const             | Description |
-| -------- | ------ | -------- | ----------------- | ----------- |
-| name     | string | Yes      |                   |             |
-| code     | string | Yes      |                   |             |
-| input    | any    | No       |                   |             |
-| env      | object | No       |                   |             |
-| service  | string | Yes      | `"Code"`          |             |
-| action   | string | Yes      | `"RunTypescript"` |             |
+| Name    | Type                   | Required | Description |
+| ------- | ---------------------- | -------- | ----------- |
+| name    | string                 | ✔       |             |
+| code    | string                 | ✔       |             |
+| input   | unknown                |          |             |
+| env     | Object                 |          |             |
+| service | const: `Code`          | ✔       |             |
+| action  | const: `RunTypescript` | ✔       |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

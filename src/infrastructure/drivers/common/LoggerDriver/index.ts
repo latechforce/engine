@@ -1,12 +1,12 @@
 import type { ILoggerDriver } from '/adapter/spi/drivers/LoggerSpi'
-import type { LoggersConfig } from '/domain/services/Logger'
+import type { LoggerConfig } from '/domain/services/Logger'
 import { ConsoleDriver } from './ConsoleDriver'
 import { FileDriver } from './FileDriver'
 
 export class LoggerDriver implements ILoggerDriver {
   private _loggers: (ConsoleDriver | FileDriver)[] = []
 
-  constructor(config: LoggersConfig) {
+  constructor(config: LoggerConfig[]) {
     for (const logger of config) {
       const { driver } = logger
       switch (driver) {

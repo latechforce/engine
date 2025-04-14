@@ -1,11 +1,22 @@
 # YouCanBookMe
 
+## Description
+
 A configuration schema for YouCanBookMe scheduling integration
 
 ## Properties
 
-| Property | Type   | Required | Const | Description |
-| -------- | ------ | -------- | ----- | ----------- |
-| name     | string | Yes      |       |             |
-| baseUrl  | string | No       |       |             |
-| user     | object | Yes      |       |             |
+| Name    | Type   | Required | Description |
+| ------- | ------ | -------- | ----------- |
+| name    | string | ✔       |             |
+| baseUrl | string |          |             |
+| user    | Object | ✔       |             |
+
+## Property Details
+
+### user
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| username | string | ✔       |             |
+| password | string | ✔       |             |

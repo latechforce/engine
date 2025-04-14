@@ -1,23 +1,39 @@
 # Rollup
 
+## Description
+
 Represents a field that aggregates data from linked records
 
 ## Properties
 
-| Property             | Type    | Required | Const      | Description |
-| -------------------- | ------- | -------- | ---------- | ----------- |
-| multipleLinkedRecord | string  | Yes      |            |             |
-| type                 | string  | Yes      | `"Rollup"` |             |
-| formula              | string  | Yes      |            |             |
-| linkedRecordField    | string  | Yes      |            |             |
-| output               | object  | Yes      |            |             |
-| name                 | string  | Yes      |            |             |
-| required             | boolean | No       |            |             |
-| onMigration          | object  | No       |            |             |
+| Name                 | Type            | Required | Description |
+| -------------------- | --------------- | -------- | ----------- |
+| multipleLinkedRecord | string          | ✔       |             |
+| type                 | const: `Rollup` | ✔       |             |
+| formula              | string          | ✔       |             |
+| linkedRecordField    | string          | ✔       |             |
+| output               | Object          | ✔       |             |
+| name                 | string          | ✔       |             |
+| required             | boolean         |          |             |
+| onMigration          | Object          |          |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### output
+
+| Property    | Type                                                     | Required | Description |
+| ----------- | -------------------------------------------------------- | -------- | ----------- |
+| type        | enum: `Number`, `LongText`, `SingleLineText`, `DateTime` | ✔       |             |
+| required    | boolean                                                  |          |             |
+| onMigration | Object                                                   |          |             |
+
+### onMigration
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| replace  | string |          |             |
+
+## Example
 
 ```json
 {

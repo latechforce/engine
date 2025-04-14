@@ -16,8 +16,7 @@ export class StartedApp extends BaseApp {
     config: AppConfig,
     services: AppServices,
     entities: AppEntities,
-    integrations: AppIntegrations,
-    private _isTest = false
+    integrations: AppIntegrations
   ) {
     super(config, services, entities, integrations)
     this._setStatus('started')
@@ -40,7 +39,6 @@ export class StartedApp extends BaseApp {
   }
 
   get queue() {
-    if (!this._isTest) throw new Error('queue is only available in test mode')
     return this._services.queue
   }
 

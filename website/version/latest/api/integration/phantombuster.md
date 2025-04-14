@@ -1,18 +1,18 @@
 # Phantombuster
 
+## Description
+
 A configuration schema for Phantombuster automation integration
 
 ## Properties
 
-| Property | Type   | Required | Const | Description |
-| -------- | ------ | -------- | ----- | ----------- |
-| name     | string | Yes      |       |             |
-| baseUrl  | string | No       |       |             |
-| apiKey   | string | Yes      |       |             |
+| Name    | Type   | Required | Description |
+| ------- | ------ | -------- | ----------- |
+| name    | string | ✔       |             |
+| baseUrl | string |          |             |
+| apiKey  | string | ✔       |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

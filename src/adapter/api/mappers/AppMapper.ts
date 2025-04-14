@@ -40,33 +40,24 @@ export class AppMapper {
     components: Components,
     schema: ConfigSchema
   ) => {
-    const {
-      name: appName,
-      version: appVersion,
-      engine: appEngine,
-      description: appDescription,
-    } = schema
-    const logger = LoggerMapper.toService(drivers, schema.loggers)
-    const monitor = MonitorMapper.toService(
-      drivers,
-      schema.monitors?.map((monitor) => ({ ...monitor, appName, appVersion })),
-      { logger }
-    )
+    const logger = LoggerMapper.toService(drivers, schema.services?.loggers)
+    const monitor = MonitorMapper.toService(drivers, schema.services?.monitors, { logger }, schema)
     const system = SystemMapper.toService(drivers)
-    const tunnel = TunnelMapper.toService(drivers, schema.tunnel)
+    const tunnel = TunnelMapper.toService(drivers, schema.services?.tunnel)
     const server = ServerMapper.toService(
       drivers,
-      { ...schema.server, appName, appVersion, appDescription },
-      { logger, monitor, tunnel }
+      schema.services?.server,
+      { logger, monitor, tunnel },
+      schema
     )
     const idGenerator = IdGeneratorMapper.toService(drivers)
     const fetcher = FetcherMapper.toService(drivers)
     const cron = CronMapper.toService(drivers)
     const client = ClientMapper.toService(drivers, { server })
-    const theme = ThemeMapper.toService(drivers, { server, logger }, schema.theme)
+    const theme = ThemeMapper.toService(drivers, { server, logger }, schema.services?.theme)
     const schemaValidator = SchemaValidatorMapper.toService(drivers)
     const templateCompiler = TemplateCompilerMapper.toService(drivers)
-    const database = DatabaseMapper.toService(drivers, schema.database, {
+    const database = DatabaseMapper.toService(drivers, schema.services?.database, {
       logger,
       monitor,
       idGenerator,
@@ -150,10 +141,10 @@ export class AppMapper {
     )
     return new StoppedApp(
       {
-        name: appName,
-        version: appVersion,
-        engine: appEngine,
-        description: appDescription,
+        name: schema.name,
+        version: schema.version,
+        engine: schema.engine,
+        description: schema.description,
         integrations: schema.integrations,
       },
       {

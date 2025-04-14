@@ -46,8 +46,10 @@ const config: Config = {
       ],
     },
   ],
-  server: {
-    port: 3000,
+  services: {
+    server: {
+      port: 3000,
+    },
   },
 }
 

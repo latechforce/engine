@@ -1,20 +1,34 @@
 # Send Email
 
+## Description
+
 Sends an email using Google Mail integration
 
 ## Properties
 
-| Property    | Type   | Required | Const          | Description |
-| ----------- | ------ | -------- | -------------- | ----------- |
-| name        | string | Yes      |                |             |
-| account     | string | Yes      |                |             |
-| email       | object | Yes      |                |             |
-| integration | string | Yes      | `"GoogleMail"` |             |
-| action      | string | Yes      | `"SendEmail"`  |             |
+| Name        | Type                | Required | Description |
+| ----------- | ------------------- | -------- | ----------- |
+| name        | string              | ✔       |             |
+| account     | string              | ✔       |             |
+| email       | Object              | ✔       |             |
+| integration | const: `GoogleMail` | ✔       |             |
+| action      | const: `SendEmail`  | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### email
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| from     | string |          |             |
+| to       | string | ✔       |             |
+| cc       | string |          |             |
+| bcc      | string |          |             |
+| subject  | string |          |             |
+| text     | string |          |             |
+| html     | string |          |             |
+
+## Example
 
 ```json
 {

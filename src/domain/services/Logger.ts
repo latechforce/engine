@@ -19,7 +19,6 @@ export interface LoggerFileConfig extends LoggerBaseConfig {
 }
 
 export type LoggerConfig = LoggerConsoleConfig | LoggerFileConfig | LoggerElasticSearchConfig
-export type LoggersConfig = LoggerConfig[]
 
 export interface ILoggerSpi {
   init: () => Promise<void>

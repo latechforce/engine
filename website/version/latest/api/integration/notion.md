@@ -1,19 +1,19 @@
 # Notion
 
+## Description
+
 A configuration schema for Notion integration
 
 ## Properties
 
-| Property        | Type   | Required | Const | Description |
-| --------------- | ------ | -------- | ----- | ----------- |
-| name            | string | Yes      |       |             |
-| baseUrl         | string | No       |       |             |
-| token           | string | Yes      |       |             |
-| pollingInterval | number | No       |       |             |
+| Name            | Type   | Required | Description |
+| --------------- | ------ | -------- | ----------- |
+| name            | string | ✔       |             |
+| baseUrl         | string |          |             |
+| token           | string | ✔       |             |
+| pollingInterval | number |          |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {

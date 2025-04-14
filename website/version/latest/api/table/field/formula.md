@@ -1,21 +1,37 @@
 # Formula
 
+## Description
+
 Represents a calculated field in forms and tables
 
 ## Properties
 
-| Property    | Type    | Required | Const       | Description |
-| ----------- | ------- | -------- | ----------- | ----------- |
-| name        | string  | Yes      |             |             |
-| required    | boolean | No       |             |             |
-| onMigration | object  | No       |             |             |
-| type        | string  | Yes      | `"Formula"` |             |
-| formula     | string  | Yes      |             |             |
-| output      | object  | Yes      |             |             |
+| Name        | Type             | Required | Description |
+| ----------- | ---------------- | -------- | ----------- |
+| name        | string           | ✔       |             |
+| required    | boolean          |          |             |
+| onMigration | Object           |          |             |
+| type        | const: `Formula` | ✔       |             |
+| formula     | string           | ✔       |             |
+| output      | Object           | ✔       |             |
 
-## Examples
+## Property Details
 
-Example 1:
+### onMigration
+
+| Property | Type   | Required | Description |
+| -------- | ------ | -------- | ----------- |
+| replace  | string |          |             |
+
+### output
+
+| Property    | Type                                                     | Required | Description |
+| ----------- | -------------------------------------------------------- | -------- | ----------- |
+| type        | enum: `Number`, `LongText`, `SingleLineText`, `DateTime` | ✔       |             |
+| required    | boolean                                                  |          |             |
+| onMigration | Object                                                   |          |             |
+
+## Example
 
 ```json
 {

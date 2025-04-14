@@ -13,7 +13,6 @@ export interface MonitorConsoleConfig {
 }
 
 export type MonitorConfig = MonitorSentryConfig | MonitorConsoleConfig
-export type MonitorsConfig = MonitorConfig[]
 export type MonitorDrivers = MonitorConfig['driver'][]
 
 export interface MonitorServices {
@@ -30,7 +29,7 @@ export class Monitor {
 
   constructor(
     private _spi: IMonitorSpi,
-    config: MonitorsConfig,
+    config: MonitorConfig[],
     private _services: MonitorServices
   ) {
     this.drivers = config.map((c) => c.driver)

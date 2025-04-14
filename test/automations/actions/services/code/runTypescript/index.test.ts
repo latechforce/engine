@@ -252,12 +252,14 @@ mock.request(({ app, request }) => {
             ],
           },
         ],
-        loggers: [
-          {
-            driver: 'File',
-            filename,
-          },
-        ],
+        services: {
+          loggers: [
+            {
+              driver: 'File',
+              filename,
+            },
+          ],
+        },
       }
       const { url } = await app.start(config)
 

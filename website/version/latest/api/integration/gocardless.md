@@ -1,18 +1,18 @@
 # GoCardless
 
+## Description
+
 A configuration schema for GoCardless payment integration
 
 ## Properties
 
-| Property    | Type   | Required | Const | Description |
-| ----------- | ------ | -------- | ----- | ----------- |
-| name        | string | Yes      |       |             |
-| baseUrl     | string | No       |       |             |
-| accessToken | string | Yes      |       |             |
+| Name        | Type   | Required | Description |
+| ----------- | ------ | -------- | ----------- |
+| name        | string | ✔       |             |
+| baseUrl     | string |          |             |
+| accessToken | string | ✔       |             |
 
-## Examples
-
-Example 1:
+## Example
 
 ```json
 {
