@@ -166,11 +166,10 @@ export class YouCanBookMeIntegration
   }
 
   currentProfile = async (): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
-    if (!this._config?.user.username) {
-      return {
-        error: { status: 500, message: 'Implementation configuration error: username is required' },
-      }
+    const profile = this.db.query('SELECT * FROM Profile LIMIT 1').get()
+    if (!profile) {
+      return { error: { status: 404, message: 'No profile found' } }
     }
-    return await this.getProfile(this._config.user.username)
+    return { data: profile as YouCanBookMeProfile }
   }
 }

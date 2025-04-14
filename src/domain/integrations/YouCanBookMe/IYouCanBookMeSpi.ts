@@ -10,4 +10,7 @@ export interface IYouCanBookMeSpi extends BaseSpi<YouCanBookMeConfig> {
     profileId: string,
     profile: Partial<YouCanBookMeProfile>
   ) => Promise<IntegrationResponse<YouCanBookMeProfile>>
+  createProfile: (
+    profile: Partial<YouCanBookMeProfile>
+  ) => Promise<IntegrationResponse<YouCanBookMeProfile>>
 }

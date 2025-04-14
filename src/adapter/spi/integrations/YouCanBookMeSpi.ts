@@ -24,4 +24,8 @@ export class YouCanBookMeSpi
   updateProfile = async (profileId: string, profile: Partial<YouCanBookMeProfile>) => {
     return this._integration.updateProfile(profileId, profile)
   }
+
+  createProfile = async (profile: Partial<YouCanBookMeProfile>) => {
+    return this._integration.createProfile(profile)
+  }
 }
