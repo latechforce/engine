@@ -1,3 +1,10 @@
+## [0.43.3](https://github.com/latechforce/engine/compare/v0.43.2...v0.43.3) (2025-04-14)
+
+
+### Bug Fixes
+
+* add services object in config ([5485cce](https://github.com/latechforce/engine/commit/5485ccebbf34e155fb3b06b049109beab0790b62))
+
 ## [0.43.2](https://github.com/latechforce/engine/compare/v0.43.1...v0.43.2) (2025-04-14)
 
 ### Bug Fixes
