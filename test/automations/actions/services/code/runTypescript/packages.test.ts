@@ -94,6 +94,51 @@ mock.request(({ app, request }) => {
       expect(response.exist).toBeTruthy()
     })
 
+    it('should run a Typescript code with the date-fns-tz package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'getDateTz',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'get-date-tz',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { dateFnsTz },
+                  } = context
+                  const exist = !!dateFnsTz.getTimezoneOffset
+                  return { exist }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/get-date-tz`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
+
     it('should run a Typescript code with xml2js package', async () => {
       // GIVEN
       const config: Config = {

@@ -78,6 +78,7 @@ export interface CodeRunnerContextPackages {
   xml2js: typeof import('xml2js')
   dateFns: typeof import('date-fns')
   dateFnsLocale: typeof import('date-fns/locale')
+  dateFnsTz: typeof import('date-fns-tz')
   googleapis: typeof import('googleapis')
   Airtable: typeof import('airtable')
   Notion: typeof import('@notionhq/client').Client

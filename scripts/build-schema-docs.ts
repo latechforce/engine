@@ -58,7 +58,7 @@ function generateMarkdownForDefinition(
 
   if (sidebarPosition > 0) {
     markdown += `---
-  sidebar_position: ${sidebarPosition}
+sidebar_position: ${sidebarPosition}
 ---
 
 `
