@@ -54,7 +54,7 @@ const config: Config = {
     image: 'img/android-chrome-512x512.png',
     algolia: {
       appId: 'NB6B22TAR2',
-      apiKey: '3ac2e5cb5367c0dd18c05ea3b6fc7c32',
+      apiKey: '11a208d848eee6536fd9d723478d821c',
       indexName: 'engine',
       contextualSearch: true,
       searchParameters: {},
