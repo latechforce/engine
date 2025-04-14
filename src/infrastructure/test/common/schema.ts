@@ -392,8 +392,10 @@ export function getAutomationSchema(name: AutomationName): {
   version: string
   engine: string
   automations: AutomationSchema[]
-  server: {
-    apiKeys: string[]
+  services: {
+    server: {
+      apiKeys: string[]
+    }
   }
 } {
   const automation = fullSchema.automations?.find((automation) => automation.name === name)
@@ -405,8 +407,10 @@ export function getAutomationSchema(name: AutomationName): {
     version: '1.0.0',
     engine: '1.0.0',
     automations: [automation],
-    server: {
-      apiKeys: ['test-key'],
+    services: {
+      server: {
+        apiKeys: ['test-key'],
+      },
     },
   }
 }

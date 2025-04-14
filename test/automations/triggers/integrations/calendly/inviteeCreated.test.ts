@@ -27,9 +27,11 @@ mock.request(({ app, drivers, integrations }) => {
       // GIVEN
       const config = {
         ...getAutomationSchema('CalendlyInviteeCreated'),
-        server: {
-          baseUrl: 'http://localhost:6001',
-          port: 6001,
+        services: {
+          server: {
+            baseUrl: 'http://localhost:6001',
+            port: 6001,
+          },
         },
       }
       await app.start(config)

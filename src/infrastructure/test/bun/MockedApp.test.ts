@@ -22,7 +22,9 @@ test('should return a mocked response from fetcher', async () => {
     name: 'Test',
     version: '1.0.0',
     engine: '1.0.0',
-    loggers: [],
+    services: {
+      loggers: [],
+    },
   })
   mockedFetcher.mock('GET', 'https://example.com/api/test', async () => {
     return new Response('Test Response', { status: 200 })

@@ -2,9 +2,9 @@
 hide_table_of_contents: true
 ---
 
-# Engine
+# LTF Engine
 
-> Engine is a web app generator that allows you to create web apps with a simple and intuitive schema.
+> LTF Engine is a web app generator that allows you to create web apps with a simple and intuitive schema.
 > It is built with TypeScript and Bun.
 > It is designed to be used by non-technical users to create web apps.
 

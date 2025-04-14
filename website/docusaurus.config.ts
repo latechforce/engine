@@ -61,9 +61,9 @@ const config: Config = {
       searchPagePath: 'search',
     },
     navbar: {
-      title: 'Engine',
+      title: 'LTF Engine',
       logo: {
-        alt: 'Engine Logo',
+        alt: 'LTF Engine Logo',
         src: 'img/android-chrome-512x512.png',
       },
       items: [
