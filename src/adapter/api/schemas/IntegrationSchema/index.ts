@@ -6,6 +6,7 @@ import type { GoCardlessIntegrationSchema } from './GoCardlessSchema'
 import type { PhantombusterIntegrationSchema } from './PhantombusterSchema'
 import type { CalendlyIntegrationSchema } from './CalendlySchema'
 import type { GoogleIntegrationSchema } from './Google'
+import type { YouCanBookMeIntegrationSchema } from './YouCanBookMeSchema'
 
 /**
  * Integrations configuration interface
@@ -21,4 +22,5 @@ export interface IntegrationSchema {
   gocardless?: GoCardlessIntegrationSchema[]
   phantombuster?: PhantombusterIntegrationSchema[]
   calendly?: CalendlyIntegrationSchema[]
+  youcanbookme?: YouCanBookMeIntegrationSchema[]
 }

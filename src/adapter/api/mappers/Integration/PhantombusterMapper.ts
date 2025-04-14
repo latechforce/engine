@@ -1,14 +1,15 @@
+import type { PhantombusterIntegrationSchema } from '../../schemas/IntegrationSchema/PhantombusterSchema'
 import type { Integrations } from '/adapter/spi/integrations'
 import { PhantombusterSpi } from '/adapter/spi/integrations/PhantombusterSpi'
-import { Phantombuster, type PhantombusterConfig } from '/domain/integrations/Phantombuster'
+import { Phantombuster } from '/domain/integrations/Phantombuster'
 
 export class PhantombusterMapper {
   static toIntegration(
     integrations: Integrations,
-    configs: PhantombusterConfig[] = []
+    schemas: PhantombusterIntegrationSchema[] = []
   ): Phantombuster {
-    const spis = configs.map((config) => {
-      const driver = integrations.phantombuster(config)
+    const spis = schemas.map((schema) => {
+      const driver = integrations.phantombuster(schema)
       return new PhantombusterSpi(driver)
     })
     return new Phantombuster(spis)

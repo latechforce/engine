@@ -40,7 +40,22 @@ export interface Integrations {
 }
 ```
 
-## Step 3: Adapter Integration Mapper
+## Step 3: Adapter Integration Schema
+
+Create a new file in `src/adapter/api/schemas/IntegrationSchema/NewIntegrationSchema.ts` to add the new integration to the integration schema:
+
+```typescript
+import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration'
+
+/**
+ * NewIntegration configuration schema
+ * @title NewIntegration
+ * @description A configuration schema for NewIntegration integration
+ */
+export type NewIntegrationIntegrationSchema = NewIntegrationConfig
+```
+
+## Step 4: Adapter Integration Mapper
 
 Create a new file in `src/adapter/api/mappers/Integration/NewIntegrationMapper.ts` to create the integration mapper:
 
@@ -48,15 +63,15 @@ Create a new file in `src/adapter/api/mappers/Integration/NewIntegrationMapper.t
 import type { Integrations } from '/adapter/spi/integrations'
 import { NewIntegrationSpi } from '/adapter/spi/integrations/NewIntegrationSpi'
 import { NewIntegration } from '/domain/integrations/NewIntegration'
-import type { NewIntegrationConfig } from '/domain/integrations/NewIntegration/NewIntegrationConfig'
+import type { NewIntegrationIntegrationSchema } from '../../schemas/IntegrationSchema/NewIntegrationSchema'
 
 export class NewIntegrationMapper {
   static toIntegration(
     integrations: Integrations,
-    configs: NewIntegrationConfig[] = []
+    schemas: NewIntegrationIntegrationSchema[] = []
   ): NewIntegration[] {
-    const spis = configs.map((config) => {
-      const driver = integrations.newIntegration(config)
+    const spis = schemas.map((schema) => {
+      const driver = integrations.newIntegration(schema)
       return new NewIntegrationSpi(driver)
     })
     return new NewIntegration(spis)

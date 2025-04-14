@@ -37,9 +37,9 @@ const config: Config = {
       'classic',
       {
         docs: {
+          path: 'version/latest',
+          routeBasePath: '/',
           sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
           editUrl: 'https://github.com/latechforce/engine/tree/main/website/',
         },
         theme: {
@@ -52,6 +52,14 @@ const config: Config = {
   themeConfig: {
     // Replace with your project's social card
     image: 'img/android-chrome-512x512.png',
+    algolia: {
+      appId: 'NB6B22TAR2',
+      apiKey: '3ac2e5cb5367c0dd18c05ea3b6fc7c32',
+      indexName: 'engine',
+      contextualSearch: true,
+      searchParameters: {},
+      searchPagePath: 'search',
+    },
     navbar: {
       title: 'Engine',
       logo: {
@@ -61,9 +69,15 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'docs',
           position: 'left',
-          label: 'Configuration',
+          label: 'Docs',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'api',
+          position: 'left',
+          label: 'Schema API',
         },
         {
           href: 'https://github.com/latechforce/engine',
@@ -76,16 +90,7 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Configuration',
-              to: '/docs/config',
-            },
-          ],
-        },
-        {
-          title: 'More',
+          title: 'Links',
           items: [
             {
               label: 'GitHub',

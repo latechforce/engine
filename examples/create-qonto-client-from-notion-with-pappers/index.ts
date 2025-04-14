@@ -12,6 +12,7 @@ const {
 const config: Config = {
   name: 'Create Qonto client from Notion with Pappers',
   version: '1.0.0',
+  engine: 'latest',
   automations: [
     {
       name: 'createQontoClientFromNotionWithPappers',
@@ -19,18 +20,21 @@ const config: Config = {
         integration: 'Notion',
         event: 'TablePageCreated',
         table: NOTION_TABLE_CLIENTS_ID!,
+        account: 'notion-account',
       },
       actions: [
         {
           name: 'getCompanyFromPappers',
           integration: 'Pappers',
           action: 'GetCompany',
+          account: 'pappers-account',
           siret: '{{lookup trigger.properties "SIRET"}}',
         },
         {
           name: 'createClientInQonto',
           integration: 'Qonto',
           action: 'CreateClient',
+          account: 'qonto-account',
           client: {
             name: '{{getCompanyFromPappers.denomination}}',
             type: 'company',
@@ -49,6 +53,7 @@ const config: Config = {
           name: 'updateClientInNotion',
           integration: 'Notion',
           action: 'UpdatePage',
+          account: 'notion-account',
           id: '{{trigger.id}}',
           table: NOTION_TABLE_CLIENTS_ID!,
           page: {
@@ -71,18 +76,26 @@ const config: Config = {
     },
   ],
   integrations: {
-    notion: {
-      token: NOTION_API_TOKEN!,
-      pollingInterval: 5,
-    },
-    pappers: {
-      apiKey: PAPPERS_API_KEY!,
-    },
-    qonto: {
-      environment: 'production',
-      secretKey: QONTO_SECRET_KEY!,
-      organisationSlug: QONTO_ORGANISATION_SLUG!,
-    },
+    notion: [
+      {
+        account: 'notion-account',
+        token: NOTION_API_TOKEN!,
+        pollingInterval: 5,
+      },
+    ],
+    pappers: [
+      {
+        account: 'pappers-account',
+        apiKey: PAPPERS_API_KEY!,
+      },
+    ],
+    qonto: [
+      {
+        account: 'qonto-account',
+        secretKey: QONTO_SECRET_KEY!,
+        organisationSlug: QONTO_ORGANISATION_SLUG!,
+      },
+    ],
   },
 }
 

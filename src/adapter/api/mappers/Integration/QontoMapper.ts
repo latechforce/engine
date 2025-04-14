@@ -1,12 +1,12 @@
+import type { QontoIntegrationSchema } from '../../schemas/IntegrationSchema/QontoSchema'
 import type { Integrations } from '/adapter/spi/integrations'
 import { QontoSpi } from '/adapter/spi/integrations/QontoSpi'
 import { Qonto } from '/domain/integrations/Qonto'
-import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
 
 export class QontoMapper {
-  static toIntegration(integrations: Integrations, configs: QontoConfig[] = []): Qonto {
-    const spis = configs.map((config) => {
-      const driver = integrations.qonto(config)
+  static toIntegration(integrations: Integrations, schemas: QontoIntegrationSchema[] = []): Qonto {
+    const spis = schemas.map((schema) => {
+      const driver = integrations.qonto(schema)
       return new QontoSpi(driver)
     })
     return new Qonto(spis)

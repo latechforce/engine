@@ -1,0 +1,17 @@
+{
+  "name": "hello-world",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun --watch run index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@latechforce/engine": "latest"
+  }
+}

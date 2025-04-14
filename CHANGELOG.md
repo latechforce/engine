@@ -1,9 +1,8 @@
 ## [0.43.2](https://github.com/latechforce/engine/compare/v0.43.1...v0.43.2) (2025-04-14)
 
-
 ### Bug Fixes
 
-* **RunTypescript:** add green test: should run a Typescript code with the date-fns-tz package ([4bca874](https://github.com/latechforce/engine/commit/4bca874df31cfdbc1c4a88528b9d23288ba1ac5b))
+- **RunTypescript:** add green test: should run a Typescript code with the date-fns-tz package ([4bca874](https://github.com/latechforce/engine/commit/4bca874df31cfdbc1c4a88528b9d23288ba1ac5b))
 
 ## [0.43.1](https://github.com/latechforce/engine/compare/v0.43.0...v0.43.1) (2025-04-13)
 

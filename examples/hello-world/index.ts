@@ -4,6 +4,7 @@ import App from '@latechforce/engine/bun'
 const config: Config = {
   name: 'Hello World Example',
   version: '1.0.0',
+  engine: 'latest',
   automations: [
     {
       name: 'helloWorld',

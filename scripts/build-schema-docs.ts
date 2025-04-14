@@ -248,7 +248,7 @@ function getSchemaFiles(dir: string, parents: string[] = []): SchemaFile[] {
     const isDirectory = stats.isDirectory()
     const name = removeSchemaSuffix(basename(file, extname(file)))
     const ref = (name !== 'index' ? name + parents.join('') : parents.join('')) + 'Schema'
-    const docsPath = join('docs', [...parents].reverse().join('/'), name !== 'index' ? name : '')
+    const docsPath = join('api', [...parents].reverse().join('/'), name !== 'index' ? name : '')
     return {
       name: name.toLowerCase(),
       ref,
@@ -267,7 +267,7 @@ const schemaContent = readFileSync(schemaPath, 'utf-8')
 const schema = JSON.parse(schemaContent)
 
 // Create docs directory if it doesn't exist
-const docsDir = join(process.cwd(), 'website', 'docs')
+const docsDir = join(process.cwd(), 'website', 'version', 'latest', 'api')
 
 // Clear the docs directory if it exists
 try {

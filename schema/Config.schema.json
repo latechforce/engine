@@ -2164,6 +2164,12 @@
           "items": {
             "$ref": "#/definitions/CalendlyIntegrationSchema"
           }
+        },
+        "youcanbookme": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/YouCanBookMeIntegrationSchema"
+          }
         }
       },
       "additionalProperties": false,
@@ -2404,6 +2410,34 @@
         }
       ],
       "title": "Calendly"
+    },
+    "YouCanBookMeIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "user": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          },
+          "required": ["username", "password"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["name", "user"],
+      "additionalProperties": false,
+      "description": "A configuration schema for YouCanBookMe scheduling integration",
+      "title": "YouCanBookMe"
     }
   }
 }
