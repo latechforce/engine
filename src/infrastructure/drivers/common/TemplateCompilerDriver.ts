@@ -3,10 +3,11 @@ import Handlebars from 'handlebars'
 import { TemplateDriver } from './TemplateDriver'
 import { parse, format } from 'date-fns'
 
-Handlebars.registerHelper('stringify', (value) => {
-  return typeof value === 'object'
-    ? new Handlebars.SafeString(JSON.stringify(value))
-    : String(value)
+Handlebars.registerHelper('default', (value, defaultValue?: string) => {
+  if (typeof value === 'object') {
+    return new Handlebars.SafeString(JSON.stringify(value))
+  }
+  return value ? String(value) : typeof defaultValue === 'string' ? defaultValue : ''
 })
 
 Handlebars.registerHelper('formatDate', (value, inputFormat, outputFormat) => {
@@ -14,16 +15,17 @@ Handlebars.registerHelper('formatDate', (value, inputFormat, outputFormat) => {
   return format(parsedDate, outputFormat)
 })
 
-Handlebars.registerHelper('lookup', function (obj, key) {
+Handlebars.registerHelper('lookup', (obj, key) => {
   return obj[key]
 })
 
 export class TemplateCompilerDriver implements ITemplateCompilerDriver {
   compile = (text: string) => {
     const processedText = text.replace(/\{\{\s*([^{}\s][^{}]*[^{}\s]?)\s*\}\}/g, (_, variable) => {
-      const hasHelper = /^\s*\w+\s/.test(variable.trim())
-      return hasHelper ? `{{${variable.trim()}}}` : `{{{stringify ${variable.trim()}}}}`
+      const trimmedVariable = variable.trim()
+      const hasHelper = /^\s*\w+\s/.test(trimmedVariable)
+      return hasHelper ? `{{${trimmedVariable}}}` : `{{{default ${trimmedVariable}}}}`
     })
-    return new TemplateDriver(Handlebars.compile(processedText))
+    return new TemplateDriver(text, Handlebars.compile(processedText))
   }
 }

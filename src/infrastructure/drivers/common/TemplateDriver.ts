@@ -1,9 +1,16 @@
 import type { ITemplateDriver } from '/adapter/spi/drivers/TemplateSpi'
 
 export class TemplateDriver implements ITemplateDriver {
-  constructor(private _template: HandlebarsTemplateDelegate) {}
+  constructor(
+    private _text: string,
+    private _template: HandlebarsTemplateDelegate
+  ) {}
 
   fill = (data: { [key: string]: unknown }) => {
-    return this._template(data)
+    const value = this._template(data)
+    if (value === '') {
+      throw new Error(`${this._text} is not defined`)
+    }
+    return value
   }
 }

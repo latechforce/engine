@@ -53,9 +53,9 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/android-chrome-512x512.png',
     algolia: {
-      appId: 'NB6B22TAR2',
-      apiKey: '11a208d848eee6536fd9d723478d821c',
-      indexName: 'engine',
+      appId: 'O9A2Y5CN7H',
+      apiKey: '8a0302bcb20acd738753d2d70d17f32b',
+      indexName: 'engine-latechforce',
       contextualSearch: true,
       searchParameters: {},
       searchPagePath: 'search',
