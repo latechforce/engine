@@ -1,6 +1,6 @@
-# Engine by La Tech Force
+# LTF Engine
 
-Engine is a NPM package that generate a web application from a JSON configuration. This package is under Fair Use License.
+LTF Engine is a NPM package that generate a web application from a JSON configuration. This package is under Fair Use License.
 
 ## Requirements
 

@@ -94,6 +94,7 @@ export interface CodeRunnerContextPackages {
   sodium: typeof import('libsodium-wrappers')
   Mistral: typeof import('@mistralai/mistralai').Mistral
   ExcelJS: typeof import('exceljs')
+  SheetJS: typeof import('xlsx')
 }
 
 export interface CodeRunnerContext<I extends object = {}> {

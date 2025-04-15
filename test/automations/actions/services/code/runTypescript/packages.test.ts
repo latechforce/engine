@@ -809,5 +809,49 @@ mock.request(({ app, request }) => {
       // THEN
       expect(response.exist).toBeTruthy()
     })
+
+    it('should run a Typescript code with SheetJS package', async () => {
+      // GIVEN
+      const config: Config = {
+        name: 'App',
+        version: '1.0.0',
+        engine: '1.0.0',
+        automations: [
+          {
+            name: 'sheetjs',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'sheetjs',
+              output: {
+                exist: {
+                  boolean: '{{runJavascriptCode.exist}}',
+                },
+              },
+            },
+            actions: [
+              {
+                service: 'Code',
+                action: 'RunTypescript',
+                name: 'runJavascriptCode',
+                code: String(async function (context: CodeRunnerContext) {
+                  const {
+                    packages: { SheetJS },
+                  } = context
+                  return { exist: !!SheetJS.readFile }
+                }),
+              },
+            ],
+          },
+        ],
+      }
+      const { url } = await app.start(config)
+
+      // WHEN
+      const response = await request.post(`${url}/api/automation/sheetjs`)
+
+      // THEN
+      expect(response.exist).toBeTruthy()
+    })
   })
 })

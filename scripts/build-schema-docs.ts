@@ -217,8 +217,6 @@ sidebar_position: ${sidebarPosition}
     }
   }
 
-  console.log(markdown)
-
   // Example
   if (schema.examples && schema.examples.length > 0) {
     markdown += `## Example\n\n\`\`\`json\n${JSON.stringify(schema.examples[0], null, 2)}\n\`\`\`\n`
