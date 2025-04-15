@@ -19,7 +19,7 @@ mock.request(({ app, request }) => {
               event: 'ApiCalled',
               path: 'send-email',
               output: {
-                id: '{{sendEmail.id}}',
+                id: '{{sendEmail.messageId}}',
               },
             },
             actions: [
