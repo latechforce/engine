@@ -69,7 +69,7 @@ export class Bucket {
     if (data instanceof Buffer) {
       fileToSave = { id, name, data, created_at, mime_type }
     } else {
-      fileToSave = { id, name, data: Buffer.from(data as string), created_at, mime_type }
+      fileToSave = { id, name, data: Buffer.from(data), created_at, mime_type }
     }
     const file = await this.storage.save(fileToSave, this.endpoint)
     return file
