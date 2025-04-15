@@ -1,3 +1,11 @@
+## [0.43.6](https://github.com/latechforce/engine/compare/v0.43.5...v0.43.6) (2025-04-15)
+
+
+### Bug Fixes
+
+* **Automation:** add green test: should fail if the first action fails without running the second action ([e18e113](https://github.com/latechforce/engine/commit/e18e11318768e83a5b92ef81952291913531b228))
+* **test:** add waitForAutomationsHistories timeout parameter ([5c30fed](https://github.com/latechforce/engine/commit/5c30fed108cb0d7ac49dc64c85fd6c843cfcb441))
+
 ## [0.43.5](https://github.com/latechforce/engine/compare/v0.43.4...v0.43.5) (2025-04-15)
 
 
