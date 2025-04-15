@@ -64,9 +64,11 @@ export class DatabaseDriver implements IDatabaseDriver {
   waitForAutomationsHistories = async ({
     count = 1,
     status = 'succeed',
+    timeout = 60000,
   }: {
     count?: number
     status?: string
+    timeout?: number
   } = {}) => {
     let histories: AutomationHistoryRecord[] = []
     let retry = 0
@@ -78,7 +80,7 @@ export class DatabaseDriver implements IDatabaseDriver {
       )
       histories = rows
       retry++
-    } while (histories.length < count && retry < 120)
+    } while (histories.length < count && retry < Math.floor(timeout / 500))
     if (histories.length < count) {
       throw new Error(`Automations histories not found: ${count} ${status} histories`)
     }
