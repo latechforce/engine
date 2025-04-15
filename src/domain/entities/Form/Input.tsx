@@ -16,6 +16,7 @@ import {
   MultipleAttachmentField,
   SingleAttachmentField,
   type Field,
+  UrlField,
 } from '/domain/entities/Field'
 
 export interface InputConfig {
@@ -55,11 +56,15 @@ export class Input {
       description: config.description,
       required: config.required || field.required,
     }
-    if (field instanceof SingleLineTextField || field instanceof EmailField) {
+    if (
+      field instanceof SingleLineTextField ||
+      field instanceof EmailField ||
+      field instanceof UrlField
+    ) {
       this.Component = () => (
         <TextInput
           {...props}
-          type={field instanceof EmailField ? 'email' : 'text'}
+          type={field instanceof EmailField ? 'email' : field instanceof UrlField ? 'url' : 'text'}
           placeholder={config.placeholder}
           maxLength={config.maxLength}
           minLength={config.minLength}

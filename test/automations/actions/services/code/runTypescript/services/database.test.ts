@@ -236,12 +236,9 @@ mock.request(({ app, request, drivers }) => {
                 action: 'RunTypescript',
                 name: 'runJavascriptCode',
                 input: {
-                  id: '{{trigger.body.id}}',
                   name: '{{trigger.body.name}}',
                 },
-                code: String(async function (
-                  context: CodeRunnerContext<{ id: string; name: string }>
-                ) {
+                code: String(async function (context: CodeRunnerContext<{ name: string }>) {
                   const { inputData, services } = context
                   const { name } = inputData
                   const { database } = services
