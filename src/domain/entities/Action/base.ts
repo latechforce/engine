@@ -39,7 +39,7 @@ export class BaseAction<Input extends object, Output extends object> {
     throw new Error('Method not implemented.')
   }
 
-  execute = async (context: AutomationContext): Promise<void> => {
+  execute = async (context: AutomationContext): Promise<{ success: boolean }> => {
     const { logger, monitor } = this._baseServices
     const actionContext: AutomationContextAction = {
       config: this._baseConfig,
@@ -55,13 +55,14 @@ export class BaseAction<Input extends object, Output extends object> {
       actionContext.output = output
       logger.debug(`"${context.id}": output data of action "${this.name}"`, output)
       context.addSucceedAction(actionContext)
+      return { success: true }
     } catch (error) {
       if (error instanceof Error) {
         actionContext.output = { error: error.message }
         context.addFailedAction(actionContext, error.message)
         logger.debug(`"${context.id}": error when executing action "${this.name}"`, error)
         monitor.captureException(error)
-        return
+        return { success: false }
       }
       throw error
     }

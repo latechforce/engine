@@ -71,8 +71,9 @@ export class Automation {
     const context = new AutomationContext(id, triggerData)
     logger.debug(`running automation "${this.name}" with id "${id}"`)
     for (const action of actions) {
-      await action.execute(context)
+      const result = await action.execute(context)
       await this._history.updateActions(id, context.run.actions)
+      if (!result.success) break
     }
     await this._history.updateStatus(id, context.status)
     logger.info(`finish automation "${this.name}" with status "${context.status}"`)

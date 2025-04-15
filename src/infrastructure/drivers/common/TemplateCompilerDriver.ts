@@ -21,7 +21,13 @@ Handlebars.registerHelper('lookup', (obj, key) => {
 
 export class TemplateCompilerDriver implements ITemplateCompilerDriver {
   compile = (text: string) => {
+    let replacementCount = 0
     const processedText = text.replace(/\{\{\s*([^{}\s][^{}]*[^{}\s]?)\s*\}\}/g, (_, variable) => {
+      if (replacementCount >= 5) {
+        return `{{${variable}}}`
+      }
+      replacementCount++
+
       const trimmedVariable = variable.trim()
       const hasHelper = /^\s*\w+\s/.test(trimmedVariable)
       return hasHelper ? `{{${trimmedVariable}}}` : `{{{default ${trimmedVariable}}}}`
