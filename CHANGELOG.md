@@ -1,3 +1,10 @@
+## [0.43.4](https://github.com/latechforce/engine/compare/v0.43.3...v0.43.4) (2025-04-15)
+
+
+### Bug Fixes
+
+* add SheetJS package ([04774ec](https://github.com/latechforce/engine/commit/04774ecd29d98520641b25345b2b6968aa95d247))
+
 ## [0.43.3](https://github.com/latechforce/engine/compare/v0.43.2...v0.43.3) (2025-04-14)
 
 
