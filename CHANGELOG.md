@@ -1,3 +1,12 @@
+## [0.43.5](https://github.com/latechforce/engine/compare/v0.43.4...v0.43.5) (2025-04-15)
+
+
+### Bug Fixes
+
+* **Form:** add green test: should display the url input ([6ae97b9](https://github.com/latechforce/engine/commit/6ae97b9e41c4bab3bc7bbd83314197e05627d350))
+* **SendEmail:** fix broken test ([1ca6482](https://github.com/latechforce/engine/commit/1ca6482702f62d5b7e17740ba1074994999fe6a1))
+* **Tempalte:** add green test: should throw an error if the name is not linked ([0d450e9](https://github.com/latechforce/engine/commit/0d450e9608f85e7007658d0114a8436f9b167e58))
+
 ## [0.43.4](https://github.com/latechforce/engine/compare/v0.43.3...v0.43.4) (2025-04-15)
 
 
