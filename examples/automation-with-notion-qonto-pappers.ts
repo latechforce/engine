@@ -1,14 +1,6 @@
 import type { Config } from '@latechforce/engine'
 import App from '@latechforce/engine/bun'
 
-const {
-  NOTION_TABLE_CLIENTS_ID,
-  NOTION_API_TOKEN,
-  PAPPERS_API_KEY,
-  QONTO_SECRET_KEY,
-  QONTO_ORGANISATION_SLUG,
-} = process.env
-
 const config: Config = {
   name: 'Create Qonto client from Notion with Pappers',
   version: '1.0.0',
@@ -19,7 +11,7 @@ const config: Config = {
       trigger: {
         integration: 'Notion',
         event: 'TablePageCreated',
-        table: NOTION_TABLE_CLIENTS_ID!,
+        table: '{{env.NOTION_TABLE_CLIENTS_ID}}',
         account: 'notion-account',
       },
       actions: [
@@ -55,7 +47,7 @@ const config: Config = {
           action: 'UpdatePage',
           account: 'notion-account',
           id: '{{trigger.id}}',
-          table: NOTION_TABLE_CLIENTS_ID!,
+          table: '{{env.NOTION_TABLE_CLIENTS_ID}}',
           page: {
             'ID Qonto': '{{createClientInQonto.id}}',
             '[Pappers] Employés': '{{getCompanyFromPappers.effectif}}',
@@ -79,21 +71,21 @@ const config: Config = {
     notion: [
       {
         account: 'notion-account',
-        token: NOTION_API_TOKEN!,
+        token: '{{env.NOTION_API_TOKEN}}',
         pollingInterval: 5,
       },
     ],
     pappers: [
       {
         account: 'pappers-account',
-        apiKey: PAPPERS_API_KEY!,
+        apiKey: '{{env.PAPPERS_API_KEY}}',
       },
     ],
     qonto: [
       {
         account: 'qonto-account',
-        secretKey: QONTO_SECRET_KEY!,
-        organisationSlug: QONTO_ORGANISATION_SLUG!,
+        secretKey: '{{env.QONTO_SECRET_KEY}}',
+        organisationSlug: '{{env.QONTO_ORGANISATION_SLUG}}',
       },
     ],
   },

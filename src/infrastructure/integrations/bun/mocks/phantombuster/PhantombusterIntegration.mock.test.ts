@@ -6,7 +6,7 @@ import env from '/infrastructure/test/env'
 const { TEST_PHANTOMBUSTER_AGENT_ID } = env
 
 export const integration = new PhantombusterIntegration({
-  name: 'phantombuster',
+  account: 'phantombuster',
   baseUrl: ':memory:',
   apiKey: 'test',
 })

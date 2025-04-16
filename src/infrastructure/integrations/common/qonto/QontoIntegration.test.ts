@@ -11,7 +11,7 @@ const {
 } = env
 
 export const integration = new QontoIntegration({
-  name: 'test',
+  account: 'test',
   baseUrl: TEST_QONTO_BASE_URL,
   stagingToken: TEST_QONTO_STAGING_TOKEN,
   organisationSlug: TEST_QONTO_ORGANISATION_SLUG,

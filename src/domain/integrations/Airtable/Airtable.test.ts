@@ -7,7 +7,7 @@ let airtable: Airtable
 
 beforeEach(() => {
   // GIVEN
-  config = { apiKey: '1234', databaseId: '1234', name: 'test' }
+  config = { apiKey: '1234', databaseId: '1234', account: 'test' }
   spi = {
     getTable: mock(),
     config,
@@ -19,7 +19,7 @@ beforeEach(() => {
 describe('validate', () => {
   it('should check the configuration', async () => {
     // WHEN
-    await airtable.validate({ account: config.name, entity: 'Integration', name: 'Airtable' })
+    await airtable.validate({ account: config.account, entity: 'Integration', name: 'Airtable' })
 
     // THEN
     expect(spi.testConnection).toHaveBeenCalledWith()
@@ -32,7 +32,7 @@ describe('getTable', () => {
     const id = 'table-id'
 
     // WHEN
-    airtable.getTable(config.name, id)
+    airtable.getTable(config.account, id)
 
     // THEN
     expect(spi.getTable).toHaveBeenCalledWith(id)

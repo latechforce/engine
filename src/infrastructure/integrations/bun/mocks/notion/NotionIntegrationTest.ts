@@ -7,7 +7,7 @@ import {
 } from './NotionTestSamples'
 
 export const integration = new NotionIntegration({
-  name: 'test',
+  account: 'test',
   baseUrl: ':memory:',
   token: 'test',
 })

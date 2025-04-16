@@ -19,10 +19,12 @@
       "/infrastructure/*": ["infrastructure/*"],
       "/adapter/*": ["adapter/*"],
       "/domain/*": ["domain/*"],
-      "/test/*": ["infrastructure/test/*"]
+      "/test/*": ["infrastructure/test/*"],
+      "@latechforce/engine": ["index.ts"],
+      "@latechforce/engine/bun": ["bun.ts"]
     },
     "esModuleInterop": false
   },
-  "include": ["src", "test", "script", "src/domain/entities/Table/index.ts"],
+  "include": ["src", "examples", "test", "script", "src/domain/entities/Table/index.ts", "examples/automation-with-notion-qonto-pappers.ts"],
   "exclude": ["node_modules", "dist"]
 }

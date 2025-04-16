@@ -11,13 +11,23 @@ const config: Config = {
       path: '/email',
       table: 'mailing_list',
       title: 'Email Form',
-      inputs: [{ field: 'email', label: 'Email' }],
+      inputs: [
+        {
+          field: 'email',
+          label: 'Email',
+        },
+      ],
     },
   ],
   tables: [
     {
       name: 'mailing_list',
-      fields: [{ name: 'email', type: 'Email' }],
+      fields: [
+        {
+          name: 'email',
+          type: 'Email',
+        },
+      ],
     },
   ],
 }

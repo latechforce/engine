@@ -45,7 +45,7 @@ mock.request(({ app, request, integrations }) => {
         integrations: {
           pappers: [
             {
-              name: 'pappers',
+              account: 'pappers',
               baseUrl: './tmp/new-api-key',
               apiKey: 'new-api-key',
             },

@@ -59,7 +59,7 @@ mock.request(({ app, request, integrations }) => {
         integrations: {
           qonto: [
             {
-              name: 'qonto',
+              account: 'qonto',
               baseUrl: ':memory:',
               organisationSlug: 'new-organization-slug',
               secretKey: 'invalid-secret-key',

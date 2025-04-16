@@ -46,11 +46,6 @@ const config: Config = {
       ],
     },
   ],
-  services: {
-    server: {
-      port: 3000,
-    },
-  },
 }
 
 await new App().start(config)
