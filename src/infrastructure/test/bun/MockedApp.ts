@@ -5,18 +5,16 @@ import { mocks } from '/infrastructure/integrations/bun/mocks'
 
 type Options = {
   drivers?: Partial<Drivers>
-  env?: Record<string, string | undefined>
 }
 
 export class MockedApp extends App {
-  constructor({ drivers = {}, env = {} }: Options = {}) {
+  constructor({ drivers = {} }: Options = {}) {
     super({
       integrations: mocks,
       drivers: {
         ...allDrivers,
         ...drivers,
       },
-      env,
     })
   }
 }

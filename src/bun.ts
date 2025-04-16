@@ -11,17 +11,15 @@ export default class extends App {
     drivers?: Partial<Drivers>
     integrations?: Partial<Integrations>
     components?: Partial<Components>
-    env?: Record<string, string | undefined>
   }) {
     const customDrivers = options?.drivers ?? {}
     const customIntegrations = options?.integrations ?? {}
     const customComponents = options?.components ?? {}
-    const customEnv = options?.env ?? {}
     super(
       { ...drivers, ...customDrivers },
       { ...integrations, ...customIntegrations },
       { ...components, ...customComponents },
-      { ...process.env, ...customEnv }
+      { ...process.env }
     )
   }
 }

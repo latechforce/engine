@@ -55,6 +55,9 @@ function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
   if (schema.type === 'array' && schema.items) {
     if (typeof schema.items === 'object' && '$ref' in schema.items) {
       const ref = (schema.items.$ref as string).split('/').pop()
+      if (!ref) {
+        throw new Error('Ref is undefined')
+      }
       const file = findSchemaFile(ref, schemaFiles)
       if (file) {
         return `Array of [${capitalize(file.name)}](${file.docsPath})`
@@ -67,6 +70,9 @@ function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
   if (schema.type === 'object') return 'Object'
   if (schema.$ref) {
     const ref = (schema.$ref as string).split('/').pop()
+    if (!ref) {
+      throw new Error('Ref is undefined')
+    }
     const file = findSchemaFile(ref, schemaFiles)
     if (file) {
       return `Reference: [${capitalize(file.name)}](${file.docsPath})`
@@ -149,6 +155,9 @@ sidebar_position: ${sidebarPosition}
     const complexProperties = Object.entries(schema.properties).filter(([_, prop]) => {
       if (prop.$ref) {
         const ref = prop.$ref.split('/').pop()
+        if (!ref) {
+          throw new Error('Ref is undefined')
+        }
         const definition = schema.definitions?.[ref]
         return (
           definition &&
@@ -171,16 +180,24 @@ sidebar_position: ${sidebarPosition}
         let currentSchema = prop
         if (prop.$ref) {
           const ref = prop.$ref.split('/').pop()
+          if (!ref) {
+            throw new Error('Ref is undefined')
+          }
           currentSchema = schema.definitions?.[ref] || prop
         }
 
         if (currentSchema.anyOf || currentSchema.oneOf) {
           const choices = currentSchema.anyOf || currentSchema.oneOf
           markdown += `This property can be one of the following options:\n\n`
-
+          if (!choices) {
+            throw new Error('Choices are undefined')
+          }
           for (const choice of choices) {
             if (choice.$ref) {
               const ref = choice.$ref.split('/').pop()
+              if (!ref) {
+                throw new Error('Ref is undefined')
+              }
               const file = findSchemaFile(ref, schemaFiles)
               if (file) {
                 markdown += `#### Option: [${capitalize(file.name)}](${file.docsPath})\n\n`
