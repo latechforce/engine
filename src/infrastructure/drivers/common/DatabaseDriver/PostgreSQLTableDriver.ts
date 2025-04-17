@@ -24,9 +24,6 @@ interface Column {
   required?: boolean
   table?: string
   tableField?: string
-  onMigration?: {
-    replace?: string
-  }
 }
 
 type Row = {
@@ -112,24 +109,13 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       const existingColumns = await this._getExistingColumns(client)
       const staticColumns = this.columns.filter((column) => !this._isViewColumn(column))
       const fieldsToAdd = staticColumns.filter(
-        (field) =>
-          !existingColumns.some(
-            (column) =>
-              column.name === field.name ||
-              (field.onMigration && field.onMigration.replace === column.name)
-          )
+        (field) => !existingColumns.some((column) => column.name === field.name)
       )
       const fieldsToAlter = staticColumns.filter((field) => {
-        const existingColumn = existingColumns.find(
-          (column) =>
-            column.name === field.name ||
-            (field.onMigration && field.onMigration.replace === column.name)
-        )
+        const existingColumn = existingColumns.find((column) => column.name === field.name)
         if (!existingColumn) return false
         return (
-          existingColumn.type !== field.type ||
-          existingColumn.notnull !== (field.required ? 1 : 0) ||
-          (field.onMigration && field.onMigration.replace)
+          existingColumn.type !== field.type || existingColumn.notnull !== (field.required ? 1 : 0)
         )
       })
       for (const field of fieldsToAdd) {
@@ -143,15 +129,6 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
         }
       }
       for (const field of fieldsToAlter) {
-        if (field.onMigration && field.onMigration.replace) {
-          const existingColumnWithNewName = existingColumns.find(
-            (column) => column.name === field.name
-          )
-          if (!existingColumnWithNewName) {
-            const renameQuery = `ALTER TABLE ${this.nameWithSchema} RENAME COLUMN ${field.onMigration.replace} TO ${field.name}`
-            await client.query(renameQuery)
-          }
-        }
         const query = `ALTER TABLE ${this.nameWithSchema} ALTER COLUMN ${field.name} TYPE ${field.type}`
         await client.query(query)
       }
@@ -644,7 +621,6 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     const column = {
       name: field.name,
       required: field.required,
-      onMigration: field.onMigration,
     }
     let rollupTable: string | undefined
     if (field.type === 'Rollup') {

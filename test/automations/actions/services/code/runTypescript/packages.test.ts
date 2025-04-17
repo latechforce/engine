@@ -10,8 +10,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getDate',
@@ -53,8 +52,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getDateLocale',
@@ -98,8 +96,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getDateTz',
@@ -143,8 +140,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'parseXml',
@@ -197,8 +193,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'axios',
@@ -241,8 +236,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'https',
@@ -285,8 +279,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'fsExtra',
@@ -329,8 +322,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'path',
@@ -373,8 +365,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'crypto',
@@ -417,8 +408,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'lodash',
@@ -461,8 +451,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'slugify',
@@ -505,8 +494,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'sodium',
@@ -549,8 +537,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'notion',
@@ -593,8 +580,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'airtable',
@@ -637,8 +623,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'papaparse',
@@ -681,8 +666,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'puppeteer',
@@ -725,8 +709,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'mistral',
@@ -770,8 +753,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'exceljs',
@@ -814,8 +796,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'sheetjs',

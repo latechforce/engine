@@ -22,8 +22,6 @@ mock.request(({ app, request, integrations }) => {
     if (!invoice) throw new Error('Invoice not created')
     config = {
       name: 'App',
-      version: '1.0.0',
-      engine: '1.0.0',
       automations: [
         {
           name: 'retrieveAttachment',

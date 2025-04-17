@@ -7,8 +7,6 @@ const mock = new Mock(Tester, { integrations: ['Pappers'] })
 mock.request(({ app, request, integrations }) => {
   const config: Config = {
     name: 'App',
-    version: '1.0.0',
-    engine: '1.0.0',
     automations: [
       {
         name: 'getCompany',

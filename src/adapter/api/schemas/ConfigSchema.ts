@@ -20,15 +20,17 @@ export type ConfigSchema = {
    * Config version
    * @description The version of the config
    */
-  version: string
+  appVersion?: string
   /**
    * Engine version
    * @description The version of the engine
+   * @default version of package.json or latest
    */
-  engine: string
+  engineVersion?: string
   /**
    * Engine description
    * @description The description of the engine
+   * @default @latechforce/engine version of package.json
    */
   description?: string
   /**

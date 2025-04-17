@@ -1,4 +1,3 @@
-import type { ConfigSchema } from '../../schemas/ConfigSchema'
 import type { ServerServiceSchema } from '../../schemas/ServiceSchema/ServerSchema'
 import type { Drivers } from '/adapter/spi/drivers'
 import { ServerSpi } from '/adapter/spi/drivers/ServerSpi'
@@ -9,9 +8,12 @@ export class ServerMapper {
     drivers: Drivers,
     schema: ServerServiceSchema = {},
     services: ServerServices,
-    config: ConfigSchema
+    {
+      appName,
+      appVersion,
+      appDescription,
+    }: { appName: string; appVersion: string; appDescription?: string }
   ) {
-    const { name: appName, version: appVersion, description: appDescription } = config
     const server = { ...schema, appName, appVersion, appDescription }
     const driver = drivers.server(server)
     const spi = new ServerSpi(driver)

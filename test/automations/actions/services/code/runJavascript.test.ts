@@ -9,8 +9,6 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
         automations: [
           {
             name: 'addNumbers',

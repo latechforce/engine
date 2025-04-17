@@ -100,24 +100,13 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       const existingColumns = this._getExistingColumns()
       const staticColumns = this.columns.filter((column) => !this._isViewColumn(column))
       const fieldsToAdd = staticColumns.filter(
-        (field) =>
-          !existingColumns.some(
-            (column) =>
-              column.name === field.name ||
-              (field.onMigration && field.onMigration.replace === column.name)
-          )
+        (field) => !existingColumns.some((column) => column.name === field.name)
       )
       const fieldsToAlter = staticColumns.filter((field) => {
-        const existingColumn = existingColumns.find(
-          (column) =>
-            column.name === field.name ||
-            (field.onMigration && field.onMigration.replace === column.name)
-        )
+        const existingColumn = existingColumns.find((column) => column.name === field.name)
         if (!existingColumn) return false
         return (
-          existingColumn.type !== field.type ||
-          existingColumn.required !== (field.required ? 1 : 0) ||
-          (field.onMigration && field.onMigration.replace)
+          existingColumn.type !== field.type || existingColumn.required !== (field.required ? 1 : 0)
         )
       })
       for (const field of fieldsToAdd) {
@@ -135,17 +124,6 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         const newSchema = this._buildColumnsQuery(staticColumns)
         this._db.exec(`DROP TABLE IF EXISTS ${tempTableName}`)
         this._db.exec(`CREATE TABLE ${tempTableName} (${newSchema})`)
-        for (const field of fieldsToAlter) {
-          if (field.onMigration && field.onMigration.replace) {
-            const existingColumnWithNewName = existingColumns.find(
-              (column) => column.name === field.name
-            )
-            if (!existingColumnWithNewName) {
-              const renameQuery = `ALTER TABLE ${this.nameWithSchema} RENAME COLUMN ${field.onMigration.replace} TO ${field.name}`
-              this._db.exec(renameQuery)
-            }
-          }
-        }
         const columnsToCopy = staticColumns.map((field) => field.name).join(', ')
         this._db.exec(`PRAGMA defer_foreign_keys = ON`)
         this._db.exec(
@@ -653,7 +631,6 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     const column = {
       name: this._slugify(field.name),
       required: field.required,
-      onMigration: field.onMigration,
     }
     let rollupTable: string | undefined
     if (field.type === 'Rollup') {

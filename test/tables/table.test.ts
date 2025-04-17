@@ -1,29 +1,27 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock } from '/test/bun'
+import { Mock, type Config } from '/test/bun'
 import { getFirstTableSchema } from '/test/common'
+import withSingleLineText from '/examples/table/with-single-line-text'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.request(({ app, request, drivers }) => {
   describe('on start', () => {
     it('should create a table', async () => {
-      // GIVEN
-      const config = getFirstTableSchema()
-
       // WHEN
-      await app.start(config)
+      await app.start(withSingleLineText)
 
       // THEN
-      expect(drivers.database.tableFromSchema(config.tables[0]).exists()).resolves.toBe(true)
+      const table = drivers.database.tableFromSchema(withSingleLineText.tables![0])
+      expect(table.exists()).resolves.toBe(true)
     })
 
     it('should connect to an existing table', async () => {
       // GIVEN
-      const config = getFirstTableSchema()
-      await drivers.database.tableFromSchema(config.tables[0]).create()
+      await drivers.database.tableFromSchema(withSingleLineText.tables![0]).create()
 
       // WHEN
-      const startedApp = await app.start(config)
+      const startedApp = await app.start(withSingleLineText)
 
       // THEN
       expect(startedApp).toBeDefined()
@@ -31,54 +29,15 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate an existing table with a new field', async () => {
       // GIVEN
-      const config = getFirstTableSchema(['name', 'long_text'])
-      await drivers.database.tableFromSchema(config.tables[0]).create()
+      await drivers.database.tableFromSchema(withSingleLineText.tables![0]).create()
+      const newConfig: Config = { ...withSingleLineText }
+      newConfig.tables?.[0].fields.push({ name: 'new_field', type: 'SingleLineText' })
 
       // WHEN
-      const startedApp = await app.start(config)
+      const startedApp = await app.start(newConfig)
 
       // THEN
       expect(startedApp).toBeDefined()
-    })
-
-    it('should migrate a table with a renamed field', async () => {
-      // GIVEN
-      const config = getFirstTableSchema(['name_after_migration'])
-      const table = drivers.database.tableFromSchema(
-        getFirstTableSchema(['name_before_migration']).tables[0]
-      )
-      await table.create()
-      await table.insert({
-        id: '1',
-        fields: { name_before_migration: 'test' },
-        created_at: new Date().toISOString(),
-      })
-
-      // WHEN
-      await app.start(config)
-
-      // THEN
-      const record = await drivers.database.tableFromSchema(config.tables[0]).readById('1')
-      expect(record?.fields.name_after_migration).toBe('test')
-      expect(record?.fields.name_before_migration).toBeUndefined()
-    })
-
-    it('should migrate a table with a renamed field that has already be renamed', async () => {
-      // GIVEN
-      const config = getFirstTableSchema(['name_after_migration'])
-      const table = drivers.database.tableFromSchema(config.tables[0])
-      await table.create()
-      await table.insert({
-        id: '1',
-        fields: { name_after_migration: 'test' },
-        created_at: new Date().toISOString(),
-      })
-
-      // WHEN
-      const call = () => app.start(config)
-
-      // THEN
-      expect(call()).resolves.toBeDefined()
     })
 
     it('should migrate a table with existing records', async () => {

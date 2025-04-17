@@ -8,8 +8,6 @@ describe('on start', () => {
     // GIVEN
     const config: Config = {
       name: 'App',
-      version: '1.0.0',
-      engine: '1.0.0',
       services: {
         monitors: [
           {
@@ -34,8 +32,6 @@ describe('on start', () => {
     // GIVEN
     const config: Config = {
       name: 'La Tech Force App',
-      version: '1.0.0',
-      engine: '1.0.0',
       services: {
         monitors: [
           {

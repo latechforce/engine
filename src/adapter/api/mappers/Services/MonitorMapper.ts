@@ -1,4 +1,3 @@
-import type { ConfigSchema } from '../../schemas/ConfigSchema'
 import type { MonitorServiceSchema } from '../../schemas/ServiceSchema/MonitorSchema'
 import type { Drivers } from '/adapter/spi/drivers'
 import { MonitorSpi } from '/adapter/spi/drivers/MonitorSpi'
@@ -9,9 +8,8 @@ export class MonitorMapper {
     drivers: Drivers,
     schema: MonitorServiceSchema[] = [],
     services: MonitorServices,
-    config: ConfigSchema
+    { appName, appVersion }: { appName: string; appVersion: string }
   ): Monitor {
-    const { name: appName, version: appVersion } = config
     const monitors = schema.map((schema) => ({ ...schema, appName, appVersion }))
     const driver = drivers.monitor(monitors)
     const spi = new MonitorSpi(driver)

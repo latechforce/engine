@@ -41,21 +41,21 @@ mock.app(({ app }) => {
     const startedApp = await app.start(withDefaultEnv)
 
     // THEN
-    expect(startedApp.version).toBe('1.0.0')
-    expect(startedApp.engine).toBe('1.0.0')
+    expect(startedApp.appVersion).toBe('1.0.0')
+    expect(startedApp.engineVersion).toBe('1.0.0')
   })
 
   it('should start an app with env variables', async () => {
     // GIVEN
-    process.env.APP_CONFIG_VERSION = '2.0.0'
-    process.env.APP_ENGINE_VERSION = '2.0.0'
+    process.env.APP_VERSION = '2.0.0'
+    process.env.ENGINE_VERSION = '2.0.0'
 
     // WHEN
     const startedApp = await app.start(withEnv)
 
     // THEN
-    expect(startedApp.version).toBe('2.0.0')
-    expect(startedApp.engine).toBe('2.0.0')
+    expect(startedApp.appVersion).toBe('2.0.0')
+    expect(startedApp.engineVersion).toBe('2.0.0')
   })
 
   it('should check the app running status through /api/health endpoint', async () => {

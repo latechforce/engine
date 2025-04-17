@@ -5,8 +5,6 @@ import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 const fullSchema: ConfigSchema = {
   name: 'App',
-  version: '1.0.0',
-  engine: '1.0.0',
   automations: [
     {
       name: 'ApiCalled',
@@ -149,9 +147,6 @@ const fullSchema: ConfigSchema = {
         {
           name: 'name_after_migration',
           type: 'SingleLineText',
-          onMigration: {
-            replace: 'name_before_migration',
-          },
         },
         {
           name: 'long_text',
