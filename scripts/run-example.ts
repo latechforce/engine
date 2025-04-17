@@ -6,13 +6,14 @@ import { readdir } from 'fs/promises'
 const searchTerm = process.argv[2]
 const examplesDir = join(process.cwd(), 'examples')
 
-async function findMatchingFile(dir: string): Promise<string | null> {
+async function findMatchingFiles(dir: string): Promise<string[]> {
   // Ensure we're still within the examples directory
   if (!dir.startsWith(examplesDir)) {
-    return null
+    return []
   }
 
   const entries = await readdir(dir, { withFileTypes: true })
+  const matches: string[] = []
 
   for (const entry of entries) {
     const fullPath = join(dir, entry.name)
@@ -23,27 +24,29 @@ async function findMatchingFile(dir: string): Promise<string | null> {
     }
 
     if (entry.isDirectory()) {
-      const found = await findMatchingFile(fullPath)
-      if (found) return found
-    } else if (entry.isFile() && entry.name.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return fullPath
+      const found = await findMatchingFiles(fullPath)
+      matches.push(...found)
+    } else if (entry.isFile() && fullPath.toLowerCase().includes(searchTerm.toLowerCase())) {
+      matches.push(fullPath)
     }
   }
 
-  return null
+  return matches
 }
 
-const matchingFile = await findMatchingFile(examplesDir)
+const matchingFiles = await findMatchingFiles(examplesDir)
 
-if (!matchingFile) {
+if (matchingFiles.length === 0) {
   console.error(`No file found in examples directory containing "${searchTerm}"`)
   process.exit(1)
-} else {
-  console.log(`Running example: ${relative(examplesDir, matchingFile)}`)
 }
 
-export const config: Config = await import(matchingFile).then(
-  (m) => m[matchingFile.split('/').pop()!.replace('.ts', '')]
-)
+// Prioritize index files
+const indexFile = matchingFiles.find((file) => file.toLowerCase().includes('index'))
+const selectedFile = indexFile || matchingFiles[0]
+
+console.log(`Running example: ${relative(examplesDir, selectedFile)}`)
+
+export const config: Config = await import(selectedFile).then((m) => m[Object.keys(m)[0]])
 
 await new App().start(config)

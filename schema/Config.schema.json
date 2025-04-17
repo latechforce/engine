@@ -7,62 +7,60 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "The name of the engine"
+          "description": "The name of the engine."
         },
         "appVersion": {
           "type": "string",
-          "description": "The version of the config"
+          "description": "The version of the application.",
+          "default": "the `version` property of the `package.json` file or `latest`"
         },
         "engineVersion": {
           "type": "string",
-          "description": "The version of the engine",
-          "default": "version of package.json or latest"
+          "description": "The version of the engine.",
+          "default": "the `version` of the dependency `@latechforce/engine` of the `package.json` file"
         },
         "description": {
           "type": "string",
-          "description": "The description of the engine",
-          "default": true
+          "description": "The description of the application."
         },
         "forms": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/FormSchema"
           },
-          "description": "The forms of the engine"
+          "description": "The forms of the application."
         },
         "automations": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/AutomationSchema"
           },
-          "description": "The automations of the engine"
+          "description": "The automations of the application."
         },
         "tables": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/TableSchema"
           },
-          "description": "The tables of the engine"
+          "description": "The tables of the application."
         },
         "buckets": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/BucketSchema"
           },
-          "description": "The buckets of the engine"
+          "description": "The buckets of the application."
         },
         "integrations": {
           "$ref": "#/definitions/IntegrationSchema",
-          "description": "The integrations of the engine"
+          "description": "The integrations of the application."
         },
         "services": {
           "$ref": "#/definitions/ServiceSchema",
-          "description": "The services of the engine"
+          "description": "The services of the application."
         }
       },
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "additionalProperties": false,
       "description": "This is the configuration of the engine.",
       "title": "Config"
@@ -99,12 +97,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "inputs",
-        "name",
-        "path",
-        "table"
-      ],
+      "required": ["inputs", "name", "path", "table"],
       "description": "Type alias for form configuration",
       "title": "Form"
     },
@@ -133,9 +126,7 @@
           "type": "number"
         }
       },
-      "required": [
-        "field"
-      ],
+      "required": ["field"],
       "additionalProperties": false,
       "description": "Type alias for input configuration",
       "title": "Input"
@@ -162,11 +153,7 @@
           }
         }
       },
-      "required": [
-        "actions",
-        "name",
-        "trigger"
-      ],
+      "required": ["actions", "name", "trigger"],
       "additionalProperties": false,
       "description": "Defines an automation workflow with triggers and actions",
       "title": "Automation"
@@ -181,13 +168,6 @@
         }
       ],
       "description": "Union type of all possible triggers that can start automations",
-      "examples": [
-        {
-          "service": "Http",
-          "trigger": "ApiCalled",
-          "path": "/run-automation"
-        }
-      ],
       "title": "Trigger"
     },
     "ServiceTriggerAutomationSchema": {
@@ -225,11 +205,7 @@
           "const": "RecordCreated"
         }
       },
-      "required": [
-        "event",
-        "service",
-        "table"
-      ],
+      "required": ["event", "service", "table"],
       "additionalProperties": false,
       "description": "A trigger that fires when a record is created in a database",
       "title": "Record Created"
@@ -257,13 +233,7 @@
           "properties": {
             "type": {
               "type": "string",
-              "enum": [
-                "string",
-                "number",
-                "boolean",
-                "array",
-                "object"
-              ]
+              "enum": ["string", "number", "boolean", "array", "object"]
             },
             "properties": {
               "type": "object",
@@ -306,9 +276,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "number"
-                ],
+                "required": ["number"],
                 "additionalProperties": false
               },
               {
@@ -318,9 +286,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "boolean"
-                ],
+                "required": ["boolean"],
                 "additionalProperties": false
               },
               {
@@ -330,9 +296,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "json"
-                ],
+                "required": ["json"],
                 "additionalProperties": false
               },
               {},
@@ -367,11 +331,7 @@
           "const": "ApiCalled"
         }
       },
-      "required": [
-        "event",
-        "path",
-        "service"
-      ],
+      "required": ["event", "path", "service"],
       "additionalProperties": false,
       "description": "A trigger that fires when an API is called",
       "title": "Api Called"
@@ -392,11 +352,7 @@
           "const": "WebhookCalled"
         }
       },
-      "required": [
-        "event",
-        "path",
-        "service"
-      ],
+      "required": ["event", "path", "service"],
       "additionalProperties": false,
       "description": "A trigger that fires when a webhook is called",
       "title": "Webhook Called"
@@ -421,11 +377,7 @@
           "const": "CronTimeTicked"
         }
       },
-      "required": [
-        "cronTime",
-        "event",
-        "service"
-      ],
+      "required": ["cronTime", "event", "service"],
       "additionalProperties": false,
       "description": "A trigger that fires when a cron time is ticked",
       "title": "Cron Time Ticked"
@@ -462,11 +414,7 @@
           "const": "InviteeCreated"
         }
       },
-      "required": [
-        "account",
-        "event",
-        "integration"
-      ],
+      "required": ["account", "event", "integration"],
       "additionalProperties": false,
       "description": "A trigger that fires when an invitee is created in Calendly",
       "title": "Invitee Created"
@@ -494,12 +442,7 @@
           "const": "TablePageCreated"
         }
       },
-      "required": [
-        "account",
-        "event",
-        "integration",
-        "table"
-      ],
+      "required": ["account", "event", "integration", "table"],
       "additionalProperties": false,
       "description": "A trigger that fires when a table page is created in Notion",
       "title": "Table Page Created"
@@ -578,13 +521,7 @@
           "const": "GetCompany"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "integration",
-        "name",
-        "siret"
-      ],
+      "required": ["account", "action", "integration", "name", "siret"],
       "additionalProperties": false,
       "description": "Retrieves company information using Pappers integration",
       "examples": [
@@ -676,13 +613,7 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "street_address",
-                "city",
-                "zip_code",
-                "province_code",
-                "country_code"
-              ],
+              "required": ["street_address", "city", "zip_code", "province_code", "country_code"],
               "additionalProperties": false
             },
             "delivery_address": {
@@ -704,28 +635,14 @@
                   "type": "string"
                 }
               },
-              "required": [
-                "street_address",
-                "city",
-                "zip_code",
-                "province_code",
-                "country_code"
-              ],
+              "required": ["street_address", "city", "zip_code", "province_code", "country_code"],
               "additionalProperties": false
             },
             "locale": {
               "type": "string"
             }
           },
-          "required": [
-            "address",
-            "city",
-            "country_code",
-            "currency",
-            "locale",
-            "type",
-            "zip_code"
-          ]
+          "required": ["address", "city", "country_code", "currency", "locale", "type", "zip_code"]
         },
         "integration": {
           "type": "string",
@@ -736,13 +653,7 @@
           "const": "CreateClient"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "client",
-        "integration",
-        "name"
-      ],
+      "required": ["account", "action", "client", "integration", "name"],
       "additionalProperties": false,
       "description": "Creates a new client in Qonto with the specified details",
       "examples": [
@@ -785,13 +696,7 @@
           "const": "RetrieveAttachment"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "attachmentId",
-        "integration",
-        "name"
-      ],
+      "required": ["account", "action", "attachmentId", "integration", "name"],
       "additionalProperties": false,
       "description": "Retrieves an attachment using Qonto integration",
       "examples": [
@@ -838,15 +743,7 @@
           "const": "UpdatePage"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "id",
-        "integration",
-        "name",
-        "page",
-        "table"
-      ],
+      "required": ["account", "action", "id", "integration", "name", "page", "table"],
       "additionalProperties": false,
       "description": "Updates a page in Notion with the specified properties",
       "examples": [
@@ -906,9 +803,7 @@
               "type": "string"
             }
           },
-          "required": [
-            "to"
-          ],
+          "required": ["to"],
           "additionalProperties": false
         },
         "integration": {
@@ -920,13 +815,7 @@
           "const": "SendEmail"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "email",
-        "integration",
-        "name"
-      ],
+      "required": ["account", "action", "email", "integration", "name"],
       "additionalProperties": false,
       "description": "Sends an email using Google Mail integration",
       "examples": [
@@ -994,11 +883,7 @@
               "type": "string"
             }
           },
-          "required": [
-            "amount",
-            "currency",
-            "mandate"
-          ],
+          "required": ["amount", "currency", "mandate"],
           "additionalProperties": false
         },
         "integration": {
@@ -1010,13 +895,7 @@
           "const": "CreatePayment"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "integration",
-        "name",
-        "payment"
-      ],
+      "required": ["account", "action", "integration", "name", "payment"],
       "additionalProperties": false,
       "description": "Creates a new payment in GoCardless with the specified details",
       "examples": [
@@ -1076,13 +955,7 @@
           "const": "ListPayments"
         }
       },
-      "required": [
-        "account",
-        "action",
-        "integration",
-        "name",
-        "params"
-      ],
+      "required": ["account", "action", "integration", "name", "params"],
       "additionalProperties": false,
       "description": "Lists payments using GoCardless integration with optional filters",
       "examples": [
@@ -1153,12 +1026,7 @@
           "const": "RunJavascript"
         }
       },
-      "required": [
-        "action",
-        "code",
-        "name",
-        "service"
-      ],
+      "required": ["action", "code", "name", "service"],
       "additionalProperties": false,
       "description": "Executes JavaScript code with the specified input",
       "examples": [
@@ -1198,12 +1066,7 @@
           "const": "RunTypescript"
         }
       },
-      "required": [
-        "action",
-        "code",
-        "name",
-        "service"
-      ],
+      "required": ["action", "code", "name", "service"],
       "additionalProperties": false,
       "description": "Executes TypeScript code with the specified input",
       "examples": [
@@ -1251,13 +1114,7 @@
           "const": "ReadRecord"
         }
       },
-      "required": [
-        "action",
-        "id",
-        "name",
-        "service",
-        "table"
-      ],
+      "required": ["action", "id", "name", "service", "table"],
       "additionalProperties": false,
       "description": "Reads a record from the specified database table",
       "examples": [
@@ -1294,13 +1151,7 @@
           "const": "CreateRecord"
         }
       },
-      "required": [
-        "action",
-        "fields",
-        "name",
-        "service",
-        "table"
-      ],
+      "required": ["action", "fields", "name", "service", "table"],
       "additionalProperties": false,
       "description": "Creates a new record in the specified database table with the given fields",
       "examples": [
@@ -1323,38 +1174,21 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "The unique identifier for the table",
-          "examples": [
-            "users"
-          ]
+          "description": "The unique identifier for the table"
         },
         "schema": {
           "type": "string",
-          "description": "The database schema where the table is located",
-          "examples": [
-            "public"
-          ]
+          "description": "The database schema where the table is located"
         },
         "fields": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/FieldTableSchema"
           },
-          "description": "Array of field definitions for the table",
-          "examples": [
-            [
-              {
-                "name": "id",
-                "type": "string",
-                "required": true
-              }
-            ]
-          ]
+          "description": "Array of field definitions for the table"
         }
       },
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "additionalProperties": false,
       "description": "Defines the structure of a database table",
       "title": "Table"
@@ -1423,28 +1257,19 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "DateTime"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a date and time field in forms and tables",
-      "examples": [
-        {
-          "type": "DateTime",
-          "name": "appointmentTime",
-          "required": true
-        }
-      ],
-      "title": "DateTime"
+      "description": "Represents a field that stores a date and time.",
+      "title": "Date time"
     },
     "EmailFieldTableSchema": {
       "type": "object",
@@ -1452,27 +1277,18 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "Email"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a field that stores an email address",
-      "examples": [
-        {
-          "type": "Email",
-          "name": "email",
-          "required": true
-        }
-      ],
+      "description": "Represents a field that stores an email address.",
       "title": "Email"
     },
     "FormulaFieldTableSchema": {
@@ -1480,9 +1296,6 @@
       "properties": {
         "name": {
           "type": "string"
-        },
-        "required": {
-          "type": "boolean"
         },
         "type": {
           "type": "string",
@@ -1492,43 +1305,30 @@
           "type": "string"
         },
         "output": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "Number",
-                "LongText",
-                "SingleLineText",
-                "DateTime"
-              ]
-            },
-            "required": {
-              "type": "boolean"
-            }
-          },
-          "required": [
-            "type"
-          ],
-          "additionalProperties": false
+          "$ref": "#/definitions/OutputFormulaFieldTableSchema"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "formula",
-        "name",
-        "output",
-        "type"
-      ],
+      "required": ["name", "type", "formula", "output"],
       "additionalProperties": false,
-      "description": "Represents a calculated field in forms and tables",
-      "examples": [
-        {
-          "type": "Formula",
-          "name": "totalPrice",
-          "formula": "price * quantity"
-        }
-      ],
+      "description": "Represents a field that calculates a value based on a formula.",
       "title": "Formula"
+    },
+    "OutputFormulaFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Number", "LongText", "SingleLineText", "DateTime"]
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false,
+      "description": "Represents the output type of a formula field.",
+      "title": "Output"
     },
     "LongTextFieldTableSchema": {
       "type": "object",
@@ -1536,27 +1336,18 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "LongText"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a field that stores multiple lines of text",
-      "examples": [
-        {
-          "type": "LongText",
-          "name": "description",
-          "required": true
-        }
-      ],
+      "description": "Represents a field that stores multiple lines of text.",
       "title": "Long text"
     },
     "MultipleLinkedRecordFieldTableSchema": {
@@ -1565,32 +1356,21 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "MultipleLinkedRecord"
         },
         "table": {
           "type": "string"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "table",
-        "type"
-      ],
+      "required": ["name", "type", "table"],
       "additionalProperties": false,
-      "description": "Represents a field that can link to multiple records from another table",
-      "examples": [
-        {
-          "type": "MultipleLinkedRecord",
-          "name": "projects",
-          "required": true,
-          "table": "projects"
-        }
-      ],
+      "description": "Represents a field that links to multiple records in another table.",
       "title": "Multiple linked record"
     },
     "NumberFieldTableSchema": {
@@ -1599,34 +1379,24 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "Number"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a field that stores numeric values",
-      "examples": [
-        {
-          "type": "Number",
-          "name": "age",
-          "required": true
-        }
-      ],
+      "description": "Represents a field that stores a numeric value.",
       "title": "Number"
     },
     "RollupFieldTableSchema": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
-        "multipleLinkedRecord": {
+        "name": {
           "type": "string"
         },
         "type": {
@@ -1636,61 +1406,47 @@
         "formula": {
           "type": "string"
         },
+        "multipleLinkedRecord": {
+          "type": "string",
+          "description": "The multiple linked record field to aggregate values from."
+        },
         "linkedRecordField": {
-          "type": "string"
+          "type": "string",
+          "description": "The field of the multiple linked record table to aggregate values from."
         },
         "output": {
-          "type": "object",
-          "properties": {
-            "type": {
-              "type": "string",
-              "enum": [
-                "Number",
-                "LongText",
-                "SingleLineText",
-                "DateTime"
-              ]
-            },
-            "required": {
-              "type": "boolean"
-            }
-          },
-          "required": [
-            "type"
-          ],
-          "additionalProperties": false
-        },
-        "name": {
-          "type": "string"
+          "$ref": "#/definitions/OutputRollupFieldTableSchema",
+          "description": "The output type of the rollup field."
         },
         "required": {
-          "type": "boolean"
+          "type": "boolean",
+          "default": "`false`"
         }
       },
       "required": [
-        "formula",
-        "linkedRecordField",
-        "multipleLinkedRecord",
         "name",
-        "output",
-        "type"
+        "type",
+        "formula",
+        "multipleLinkedRecord",
+        "linkedRecordField",
+        "output"
       ],
-      "description": "Represents a field that aggregates data from linked records",
-      "examples": [
-        {
-          "type": "Rollup",
-          "name": "totalSales",
-          "required": false,
-          "multipleLinkedRecord": "orders",
-          "linkedRecordField": "amount",
-          "formula": "sum(amount)",
-          "output": {
-            "type": "Number",
-            "name": "totalSales"
-          }
-        }
-      ],
+      "additionalProperties": false,
+      "description": "Represents a field that aggregates values from linked records.",
       "title": "Rollup"
+    },
+    "OutputRollupFieldTableSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["Number", "LongText", "SingleLineText", "DateTime"]
+        }
+      },
+      "required": ["type"],
+      "additionalProperties": false,
+      "description": "Represents the output type of a rollup field.",
+      "title": "Output"
     },
     "SingleLineTextFieldTableSchema": {
       "type": "object",
@@ -1698,27 +1454,18 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "SingleLineText"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a field that stores a single line of text",
-      "examples": [
-        {
-          "type": "SingleLineText",
-          "name": "title",
-          "required": true
-        }
-      ],
+      "description": "Represents a field that stores a single line of text.",
       "title": "Single line text"
     },
     "SingleLinkedRecordFieldTableSchema": {
@@ -1727,32 +1474,21 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "SingleLinkedRecord"
         },
         "table": {
           "type": "string"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "table",
-        "type"
-      ],
+      "required": ["name", "type", "table"],
       "additionalProperties": false,
-      "description": "Represents a field that can link to a single record from another table",
-      "examples": [
-        {
-          "type": "SingleLinkedRecord",
-          "name": "manager",
-          "required": true,
-          "table": "users"
-        }
-      ],
+      "description": "Represents a field that links to a single record in another table.",
       "title": "Single linked record"
     },
     "SingleSelectFieldTableSchema": {
@@ -1760,9 +1496,6 @@
       "properties": {
         "name": {
           "type": "string"
-        },
-        "required": {
-          "type": "boolean"
         },
         "type": {
           "type": "string",
@@ -1773,27 +1506,15 @@
           "items": {
             "type": "string"
           }
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "options",
-        "type"
-      ],
+      "required": ["name", "type", "options"],
       "additionalProperties": false,
-      "description": "Represents a field that allows selecting one option from a predefined list",
-      "examples": [
-        {
-          "type": "SingleSelect",
-          "name": "status",
-          "required": true,
-          "options": [
-            "Active",
-            "Inactive",
-            "Pending"
-          ]
-        }
-      ],
+      "description": "Represents a field that allows selecting a single option from a predefined list.",
       "title": "Single select"
     },
     "MultipleSelectFieldTableSchema": {
@@ -1801,9 +1522,6 @@
       "properties": {
         "name": {
           "type": "string"
-        },
-        "required": {
-          "type": "boolean"
         },
         "type": {
           "type": "string",
@@ -1814,27 +1532,15 @@
           "items": {
             "type": "string"
           }
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "options",
-        "type"
-      ],
+      "required": ["name", "type", "options"],
       "additionalProperties": false,
-      "description": "Represents a field that allows selecting multiple options from a predefined list",
-      "examples": [
-        {
-          "type": "MultipleSelect",
-          "name": "interests",
-          "required": true,
-          "options": [
-            "Sports",
-            "Music",
-            "Travel"
-          ]
-        }
-      ],
+      "description": "Represents a field that allows selecting multiple options from a predefined list.",
       "title": "Multiple select"
     },
     "CheckboxFieldTableSchema": {
@@ -1843,27 +1549,18 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "Checkbox"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a boolean checkbox field in forms and tables",
-      "examples": [
-        {
-          "type": "Checkbox",
-          "name": "termsAccepted",
-          "required": true
-        }
-      ],
+      "description": "Represents a boolean checkbox field in forms and tables.",
       "title": "Checkbox"
     },
     "MultipleAttachmentFieldTableSchema": {
@@ -1872,27 +1569,18 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "MultipleAttachment"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a field that can store multiple file attachments",
-      "examples": [
-        {
-          "type": "MultipleAttachment",
-          "name": "documents",
-          "required": true
-        }
-      ],
+      "description": "Represents a field that stores multiple attachments.",
       "title": "Multiple attachment"
     },
     "UrlFieldTableSchema": {
@@ -1901,27 +1589,18 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "Url"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a field that stores a URL",
-      "examples": [
-        {
-          "type": "Url",
-          "name": "website",
-          "required": true
-        }
-      ],
+      "description": "Represents a field that stores an URL.",
       "title": "Url"
     },
     "SingleAttachmentFieldTableSchema": {
@@ -1930,27 +1609,18 @@
         "name": {
           "type": "string"
         },
-        "required": {
-          "type": "boolean"
-        },
         "type": {
           "type": "string",
           "const": "SingleAttachment"
+        },
+        "required": {
+          "type": "boolean",
+          "default": "`false`"
         }
       },
-      "required": [
-        "name",
-        "type"
-      ],
+      "required": ["name", "type"],
       "additionalProperties": false,
-      "description": "Represents a field that can store a single file attachment",
-      "examples": [
-        {
-          "type": "SingleAttachment",
-          "name": "profilePicture",
-          "required": true
-        }
-      ],
+      "description": "Represents a field that stores a single attachment.",
       "title": "Single attachment"
     },
     "BucketSchema": {
@@ -1960,9 +1630,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "additionalProperties": false,
       "description": "Type alias for bucket storage configuration",
       "title": "Bucket"
@@ -2042,11 +1710,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "account",
-        "apiKey",
-        "databaseId"
-      ],
+      "required": ["account", "apiKey", "databaseId"],
       "additionalProperties": false,
       "description": "A configuration schema for Airtable integration",
       "examples": [
@@ -2074,10 +1738,7 @@
           "type": "number"
         }
       },
-      "required": [
-        "account",
-        "token"
-      ],
+      "required": ["account", "token"],
       "additionalProperties": false,
       "description": "A configuration schema for Notion integration",
       "examples": [
@@ -2102,10 +1763,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "account",
-        "apiKey"
-      ],
+      "required": ["account", "apiKey"],
       "additionalProperties": false,
       "description": "A configuration schema for Pappers integration",
       "examples": [
@@ -2135,11 +1793,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "account",
-        "organisationSlug",
-        "secretKey"
-      ],
+      "required": ["account", "organisationSlug", "secretKey"],
       "additionalProperties": false,
       "description": "A configuration schema for Qonto banking integration",
       "examples": [
@@ -2182,11 +1836,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "account",
-        "password",
-        "user"
-      ],
+      "required": ["account", "password", "user"],
       "additionalProperties": false,
       "description": "A configuration schema for Gmail integration",
       "examples": [
@@ -2211,10 +1861,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "accessToken",
-        "account"
-      ],
+      "required": ["accessToken", "account"],
       "additionalProperties": false,
       "description": "A configuration schema for GoCardless payment integration",
       "examples": [
@@ -2238,10 +1885,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "account",
-        "apiKey"
-      ],
+      "required": ["account", "apiKey"],
       "additionalProperties": false,
       "description": "A configuration schema for Phantombuster automation integration",
       "examples": [
@@ -2268,16 +1912,11 @@
               "type": "string"
             }
           },
-          "required": [
-            "accessToken"
-          ],
+          "required": ["accessToken"],
           "additionalProperties": false
         }
       },
-      "required": [
-        "account",
-        "user"
-      ],
+      "required": ["account", "user"],
       "additionalProperties": false,
       "description": "A configuration schema for Calendly scheduling integration",
       "examples": [
@@ -2309,17 +1948,11 @@
               "type": "string"
             }
           },
-          "required": [
-            "username",
-            "password"
-          ],
+          "required": ["username", "password"],
           "additionalProperties": false
         }
       },
-      "required": [
-        "account",
-        "user"
-      ],
+      "required": ["account", "user"],
       "additionalProperties": false,
       "description": "A configuration schema for YouCanBookMe scheduling integration",
       "title": "YouCanBookMe"
@@ -2371,16 +2004,10 @@
           }
         },
         "port": {
-          "type": [
-            "string",
-            "number"
-          ]
+          "type": ["string", "number"]
         },
         "idleTimeout": {
-          "type": [
-            "string",
-            "number"
-          ]
+          "type": ["string", "number"]
         },
         "baseUrl": {
           "type": "string"
@@ -2395,10 +2022,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": [
-              "Sentry",
-              "Console"
-            ]
+            "enum": ["Sentry", "Console"]
           }
         }
       },
@@ -2411,19 +2035,13 @@
       "properties": {
         "driver": {
           "type": "string",
-          "enum": [
-            "PostgreSQL",
-            "SQLite"
-          ]
+          "enum": ["PostgreSQL", "SQLite"]
         },
         "url": {
           "type": "string"
         }
       },
-      "required": [
-        "driver",
-        "url"
-      ],
+      "required": ["driver", "url"],
       "additionalProperties": false,
       "description": "The database config for the engine",
       "title": "Database",
@@ -2448,11 +2066,7 @@
               "type": "string"
             }
           },
-          "required": [
-            "driver",
-            "dsn",
-            "environment"
-          ],
+          "required": ["driver", "dsn", "environment"],
           "additionalProperties": false
         },
         {
@@ -2463,9 +2077,7 @@
               "const": "Console"
             }
           },
-          "required": [
-            "driver"
-          ],
+          "required": ["driver"],
           "additionalProperties": false
         }
       ],
@@ -2488,9 +2100,7 @@
               "const": "Console"
             }
           },
-          "required": [
-            "driver"
-          ],
+          "required": ["driver"],
           "additionalProperties": false
         },
         {
@@ -2510,10 +2120,7 @@
               "type": "string"
             }
           },
-          "required": [
-            "driver",
-            "filename"
-          ],
+          "required": ["driver", "filename"],
           "additionalProperties": false
         },
         {
@@ -2536,11 +2143,7 @@
               "type": "string"
             }
           },
-          "required": [
-            "driver",
-            "url",
-            "index"
-          ],
+          "required": ["driver", "url", "index"],
           "additionalProperties": false
         }
       ],
@@ -2568,11 +2171,7 @@
           "const": "Ngrok"
         }
       },
-      "required": [
-        "account",
-        "authToken",
-        "integration"
-      ],
+      "required": ["account", "authToken", "integration"],
       "additionalProperties": false,
       "description": "The tunnel config for the engine",
       "title": "Tunnel"
@@ -2587,9 +2186,7 @@
               "const": "none"
             }
           },
-          "required": [
-            "type"
-          ],
+          "required": ["type"],
           "additionalProperties": false
         },
         {
@@ -2603,9 +2200,7 @@
               "type": "string"
             }
           },
-          "required": [
-            "type"
-          ],
+          "required": ["type"],
           "additionalProperties": false
         }
       ],

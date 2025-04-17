@@ -1,6 +1,6 @@
 import type { AutomationSchema } from '/adapter/api/schemas/AutomationSchema'
 import type { BucketSchema } from '../../../adapter/api/schemas/BucketSchema'
-import type { ConfigSchema } from '../../../adapter/api/schemas'
+import type { ConfigSchema } from '../../../adapter/api/schemas/ConfigSchema'
 import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 const fullSchema: ConfigSchema = {

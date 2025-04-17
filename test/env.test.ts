@@ -1,7 +1,7 @@
 import tester, { it, expect } from 'bun:test'
 import { Mock } from '/test/bun'
-import env from '/examples/env'
-import defaultEnv from '/examples/defautEnv'
+import { env } from '/examples/env'
+import { defaultEnv } from '/examples/defautEnv'
 
 const mock = new Mock(tester)
 

@@ -1,31 +1,33 @@
 # Update Page
 
-## Description
-
 Updates a page in Notion with the specified properties
 
-## Properties
+## Required
 
-| Name        | Type                | Required | Description |
-| ----------- | ------------------- | -------- | ----------- |
-| name        | string              | ✔       |             |
-| account     | string              | ✔       |             |
-| table       | string              | ✔       |             |
-| id          | string              | ✔       |             |
-| page        | Object              | ✔       |             |
-| integration | const: `Notion`     | ✔       |             |
-| action      | const: `UpdatePage` | ✔       |             |
+### account
 
-## Example
+`string`
 
-```json
-{
-  "integration": "Notion",
-  "action": "UpdatePage",
-  "pageId": "{{trigger.payload.pageId}}",
-  "properties": {
-    "title": "{{trigger.payload.title}}",
-    "status": "{{trigger.payload.status}}"
-  }
-}
-```
+### action
+
+const: `UpdatePage`
+
+### id
+
+`string`
+
+### integration
+
+const: `Notion`
+
+### name
+
+`string`
+
+### page
+
+Object
+
+### table
+
+`string`

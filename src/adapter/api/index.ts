@@ -1,6 +1,6 @@
 import { AppMapper } from './mappers/AppMapper'
 import type { StoppedApp } from '/domain/entities/App/Stopped'
-import type { ConfigSchema } from './schemas'
+import type { ConfigSchema } from './schemas/ConfigSchema'
 import type { SchemaError } from '/domain/entities/Error/Schema'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { SchemaValidator } from '/domain/services/SchemaValidator'

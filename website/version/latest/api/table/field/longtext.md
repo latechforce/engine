@@ -1,32 +1,56 @@
 # Long text
 
-## Description
+Represents a field that stores multiple lines of text.
 
-Represents a field that stores multiple lines of text
+## Required
 
-## Properties
+### name
 
-| Name        | Type              | Required | Description |
-| ----------- | ----------------- | -------- | ----------- |
-| name        | string            | ✔       |             |
-| required    | boolean           |          |             |
-| onMigration | Object            |          |             |
-| type        | const: `LongText` | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
-
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
-
-## Example
+const: `LongText`
 
 ```json
 {
-  "type": "LongText",
-  "name": "description",
-  "required": true
+  "name": "App with a table with a long text field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "long_text",
+          "type": "LongText"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required long text field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "long_text",
+          "type": "LongText",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

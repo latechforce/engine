@@ -3,13 +3,14 @@ import type { MultipleLinkedRecordFieldConfig } from '/domain/entities/Field/Mul
 /**
  * Multiple linked record field interface
  * @title Multiple linked record
- * @description Represents a field that can link to multiple records from another table
- * @example
- * {
- *   type: 'MultipleLinkedRecord',
- *   name: 'projects',
- *   required: true,
- *   table: 'projects'
- * }
+ * @description Represents a field that links to multiple records in another table.
  */
-export type MultipleLinkedRecordFieldTableSchema = MultipleLinkedRecordFieldConfig
+export type MultipleLinkedRecordFieldTableSchema = {
+  name: MultipleLinkedRecordFieldConfig['name']
+  type: MultipleLinkedRecordFieldConfig['type']
+  table: MultipleLinkedRecordFieldConfig['table']
+  /**
+   * @default '`false`'
+   */
+  required?: MultipleLinkedRecordFieldConfig['required']
+}

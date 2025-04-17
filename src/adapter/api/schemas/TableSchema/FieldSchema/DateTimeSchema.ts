@@ -1,14 +1,15 @@
 import type { DateTimeFieldConfig } from '/domain/entities/Field/DateTime'
 
 /**
- * DateTime field interface
- * @title DateTime
- * @description Represents a date and time field in forms and tables
- * @example
- * {
- *   type: 'DateTime',
- *   name: 'appointmentTime',
- *   required: true,
- * }
+ * Date time field interface
+ * @title Date time
+ * @description Represents a field that stores a date and time.
  */
-export type DateTimeFieldTableSchema = DateTimeFieldConfig
+export type DateTimeFieldTableSchema = {
+  name: DateTimeFieldConfig['name']
+  type: DateTimeFieldConfig['type']
+  /**
+   * @default '`false`'
+   */
+  required?: DateTimeFieldConfig['required']
+}

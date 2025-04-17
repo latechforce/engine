@@ -1,14 +1,14 @@
 import type { Config } from '/src'
 
 export const required: Config = {
-  name: 'App with a table with a required field',
+  name: 'App with a table with a required date time field',
   tables: [
     {
       name: 'table',
       fields: [
         {
-          name: 'single_line_text',
-          type: 'SingleLineText',
+          name: 'date_time',
+          type: 'DateTime',
           required: true,
         },
       ],

@@ -1,17 +1,35 @@
 # Input
 
-## Description
-
 Type alias for input configuration
 
-## Properties
+## Required
 
-| Name        | Type    | Required | Description |
-| ----------- | ------- | -------- | ----------- |
-| field       | string  | ✔       |             |
-| label       | string  |          |             |
-| description | string  |          |             |
-| placeholder | string  |          |             |
-| required    | boolean |          |             |
-| minLength   | number  |          |             |
-| maxLength   | number  |          |             |
+### field
+
+`string`
+
+## Optional
+
+### label
+
+`string`
+
+### description
+
+`string`
+
+### placeholder
+
+`string`
+
+### required
+
+`boolean`
+
+### minLength
+
+`number`
+
+### maxLength
+
+`number`

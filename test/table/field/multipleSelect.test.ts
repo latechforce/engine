@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { multipleSelect } from '/examples/config/table/field/type/multipleSelect'
+import { multipleSelect } from '../../../examples/config/table/field/multipleSelect'
 
 const mock = new Mock(Tester)
 

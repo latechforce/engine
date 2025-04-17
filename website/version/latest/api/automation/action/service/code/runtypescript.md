@@ -1,29 +1,31 @@
 # Run TypeScript
 
-## Description
-
 Executes TypeScript code with the specified input
 
-## Properties
+## Required
 
-| Name    | Type                   | Required | Description |
-| ------- | ---------------------- | -------- | ----------- |
-| name    | string                 | ✔       |             |
-| code    | string                 | ✔       |             |
-| input   | unknown                |          |             |
-| env     | Object                 |          |             |
-| service | const: `Code`          | ✔       |             |
-| action  | const: `RunTypescript` | ✔       |             |
+### action
 
-## Example
+const: `RunTypescript`
 
-```json
-{
-  "service": "Code",
-  "action": "RunTypescript",
-  "code": "return { result: input.value * 2 }",
-  "input": {
-    "value": 5
-  }
-}
-```
+### code
+
+`string`
+
+### name
+
+`string`
+
+### service
+
+const: `Code`
+
+## Optional
+
+### input
+
+`unknown`
+
+### env
+
+Object

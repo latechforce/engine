@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { longText } from '/examples/config/table/field/type/longText'
+import { longText } from '../../../examples/config/table/field/longText'
 
 const mock = new Mock(Tester)
 

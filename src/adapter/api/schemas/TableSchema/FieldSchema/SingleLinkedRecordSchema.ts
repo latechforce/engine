@@ -3,13 +3,14 @@ import type { SingleLinkedRecordFieldConfig } from '/domain/entities/Field/Singl
 /**
  * Single linked record field interface
  * @title Single linked record
- * @description Represents a field that can link to a single record from another table
- * @example
- * {
- *   type: 'SingleLinkedRecord',
- *   name: 'manager',
- *   required: true,
- *   table: 'users'
- * }
+ * @description Represents a field that links to a single record in another table.
  */
-export type SingleLinkedRecordFieldTableSchema = SingleLinkedRecordFieldConfig
+export type SingleLinkedRecordFieldTableSchema = {
+  name: SingleLinkedRecordFieldConfig['name']
+  type: SingleLinkedRecordFieldConfig['type']
+  table: SingleLinkedRecordFieldConfig['table']
+  /**
+   * @default '`false`'
+   */
+  required?: SingleLinkedRecordFieldConfig['required']
+}

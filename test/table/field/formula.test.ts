@@ -1,8 +1,8 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import { addition } from '/examples/config/table/field/type/formula/number/addition'
-import { multiplication } from '/examples/config/table/field/type/formula/number/multiplication'
-import { concatenation } from '/examples/config/table/field/type/formula/singleLineText/concatenation'
+import { addition } from '../../../examples/config/table/field/formula/number/addition'
+import { multiplication } from '../../../examples/config/table/field/formula/number/multiplication'
+import { concatenation } from '../../../examples/config/table/field/formula/singleLineText/concatenation'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 

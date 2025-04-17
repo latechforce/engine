@@ -1,24 +1,23 @@
 # Airtable
 
-## Description
-
 A configuration schema for Airtable integration
 
-## Properties
+## Required
 
-| Name       | Type   | Required | Description |
-| ---------- | ------ | -------- | ----------- |
-| name       | string | ✔       |             |
-| baseUrl    | string |          |             |
-| apiKey     | string | ✔       |             |
-| databaseId | string | ✔       |             |
+### account
 
-## Example
+`string`
 
-```json
-{
-  "name": "main-database",
-  "apiKey": "key1234567890ABCD",
-  "databaseId": "app1234567890ABCD"
-}
-```
+### apiKey
+
+`string`
+
+### databaseId
+
+`string`
+
+## Optional
+
+### baseUrl
+
+`string`

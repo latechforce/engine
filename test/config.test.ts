@@ -1,6 +1,6 @@
 import tester, { it, expect, describe } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import { name } from '/examples/config/name'
+import { name } from '../examples/config'
 import { description } from '/examples/config/description'
 import { appVersion } from '/examples/config/appVersion'
 import { engineVersion } from '/examples/config/engineVersion'

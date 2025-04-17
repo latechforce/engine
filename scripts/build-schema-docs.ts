@@ -1,5 +1,12 @@
-import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync } from 'fs'
-import { capitalize } from 'lodash'
+import {
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  rmSync,
+  readdirSync,
+  statSync,
+  existsSync,
+} from 'fs'
 import { join, basename, extname } from 'path'
 
 interface JSONSchema {
@@ -21,6 +28,7 @@ interface JSONSchema {
 
 interface SchemaFile {
   name: string
+  title: string
   parents: string[]
   path: string
   ref: string
@@ -51,7 +59,7 @@ function findSchemaFile(ref: string, schemaFiles: SchemaFile[]): SchemaFile | un
 function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
   if (schema.enum) return `enum: ${schema.enum.map((e) => `\`${e}\``).join(', ')}`
   if (schema.const) return `const: \`${schema.const}\``
-  if (Array.isArray(schema.type)) return schema.type.join(' or ')
+  if (Array.isArray(schema.type)) return schema.type.map((t) => `\`${t}\``).join(' or ')
   if (schema.type === 'array' && schema.items) {
     if (typeof schema.items === 'object' && '$ref' in schema.items) {
       const ref = (schema.items.$ref as string).split('/').pop()
@@ -60,11 +68,11 @@ function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
       }
       const file = findSchemaFile(ref, schemaFiles)
       if (file) {
-        return `Array of [${capitalize(file.name)}](${file.docsPath})`
+        return `Array of [${file.title}](${file.docsPath})`
       }
       return `Array of [${ref}](#)`
     } else {
-      return `Array&lt;${formatType(schema.items as JSONSchema, schemaFiles)}&gt;`
+      return `Array of ${formatType(schema.items as JSONSchema, schemaFiles)}`
     }
   }
   if (schema.type === 'object') return 'Object'
@@ -75,22 +83,39 @@ function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
     }
     const file = findSchemaFile(ref, schemaFiles)
     if (file) {
-      return `Reference: [${capitalize(file.name)}](${file.docsPath})`
+      return `Reference of [${file.title}](${file.docsPath})`
     }
-    return `Reference: ${ref}`
+    return `Reference of ${ref}`
   }
   if (schema.anyOf) return 'anyOf'
   if (schema.oneOf) return 'oneOf'
-  return schema.type || 'unknown'
+  return `\`${schema.type || 'unknown'}\``
 }
 
-function generateMarkdownForDefinition(
-  ref: string,
+async function findExample(file: SchemaFile, key: string): Promise<string> {
+  const parents = [...file.parents].reverse().join('/')
+  let examplePath = join(process.cwd(), 'examples', 'config', parents, file.name, `${key}.ts`)
+  if (!existsSync(examplePath)) {
+    examplePath = join(process.cwd(), 'examples', parents, file.name, `${key}.ts`)
+    if (!existsSync(examplePath)) {
+      examplePath = join(process.cwd(), 'examples', 'config', parents, `${key}.ts`)
+      if (!existsSync(examplePath)) {
+        return ''
+      }
+    }
+  }
+  const example = await import(examplePath).then((m) => m[Object.keys(m)[0]])
+  return `\`\`\`json\n${JSON.stringify(example, null, 2)}\n\`\`\`\n\n`
+}
+
+async function generateMarkdownForDefinition(
+  ref: string | null,
   schema: JSONSchema,
   schemaFiles: SchemaFile[]
-): string {
+): Promise<string> {
   let markdown = ''
   let sidebarPosition = 0
+  const file = ref ? findSchemaFile(ref, schemaFiles) : null
 
   switch (schema.title) {
     case 'Config':
@@ -124,119 +149,69 @@ sidebar_position: ${sidebarPosition}
   }
 
   // Title
-  markdown += `# ${schema.title || 'Config Schema'}\n\n`
+  markdown += `# ${schema.title}\n\n`
 
   // Description
   if (schema.description) {
-    markdown += `## Description\n\n${schema.description}\n\n`
+    markdown += `${schema.description}\n\n`
   }
 
-  // Default
-  if (schema.default !== undefined) {
-    markdown += `## Default\n\n\`\`\`json\n${JSON.stringify(schema.default, null, 2)}\n\`\`\`\n\n`
-  }
-
-  // Properties
   if (schema.properties) {
-    markdown += `## Properties\n\n`
-    markdown += `| Name | Type | Required | Description |\n`
-    markdown += `|------|------|----------|-------------|\n`
-
-    for (const [key, prop] of Object.entries(schema.properties)) {
-      const type = formatType(prop, schemaFiles)
-      const required = schema.required?.includes(key) ? '✔' : ''
-      const description = prop.description || ''
-
-      markdown += `| ${key} | ${type} | ${required} | ${description} |\n`
-    }
-    markdown += '\n'
-
-    // Add detailed documentation for anyOf, oneOf, and object types in a separate section
-    const complexProperties = Object.entries(schema.properties).filter(([_, prop]) => {
-      if (prop.$ref) {
-        const ref = prop.$ref.split('/').pop()
-        if (!ref) {
-          throw new Error('Ref is undefined')
+    const requiredProperties = schema.required || []
+    const optionalProperties = Object.keys(schema.properties).filter(
+      (key) => !requiredProperties.includes(key)
+    )
+    if (requiredProperties.length > 0) {
+      markdown += `## Required\n\n`
+      for (const key of requiredProperties) {
+        const prop = schema.properties?.[key]
+        if (prop) {
+          markdown += `### ${key}\n\n`
+          markdown += `${formatType(prop, schemaFiles)}\n\n`
+          if (prop.description) {
+            markdown += `${prop.description}\n`
+          }
+          if (prop.default !== undefined) {
+            markdown += `The default value is ${prop.default}.\n`
+          }
         }
-        const definition = schema.definitions?.[ref]
-        return (
-          definition &&
-          (definition.anyOf ||
-            definition.oneOf ||
-            (definition.type === 'object' && definition.properties))
-        )
       }
-      return prop.anyOf || prop.oneOf || (prop.type === 'object' && prop.properties)
-    })
-
-    console.log(complexProperties)
-
-    if (complexProperties.length > 0) {
-      markdown += `## Property Details\n\n`
-
-      for (const [key, prop] of complexProperties) {
-        markdown += `### ${key}\n\n`
-
-        let currentSchema = prop
-        if (prop.$ref) {
-          const ref = prop.$ref.split('/').pop()
-          if (!ref) {
-            throw new Error('Ref is undefined')
+      if (file) {
+        markdown += await findExample(file, 'index')
+      }
+    }
+    if (optionalProperties.length > 0) {
+      markdown += `## Optional\n\n`
+      for (const key of optionalProperties) {
+        const prop = schema.properties?.[key]
+        if (prop) {
+          markdown += `### ${key}\n\n`
+          markdown += `${formatType(prop, schemaFiles)}\n\n`
+          if (prop.description) {
+            markdown += `${prop.description}\n`
           }
-          currentSchema = schema.definitions?.[ref] || prop
-        }
-
-        if (currentSchema.anyOf || currentSchema.oneOf) {
-          const choices = currentSchema.anyOf || currentSchema.oneOf
-          markdown += `This property can be one of the following options:\n\n`
-          if (!choices) {
-            throw new Error('Choices are undefined')
+          if (prop.default !== undefined) {
+            markdown += `The default value is ${prop.default}.\n`
           }
-          for (const choice of choices) {
-            if (choice.$ref) {
-              const ref = choice.$ref.split('/').pop()
-              if (!ref) {
-                throw new Error('Ref is undefined')
-              }
-              const file = findSchemaFile(ref, schemaFiles)
-              if (file) {
-                markdown += `#### Option: [${capitalize(file.name)}](${file.docsPath})\n\n`
-              } else {
-                markdown += `#### Option: ${ref}\n\n`
-              }
-            } else if (choice.type === 'object' && choice.properties) {
-              markdown += `#### Option: Object\n\n`
-              markdown += `| Property | Type | Required | Description |\n`
-              markdown += `|----------|------|----------|-------------|\n`
-
-              for (const [propKey, propValue] of Object.entries(choice.properties)) {
-                const propType = formatType(propValue, schemaFiles)
-                const propRequired = choice.required?.includes(propKey) ? '✔' : ''
-                const propDescription = propValue.description || ''
-                markdown += `| ${propKey} | ${propType} | ${propRequired} | ${propDescription} |\n`
-              }
-              markdown += '\n'
-            }
+          if (file) {
+            markdown += await findExample(file, key)
           }
-        } else if (currentSchema.type === 'object' && currentSchema.properties) {
-          markdown += `| Property | Type | Required | Description |\n`
-          markdown += `|----------|------|----------|-------------|\n`
-
-          for (const [propKey, propValue] of Object.entries(currentSchema.properties)) {
-            const propType = formatType(propValue, schemaFiles)
-            const propRequired = currentSchema.required?.includes(propKey) ? '✔' : ''
-            const propDescription = propValue.description || ''
-            markdown += `| ${propKey} | ${propType} | ${propRequired} | ${propDescription} |\n`
-          }
-          markdown += '\n'
         }
       }
     }
   }
 
-  // Example
-  if (schema.examples && schema.examples.length > 0) {
-    markdown += `## Example\n\n\`\`\`json\n${JSON.stringify(schema.examples[0], null, 2)}\n\`\`\`\n`
+  if (schema.anyOf) {
+    markdown += `## Any of\n\n`
+    for (const choice of schema.anyOf) {
+      const ref = choice.$ref?.split('/').pop()
+      if (ref) {
+        const file = findSchemaFile(ref, schemaFiles)
+        if (file) {
+          markdown += `- [${file.title}](${file.docsPath})\n\n`
+        }
+      }
+    }
   }
 
   return markdown
@@ -254,6 +229,7 @@ function getSchemaFiles(dir: string, parents: string[] = []): SchemaFile[] {
       '/' + join('api', [...parents].reverse().join('/'), name !== 'index' ? name : '')
     return {
       name: name.toLowerCase(),
+      title: name,
       ref,
       parents,
       path: fullPath,
@@ -266,7 +242,7 @@ function getSchemaFiles(dir: string, parents: string[] = []): SchemaFile[] {
 
 // Read the schema file
 
-function main() {
+async function main() {
   const schemaPath = join(process.cwd(), 'schema', 'config.schema.json')
   const schemaContent = readFileSync(schemaPath, 'utf-8')
   const schema = JSON.parse(schemaContent)
@@ -288,7 +264,7 @@ function main() {
   const schemasDir = join(process.cwd(), 'src', 'adapter', 'api', 'schemas')
   const schemaFiles = getSchemaFiles(schemasDir)
 
-  const processSchemaFiles = (schemaFiles: SchemaFile[], basePath: string) => {
+  const processSchemaFiles = async (schemaFiles: SchemaFile[], basePath: string) => {
     for (const file of schemaFiles) {
       if (file.isDirectory) {
         // Create a subdirectory in docs for this schema type
@@ -296,14 +272,14 @@ function main() {
         mkdirSync(docsSubDir, { recursive: true })
 
         if (file.children) {
-          processSchemaFiles(file.children, docsSubDir)
+          await processSchemaFiles(file.children, docsSubDir)
         }
       } else {
         const definitionSchema = schema.definitions[file.ref]
         if (!definitionSchema) {
           throw new Error(`Definition ${file.ref} not found in schema`)
         }
-        const integrationsMarkdown = generateMarkdownForDefinition(
+        const integrationsMarkdown = await generateMarkdownForDefinition(
           file.ref,
           definitionSchema,
           schemaFiles
@@ -313,9 +289,9 @@ function main() {
       }
     }
   }
-  processSchemaFiles(schemaFiles, docsDir)
+  await processSchemaFiles(schemaFiles, docsDir)
 
   console.log('Documentation generation completed successfully!')
 }
 
-main()
+await main()

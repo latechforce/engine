@@ -1,15 +1,9 @@
 # Trigger
 
-## Description
-
 Union type of all possible triggers that can start automations
 
-## Example
+## Any of
 
-```json
-{
-  "service": "Http",
-  "trigger": "ApiCalled",
-  "path": "/run-automation"
-}
-```
+- [Service](/api/automation/trigger/service)
+
+- [Integration](/api/automation/trigger/integration)

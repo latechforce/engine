@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { url } from '../../../examples/config/table/field/type/url'
+import { url } from '../../../examples/config/table/field/url'
 
 const mock = new Mock(Tester)
 

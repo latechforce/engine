@@ -1,7 +1,7 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { sum } from '../../../examples/config/table/field/type/rollup/number/sum'
-import { concat } from '../../../examples/config/table/field/type/rollup/singleLineText/concat'
+import { sum } from '../../../examples/config/table/field/rollup/number/sum'
+import { concat } from '../../../examples/config/table/field/rollup/singleLineText/concat'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 

@@ -1,24 +1,23 @@
 # Mail
 
-## Description
-
 A configuration schema for Gmail integration
 
-## Properties
+## Required
 
-| Name     | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| name     | string | ✔       |             |
-| baseUrl  | string |          |             |
-| user     | string | ✔       |             |
-| password | string | ✔       |             |
+### account
 
-## Example
+`string`
 
-```json
-{
-  "name": "support-email",
-  "user": "support@company.com",
-  "password": "app-specific-password"
-}
-```
+### password
+
+`string`
+
+### user
+
+`string`
+
+## Optional
+
+### baseUrl
+
+`string`

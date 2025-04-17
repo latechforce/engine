@@ -1,14 +1,23 @@
 # Tunnel
 
-## Description
-
 The tunnel config for the engine
 
-## Properties
+## Required
 
-| Name        | Type           | Required | Description |
-| ----------- | -------------- | -------- | ----------- |
-| name        | string         | ✔       |             |
-| baseUrl     | string         |          |             |
-| authToken   | string         | ✔       |             |
-| integration | const: `Ngrok` | ✔       |             |
+### account
+
+`string`
+
+### authToken
+
+`string`
+
+### integration
+
+const: `Ngrok`
+
+## Optional
+
+### baseUrl
+
+`string`

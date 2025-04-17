@@ -1,32 +1,56 @@
 # Checkbox
 
-## Description
+Represents a boolean checkbox field in forms and tables.
 
-Represents a boolean checkbox field in forms and tables
+## Required
 
-## Properties
+### name
 
-| Name        | Type              | Required | Description |
-| ----------- | ----------------- | -------- | ----------- |
-| name        | string            | ✔       |             |
-| required    | boolean           |          |             |
-| onMigration | Object            |          |             |
-| type        | const: `Checkbox` | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
-
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
-
-## Example
+const: `Checkbox`
 
 ```json
 {
-  "type": "Checkbox",
-  "name": "termsAccepted",
-  "required": true
+  "name": "App with a table with a checkbox field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "checkbox",
+          "type": "Checkbox"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required checkbox field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "checkbox",
+          "type": "Checkbox",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

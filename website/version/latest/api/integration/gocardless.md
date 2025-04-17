@@ -1,22 +1,19 @@
 # GoCardless
 
-## Description
-
 A configuration schema for GoCardless payment integration
 
-## Properties
+## Required
 
-| Name        | Type   | Required | Description |
-| ----------- | ------ | -------- | ----------- |
-| name        | string | ✔       |             |
-| baseUrl     | string |          |             |
-| accessToken | string | ✔       |             |
+### accessToken
 
-## Example
+`string`
 
-```json
-{
-  "name": "payment-processing",
-  "accessToken": "live_1234567890ABCD"
-}
-```
+### account
+
+`string`
+
+## Optional
+
+### baseUrl
+
+`string`

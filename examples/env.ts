@@ -5,5 +5,3 @@ export const env: Config = {
   appVersion: '{{env.APP_VERSION}}',
   engineVersion: '{{env.ENGINE_VERSION}}',
 }
-
-export default env

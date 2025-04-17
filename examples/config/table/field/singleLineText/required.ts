@@ -1,7 +1,7 @@
 import type { Config } from '/src'
 
-export const name: Config = {
-  name: 'App with a table with a named field',
+export const required: Config = {
+  name: 'App with a table with a required single line text field',
   tables: [
     {
       name: 'table',
@@ -9,6 +9,7 @@ export const name: Config = {
         {
           name: 'single_line_text',
           type: 'SingleLineText',
+          required: true,
         },
       ],
     },

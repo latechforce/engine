@@ -1,22 +1,19 @@
 # Pappers
 
-## Description
-
 A configuration schema for Pappers integration
 
-## Properties
+## Required
 
-| Name    | Type   | Required | Description |
-| ------- | ------ | -------- | ----------- |
-| name    | string | ✔       |             |
-| baseUrl | string |          |             |
-| apiKey  | string | ✔       |             |
+### account
 
-## Example
+`string`
 
-```json
-{
-  "name": "company-data",
-  "apiKey": "1234567890ABCD"
-}
-```
+### apiKey
+
+`string`
+
+## Optional
+
+### baseUrl
+
+`string`

@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { singleLinkedRecord } from '/examples/config/table/field/type/singleLinkedRecord'
+import { singleLinkedRecord } from '../../../examples/config/table/field/singleLinkedRecord'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 

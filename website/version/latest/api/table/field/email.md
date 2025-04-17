@@ -1,32 +1,56 @@
 # Email
 
-## Description
+Represents a field that stores an email address.
 
-Represents a field that stores an email address
+## Required
 
-## Properties
+### name
 
-| Name        | Type           | Required | Description |
-| ----------- | -------------- | -------- | ----------- |
-| name        | string         | ✔       |             |
-| required    | boolean        |          |             |
-| onMigration | Object         |          |             |
-| type        | const: `Email` | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
-
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
-
-## Example
+const: `Email`
 
 ```json
 {
-  "type": "Email",
-  "name": "email",
-  "required": true
+  "name": "App with a table with an email field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "email",
+          "type": "Email"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required email field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "email",
+          "type": "Email",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

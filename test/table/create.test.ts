@@ -2,7 +2,7 @@ import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
 import { singleLineText } from '../../examples/config/table/field/type/singleLineText'
 import { required } from '../../examples/config/table/field/required'
-import { name } from '../../examples/config/table/name'
+import { name } from '../../examples/config/table'
 import { name as namedField } from '../../examples/config/table/field/name'
 import { schema } from '../../examples/config/table/schema'
 

@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { checkbox } from '/examples/config/table/field/type/checkbox'
+import { checkbox } from '../../../examples/config/table/field/checkbox'
 
 const mock = new Mock(Tester)
 
