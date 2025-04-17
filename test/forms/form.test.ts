@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import type { CodeRunnerContext } from 'index'
+import type { CodeRunnerContext } from '/src'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 

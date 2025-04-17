@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const description: Config = {
   name: 'App',

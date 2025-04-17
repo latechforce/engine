@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const multipleSelect: Config = {
   name: 'App with a table with a multiple select field',

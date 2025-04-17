@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const env: Config = {
   name: 'App with env variable',

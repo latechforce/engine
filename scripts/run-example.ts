@@ -1,4 +1,4 @@
-import type { Config } from '../src'
+import type { Config } from '/src'
 import App from '../src/bun'
 import { join, relative } from 'path'
 import { readdir } from 'fs/promises'
@@ -42,6 +42,8 @@ if (!matchingFile) {
   console.log(`Running example: ${relative(examplesDir, matchingFile)}`)
 }
 
-export const config: Config = await import(matchingFile).then((m) => m.default)
+export const config: Config = await import(matchingFile).then(
+  (m) => m[matchingFile.split('/').pop()!.replace('.ts', '')]
+)
 
 await new App().start(config)

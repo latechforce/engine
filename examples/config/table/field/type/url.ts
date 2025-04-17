@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const url: Config = {
   name: 'App with a table with a url field',

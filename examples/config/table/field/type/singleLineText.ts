@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const singleLineText: Config = {
   name: 'App with a table with a single line text field',

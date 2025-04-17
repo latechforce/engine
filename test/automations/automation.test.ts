@@ -1,7 +1,7 @@
 import BunTester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/infrastructure/test/bun/Mock'
 import { getAutomationSchema } from '/test/common'
-import type { Config } from 'index'
+import type { Config } from '/src'
 
 const mock = new Mock(BunTester, { drivers: ['Database'] })
 

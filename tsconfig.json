@@ -14,13 +14,14 @@
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "/infrastructure/*": ["infrastructure/*"],
-      "/adapter/*": ["adapter/*"],
-      "/domain/*": ["domain/*"],
-      "/test/*": ["infrastructure/test/*"],
-      "/examples/*": ["../examples/*"]
+      "/src": ["src"],
+      "/infrastructure/*": ["src/infrastructure/*"],
+      "/adapter/*": ["src/adapter/*"],
+      "/domain/*": ["src/domain/*"],
+      "/test/*": ["src/infrastructure/test/*"],
+      "/examples/*": ["examples/*"]
     },
     "esModuleInterop": false
   },

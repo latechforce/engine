@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const singleLinkedRecord: Config = {
   name: 'App with a table with a single linked record field',

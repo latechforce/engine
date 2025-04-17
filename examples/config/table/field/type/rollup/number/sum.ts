@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const sum: Config = {
   name: 'App with a table with a rollup field as a number and a SUM formula',

@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const concat: Config = {
   name: 'App with a table with a rollup field as a single line text and a CONCAT formula',

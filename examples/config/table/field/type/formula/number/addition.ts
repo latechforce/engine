@@ -1,4 +1,4 @@
-import type { Config } from '@latechforce/engine'
+import type { Config } from '/src'
 
 export const addition: Config = {
   name: 'App with a table with a formula field as a number and an addition',
