@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { singleLineText } from '../../../examples/config/table/field/type/singleLineText'
+import { singleLineText } from '/examples/config/table/field/singleLineText'
 
 const mock = new Mock(Tester)
 

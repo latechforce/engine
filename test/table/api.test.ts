@@ -1,7 +1,7 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { singleLineText } from '../../examples/config/table/field/type/singleLineText'
-import { required } from '../../examples/config/table/field/required'
+import { singleLineText } from '/examples/config/table/field/singleLineText'
+import { required } from '/examples/config/table/field/singleLineText/required'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 

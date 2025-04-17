@@ -1,6 +1,6 @@
 import tester, { it, expect, describe } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import { name } from '../examples/config'
+import { config } from '../examples/config'
 import { description } from '/examples/config/description'
 import { appVersion } from '/examples/config/appVersion'
 import { engineVersion } from '/examples/config/engineVersion'
@@ -22,7 +22,7 @@ mock.app(({ app }) => {
   describe('should start an app', () => {
     it('with a name', async () => {
       // WHEN
-      const startedApp = await app.start(name)
+      const startedApp = await app.start(config)
 
       // THEN
       expect(startedApp.name).toBe('App')
@@ -55,7 +55,7 @@ mock.app(({ app }) => {
 
   it('should check the app running status through /api/health endpoint', async () => {
     // GIVEN
-    const startedApp = await app.start(name)
+    const startedApp = await app.start(config)
 
     // WHEN
     const { success } = await fetch(startedApp.url + '/api/health').then((res) => res.json())
@@ -66,7 +66,7 @@ mock.app(({ app }) => {
 
   it('should stop an app', async () => {
     // GIVEN
-    const startedApp = await app.start(name)
+    const startedApp = await app.start(config)
 
     // WHEN
     await startedApp.stop()

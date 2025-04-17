@@ -1,10 +1,9 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { singleLineText } from '../../examples/config/table/field/type/singleLineText'
-import { required } from '../../examples/config/table/field/required'
-import { name } from '../../examples/config/table'
-import { name as namedField } from '../../examples/config/table/field/name'
-import { schema } from '../../examples/config/table/schema'
+import { singleLineText } from '/examples/config/table/field/singleLineText'
+import { required } from '/examples/config/table/field/singleLineText/required'
+import { table as tableConfig } from '/examples/config/table'
+import { schema } from '/examples/config/table/schema'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -39,10 +38,10 @@ mock.app(({ app, drivers }) => {
     describe('should create a table with', () => {
       it('a name', async () => {
         // WHEN
-        await app.start(name)
+        await app.start(tableConfig)
 
         // THEN
-        const table = drivers.database.tableFromSchema(name.tables![0])
+        const table = drivers.database.tableFromSchema(tableConfig.tables![0])
         expect(table.name).toBe('table')
       })
 
@@ -80,10 +79,10 @@ mock.app(({ app, drivers }) => {
 
       it('a named field', async () => {
         // WHEN
-        await app.start(namedField)
+        await app.start(singleLineText)
 
         // THEN
-        const table = drivers.database.tableFromSchema(namedField.tables![0])
+        const table = drivers.database.tableFromSchema(singleLineText.tables![0])
         const columns = await table.getColumns()
         expect(columns[3].name).toBe('single_line_text')
       })
