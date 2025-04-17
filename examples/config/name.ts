@@ -1,7 +1,7 @@
 import type { Config } from '@latechforce/engine'
 
-export const config: Config = {
+export const name: Config = {
   name: 'App',
 }
 
-export default config
+export default name

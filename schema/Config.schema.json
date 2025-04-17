@@ -9,17 +9,19 @@
           "type": "string",
           "description": "The name of the engine"
         },
-        "version": {
+        "appVersion": {
           "type": "string",
           "description": "The version of the config"
         },
-        "engine": {
+        "engineVersion": {
           "type": "string",
-          "description": "The version of the engine"
+          "description": "The version of the engine",
+          "default": "version of package.json or latest"
         },
         "description": {
           "type": "string",
-          "description": "The description of the engine"
+          "description": "The description of the engine",
+          "default": true
         },
         "forms": {
           "type": "array",
@@ -59,9 +61,7 @@
         }
       },
       "required": [
-        "name",
-        "version",
-        "engine"
+        "name"
       ],
       "additionalProperties": false,
       "description": "This is the configuration of the engine.",
@@ -1427,15 +1427,6 @@
         "required": {
           "type": "boolean"
         },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
         "type": {
           "type": "string",
           "const": "DateTime"
@@ -1464,15 +1455,6 @@
         },
         "required": {
           "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         },
         "type": {
           "type": "string",
@@ -1503,15 +1485,6 @@
         "required": {
           "type": "boolean"
         },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
         "type": {
           "type": "string",
           "const": "Formula"
@@ -1533,15 +1506,6 @@
             },
             "required": {
               "type": "boolean"
-            },
-            "onMigration": {
-              "type": "object",
-              "properties": {
-                "replace": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
             }
           },
           "required": [
@@ -1576,15 +1540,6 @@
         "required": {
           "type": "boolean"
         },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
         "type": {
           "type": "string",
           "const": "LongText"
@@ -1613,15 +1568,6 @@
         },
         "required": {
           "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         },
         "type": {
           "type": "string",
@@ -1656,15 +1602,6 @@
         },
         "required": {
           "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         },
         "type": {
           "type": "string",
@@ -1717,15 +1654,6 @@
             },
             "required": {
               "type": "boolean"
-            },
-            "onMigration": {
-              "type": "object",
-              "properties": {
-                "replace": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
             }
           },
           "required": [
@@ -1738,15 +1666,6 @@
         },
         "required": {
           "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         }
       },
       "required": [
@@ -1783,15 +1702,6 @@
         "required": {
           "type": "boolean"
         },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
         "type": {
           "type": "string",
           "const": "SingleLineText"
@@ -1820,15 +1730,6 @@
         },
         "required": {
           "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         },
         "type": {
           "type": "string",
@@ -1863,15 +1764,6 @@
         },
         "required": {
           "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         },
         "type": {
           "type": "string",
@@ -1914,15 +1806,6 @@
         "required": {
           "type": "boolean"
         },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
         "type": {
           "type": "string",
           "const": "MultipleSelect"
@@ -1964,15 +1847,6 @@
         "required": {
           "type": "boolean"
         },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
         "type": {
           "type": "string",
           "const": "Checkbox"
@@ -2001,15 +1875,6 @@
         },
         "required": {
           "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         },
         "type": {
           "type": "string",
@@ -2040,15 +1905,6 @@
         "required": {
           "type": "boolean"
         },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
         "type": {
           "type": "string",
           "const": "Url"
@@ -2077,15 +1933,6 @@
         },
         "required": {
           "type": "boolean"
-        },
-        "onMigration": {
-          "type": "object",
-          "properties": {
-            "replace": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
         },
         "type": {
           "type": "string",

@@ -1,13 +1,14 @@
-import tester, { it, expect } from 'bun:test'
+import tester, { it, expect, describe } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import { config } from '/examples/config'
-import withEnv from '/examples/with-env'
-import withDefaultEnv from '/examples/with-default-env'
+import name from '/examples/config/name'
+import description from '/examples/config/description'
+import appVersion from '/examples/config/appVersion'
+import engineVersion from '/examples/config/engineVersion'
 
 const mock = new Mock(tester)
 
 mock.app(({ app }) => {
-  it('should throw an error if config is empty', async () => {
+  it('should throw an error if config has no name', async () => {
     // GIVEN
     const emptyConfig = {} as Config
 
@@ -18,49 +19,43 @@ mock.app(({ app }) => {
     expect(call()).rejects.toThrowError("must have required property 'name'")
   })
 
-  it('should start an app', async () => {
-    // WHEN
-    const startedApp = await app.start(config)
+  describe('should start an app', () => {
+    it('with a name', async () => {
+      // WHEN
+      const startedApp = await app.start(name)
 
-    // THEN
-    expect(startedApp.url).toBeDefined()
-  })
+      // THEN
+      expect(startedApp.name).toBe('App')
+    })
 
-  it('should throw an error if env variables are not set', async () => {
-    // WHEN
-    const call = () => app.start(withEnv)
+    it('with a description', async () => {
+      // WHEN
+      const startedApp = await app.start(description)
 
-    // THEN
-    expect(call()).rejects.toThrowError(
-      'Environment variable APP_CONFIG_VERSION not found and no default value provided'
-    )
-  })
+      // THEN
+      expect(startedApp.description).toBe('App description')
+    })
 
-  it('should start an app with default variables values', async () => {
-    // WHEN
-    const startedApp = await app.start(withDefaultEnv)
+    it('with an app version', async () => {
+      // WHEN
+      const startedApp = await app.start(appVersion)
 
-    // THEN
-    expect(startedApp.appVersion).toBe('1.0.0')
-    expect(startedApp.engineVersion).toBe('1.0.0')
-  })
+      // THEN
+      expect(startedApp.appVersion).toBe('1.0.0')
+    })
 
-  it('should start an app with env variables', async () => {
-    // GIVEN
-    process.env.APP_VERSION = '2.0.0'
-    process.env.ENGINE_VERSION = '2.0.0'
+    it('with an engine version', async () => {
+      // WHEN
+      const startedApp = await app.start(engineVersion)
 
-    // WHEN
-    const startedApp = await app.start(withEnv)
-
-    // THEN
-    expect(startedApp.appVersion).toBe('2.0.0')
-    expect(startedApp.engineVersion).toBe('2.0.0')
+      // THEN
+      expect(startedApp.engineVersion).toBe('1.0.0')
+    })
   })
 
   it('should check the app running status through /api/health endpoint', async () => {
     // GIVEN
-    const startedApp = await app.start(config)
+    const startedApp = await app.start(name)
 
     // WHEN
     const { success } = await fetch(startedApp.url + '/api/health').then((res) => res.json())
@@ -71,7 +66,7 @@ mock.app(({ app }) => {
 
   it('should stop an app', async () => {
     // GIVEN
-    const startedApp = await app.start(config)
+    const startedApp = await app.start(name)
 
     // WHEN
     await startedApp.stop()

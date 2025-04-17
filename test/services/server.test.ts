@@ -1,7 +1,7 @@
 import tester, { it, expect, describe } from 'bun:test'
 import { Mock } from '/test/bun'
-import { withPort } from '../../examples/service/server/with-port'
-import { withBaseUrl } from '../../examples/service/server/with-base-url'
+import { withPort } from '../../examples/config/service/server/with-port'
+import { withBaseUrl } from '../../examples/config/service/server/with-base-url'
 
 const mock = new Mock(tester)
 

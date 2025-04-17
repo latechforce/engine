@@ -1,7 +1,7 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
 import { getFirstTableSchema } from '/test/common'
-import withSingleLineText from '/examples/table/with-single-line-text'
+import withSingleLineText from '../../examples/config/table/with-single-line-text'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
