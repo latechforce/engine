@@ -20,9 +20,7 @@
       "/adapter/*": ["adapter/*"],
       "/domain/*": ["domain/*"],
       "/test/*": ["infrastructure/test/*"],
-      "/examples/*": ["../examples/*"],
-      "@latechforce/engine": ["index.ts"],
-      "@latechforce/engine/bun": ["bun.ts"]
+      "/examples/*": ["../examples/*"]
     },
     "esModuleInterop": false
   },

@@ -23,5 +23,5 @@ export interface TableSchema {
    * @description Array of field definitions for the table
    * @example [{ name: "id", type: "string", required: true }]
    */
-  fields: FieldTableSchema[]
+  fields?: FieldTableSchema[]
 }

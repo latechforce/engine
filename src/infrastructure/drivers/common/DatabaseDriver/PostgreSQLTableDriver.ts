@@ -52,7 +52,6 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     this.view = `${this.name}_view`
     this.viewWithSchema = `${this.schema}.${this.view}`
     this.fields = [
-      ...config.fields,
       {
         name: 'id',
         type: 'SingleLineText',
@@ -67,8 +66,26 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
         name: 'updated_at',
         type: 'DateTime',
       },
+      ...config.fields,
     ]
     this.columns = this.fields.map(this._convertFieldToColumn)
+  }
+
+  getSchema = async (): Promise<string> => {
+    const result = await this._db.query(
+      `SELECT table_schema FROM information_schema.tables WHERE table_name = ?`,
+      [this.name]
+    )
+    if (!result) throw new Error(`Table "${this.name}" not found`)
+    return result.rows[0].table_schema
+  }
+
+  getColumns = async (): Promise<Column[]> => {
+    const result = await this._db.query(
+      `SELECT column_name, data_type FROM information_schema.columns WHERE table_schema = $1 AND table_name = $2`,
+      [this.schema, this.name]
+    )
+    return result.rows.map((row) => ({ name: row.column_name, type: row.data_type }))
   }
 
   exists = async () => {

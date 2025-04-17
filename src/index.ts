@@ -14,7 +14,7 @@ import type { IServerDriver } from './adapter/spi/drivers/ServerSpi'
 import type { IStorageDriver } from './adapter/spi/drivers/StorageSpi'
 import type { StorageConfig } from './domain/services/Storage'
 
-export type { ConfigSchema as Config } from '/adapter/api/schemas/ConfigSchema'
+export type { ConfigSchema as Config } from './adapter/api/schemas'
 export type { AutomationSchema as Automation } from '/adapter/api/schemas/AutomationSchema'
 export type { ActionAutomationSchema as Action } from '/adapter/api/schemas/AutomationSchema/ActionSchema'
 export type { TriggerAutomationSchema as Trigger } from '/adapter/api/schemas/AutomationSchema/TriggerSchema'

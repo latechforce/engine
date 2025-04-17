@@ -1,5 +1,5 @@
-import type { Config } from '@latechforce/engine'
-import App from '@latechforce/engine/bun'
+import type { Config } from '../src'
+import App from '../src/bun'
 import { join, relative } from 'path'
 import { readdir } from 'fs/promises'
 
@@ -25,7 +25,7 @@ async function findMatchingFile(dir: string): Promise<string | null> {
     if (entry.isDirectory()) {
       const found = await findMatchingFile(fullPath)
       if (found) return found
-    } else if (entry.isFile() && entry.name.includes(searchTerm)) {
+    } else if (entry.isFile() && entry.name.toLowerCase().includes(searchTerm.toLowerCase())) {
       return fullPath
     }
   }

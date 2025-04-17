@@ -1,33 +1,29 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableSchema } from '/test/common'
+import { longText } from '/examples/config/table/field/type/longText'
 
 const mock = new Mock(Tester)
 
 mock.request(({ app, request }) => {
-  describe('on start', () => {
+  describe('on app start', () => {
     it('should create a table with a long text', async () => {
-      // GIVEN
-      const config = getFirstTableSchema(['long_text'])
-
       // WHEN
-      const startedApp = await app.start(config)
+      const startedApp = await app.start(longText)
 
       // THEN
       expect(startedApp).toBeDefined()
     })
   })
 
-  describe('on POST', () => {
+  describe('on API POST', () => {
     it('should create a record with a long text', async () => {
       // GIVEN
       const long_text =
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-      const config = getFirstTableSchema(['long_text'])
-      const { url } = await app.start(config)
+      const { url } = await app.start(longText)
 
       // WHEN
-      const { record } = await request.post(`${url}/api/table/${config.tables[0].name}`, {
+      const { record } = await request.post(`${url}/api/table/${longText.tables![0].name}`, {
         long_text,
       })
 

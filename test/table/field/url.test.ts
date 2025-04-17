@@ -1,32 +1,28 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstTableSchema } from '/test/common'
+import { url } from '../../../examples/config/table/field/type/url'
 
 const mock = new Mock(Tester)
 
 mock.request(({ app, request }) => {
-  describe('on start', () => {
+  describe('on app start', () => {
     it('should create a table with an url', async () => {
-      // GIVEN
-      const config = getFirstTableSchema(['url'])
-
       // WHEN
-      const startedApp = await app.start(config)
+      const call = () => app.start(url)
 
       // THEN
-      expect(startedApp).toBeDefined()
+      expect(call()).resolves.toBeDefined()
     })
   })
 
-  describe('on POST', () => {
+  describe('on API POST', () => {
     it('should create a record with an url', async () => {
       // GIVEN
       const urlField = 'https://test.com'
-      const config = getFirstTableSchema(['url'])
-      const { url } = await app.start(config)
+      const { url: urlPath } = await app.start(url)
 
       // WHEN
-      const { record } = await request.post(`${url}/api/table/${config.tables[0].name}`, {
+      const { record } = await request.post(`${urlPath}/api/table/${url.tables![0].name}`, {
         url: urlField,
       })
 

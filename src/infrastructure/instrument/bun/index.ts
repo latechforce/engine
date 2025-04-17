@@ -1,4 +1,4 @@
-import type { ConfigSchema } from '/adapter/api/schemas/ConfigSchema'
+import type { ConfigSchema } from '../../../adapter/api/schemas'
 import * as Sentry from './Sentry'
 import { SystemDriver } from '/infrastructure/drivers/common/SystemDriver'
 

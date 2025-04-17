@@ -32,7 +32,6 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     this.view = `${this.name}_view`
     this.viewWithSchema = `${this.schema}_${this.view}`
     this.fields = [
-      ...config.fields,
       {
         name: 'id',
         type: 'SingleLineText',
@@ -47,8 +46,32 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         name: 'updated_at',
         type: 'DateTime',
       },
+      ...config.fields,
     ]
     this.columns = this.fields.map(this._convertFieldToColumn)
+  }
+
+  getSchema = async (): Promise<string> => {
+    return this.schema
+  }
+
+  getColumns = async (): Promise<Column[]> => {
+    const columns = this._db
+      .query<
+        {
+          name: string
+          type: 'TEXT' | 'TIMESTAMP' | 'NUMERIC' | 'BOOLEAN' | 'TEXT[]'
+          notnull: number
+        },
+        []
+      >(`PRAGMA table_info(${this.nameWithSchema})`)
+      .all()
+    if (!columns) throw new Error(`Table "${this.name}" not found`)
+    return columns.map((column) => ({
+      name: column.name,
+      type: column.type,
+      required: column.notnull === 1,
+    }))
   }
 
   ensureSync = (): void => {
@@ -730,6 +753,15 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       }
       if (error.message.includes('FOREIGN KEY constraint failed')) {
         throw new Error('Invalid linked record')
+      }
+      if (error.message.includes('NOT NULL constraint failed')) {
+        let field: string
+        if (error.message.includes('"')) {
+          field = error.message.split('"')[1]
+        } else {
+          field = error.message.split('.')[1]
+        }
+        throw new Error(`Field "${field}" is required`)
       }
     }
     throw error

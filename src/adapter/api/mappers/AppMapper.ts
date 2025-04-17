@@ -31,7 +31,7 @@ import { ClientMapper } from './Services/ClientMapper'
 import type { Components } from '/domain/components'
 import { SystemMapper } from './Services/SystemMapper'
 import { CalendlyMapper } from './Integration/CalendlyMapper'
-import type { ConfigSchema } from '../schemas/ConfigSchema'
+import type { ConfigSchema } from '../schemas'
 
 export class AppMapper {
   static toEntity = (

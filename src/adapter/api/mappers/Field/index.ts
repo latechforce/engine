@@ -77,11 +77,11 @@ export class FieldMapper {
     }
   }
 
-  static toManyEntities(schemas: FieldTableSchema[]): Field[] {
+  static toManyEntities(schemas: FieldTableSchema[] = []): Field[] {
     return schemas.map((schema) => this.toEntity(schema, schemas))
   }
 
-  static toManyConfigs(schemas: FieldTableSchema[]): FieldConfig[] {
+  static toManyConfigs(schemas: FieldTableSchema[] = []): FieldConfig[] {
     return schemas.map((schema) => this.toConfig(schema, schemas))
   }
 }

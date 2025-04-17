@@ -1,7 +1,7 @@
 import type { Config } from '@latechforce/engine'
 
-export const withSingleLineText: Config = {
-  name: 'App with a table with a single line text field',
+export const name: Config = {
+  name: 'App with a table with a named field',
   tables: [
     {
       name: 'table',
@@ -14,5 +14,3 @@ export const withSingleLineText: Config = {
     },
   ],
 }
-
-export default withSingleLineText

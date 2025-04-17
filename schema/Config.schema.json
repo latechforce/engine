@@ -1353,8 +1353,7 @@
         }
       },
       "required": [
-        "name",
-        "fields"
+        "name"
       ],
       "additionalProperties": false,
       "description": "Defines the structure of a database table",
