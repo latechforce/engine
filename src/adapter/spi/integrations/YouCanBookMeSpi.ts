@@ -1,6 +1,7 @@
 import { BaseSpi } from './base'
 import type { IntegrationResponse } from '/domain/integrations/base'
 import type { IYouCanBookMeSpi } from '/domain/integrations/YouCanBookMe/IYouCanBookMeSpi'
+import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 
 export type IYouCanBookMeIntegration = IYouCanBookMeSpi

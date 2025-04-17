@@ -1,17 +1,14 @@
 import type { Queue } from '/domain/services/Queue'
-import type { BaseTrigger, BaseTriggerConfig } from '../base'
-import type { AutomationContext } from '../../Automation/Context'
+import { BaseTrigger, type BaseTriggerIntegrationConfig } from '../../base'
+import type { AutomationContext } from '../../../Automation/Context'
 import type { YouCanBookMe } from '/domain/integrations/YouCanBookMe'
-import type { PostRequest } from '../../Request'
+import type { PostRequest } from '../../../Request'
 import type { Server } from '/domain/services/Server'
 import type { System } from '/domain/services/System'
-import { JsonResponse } from '../../Response/Json'
-import { ConfigError } from '../../Error/Config'
+import { JsonResponse } from '../../../Response/Json'
 import type { YouCanBookMeWebhookAction } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 
-export interface BookingCreatedTriggerConfig extends BaseTriggerConfig {
-  automation: string
-}
+export type BookingCreatedTriggerConfig = BaseTriggerIntegrationConfig
 
 export interface BookingCreatedTriggerServices {
   queue: Queue
@@ -23,23 +20,25 @@ export interface BookingCreatedTriggerIntegrations {
   youCanBookMe: YouCanBookMe
 }
 
-export class BookingCreatedTrigger implements BaseTrigger {
+export class BookingCreatedTrigger extends BaseTrigger<BookingCreatedTriggerConfig> {
   constructor(
-    private _config: BookingCreatedTriggerConfig,
+    config: BookingCreatedTriggerConfig,
     private _services: BookingCreatedTriggerServices,
     private _integrations: BookingCreatedTriggerIntegrations
-  ) {}
+  ) {
+    super(config)
+  }
 
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {
     const { queue, server, system } = this._services
-    const { automation } = this._config
+    const { automation, account } = this._config
     const { youCanBookMe } = this._integrations
 
     const triggerPath =
       '/' + system.joinPath('api', 'trigger', 'you-can-book-me', 'invitee-created', automation)
     await server.post(triggerPath, this.onTriggerCalled)
     const triggerUrl = system.joinPath(server.baseUrl, triggerPath)
-    const currentProfile = await youCanBookMe.currentProfile()
+    const currentProfile = await youCanBookMe.currentProfile(account)
 
     const youCanBookMeWebhookActions = currentProfile.actions.filter(
       (action) => action.type === 'WEBHOOK'
@@ -56,7 +55,7 @@ export class BookingCreatedTrigger implements BaseTrigger {
         subject: 'POST',
         body: '{ "startsAt": "{START-LOCAL-DATE}", "endsAt": "{END-LOCAL-TIME}", "timeZone": "{TIMEZONE}", "firstName": "{FNAME}", "email": "{EMAIL}" }',
       }
-      await youCanBookMe.updateProfile(currentProfile.id, {
+      await youCanBookMe.updateProfile(account, currentProfile.id, {
         actions: [...currentProfile.actions, youCanBookMeWebhookAction],
       })
     }
@@ -64,19 +63,10 @@ export class BookingCreatedTrigger implements BaseTrigger {
     queue.job(automation, run)
   }
 
-  validateConfig = async () => {
+  validate = async () => {
     const { youCanBookMe } = this._integrations
-    const response = await youCanBookMe.checkConfiguration()
-    if (response?.error) {
-      return [
-        new ConfigError({
-          entity: 'Trigger',
-          name: 'BookingCreatedTrigger',
-          message: response.error.message || 'Unknown error',
-        }),
-      ]
-    }
-    return []
+    const { account } = this._config
+    return youCanBookMe.validate({ account, entity: 'Trigger', name: 'BookingCreatedTrigger' })
   }
 
   onTriggerCalled = async (request: PostRequest) => {
