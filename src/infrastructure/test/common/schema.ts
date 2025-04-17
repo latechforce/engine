@@ -138,6 +138,7 @@ const fullSchema: ConfigSchema = {
       trigger: {
         integration: 'YouCanBookMe',
         event: 'BookingCreated',
+        account: 'youcanbookme',
       },
       actions: [],
     },

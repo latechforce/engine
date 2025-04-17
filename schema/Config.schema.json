@@ -437,6 +437,9 @@
         },
         {
           "$ref": "#/definitions/NotionIntegrationTriggerAutomationSchema"
+        },
+        {
+          "$ref": "#/definitions/YouCanBookMeIntegrationTriggerAutomationSchema"
         }
       ],
       "description": "The Integration trigger.",
@@ -503,6 +506,35 @@
       "additionalProperties": false,
       "description": "A trigger that fires when a table page is created in Notion",
       "title": "Table Page Created"
+    },
+    "YouCanBookMeIntegrationTriggerAutomationSchema": {
+      "$ref": "#/definitions/BookingCreatedYouCanBookMeIntegrationTriggerAutomationSchema",
+      "description": "The YouCanBookMe integration trigger.",
+      "title": "YouCanBookMe"
+    },
+    "BookingCreatedYouCanBookMeIntegrationTriggerAutomationSchema": {
+      "type": "object",
+      "properties": {
+        "account": {
+          "type": "string"
+        },
+        "integration": {
+          "type": "string",
+          "const": "YouCanBookMe"
+        },
+        "event": {
+          "type": "string",
+          "const": "BookingCreated"
+        }
+      },
+      "required": [
+        "account",
+        "event",
+        "integration"
+      ],
+      "additionalProperties": false,
+      "description": "A trigger that fires when a booking is created in YouCanBookMe",
+      "title": "Booking Created"
     },
     "ActionAutomationSchema": {
       "anyOf": [

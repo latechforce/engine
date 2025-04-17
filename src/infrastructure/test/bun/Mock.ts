@@ -407,14 +407,19 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           await integrations.phantombuster.createToken(configs[0].apiKey)
         }
         if (this.options.integrations.includes('YouCanBookMe')) {
-          const config: YouCanBookMeConfig = {
-            user: {
-              username: 'username',
-              password: 'password',
+          const configs: YouCanBookMeConfig[] = [
+            {
+              name: 'youcanbookme',
+              baseUrl: await getTestDbUrl('youcanbookme'),
+              user: {
+                username: 'test',
+                password: 'test',
+              },
             },
-          }
-          integrations.youcanbookme = new YouCanBookMeIntegration(config)
-          extendsConfig.integrations.youCanBookMe = config
+          ]
+          integrations.youcanbookme = new YouCanBookMeIntegration(configs[0])
+          extendsConfig.integrations.youcanbookme = configs
+          await integrations.youcanbookme.createToken(configs[0].user.username)
         }
       }
       let startedApp: StartedApp | undefined

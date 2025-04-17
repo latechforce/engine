@@ -92,9 +92,9 @@ export class AppMapper {
     const airtable = AirtableMapper.toIntegration(integrations, schema.integrations?.airtable)
     const pappers = PappersMapper.toIntegration(integrations, schema.integrations?.pappers)
     const qonto = QontoMapper.toIntegration(integrations, schema.integrations?.qonto)
-    const youCanBookMe = YouCanBookMeMapper.toIntegration(
+    const youcanbookme = YouCanBookMeMapper.toIntegration(
       integrations,
-      config.integrations?.youCanBookMe
+      schema.integrations?.youcanbookme
     )
     const phantombuster = PhantombusterMapper.toIntegration(
       integrations,
@@ -136,7 +136,7 @@ export class AppMapper {
         system,
       },
       { tables },
-      { notion, pappers, qonto, googleMail, gocardless, calendly, youCanBookMe }
+      { notion, pappers, qonto, googleMail, gocardless, calendly, youcanbookme }
     )
     const forms = FormMapper.toManyEntities(
       schema.forms,

@@ -1,19 +1,20 @@
-import Tester, { expect, describe, it, beforeEach } from 'bun:test'
+import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationConfig } from '/test/config'
+import { getAutomationSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['YouCanBookMe'] })
 
 mock.request(({ app, drivers, integrations }) => {
   describe('on booking created', () => {
-    beforeEach(async () => {
     it('should start an automation', async () => {
       // GIVEN
       const config = {
-        ...getAutomationConfig('YouCanBookMeBookingCreated'),
-        server: {
-          baseUrl: 'http://localhost:3001',
-          port: 3001,
+        ...getAutomationSchema('YouCanBookMeBookingCreated'),
+        services: {
+          server: {
+            baseUrl: 'http://localhost:3001',
+            port: 3001,
+          },
         },
       }
       await app.start(config)

@@ -17,7 +17,7 @@ export interface BookingCreatedTriggerServices {
 }
 
 export interface BookingCreatedTriggerIntegrations {
-  youCanBookMe: YouCanBookMe
+  youcanbookme: YouCanBookMe
 }
 
 export class BookingCreatedTrigger extends BaseTrigger<BookingCreatedTriggerConfig> {
@@ -32,13 +32,13 @@ export class BookingCreatedTrigger extends BaseTrigger<BookingCreatedTriggerConf
   init = async (run: (triggerData: object) => Promise<AutomationContext>) => {
     const { queue, server, system } = this._services
     const { automation, account } = this._config
-    const { youCanBookMe } = this._integrations
+    const { youcanbookme } = this._integrations
 
     const triggerPath =
       '/' + system.joinPath('api', 'trigger', 'you-can-book-me', 'invitee-created', automation)
     await server.post(triggerPath, this.onTriggerCalled)
     const triggerUrl = system.joinPath(server.baseUrl, triggerPath)
-    const currentProfile = await youCanBookMe.currentProfile(account)
+    const currentProfile = await youcanbookme.currentProfile(account)
 
     const youCanBookMeWebhookActions = currentProfile.actions.filter(
       (action) => action.type === 'WEBHOOK'
@@ -55,7 +55,7 @@ export class BookingCreatedTrigger extends BaseTrigger<BookingCreatedTriggerConf
         subject: 'POST',
         body: '{ "startsAt": "{START-LOCAL-DATE}", "endsAt": "{END-LOCAL-TIME}", "timeZone": "{TIMEZONE}", "firstName": "{FNAME}", "email": "{EMAIL}" }',
       }
-      await youCanBookMe.updateProfile(account, currentProfile.id, {
+      await youcanbookme.updateProfile(account, currentProfile.id, {
         actions: [...currentProfile.actions, youCanBookMeWebhookAction],
       })
     }
@@ -64,9 +64,9 @@ export class BookingCreatedTrigger extends BaseTrigger<BookingCreatedTriggerConf
   }
 
   validate = async () => {
-    const { youCanBookMe } = this._integrations
+    const { youcanbookme } = this._integrations
     const { account } = this._config
-    return youCanBookMe.validate({ account, entity: 'Trigger', name: 'BookingCreatedTrigger' })
+    return youcanbookme.validate({ account, entity: 'Trigger', name: 'BookingCreatedTrigger' })
   }
 
   onTriggerCalled = async (request: PostRequest) => {
