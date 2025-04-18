@@ -409,7 +409,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('YouCanBookMe')) {
           const configs: YouCanBookMeConfig[] = [
             {
-              name: 'youcanbookme',
+              account: 'youcanbookme',
               baseUrl: await getTestDbUrl('youcanbookme'),
               user: {
                 username: 'test',
