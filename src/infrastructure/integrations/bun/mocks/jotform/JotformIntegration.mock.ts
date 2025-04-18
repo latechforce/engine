@@ -1,5 +1,4 @@
 import type { IJotformIntegration } from '/adapter/spi/integrations/JotformSpi'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
 import { BaseMockIntegration } from '../base'
 
