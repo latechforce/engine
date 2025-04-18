@@ -1,3 +1,23 @@
+# [0.45.0](https://github.com/latechforce/engine/compare/v0.44.0...v0.45.0) (2025-04-18)
+
+
+### Bug Fixes
+
+* **jotform:** typing misconfiguration ([4c06458](https://github.com/latechforce/engine/commit/4c06458a2bb16af077416dc2ca82cc508968317b))
+
+
+### Features
+
+* **jotform:** add jotform base infrastructure ([0d899a6](https://github.com/latechforce/engine/commit/0d899a6fb4e3c99c47f2d1d0491ccec4f8b01079))
+* **jotform:** add Jotform integration domain ([102fe17](https://github.com/latechforce/engine/commit/102fe179b13d780707b91dbd665260c69350ad1e))
+* **jotform:** add jotform mapper ([cf93266](https://github.com/latechforce/engine/commit/cf9326668df85a138ede590daa419a77cbb95240))
+* **jotform:** add Jotform test ([900b54f](https://github.com/latechforce/engine/commit/900b54f14840526793ad891b1f7b4a3a95fbd0b2))
+* **jotform:** add jotform trigger and test ([1720ddd](https://github.com/latechforce/engine/commit/1720ddda6352a3938e32a75564bcdffb9c5f3077))
+* **jotform:** add test for list and add webhooks ([9c9f283](https://github.com/latechforce/engine/commit/9c9f283b5d69b7fca44798ee20803d47dcb031b7))
+* **jotform:** add webhook api endpoint ([c025d52](https://github.com/latechforce/engine/commit/c025d52880665847786cc675bf012b38372ff61d))
+* **jotform:** finalize jotform integration test ([287be50](https://github.com/latechforce/engine/commit/287be500939b0e6921f9dc05f099e1ae72abc1ed))
+* **jotform:** wip on infrastructure ([80ecbe4](https://github.com/latechforce/engine/commit/80ecbe4ee0d44af35692455446ca051b8b14ce10))
+
 # [0.44.0](https://github.com/latechforce/engine/compare/v0.43.7...v0.44.0) (2025-04-18)
 
 
