@@ -1,3 +1,10 @@
+## [0.45.1](https://github.com/latechforce/engine/compare/v0.45.0...v0.45.1) (2025-04-18)
+
+
+### Bug Fixes
+
+* **env:** add green test: should set API keys from env variables ([e5bddf3](https://github.com/latechforce/engine/commit/e5bddf35888e24691525bc797ec0d93081d3b00d))
+
 # [0.45.0](https://github.com/latechforce/engine/compare/v0.44.0...v0.45.0) (2025-04-18)
 
 
