@@ -1,3 +1,10 @@
+## [0.43.7](https://github.com/latechforce/engine/compare/v0.43.6...v0.43.7) (2025-04-18)
+
+
+### Bug Fixes
+
+* **Sentry:** add dynamic env variable in Sentry instrument ([5a15845](https://github.com/latechforce/engine/commit/5a15845e2b20d1405587217657c1a7ece4db017f))
+
 ## [0.43.6](https://github.com/latechforce/engine/compare/v0.43.5...v0.43.6) (2025-04-15)
 
 ### Bug Fixes
