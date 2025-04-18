@@ -1,3 +1,10 @@
+## [0.45.2](https://github.com/latechforce/engine/compare/v0.45.1...v0.45.2) (2025-04-18)
+
+
+### Bug Fixes
+
+* **Mock:** add green test: should not connect to an integration if not provided ([70c2f50](https://github.com/latechforce/engine/commit/70c2f50202406f7a705bbd554f6214261d50e948))
+
 ## [0.45.1](https://github.com/latechforce/engine/compare/v0.45.0...v0.45.1) (2025-04-18)
 
 
