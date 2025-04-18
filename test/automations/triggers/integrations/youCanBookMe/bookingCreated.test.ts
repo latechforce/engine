@@ -1,10 +1,21 @@
-import Tester, { expect, describe, it } from 'bun:test'
+import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Mock } from '/test/bun'
 import { getAutomationSchema } from '/test/common'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['YouCanBookMe'] })
 
 mock.request(({ app, drivers, integrations }) => {
+  beforeEach(async () => {
+    await integrations.youcanbookme.createProfile({
+      id: 'test',
+      title: 'Test Profile',
+      description: 'Test Description',
+      subdomain: 'test-profile',
+      timeZone: 'Europe/Paris',
+      locale: 'en-US',
+    })
+  })
+
   describe('on booking created', () => {
     it('should start an automation', async () => {
       // GIVEN
@@ -18,21 +29,15 @@ mock.request(({ app, drivers, integrations }) => {
         },
       }
       await app.start(config)
-
       const currentProfileResponse = await integrations.youcanbookme.currentProfile()
-
       if (currentProfileResponse.error) {
         throw new Error('YouCanBookMe username is not configured')
       }
-
       const currentProfile = currentProfileResponse.data
-
       const webhookActions = currentProfile.actions.filter((action) => action.type === 'WEBHOOK')
-
       if (webhookActions.length === 0) {
         throw new Error('No webhook actions found')
       }
-
       const webhook = webhookActions[0]
 
       // WHEN

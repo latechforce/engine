@@ -17,7 +17,7 @@ import { CronTimeTickedScheduleTrigger } from '/domain/entities/Trigger/services
 import { ApiCalledHttpTrigger } from '/domain/entities/Trigger/services/http/ApiCalled'
 import { WebhookCalledHttpTrigger } from '/domain/entities/Trigger/services/http/WebhookCalled'
 import type { YouCanBookMe } from '/domain/integrations/YouCanBookMe'
-import { BookingCreatedTrigger } from '/domain/entities/Trigger/integrations/youCanBookMe/BookingCreated'
+import { BookingCreatedTrigger } from '../../../domain/entities/Trigger/integrations/youcanbookme/BookingCreated'
 
 export interface TriggerMapperServices {
   server: Server

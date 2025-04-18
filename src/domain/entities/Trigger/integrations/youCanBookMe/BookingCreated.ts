@@ -40,7 +40,7 @@ export class BookingCreatedTrigger extends BaseTrigger<BookingCreatedTriggerConf
     const triggerUrl = system.joinPath(server.baseUrl, triggerPath)
     const currentProfile = await youcanbookme.currentProfile(account)
 
-    const youCanBookMeWebhookActions = currentProfile.actions.filter(
+    const youCanBookMeWebhookActions = currentProfile.actions?.filter(
       (action) => action.type === 'WEBHOOK'
     )
 

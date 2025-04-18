@@ -45,13 +45,13 @@ export function testYouCanBookMeIntegration(
       expect(result.data?.timeZone).toBe(updateData.timeZone)
     })
 
-    it.skip('should create a new profile', async () => {
+    it('should create a new profile', async () => {
       // WHEN
       const profile = {
-        title: 'Test Profile',
-        description: 'Test Description',
-        subdomain: 'test-profile',
-        timeZone: 'UTC',
+        title: 'string',
+        description: 'string',
+        subdomain: 'string',
+        timeZone: 'America/New_York',
         locale: 'en-US',
         status: 'ONLINE' as const,
         brandingType: 'NO_BRANDING' as const,
@@ -63,8 +63,6 @@ export function testYouCanBookMeIntegration(
       expect(result.data).toBeDefined()
 
       assertIsDefined(result.data)
-
-      console.log(result.data)
 
       expect(result.data.title).toBe(profile.title)
       expect(result.data.description).toBe(profile.description)

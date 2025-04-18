@@ -3,7 +3,7 @@ import {
   type BookingCreatedTriggerConfig,
   type BookingCreatedTriggerIntegrations,
   type BookingCreatedTriggerServices,
-} from '../../../../../domain/entities/Trigger/integrations/youCanBookMe/BookingCreated'
+} from '../../../../../domain/entities/Trigger/integrations/youcanbookme/BookingCreated'
 
 export class BookingCreatedTriggerMapper {
   static toEntity = (
