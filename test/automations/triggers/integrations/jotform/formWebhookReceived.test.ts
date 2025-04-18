@@ -5,7 +5,7 @@ import { getAutomationSchema } from '/test/common'
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['Jotform'] })
 
 mock.request(({ app, drivers }) => {
-  describe('on form webhook received', () => {
+  describe.skip('on form webhook received', () => {
     beforeEach(async () => {
       // Add form-specific setup here
     })

@@ -1,6 +1,7 @@
 import type { IJotformIntegration } from '/adapter/spi/integrations/JotformSpi'
 import type BunTester from 'bun:test'
-import { assertIsDefined } from '/infrastructure/test/common'
+import { assertIsDefined } from '/test/common'
+import env from '/test/env'
 
 export function testJotformIntegration(
   { describe, it, expect }: typeof BunTester,
@@ -18,7 +19,7 @@ export function testJotformIntegration(
     describe('Webhooks', () => {
       it('should list webhooks for a form', async () => {
         // WHEN
-        const formId = '251068280670052'
+        const formId = env.TEST_JOTFORM_FORM_ID
         const result = await integration.listWebhooks(formId)
 
         // THEN
@@ -33,7 +34,7 @@ export function testJotformIntegration(
       it('should add a webhook to a form', async () => {
         // WHEN
         const params = {
-          formId: '251068280670052',
+          formId: env.TEST_JOTFORM_FORM_ID,
           webhookUrl: 'http://example.com/webhook',
         }
         const result = await integration.addWebhook(params)
@@ -50,7 +51,7 @@ export function testJotformIntegration(
       it('should delete a webhook', async () => {
         // WHEN
         const params = {
-          formId: '251068280670052',
+          formId: env.TEST_JOTFORM_FORM_ID,
           webhookId: '0',
         }
         const result = await integration.deleteWebhook(params)
