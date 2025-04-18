@@ -44,6 +44,7 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
     } catch (error) {
       return this._responseError(error)
     }
+    return undefined
   }
 
   getProfile = async (profileId: string): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
@@ -67,6 +68,32 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
       return { data: response.data }
     } catch (error) {
       return this._responseError(error)
+    }
+  }
+
+  currentProfile = async (): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
+    try {
+      const response = await this._instance.get<YouCanBookMeProfile>('/profiles')
+      return { data: response.data }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return { error: { status: error.response?.status ?? 500, message: error.message } }
+      }
+      return { error: { status: 500, message: 'Unknown error' } }
+    }
+  }
+
+  createProfile = async (
+    profile: Partial<YouCanBookMeProfile>
+  ): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
+    try {
+      const response = await this._instance.post<YouCanBookMeProfile>('/profiles', profile)
+      return { data: response.data }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return { error: { status: error.response?.status ?? 500, message: error.message } }
+      }
+      return { error: { status: 500, message: 'Unknown error' } }
     }
   }
 }

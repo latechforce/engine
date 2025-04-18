@@ -24,6 +24,8 @@ import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import { PhantombusterIntegration } from '/infrastructure/integrations/bun/mocks/phantombuster/PhantombusterIntegration.mock'
 import { CalendlyIntegration } from '/infrastructure/integrations/bun/mocks/calendly/CalendlyIntegration.mock'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
+import { YouCanBookMeIntegration } from '/infrastructure/integrations/bun/mocks/youcanbookme/YouCanBookMeIntegration.mock'
+import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -43,6 +45,7 @@ type IntegrationType =
   | 'GoCardless'
   | 'Phantombuster'
   | 'Calendly'
+  | 'YouCanBookMe'
 
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
@@ -72,7 +75,9 @@ type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
               ? PhantombusterIntegration
               : I extends 'Calendly'
                 ? CalendlyIntegration
-                : never
+                : I extends 'YouCanBookMe'
+                  ? YouCanBookMeIntegration
+                  : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -400,6 +405,21 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           integrations.phantombuster = new PhantombusterIntegration(configs[0])
           extendsConfig.integrations.phantombuster = configs
           await integrations.phantombuster.createToken(configs[0].apiKey)
+        }
+        if (this.options.integrations.includes('YouCanBookMe')) {
+          const configs: YouCanBookMeConfig[] = [
+            {
+              name: 'youcanbookme',
+              baseUrl: await getTestDbUrl('youcanbookme'),
+              user: {
+                username: 'test',
+                password: 'test',
+              },
+            },
+          ]
+          integrations.youcanbookme = new YouCanBookMeIntegration(configs[0])
+          extendsConfig.integrations.youcanbookme = configs
+          await integrations.youcanbookme.createToken(configs[0].user.username)
         }
       }
       let startedApp: StartedApp | undefined

@@ -11,7 +11,14 @@ import { RunTypescriptCodeAction } from '/domain/entities/Action/services/code/R
 import { ReadRecordDatabaseAction } from '/domain/entities/Action/services/database/ReadRecord'
 import { RunJavascriptCodeAction } from '/domain/entities/Action/services/code/RunJavascript'
 import type { TemplateCompiler, Logger, Monitor, CodeCompiler, IdGenerator } from '/domain/services'
-import type { Pappers, Qonto, Notion, GoogleMail, GoCardless } from '/domain/integrations'
+import type {
+  Pappers,
+  Qonto,
+  Notion,
+  GoogleMail,
+  GoCardless,
+  YouCanBookMe,
+} from '/domain/integrations'
 import type { Table } from '/domain/entities/Table'
 import type { Action } from '/domain/entities/Action'
 
@@ -34,6 +41,7 @@ export type ActionMapperIntegrations = {
   notion: Notion
   googleMail: GoogleMail
   gocardless: GoCardless
+  youcanbookme: YouCanBookMe
 }
 
 export class ActionMapper {

@@ -6,6 +6,7 @@ import type { NotionConfig } from './Notion'
 import type { PappersConfig } from './Pappers'
 import type { PhantombusterConfig } from './Phantombuster'
 import type { QontoConfig } from './Qonto'
+import type { YouCanBookMeConfig } from './YouCanBookMe'
 
 export * from './Google/Mail'
 export * from './Airtable'
@@ -15,6 +16,7 @@ export * from './Qonto'
 export * from './GoCardless'
 export * from './Phantombuster'
 export * from './Calendly'
+export * from './YouCanBookMe'
 
 export interface IntegrationsConfig {
   airtable?: AirtableConfig[]
@@ -27,4 +29,5 @@ export interface IntegrationsConfig {
   gocardless?: GoCardlessConfig[]
   phantombuster?: PhantombusterConfig[]
   calendly?: CalendlyConfig[]
+  youcanbookme?: YouCanBookMeConfig[]
 }

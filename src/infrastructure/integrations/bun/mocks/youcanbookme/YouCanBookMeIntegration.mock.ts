@@ -5,6 +5,7 @@ import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouC
 import { BaseMockIntegration } from '../base'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
+import { nanoid } from 'nanoid'
 
 type ProfileRecordFields = RecordFields & {
   createdBy: string
@@ -59,9 +60,12 @@ export class YouCanBookMeIntegration
     this._profiles.ensureSync()
   }
 
-  createProfile = async (profile: YouCanBookMeProfile): Promise<void> => {
+  createProfile = async (
+    profile: Partial<YouCanBookMeProfile>
+  ): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
+    const id = profile.id ?? nanoid()
     await this._profiles.insert({
-      id: profile.id,
+      id,
       created_at: new Date().toISOString(),
       fields: {
         createdBy: profile.createdBy,
@@ -72,17 +76,18 @@ export class YouCanBookMeIntegration
         description: profile.description,
         subdomain: profile.subdomain,
         logo: profile.logo,
-        timeZoneOverride: profile.timeZoneOverride.toString(),
-        captchaActive: profile.captchaActive.toString(),
+        timeZoneOverride: profile.timeZoneOverride?.toString() ?? 'false',
+        captchaActive: profile.captchaActive?.toString() ?? 'false',
         accessCode: profile.accessCode,
         timeZone: profile.timeZone,
         locale: profile.locale,
         profileId: profile.profileId,
         status: profile.status,
-        actions: JSON.stringify(profile.actions),
+        actions: JSON.stringify(profile.actions ?? []),
         brandingType: profile.brandingType,
       },
     })
+    return { data: { ...profile, id } as YouCanBookMeProfile }
   }
 
   getProfile = async (profileId: string): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
@@ -163,5 +168,15 @@ export class YouCanBookMeIntegration
       },
     })
     return { data: updatedProfile }
+  }
+
+  currentProfile = async (): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
+    const profile = await this.getProfile(this.config.user.username)
+
+    if (profile.error) {
+      return { error: { status: 404, message: 'No profile found' } }
+    }
+
+    return profile
   }
 }

@@ -8,6 +8,21 @@ export class YouCanBookMe extends Integration<YouCanBookMeConfig, IYouCanBookMeS
     super(spis)
   }
 
+  currentProfile = async (account: string): Promise<YouCanBookMeProfile> => {
+    const response = await this._spi(account).currentProfile()
+    if (response.error) return Integration.throwError('currentProfile', response.error)
+    return response.data
+  }
+
+  createProfile = async (
+    account: string,
+    profile: YouCanBookMeProfile
+  ): Promise<YouCanBookMeProfile> => {
+    const response = await this._spi(account).createProfile(profile)
+    if (response.error) return Integration.throwError('createProfile', response.error)
+    return response.data
+  }
+
   getProfile = async (account: string, profileId: string): Promise<YouCanBookMeProfile> => {
     const response = await this._spi(account).getProfile(profileId)
     if (response.error) return Integration.throwError('getProfile', response.error)

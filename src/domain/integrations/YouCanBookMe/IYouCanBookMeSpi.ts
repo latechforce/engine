@@ -4,9 +4,13 @@ import type { YouCanBookMeProfile } from './YouCanBookMeTypes'
 import type { YouCanBookMeConfig } from './YouCanBookMeConfig'
 
 export interface IYouCanBookMeSpi extends BaseSpi<YouCanBookMeConfig> {
+  currentProfile: () => Promise<IntegrationResponse<YouCanBookMeProfile>>
   getProfile: (profileId: string) => Promise<IntegrationResponse<YouCanBookMeProfile>>
   updateProfile: (
     profileId: string,
+    profile: Partial<YouCanBookMeProfile>
+  ) => Promise<IntegrationResponse<YouCanBookMeProfile>>
+  createProfile: (
     profile: Partial<YouCanBookMeProfile>
   ) => Promise<IntegrationResponse<YouCanBookMeProfile>>
 }

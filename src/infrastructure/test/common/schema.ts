@@ -131,6 +131,15 @@ const fullSchema: ConfigSchema = {
       },
       actions: [],
     },
+    {
+      name: 'YouCanBookMeBookingCreated',
+      trigger: {
+        integration: 'YouCanBookMe',
+        event: 'BookingCreated',
+        account: 'youcanbookme',
+      },
+      actions: [],
+    },
   ],
   tables: [
     {
@@ -291,6 +300,7 @@ type AutomationName =
   | 'WebhookCalledWithApiKeyAuth'
   | 'CronTimeTicked'
   | 'CalendlyInviteeCreated'
+  | 'YouCanBookMeBookingCreated'
 
 type FirstTableFieldName =
   | 'name'
