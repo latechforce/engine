@@ -1,7 +1,7 @@
 import { drivers } from '/infrastructure/drivers/common'
 import { integrations } from '/infrastructure/integrations/common'
 import { components } from '/infrastructure/components/tailwindcss'
-import App from '/adapter/api'
+import { Engine } from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
 import type { Components } from '/domain/components'
@@ -72,7 +72,7 @@ export type { AppIntegrations } from '/domain/entities/App/Base'
 export type { StartedApp } from '/domain/entities/App/Started'
 export type { StoppedApp } from '/domain/entities/App/Stopped'
 
-export default class extends App {
+export default class extends Engine {
   constructor(options: {
     drivers: Partial<Drivers> & {
       database: (config: DatabaseConfig) => IDatabaseDriver
@@ -89,8 +89,7 @@ export default class extends App {
     super(
       { ...drivers, ...customDrivers },
       { ...integrations, ...customIntegrations },
-      { ...components, ...customComponents },
-      { ...process.env }
+      { ...components, ...customComponents }
     )
   }
 }

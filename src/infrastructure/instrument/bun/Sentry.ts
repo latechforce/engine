@@ -3,10 +3,12 @@ import * as Sentry from '@sentry/bun'
 import slugify from 'slugify'
 
 export function init(config: MonitorSentryConfig) {
+  const release = `${slugify(config.appName, { lower: true })}@${config.appVersion}`
   Sentry.init({
-    release: `${slugify(config.appName)}@${config.appVersion}`,
+    release,
     dsn: config.dsn,
     environment: config.environment,
     tracesSampleRate: 1.0,
   })
+  console.log(`Sentry initialized with release ${release}`)
 }

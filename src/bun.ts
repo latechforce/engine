@@ -1,12 +1,12 @@
 import { drivers } from '/infrastructure/drivers/bun'
 import { integrations } from '/infrastructure/integrations/bun'
 import { components } from '/infrastructure/components/tailwindcss'
-import App from '/adapter/api'
+import { Engine } from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
 import type { Components } from './domain/components'
 
-export default class extends App {
+export default class extends Engine {
   constructor(options?: {
     drivers?: Partial<Drivers>
     integrations?: Partial<Integrations>
@@ -18,8 +18,7 @@ export default class extends App {
     super(
       { ...drivers, ...customDrivers },
       { ...integrations, ...customIntegrations },
-      { ...components, ...customComponents },
-      { ...process.env }
+      { ...components, ...customComponents }
     )
   }
 }

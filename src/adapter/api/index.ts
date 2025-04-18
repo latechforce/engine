@@ -9,14 +9,13 @@ import type { Integrations } from '/adapter/spi/integrations'
 import type { StartedApp } from '/domain/entities/App/Started'
 import type { Components } from '/domain/components'
 
-export default class {
+export class Engine {
   private _schemaValidator: SchemaValidator
 
   constructor(
     private _drivers: Drivers,
     private _integrations: Integrations,
-    private _components: Components,
-    private _env: Record<string, string | undefined>
+    private _components: Components
   ) {
     this._schemaValidator = SchemaValidatorMapper.toService(_drivers)
   }
@@ -56,14 +55,16 @@ export default class {
   }
 
   private _validateOrThrow = async (config: unknown): Promise<StoppedApp> => {
-    const configWithEnv = this._fillEnv(config)
+    const configWithEnv = Engine.fillEnv(config)
     const configWithValidSchema = this._validateSchemaOrThrow(configWithEnv)
     return this._validateConfigOrThrow(configWithValidSchema)
   }
 
-  private _fillEnv = (config: unknown): unknown => {
+  static fillEnv = (config: unknown): unknown => {
+    const env = process.env
+
     if (Array.isArray(config)) {
-      return config.map((item) => this._fillEnv(item))
+      return config.map((item) => Engine.fillEnv(item))
     }
 
     if (typeof config !== 'object' || config === null) {
@@ -80,15 +81,15 @@ export default class {
             ? defaultValueParts.join(' ').replace(/^"|"$/g, '')
             : undefined
 
-        if (envKey in this._env) {
-          result[key] = this._env[envKey]
+        if (envKey in env) {
+          result[key] = env[envKey]
         } else if (defaultValue !== undefined) {
           result[key] = defaultValue
         } else {
           throw new Error(`Environment variable ${envKey} not found and no default value provided`)
         }
       } else if (typeof value === 'object' && value !== null) {
-        result[key] = this._fillEnv(value)
+        result[key] = Engine.fillEnv(value)
       } else {
         result[key] = value
       }
