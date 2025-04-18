@@ -1,8 +1,7 @@
 import type { IJotformIntegration } from '/adapter/spi/integrations/JotformSpi'
 import type { IntegrationResponseError } from '/domain/integrations/base'
 import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
-import axios, { AxiosError, type AxiosInstance, type AxiosResponse } from 'axios'
-import { join } from 'path'
+import axios, { AxiosError, type AxiosInstance } from 'axios'
 
 export class JotformIntegration implements IJotformIntegration {
   private _instance: AxiosInstance
@@ -15,22 +14,20 @@ export class JotformIntegration implements IJotformIntegration {
       Accept: 'application/json',
     }
     this._instance = axios.create({
-      baseURL: join(baseUrl, 'v1'),
+      baseURL: baseUrl,
       headers,
     })
   }
 
   private _responseError = (error: unknown): IntegrationResponseError => {
     if (error instanceof AxiosError && error.response) {
-      const { message, code, status } = error.response.data as {
+      const { message, status } = error.response.data as {
         message: string
-        code?: number
-        status?: string
+        status: number
       }
       return {
         error: {
           message,
-          code,
           status,
         },
       }
