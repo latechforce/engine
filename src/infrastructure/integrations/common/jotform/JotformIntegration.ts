@@ -3,6 +3,8 @@ import type { IntegrationResponse, IntegrationResponseError } from '/domain/inte
 import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import type {
+  DeleteWebhookParams,
+  DeleteWebhookResponse,
   JotformWebhookParams,
   JotformWebhookResponse,
 } from '/domain/integrations/Jotform/JotformTypes'
@@ -72,6 +74,19 @@ export class JotformIntegration implements IJotformIntegration {
 
       const data = await response.json()
       return { data }
+    } catch (error) {
+      return this._responseError(error)
+    }
+  }
+
+  deleteWebhook = async (
+    params: DeleteWebhookParams
+  ): Promise<IntegrationResponse<JotformWebhookResponse>> => {
+    try {
+      const response = await this._instance.delete(
+        `/form/${params.formId}/webhooks/${params.webhookId}`
+      )
+      return { data: response.data }
     } catch (error) {
       return this._responseError(error)
     }

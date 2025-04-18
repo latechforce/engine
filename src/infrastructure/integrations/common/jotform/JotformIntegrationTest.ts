@@ -44,7 +44,24 @@ export function testJotformIntegration(
 
         expect(result.data.responseCode).toBe(200)
         expect(result.data.message).toBe('success')
-        expect(result.data.content).toBeDefined()
+        expect(Object.values(result.data.content).length).toBe(1)
+      })
+
+      it('should delete a webhook', async () => {
+        // WHEN
+        const params = {
+          formId: '251068280670052',
+          webhookId: '0',
+        }
+        const result = await integration.deleteWebhook(params)
+
+        //THEN
+        expect(result.data).toBeDefined()
+        assertIsDefined(result.data)
+
+        expect(result.data.responseCode).toBe(200)
+        expect(result.data.message).toBe('success')
+        expect(Object.values(result.data.content).length).toBe(0)
       })
     })
   })

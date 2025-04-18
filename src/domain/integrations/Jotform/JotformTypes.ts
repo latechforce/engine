@@ -19,3 +19,8 @@ export type JotformWebhookParams = {
   formId: string
   webhookUrl: string
 }
+
+export type DeleteWebhookParams = {
+  formId: string
+  webhookId: string
+}

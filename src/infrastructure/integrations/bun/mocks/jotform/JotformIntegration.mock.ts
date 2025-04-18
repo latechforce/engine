@@ -2,6 +2,7 @@ import type { IJotformIntegration } from '/adapter/spi/integrations/JotformSpi'
 import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
 import { BaseMockIntegration } from '../base'
 import type {
+  DeleteWebhookParams,
   JotformWebhookParams,
   JotformWebhookResponse,
 } from '/domain/integrations/Jotform/JotformTypes'
@@ -26,12 +27,39 @@ export class JotformIntegration extends BaseMockIntegration implements IJotformI
     this._webhooks.ensureSync()
   }
 
+  deleteWebhook = async (
+    params: DeleteWebhookParams
+  ): Promise<IntegrationResponse<JotformWebhookResponse>> => {
+    const result = await this._webhooks.readById<FormWebhookRecordFields>(params.formId)
+
+    const webhook = JSON.parse(result?.fields.content ?? '{}')
+
+    delete webhook[params.webhookId]
+
+    this._webhooks.updateSync<FormWebhookRecordFields>({
+      id: params.formId,
+      updated_at: new Date().toISOString(),
+      fields: {
+        content: JSON.stringify(webhook),
+      },
+    })
+
+    return {
+      data: {
+        responseCode: 200,
+        message: 'success',
+        content: webhook,
+        'limit-left': 100,
+      },
+    }
+  }
+
   listWebhooks = async (formId: string): Promise<IntegrationResponse<JotformWebhookResponse>> => {
     const result = await this._webhooks.readById<FormWebhookRecordFields>(formId)
     return {
       data: {
         responseCode: 200,
-        message: 'OK',
+        message: 'success',
         content: JSON.parse(result?.fields.content ?? '{}'),
         'limit-left': 100,
       },
@@ -51,7 +79,7 @@ export class JotformIntegration extends BaseMockIntegration implements IJotformI
     return {
       data: {
         responseCode: 200,
-        message: 'OK',
+        message: 'success',
         content: { '0': params.webhookUrl },
         'limit-left': 100,
       },
