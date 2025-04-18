@@ -9,6 +9,7 @@ import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
+import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
 
 import { NotionIntegration } from './notion/NotionIntegration'
 import { PappersIntegration } from './pappers/PappersIntegration'
@@ -20,6 +21,7 @@ import { GoCardlessIntegration } from './gocardless/GoCardlessIntegration'
 import { PhantombusterIntegration } from './phantombuster/PhantombusterIntegration'
 import { CalendlyIntegration } from './calendly/CalendlyIntegration'
 import { YouCanBookMeIntegration } from './youcanbookme/YouCanBookMeIntegration'
+import { JotformIntegration } from './jotform/JotformIntegration'
 
 export const integrations: Integrations = {
   airtable: (config: AirtableConfig) => new AirtableIntegration(config),
@@ -32,4 +34,5 @@ export const integrations: Integrations = {
   phantombuster: (config: PhantombusterConfig) => new PhantombusterIntegration(config),
   calendly: (config: CalendlyConfig) => new CalendlyIntegration(config),
   youCanBookMe: (config: YouCanBookMeConfig) => new YouCanBookMeIntegration(config),
+  jotform: (config: JotformConfig) => new JotformIntegration(config),
 }
