@@ -42,4 +42,18 @@ export class JotformIntegration implements IJotformIntegration {
       return this._responseError(error)
     }
   }
+
+  listWebhooks = async (formId: string): Promise<IntegrationResponse<JotformWebhookResponse>> => {
+    const response = await this._instance.get(`/form/${formId}/webhooks`)
+    return { data: response.data }
+  }
+
+  addWebhook = async (
+    params: JotformWebhookParams
+  ): Promise<IntegrationResponse<JotformWebhookResponse>> => {
+    const response = await this._instance.post(`/form/${params.formId}/webhooks`, {
+      webhookURL: params.webhookUrl,
+    })
+    return { data: response.data }
+  }
 }
