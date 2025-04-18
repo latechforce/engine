@@ -7,6 +7,7 @@ import type { PhantombusterIntegrationSchema } from './PhantombusterSchema'
 import type { CalendlyIntegrationSchema } from './CalendlySchema'
 import type { GoogleIntegrationSchema } from './Google'
 import type { YouCanBookMeIntegrationSchema } from './YouCanBookMeSchema'
+import type { JotformIntegrationSchema } from './JotformSchema'
 
 /**
  * Integrations configuration interface
@@ -23,4 +24,5 @@ export interface IntegrationSchema {
   phantombuster?: PhantombusterIntegrationSchema[]
   calendly?: CalendlyIntegrationSchema[]
   youcanbookme?: YouCanBookMeIntegrationSchema[]
+  jotform?: JotformIntegrationSchema[]
 }

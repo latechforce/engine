@@ -16,6 +16,8 @@ import { RecordCreatedDatabaseTrigger } from '/domain/entities/Trigger/services/
 import { CronTimeTickedScheduleTrigger } from '/domain/entities/Trigger/services/schedule/CronTimeTicked'
 import { ApiCalledHttpTrigger } from '/domain/entities/Trigger/services/http/ApiCalled'
 import { WebhookCalledHttpTrigger } from '/domain/entities/Trigger/services/http/WebhookCalled'
+import type { Jotform } from '/domain/integrations/Jotform'
+import { FormWebhookReceivedTrigger } from '/domain/entities/Trigger/integrations/jotform/FormWebhookReceived'
 
 export interface TriggerMapperServices {
   server: Server
@@ -30,6 +32,7 @@ export interface TriggerMapperServices {
 export interface TriggerMapperIntegrations {
   notion: Notion
   calendly: Calendly
+  jotform: Jotform
 }
 
 export class TriggerMapper {
@@ -56,6 +59,16 @@ export class TriggerMapper {
           switch (schema.event) {
             case 'InviteeCreated':
               return new InviteeCreatedCalendlyTrigger(
+                { ...schema, automation },
+                services,
+                integrations
+              )
+          }
+          break
+        case 'Jotform':
+          switch (schema.event) {
+            case 'FormWebhookReceived':
+              return new FormWebhookReceivedTrigger(
                 { ...schema, automation },
                 services,
                 integrations
