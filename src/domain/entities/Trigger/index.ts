@@ -4,7 +4,7 @@ import type { RecordCreatedDatabaseTrigger } from '/domain/entities/Trigger/serv
 import type { WebhookCalledHttpTrigger } from '/domain/entities/Trigger/services/http/WebhookCalled'
 import type { CronTimeTickedScheduleTrigger } from '/domain/entities/Trigger/services/schedule/CronTimeTicked'
 import type { InviteeCreatedCalendlyTrigger } from '/domain/entities/Trigger/integrations/calendly/InviteeCreated'
-import type { BookingCreatedTrigger } from '/domain/entities/Trigger/integrations/youcanbookme/BookingCreated'
+import type { BookingCreatedTrigger } from './integrations/notion/BookingCreated'
 
 export type Trigger =
   | WebhookCalledHttpTrigger
