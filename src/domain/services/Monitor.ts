@@ -29,7 +29,7 @@ export class Monitor {
 
   constructor(
     private _spi: IMonitorSpi,
-    config: MonitorConfig[],
+    public config: MonitorConfig[],
     private _services: MonitorServices
   ) {
     this.drivers = config.map((c) => c.driver)

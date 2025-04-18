@@ -25,7 +25,7 @@ mock.app(({ app }) => {
       const startedApp = await app.start(config)
 
       // THEN
-      expect(startedApp.name).toBe('App')
+      expect(startedApp.config.name).toBe('App')
     })
 
     it('with a description', async () => {
@@ -33,7 +33,7 @@ mock.app(({ app }) => {
       const startedApp = await app.start(description)
 
       // THEN
-      expect(startedApp.description).toBe('App description')
+      expect(startedApp.config.description).toBe('App description')
     })
 
     it('with an app version', async () => {
@@ -41,7 +41,7 @@ mock.app(({ app }) => {
       const startedApp = await app.start(appVersion)
 
       // THEN
-      expect(startedApp.appVersion).toBe('1.0.0')
+      expect(startedApp.config.appVersion).toBe('1.0.0')
     })
 
     it('with an engine version', async () => {
@@ -49,7 +49,7 @@ mock.app(({ app }) => {
       const startedApp = await app.start(engineVersion)
 
       // THEN
-      expect(startedApp.engineVersion).toBe('1.0.0')
+      expect(startedApp.config.engineVersion).toBe('1.0.0')
     })
   })
 

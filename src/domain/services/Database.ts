@@ -47,7 +47,7 @@ export class Database {
   constructor(
     private _spi: IDatabaseSpi,
     private _services: DatabaseServices,
-    config: DatabaseConfig
+    public config: DatabaseConfig
   ) {
     const { driver } = config
     this.driver = driver

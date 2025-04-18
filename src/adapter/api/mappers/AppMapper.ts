@@ -160,6 +160,13 @@ export class AppMapper {
         engineVersion,
         description: schema.description,
         integrations: schema.integrations,
+        services: {
+          server: server.config,
+          database: database.config,
+          monitors: monitor.config,
+          tunnel: tunnel.config,
+          theme: theme.config,
+        },
       },
       {
         server,

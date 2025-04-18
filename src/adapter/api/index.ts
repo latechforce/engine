@@ -63,31 +63,38 @@ export class Engine {
   static fillEnv = (config: unknown): unknown => {
     const env = process.env
 
+    function replaceToken(value: string): string {
+      const content = value.replace(/^{{\s*env\.|}}$/g, '').trim()
+      const [envKey, ...defaultValueParts] = content.split(' ')
+      const defaultValue =
+        defaultValueParts.length > 0 ? defaultValueParts.join(' ').replace(/^"|"$/g, '') : undefined
+      if (envKey in env) {
+        const envValue = env[envKey]
+        if (envValue === undefined) {
+          throw new Error(`Environment variable ${envKey} not found and no default value provided`)
+        }
+        return envValue
+      } else if (defaultValue !== undefined) {
+        return defaultValue
+      }
+      throw new Error(`Environment variable ${envKey} not found and no default value provided`)
+    }
+
     if (Array.isArray(config)) {
       return config.map((item) => Engine.fillEnv(item))
     }
 
     if (typeof config !== 'object' || config === null) {
+      if (typeof config === 'string' && config.match(/^{{\s*env\./)) {
+        return replaceToken(config)
+      }
       return config
     }
 
     const result = { ...config } as unknown as Record<string, unknown>
     for (const [key, value] of Object.entries(config)) {
       if (typeof value === 'string' && value.match(/^{{\s*env\./)) {
-        const content = value.replace(/^{{\s*env\.|}}$/g, '').trim()
-        const [envKey, ...defaultValueParts] = content.split(' ')
-        const defaultValue =
-          defaultValueParts.length > 0
-            ? defaultValueParts.join(' ').replace(/^"|"$/g, '')
-            : undefined
-
-        if (envKey in env) {
-          result[key] = env[envKey]
-        } else if (defaultValue !== undefined) {
-          result[key] = defaultValue
-        } else {
-          throw new Error(`Environment variable ${envKey} not found and no default value provided`)
-        }
+        result[key] = replaceToken(value)
       } else if (typeof value === 'object' && value !== null) {
         result[key] = Engine.fillEnv(value)
       } else {

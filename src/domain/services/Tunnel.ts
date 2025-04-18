@@ -12,7 +12,10 @@ export interface ITunnelSpi {
 }
 
 export class Tunnel {
-  constructor(private _spi: ITunnelSpi) {}
+  constructor(
+    private _spi: ITunnelSpi,
+    public config?: TunnelConfig
+  ) {}
 
   start = async (port: number | string): Promise<string> => {
     return this._spi.start(Number(port))

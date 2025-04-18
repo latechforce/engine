@@ -57,12 +57,12 @@ export class StartedApp extends BaseApp {
       })
     }
     const stoppedApp = new StoppedApp(
-      this._config,
+      this.config,
       this._services,
       this._entities,
       this._integrations
     )
-    this.logger.info(`🛑 app "${this.name}" stopped`)
+    this.logger.info(`🛑 app "${this.config.name}" stopped`)
     return stoppedApp
   }
 

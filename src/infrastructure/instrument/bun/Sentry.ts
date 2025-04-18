@@ -10,5 +10,5 @@ export function init(config: MonitorSentryConfig) {
     environment: config.environment,
     tracesSampleRate: 1.0,
   })
-  console.log(`Sentry initialized with release ${release}`)
+  console.log('Sentry has been successfully initialized')
 }

@@ -79,9 +79,9 @@ export class Server {
   constructor(
     private _spi: IServerSpi,
     private _services: ServerServices,
-    private _config: ServerConfig
+    public config: ServerConfig
   ) {
-    this._baseUrl = _config.baseUrl
+    this._baseUrl = config.baseUrl
   }
 
   get baseUrl() {

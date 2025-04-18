@@ -38,7 +38,7 @@ export class StoppedApp extends BaseApp {
     const { tables, automations, buckets, forms } = this._entities
     const { notion } = this._integrations
     await server.init(async () => {
-      if (this._config.integrations?.notion) await notion.init()
+      if (this.config.integrations?.notion) await notion.init()
       for (const table of tables) await table.init()
       for (const automation of automations) await automation.init()
       for (const bucket of buckets) await bucket.init()
@@ -65,7 +65,7 @@ export class StoppedApp extends BaseApp {
     await notion.startPolling()
     await server.start()
     const startedApp = new StartedApp(
-      this._config,
+      this.config,
       this._services,
       this._entities,
       this._integrations
@@ -85,9 +85,9 @@ export class StoppedApp extends BaseApp {
       monitor.captureException(reason)
       startedApp.onClose('UNCAUGHT_REJECTION')
     })
-    logger.info(`🚀 App "${this.name}" started at ${startedApp.url}`)
-    logger.info(`⚙️  App version: ${this.appVersion}`)
-    logger.info(`⚙️  Engine version: ${this.engineVersion}`)
+    logger.info(`🚀 App "${this.config.name}" started at ${startedApp.url}`)
+    logger.info(`⚙️  App version: ${this.config.appVersion}`)
+    logger.info(`⚙️  Engine version: ${this.config.engineVersion}`)
     logger.info(`🔗 Open API documentation available at ${startedApp.url}/api/docs`)
     return startedApp
   }

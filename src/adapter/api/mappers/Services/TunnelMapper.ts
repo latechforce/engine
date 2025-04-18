@@ -7,6 +7,6 @@ export class TunnelMapper {
   static toService(drivers: Drivers, schema?: TunnelServiceSchema): Tunnel {
     const driver = drivers.tunnel(schema)
     const spi = new TunnelSpi(driver)
-    return new Tunnel(spi)
+    return new Tunnel(spi, schema)
   }
 }

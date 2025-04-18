@@ -15,6 +15,7 @@ import type { Cron } from '/domain/services/Cron'
 import type { Form } from '../Form'
 import type { Theme } from '/domain/services/Theme'
 import type { Client } from '/domain/services/Client'
+import type { ServicesConfig } from '/domain/services'
 
 export interface AppConfig {
   name: string
@@ -22,6 +23,7 @@ export interface AppConfig {
   engineVersion: string
   description?: string
   integrations?: IntegrationsConfig
+  services?: ServicesConfig
 }
 
 export interface AppServices {
@@ -52,24 +54,15 @@ export interface AppIntegrations {
 type Status = 'stopped' | 'starting' | 'started' | 'stopping'
 
 export class BaseApp {
-  public name: string
-  public appVersion: string
-  public engineVersion: string
-  public description?: string
   public logger: Logger
   protected _status: Status = 'stopped'
 
   constructor(
-    protected _config: AppConfig,
+    public config: AppConfig,
     protected _services: AppServices,
     protected _entities: AppEntities,
     protected _integrations: AppIntegrations
   ) {
-    const { name, appVersion, engineVersion, description } = _config
-    this.name = name
-    this.appVersion = appVersion
-    this.engineVersion = engineVersion
-    this.description = description
     this.logger = _services.logger
   }
 

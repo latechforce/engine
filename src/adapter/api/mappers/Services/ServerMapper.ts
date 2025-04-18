@@ -13,7 +13,7 @@ export class ServerMapper {
       appVersion,
       appDescription,
     }: { appName: string; appVersion: string; appDescription?: string }
-  ) {
+  ): Server {
     const server = { ...schema, appName, appVersion, appDescription }
     const driver = drivers.server(server)
     const spi = new ServerSpi(driver)
