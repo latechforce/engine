@@ -1,3 +1,18 @@
+# [0.44.0](https://github.com/latechforce/engine/compare/v0.43.7...v0.44.0) (2025-04-18)
+
+
+### Bug Fixes
+
+* **youcanbookme:** import path build issue ([aa886ba](https://github.com/latechforce/engine/commit/aa886ba361528e3770b0686aeceadbc06f37bfb5))
+* **youcanbookme:** trigger test ([a8f9500](https://github.com/latechforce/engine/commit/a8f9500a396d629c08d34c94820c9136db8f90d8))
+
+
+### Features
+
+* **youcanbookme:** add automation trigger ([604ef66](https://github.com/latechforce/engine/commit/604ef6675a29da74dbc6e8233d547d6768e68fc1))
+* **youcanbookme:** upgrade feature with new architecture ([5ea9b81](https://github.com/latechforce/engine/commit/5ea9b8101b26d90b20ae1df6516e3e69e9ca10d8))
+* **youcanbookme:** wip on integration ([155e5df](https://github.com/latechforce/engine/commit/155e5df222993deb6f1899ae228d18482fa52d16))
+
 ## [0.43.7](https://github.com/latechforce/engine/compare/v0.43.6...v0.43.7) (2025-04-18)
 
 
