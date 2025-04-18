@@ -1,6 +1,8 @@
 import type { CalendlyIntegrationTriggerAutomationSchema } from './Calendly'
+import type { JotformIntegrationTriggerAutomationSchema } from './Jotform'
 import type { NotionIntegrationTriggerAutomationSchema } from './Notion'
 import type { YouCanBookMeIntegrationTriggerAutomationSchema } from './YouCanBookMe'
+
 /**
  * The schema for the Integration trigger.
  * @title Integration
@@ -9,4 +11,5 @@ import type { YouCanBookMeIntegrationTriggerAutomationSchema } from './YouCanBoo
 export type IntegrationTriggerAutomationSchema =
   | CalendlyIntegrationTriggerAutomationSchema
   | NotionIntegrationTriggerAutomationSchema
+  | JotformIntegrationTriggerAutomationSchema
   | YouCanBookMeIntegrationTriggerAutomationSchema

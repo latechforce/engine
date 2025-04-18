@@ -9,6 +9,7 @@ import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
 import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import type { CalendlyConfig } from '/domain/integrations/Calendly'
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe'
+import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
 
 import { NotionIntegration } from './notion/NotionIntegration.mock'
 import { PappersIntegration } from './pappers/PappersIntegration.mock'
@@ -21,6 +22,7 @@ import { PhantombusterIntegration } from './phantombuster/PhantombusterIntegrati
 import { CalendlyIntegration } from './calendly/CalendlyIntegration.mock'
 import { YouCanBookMeIntegration } from './youcanbookme/YouCanBookMeIntegration.mock'
 import { BaseMockIntegration } from './base'
+import { JotformIntegration } from './jotform/JotformIntegration.mock'
 
 export const mocks: Integrations = {
   airtable: (config: AirtableConfig) => new AirtableIntegration(config),
@@ -33,6 +35,7 @@ export const mocks: Integrations = {
   phantombuster: (config: PhantombusterConfig) => new PhantombusterIntegration(config),
   calendly: (config: CalendlyConfig) => new CalendlyIntegration(config),
   youCanBookMe: (config: YouCanBookMeConfig) => new YouCanBookMeIntegration(config),
+  jotform: (config: JotformConfig) => new JotformIntegration(config),
 }
 
 export { BaseMockIntegration }

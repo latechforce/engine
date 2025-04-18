@@ -132,6 +132,16 @@ const fullSchema: ConfigSchema = {
       actions: [],
     },
     {
+      name: 'FormWebhookReceived',
+      trigger: {
+        integration: 'Jotform',
+        event: 'FormWebhookReceived',
+        account: 'jotform',
+        formId: '251068280670052',
+      },
+      actions: [],
+    },
+    {
       name: 'YouCanBookMeBookingCreated',
       trigger: {
         integration: 'YouCanBookMe',
@@ -300,6 +310,7 @@ type AutomationName =
   | 'WebhookCalledWithApiKeyAuth'
   | 'CronTimeTicked'
   | 'CalendlyInviteeCreated'
+  | 'FormWebhookReceived'
   | 'YouCanBookMeBookingCreated'
 
 type FirstTableFieldName =

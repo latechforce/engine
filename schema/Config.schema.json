@@ -432,6 +432,9 @@
           "$ref": "#/definitions/NotionIntegrationTriggerAutomationSchema"
         },
         {
+          "$ref": "#/definitions/JotformIntegrationTriggerAutomationSchema"
+        },
+        {
           "$ref": "#/definitions/YouCanBookMeIntegrationTriggerAutomationSchema"
         }
       ],
@@ -499,6 +502,39 @@
       "additionalProperties": false,
       "description": "A trigger that fires when a table page is created in Notion",
       "title": "Table Page Created"
+    },
+    "JotformIntegrationTriggerAutomationSchema": {
+      "$ref": "#/definitions/FormWebhookReceivedJotformIntegrationTriggerAutomationSchema",
+      "description": "The Jotform integration trigger.",
+      "title": "Jotform"
+    },
+    "FormWebhookReceivedJotformIntegrationTriggerAutomationSchema": {
+      "type": "object",
+      "properties": {
+        "account": {
+          "type": "string"
+        },
+        "formId": {
+          "type": "string"
+        },
+        "integration": {
+          "type": "string",
+          "const": "Jotform"
+        },
+        "event": {
+          "type": "string",
+          "const": "FormWebhookReceived"
+        }
+      },
+      "required": [
+        "account",
+        "event",
+        "formId",
+        "integration"
+      ],
+      "additionalProperties": false,
+      "description": "A trigger that fires when form webhook is received in Jotform",
+      "title": "Form Webhook Received"
     },
     "YouCanBookMeIntegrationTriggerAutomationSchema": {
       "$ref": "#/definitions/BookingCreatedYouCanBookMeIntegrationTriggerAutomationSchema",
@@ -1928,6 +1964,12 @@
           "items": {
             "$ref": "#/definitions/YouCanBookMeIntegrationSchema"
           }
+        },
+        "jotform": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JotformIntegrationSchema"
+          }
         }
       },
       "additionalProperties": false,
@@ -2231,6 +2273,27 @@
       "additionalProperties": false,
       "description": "A configuration schema for YouCanBookMe scheduling integration",
       "title": "YouCanBookMe"
+    },
+    "JotformIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "account": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string"
+        },
+        "apiKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "account",
+        "apiKey"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Jotform integration",
+      "title": "Jotform"
     },
     "ServiceSchema": {
       "type": "object",

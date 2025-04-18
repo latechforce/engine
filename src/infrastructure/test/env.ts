@@ -29,6 +29,9 @@ const {
   TEST_YOUCANBOOKME_BASE_URL,
   TEST_YOUCANBOOKME_USERNAME,
   TEST_YOUCANBOOKME_PASSWORD,
+  TEST_JOTFORM_API_KEY,
+  TEST_JOTFORM_BASE_URL,
+  TEST_JOTFORM_FORM_ID,
 } = process.env
 
 if (!TEST_SENTRY_DSN) throw new Error('TEST_SENTRY_DSN env var is not defined')
@@ -71,6 +74,9 @@ if (!TEST_YOUCANBOOKME_USERNAME)
   throw new Error('TEST_YOUCANBOOKME_USERNAME env var is not defined')
 if (!TEST_YOUCANBOOKME_PASSWORD)
   throw new Error('TEST_YOUCANBOOKME_PASSWORD env var is not defined')
+if (!TEST_JOTFORM_API_KEY) throw new Error('TEST_JOTFORM_API_KEY env var is not defined')
+if (!TEST_JOTFORM_BASE_URL) throw new Error('TEST_JOTFORM_BASE_URL env var is not defined')
+if (!TEST_JOTFORM_FORM_ID) throw new Error('TEST_JOTFORM_FORM_ID env var is not defined')
 
 const env = {
   TEST_SENTRY_DSN,
@@ -103,6 +109,9 @@ const env = {
   TEST_YOUCANBOOKME_BASE_URL,
   TEST_YOUCANBOOKME_USERNAME,
   TEST_YOUCANBOOKME_PASSWORD,
+  TEST_JOTFORM_API_KEY,
+  TEST_JOTFORM_BASE_URL,
+  TEST_JOTFORM_FORM_ID,
 }
 
 export default env

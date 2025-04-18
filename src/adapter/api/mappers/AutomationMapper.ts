@@ -43,7 +43,8 @@ export class AutomationMapper {
       cron,
       system,
     } = services
-    const { notion, pappers, qonto, googleMail, gocardless, calendly, youcanbookme } = integrations
+    const { notion, pappers, qonto, googleMail, gocardless, calendly, jotform, youcanbookme } =
+      integrations
     const trigger = TriggerMapper.toEntity(
       schema.trigger,
       schema,
@@ -59,6 +60,7 @@ export class AutomationMapper {
       {
         notion,
         calendly,
+        jotform,
         youcanbookme,
       }
     )
