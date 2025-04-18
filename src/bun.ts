@@ -4,7 +4,7 @@ import { components } from '/infrastructure/components/tailwindcss'
 import App from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
-import type { Components } from './domain/components'
+import type { Components } from '/domain/components'
 
 export default class extends App {
   constructor(options?: {

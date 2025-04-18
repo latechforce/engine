@@ -1,4 +1,4 @@
-import type { BookingCreatedTriggerConfig } from '../../../../../../../domain/entities/Trigger/integrations/youcanbookme/BookingCreated'
+import type { BookingCreatedTriggerConfig } from '/domain/entities/Trigger/integrations/youcanbookme/BookingCreated'
 
 /**
  * Booking Created YouCanBookMe Trigger
