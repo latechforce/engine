@@ -6,9 +6,58 @@ import {
 } from '/infrastructure/integrations/bun/mocks/qonto/QontoTestSamples'
 import type { QontoClientInvoice } from '/domain/integrations/Qonto/QontoTypes'
 
-const mock = new Mock(Tester, { integrations: ['Qonto'] })
+new Mock(Tester).app(({ app }) => {
+  describe('on start', () => {
+    it('should return a config error if the configuration is not valid', async () => {
+      // GIVEN
+      const extendConfig: Config = {
+        name: 'App',
+        automations: [
+          {
+            name: 'retrieveAttachment',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'retrieve-attachment',
+              output: {
+                attachment: {
+                  json: '{{retrieveAttachment}}',
+                },
+              },
+            },
+            actions: [
+              {
+                name: 'retrieveAttachment',
+                integration: 'Qonto',
+                action: 'RetrieveAttachment',
+                account: 'qonto',
+                attachmentId: 'invalid-attachment-id',
+              },
+            ],
+          },
+        ],
+        integrations: {
+          qonto: [
+            {
+              account: 'qonto',
+              baseUrl: ':memory:',
+              organisationSlug: 'new-organization-slug',
+              secretKey: 'invalid-secret-key',
+            },
+          ],
+        },
+      }
 
-mock.request(({ app, request, integrations }) => {
+      // WHEN
+      const call = async () => app.start(extendConfig)
+
+      // THEN
+      expect(call()).rejects.toThrow('Test connection failed')
+    })
+  })
+})
+
+new Mock(Tester, { integrations: ['Qonto'] }).request(({ app, request, integrations }) => {
   let config: Config
   let invoice: QontoClientInvoice
 
@@ -47,31 +96,6 @@ mock.request(({ app, request, integrations }) => {
         },
       ],
     }
-  })
-
-  describe('on start', () => {
-    it('should return a config error if the configuration is not valid', async () => {
-      // GIVEN
-      const extendConfig: Config = {
-        ...config,
-        integrations: {
-          qonto: [
-            {
-              account: 'qonto',
-              baseUrl: ':memory:',
-              organisationSlug: 'new-organization-slug',
-              secretKey: 'invalid-secret-key',
-            },
-          ],
-        },
-      }
-
-      // WHEN
-      const call = async () => app.start(extendConfig)
-
-      // THEN
-      expect(call()).rejects.toThrow('Test connection failed')
-    })
   })
 
   describe('on POST', () => {

@@ -2,39 +2,33 @@ import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
 import { pappersCompanySample } from '/infrastructure/integrations/bun/mocks/pappers/PappersTestSamples'
 
-const mock = new Mock(Tester, { integrations: ['Pappers'] })
-
-mock.request(({ app, request, integrations }) => {
-  const config: Config = {
-    name: 'App',
-    automations: [
-      {
-        name: 'getCompany',
-        trigger: {
-          service: 'Http',
-          event: 'ApiCalled',
-          path: 'get-company',
-          output: {
-            denomination: '{{getCompany.denomination}}',
-          },
+const config: Config = {
+  name: 'App',
+  automations: [
+    {
+      name: 'getCompany',
+      trigger: {
+        service: 'Http',
+        event: 'ApiCalled',
+        path: 'get-company',
+        output: {
+          denomination: '{{getCompany.denomination}}',
         },
-        actions: [
-          {
-            name: 'getCompany',
-            integration: 'Pappers',
-            action: 'GetCompany',
-            account: 'pappers',
-            siret: '44306184100047',
-          },
-        ],
       },
-    ],
-  }
+      actions: [
+        {
+          name: 'getCompany',
+          integration: 'Pappers',
+          action: 'GetCompany',
+          account: 'pappers',
+          siret: '44306184100047',
+        },
+      ],
+    },
+  ],
+}
 
-  beforeEach(async () => {
-    await integrations.pappers.addCompany(pappersCompanySample)
-  })
-
+new Mock(Tester).app(({ app }) => {
   describe('on start', () => {
     it('should return a config error if the configuration is not valid', async () => {
       // GIVEN
@@ -57,6 +51,12 @@ mock.request(({ app, request, integrations }) => {
       // THEN
       expect(call()).rejects.toThrow('Test connection failed')
     })
+  })
+})
+
+new Mock(Tester, { integrations: ['Pappers'] }).request(({ app, request, integrations }) => {
+  beforeEach(async () => {
+    await integrations.pappers.addCompany(pappersCompanySample)
   })
 
   describe('on POST', () => {

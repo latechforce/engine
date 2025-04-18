@@ -24,6 +24,46 @@ mock.request(({ app, request }) => {
     // THEN
     expect(request.get).toBeDefined()
   })
+
+  test('should not connect to an integration if not provided', () => {
+    // THEN
+    const call = async () =>
+      app.start({
+        name: 'App',
+        automations: [
+          {
+            name: 'test',
+            trigger: {
+              service: 'Http',
+              event: 'ApiCalled',
+              path: 'test',
+            },
+            actions: [
+              {
+                name: 'test',
+                integration: 'Qonto',
+                action: 'RetrieveAttachment',
+                account: 'qonto',
+                attachmentId: 'test',
+              },
+            ],
+          },
+        ],
+        integrations: {
+          qonto: [
+            {
+              account: 'qonto',
+              baseUrl: ':memory:',
+              secretKey: 'test',
+              organisationSlug: 'test',
+            },
+          ],
+        },
+      })
+
+    // THEN
+    expect(call()).rejects.toThrow('Test connection failed')
+  })
 })
 
 // GIVEN
@@ -147,5 +187,38 @@ mockPhantombuster.app(({ integrations }) => {
   test('should have a Phantombuster integration', () => {
     // THEN
     expect(integrations.phantombuster).toBeDefined()
+  })
+})
+
+const mockCalendly = new Mock(BunTester, { integrations: ['Calendly'] })
+
+// GIVEN
+mockCalendly.app(({ integrations }) => {
+  // WHEN
+  test('should have a Calendly integration', () => {
+    // THEN
+    expect(integrations.calendly).toBeDefined()
+  })
+})
+
+const mockYouCanBookMe = new Mock(BunTester, { integrations: ['YouCanBookMe'] })
+
+// GIVEN
+mockYouCanBookMe.app(({ integrations }) => {
+  // WHEN
+  test('should have a YouCanBookMe integration', () => {
+    // THEN
+    expect(integrations.youcanbookme).toBeDefined()
+  })
+})
+
+const mockJotform = new Mock(BunTester, { integrations: ['Jotform'] })
+
+// GIVEN
+mockJotform.app(({ integrations }) => {
+  // WHEN
+  test('should have a Jotform integration', () => {
+    // THEN
+    expect(integrations.jotform).toBeDefined()
   })
 })

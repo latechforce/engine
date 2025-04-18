@@ -26,6 +26,8 @@ import { CalendlyIntegration } from '/infrastructure/integrations/bun/mocks/cale
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 import { YouCanBookMeIntegration } from '/infrastructure/integrations/bun/mocks/youcanbookme/YouCanBookMeIntegration.mock'
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
+import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
+import { JotformIntegration } from '/infrastructure/integrations/bun/mocks/jotform/JotformIntegration.mock'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -46,6 +48,7 @@ type IntegrationType =
   | 'Phantombuster'
   | 'Calendly'
   | 'YouCanBookMe'
+  | 'Jotform'
 
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
@@ -77,7 +80,9 @@ type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
                 ? CalendlyIntegration
                 : I extends 'YouCanBookMe'
                   ? YouCanBookMeIntegration
-                  : never
+                  : I extends 'Jotform'
+                    ? JotformIntegration
+                    : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -421,6 +426,18 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           extendsConfig.integrations.youcanbookme = configs
           await integrations.youcanbookme.createToken(configs[0].user.username)
         }
+        if (this.options.integrations.includes('Jotform')) {
+          const configs: JotformConfig[] = [
+            {
+              account: 'jotform',
+              baseUrl: await getTestDbUrl('jotform'),
+              apiKey: 'test',
+            },
+          ]
+          integrations.jotform = new JotformIntegration(configs[0])
+          extendsConfig.integrations.jotform = configs
+          await integrations.jotform.createToken(configs[0].apiKey)
+        }
       }
       let startedApp: StartedApp | undefined
       app.start = async (config: Config) => {
@@ -430,14 +447,14 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           ...config,
           ...rest,
           integrations: {
-            ...integrations,
             ...config.integrations,
+            ...integrations,
           },
           services: {
             loggers: [],
             theme: { type: 'none' },
-            ...services,
             ...config.services,
+            ...services,
           },
         })
         return startedApp
