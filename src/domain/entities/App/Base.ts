@@ -15,10 +15,11 @@ import type { Cron } from '/domain/services/Cron'
 import type { Form } from '../Form'
 import type { Theme } from '/domain/services/Theme'
 import type { Client } from '/domain/services/Client'
+
 export interface AppConfig {
   name: string
-  version: string
-  engine: string
+  appVersion: string
+  engineVersion: string
   description?: string
   integrations?: IntegrationsConfig
 }
@@ -52,8 +53,8 @@ type Status = 'stopped' | 'starting' | 'started' | 'stopping'
 
 export class BaseApp {
   public name: string
-  public version: string
-  public engine: string
+  public appVersion: string
+  public engineVersion: string
   public description?: string
   public logger: Logger
   protected _status: Status = 'stopped'
@@ -64,10 +65,10 @@ export class BaseApp {
     protected _entities: AppEntities,
     protected _integrations: AppIntegrations
   ) {
-    const { name, version, engine, description } = _config
+    const { name, appVersion, engineVersion, description } = _config
     this.name = name
-    this.version = version
-    this.engine = engine.replace('^', '')
+    this.appVersion = appVersion
+    this.engineVersion = engineVersion
     this.description = description
     this.logger = _services.logger
   }

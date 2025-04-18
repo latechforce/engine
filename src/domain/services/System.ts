@@ -2,6 +2,8 @@ export interface ISystemSpi {
   fileExists: (path: string) => boolean
   getMimeType: (path: string) => string | null
   joinPath: (...paths: string[]) => string
+  getEngineVersion: () => string
+  getAppVersion: () => string
 }
 
 export class System {
@@ -21,5 +23,13 @@ export class System {
 
   joinPath = (...paths: string[]): string => {
     return this._spi.joinPath(...paths)
+  }
+
+  getEngineVersion = (): string => {
+    return this._spi.getEngineVersion()
+  }
+
+  getAppVersion = (): string => {
+    return this._spi.getAppVersion()
   }
 }

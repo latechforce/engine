@@ -4,6 +4,8 @@ export interface ISystemDriver {
   fileExists: (path: string) => boolean
   getMimeType: (fileName: string) => string | null
   joinPath: (...paths: string[]) => string
+  getEngineVersion: () => string
+  getAppVersion: () => string
 }
 
 export class SystemSpi implements ISystemSpi {
@@ -19,5 +21,13 @@ export class SystemSpi implements ISystemSpi {
 
   joinPath = (...paths: string[]) => {
     return this._driver.joinPath(...paths)
+  }
+
+  getEngineVersion = () => {
+    return this._driver.getEngineVersion()
+  }
+
+  getAppVersion = () => {
+    return this._driver.getAppVersion()
   }
 }

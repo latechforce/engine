@@ -1,7 +1,7 @@
 import { ConfigError, type ConfigErrorEntity } from '../entities/Error/Config'
 
 export type BaseConfig = {
-  name: string
+  account: string
   baseUrl?: string
 }
 
@@ -31,7 +31,7 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
   constructor(private _spis: T[]) {}
 
   protected _spi = (account: string): T => {
-    const spi = this._spis.find((spi) => spi.config.name === account)
+    const spi = this._spis.find((spi) => spi.config.account === account)
     if (!spi) {
       throw new Error(`Account not found for name: ${account}`)
     }
@@ -49,7 +49,7 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
   }): Promise<ConfigError[]> => {
     const { account, entity, name } = params
     if (this._isAccountValidated[account]) return []
-    const spi = this._spis.find((spi) => spi.config.name === account)
+    const spi = this._spis.find((spi) => spi.config.account === account)
     if (!spi) {
       return [new ConfigError({ entity, name, message: 'Account not found' })]
     }

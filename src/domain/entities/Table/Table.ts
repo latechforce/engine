@@ -143,9 +143,9 @@ export class Table {
     } catch (error) {
       if (error instanceof Error) {
         this._services.monitor.captureException(error)
-        return new JsonResponse({ error: { message: error.message } }, 400)
+        return new JsonResponse({ error: error.message }, 400)
       }
-      return new JsonResponse({ error: { message: 'Unknown error' } }, 500)
+      return new JsonResponse({ error: 'Unknown error' }, 500)
     }
   }
 
@@ -173,9 +173,9 @@ export class Table {
     } catch (error) {
       if (error instanceof Error) {
         this._services.monitor.captureException(error)
-        return new JsonResponse({ error: { message: error.message } }, 400)
+        return new JsonResponse({ error: error.message }, 400)
       }
-      return new JsonResponse({ error: { message: 'Unknown error' } }, 500)
+      return new JsonResponse({ error: 'Unknown error' }, 500)
     }
   }
 
@@ -186,9 +186,9 @@ export class Table {
       return new JsonResponse({ id })
     } catch (error) {
       if (error instanceof Error) {
-        return new JsonResponse({ error: { message: error.message } }, 400)
+        return new JsonResponse({ error: error.message }, 400)
       }
-      return new JsonResponse({ error: { message: 'Unknown error' } }, 500)
+      return new JsonResponse({ error: 'Unknown error' }, 500)
     }
   }
 

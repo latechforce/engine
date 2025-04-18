@@ -22,8 +22,6 @@ mock.request(({ app, request, integrations }) => {
     if (!invoice) throw new Error('Invoice not created')
     config = {
       name: 'App',
-      version: '1.0.0',
-      engine: '1.0.0',
       automations: [
         {
           name: 'retrieveAttachment',
@@ -59,7 +57,7 @@ mock.request(({ app, request, integrations }) => {
         integrations: {
           qonto: [
             {
-              name: 'qonto',
+              account: 'qonto',
               baseUrl: ':memory:',
               organisationSlug: 'new-organization-slug',
               secretKey: 'invalid-secret-key',

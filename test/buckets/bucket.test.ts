@@ -38,7 +38,7 @@ mock.request(({ app, drivers }) => {
         integrations: {
           notion: [
             {
-              name: 'notion_files',
+              account: 'notion_files',
               baseUrl: ':memory:',
               token: 'test',
             },

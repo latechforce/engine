@@ -1,21 +1,13 @@
 # Database
 
-## Description
-
 The database config for the engine
 
-## Default
+## Required
 
-```json
-{
-  "driver": "SQLite",
-  "url": ":memory:"
-}
-```
+### driver
 
-## Properties
+enum: `PostgreSQL`, `SQLite`
 
-| Name   | Type                         | Required | Description |
-| ------ | ---------------------------- | -------- | ----------- |
-| driver | enum: `PostgreSQL`, `SQLite` | ✔       |             |
-| url    | string                       | ✔       |             |
+### url
+
+`string`

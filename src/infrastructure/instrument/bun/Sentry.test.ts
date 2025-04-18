@@ -1,23 +1,21 @@
 import { describe, it } from 'bun:test'
 import { instrument } from '/infrastructure/instrument/bun'
 import { MockedApp, type Config } from '/test/bun'
-import env from '/infrastructure/test/env'
 
 describe('on start', () => {
   it('should start an app with Sentry monitor', async () => {
     // GIVEN
     const config: Config = {
       name: 'App',
-      version: '1.0.0',
-      engine: '1.0.0',
       services: {
         monitors: [
           {
             driver: 'Sentry',
-            dsn: env.TEST_SENTRY_DSN,
+            dsn: '{{env.TEST_SENTRY_DSN}}',
             environment: 'test',
           },
         ],
+        loggers: [],
       },
     }
     const app = new MockedApp()
@@ -34,16 +32,15 @@ describe('on start', () => {
     // GIVEN
     const config: Config = {
       name: 'La Tech Force App',
-      version: '1.0.0',
-      engine: '1.0.0',
       services: {
         monitors: [
           {
             driver: 'Sentry',
-            dsn: env.TEST_SENTRY_DSN,
+            dsn: '{{env.TEST_SENTRY_DSN}}',
             environment: 'test',
           },
         ],
+        loggers: [],
       },
     }
     const app = new MockedApp()

@@ -1,7 +1,7 @@
 import { drivers } from '/infrastructure/drivers/common'
 import { integrations } from '/infrastructure/integrations/common'
 import { components } from '/infrastructure/components/tailwindcss'
-import App from '/adapter/api'
+import { Engine } from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
 import type { Components } from '/domain/components'
@@ -14,7 +14,7 @@ import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
 import type { IStorageDriver } from '/adapter/spi/drivers/StorageSpi'
 import type { StorageConfig } from '/domain/services/Storage'
 
-export type { ConfigSchema as Config } from '/adapter/api/schemas/ConfigSchema'
+export type { ConfigSchema as Config } from './adapter/api/schemas/ConfigSchema'
 export type { AutomationSchema as Automation } from '/adapter/api/schemas/AutomationSchema'
 export type { ActionAutomationSchema as Action } from '/adapter/api/schemas/AutomationSchema/ActionSchema'
 export type { TriggerAutomationSchema as Trigger } from '/adapter/api/schemas/AutomationSchema/TriggerSchema'
@@ -72,7 +72,7 @@ export type { AppIntegrations } from '/domain/entities/App/Base'
 export type { StartedApp } from '/domain/entities/App/Started'
 export type { StoppedApp } from '/domain/entities/App/Stopped'
 
-export default class extends App {
+export default class extends Engine {
   constructor(options: {
     drivers: Partial<Drivers> & {
       database: (config: DatabaseConfig) => IDatabaseDriver
@@ -82,17 +82,14 @@ export default class extends App {
     }
     integrations?: Partial<Integrations>
     components?: Partial<Components>
-    env?: Record<string, string | undefined>
   }) {
     const customDrivers = options?.drivers ?? {}
     const customIntegrations = options?.integrations ?? {}
     const customComponents = options?.components ?? {}
-    const customEnv = options?.env ?? {}
     super(
       { ...drivers, ...customDrivers },
       { ...integrations, ...customIntegrations },
-      { ...components, ...customComponents },
-      { ...process.env, ...customEnv }
+      { ...components, ...customComponents }
     )
   }
 }

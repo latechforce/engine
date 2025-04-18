@@ -14,9 +14,6 @@ export interface Column {
   required?: boolean
   table?: string
   tableField?: string
-  onMigration?: {
-    replace?: string
-  }
 }
 
 export type Row = {

@@ -1,32 +1,19 @@
 # Calendly
 
-## Description
-
 A configuration schema for Calendly scheduling integration
 
-## Properties
+## Required
 
-| Name    | Type   | Required | Description |
-| ------- | ------ | -------- | ----------- |
-| name    | string | ✔       |             |
-| baseUrl | string |          |             |
-| user    | Object | ✔       |             |
+### account
 
-## Property Details
+`string`
 
 ### user
 
-| Property    | Type   | Required | Description |
-| ----------- | ------ | -------- | ----------- |
-| accessToken | string | ✔       |             |
+Object
 
-## Example
+## Optional
 
-```json
-{
-  "name": "scheduling",
-  "user": {
-    "accessToken": "1234567890ABCD"
-  }
-}
-```
+### baseUrl
+
+`string`

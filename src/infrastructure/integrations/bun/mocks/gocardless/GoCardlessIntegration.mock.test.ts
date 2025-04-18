@@ -3,7 +3,7 @@ import { GoCardlessIntegration } from './GoCardlessIntegration.mock'
 import BunTester from 'bun:test'
 
 const integration = new GoCardlessIntegration({
-  name: 'test',
+  account: 'test',
   baseUrl: ':memory:',
   accessToken: 'test',
 })

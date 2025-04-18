@@ -1,13 +1,17 @@
 # Record Created
 
-## Description
-
 A trigger that fires when a record is created in a database
 
-## Properties
+## Required
 
-| Name    | Type                   | Required | Description |
-| ------- | ---------------------- | -------- | ----------- |
-| table   | string                 | ✔       |             |
-| service | const: `Database`      | ✔       |             |
-| event   | const: `RecordCreated` | ✔       |             |
+### event
+
+const: `RecordCreated`
+
+### service
+
+const: `Database`
+
+### table
+
+`string`

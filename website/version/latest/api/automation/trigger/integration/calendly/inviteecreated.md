@@ -1,13 +1,17 @@
 # Invitee Created
 
-## Description
-
 A trigger that fires when an invitee is created in Calendly
 
-## Properties
+## Required
 
-| Name        | Type                    | Required | Description |
-| ----------- | ----------------------- | -------- | ----------- |
-| account     | string                  | ✔       |             |
-| integration | const: `Calendly`       | ✔       |             |
-| event       | const: `InviteeCreated` | ✔       |             |
+### account
+
+`string`
+
+### event
+
+const: `InviteeCreated`
+
+### integration
+
+const: `Calendly`

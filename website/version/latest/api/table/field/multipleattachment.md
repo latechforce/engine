@@ -1,32 +1,56 @@
 # Multiple attachment
 
-## Description
+Represents a field that stores multiple attachments.
 
-Represents a field that can store multiple file attachments
+## Required
 
-## Properties
+### name
 
-| Name        | Type                        | Required | Description |
-| ----------- | --------------------------- | -------- | ----------- |
-| name        | string                      | ✔       |             |
-| required    | boolean                     |          |             |
-| onMigration | Object                      |          |             |
-| type        | const: `MultipleAttachment` | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
-
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
-
-## Example
+const: `MultipleAttachment`
 
 ```json
 {
-  "type": "MultipleAttachment",
-  "name": "documents",
-  "required": true
+  "name": "App with a table with a multiple attachment field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "multiple_attachment",
+          "type": "MultipleAttachment"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required multiple attachment field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "multiple_attachment",
+          "type": "MultipleAttachment",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

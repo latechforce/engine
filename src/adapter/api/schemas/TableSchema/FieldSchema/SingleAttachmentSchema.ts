@@ -3,12 +3,13 @@ import type { SingleAttachmentFieldConfig } from '/domain/entities/Field/SingleA
 /**
  * Single attachment field interface
  * @title Single attachment
- * @description Represents a field that can store a single file attachment
- * @example
- * {
- *   type: 'SingleAttachment',
- *   name: 'profilePicture',
- *   required: true
- * }
+ * @description Represents a field that stores a single attachment.
  */
-export type SingleAttachmentFieldTableSchema = SingleAttachmentFieldConfig
+export type SingleAttachmentFieldTableSchema = {
+  name: SingleAttachmentFieldConfig['name']
+  type: SingleAttachmentFieldConfig['type']
+  /**
+   * @default '`false`'
+   */
+  required?: SingleAttachmentFieldConfig['required']
+}

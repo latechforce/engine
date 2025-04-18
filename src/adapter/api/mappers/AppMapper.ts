@@ -41,15 +41,22 @@ export class AppMapper {
     components: Components,
     schema: ConfigSchema
   ) => {
-    const logger = LoggerMapper.toService(drivers, schema.services?.loggers)
-    const monitor = MonitorMapper.toService(drivers, schema.services?.monitors, { logger }, schema)
     const system = SystemMapper.toService(drivers)
+    const appVersion = schema.appVersion ?? system.getAppVersion()
+    const engineVersion = schema.engineVersion ?? system.getEngineVersion()
+    const logger = LoggerMapper.toService(drivers, schema.services?.loggers)
+    const monitor = MonitorMapper.toService(
+      drivers,
+      schema.services?.monitors,
+      { logger },
+      { appName: schema.name, appVersion }
+    )
     const tunnel = TunnelMapper.toService(drivers, schema.services?.tunnel)
     const server = ServerMapper.toService(
       drivers,
       schema.services?.server,
       { logger, monitor, tunnel },
-      schema
+      { appName: schema.name, appVersion, appDescription: schema.description }
     )
     const idGenerator = IdGeneratorMapper.toService(drivers)
     const fetcher = FetcherMapper.toService(drivers)
@@ -147,8 +154,8 @@ export class AppMapper {
     return new StoppedApp(
       {
         name: schema.name,
-        version: schema.version,
-        engine: schema.engine,
+        appVersion,
+        engineVersion,
         description: schema.description,
         integrations: schema.integrations,
       },

@@ -7,7 +7,7 @@ import {
 } from './AirtableTestSamples'
 
 export const integration = new AirtableIntegration({
-  name: 'test',
+  account: 'test',
   apiKey: 'test',
   databaseId: 'test',
   baseUrl: ':memory:',

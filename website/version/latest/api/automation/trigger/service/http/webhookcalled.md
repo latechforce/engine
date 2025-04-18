@@ -1,14 +1,23 @@
 # Webhook Called
 
-## Description
-
 A trigger that fires when a webhook is called
 
-## Properties
+## Required
 
-| Name    | Type                   | Required | Description |
-| ------- | ---------------------- | -------- | ----------- |
-| path    | string                 | ✔       |             |
-| auth    | unknown                |          |             |
-| service | const: `Http`          | ✔       |             |
-| event   | const: `WebhookCalled` | ✔       |             |
+### event
+
+const: `WebhookCalled`
+
+### path
+
+`string`
+
+### service
+
+const: `Http`
+
+## Optional
+
+### auth
+
+`unknown`

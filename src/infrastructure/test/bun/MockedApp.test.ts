@@ -20,8 +20,6 @@ test('should return a mocked response from fetcher', async () => {
   })
   const { services } = await mockedApp.start({
     name: 'Test',
-    version: '1.0.0',
-    engine: '1.0.0',
     services: {
       loggers: [],
     },

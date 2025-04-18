@@ -1,16 +1,9 @@
 # Action
 
-## Description
-
 Union type of all possible actions that can be performed in automations
 
-## Example
+## Any of
 
-```json
-{
-  "service": "Database",
-  "action": "ReadRecord",
-  "table": "users",
-  "id": "user_123"
-}
-```
+- [Integration](/api/automation/action/integration)
+
+- [Service](/api/automation/action/service)

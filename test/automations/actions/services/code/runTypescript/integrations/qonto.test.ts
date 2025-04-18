@@ -19,8 +19,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'createClient',
@@ -75,8 +74,7 @@ mock.request(({ app, request, integrations }) => {
       const sample = qontoCreateClientInvoiceSample(client)
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'createClientInvoice',
@@ -134,8 +132,7 @@ mock.request(({ app, request, integrations }) => {
       await integrations.qonto.createClientInvoice(qontoCreateClientInvoiceSample(client))
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'listClientInvoices',
@@ -185,8 +182,7 @@ mock.request(({ app, request, integrations }) => {
       if (!invoice) throw new Error('Invoice not created')
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'retrieveAttachment',

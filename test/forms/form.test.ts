@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import type { CodeRunnerContext } from 'index'
+import type { CodeRunnerContext } from '/src'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -8,8 +8,6 @@ mock.page(({ app, browser, drivers }) => {
   describe('open page', () => {
     const config: Config = {
       name: 'App',
-      version: '1.0.0',
-      engine: '1.0.0',
       forms: [
         {
           name: 'user',

@@ -65,11 +65,12 @@ export class Bucket {
     const id = idGenerator.forFile()
     const created_at = new Date()
     const mime_type = system.getMimeType(name)
-    let fileToSave: FileToSave
-    if (data instanceof Buffer) {
-      fileToSave = { id, name, data, created_at, mime_type }
-    } else {
-      fileToSave = { id, name, data: Buffer.from(data), created_at, mime_type }
+    const fileToSave: FileToSave = {
+      id,
+      name,
+      data: data instanceof Buffer ? data : Buffer.from(data),
+      created_at,
+      mime_type,
     }
     const file = await this.storage.save(fileToSave, this.endpoint)
     return file

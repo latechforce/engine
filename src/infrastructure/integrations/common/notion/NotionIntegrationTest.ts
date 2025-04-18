@@ -4,7 +4,7 @@ import { NotionIntegration } from './NotionIntegration'
 import env from '../../../test/env'
 
 export const integration = new NotionIntegration({
-  name: 'test',
+  account: 'test',
   token: env.TEST_NOTION_TOKEN,
   pollingInterval: 10,
 })

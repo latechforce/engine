@@ -3,12 +3,13 @@ import type { MultipleAttachmentFieldConfig } from '/domain/entities/Field/Multi
 /**
  * Multiple attachment field interface
  * @title Multiple attachment
- * @description Represents a field that can store multiple file attachments
- * @example
- * {
- *   type: 'MultipleAttachment',
- *   name: 'documents',
- *   required: true
- * }
+ * @description Represents a field that stores multiple attachments.
  */
-export type MultipleAttachmentFieldTableSchema = MultipleAttachmentFieldConfig
+export type MultipleAttachmentFieldTableSchema = {
+  name: MultipleAttachmentFieldConfig['name']
+  type: MultipleAttachmentFieldConfig['type']
+  /**
+   * @default '`false`'
+   */
+  required?: MultipleAttachmentFieldConfig['required']
+}

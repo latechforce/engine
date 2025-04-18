@@ -32,7 +32,6 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     this.view = `${this.name}_view`
     this.viewWithSchema = `${this.schema}_${this.view}`
     this.fields = [
-      ...config.fields,
       {
         name: 'id',
         type: 'SingleLineText',
@@ -47,8 +46,32 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         name: 'updated_at',
         type: 'DateTime',
       },
+      ...config.fields,
     ]
     this.columns = this.fields.map(this._convertFieldToColumn)
+  }
+
+  getSchema = async (): Promise<string> => {
+    return this.schema
+  }
+
+  getColumns = async (): Promise<Column[]> => {
+    const columns = this._db
+      .query<
+        {
+          name: string
+          type: 'TEXT' | 'TIMESTAMP' | 'NUMERIC' | 'BOOLEAN' | 'TEXT[]'
+          notnull: number
+        },
+        []
+      >(`PRAGMA table_info(${this.nameWithSchema})`)
+      .all()
+    if (!columns) throw new Error(`Table "${this.name}" not found`)
+    return columns.map((column) => ({
+      name: column.name,
+      type: column.type,
+      required: column.notnull === 1,
+    }))
   }
 
   ensureSync = (): void => {
@@ -100,24 +123,13 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       const existingColumns = this._getExistingColumns()
       const staticColumns = this.columns.filter((column) => !this._isViewColumn(column))
       const fieldsToAdd = staticColumns.filter(
-        (field) =>
-          !existingColumns.some(
-            (column) =>
-              column.name === field.name ||
-              (field.onMigration && field.onMigration.replace === column.name)
-          )
+        (field) => !existingColumns.some((column) => column.name === field.name)
       )
       const fieldsToAlter = staticColumns.filter((field) => {
-        const existingColumn = existingColumns.find(
-          (column) =>
-            column.name === field.name ||
-            (field.onMigration && field.onMigration.replace === column.name)
-        )
+        const existingColumn = existingColumns.find((column) => column.name === field.name)
         if (!existingColumn) return false
         return (
-          existingColumn.type !== field.type ||
-          existingColumn.required !== (field.required ? 1 : 0) ||
-          (field.onMigration && field.onMigration.replace)
+          existingColumn.type !== field.type || existingColumn.required !== (field.required ? 1 : 0)
         )
       })
       for (const field of fieldsToAdd) {
@@ -135,17 +147,6 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
         const newSchema = this._buildColumnsQuery(staticColumns)
         this._db.exec(`DROP TABLE IF EXISTS ${tempTableName}`)
         this._db.exec(`CREATE TABLE ${tempTableName} (${newSchema})`)
-        for (const field of fieldsToAlter) {
-          if (field.onMigration && field.onMigration.replace) {
-            const existingColumnWithNewName = existingColumns.find(
-              (column) => column.name === field.name
-            )
-            if (!existingColumnWithNewName) {
-              const renameQuery = `ALTER TABLE ${this.nameWithSchema} RENAME COLUMN ${field.onMigration.replace} TO ${field.name}`
-              this._db.exec(renameQuery)
-            }
-          }
-        }
         const columnsToCopy = staticColumns.map((field) => field.name).join(', ')
         this._db.exec(`PRAGMA defer_foreign_keys = ON`)
         this._db.exec(
@@ -653,7 +654,6 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     const column = {
       name: this._slugify(field.name),
       required: field.required,
-      onMigration: field.onMigration,
     }
     let rollupTable: string | undefined
     if (field.type === 'Rollup') {
@@ -753,6 +753,15 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       }
       if (error.message.includes('FOREIGN KEY constraint failed')) {
         throw new Error('Invalid linked record')
+      }
+      if (error.message.includes('NOT NULL constraint failed')) {
+        let field: string
+        if (error.message.includes('"')) {
+          field = error.message.split('"')[1]
+        } else {
+          field = error.message.split('.')[1]
+        }
+        throw new Error(`Field "${field}" is required`)
       }
     }
     throw error
