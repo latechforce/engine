@@ -1,26 +1,25 @@
 # Read Record
 
-## Description
-
 Reads a record from the specified database table
 
-## Properties
+## Required
 
-| Name    | Type                | Required | Description |
-| ------- | ------------------- | -------- | ----------- |
-| name    | string              | ✔       |             |
-| id      | string              | ✔       |             |
-| table   | string              | ✔       |             |
-| service | const: `Database`   | ✔       |             |
-| action  | const: `ReadRecord` | ✔       |             |
+### action
 
-## Example
+const: `ReadRecord`
 
-```json
-{
-  "service": "Database",
-  "action": "ReadRecord",
-  "table": "users",
-  "id": "user_123"
-}
-```
+### id
+
+`string`
+
+### name
+
+`string`
+
+### service
+
+const: `Database`
+
+### table
+
+`string`

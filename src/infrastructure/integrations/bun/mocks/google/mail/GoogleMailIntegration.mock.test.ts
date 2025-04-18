@@ -5,7 +5,7 @@ import { testGoogleMailIntegration } from '/infrastructure/integrations/common/g
 const integration = new GoogleMailIntegration({
   user: 'test',
   password: 'test',
-  name: 'test',
+  account: 'test',
   baseUrl: ':memory:',
 })
 

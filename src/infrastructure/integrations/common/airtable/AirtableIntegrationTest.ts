@@ -4,7 +4,7 @@ import type BunTester from 'bun:test'
 import { AirtableIntegration } from './AirtableIntegration'
 
 export const integration = new AirtableIntegration({
-  name: 'test',
+  account: 'test',
   apiKey: env.TEST_AIRTABLE_API_KEY,
   databaseId: env.TEST_AIRTABLE_BASE_ID,
 })

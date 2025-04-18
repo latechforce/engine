@@ -1,29 +1,31 @@
 # Run JavaScript
 
-## Description
-
 Executes JavaScript code with the specified input
 
-## Properties
+## Required
 
-| Name    | Type                   | Required | Description |
-| ------- | ---------------------- | -------- | ----------- |
-| name    | string                 | ✔       |             |
-| code    | string                 | ✔       |             |
-| input   | unknown                |          |             |
-| env     | Object                 |          |             |
-| service | const: `Code`          | ✔       |             |
-| action  | const: `RunJavascript` | ✔       |             |
+### action
 
-## Example
+const: `RunJavascript`
 
-```json
-{
-  "service": "Code",
-  "action": "RunJavascript",
-  "code": "return { result: input.value * 2 }",
-  "input": {
-    "value": 5
-  }
-}
-```
+### code
+
+`string`
+
+### name
+
+`string`
+
+### service
+
+const: `Code`
+
+## Optional
+
+### input
+
+`unknown`
+
+### env
+
+Object

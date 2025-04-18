@@ -1,13 +1,17 @@
 # Cron Time Ticked
 
-## Description
-
 A trigger that fires when a cron time is ticked
 
-## Properties
+## Required
 
-| Name     | Type                    | Required | Description |
-| -------- | ----------------------- | -------- | ----------- |
-| cronTime | string                  | ✔       |             |
-| service  | const: `Schedule`       | ✔       |             |
-| event    | const: `CronTimeTicked` | ✔       |             |
+### cronTime
+
+`string`
+
+### event
+
+const: `CronTimeTicked`
+
+### service
+
+const: `Schedule`

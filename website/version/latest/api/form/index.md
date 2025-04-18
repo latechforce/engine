@@ -4,19 +4,40 @@ sidebar_position: 2
 
 # Form
 
-## Description
-
 Type alias for form configuration
 
-## Properties
+## Required
 
-| Name           | Type                              | Required | Description |
-| -------------- | --------------------------------- | -------- | ----------- |
-| inputs         | Array of [Input](/api/form/input) | ✔       |             |
-| name           | string                            | ✔       |             |
-| path           | string                            | ✔       |             |
-| title          | string                            |          |             |
-| description    | string                            |          |             |
-| table          | string                            | ✔       |             |
-| submitLabel    | string                            |          |             |
-| successMessage | string                            |          |             |
+### inputs
+
+Array of [Input](/api/form/input)
+
+### name
+
+`string`
+
+### path
+
+`string`
+
+### table
+
+`string`
+
+## Optional
+
+### title
+
+`string`
+
+### description
+
+`string`
+
+### submitLabel
+
+`string`
+
+### successMessage
+
+`string`

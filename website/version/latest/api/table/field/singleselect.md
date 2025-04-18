@@ -1,34 +1,62 @@
 # Single select
 
-## Description
+Represents a field that allows selecting a single option from a predefined list.
 
-Represents a field that allows selecting one option from a predefined list
+## Required
 
-## Properties
+### name
 
-| Name        | Type                  | Required | Description |
-| ----------- | --------------------- | -------- | ----------- |
-| name        | string                | ✔       |             |
-| required    | boolean               |          |             |
-| onMigration | Object                |          |             |
-| type        | const: `SingleSelect` | ✔       |             |
-| options     | Array&lt;string&gt;   | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
+const: `SingleSelect`
 
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
+### options
 
-## Example
+Array of `string`
 
 ```json
 {
-  "type": "SingleSelect",
-  "name": "status",
-  "required": true,
-  "options": ["Active", "Inactive", "Pending"]
+  "name": "App with a table with a single select field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "single_select",
+          "type": "SingleSelect",
+          "options": ["Option 1", "Option 2", "Option 3"]
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required single select field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "single_select",
+          "type": "SingleSelect",
+          "options": ["Option 1", "Option 2", "Option 3"],
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

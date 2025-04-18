@@ -13,52 +13,54 @@ import type { ServiceSchema } from './ServiceSchema'
 export type ConfigSchema = {
   /**
    * Engine name
-   * @description The name of the engine
+   * @description The name of the engine.
    */
   name: string
   /**
    * Config version
-   * @description The version of the config
+   * @description The version of the application.
+   * @default "the `version` property of the `package.json` file or `latest`"
    */
-  version: string
+  appVersion?: string
   /**
    * Engine version
-   * @description The version of the engine
+   * @description The version of the engine.
+   * @default "the `version` of the dependency `@latechforce/engine` of the `package.json` file"
    */
-  engine: string
+  engineVersion?: string
   /**
    * Engine description
-   * @description The description of the engine
+   * @description The description of the application.
    */
   description?: string
   /**
    * Forms
-   * @description The forms of the engine
+   * @description The forms of the application.
    */
   forms?: FormSchema[]
   /**
    * Automations
-   * @description The automations of the engine
+   * @description The automations of the application.
    */
   automations?: AutomationSchema[]
   /**
    * Tables
-   * @description The tables of the engine
+   * @description The tables of the application.
    */
   tables?: TableSchema[]
   /**
    * Buckets
-   * @description The buckets of the engine
+   * @description The buckets of the application.
    */
   buckets?: BucketSchema[]
   /**
    * Integrations
-   * @description The integrations of the engine
+   * @description The integrations of the application.
    */
   integrations?: IntegrationSchema
   /**
    * Services
-   * @description The services of the engine
+   * @description The services of the application.
    */
   services?: ServiceSchema
 }

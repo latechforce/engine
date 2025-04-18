@@ -15,7 +15,7 @@ export interface RollupFieldConfig extends BaseFieldConfig {
   linkedRecordField: string
   output: Omit<
     NumberFieldConfig | LongTextFieldConfig | SingleLineTextFieldConfig | DateTimeFieldConfig,
-    'name'
+    'name' | 'required'
   >
 }
 

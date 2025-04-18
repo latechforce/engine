@@ -20,8 +20,6 @@ describe('on start', () => {
     // GIVEN
     const config: Config = {
       name: 'App',
-      version: '1.0.0',
-      engine: '1.0.0',
       buckets: [
         {
           name: 'bucket',
@@ -48,8 +46,6 @@ describe('on start', () => {
     // GIVEN
     const config: Config = {
       name: 'App',
-      version: '1.0.0',
-      engine: '1.0.0',
       buckets: [
         {
           name: 'bucket',

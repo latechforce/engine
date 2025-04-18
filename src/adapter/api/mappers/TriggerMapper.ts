@@ -18,6 +18,8 @@ import { ApiCalledHttpTrigger } from '/domain/entities/Trigger/services/http/Api
 import { WebhookCalledHttpTrigger } from '/domain/entities/Trigger/services/http/WebhookCalled'
 import type { Jotform } from '/domain/integrations/Jotform'
 import { FormWebhookReceivedTrigger } from '/domain/entities/Trigger/integrations/jotform/FormWebhookReceived'
+import type { YouCanBookMe } from '/domain/integrations/YouCanBookMe'
+import { BookingCreatedTrigger } from '../../../domain/entities/Trigger/integrations/youcanbookme/BookingCreated'
 
 export interface TriggerMapperServices {
   server: Server
@@ -33,6 +35,7 @@ export interface TriggerMapperIntegrations {
   notion: Notion
   calendly: Calendly
   jotform: Jotform
+  youcanbookme: YouCanBookMe
 }
 
 export class TriggerMapper {
@@ -74,6 +77,13 @@ export class TriggerMapper {
                 integrations
               )
           }
+          break
+        case 'YouCanBookMe':
+          switch (schema.event) {
+            case 'BookingCreated':
+              return new BookingCreatedTrigger({ ...schema, automation }, services, integrations)
+          }
+          break
       }
     } else {
       switch (schema.service) {

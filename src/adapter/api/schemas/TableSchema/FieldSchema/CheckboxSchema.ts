@@ -3,12 +3,13 @@ import type { CheckboxFieldConfig } from '/domain/entities/Field/Checkbox'
 /**
  * Checkbox field interface
  * @title Checkbox
- * @description Represents a boolean checkbox field in forms and tables
- * @example
- * {
- *   type: 'Checkbox',
- *   name: 'termsAccepted',
- *   required: true,
- * }
+ * @description Represents a boolean checkbox field in forms and tables.
  */
-export type CheckboxFieldTableSchema = CheckboxFieldConfig
+export type CheckboxFieldTableSchema = {
+  name: CheckboxFieldConfig['name']
+  type: CheckboxFieldConfig['type']
+  /**
+   * @default '`false`'
+   */
+  required?: CheckboxFieldConfig['required']
+}

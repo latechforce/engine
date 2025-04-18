@@ -1,15 +1,9 @@
 # Service
 
-## Description
-
 Union type of all possible service actions that can be performed in automations
 
-## Example
+## Any of
 
-```json
-{
-  "service": "Service",
-  "action": "RunJavascript",
-  "code": "console.log(\"Hello, world!\");"
-}
-```
+- [Code](/api/automation/action/service/code)
+
+- [Database](/api/automation/action/service/database)

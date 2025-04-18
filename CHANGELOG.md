@@ -1,33 +1,35 @@
-## [0.43.6](https://github.com/latechforce/engine/compare/v0.43.5...v0.43.6) (2025-04-15)
-
+## [0.43.7](https://github.com/latechforce/engine/compare/v0.43.6...v0.43.7) (2025-04-18)
 
 ### Bug Fixes
 
-* **Automation:** add green test: should fail if the first action fails without running the second action ([e18e113](https://github.com/latechforce/engine/commit/e18e11318768e83a5b92ef81952291913531b228))
-* **test:** add waitForAutomationsHistories timeout parameter ([5c30fed](https://github.com/latechforce/engine/commit/5c30fed108cb0d7ac49dc64c85fd6c843cfcb441))
+- **Sentry:** add dynamic env variable in Sentry instrument ([5a15845](https://github.com/latechforce/engine/commit/5a15845e2b20d1405587217657c1a7ece4db017f))
+
+## [0.43.6](https://github.com/latechforce/engine/compare/v0.43.5...v0.43.6) (2025-04-15)
+
+### Bug Fixes
+
+- **Automation:** add green test: should fail if the first action fails without running the second action ([e18e113](https://github.com/latechforce/engine/commit/e18e11318768e83a5b92ef81952291913531b228))
+- **test:** add waitForAutomationsHistories timeout parameter ([5c30fed](https://github.com/latechforce/engine/commit/5c30fed108cb0d7ac49dc64c85fd6c843cfcb441))
 
 ## [0.43.5](https://github.com/latechforce/engine/compare/v0.43.4...v0.43.5) (2025-04-15)
 
-
 ### Bug Fixes
 
-* **Form:** add green test: should display the url input ([6ae97b9](https://github.com/latechforce/engine/commit/6ae97b9e41c4bab3bc7bbd83314197e05627d350))
-* **SendEmail:** fix broken test ([1ca6482](https://github.com/latechforce/engine/commit/1ca6482702f62d5b7e17740ba1074994999fe6a1))
-* **Tempalte:** add green test: should throw an error if the name is not linked ([0d450e9](https://github.com/latechforce/engine/commit/0d450e9608f85e7007658d0114a8436f9b167e58))
+- **Form:** add green test: should display the url input ([6ae97b9](https://github.com/latechforce/engine/commit/6ae97b9e41c4bab3bc7bbd83314197e05627d350))
+- **SendEmail:** fix broken test ([1ca6482](https://github.com/latechforce/engine/commit/1ca6482702f62d5b7e17740ba1074994999fe6a1))
+- **Tempalte:** add green test: should throw an error if the name is not linked ([0d450e9](https://github.com/latechforce/engine/commit/0d450e9608f85e7007658d0114a8436f9b167e58))
 
 ## [0.43.4](https://github.com/latechforce/engine/compare/v0.43.3...v0.43.4) (2025-04-15)
 
-
 ### Bug Fixes
 
-* add SheetJS package ([04774ec](https://github.com/latechforce/engine/commit/04774ecd29d98520641b25345b2b6968aa95d247))
+- add SheetJS package ([04774ec](https://github.com/latechforce/engine/commit/04774ecd29d98520641b25345b2b6968aa95d247))
 
 ## [0.43.3](https://github.com/latechforce/engine/compare/v0.43.2...v0.43.3) (2025-04-14)
 
-
 ### Bug Fixes
 
-* add services object in config ([5485cce](https://github.com/latechforce/engine/commit/5485ccebbf34e155fb3b06b049109beab0790b62))
+- add services object in config ([5485cce](https://github.com/latechforce/engine/commit/5485ccebbf34e155fb3b06b049109beab0790b62))
 
 ## [0.43.2](https://github.com/latechforce/engine/compare/v0.43.1...v0.43.2) (2025-04-14)
 

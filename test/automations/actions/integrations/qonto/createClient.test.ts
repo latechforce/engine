@@ -6,8 +6,7 @@ const mock = new Mock(Tester, { integrations: ['Qonto'] })
 mock.request(({ app, request }) => {
   const config: Config = {
     name: 'App',
-    version: '1.0.0',
-    engine: '1.0.0',
+
     automations: [
       {
         name: 'createClient',
@@ -51,7 +50,7 @@ mock.request(({ app, request }) => {
         integrations: {
           qonto: [
             {
-              name: 'qonto',
+              account: 'qonto',
               baseUrl: ':memory:',
               organisationSlug: 'new-organization-slug',
               secretKey: 'invalid-secret-key',

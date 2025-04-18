@@ -1,32 +1,56 @@
 # Single attachment
 
-## Description
+Represents a field that stores a single attachment.
 
-Represents a field that can store a single file attachment
+## Required
 
-## Properties
+### name
 
-| Name        | Type                      | Required | Description |
-| ----------- | ------------------------- | -------- | ----------- |
-| name        | string                    | ✔       |             |
-| required    | boolean                   |          |             |
-| onMigration | Object                    |          |             |
-| type        | const: `SingleAttachment` | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
-
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
-
-## Example
+const: `SingleAttachment`
 
 ```json
 {
-  "type": "SingleAttachment",
-  "name": "profilePicture",
-  "required": true
+  "name": "App with a table with a single attachment field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "single_attachment",
+          "type": "SingleAttachment"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required single attachment field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "single_attachment",
+          "type": "SingleAttachment",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

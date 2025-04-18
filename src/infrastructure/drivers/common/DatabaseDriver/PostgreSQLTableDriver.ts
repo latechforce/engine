@@ -24,9 +24,6 @@ interface Column {
   required?: boolean
   table?: string
   tableField?: string
-  onMigration?: {
-    replace?: string
-  }
 }
 
 type Row = {
@@ -55,7 +52,6 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     this.view = `${this.name}_view`
     this.viewWithSchema = `${this.schema}.${this.view}`
     this.fields = [
-      ...config.fields,
       {
         name: 'id',
         type: 'SingleLineText',
@@ -70,8 +66,26 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
         name: 'updated_at',
         type: 'DateTime',
       },
+      ...config.fields,
     ]
     this.columns = this.fields.map(this._convertFieldToColumn)
+  }
+
+  getSchema = async (): Promise<string> => {
+    const result = await this._db.query(
+      `SELECT table_schema FROM information_schema.tables WHERE table_name = ?`,
+      [this.name]
+    )
+    if (!result) throw new Error(`Table "${this.name}" not found`)
+    return result.rows[0].table_schema
+  }
+
+  getColumns = async (): Promise<Column[]> => {
+    const result = await this._db.query(
+      `SELECT column_name, data_type FROM information_schema.columns WHERE table_schema = $1 AND table_name = $2`,
+      [this.schema, this.name]
+    )
+    return result.rows.map((row) => ({ name: row.column_name, type: row.data_type }))
   }
 
   exists = async () => {
@@ -112,24 +126,13 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
       const existingColumns = await this._getExistingColumns(client)
       const staticColumns = this.columns.filter((column) => !this._isViewColumn(column))
       const fieldsToAdd = staticColumns.filter(
-        (field) =>
-          !existingColumns.some(
-            (column) =>
-              column.name === field.name ||
-              (field.onMigration && field.onMigration.replace === column.name)
-          )
+        (field) => !existingColumns.some((column) => column.name === field.name)
       )
       const fieldsToAlter = staticColumns.filter((field) => {
-        const existingColumn = existingColumns.find(
-          (column) =>
-            column.name === field.name ||
-            (field.onMigration && field.onMigration.replace === column.name)
-        )
+        const existingColumn = existingColumns.find((column) => column.name === field.name)
         if (!existingColumn) return false
         return (
-          existingColumn.type !== field.type ||
-          existingColumn.notnull !== (field.required ? 1 : 0) ||
-          (field.onMigration && field.onMigration.replace)
+          existingColumn.type !== field.type || existingColumn.notnull !== (field.required ? 1 : 0)
         )
       })
       for (const field of fieldsToAdd) {
@@ -143,15 +146,6 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
         }
       }
       for (const field of fieldsToAlter) {
-        if (field.onMigration && field.onMigration.replace) {
-          const existingColumnWithNewName = existingColumns.find(
-            (column) => column.name === field.name
-          )
-          if (!existingColumnWithNewName) {
-            const renameQuery = `ALTER TABLE ${this.nameWithSchema} RENAME COLUMN ${field.onMigration.replace} TO ${field.name}`
-            await client.query(renameQuery)
-          }
-        }
         const query = `ALTER TABLE ${this.nameWithSchema} ALTER COLUMN ${field.name} TYPE ${field.type}`
         await client.query(query)
       }
@@ -644,7 +638,6 @@ export class PostgreSQLDatabaseTableDriver implements IDatabaseTableDriver {
     const column = {
       name: field.name,
       required: field.required,
-      onMigration: field.onMigration,
     }
     let rollupTable: string | undefined
     if (field.type === 'Rollup') {

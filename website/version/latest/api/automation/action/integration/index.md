@@ -1,15 +1,15 @@
 # Integration
 
-## Description
-
 Union type of all possible integration actions that can be performed in automations
 
-## Example
+## Any of
 
-```json
-{
-  "service": "Integration",
-  "action": "GetCompany",
-  "companyId": "123"
-}
-```
+- [Pappers](/api/automation/action/integration/pappers)
+
+- [Qonto](/api/automation/action/integration/qonto)
+
+- [Notion](/api/automation/action/integration/notion)
+
+- [Google](/api/automation/action/integration/google)
+
+- [GoCardless](/api/automation/action/integration/gocardless)

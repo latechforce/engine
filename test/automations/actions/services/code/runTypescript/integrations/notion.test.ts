@@ -21,8 +21,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'createUser',
@@ -84,8 +83,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'updateUser',
@@ -157,8 +155,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'readUser',
@@ -224,8 +221,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'readUser',
@@ -291,8 +287,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'listUsers',
@@ -372,8 +367,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'readProperty',
@@ -438,8 +432,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'listUsers',

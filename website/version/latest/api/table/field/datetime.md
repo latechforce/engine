@@ -1,32 +1,56 @@
-# DateTime
+# Date time
 
-## Description
+Represents a field that stores a date and time.
 
-Represents a date and time field in forms and tables
+## Required
 
-## Properties
+### name
 
-| Name        | Type              | Required | Description |
-| ----------- | ----------------- | -------- | ----------- |
-| name        | string            | ✔       |             |
-| required    | boolean           |          |             |
-| onMigration | Object            |          |             |
-| type        | const: `DateTime` | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
-
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
-
-## Example
+const: `DateTime`
 
 ```json
 {
-  "type": "DateTime",
-  "name": "appointmentTime",
-  "required": true
+  "name": "App with a table with a date time field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "date_time",
+          "type": "DateTime"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required date time field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "date_time",
+          "type": "DateTime",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

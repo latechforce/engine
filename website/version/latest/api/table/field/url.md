@@ -1,32 +1,56 @@
 # Url
 
-## Description
+Represents a field that stores an URL.
 
-Represents a field that stores a URL
+## Required
 
-## Properties
+### name
 
-| Name        | Type         | Required | Description |
-| ----------- | ------------ | -------- | ----------- |
-| name        | string       | ✔       |             |
-| required    | boolean      |          |             |
-| onMigration | Object       |          |             |
-| type        | const: `Url` | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
-
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
-
-## Example
+const: `Url`
 
 ```json
 {
-  "type": "Url",
-  "name": "website",
-  "required": true
+  "name": "App with a table with a url field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "url",
+          "type": "Url"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required url field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "url",
+          "type": "Url",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

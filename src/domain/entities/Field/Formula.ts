@@ -9,7 +9,7 @@ export interface FormulaFieldConfig extends BaseFieldConfig {
   formula: string
   output: Omit<
     NumberFieldConfig | LongTextFieldConfig | SingleLineTextFieldConfig | DateTimeFieldConfig,
-    'name'
+    'name' | 'required'
   >
 }
 

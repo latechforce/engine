@@ -1,12 +1,10 @@
 import type { AutomationSchema } from '/adapter/api/schemas/AutomationSchema'
 import type { BucketSchema } from '../../../adapter/api/schemas/BucketSchema'
-import type { ConfigSchema } from '/adapter/api/schemas/ConfigSchema'
+import type { ConfigSchema } from '../../../adapter/api/schemas/ConfigSchema'
 import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 const fullSchema: ConfigSchema = {
   name: 'App',
-  version: '1.0.0',
-  engine: '1.0.0',
   automations: [
     {
       name: 'ApiCalled',
@@ -143,6 +141,15 @@ const fullSchema: ConfigSchema = {
       },
       actions: [],
     },
+    {
+      name: 'YouCanBookMeBookingCreated',
+      trigger: {
+        integration: 'YouCanBookMe',
+        event: 'BookingCreated',
+        account: 'youcanbookme',
+      },
+      actions: [],
+    },
   ],
   tables: [
     {
@@ -159,9 +166,6 @@ const fullSchema: ConfigSchema = {
         {
           name: 'name_after_migration',
           type: 'SingleLineText',
-          onMigration: {
-            replace: 'name_before_migration',
-          },
         },
         {
           name: 'long_text',
@@ -307,6 +311,7 @@ type AutomationName =
   | 'CronTimeTicked'
   | 'CalendlyInviteeCreated'
   | 'FormWebhookReceived'
+  | 'YouCanBookMeBookingCreated'
 
 type FirstTableFieldName =
   | 'name'
@@ -334,8 +339,6 @@ type FirstTableFieldName =
 
 export function getFirstTableSchema(fields: FirstTableFieldName[] = ['name']): {
   name: string
-  version: string
-  engine: string
   tables: TableSchema[]
 } {
   const firstTable = fullSchema.tables?.find((table) => table.name === 'first_table')
@@ -344,12 +347,10 @@ export function getFirstTableSchema(fields: FirstTableFieldName[] = ['name']): {
   }
   return {
     name: 'First Table',
-    version: '1.0.0',
-    engine: '1.0.0',
     tables: [
       {
         ...firstTable,
-        fields: firstTable.fields.filter((f) => fields.includes(f.name as FirstTableFieldName)),
+        fields: firstTable.fields?.filter((f) => fields.includes(f.name as FirstTableFieldName)),
       },
     ],
   }
@@ -357,8 +358,6 @@ export function getFirstTableSchema(fields: FirstTableFieldName[] = ['name']): {
 
 export function getFirstAndSecondTableSchema(fields: FirstTableFieldName[] = ['name']): {
   name: string
-  version: string
-  engine: string
   tables: TableSchema[]
 } {
   const firstTable = fullSchema.tables?.find((table) => table.name === 'first_table')
@@ -368,12 +367,10 @@ export function getFirstAndSecondTableSchema(fields: FirstTableFieldName[] = ['n
   }
   return {
     name: 'First and Second Table',
-    version: '1.0.0',
-    engine: '1.0.0',
     tables: [
       {
         ...firstTable,
-        fields: firstTable.fields.filter((f) => fields.includes(f.name as FirstTableFieldName)),
+        fields: firstTable.fields?.filter((f) => fields.includes(f.name as FirstTableFieldName)),
       },
       secondTable,
     ],
@@ -382,8 +379,6 @@ export function getFirstAndSecondTableSchema(fields: FirstTableFieldName[] = ['n
 
 export function getFirstBucketSchema(): {
   name: string
-  version: string
-  engine: string
   buckets: BucketSchema[]
 } {
   const firstBucket = fullSchema.buckets?.find((bucket) => bucket.name === 'first_bucket')
@@ -392,16 +387,12 @@ export function getFirstBucketSchema(): {
   }
   return {
     name: 'First Bucket',
-    version: '1.0.0',
-    engine: '1.0.0',
     buckets: [firstBucket],
   }
 }
 
 export function getAutomationSchema(name: AutomationName): {
   name: string
-  version: string
-  engine: string
   automations: AutomationSchema[]
   services: {
     server: {
@@ -415,8 +406,6 @@ export function getAutomationSchema(name: AutomationName): {
   }
   return {
     name,
-    version: '1.0.0',
-    engine: '1.0.0',
     automations: [automation],
     services: {
       server: {

@@ -1,22 +1,19 @@
 # Phantombuster
 
-## Description
-
 A configuration schema for Phantombuster automation integration
 
-## Properties
+## Required
 
-| Name    | Type   | Required | Description |
-| ------- | ------ | -------- | ----------- |
-| name    | string | ✔       |             |
-| baseUrl | string |          |             |
-| apiKey  | string | ✔       |             |
+### account
 
-## Example
+`string`
 
-```json
-{
-  "name": "linkedin-automation",
-  "apiKey": "1234567890ABCD"
-}
-```
+### apiKey
+
+`string`
+
+## Optional
+
+### baseUrl
+
+`string`

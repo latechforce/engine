@@ -24,6 +24,8 @@ import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import { PhantombusterIntegration } from '/infrastructure/integrations/bun/mocks/phantombuster/PhantombusterIntegration.mock'
 import { CalendlyIntegration } from '/infrastructure/integrations/bun/mocks/calendly/CalendlyIntegration.mock'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
+import { YouCanBookMeIntegration } from '/infrastructure/integrations/bun/mocks/youcanbookme/YouCanBookMeIntegration.mock'
+import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -43,6 +45,7 @@ type IntegrationType =
   | 'GoCardless'
   | 'Phantombuster'
   | 'Calendly'
+  | 'YouCanBookMe'
 
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
@@ -72,7 +75,9 @@ type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
               ? PhantombusterIntegration
               : I extends 'Calendly'
                 ? CalendlyIntegration
-                : never
+                : I extends 'YouCanBookMe'
+                  ? YouCanBookMeIntegration
+                  : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -301,7 +306,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('Calendly')) {
           const configs: CalendlyConfig[] = [
             {
-              name: 'calendly',
+              account: 'calendly',
               baseUrl: await getTestDbUrl('calendly'),
               user: {
                 accessToken: 'test',
@@ -315,7 +320,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('Notion')) {
           const configs: NotionConfig[] = [
             {
-              name: 'notion',
+              account: 'notion',
               baseUrl: await getTestDbUrl('notion'),
               token: 'test',
               pollingInterval: 1,
@@ -328,7 +333,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('Airtable')) {
           const configs: AirtableConfig[] = [
             {
-              name: 'airtable',
+              account: 'airtable',
               baseUrl: await getTestDbUrl('airtable'),
               apiKey: 'test',
               databaseId: 'test',
@@ -341,7 +346,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('Qonto')) {
           const configs: QontoConfig[] = [
             {
-              name: 'qonto',
+              account: 'qonto',
               baseUrl: await getTestDbUrl('qonto'),
               organisationSlug: 'test',
               secretKey: 'test',
@@ -354,7 +359,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('GoogleMail')) {
           const configs: GoogleMailConfig[] = [
             {
-              name: 'googlemail',
+              account: 'googlemail',
               baseUrl: await getTestDbUrl('googlemail'),
               user: 'test',
               password: 'test',
@@ -368,7 +373,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('Pappers')) {
           const configs: PappersConfig[] = [
             {
-              name: 'pappers',
+              account: 'pappers',
               baseUrl: await getTestDbUrl('pappers'),
               apiKey: 'test',
             },
@@ -380,7 +385,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('GoCardless')) {
           const configs: GoCardlessConfig[] = [
             {
-              name: 'gocardless',
+              account: 'gocardless',
               baseUrl: await getTestDbUrl('gocardless'),
               accessToken: 'test',
             },
@@ -392,7 +397,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
         if (this.options.integrations.includes('Phantombuster')) {
           const configs: PhantombusterConfig[] = [
             {
-              name: 'phantombuster',
+              account: 'phantombuster',
               baseUrl: await getTestDbUrl('phantombuster'),
               apiKey: 'test',
             },
@@ -400,6 +405,21 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           integrations.phantombuster = new PhantombusterIntegration(configs[0])
           extendsConfig.integrations.phantombuster = configs
           await integrations.phantombuster.createToken(configs[0].apiKey)
+        }
+        if (this.options.integrations.includes('YouCanBookMe')) {
+          const configs: YouCanBookMeConfig[] = [
+            {
+              account: 'youcanbookme',
+              baseUrl: await getTestDbUrl('youcanbookme'),
+              user: {
+                username: 'test',
+                password: 'test',
+              },
+            },
+          ]
+          integrations.youcanbookme = new YouCanBookMeIntegration(configs[0])
+          extendsConfig.integrations.youcanbookme = configs
+          await integrations.youcanbookme.createToken(configs[0].user.username)
         }
       }
       let startedApp: StartedApp | undefined

@@ -6,7 +6,7 @@ import BunTester from 'bun:test'
 const { TEST_GOCARDLESS_ACCESS_TOKEN, TEST_GOCARDLESS_BASE_URL } = env
 
 export const integration = new GoCardlessIntegration({
-  name: 'test',
+  account: 'test',
   baseUrl: TEST_GOCARDLESS_BASE_URL,
   accessToken: TEST_GOCARDLESS_ACCESS_TOKEN,
 })

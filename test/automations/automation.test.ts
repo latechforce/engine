@@ -1,7 +1,7 @@
 import BunTester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/infrastructure/test/bun/Mock'
 import { getAutomationSchema } from '/test/common'
-import type { Config } from 'index'
+import type { Config } from '/src'
 
 const mock = new Mock(BunTester, { drivers: ['Database'] })
 
@@ -24,8 +24,6 @@ mock.request(({ app, request, drivers }) => {
       // GIVEN
       const config: Config = {
         name: 'ApiCalled',
-        version: '1.0.0',
-        engine: '1.0.0',
         automations: [
           {
             name: 'ApiCalled',

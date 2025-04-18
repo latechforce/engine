@@ -1,32 +1,56 @@
 # Single line text
 
-## Description
+Represents a field that stores a single line of text.
 
-Represents a field that stores a single line of text
+## Required
 
-## Properties
+### name
 
-| Name        | Type                    | Required | Description |
-| ----------- | ----------------------- | -------- | ----------- |
-| name        | string                  | ✔       |             |
-| required    | boolean                 |          |             |
-| onMigration | Object                  |          |             |
-| type        | const: `SingleLineText` | ✔       |             |
+`string`
 
-## Property Details
+### type
 
-### onMigration
-
-| Property | Type   | Required | Description |
-| -------- | ------ | -------- | ----------- |
-| replace  | string |          |             |
-
-## Example
+const: `SingleLineText`
 
 ```json
 {
-  "type": "SingleLineText",
-  "name": "title",
-  "required": true
+  "name": "App with a table with a single line text field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "single_line_text",
+          "type": "SingleLineText"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Optional
+
+### required
+
+`boolean`
+
+The default value is `false`.
+
+```json
+{
+  "name": "App with a table with a required single line text field",
+  "tables": [
+    {
+      "name": "table",
+      "fields": [
+        {
+          "name": "single_line_text",
+          "type": "SingleLineText",
+          "required": true
+        }
+      ]
+    }
+  ]
 }
 ```

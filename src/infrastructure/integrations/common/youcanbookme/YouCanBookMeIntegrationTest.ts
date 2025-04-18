@@ -1,5 +1,6 @@
 import type { IYouCanBookMeIntegration } from '/adapter/spi/integrations/YouCanBookMeSpi'
 import type BunTester from 'bun:test'
+import { assertIsDefined } from '/infrastructure/test/common'
 
 export function testYouCanBookMeIntegration(
   { describe, it, expect }: typeof BunTester,
@@ -42,6 +43,34 @@ export function testYouCanBookMeIntegration(
       expect(result.data?.title).toBe(updateData.title)
       expect(result.data?.description).toBe(updateData.description)
       expect(result.data?.timeZone).toBe(updateData.timeZone)
+    })
+
+    it('should create a new profile', async () => {
+      // WHEN
+      const profile = {
+        title: 'string',
+        description: 'string',
+        subdomain: 'string',
+        timeZone: 'America/New_York',
+        locale: 'en-US',
+        status: 'ONLINE' as const,
+        brandingType: 'NO_BRANDING' as const,
+      }
+      const result = await integration.createProfile(profile)
+
+      // THEN
+      expect(result.error).toBeUndefined()
+      expect(result.data).toBeDefined()
+
+      assertIsDefined(result.data)
+
+      expect(result.data.title).toBe(profile.title)
+      expect(result.data.description).toBe(profile.description)
+      expect(result.data.subdomain).toBe(profile.subdomain)
+      expect(result.data.timeZone).toBe(profile.timeZone)
+      expect(result.data.locale).toBe(profile.locale)
+      expect(result.data.status).toBe(profile.status)
+      expect(result.data.brandingType).toBe(profile.brandingType)
     })
   })
 }

@@ -1,26 +1,27 @@
 # Qonto
 
-## Description
-
 A configuration schema for Qonto banking integration
 
-## Properties
+## Required
 
-| Name             | Type   | Required | Description |
-| ---------------- | ------ | -------- | ----------- |
-| name             | string | ✔       |             |
-| baseUrl          | string |          |             |
-| organisationSlug | string | ✔       |             |
-| secretKey        | string | ✔       |             |
-| stagingToken     | string |          |             |
+### account
 
-## Example
+`string`
 
-```json
-{
-  "name": "business-account",
-  "organisationSlug": "my-company",
-  "secretKey": "1234567890ABCD",
-  "stagingToken": "staging_1234567890ABCD"
-}
-```
+### organisationSlug
+
+`string`
+
+### secretKey
+
+`string`
+
+## Optional
+
+### baseUrl
+
+`string`
+
+### stagingToken
+
+`string`

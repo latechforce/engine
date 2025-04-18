@@ -5,6 +5,7 @@ import type { WebhookCalledHttpTrigger } from '/domain/entities/Trigger/services
 import type { CronTimeTickedScheduleTrigger } from '/domain/entities/Trigger/services/schedule/CronTimeTicked'
 import type { InviteeCreatedCalendlyTrigger } from '/domain/entities/Trigger/integrations/calendly/InviteeCreated'
 import type { FormWebhookReceivedTrigger } from '/domain/entities/Trigger/integrations/jotform/FormWebhookReceived'
+import type { BookingCreatedTrigger } from './integrations/youcanbookme/BookingCreated'
 
 export type Trigger =
   | WebhookCalledHttpTrigger
@@ -14,3 +15,4 @@ export type Trigger =
   | CronTimeTickedScheduleTrigger
   | InviteeCreatedCalendlyTrigger
   | FormWebhookReceivedTrigger
+  | BookingCreatedTrigger

@@ -3,7 +3,7 @@ import { QontoIntegration } from './QontoIntegration.mock'
 import BunTester from 'bun:test'
 
 const integration = new QontoIntegration({
-  name: 'test',
+  account: 'test',
   baseUrl: ':memory:',
   stagingToken: 'test',
   organisationSlug: 'test',

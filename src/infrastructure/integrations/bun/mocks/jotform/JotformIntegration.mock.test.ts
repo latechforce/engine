@@ -3,7 +3,7 @@ import { testJotformIntegration } from '/infrastructure/integrations/common/jotf
 import BunTester from 'bun:test'
 
 export const integration = new JotformIntegration({
-  name: 'test',
+  account: 'test',
   baseUrl: ':memory:',
   apiKey: 'test',
 })

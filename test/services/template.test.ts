@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import type { CodeRunnerContext } from 'index'
+import type { CodeRunnerContext } from '/src'
 
 const mock = new Mock(Tester)
 
@@ -10,8 +10,6 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
         automations: [
           {
             name: 'sendEmail',
@@ -62,8 +60,6 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
         automations: [
           {
             name: 'sendEmail',
@@ -114,8 +110,6 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
         automations: [
           {
             name: 'sendEmail',

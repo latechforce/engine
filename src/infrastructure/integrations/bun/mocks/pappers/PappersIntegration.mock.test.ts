@@ -6,7 +6,7 @@ import BunTester from 'bun:test'
 const integration = new PappersIntegration({
   apiKey: 'test',
   baseUrl: ':memory:',
-  name: 'pappers',
+  account: 'pappers',
 })
 
 await integration.createToken('test')

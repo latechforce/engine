@@ -1,14 +1,15 @@
 import type { UrlFieldConfig } from '/domain/entities/Field/Url'
 
 /**
- * URL field interface
+ * Url field interface
  * @title Url
- * @description Represents a field that stores a URL
- * @example
- * {
- *   type: 'Url',
- *   name: 'website',
- *   required: true
- * }
+ * @description Represents a field that stores an URL.
  */
-export type UrlFieldTableSchema = UrlFieldConfig
+export type UrlFieldTableSchema = {
+  name: UrlFieldConfig['name']
+  type: UrlFieldConfig['type']
+  /**
+   * @default '`false`'
+   */
+  required?: UrlFieldConfig['required']
+}

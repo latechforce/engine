@@ -13,8 +13,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'hello-name',
@@ -65,8 +64,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'hello-name',
@@ -122,8 +120,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'hello-name',
@@ -176,8 +173,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getEnv',
@@ -222,8 +218,7 @@ mock.request(({ app, request }) => {
       fs.ensureFileSync(filename)
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getEnv',
@@ -275,8 +270,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getTimestamp',
@@ -317,8 +311,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getIsArray',
@@ -359,8 +352,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getIsNumber',
@@ -401,8 +393,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getIsBoolean',
@@ -443,8 +434,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getURLSearchParams',
@@ -483,8 +473,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getTextEncoder',
@@ -523,8 +512,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getTextDecoder',
@@ -563,8 +551,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getBlob',
@@ -603,8 +590,7 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'getBlob',

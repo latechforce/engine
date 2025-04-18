@@ -1,18 +1,18 @@
 import { drivers } from '/infrastructure/drivers/common'
 import { integrations } from '/infrastructure/integrations/common'
 import { components } from '/infrastructure/components/tailwindcss'
-import App from '/adapter/api'
+import { Engine } from '/adapter/api'
 import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
 import type { Components } from '/domain/components'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type { DatabaseConfig } from '/domain/services/Database'
-import type { MonitorConfig } from './domain/services/Monitor'
-import type { IMonitorDriver } from './adapter/spi/drivers/MonitorSpi'
-import type { ServerConfig } from './domain/services/Server'
-import type { IServerDriver } from './adapter/spi/drivers/ServerSpi'
-import type { IStorageDriver } from './adapter/spi/drivers/StorageSpi'
-import type { StorageConfig } from './domain/services/Storage'
+import type { MonitorConfig } from '/domain/services/Monitor'
+import type { IMonitorDriver } from '/adapter/spi/drivers/MonitorSpi'
+import type { ServerConfig } from '/domain/services/Server'
+import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
+import type { IStorageDriver } from '/adapter/spi/drivers/StorageSpi'
+import type { StorageConfig } from '/domain/services/Storage'
 
 export type { ConfigSchema as Config } from '/adapter/api/schemas/ConfigSchema'
 export type { AutomationSchema as Automation } from '/adapter/api/schemas/AutomationSchema'
@@ -72,7 +72,7 @@ export type { AppIntegrations } from '/domain/entities/App/Base'
 export type { StartedApp } from '/domain/entities/App/Started'
 export type { StoppedApp } from '/domain/entities/App/Stopped'
 
-export default class extends App {
+export default class extends Engine {
   constructor(options: {
     drivers: Partial<Drivers> & {
       database: (config: DatabaseConfig) => IDatabaseDriver
@@ -82,17 +82,14 @@ export default class extends App {
     }
     integrations?: Partial<Integrations>
     components?: Partial<Components>
-    env?: Record<string, string | undefined>
   }) {
     const customDrivers = options?.drivers ?? {}
     const customIntegrations = options?.integrations ?? {}
     const customComponents = options?.components ?? {}
-    const customEnv = options?.env ?? {}
     super(
       { ...drivers, ...customDrivers },
       { ...integrations, ...customIntegrations },
-      { ...components, ...customComponents },
-      { ...process.env, ...customEnv }
+      { ...components, ...customComponents }
     )
   }
 }

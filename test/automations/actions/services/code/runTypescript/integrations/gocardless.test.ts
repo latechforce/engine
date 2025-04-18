@@ -11,8 +11,7 @@ mock.request(({ app, request, integrations }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'createPayment',
@@ -65,8 +64,7 @@ mock.request(({ app, request, integrations }) => {
       const payment = await integrations.gocardless.createPayment(goCardlessCreatePaymentSample)
       const config: Config = {
         name: 'App',
-        version: '1.0.0',
-        engine: '1.0.0',
+
         automations: [
           {
             name: 'listPayments',

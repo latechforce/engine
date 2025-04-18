@@ -3,7 +3,7 @@ import { NgrokIntegration } from './NgrokIntegration.mock'
 import BunTester from 'bun:test'
 
 const integration = new NgrokIntegration({
-  name: 'test',
+  account: 'test',
   baseUrl: ':memory:',
   authToken: 'test',
 })

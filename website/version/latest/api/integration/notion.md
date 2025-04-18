@@ -1,24 +1,23 @@
 # Notion
 
-## Description
-
 A configuration schema for Notion integration
 
-## Properties
+## Required
 
-| Name            | Type   | Required | Description |
-| --------------- | ------ | -------- | ----------- |
-| name            | string | ✔       |             |
-| baseUrl         | string |          |             |
-| token           | string | ✔       |             |
-| pollingInterval | number |          |             |
+### account
 
-## Example
+`string`
 
-```json
-{
-  "name": "project-management",
-  "token": "secret_1234567890ABCD",
-  "pollingInterval": 300000
-}
-```
+### token
+
+`string`
+
+## Optional
+
+### baseUrl
+
+`string`
+
+### pollingInterval
+
+`number`

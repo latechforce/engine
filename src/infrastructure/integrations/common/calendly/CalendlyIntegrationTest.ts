@@ -6,7 +6,7 @@ import type {
   CreateWebhookSubscriptionResponse,
   ListWebhookSubscriptionsResponse,
 } from '/domain/integrations/Calendly/CalendlyTypes'
-import { assertIsDefined } from 'infrastructure/test/common'
+import { assertIsDefined } from '/infrastructure/test/common'
 
 export function testCalendlyIntegration(
   { describe, it, expect, beforeAll }: typeof BunTester,

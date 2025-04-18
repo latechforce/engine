@@ -3,7 +3,7 @@ import { testCalendlyIntegration } from '/infrastructure/integrations/common/cal
 import BunTester from 'bun:test'
 
 export const integration = new CalendlyIntegration({
-  name: 'test',
+  account: 'test',
   baseUrl: ':memory:',
   user: {
     accessToken: 'https://api.calendly.com/users/123',

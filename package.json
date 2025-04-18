@@ -1,7 +1,7 @@
 {
   "name": "@latechforce/engine",
   "description": "Web application generator from a configuration file as a Fair Use NPM package.",
-  "version": "0.43.6",
+  "version": "0.43.7",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -34,6 +34,7 @@
     "format": "bunx prettier --write \"**/*.{js,jsx,ts,tsx,md,json}\"",
     "lint": "bunx eslint . --fix",
     "clean": "rm -rf dist && rm -rf node_modules && rm -rf bun.lock && rm -rf tmp",
+    "example": "bun run scripts/run-example.ts",
     "build:schema": "bun scripts/build-schema.ts",
     "build:types": "bunx tsc --project scripts/tsconfig.json && bun scripts/fix-types-paths.ts",
     "build:engine": "bun build --entrypoints ./src/index.ts ./src/bun.ts ./src/infrastructure/instrument/bun/index.ts ./src/infrastructure/test/bun/index.ts --outdir ./dist --target bun --packages external --splitting",
