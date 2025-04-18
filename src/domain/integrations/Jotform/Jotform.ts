@@ -2,7 +2,7 @@ import type { IJotformSpi } from './IJotformSpi'
 import { Integration } from '../base'
 import type { JotformWebhookResponse, JotformWebhookParams } from './JotformTypes'
 import type { JotformConfig } from './JotformConfig'
-import type { DeleteWebhookParams, DeleteWebhookResponse } from './JotformTypes'
+import type { DeleteWebhookParams } from './JotformTypes'
 
 export class Jotform extends Integration<JotformConfig, IJotformSpi> {
   constructor(spis: IJotformSpi[]) {
@@ -27,7 +27,7 @@ export class Jotform extends Integration<JotformConfig, IJotformSpi> {
   deleteWebhook = async (
     account: string,
     params: DeleteWebhookParams
-  ): Promise<IntegrationResponse<DeleteWebhookResponse>> => {
+  ): Promise<JotformWebhookResponse> => {
     const response = await this._spi(account).deleteWebhook(params)
     if (response.error) return Integration.throwError('deleteWebhook', response.error)
     return response.data

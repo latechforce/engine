@@ -4,7 +4,6 @@ import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import type {
   DeleteWebhookParams,
-  DeleteWebhookResponse,
   JotformWebhookParams,
   JotformWebhookResponse,
 } from '/domain/integrations/Jotform/JotformTypes'
