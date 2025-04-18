@@ -1,7 +1,11 @@
 import type { IJotformIntegration } from '/adapter/spi/integrations/JotformSpi'
-import type { IntegrationResponseError } from '/domain/integrations/base'
+import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
 import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
+import type {
+  JotformWebhookParams,
+  JotformWebhookResponse,
+} from '/domain/integrations/Jotform/JotformTypes'
 
 export class JotformIntegration implements IJotformIntegration {
   private _instance: AxiosInstance
@@ -10,8 +14,7 @@ export class JotformIntegration implements IJotformIntegration {
     const { baseUrl = 'https://api.jotform.com', apiKey } = config
     const headers = {
       APIKEY: apiKey,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
     }
     this._instance = axios.create({
       baseURL: baseUrl,
@@ -44,16 +47,33 @@ export class JotformIntegration implements IJotformIntegration {
   }
 
   listWebhooks = async (formId: string): Promise<IntegrationResponse<JotformWebhookResponse>> => {
-    const response = await this._instance.get(`/form/${formId}/webhooks`)
-    return { data: response.data }
+    try {
+      const response = await this._instance.get(`/form/${formId}/webhooks`)
+      return { data: response.data }
+    } catch (error) {
+      return this._responseError(error)
+    }
   }
 
   addWebhook = async (
     params: JotformWebhookParams
   ): Promise<IntegrationResponse<JotformWebhookResponse>> => {
-    const response = await this._instance.post(`/form/${params.formId}/webhooks`, {
-      webhookURL: params.webhookUrl,
-    })
-    return { data: response.data }
+    try {
+      const body = new FormData()
+      body.append('webhookURL', params.webhookUrl)
+
+      const response = await fetch(`${this.config.baseUrl}/form/${params.formId}/webhooks`, {
+        method: 'POST',
+        body,
+        headers: {
+          APIKEY: `${this.config.apiKey}`,
+        },
+      })
+
+      const data = await response.json()
+      return { data }
+    } catch (error) {
+      return this._responseError(error)
+    }
   }
 }
