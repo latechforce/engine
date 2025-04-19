@@ -2,13 +2,7 @@ import type { Config, CodeRunnerContext } from '/src'
 
 export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadNumberFieldService: Config =
   {
-    name: 'App with a database read number field service',
-    tables: [
-      {
-        name: 'users',
-        fields: [{ name: 'age', type: 'Number' }],
-      },
-    ],
+    name: 'App with a database service with read number field method',
     automations: [
       {
         name: 'readAge',
@@ -45,6 +39,12 @@ export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadNumbe
             }),
           },
         ],
+      },
+    ],
+    tables: [
+      {
+        name: 'users',
+        fields: [{ name: 'age', type: 'Number' }],
       },
     ],
   }

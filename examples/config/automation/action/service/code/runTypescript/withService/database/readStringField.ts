@@ -2,13 +2,7 @@ import type { Config, CodeRunnerContext } from '/src'
 
 export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadStringFieldService: Config =
   {
-    name: 'App with a database read string field service',
-    tables: [
-      {
-        name: 'users',
-        fields: [{ name: 'name', type: 'SingleLineText' }],
-      },
-    ],
+    name: 'App with a database service with read string field method',
     automations: [
       {
         name: 'readName',
@@ -43,6 +37,12 @@ export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadStrin
             }),
           },
         ],
+      },
+    ],
+    tables: [
+      {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
       },
     ],
   }

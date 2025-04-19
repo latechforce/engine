@@ -2,13 +2,7 @@ import type { Config, CodeRunnerContext } from '/src'
 
 export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadBooleanFieldService: Config =
   {
-    name: 'App with a database read boolean field service',
-    tables: [
-      {
-        name: 'users',
-        fields: [{ name: 'valid', type: 'Checkbox' }],
-      },
-    ],
+    name: 'App with a database service with read boolean field method',
     automations: [
       {
         name: 'readValid',
@@ -45,6 +39,12 @@ export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadBoole
             }),
           },
         ],
+      },
+    ],
+    tables: [
+      {
+        name: 'users',
+        fields: [{ name: 'valid', type: 'Checkbox' }],
       },
     ],
   }

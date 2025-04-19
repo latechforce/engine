@@ -2,13 +2,7 @@ import type { Config, CodeRunnerContext } from '/src'
 
 export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadDateFieldService: Config =
   {
-    name: 'App with a database read date field service',
-    tables: [
-      {
-        name: 'users',
-        fields: [{ name: 'birthdate', type: 'DateTime' }],
-      },
-    ],
+    name: 'App with a database service with read date field method',
     automations: [
       {
         name: 'readBirthdate',
@@ -43,6 +37,12 @@ export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadDateF
             }),
           },
         ],
+      },
+    ],
+    tables: [
+      {
+        name: 'users',
+        fields: [{ name: 'birthdate', type: 'DateTime' }],
       },
     ],
   }

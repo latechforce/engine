@@ -1,7 +1,7 @@
 import type { Config, CodeRunnerContext } from '/src'
 
 export const configAutomationActionServiceCodeRunTypescriptWithDatabaseReadService: Config = {
-  name: 'App with a database read service',
+  name: 'App with a database service with read method',
   automations: [
     {
       name: 'readUser',

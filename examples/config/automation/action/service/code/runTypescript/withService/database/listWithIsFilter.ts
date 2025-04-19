@@ -2,13 +2,7 @@ import type { Config, CodeRunnerContext } from '/src'
 
 export const configAutomationActionServiceCodeRunTypescriptWithDatabaseListWithIsFilterService: Config =
   {
-    name: 'App with a database list with is filter service',
-    tables: [
-      {
-        name: 'users',
-        fields: [{ name: 'name', type: 'SingleLineText' }],
-      },
-    ],
+    name: 'App with a database service with list with is filter method',
     automations: [
       {
         name: 'listUsers',
@@ -38,6 +32,12 @@ export const configAutomationActionServiceCodeRunTypescriptWithDatabaseListWithI
             }),
           },
         ],
+      },
+    ],
+    tables: [
+      {
+        name: 'users',
+        fields: [{ name: 'name', type: 'SingleLineText' }],
       },
     ],
   }

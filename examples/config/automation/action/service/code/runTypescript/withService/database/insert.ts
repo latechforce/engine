@@ -1,7 +1,7 @@
 import type { Config, CodeRunnerContext } from '/src'
 
 export const configAutomationActionServiceCodeRunTypescriptWithDatabaseInsertService: Config = {
-  name: 'App with a database insert service',
+  name: 'App with a database service with insert method',
   automations: [
     {
       name: 'createUser',
