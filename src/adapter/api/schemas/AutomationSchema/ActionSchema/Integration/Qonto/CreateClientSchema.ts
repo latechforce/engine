@@ -4,26 +4,36 @@ import type { CreateClientQontoActionConfig } from '/domain/entities/Action/inte
  * Interface for creating a client in Qonto
  * @title Create Client
  * @description Creates a new client in Qonto with the specified details
- *
- * @example
- * {
- *   integration: 'Qonto',
- *   action: 'CreateClient',
- *   client: {
- *     name: '{{trigger.payload.companyName}}',
- *     email: '{{trigger.payload.email}}',
- *     phone: '{{trigger.payload.phone}}',
- *     address: {
- *       street: '{{trigger.payload.street}}',
- *       city: '{{trigger.payload.city}}',
- *       postalCode: '{{trigger.payload.postalCode}}',
- *       country: '{{trigger.payload.country}}'
- *     }
- *   }
- * }
  */
-export interface CreateClientQontoIntegrationActionAutomationSchema
-  extends CreateClientQontoActionConfig {
+export interface CreateClientQontoIntegrationActionAutomationSchema {
+  /**
+   * The name for this action
+   * @title Name
+   * @description The name for this action
+   */
+  name: CreateClientQontoActionConfig['name']
+  /**
+   * The integration type for this action
+   * @title Integration
+   * @description The integration type for this action
+   */
   integration: 'Qonto'
+  /**
+   * The action type for this action
+   * @title Action
+   * @description The action type for this action
+   */
   action: 'CreateClient'
+  /**
+   * The client for this action
+   * @title Client
+   * @description The client for this action
+   */
+  client: CreateClientQontoActionConfig['client']
+  /**
+   * The account identifier for this action
+   * @title Account
+   * @description The account identifier for this action
+   */
+  account: CreateClientQontoActionConfig['account']
 }

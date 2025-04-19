@@ -21,17 +21,20 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The account identifier for the Pappers integration
 >account: `string`
 
-### apiKey
+### API Key
 
+The API key for authenticating with Pappers
 >apiKey: `string`
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for the Pappers API
 >baseUrl?: `string`
 

@@ -4,23 +4,28 @@ Sends an email using Google Mail integration
 
 ## Required
 
-### account
+### Name
 
->account: `string`
+The name for this action
+>name: `string`
 
-### action
+### Integration
 
->action: const: `SendEmail`
-
-### email
-
->email: Object
-
-### integration
-
+The integration type for this action
 >integration: const: `GoogleMail`
 
-### name
+### Action
 
->name: `string`
+The action type for this action
+>action: const: `SendEmail`
+
+### Email
+
+The email for this action
+>email: Object
+
+### Account
+
+The account identifier for this action
+>account: `string`
 

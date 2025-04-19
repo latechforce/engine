@@ -34,26 +34,31 @@ await new App().start(config)
 ```
 ## Required
 
-### action
+### Name
 
->action: const: `RunTypescript`
-
-### code
-
->code: `string`
-
-### name
-
+The name for this action
 >name: `string`
 
-### service
+### Service
 
+The service type for this action
 >service: const: `Code`
+
+### Action
+
+The action type for this action
+>action: const: `RunTypescript`
+
+### Code
+
+The code for this action
+>code: `string`
 
 ## Optional
 
-### input
+### Input
 
+The input for this action
 >input?: `unknown`
 
 ```ts
@@ -100,8 +105,9 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### env
+### Environment Variables
 
+The environment variables for this action
 >env?: Object
 
 ```ts

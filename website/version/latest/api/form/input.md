@@ -1,6 +1,6 @@
 # Input
 
-Type alias for input configuration
+Configuration for form input fields
 
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
@@ -37,18 +37,21 @@ await new App().start(config)
 ```
 ## Required
 
-### field
+### Field
 
+The name of the field this input is associated with
 >field: `string`
 
 ## Optional
 
-### label
+### Label
 
+The display label for the input field
 >label?: `string`
 
-### description
+### Description
 
+The description of the input field
 >description?: `string`
 
 ```ts
@@ -85,19 +88,23 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### placeholder
+### Placeholder
 
+The placeholder text for the input field
 >placeholder?: `string`
 
-### required
+### Required
 
+Whether the input field is required
 >required?: `boolean`
 
-### minLength
+### Min Length
 
+The minimum length of the input value
 >minLength?: `number`
 
-### maxLength
+### Max Length
 
+The maximum length of the input value
 >maxLength?: `number`
 

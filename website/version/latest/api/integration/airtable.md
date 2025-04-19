@@ -22,21 +22,25 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The account identifier for the Airtable integration
 >account: `string`
 
-### apiKey
+### API Key
 
+The API key for Airtable
 >apiKey: `string`
 
-### databaseId
+### Database ID
 
+The database ID for Airtable
 >databaseId: `string`
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for Airtable API
 >baseUrl?: `string`
 

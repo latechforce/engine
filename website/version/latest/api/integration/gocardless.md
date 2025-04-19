@@ -21,17 +21,20 @@ await new App().start(config)
 ```
 ## Required
 
-### accessToken
+### Account
 
->accessToken: `string`
-
-### account
-
+The account identifier for the GoCardless integration
 >account: `string`
+
+### Access Token
+
+The access token for authenticating with GoCardless
+>accessToken: `string`
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for the GoCardless API
 >baseUrl?: `string`
 

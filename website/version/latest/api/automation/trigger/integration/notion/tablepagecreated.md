@@ -25,19 +25,23 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Integration
 
->account: `string`
-
-### event
-
->event: const: `TablePageCreated`
-
-### integration
-
+The integration type for this trigger
 >integration: const: `Notion`
 
-### table
+### Event
 
+The event type for this trigger
+>event: const: `TablePageCreated`
+
+### Database
+
+The database identifier for this trigger
 >table: `string`
+
+### Account
+
+The account identifier for this trigger
+>account: `string`
 

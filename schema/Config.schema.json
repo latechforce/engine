@@ -7,24 +7,24 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "The name of the engine.",
+          "description": "The name of the engine",
           "title": "Name"
         },
         "appVersion": {
           "type": "string",
-          "description": "The version of the application.",
-          "title": "App version",
+          "description": "The version of the application",
+          "title": "App Version",
           "default": "the `version` property of the `package.json` file or `latest`"
         },
         "engineVersion": {
           "type": "string",
-          "description": "The version of the engine.",
-          "title": "Engine version",
+          "description": "The version of the engine",
+          "title": "Engine Version",
           "default": "the `version` of the dependency `@latechforce/engine` of the `package.json` file"
         },
         "description": {
           "type": "string",
-          "description": "The description of the application.",
+          "description": "The description of the application",
           "title": "Description"
         },
         "forms": {
@@ -32,7 +32,7 @@
           "items": {
             "$ref": "#/definitions/FormSchema"
           },
-          "description": "The forms of the application.",
+          "description": "The forms of the application",
           "title": "Forms"
         },
         "automations": {
@@ -40,7 +40,7 @@
           "items": {
             "$ref": "#/definitions/AutomationSchema"
           },
-          "description": "The automations of the application.",
+          "description": "The automations of the application",
           "title": "Automations"
         },
         "tables": {
@@ -48,7 +48,7 @@
           "items": {
             "$ref": "#/definitions/TableSchema"
           },
-          "description": "The tables of the application.",
+          "description": "The tables of the application",
           "title": "Tables"
         },
         "buckets": {
@@ -56,17 +56,17 @@
           "items": {
             "$ref": "#/definitions/BucketSchema"
           },
-          "description": "The buckets of the application.",
+          "description": "The buckets of the application",
           "title": "Buckets"
         },
         "integrations": {
           "$ref": "#/definitions/IntegrationSchema",
-          "description": "The integrations of the application.",
+          "description": "The integrations of the application",
           "title": "Integrations"
         },
         "services": {
           "$ref": "#/definitions/ServiceSchema",
-          "description": "The services of the application.",
+          "description": "The services of the application",
           "title": "Services"
         }
       },
@@ -138,32 +138,46 @@
       "type": "object",
       "properties": {
         "field": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field this input is associated with",
+          "title": "Field"
         },
         "label": {
-          "type": "string"
+          "type": "string",
+          "description": "The display label for the input field",
+          "title": "Label"
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "The description of the input field",
+          "title": "Description"
         },
         "placeholder": {
-          "type": "string"
+          "type": "string",
+          "description": "The placeholder text for the input field",
+          "title": "Placeholder"
         },
         "required": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether the input field is required",
+          "title": "Required"
         },
         "minLength": {
-          "type": "number"
+          "type": "number",
+          "description": "The minimum length of the input value",
+          "title": "Min Length"
         },
         "maxLength": {
-          "type": "number"
+          "type": "number",
+          "description": "The maximum length of the input value",
+          "title": "Max Length"
         }
       },
       "required": [
         "field"
       ],
       "additionalProperties": false,
-      "description": "Type alias for input configuration",
+      "description": "Configuration for form input fields",
       "title": "Input"
     },
     "AutomationSchema": {
@@ -212,13 +226,6 @@
         }
       ],
       "description": "Union type of all possible triggers that can start automations",
-      "examples": [
-        {
-          "service": "Database",
-          "event": "RecordCreated",
-          "table": "users"
-        }
-      ],
       "title": "Trigger"
     },
     "ServiceTriggerAutomationSchema": {
@@ -244,21 +251,27 @@
     "RecordCreatedDatabaseServiceTriggerAutomationSchema": {
       "type": "object",
       "properties": {
-        "table": {
-          "type": "string"
-        },
         "service": {
           "type": "string",
-          "const": "Database"
+          "const": "Database",
+          "description": "The service type for this trigger",
+          "title": "Service"
         },
         "event": {
           "type": "string",
-          "const": "RecordCreated"
+          "const": "RecordCreated",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
+        "table": {
+          "type": "string",
+          "description": "The table name for this trigger",
+          "title": "Table"
         }
       },
       "required": [
-        "event",
         "service",
+        "event",
         "table"
       ],
       "additionalProperties": false,
@@ -280,8 +293,22 @@
     "ApiCalledHttpServiceTriggerAutomationSchema": {
       "type": "object",
       "properties": {
+        "service": {
+          "type": "string",
+          "const": "Http",
+          "description": "The service type for this trigger",
+          "title": "Service"
+        },
+        "event": {
+          "type": "string",
+          "const": "ApiCalled",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
         "path": {
-          "type": "string"
+          "type": "string",
+          "description": "The API endpoint path where the trigger will be activated",
+          "title": "Path"
         },
         "input": {
           "type": "object",
@@ -321,7 +348,9 @@
               "items": {}
             }
           },
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "The JSON schema for validating the input data",
+          "title": "Input"
         },
         "output": {
           "type": "object",
@@ -383,25 +412,21 @@
                 "not": {}
               }
             ]
-          }
+          },
+          "description": "The template for formatting the output response",
+          "title": "Output"
         },
         "auth": {
           "type": "string",
-          "const": "ApiKey"
-        },
-        "service": {
-          "type": "string",
-          "const": "Http"
-        },
-        "event": {
-          "type": "string",
-          "const": "ApiCalled"
+          "const": "ApiKey",
+          "description": "The authentication settings for the API endpoint",
+          "title": "Auth"
         }
       },
       "required": [
+        "service",
         "event",
-        "path",
-        "service"
+        "path"
       ],
       "additionalProperties": false,
       "description": "A trigger that fires when an API is called",
@@ -410,23 +435,32 @@
     "WebhookCalledHttpServiceTriggerAutomationSchema": {
       "type": "object",
       "properties": {
-        "path": {
-          "type": "string"
-        },
-        "auth": {},
         "service": {
           "type": "string",
-          "const": "Http"
+          "const": "Http",
+          "description": "The service type for this trigger",
+          "title": "Service"
         },
         "event": {
           "type": "string",
-          "const": "WebhookCalled"
+          "const": "WebhookCalled",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
+        "path": {
+          "type": "string",
+          "description": "The path for this trigger",
+          "title": "Path"
+        },
+        "auth": {
+          "description": "The authentication configuration for this trigger",
+          "title": "Authentication"
         }
       },
       "required": [
+        "service",
         "event",
-        "path",
-        "service"
+        "path"
       ],
       "additionalProperties": false,
       "description": "A trigger that fires when a webhook is called",
@@ -440,22 +474,28 @@
     "CronTimeTickedScheduleServiceTriggerAutomationSchema": {
       "type": "object",
       "properties": {
-        "cronTime": {
-          "type": "string"
-        },
         "service": {
           "type": "string",
-          "const": "Schedule"
+          "const": "Schedule",
+          "description": "The service type for this trigger",
+          "title": "Service"
         },
         "event": {
           "type": "string",
-          "const": "CronTimeTicked"
+          "const": "CronTimeTicked",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
+        "cronTime": {
+          "type": "string",
+          "description": "The cron time for this trigger",
+          "title": "Cron Time"
         }
       },
       "required": [
-        "cronTime",
+        "service",
         "event",
-        "service"
+        "cronTime"
       ],
       "additionalProperties": false,
       "description": "A trigger that fires when a cron time is ticked",
@@ -487,22 +527,28 @@
     "InviteeCreatedCalendlyIntegrationTriggerAutomationSchema": {
       "type": "object",
       "properties": {
-        "account": {
-          "type": "string"
-        },
         "integration": {
           "type": "string",
-          "const": "Calendly"
+          "const": "Calendly",
+          "description": "The integration type for this trigger",
+          "title": "Integration"
         },
         "event": {
           "type": "string",
-          "const": "InviteeCreated"
+          "const": "InviteeCreated",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
+        "account": {
+          "type": "string",
+          "description": "The account identifier for this trigger",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
+        "integration",
         "event",
-        "integration"
+        "account"
       ],
       "additionalProperties": false,
       "description": "A trigger that fires when an invitee is created in Calendly",
@@ -516,26 +562,34 @@
     "TablePageCreatedNotionIntegrationTriggerAutomationSchema": {
       "type": "object",
       "properties": {
-        "table": {
-          "type": "string"
-        },
-        "account": {
-          "type": "string"
-        },
         "integration": {
           "type": "string",
-          "const": "Notion"
+          "const": "Notion",
+          "description": "The integration type for this trigger",
+          "title": "Integration"
         },
         "event": {
           "type": "string",
-          "const": "TablePageCreated"
+          "const": "TablePageCreated",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
+        "table": {
+          "type": "string",
+          "description": "The database identifier for this trigger",
+          "title": "Database"
+        },
+        "account": {
+          "type": "string",
+          "description": "The account identifier for this trigger",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
-        "event",
         "integration",
-        "table"
+        "event",
+        "table",
+        "account"
       ],
       "additionalProperties": false,
       "description": "A trigger that fires when a table page is created in Notion",
@@ -549,26 +603,34 @@
     "FormWebhookReceivedJotformIntegrationTriggerAutomationSchema": {
       "type": "object",
       "properties": {
-        "account": {
-          "type": "string"
-        },
-        "formId": {
-          "type": "string"
-        },
         "integration": {
           "type": "string",
-          "const": "Jotform"
+          "const": "Jotform",
+          "description": "The integration type for this trigger",
+          "title": "Integration"
         },
         "event": {
           "type": "string",
-          "const": "FormWebhookReceived"
+          "const": "FormWebhookReceived",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
+        "formId": {
+          "type": "string",
+          "description": "The form identifier for this trigger",
+          "title": "Form"
+        },
+        "account": {
+          "type": "string",
+          "description": "The account identifier for this trigger",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
+        "integration",
         "event",
         "formId",
-        "integration"
+        "account"
       ],
       "additionalProperties": false,
       "description": "A trigger that fires when form webhook is received in Jotform",
@@ -582,22 +644,28 @@
     "BookingCreatedYouCanBookMeIntegrationTriggerAutomationSchema": {
       "type": "object",
       "properties": {
-        "account": {
-          "type": "string"
-        },
         "integration": {
           "type": "string",
-          "const": "YouCanBookMe"
+          "const": "YouCanBookMe",
+          "description": "The integration type for this trigger",
+          "title": "Integration"
         },
         "event": {
           "type": "string",
-          "const": "BookingCreated"
+          "const": "BookingCreated",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
+        "account": {
+          "type": "string",
+          "description": "The account identifier for this trigger",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
+        "integration",
         "event",
-        "integration"
+        "account"
       ],
       "additionalProperties": false,
       "description": "A trigger that fires when a booking is created in YouCanBookMe",
@@ -660,39 +728,42 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
-        },
-        "account": {
-          "type": "string"
-        },
-        "siret": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
         },
         "integration": {
           "type": "string",
-          "const": "Pappers"
+          "const": "Pappers",
+          "description": "The integration type for this action",
+          "title": "Integration"
         },
         "action": {
           "type": "string",
-          "const": "GetCompany"
+          "const": "GetCompany",
+          "description": "The action type for this action",
+          "title": "Action"
+        },
+        "siret": {
+          "type": "string",
+          "description": "The siret for this action",
+          "title": "Siret"
+        },
+        "account": {
+          "type": "string",
+          "description": "The account identifier for this action",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
-        "action",
-        "integration",
         "name",
-        "siret"
+        "integration",
+        "action",
+        "siret",
+        "account"
       ],
       "additionalProperties": false,
       "description": "Retrieves company information using Pappers integration",
-      "examples": [
-        {
-          "integration": "Pappers",
-          "action": "GetCompany",
-          "siren": "123456789"
-        }
-      ],
       "title": "Get Company"
     },
     "QontoIntegrationActionAutomationSchema": {
@@ -711,10 +782,21 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
         },
-        "account": {
-          "type": "string"
+        "integration": {
+          "type": "string",
+          "const": "Qonto",
+          "description": "The integration type for this action",
+          "title": "Integration"
+        },
+        "action": {
+          "type": "string",
+          "const": "CreateClient",
+          "description": "The action type for this action",
+          "title": "Action"
         },
         "client": {
           "type": "object",
@@ -824,82 +906,67 @@
             "locale",
             "type",
             "zip_code"
-          ]
+          ],
+          "description": "The client for this action",
+          "title": "Client"
         },
-        "integration": {
+        "account": {
           "type": "string",
-          "const": "Qonto"
-        },
-        "action": {
-          "type": "string",
-          "const": "CreateClient"
+          "description": "The account identifier for this action",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
+        "name",
+        "integration",
         "action",
         "client",
-        "integration",
-        "name"
+        "account"
       ],
       "additionalProperties": false,
       "description": "Creates a new client in Qonto with the specified details",
-      "examples": [
-        {
-          "integration": "Qonto",
-          "action": "CreateClient",
-          "client": {
-            "name": "{{trigger.payload.companyName}}",
-            "email": "{{trigger.payload.email}}",
-            "phone": "{{trigger.payload.phone}}",
-            "address": {
-              "street": "{{trigger.payload.street}}",
-              "city": "{{trigger.payload.city}}",
-              "postalCode": "{{trigger.payload.postalCode}}",
-              "country": "{{trigger.payload.country}}"
-            }
-          }
-        }
-      ],
       "title": "Create Client"
     },
     "RetrieveAttachmentQontoIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
-        },
-        "account": {
-          "type": "string"
-        },
-        "attachmentId": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
         },
         "integration": {
           "type": "string",
-          "const": "Qonto"
+          "const": "Qonto",
+          "description": "The integration type for this action",
+          "title": "Integration"
         },
         "action": {
           "type": "string",
-          "const": "RetrieveAttachment"
+          "const": "RetrieveAttachment",
+          "description": "The action type for this action",
+          "title": "Action"
+        },
+        "attachmentId": {
+          "type": "string",
+          "description": "The attachment identifier for this action",
+          "title": "Attachment"
+        },
+        "account": {
+          "type": "string",
+          "description": "The account identifier for this action",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
+        "name",
+        "integration",
         "action",
         "attachmentId",
-        "integration",
-        "name"
+        "account"
       ],
       "additionalProperties": false,
       "description": "Retrieves an attachment using Qonto integration",
-      "examples": [
-        {
-          "integration": "Qonto",
-          "action": "RetrieveAttachment",
-          "attachmentId": "att_123456789"
-        }
-      ],
       "title": "Retrieve Attachment"
     },
     "NotionIntegrationActionAutomationSchema": {
@@ -911,54 +978,57 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
         },
-        "account": {
-          "type": "string"
+        "integration": {
+          "type": "string",
+          "const": "Notion",
+          "description": "The integration type for this action",
+          "title": "Integration"
+        },
+        "action": {
+          "type": "string",
+          "const": "UpdatePage",
+          "description": "The action type for this action",
+          "title": "Action"
         },
         "table": {
-          "type": "string"
+          "type": "string",
+          "description": "The table identifier for this action",
+          "title": "Table"
         },
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "The page identifier for this action",
+          "title": "Page"
         },
         "page": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
+          },
+          "description": "The page identifier for this action",
+          "title": "Page"
         },
-        "integration": {
+        "account": {
           "type": "string",
-          "const": "Notion"
-        },
-        "action": {
-          "type": "string",
-          "const": "UpdatePage"
+          "description": "The account identifier for this action",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
-        "action",
-        "id",
-        "integration",
         "name",
+        "integration",
+        "action",
+        "table",
+        "id",
         "page",
-        "table"
+        "account"
       ],
       "additionalProperties": false,
       "description": "Updates a page in Notion with the specified properties",
-      "examples": [
-        {
-          "integration": "Notion",
-          "action": "UpdatePage",
-          "pageId": "{{trigger.payload.pageId}}",
-          "properties": {
-            "title": "{{trigger.payload.title}}",
-            "status": "{{trigger.payload.status}}"
-          }
-        }
-      ],
       "title": "Update Page"
     },
     "GoogleIntegrationActionAutomationSchema": {
@@ -975,10 +1045,21 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
         },
-        "account": {
-          "type": "string"
+        "integration": {
+          "type": "string",
+          "const": "GoogleMail",
+          "description": "The integration type for this action",
+          "title": "Integration"
+        },
+        "action": {
+          "type": "string",
+          "const": "SendEmail",
+          "description": "The action type for this action",
+          "title": "Action"
         },
         "email": {
           "type": "object",
@@ -1008,37 +1089,25 @@
           "required": [
             "to"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "The email for this action",
+          "title": "Email"
         },
-        "integration": {
+        "account": {
           "type": "string",
-          "const": "GoogleMail"
-        },
-        "action": {
-          "type": "string",
-          "const": "SendEmail"
+          "description": "The account identifier for this action",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
+        "name",
+        "integration",
         "action",
         "email",
-        "integration",
-        "name"
+        "account"
       ],
       "additionalProperties": false,
       "description": "Sends an email using Google Mail integration",
-      "examples": [
-        {
-          "integration": "GoogleMail",
-          "action": "SendEmail",
-          "email": {
-            "to": "recipient@example.com",
-            "subject": "Test Email",
-            "text": "This is a test email"
-          }
-        }
-      ],
       "title": "Send Email"
     },
     "GoCardlessIntegrationActionAutomationSchema": {
@@ -1057,10 +1126,21 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
         },
-        "account": {
-          "type": "string"
+        "integration": {
+          "type": "string",
+          "const": "GoCardless",
+          "description": "The integration type for this action",
+          "title": "Integration"
+        },
+        "action": {
+          "type": "string",
+          "const": "CreatePayment",
+          "description": "The action type for this action",
+          "title": "Action"
         },
         "payment": {
           "type": "object",
@@ -1098,52 +1178,51 @@
             "currency",
             "mandate"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "The payment for this action",
+          "title": "Payment"
         },
-        "integration": {
+        "account": {
           "type": "string",
-          "const": "GoCardless"
-        },
-        "action": {
-          "type": "string",
-          "const": "CreatePayment"
+          "description": "The account identifier for this action",
+          "title": "Account"
         }
       },
       "required": [
-        "account",
-        "action",
-        "integration",
         "name",
-        "payment"
+        "integration",
+        "action",
+        "payment",
+        "account"
       ],
       "additionalProperties": false,
       "description": "Creates a new payment in GoCardless with the specified details",
-      "examples": [
-        {
-          "integration": "GoCardless",
-          "action": "CreatePayment",
-          "payment": {
-            "amount": 1000,
-            "currency": "EUR",
-            "description": "Monthly subscription",
-            "mandate": "{{trigger.payload.mandateId}}",
-            "metadata": {
-              "orderId": "{{trigger.payload.orderId}}",
-              "customerId": "{{trigger.payload.customerId}}"
-            }
-          }
-        }
-      ],
       "title": "Create Payment"
     },
     "ListPaymentsGoCardlessIntegrationActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
+        },
+        "integration": {
+          "type": "string",
+          "const": "GoCardless",
+          "description": "The integration type for this action",
+          "title": "Integration"
+        },
+        "action": {
+          "type": "string",
+          "const": "ListPayments",
+          "description": "The action type for this action",
+          "title": "Action"
         },
         "account": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for this action",
+          "title": "Account"
         },
         "params": {
           "type": "object",
@@ -1164,36 +1243,20 @@
               "type": "string"
             }
           },
-          "additionalProperties": false
-        },
-        "integration": {
-          "type": "string",
-          "const": "GoCardless"
-        },
-        "action": {
-          "type": "string",
-          "const": "ListPayments"
+          "additionalProperties": false,
+          "description": "The parameters for this action",
+          "title": "Parameters"
         }
       },
       "required": [
-        "account",
-        "action",
-        "integration",
         "name",
+        "integration",
+        "action",
+        "account",
         "params"
       ],
       "additionalProperties": false,
       "description": "Lists payments using GoCardless integration with optional filters",
-      "examples": [
-        {
-          "integration": "GoCardless",
-          "action": "ListPayments",
-          "filters": {
-            "status": "paid",
-            "limit": 10
-          }
-        }
-      ],
       "title": "List Payments"
     },
     "ServiceActionAutomationSchema": {
@@ -1231,77 +1294,93 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
+        },
+        "service": {
+          "type": "string",
+          "const": "Code",
+          "description": "The service type for this action",
+          "title": "Service"
+        },
+        "action": {
+          "type": "string",
+          "const": "RunJavascript",
+          "description": "The action type for this action",
+          "title": "Action"
         },
         "code": {
-          "type": "string"
+          "type": "string",
+          "description": "The code for this action",
+          "title": "Code"
         },
-        "input": {},
+        "input": {
+          "description": "The input for this action",
+          "title": "Input"
+        },
         "env": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
-        },
-        "service": {
-          "type": "string",
-          "const": "Code"
-        },
-        "action": {
-          "type": "string",
-          "const": "RunJavascript"
+          },
+          "description": "The environment variables for this action",
+          "title": "Environment Variables"
         }
       },
       "required": [
-        "action",
-        "code",
         "name",
-        "service"
+        "service",
+        "action",
+        "code"
       ],
       "additionalProperties": false,
       "description": "Executes JavaScript code with the specified input",
-      "examples": [
-        {
-          "service": "Code",
-          "action": "RunJavascript",
-          "code": "return { result: input.value * 2 }",
-          "input": {
-            "value": 5
-          }
-        }
-      ],
       "title": "Run JavaScript"
     },
     "RunTypescriptCodeServiceActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
+        },
+        "service": {
+          "type": "string",
+          "const": "Code",
+          "description": "The service type for this action",
+          "title": "Service"
+        },
+        "action": {
+          "type": "string",
+          "const": "RunTypescript",
+          "description": "The action type for this action",
+          "title": "Action"
         },
         "code": {
-          "type": "string"
+          "type": "string",
+          "description": "The code for this action",
+          "title": "Code"
         },
-        "input": {},
+        "input": {
+          "description": "The input for this action",
+          "title": "Input"
+        },
         "env": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
-        },
-        "service": {
-          "type": "string",
-          "const": "Code"
-        },
-        "action": {
-          "type": "string",
-          "const": "RunTypescript"
+          },
+          "description": "The environment variables for this action",
+          "title": "Environment Variables"
         }
       },
       "required": [
-        "action",
-        "code",
         "name",
-        "service"
+        "service",
+        "action",
+        "code"
       ],
       "additionalProperties": false,
       "description": "Executes TypeScript code with the specified input",
@@ -1323,88 +1402,87 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
-        },
-        "id": {
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
         },
         "service": {
           "type": "string",
-          "const": "Database"
+          "const": "Database",
+          "description": "The service type for this action",
+          "title": "Service"
         },
         "action": {
           "type": "string",
-          "const": "ReadRecord"
+          "const": "ReadRecord",
+          "description": "The action type for this action",
+          "title": "Action"
+        },
+        "table": {
+          "type": "string",
+          "description": "The table name for this action",
+          "title": "Table"
+        },
+        "id": {
+          "type": "string",
+          "description": "The record identifier for this action",
+          "title": "Record"
         }
       },
       "required": [
-        "action",
-        "id",
         "name",
         "service",
-        "table"
+        "action",
+        "table",
+        "id"
       ],
       "additionalProperties": false,
       "description": "Reads a record from the specified database table",
-      "examples": [
-        {
-          "service": "Database",
-          "action": "ReadRecord",
-          "table": "users",
-          "id": "user_123"
-        }
-      ],
       "title": "Read Record"
     },
     "CreateRecordDatabaseServiceActionAutomationSchema": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name for this action",
+          "title": "Name"
+        },
+        "service": {
+          "type": "string",
+          "const": "Database",
+          "description": "The service type for this action",
+          "title": "Service"
+        },
+        "action": {
+          "type": "string",
+          "const": "CreateRecord",
+          "description": "The action type for this action",
+          "title": "Action"
+        },
+        "table": {
+          "type": "string",
+          "description": "The table name for this action",
+          "title": "Table"
         },
         "fields": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
-          }
-        },
-        "table": {
-          "type": "string"
-        },
-        "service": {
-          "type": "string",
-          "const": "Database"
-        },
-        "action": {
-          "type": "string",
-          "const": "CreateRecord"
+          },
+          "description": "The fields for this action",
+          "title": "Fields"
         }
       },
       "required": [
-        "action",
-        "fields",
         "name",
         "service",
-        "table"
+        "action",
+        "table",
+        "fields"
       ],
       "additionalProperties": false,
       "description": "Creates a new record in the specified database table with the given fields",
-      "examples": [
-        {
-          "service": "Database",
-          "action": "CreateRecord",
-          "table": "users",
-          "fields": {
-            "name": "{{trigger.payload.name}}",
-            "email": "{{trigger.payload.email}}",
-            "role": "customer",
-            "createdAt": "{{now}}"
-          }
-        }
-      ],
       "title": "Create Record"
     },
     "TableSchema": {
@@ -2138,16 +2216,24 @@
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for the Airtable integration",
+          "title": "Account"
         },
         "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The base URL for Airtable API",
+          "title": "Base URL"
         },
         "apiKey": {
-          "type": "string"
+          "type": "string",
+          "description": "The API key for Airtable",
+          "title": "API Key"
         },
         "databaseId": {
-          "type": "string"
+          "type": "string",
+          "description": "The database ID for Airtable",
+          "title": "Database ID"
         }
       },
       "required": [
@@ -2157,29 +2243,30 @@
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Airtable integration",
-      "examples": [
-        {
-          "name": "main-database",
-          "apiKey": "key1234567890ABCD",
-          "databaseId": "app1234567890ABCD"
-        }
-      ],
       "title": "Airtable"
     },
     "NotionIntegrationSchema": {
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for the Notion integration",
+          "title": "Account"
         },
         "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The base URL for the Notion API",
+          "title": "Base URL"
         },
         "token": {
-          "type": "string"
+          "type": "string",
+          "description": "The authentication token for the Notion API",
+          "title": "Token"
         },
         "pollingInterval": {
-          "type": "number"
+          "type": "number",
+          "description": "The interval in milliseconds for polling Notion API",
+          "title": "Polling Interval"
         }
       },
       "required": [
@@ -2188,26 +2275,25 @@
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Notion integration",
-      "examples": [
-        {
-          "name": "project-management",
-          "token": "secret_1234567890ABCD",
-          "pollingInterval": 300000
-        }
-      ],
       "title": "Notion"
     },
     "PappersIntegrationSchema": {
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
-        },
-        "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for the Pappers integration",
+          "title": "Account"
         },
         "apiKey": {
-          "type": "string"
+          "type": "string",
+          "description": "The API key for authenticating with Pappers",
+          "title": "API Key"
+        },
+        "baseUrl": {
+          "type": "string",
+          "description": "The base URL for the Pappers API",
+          "title": "Base URL"
         }
       },
       "required": [
@@ -2216,31 +2302,35 @@
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Pappers integration",
-      "examples": [
-        {
-          "name": "company-data",
-          "apiKey": "1234567890ABCD"
-        }
-      ],
       "title": "Pappers"
     },
     "QontoIntegrationSchema": {
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
-        },
-        "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for the Qonto integration",
+          "title": "Account"
         },
         "organisationSlug": {
-          "type": "string"
+          "type": "string",
+          "description": "The unique identifier for your Qonto organisation",
+          "title": "Organisation Slug"
         },
         "secretKey": {
-          "type": "string"
+          "type": "string",
+          "description": "The API secret key used to authenticate with Qonto",
+          "title": "Secret Key"
         },
         "stagingToken": {
-          "type": "string"
+          "type": "string",
+          "description": "Optional token used for testing with Qonto staging environment",
+          "title": "Staging Token"
+        },
+        "baseUrl": {
+          "type": "string",
+          "description": "Optional custom base URL for Qonto API endpoints",
+          "title": "Base URL"
         }
       },
       "required": [
@@ -2250,14 +2340,6 @@
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Qonto banking integration",
-      "examples": [
-        {
-          "name": "business-account",
-          "organisationSlug": "my-company",
-          "secretKey": "1234567890ABCD",
-          "stagingToken": "staging_1234567890ABCD"
-        }
-      ],
       "title": "Qonto"
     },
     "GoogleIntegrationSchema": {
@@ -2278,72 +2360,79 @@
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
-        },
-        "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for the Google Mail integration",
+          "title": "Account"
         },
         "user": {
-          "type": "string"
+          "type": "string",
+          "description": "The user email address for Gmail authentication",
+          "title": "User"
         },
         "password": {
-          "type": "string"
+          "type": "string",
+          "description": "The password or app password for Gmail authentication",
+          "title": "Password"
+        },
+        "baseUrl": {
+          "type": "string",
+          "description": "The base URL for Gmail authentication",
+          "title": "Base URL"
         }
       },
       "required": [
         "account",
-        "password",
-        "user"
+        "user",
+        "password"
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Gmail integration",
-      "examples": [
-        {
-          "name": "support-email",
-          "user": "support@company.com",
-          "password": "app-specific-password"
-        }
-      ],
       "title": "Mail"
     },
     "GoCardlessIntegrationSchema": {
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for the GoCardless integration",
+          "title": "Account"
         },
         "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The base URL for the GoCardless API",
+          "title": "Base URL"
         },
         "accessToken": {
-          "type": "string"
+          "type": "string",
+          "description": "The access token for authenticating with GoCardless",
+          "title": "Access Token"
         }
       },
       "required": [
-        "accessToken",
-        "account"
+        "account",
+        "accessToken"
       ],
       "additionalProperties": false,
       "description": "A configuration schema for GoCardless payment integration",
-      "examples": [
-        {
-          "name": "payment-processing",
-          "accessToken": "live_1234567890ABCD"
-        }
-      ],
       "title": "GoCardless"
     },
     "PhantombusterIntegrationSchema": {
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
-        },
-        "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The Phantombuster account identifier",
+          "title": "Account"
         },
         "apiKey": {
-          "type": "string"
+          "type": "string",
+          "description": "The Phantombuster API key for authentication",
+          "title": "API Key"
+        },
+        "baseUrl": {
+          "type": "string",
+          "description": "The base URL for Phantombuster API",
+          "title": "Base URL"
         }
       },
       "required": [
@@ -2352,34 +2441,36 @@
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Phantombuster automation integration",
-      "examples": [
-        {
-          "name": "linkedin-automation",
-          "apiKey": "1234567890ABCD"
-        }
-      ],
       "title": "Phantombuster"
     },
     "CalendlyIntegrationSchema": {
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for Calendly",
+          "title": "Account"
         },
         "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The base URL for Calendly API",
+          "title": "Base URL"
         },
         "user": {
           "type": "object",
           "properties": {
             "accessToken": {
-              "type": "string"
+              "type": "string",
+              "description": "The access token for Calendly API authentication",
+              "title": "Access Token"
             }
           },
           "required": [
             "accessToken"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "The user configuration for Calendly",
+          "title": "User"
         }
       },
       "required": [
@@ -2388,40 +2479,42 @@
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Calendly scheduling integration",
-      "examples": [
-        {
-          "name": "scheduling",
-          "user": {
-            "accessToken": "1234567890ABCD"
-          }
-        }
-      ],
       "title": "Calendly"
     },
     "YouCanBookMeIntegrationSchema": {
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
+          "type": "string",
+          "description": "The account identifier for YouCanBookMe",
+          "title": "Account"
         },
         "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The base URL for YouCanBookMe API",
+          "title": "Base URL"
         },
         "user": {
           "type": "object",
           "properties": {
             "username": {
-              "type": "string"
+              "type": "string",
+              "description": "The username for YouCanBookMe",
+              "title": "Username"
             },
             "password": {
-              "type": "string"
+              "type": "string",
+              "description": "The password for YouCanBookMe",
+              "title": "Password"
             }
           },
           "required": [
             "username",
             "password"
           ],
-          "additionalProperties": false
+          "additionalProperties": false,
+          "description": "The user credentials for YouCanBookMe",
+          "title": "User"
         }
       },
       "required": [
@@ -2436,13 +2529,19 @@
       "type": "object",
       "properties": {
         "account": {
-          "type": "string"
+          "type": "string",
+          "description": "The account name for the Jotform integration",
+          "title": "Account"
         },
         "baseUrl": {
-          "type": "string"
+          "type": "string",
+          "description": "The base URL for the Jotform API",
+          "title": "Base URL"
         },
         "apiKey": {
-          "type": "string"
+          "type": "string",
+          "description": "The API key for authenticating with Jotform",
+          "title": "API Key"
         }
       },
       "required": [

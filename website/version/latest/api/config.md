@@ -19,14 +19,14 @@ await new App().start(config)
 
 ### Name
 
-The name of the engine.
+The name of the engine
 >name: `string`
 
 ## Optional
 
-### App version
+### App Version
 
-The version of the application.
+The version of the application
 The default value is the `version` property of the `package.json` file or `latest`.
 >appVersion?: `string`
 
@@ -40,9 +40,9 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### Engine version
+### Engine Version
 
-The version of the engine.
+The version of the engine
 The default value is the `version` of the dependency `@latechforce/engine` of the `package.json` file.
 >engineVersion?: `string`
 
@@ -58,7 +58,7 @@ await new App().start(config)
 ```
 ### Description
 
-The description of the application.
+The description of the application
 >description?: `string`
 
 ```ts
@@ -73,7 +73,7 @@ await new App().start(config)
 ```
 ### Forms
 
-The forms of the application.
+The forms of the application
 >forms?: [Form](/api/form)[]
 
 ```ts
@@ -131,7 +131,7 @@ await new App().start(config)
 ```
 ### Automations
 
-The automations of the application.
+The automations of the application
 >automations?: [Automation](/api/automation)[]
 
 ```ts
@@ -179,7 +179,7 @@ await new App().start(config)
 ```
 ### Tables
 
-The tables of the application.
+The tables of the application
 >tables?: [Table](/api/table)[]
 
 ```ts
@@ -201,7 +201,7 @@ await new App().start(config)
 ```
 ### Buckets
 
-The buckets of the application.
+The buckets of the application
 >buckets?: [Bucket](/api/bucket)[]
 
 ```ts
@@ -223,7 +223,7 @@ await new App().start(config)
 ```
 ### Integrations
 
-The integrations of the application.
+The integrations of the application
 >integrations?: [Integration](/api/integration)
 
 ```ts
@@ -252,7 +252,7 @@ await new App().start(config)
 ```
 ### Services
 
-The services of the application.
+The services of the application
 >services?: [Service](/api/service)
 
 ```ts

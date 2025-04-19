@@ -4,16 +4,36 @@ import type { RetrieveAttachmentQontoActionConfig } from '/domain/entities/Actio
  * Interface for retrieving an attachment from Qonto
  * @title Retrieve Attachment
  * @description Retrieves an attachment using Qonto integration
- *
- * @example
- * {
- *   integration: 'Qonto',
- *   action: 'RetrieveAttachment',
- *   attachmentId: 'att_123456789'
- * }
  */
-export interface RetrieveAttachmentQontoIntegrationActionAutomationSchema
-  extends RetrieveAttachmentQontoActionConfig {
+export interface RetrieveAttachmentQontoIntegrationActionAutomationSchema {
+  /**
+   * The name for this action
+   * @title Name
+   * @description The name for this action
+   */
+  name: RetrieveAttachmentQontoActionConfig['name']
+  /**
+   * The integration type for this action
+   * @title Integration
+   * @description The integration type for this action
+   */
   integration: 'Qonto'
+  /**
+   * The action type for this action
+   * @title Action
+   * @description The action type for this action
+   */
   action: 'RetrieveAttachment'
+  /**
+   * The attachment identifier for this action
+   * @title Attachment
+   * @description The attachment identifier for this action
+   */
+  attachmentId: RetrieveAttachmentQontoActionConfig['attachmentId']
+  /**
+   * The account identifier for this action
+   * @title Account
+   * @description The account identifier for this action
+   */
+  account: RetrieveAttachmentQontoActionConfig['account']
 }

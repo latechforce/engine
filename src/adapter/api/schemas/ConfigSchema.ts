@@ -10,67 +10,76 @@ import type { ServiceSchema } from './ServiceSchema'
  * @title Config
  * @description This is the configuration of the engine.
  */
-export type ConfigSchema = {
+export interface ConfigSchema {
   /**
-   * Engine name
+   * The name of the engine
    * @title Name
-   * @description The name of the engine.
+   * @description The name of the engine
    */
   name: string
+
   /**
-   * Config version
-   * @title App version
-   * @description The version of the application.
+   * The version of the application
+   * @title App Version
+   * @description The version of the application
    * @default "the `version` property of the `package.json` file or `latest`"
    */
   appVersion?: string
+
   /**
-   * Engine version
-   * @title Engine version
-   * @description The version of the engine.
+   * The version of the engine
+   * @title Engine Version
+   * @description The version of the engine
    * @default "the `version` of the dependency `@latechforce/engine` of the `package.json` file"
    */
   engineVersion?: string
+
   /**
-   * Engine description
+   * The description of the application
    * @title Description
-   * @description The description of the application.
+   * @description The description of the application
    */
   description?: string
+
   /**
-   * Forms
+   * The forms of the application
    * @title Forms
-   * @description The forms of the application.
+   * @description The forms of the application
    */
   forms?: FormSchema[]
+
   /**
-   * Automations
+   * The automations of the application
    * @title Automations
-   * @description The automations of the application.
+   * @description The automations of the application
    */
   automations?: AutomationSchema[]
+
   /**
-   * Tables
+   * The tables of the application
    * @title Tables
-   * @description The tables of the application.
+   * @description The tables of the application
    */
   tables?: TableSchema[]
+
   /**
-   * Buckets
+   * The buckets of the application
    * @title Buckets
-   * @description The buckets of the application.
+   * @description The buckets of the application
    */
   buckets?: BucketSchema[]
+
   /**
-   * Integrations
+   * The integrations of the application
    * @title Integrations
-   * @description The integrations of the application.
+   * @description The integrations of the application
    */
   integrations?: IntegrationSchema
+
   /**
-   * Services
+   * The services of the application
    * @title Services
-   * @description The services of the application.
+   * @description The services of the application
    */
   services?: ServiceSchema
 }

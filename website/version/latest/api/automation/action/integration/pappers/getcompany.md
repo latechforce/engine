@@ -4,23 +4,28 @@ Retrieves company information using Pappers integration
 
 ## Required
 
-### account
+### Name
 
->account: `string`
-
-### action
-
->action: const: `GetCompany`
-
-### integration
-
->integration: const: `Pappers`
-
-### name
-
+The name for this action
 >name: `string`
 
-### siret
+### Integration
 
+The integration type for this action
+>integration: const: `Pappers`
+
+### Action
+
+The action type for this action
+>action: const: `GetCompany`
+
+### Siret
+
+The siret for this action
 >siret: `string`
+
+### Account
+
+The account identifier for this action
+>account: `string`
 

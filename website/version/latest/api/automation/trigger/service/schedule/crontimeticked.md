@@ -24,15 +24,18 @@ await new App().start(config)
 ```
 ## Required
 
-### cronTime
+### Service
 
->cronTime: `string`
+The service type for this trigger
+>service: const: `Schedule`
 
-### event
+### Event
 
+The event type for this trigger
 >event: const: `CronTimeTicked`
 
-### service
+### Cron Time
 
->service: const: `Schedule`
+The cron time for this trigger
+>cronTime: `string`
 

@@ -5,4 +5,36 @@ import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe'
  * @title YouCanBookMe
  * @description A configuration schema for YouCanBookMe scheduling integration
  */
-export type YouCanBookMeIntegrationSchema = YouCanBookMeConfig
+export interface YouCanBookMeIntegrationSchema {
+  /**
+   * The account identifier for YouCanBookMe
+   * @title Account
+   * @description The account identifier for YouCanBookMe
+   */
+  account: YouCanBookMeConfig['account']
+  /**
+   * The base URL for YouCanBookMe API
+   * @title Base URL
+   * @description The base URL for YouCanBookMe API
+   */
+  baseUrl?: YouCanBookMeConfig['baseUrl']
+  /**
+   * The user credentials for YouCanBookMe
+   * @title User
+   * @description The user credentials for YouCanBookMe
+   */
+  user: {
+    /**
+     * The username for YouCanBookMe
+     * @title Username
+     * @description The username for YouCanBookMe
+     */
+    username: string
+    /**
+     * The password for YouCanBookMe
+     * @title Password
+     * @description The password for YouCanBookMe
+     */
+    password: string
+  }
+}

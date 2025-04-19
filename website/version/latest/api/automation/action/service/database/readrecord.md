@@ -51,23 +51,28 @@ await new App().start(config)
 ```
 ## Required
 
-### action
+### Name
 
->action: const: `ReadRecord`
-
-### id
-
->id: `string`
-
-### name
-
+The name for this action
 >name: `string`
 
-### service
+### Service
 
+The service type for this action
 >service: const: `Database`
 
-### table
+### Action
 
+The action type for this action
+>action: const: `ReadRecord`
+
+### Table
+
+The table name for this action
 >table: `string`
+
+### Record
+
+The record identifier for this action
+>id: `string`
 

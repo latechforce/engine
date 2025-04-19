@@ -21,17 +21,20 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The account name for the Jotform integration
 >account: `string`
 
-### apiKey
+### API Key
 
+The API key for authenticating with Jotform
 >apiKey: `string`
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for the Jotform API
 >baseUrl?: `string`
 

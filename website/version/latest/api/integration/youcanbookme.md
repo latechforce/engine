@@ -24,17 +24,20 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The account identifier for YouCanBookMe
 >account: `string`
 
-### user
+### User
 
+The user credentials for YouCanBookMe
 >user: Object
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for YouCanBookMe API
 >baseUrl?: `string`
 

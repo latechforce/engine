@@ -30,15 +30,18 @@ await new App().start(config)
 ```
 ## Required
 
-### event
+### Service
 
->event: const: `RecordCreated`
-
-### service
-
+The service type for this trigger
 >service: const: `Database`
 
-### table
+### Event
 
+The event type for this trigger
+>event: const: `RecordCreated`
+
+### Table
+
+The table name for this trigger
 >table: `string`
 

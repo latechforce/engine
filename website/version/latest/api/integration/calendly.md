@@ -23,17 +23,20 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The account identifier for Calendly
 >account: `string`
 
-### user
+### User
 
+The user configuration for Calendly
 >user: Object
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for Calendly API
 >baseUrl?: `string`
 

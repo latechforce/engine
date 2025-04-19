@@ -4,23 +4,28 @@ Creates a new payment in GoCardless with the specified details
 
 ## Required
 
-### account
+### Name
 
->account: `string`
-
-### action
-
->action: const: `CreatePayment`
-
-### integration
-
->integration: const: `GoCardless`
-
-### name
-
+The name for this action
 >name: `string`
 
-### payment
+### Integration
 
+The integration type for this action
+>integration: const: `GoCardless`
+
+### Action
+
+The action type for this action
+>action: const: `CreatePayment`
+
+### Payment
+
+The payment for this action
 >payment: Object
+
+### Account
+
+The account identifier for this action
+>account: `string`
 

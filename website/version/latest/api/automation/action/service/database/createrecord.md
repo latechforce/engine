@@ -4,23 +4,28 @@ Creates a new record in the specified database table with the given fields
 
 ## Required
 
-### action
+### Name
 
->action: const: `CreateRecord`
-
-### fields
-
->fields: Object
-
-### name
-
+The name for this action
 >name: `string`
 
-### service
+### Service
 
+The service type for this action
 >service: const: `Database`
 
-### table
+### Action
 
+The action type for this action
+>action: const: `CreateRecord`
+
+### Table
+
+The table name for this action
 >table: `string`
+
+### Fields
+
+The fields for this action
+>fields: Object
 

@@ -24,21 +24,25 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The account identifier for the Google Mail integration
 >account: `string`
 
-### password
+### User
 
->password: `string`
-
-### user
-
+The user email address for Gmail authentication
 >user: `string`
+
+### Password
+
+The password or app password for Gmail authentication
+>password: `string`
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for Gmail authentication
 >baseUrl?: `string`
 

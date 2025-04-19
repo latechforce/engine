@@ -22,25 +22,30 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The account identifier for the Qonto integration
 >account: `string`
 
-### organisationSlug
+### Organisation Slug
 
+The unique identifier for your Qonto organisation
 >organisationSlug: `string`
 
-### secretKey
+### Secret Key
 
+The API secret key used to authenticate with Qonto
 >secretKey: `string`
 
 ## Optional
 
-### baseUrl
+### Staging Token
 
->baseUrl?: `string`
-
-### stagingToken
-
+Optional token used for testing with Qonto staging environment
 >stagingToken?: `string`
+
+### Base URL
+
+Optional custom base URL for Qonto API endpoints
+>baseUrl?: `string`
 

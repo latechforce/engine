@@ -34,29 +34,35 @@ await new App().start(config)
 ```
 ## Required
 
-### action
+### Name
 
->action: const: `RunJavascript`
-
-### code
-
->code: `string`
-
-### name
-
+The name for this action
 >name: `string`
 
-### service
+### Service
 
+The service type for this action
 >service: const: `Code`
+
+### Action
+
+The action type for this action
+>action: const: `RunJavascript`
+
+### Code
+
+The code for this action
+>code: `string`
 
 ## Optional
 
-### input
+### Input
 
+The input for this action
 >input?: `unknown`
 
-### env
+### Environment Variables
 
+The environment variables for this action
 >env?: Object
 

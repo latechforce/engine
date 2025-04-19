@@ -21,17 +21,20 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The Phantombuster account identifier
 >account: `string`
 
-### apiKey
+### API Key
 
+The Phantombuster API key for authentication
 >apiKey: `string`
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for Phantombuster API
 >baseUrl?: `string`
 

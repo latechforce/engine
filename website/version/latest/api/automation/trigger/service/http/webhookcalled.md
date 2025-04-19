@@ -24,22 +24,26 @@ await new App().start(config)
 ```
 ## Required
 
-### event
+### Service
 
+The service type for this trigger
+>service: const: `Http`
+
+### Event
+
+The event type for this trigger
 >event: const: `WebhookCalled`
 
-### path
+### Path
 
+The path for this trigger
 >path: `string`
-
-### service
-
->service: const: `Http`
 
 ## Optional
 
-### auth
+### Authentication
 
+The authentication configuration for this trigger
 >auth?: `unknown`
 
 ```ts

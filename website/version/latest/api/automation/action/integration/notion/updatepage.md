@@ -4,31 +4,38 @@ Updates a page in Notion with the specified properties
 
 ## Required
 
-### account
+### Name
 
->account: `string`
-
-### action
-
->action: const: `UpdatePage`
-
-### id
-
->id: `string`
-
-### integration
-
->integration: const: `Notion`
-
-### name
-
+The name for this action
 >name: `string`
 
-### page
+### Integration
 
+The integration type for this action
+>integration: const: `Notion`
+
+### Action
+
+The action type for this action
+>action: const: `UpdatePage`
+
+### Table
+
+The table identifier for this action
+>table: `string`
+
+### Page
+
+The page identifier for this action
+>id: `string`
+
+### Page
+
+The page identifier for this action
 >page: Object
 
-### table
+### Account
 
->table: `string`
+The account identifier for this action
+>account: `string`
 

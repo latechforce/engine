@@ -21,21 +21,25 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Account
 
+The account identifier for the Notion integration
 >account: `string`
 
-### token
+### Token
 
+The authentication token for the Notion API
 >token: `string`
 
 ## Optional
 
-### baseUrl
+### Base URL
 
+The base URL for the Notion API
 >baseUrl?: `string`
 
-### pollingInterval
+### Polling Interval
 
+The interval in milliseconds for polling Notion API
 >pollingInterval?: `number`
 

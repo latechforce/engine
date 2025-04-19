@@ -24,15 +24,18 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Integration
 
->account: `string`
+The integration type for this trigger
+>integration: const: `YouCanBookMe`
 
-### event
+### Event
 
+The event type for this trigger
 >event: const: `BookingCreated`
 
-### integration
+### Account
 
->integration: const: `YouCanBookMe`
+The account identifier for this trigger
+>account: `string`
 

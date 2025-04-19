@@ -25,19 +25,23 @@ await new App().start(config)
 ```
 ## Required
 
-### account
+### Integration
 
->account: `string`
+The integration type for this trigger
+>integration: const: `Jotform`
 
-### event
+### Event
 
+The event type for this trigger
 >event: const: `FormWebhookReceived`
 
-### formId
+### Form
 
+The form identifier for this trigger
 >formId: `string`
 
-### integration
+### Account
 
->integration: const: `Jotform`
+The account identifier for this trigger
+>account: `string`
 

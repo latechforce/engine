@@ -4,26 +4,36 @@ import type { CreatePaymentGoCardlessActionConfig } from '/domain/entities/Actio
  * Interface for creating a payment in GoCardless
  * @title Create Payment
  * @description Creates a new payment in GoCardless with the specified details
- *
- * @example
- * {
- *   integration: 'GoCardless',
- *   action: 'CreatePayment',
- *   payment: {
- *     amount: 1000,
- *     currency: 'EUR',
- *     description: 'Monthly subscription',
- *     mandate: '{{trigger.payload.mandateId}}',
- *     metadata: {
- *       orderId: '{{trigger.payload.orderId}}',
- *       customerId: '{{trigger.payload.customerId}}'
- *     }
- *   }
- * }
- *
  */
-export interface CreatePaymentGoCardlessIntegrationActionAutomationSchema
-  extends CreatePaymentGoCardlessActionConfig {
+export interface CreatePaymentGoCardlessIntegrationActionAutomationSchema {
+  /**
+   * The name for this action
+   * @title Name
+   * @description The name for this action
+   */
+  name: CreatePaymentGoCardlessActionConfig['name']
+  /**
+   * The integration type for this action
+   * @title Integration
+   * @description The integration type for this action
+   */
   integration: 'GoCardless'
+  /**
+   * The action type for this action
+   * @title Action
+   * @description The action type for this action
+   */
   action: 'CreatePayment'
+  /**
+   * The payment for this action
+   * @title Payment
+   * @description The payment for this action
+   */
+  payment: CreatePaymentGoCardlessActionConfig['payment']
+  /**
+   * The account identifier for this action
+   * @title Account
+   * @description The account identifier for this action
+   */
+  account: CreatePaymentGoCardlessActionConfig['account']
 }

@@ -24,22 +24,26 @@ await new App().start(config)
 ```
 ## Required
 
-### event
+### Service
 
+The service type for this trigger
+>service: const: `Http`
+
+### Event
+
+The event type for this trigger
 >event: const: `ApiCalled`
 
-### path
+### Path
 
+The API endpoint path where the trigger will be activated
 >path: `string`
-
-### service
-
->service: const: `Http`
 
 ## Optional
 
-### input
+### Input
 
+The JSON schema for validating the input data
 >input?: Object
 
 ```ts
@@ -73,8 +77,9 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### output
+### Output
 
+The template for formatting the output response
 >output?: Object
 
 ```ts
@@ -100,8 +105,9 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### auth
+### Auth
 
+The authentication settings for the API endpoint
 >auth?: const: `ApiKey`
 
 ```ts

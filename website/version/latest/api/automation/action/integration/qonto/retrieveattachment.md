@@ -4,23 +4,28 @@ Retrieves an attachment using Qonto integration
 
 ## Required
 
-### account
+### Name
 
->account: `string`
+The name for this action
+>name: `string`
 
-### action
+### Integration
 
->action: const: `RetrieveAttachment`
-
-### attachmentId
-
->attachmentId: `string`
-
-### integration
-
+The integration type for this action
 >integration: const: `Qonto`
 
-### name
+### Action
 
->name: `string`
+The action type for this action
+>action: const: `RetrieveAttachment`
+
+### Attachment
+
+The attachment identifier for this action
+>attachmentId: `string`
+
+### Account
+
+The account identifier for this action
+>account: `string`
 
