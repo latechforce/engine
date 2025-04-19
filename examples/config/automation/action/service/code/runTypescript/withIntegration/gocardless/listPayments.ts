@@ -23,7 +23,6 @@ export const configAutomationActionServiceCodeRunTypescriptWithGoCardlessListPay
             name: 'runTypescriptCode',
             code: String(async function (context: CodeRunnerContext<{}>) {
               const { gocardless } = context.integrations
-
               const result = await gocardless.listPayments('gocardless', {
                 limit: 10,
                 status: 'pending_submission',

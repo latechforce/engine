@@ -1,5 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
+import { Mock } from '/test/bun'
+import { configAutomationActionIntegrationGoogleMailSendEmail } from '/examples/config/automation/action/integration/googlemail/sendEmail'
 
 const mock = new Mock(Tester, { integrations: ['GoogleMail'] })
 
@@ -7,38 +8,7 @@ mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should send an email', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-        automations: [
-          {
-            name: 'sendEmail',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'send-email',
-              output: {
-                id: '{{sendEmail.messageId}}',
-              },
-            },
-            actions: [
-              {
-                name: 'sendEmail',
-                integration: 'GoogleMail',
-                action: 'SendEmail',
-                account: 'googlemail',
-                email: {
-                  from: 'test@test.com',
-                  to: 'test@test.com',
-                  subject: 'ENGINE - TEST',
-                  text: 'ENGINE - TEST',
-                  html: 'ENGINE - TEST',
-                },
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionIntegrationGoogleMailSendEmail)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/send-email`)
@@ -49,31 +19,20 @@ mock.request(({ app, request }) => {
 
     it('should throw an error if the to is not a valid email', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
+      const config = {
+        ...configAutomationActionIntegrationGoogleMailSendEmail,
         automations: [
           {
-            name: 'sendEmail',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'send-email',
-              output: {
-                id: '{{sendEmail.id}}',
-              },
-            },
+            ...configAutomationActionIntegrationGoogleMailSendEmail.automations![0],
             actions: [
               {
-                name: 'sendEmail',
-                integration: 'GoogleMail',
-                action: 'SendEmail',
-                account: 'googlemail',
+                ...configAutomationActionIntegrationGoogleMailSendEmail.automations![0].actions[0],
                 email: {
-                  from: 'test@test.com',
+                  ...(
+                    configAutomationActionIntegrationGoogleMailSendEmail.automations![0]
+                      .actions[0] as any
+                  ).email,
                   to: '{{trigger.email}}',
-                  subject: 'ENGINE - TEST',
-                  text: 'ENGINE - TEST',
-                  html: 'ENGINE - TEST',
                 },
               },
             ],

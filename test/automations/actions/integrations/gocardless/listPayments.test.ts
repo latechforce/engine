@@ -1,5 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
+import { Mock } from '/test/bun'
+import { configAutomationActionIntegrationGoCardlessListPayments } from '/examples/config/automation/action/integration/gocardless/listPayments'
 
 const mock = new Mock(Tester, { integrations: ['GoCardless'] })
 
@@ -7,37 +8,7 @@ mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should list payments', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'listPayments',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'list-payments',
-              output: {
-                payments: { json: '{{listPayments.payments}}' },
-                meta: { json: '{{listPayments.meta}}' },
-              },
-            },
-            actions: [
-              {
-                name: 'listPayments',
-                integration: 'GoCardless',
-                action: 'ListPayments',
-                account: 'gocardless',
-                params: {
-                  limit: 10,
-                  status: 'pending_submission',
-                },
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionIntegrationGoCardlessListPayments)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/list-payments`)

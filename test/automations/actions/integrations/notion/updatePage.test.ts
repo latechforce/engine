@@ -1,11 +1,15 @@
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
+import { Mock } from '/test/bun'
 import {
   notionTableSample1,
   notionTableSample2,
   notionTableSample3,
   notionUserSample,
 } from '/infrastructure/integrations/bun/mocks/notion/NotionTestSamples'
+import {
+  configAutomationActionIntegrationNotionUpdatePage,
+  configAutomationActionIntegrationNotionUpdatePageWithSpecialCharacters,
+} from '/examples/config/automation/action/integration/notion/updatePage'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['Notion'] })
 
@@ -20,42 +24,7 @@ mock.request(({ app, request, integrations, drivers }) => {
   describe('on POST', () => {
     it('should update a page', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'updatePage',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'update-page',
-              input: {
-                type: 'object',
-                properties: {
-                  id: {
-                    type: 'string',
-                  },
-                },
-              },
-            },
-            actions: [
-              {
-                name: 'updatePage',
-                integration: 'Notion',
-                action: 'UpdatePage',
-                account: 'notion',
-                table: notionTableSample1.name,
-                id: '{{trigger.body.id}}',
-                page: {
-                  name: 'John Doe',
-                },
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionIntegrationNotionUpdatePage)
       const table = await integrations.notion.getTable(notionTableSample1.name)
       const insertResponse = await table.insert({ name: 'John' })
       if (insertResponse.error) {
@@ -80,36 +49,8 @@ mock.request(({ app, request, integrations, drivers }) => {
   describe('on Notion Table Page Created', () => {
     it('should update a page with properties with specials characters', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'updatePage',
-            trigger: {
-              integration: 'Notion',
-              event: 'TablePageCreated',
-              table: notionTableSample3.name,
-              account: 'notion',
-            },
-            actions: [
-              {
-                name: 'updatePage',
-                integration: 'Notion',
-                action: 'UpdatePage',
-                table: notionTableSample3.name,
-                id: '{{trigger.id}}',
-                account: 'notion',
-                page: {
-                  '[App] Nom': '{{lookup trigger.properties "[App] Nom" }} updated',
-                },
-              },
-            ],
-          },
-        ],
-      }
       const table = await integrations.notion.getTable(notionTableSample3.name)
-      await app.start(config)
+      await app.start(configAutomationActionIntegrationNotionUpdatePageWithSpecialCharacters)
 
       // WHEN
       await table.insert({ '[App] Nom': 'App' })

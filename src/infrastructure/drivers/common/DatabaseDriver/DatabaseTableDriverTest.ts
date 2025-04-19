@@ -1,5 +1,4 @@
 import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
-import { getFirstAndSecondTableSchema } from '../../../test/common/schema'
 import type BunTester from 'bun:test'
 
 const {

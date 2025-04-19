@@ -5,37 +5,14 @@ import {
   qontoCreateClientSample,
 } from '/infrastructure/integrations/bun/mocks/qonto/QontoTestSamples'
 import type { QontoClientInvoice } from '/domain/integrations/Qonto/QontoTypes'
+import { configAutomationActionIntegrationQontoRetrieveAttachment } from '/examples/config/automation/action/integration/qonto/retrieveAttachment'
 
 new Mock(Tester).app(({ app }) => {
   describe('on start', () => {
     it('should return a config error if the configuration is not valid', async () => {
       // GIVEN
       const extendConfig: Config = {
-        name: 'App',
-        automations: [
-          {
-            name: 'retrieveAttachment',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'retrieve-attachment',
-              output: {
-                attachment: {
-                  json: '{{retrieveAttachment}}',
-                },
-              },
-            },
-            actions: [
-              {
-                name: 'retrieveAttachment',
-                integration: 'Qonto',
-                action: 'RetrieveAttachment',
-                account: 'qonto',
-                attachmentId: 'invalid-attachment-id',
-              },
-            ],
-          },
-        ],
+        ...configAutomationActionIntegrationQontoRetrieveAttachment,
         integrations: {
           qonto: [
             {
@@ -58,7 +35,6 @@ new Mock(Tester).app(({ app }) => {
 })
 
 new Mock(Tester, { integrations: ['Qonto'] }).request(({ app, request, integrations }) => {
-  let config: Config
   let invoice: QontoClientInvoice
 
   beforeEach(async () => {
@@ -69,38 +45,26 @@ new Mock(Tester, { integrations: ['Qonto'] }).request(({ app, request, integrati
     const { data: invoices = [] } = await integrations.qonto.listClientInvoices()
     invoice = invoices[0]
     if (!invoice) throw new Error('Invoice not created')
-    config = {
-      name: 'App',
-      automations: [
-        {
-          name: 'retrieveAttachment',
-          trigger: {
-            service: 'Http',
-            event: 'ApiCalled',
-            path: 'retrieve-attachment',
-            output: {
-              attachment: {
-                json: '{{retrieveAttachment}}',
-              },
-            },
-          },
-          actions: [
-            {
-              name: 'retrieveAttachment',
-              integration: 'Qonto',
-              action: 'RetrieveAttachment',
-              account: 'qonto',
-              attachmentId: invoice.attachment_id!,
-            },
-          ],
-        },
-      ],
-    }
   })
 
   describe('on POST', () => {
     it('should retrieve an attachment', async () => {
       // GIVEN
+      const config = {
+        ...configAutomationActionIntegrationQontoRetrieveAttachment,
+        automations: [
+          {
+            ...configAutomationActionIntegrationQontoRetrieveAttachment.automations![0],
+            actions: [
+              {
+                ...configAutomationActionIntegrationQontoRetrieveAttachment.automations![0]
+                  .actions[0],
+                attachmentId: invoice.attachment_id!,
+              },
+            ],
+          },
+        ],
+      }
       const { url } = await app.start(config)
 
       // WHEN
