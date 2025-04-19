@@ -79,43 +79,59 @@
     },
     "FormSchema": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the form.",
+          "title": "Name"
+        },
+        "path": {
+          "type": "string",
+          "description": "The URL path where the form is accessible.",
+          "title": "Path"
+        },
+        "title": {
+          "type": "string",
+          "description": "The display title of the form.",
+          "title": "Title"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the form.",
+          "title": "Description"
+        },
+        "table": {
+          "type": "string",
+          "description": "The name of the table this form is associated with.",
+          "title": "Table"
+        },
         "inputs": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/InputFormSchema"
-          }
-        },
-        "name": {
-          "type": "string"
-        },
-        "path": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "table": {
-          "type": "string"
+          },
+          "description": "The input fields of the form.",
+          "title": "Inputs"
         },
         "submitLabel": {
-          "type": "string"
+          "type": "string",
+          "description": "The text displayed on the submit button.",
+          "title": "Submit label"
         },
         "successMessage": {
-          "type": "string"
+          "type": "string",
+          "description": "The message displayed after successful form submission.",
+          "title": "Success message"
         }
       },
       "required": [
-        "inputs",
         "name",
         "path",
-        "table"
+        "table",
+        "inputs"
       ],
-      "description": "Type alias for form configuration",
+      "additionalProperties": false,
+      "description": "Defines a form for data input and submission",
       "title": "Form"
     },
     "InputFormSchema": {
@@ -154,19 +170,27 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the automation.",
+          "title": "Name"
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "The description of the automation.",
+          "title": "Description"
         },
         "trigger": {
-          "$ref": "#/definitions/TriggerAutomationSchema"
+          "$ref": "#/definitions/TriggerAutomationSchema",
+          "description": "The trigger that starts the automation.",
+          "title": "Trigger"
         },
         "actions": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/ActionAutomationSchema"
-          }
+          },
+          "description": "The actions that are executed when the trigger is activated.",
+          "title": "Actions"
         }
       },
       "required": [
@@ -2016,14 +2040,16 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the bucket.",
+          "title": "Name"
         }
       },
       "required": [
         "name"
       ],
       "additionalProperties": false,
-      "description": "Type alias for bucket storage configuration",
+      "description": "Defines a storage bucket for file management",
       "title": "Bucket"
     },
     "IntegrationSchema": {
@@ -2033,58 +2059,78 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/AirtableIntegrationSchema"
-          }
+          },
+          "description": "Configuration for Airtable integrations.",
+          "title": "Airtable"
         },
         "notion": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/NotionIntegrationSchema"
-          }
+          },
+          "description": "Configuration for Notion integrations.",
+          "title": "Notion"
         },
         "pappers": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/PappersIntegrationSchema"
-          }
+          },
+          "description": "Configuration for Pappers integrations.",
+          "title": "Pappers"
         },
         "qonto": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/QontoIntegrationSchema"
-          }
+          },
+          "description": "Configuration for Qonto integrations.",
+          "title": "Qonto"
         },
         "google": {
-          "$ref": "#/definitions/GoogleIntegrationSchema"
+          "$ref": "#/definitions/GoogleIntegrationSchema",
+          "description": "Configuration for Google integrations.",
+          "title": "Google"
         },
         "gocardless": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/GoCardlessIntegrationSchema"
-          }
+          },
+          "description": "Configuration for GoCardless integrations.",
+          "title": "GoCardless"
         },
         "phantombuster": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/PhantombusterIntegrationSchema"
-          }
+          },
+          "description": "Configuration for Phantombuster integrations.",
+          "title": "Phantombuster"
         },
         "calendly": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/CalendlyIntegrationSchema"
-          }
+          },
+          "description": "Configuration for Calendly integrations.",
+          "title": "Calendly"
         },
         "youcanbookme": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/YouCanBookMeIntegrationSchema"
-          }
+          },
+          "description": "Configuration for YouCanBookMe integrations.",
+          "title": "YouCanBookMe"
         },
         "jotform": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/JotformIntegrationSchema"
-          }
+          },
+          "description": "Configuration for Jotform integrations.",
+          "title": "Jotform"
         }
       },
       "additionalProperties": false,
@@ -2414,33 +2460,40 @@
       "type": "object",
       "properties": {
         "server": {
-          "$ref": "#/definitions/ServerServiceSchema"
+          "$ref": "#/definitions/ServerServiceSchema",
+          "description": "Configuration for the server service.",
+          "title": "Server"
         },
         "database": {
           "$ref": "#/definitions/DatabaseServiceSchema",
-          "description": "The database of the engine"
+          "description": "Configuration for the database service.",
+          "title": "Database"
         },
         "monitors": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/MonitorServiceSchema"
           },
-          "description": "The monitors of the engine"
+          "description": "Configurations for monitoring services.",
+          "title": "Monitors"
         },
         "loggers": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/LoggerServiceSchema"
           },
-          "description": "The loggers of the engine"
+          "description": "Configurations for logging services.",
+          "title": "Loggers"
         },
         "tunnel": {
           "$ref": "#/definitions/TunnelServiceSchema",
-          "description": "The tunnel of the engine"
+          "description": "Configuration for the tunnel service.",
+          "title": "Tunnel"
         },
         "theme": {
           "$ref": "#/definitions/ThemeServiceSchema",
-          "description": "The themes of the engine"
+          "description": "Configuration for the theme service.",
+          "title": "Theme"
         }
       },
       "additionalProperties": false,

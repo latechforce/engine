@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Form
 
-Type alias for form configuration
+Defines a form for data input and submission
 
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
@@ -41,26 +41,31 @@ await new App().start(config)
 ```
 ## Required
 
-### inputs
+### Name
 
->inputs: [Input](/api/form/input)[]
-
-### name
-
+The name of the form.
 >name: `string`
 
-### path
+### Path
 
+The URL path where the form is accessible.
 >path: `string`
 
-### table
+### Table
 
+The name of the table this form is associated with.
 >table: `string`
+
+### Inputs
+
+The input fields of the form.
+>inputs: [Input](/api/form/input)[]
 
 ## Optional
 
-### title
+### Title
 
+The display title of the form.
 >title?: `string`
 
 ```ts
@@ -97,8 +102,9 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### description
+### Description
 
+The description of the form.
 >description?: `string`
 
 ```ts
@@ -135,8 +141,9 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### submitLabel
+### Submit label
 
+The text displayed on the submit button.
 >submitLabel?: `string`
 
 ```ts
@@ -173,8 +180,9 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### successMessage
+### Success message
 
+The message displayed after successful form submission.
 >successMessage?: `string`
 
 ```ts

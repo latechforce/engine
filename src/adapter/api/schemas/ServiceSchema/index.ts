@@ -11,30 +11,40 @@ import type { TunnelServiceSchema } from './TunnelSchema'
  * @description Defines configurations for various services
  */
 export interface ServiceSchema {
+  /**
+   * Server configuration
+   * @title Server
+   * @description Configuration for the server service.
+   */
   server?: ServerServiceSchema
   /**
-   * Database
-   * @description The database of the engine
+   * Database configuration
+   * @title Database
+   * @description Configuration for the database service.
    */
   database?: DatabaseServiceSchema
   /**
-   * Monitors
-   * @description The monitors of the engine
+   * Monitor configurations
+   * @title Monitors
+   * @description Configurations for monitoring services.
    */
   monitors?: MonitorServiceSchema[]
   /**
-   * Loggers
-   * @description The loggers of the engine
+   * Logger configurations
+   * @title Loggers
+   * @description Configurations for logging services.
    */
   loggers?: LoggerServiceSchema[]
   /**
-   * Tunnel
-   * @description The tunnel of the engine
+   * Tunnel configuration
+   * @title Tunnel
+   * @description Configuration for the tunnel service.
    */
   tunnel?: TunnelServiceSchema
   /**
-   * Themes
-   * @description The themes of the engine
+   * Theme configuration
+   * @title Theme
+   * @description Configuration for the theme service.
    */
   theme?: ThemeServiceSchema
 }

@@ -1,8 +1,15 @@
 import type { BucketConfig } from '/domain/entities/Bucket'
 
 /**
- * Bucket configuration type
+ * Bucket configuration interface
  * @title Bucket
- * @description Type alias for bucket storage configuration
+ * @description Defines a storage bucket for file management
  */
-export type BucketSchema = BucketConfig
+export interface BucketSchema {
+  /**
+   * Bucket name
+   * @title Name
+   * @description The name of the bucket.
+   */
+  name: BucketConfig['name']
+}

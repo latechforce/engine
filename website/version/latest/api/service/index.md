@@ -4,32 +4,33 @@ Defines configurations for various services
 
 ## Optional
 
-### server
+### Server
 
+Configuration for the server service.
 >server?: [Server](/api/service/server)
 
-### database
+### Database
 
-The database of the engine
+Configuration for the database service.
 >database?: [Database](/api/service/database)
 
-### monitors
+### Monitors
 
-The monitors of the engine
+Configurations for monitoring services.
 >monitors?: [Monitor](/api/service/monitor)[]
 
-### loggers
+### Loggers
 
-The loggers of the engine
+Configurations for logging services.
 >loggers?: [Logger](/api/service/logger)[]
 
-### tunnel
+### Tunnel
 
-The tunnel of the engine
+Configuration for the tunnel service.
 >tunnel?: [Tunnel](/api/service/tunnel)
 
-### theme
+### Theme
 
-The themes of the engine
+Configuration for the theme service.
 >theme?: [Theme](/api/service/theme)
 

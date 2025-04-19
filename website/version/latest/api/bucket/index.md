@@ -4,11 +4,12 @@ sidebar_position: 5
 
 # Bucket
 
-Type alias for bucket storage configuration
+Defines a storage bucket for file management
 
 ## Required
 
-### name
+### Name
 
+The name of the bucket.
 >name: `string`
 

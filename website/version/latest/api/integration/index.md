@@ -8,43 +8,53 @@ Defines configurations for various third-party service integrations
 
 ## Optional
 
-### airtable
+### Airtable
 
+Configuration for Airtable integrations.
 >airtable?: [Airtable](/api/integration/airtable)[]
 
-### notion
+### Notion
 
+Configuration for Notion integrations.
 >notion?: [Notion](/api/integration/notion)[]
 
-### pappers
+### Pappers
 
+Configuration for Pappers integrations.
 >pappers?: [Pappers](/api/integration/pappers)[]
 
-### qonto
+### Qonto
 
+Configuration for Qonto integrations.
 >qonto?: [Qonto](/api/integration/qonto)[]
 
-### google
+### Google
 
+Configuration for Google integrations.
 >google?: [Google](/api/integration/google)
 
-### gocardless
+### GoCardless
 
+Configuration for GoCardless integrations.
 >gocardless?: [GoCardless](/api/integration/gocardless)[]
 
-### phantombuster
+### Phantombuster
 
+Configuration for Phantombuster integrations.
 >phantombuster?: [Phantombuster](/api/integration/phantombuster)[]
 
-### calendly
+### Calendly
 
+Configuration for Calendly integrations.
 >calendly?: [Calendly](/api/integration/calendly)[]
 
-### youcanbookme
+### YouCanBookMe
 
+Configuration for YouCanBookMe integrations.
 >youcanbookme?: [YouCanBookMe](/api/integration/youcanbookme)[]
 
-### jotform
+### Jotform
 
+Configuration for Jotform integrations.
 >jotform?: [Jotform](/api/integration/jotform)[]
 

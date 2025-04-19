@@ -35,22 +35,26 @@ await new App().start(config)
 ```
 ## Required
 
-### actions
+### Actions
 
+The actions that are executed when the trigger is activated.
 >actions: [Action](/api/automation/action)[]
 
-### name
+### Name
 
+The name of the automation.
 >name: `string`
 
-### trigger
+### Trigger
 
+The trigger that starts the automation.
 >trigger: [Trigger](/api/automation/trigger)
 
 ## Optional
 
-### description
+### Description
 
+The description of the automation.
 >description?: `string`
 
 ```ts
