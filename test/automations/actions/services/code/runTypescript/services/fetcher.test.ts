@@ -1,6 +1,8 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
-import type { CodeRunnerContext } from '/domain/services/CodeRunner'
+import { Mock } from '/test/bun'
+import { configAutomationActionServiceCodeRunTypescriptWithFetcherGetService } from '/examples/config/automation/action/service/code/runTypescript/withService/fetcher/get'
+import { configAutomationActionServiceCodeRunTypescriptWithFetcherPostService } from '/examples/config/automation/action/service/code/runTypescript/withService/fetcher/post'
+import { configAutomationActionServiceCodeRunTypescriptWithFetcherPutService } from '/examples/config/automation/action/service/code/runTypescript/withService/fetcher/put'
 
 const mock = new Mock(Tester, { drivers: ['Fetcher'] })
 
@@ -11,32 +13,9 @@ mock.request(({ app, request, drivers }) => {
       await drivers.fetcher.mock('GET', 'https://example.com/', async () => {
         return new Response('<html></html>', { status: 200 })
       })
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'fetcherGet',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'fetcher-get',
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const { fetcher } = context.services
-                  await fetcher.get('https://example.com/')
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithFetcherGetService
+      )
 
       // WHEN
       const response = await request.post(`${url}/api/automation/fetcher-get`)
@@ -50,40 +29,9 @@ mock.request(({ app, request, drivers }) => {
       await drivers.fetcher.mock('POST', 'https://example.com/', async () => {
         return new Response(JSON.stringify({ name: 'John' }), { status: 200 })
       })
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'fetcherPost',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'fetcher-post',
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const { fetcher } = context.services
-                  await fetcher.post(
-                    'https://example.com/',
-                    { name: 'Joe' },
-                    {
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                    }
-                  )
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithFetcherPostService
+      )
 
       // WHEN
       const response = await request.post(`${url}/api/automation/fetcher-post`)
@@ -97,40 +45,9 @@ mock.request(({ app, request, drivers }) => {
       await drivers.fetcher.mock('PUT', 'https://example.com/', async () => {
         return new Response(JSON.stringify({ name: 'John' }), { status: 200 })
       })
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'fetcherPut',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'fetcher-put',
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const { fetcher } = context.services
-                  await fetcher.put(
-                    'https://example.com/',
-                    { name: 'Joe' },
-                    {
-                      headers: {
-                        'Content-Type': 'application/json',
-                      },
-                    }
-                  )
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithFetcherPutService
+      )
 
       // WHEN
       const response = await request.post(`${url}/api/automation/fetcher-put`)
