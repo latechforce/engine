@@ -4,6 +4,7 @@ import postcss from 'postcss'
 import fs from 'fs-extra'
 import { join } from 'path'
 import type { ThemeConfigTailwindCSS } from '/domain/services/Theme'
+import * as Icons from 'lucide-react'
 
 export class TailwindCSSDriver implements IThemeDriver {
   constructor(private _config: ThemeConfigTailwindCSS) {}
@@ -36,20 +37,24 @@ export class TailwindCSSDriver implements IThemeDriver {
 
   loadJsFiles = async (): Promise<{ name: string; content: string }[]> => {
     const prelineJs = await fs.readFile(require.resolve('preline/dist/preline.js'), 'utf8')
-    const lucideJs = await fs.readFile(require.resolve('lucide/dist/umd/lucide.min.js'), 'utf8')
     const loadJs = `
-      document.addEventListener('DOMContentLoaded', function () {
-        lucide.createIcons()
-      })
+      htmx.on("htmx:afterSwap", function(evt) {
+        window.HSStaticMethods?.autoInit?.();
+      });
     `
     return [
       { name: 'preline.js', content: prelineJs },
-      { name: 'lucide.min.js', content: lucideJs },
       { name: 'load.js', content: loadJs },
     ]
   }
 
-  icon = (icon: string): React.ReactNode => {
-    return <i data-lucide={icon}></i>
+  icon = (name: string): React.ReactNode => {
+    const iconName = name
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, (char) => char.toUpperCase())
+      .replace(/\s/g, '')
+    const Icon = Icons[iconName as keyof typeof Icons] || Icons['HelpCircle']
+    // @ts-expect-error - lucide-react is not typed
+    return <Icon />
   }
 }

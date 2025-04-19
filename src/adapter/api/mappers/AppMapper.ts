@@ -64,8 +64,8 @@ export class AppMapper {
     const idGenerator = IdGeneratorMapper.toService(drivers)
     const fetcher = FetcherMapper.toService(drivers)
     const cron = CronMapper.toService(drivers)
-    const client = ClientMapper.toService(drivers, { server })
-    const theme = ThemeMapper.toService(drivers, { server, logger }, schema.services?.theme)
+    const client = ClientMapper.toService(drivers, { server, logger })
+    const theme = ThemeMapper.toService(drivers, { server, logger, client }, schema.services?.theme)
     const schemaValidator = SchemaValidatorMapper.toService(drivers)
     const templateCompiler = TemplateCompilerMapper.toService(drivers)
     const database = DatabaseMapper.toService(drivers, schema.services?.database, {
@@ -182,7 +182,7 @@ export class AppMapper {
       { tables },
       components
     )
-    const admin = new Admin({ server, theme }, components)
+    const admin = new Admin({ server, theme, client }, components)
     return new StoppedApp(
       {
         name: schema.name,
@@ -209,7 +209,6 @@ export class AppMapper {
         codeCompiler: typescriptCompiler,
         cron,
         theme,
-        client,
       },
       {
         tables,

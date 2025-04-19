@@ -2,6 +2,7 @@ import { CssResponse } from '../entities/Response/Css'
 import { JsResponse } from '../entities/Response/Js'
 import type { Server } from './Server'
 import type { Logger } from './Logger'
+import type { Client } from './Client'
 
 export interface ThemeConfigNone {
   type: 'none'
@@ -17,6 +18,7 @@ export type ThemeConfig = ThemeConfigNone | ThemeConfigTailwindCSS
 export interface ThemeServices {
   server: Server
   logger: Logger
+  client: Client
 }
 
 export interface IThemeSpi {
@@ -39,7 +41,9 @@ export class Theme {
   }
 
   init = async () => {
-    const { server, logger } = this._services
+    const { server, logger, client } = this._services
+    await client.init()
+    this.jsFiles.push(...client.jsFiles.map((path) => `${path}?ts=${this.timestamp}`))
     logger.debug(`init theme with "${this.config.type}"`)
     const cssFiles = await this._spi.loadCssFiles()
     for (const cssFile of cssFiles) {

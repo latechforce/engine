@@ -6,6 +6,7 @@ export type SidebarProps = {
     href: string
     icon: React.ReactNode
     active?: boolean
+    aAttributes?: Record<string, string>
   }[]
   children: React.ReactNode
 }

@@ -1,15 +1,15 @@
 import type { ClientHtmlAttributesOptions, IClientSpi } from '/domain/services/Client'
 
 export interface IClientDriver {
-  getJs: () => Promise<string>
+  readJsFiles: () => Promise<{ name: string; content: string }[]>
   getHtmlAttributes: (options: ClientHtmlAttributesOptions) => Record<string, string>
 }
 
 export class ClientSpi implements IClientSpi {
   constructor(private _driver: IClientDriver) {}
 
-  getJs = async (): Promise<string> => {
-    return this._driver.getJs()
+  readJsFiles = async (): Promise<{ name: string; content: string }[]> => {
+    return this._driver.readJsFiles()
   }
 
   getHtmlAttributes = (options: ClientHtmlAttributesOptions): Record<string, string> => {

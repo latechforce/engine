@@ -24,4 +24,18 @@ mock.page(({ app, browser }) => {
       expect(page.content()).resolves.toContain('Integrations')
     })
   })
+
+  it('should redirect to /admin/forms', async () => {
+    // GIVEN
+    const { url } = await app.start(config)
+    const page = await browser.newPage()
+
+    // WHEN
+    await page.goto(`${url}/admin`)
+    await page.click('a[href="/admin/forms"]')
+    await page.waitForUrl(`${url}/admin/forms`)
+
+    // THEN
+    expect(page.url()).toBe(`${url}/admin/forms`)
+  })
 })

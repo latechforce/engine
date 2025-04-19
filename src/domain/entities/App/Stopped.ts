@@ -29,7 +29,7 @@ export class StoppedApp extends BaseApp {
   }
 
   init = async (): Promise<void> => {
-    const { server, theme, client } = this._services
+    const { server, theme } = this._services
     const { tables, automations, buckets, forms, admin } = this._entities
     const integrations = Object.values(this._integrations)
     await server.init(async () => {
@@ -40,7 +40,6 @@ export class StoppedApp extends BaseApp {
       for (const form of forms) await form.init()
       await admin.init()
       await theme.init()
-      await client.init()
     })
     this.logger.debug('✅ app is initialized')
   }

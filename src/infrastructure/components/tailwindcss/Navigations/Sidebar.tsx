@@ -2,9 +2,9 @@ import type { SidebarProps } from '/domain/components'
 
 export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => {
   const activeClass =
-    'flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white'
+    'cursor-pointer flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white'
   const inactiveClass =
-    'w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200'
+    'cursor-pointer w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200'
   return (
     <div>
       <div className="py-16 text-center lg:hidden">
@@ -72,7 +72,11 @@ export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => 
               <ul className="space-y-1">
                 {items.map((item) => (
                   <li key={item.label}>
-                    <a className={`${item.active ? activeClass : inactiveClass}`} href={item.href}>
+                    <a
+                      href={item.href}
+                      className={`${item.active ? activeClass : inactiveClass}`}
+                      {...item.aAttributes}
+                    >
                       {item.icon}
                       {item.label}
                     </a>

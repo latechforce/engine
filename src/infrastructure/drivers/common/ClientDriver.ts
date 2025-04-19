@@ -3,17 +3,24 @@ import type { IClientDriver } from '/adapter/spi/drivers/ClientSpi'
 import type { ClientHtmlAttributesOptions } from '/domain/services/Client'
 
 export class ClientDriver implements IClientDriver {
-  getJs = async (): Promise<string> => {
+  readJsFiles = async (): Promise<{ name: string; content: string }[]> => {
     const output = await fs.readFile(require.resolve('htmx.org/dist/htmx.js'), 'utf8')
-    return output
+    return [{ name: 'htmx.js', content: output }]
   }
 
   getHtmlAttributes = (options: ClientHtmlAttributesOptions): Record<string, string> => {
-    const { post, target, action, fileUpload } = options
+    const { post, get, target, action, trigger, fileUpload, pushUrl } = options
     const attributes: Record<string, string> = {}
     if (post) attributes['hx-post'] = post
+    if (get) attributes['hx-get'] = get
     if (target) attributes['hx-target'] = target
+    if (pushUrl) attributes['hx-push-url'] = pushUrl
     if (fileUpload) attributes['hx-encoding'] = 'multipart/form-data'
+    switch (trigger) {
+      case 'revealed':
+        attributes['hx-trigger'] = 'revealed'
+        break
+    }
     switch (action) {
       case 'replace':
         attributes['hx-swap'] = 'outerHTML'

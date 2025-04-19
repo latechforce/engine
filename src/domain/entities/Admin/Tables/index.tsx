@@ -1,16 +1,9 @@
-import { BaseAdmin } from '../base'
+import { BaseAdmin, type BaseAdminServices } from '../base'
 import { JsxResponse } from '/domain/entities/Response/Jsx'
 import type { Components } from '/domain/components'
-import type { Server } from '/domain/services'
-import { Theme } from '/domain/services'
-
-export type AdminServices = {
-  server: Server
-  theme: Theme
-}
 
 export class AdminTables extends BaseAdmin {
-  constructor(services: AdminServices, components: Components) {
+  constructor(services: BaseAdminServices, components: Components) {
     super(services, components)
   }
 

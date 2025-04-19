@@ -112,6 +112,7 @@ type AppHelpers<D extends DriverType[], I extends IntegrationType[]> = {
 
 type PageHelpers = Page & {
   waitForText: (text: string) => Promise<void>
+  waitForUrl: (url: string) => Promise<void>
   waitForTimeout: (ms: number) => Promise<void>
 }
 
@@ -226,6 +227,9 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
               {},
               text
             )
+          }
+          page.waitForUrl = async (url: string) => {
+            await page.waitForFunction((url: string) => document.URL.includes(url), {}, url)
           }
           page.waitForTimeout = async (ms: number) => {
             await new Promise((resolve) => setTimeout(resolve, ms))
