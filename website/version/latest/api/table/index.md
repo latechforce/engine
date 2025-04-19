@@ -39,11 +39,10 @@ The default value is `public`.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with a table with a schema",
+  "name": "App with a table with a name",
   "tables": [
     {
-      "name": "table",
-      "schema": "private"
+      "name": "table"
     }
   ]
 }
@@ -59,24 +58,10 @@ Array of field definitions for the table.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with a table with a name and multiple fields",
+  "name": "App with a table with a name",
   "tables": [
     {
-      "name": "table",
-      "fields": [
-        {
-          "name": "single_line_text",
-          "type": "SingleLineText"
-        },
-        {
-          "name": "number",
-          "type": "Number"
-        },
-        {
-          "name": "date_time",
-          "type": "DateTime"
-        }
-      ]
+      "name": "table"
     }
   ]
 }

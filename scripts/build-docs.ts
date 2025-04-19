@@ -100,14 +100,20 @@ function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
 }
 
 async function findExample(file: SchemaFile, key: string): Promise<string> {
-  const parents = [...file.parents].reverse().join('/')
+  const parents = [...file.parents]
+    .reverse()
+    .filter((p) => p !== 'config')
+    .join('/')
   let examplePath = join(process.cwd(), 'examples', 'config', parents, file.name, `${key}.ts`)
   if (!existsSync(examplePath)) {
-    examplePath = join(process.cwd(), 'examples', parents, file.name, `${key}.ts`)
+    examplePath = join(process.cwd(), 'examples', 'config', parents, file.name, key, `index.ts`)
     if (!existsSync(examplePath)) {
-      examplePath = join(process.cwd(), 'examples', 'config', parents, `${key}.ts`)
+      examplePath = join(process.cwd(), 'examples', 'config', parents, `${file.name}.ts`)
       if (!existsSync(examplePath)) {
-        return ''
+        examplePath = join(process.cwd(), 'examples', file.name, `index.ts`)
+        if (!existsSync(examplePath)) {
+          return ''
+        }
       }
     }
   }
@@ -172,6 +178,13 @@ sidebar_position: ${sidebarPosition}
 
   if (file) {
     markdown += await findExample(file, 'index')
+  }
+
+  if (schema.default) {
+    markdown += `The default configuration is:\n\n`
+    markdown += `\`\`\`json\n`
+    markdown += `${JSON.stringify(schema.default, null, 2)}\n`
+    markdown += `\`\`\`\n\n`
   }
 
   if (schema.properties) {

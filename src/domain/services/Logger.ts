@@ -3,22 +3,16 @@ interface LoggerBaseConfig {
   silent?: boolean
 }
 
-export interface LoggerElasticSearchConfig extends LoggerBaseConfig {
-  driver: 'ElasticSearch'
-  url: string
-  index: string
-}
-
 export interface LoggerConsoleConfig extends LoggerBaseConfig {
-  driver: 'Console'
+  type: 'Console'
 }
 
 export interface LoggerFileConfig extends LoggerBaseConfig {
-  driver: 'File'
+  type: 'File'
   filename: string
 }
 
-export type LoggerConfig = LoggerConsoleConfig | LoggerFileConfig | LoggerElasticSearchConfig
+export type LoggerConfig = LoggerConsoleConfig | LoggerFileConfig
 
 export interface ILoggerSpi {
   init: () => Promise<void>

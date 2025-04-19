@@ -8,8 +8,8 @@ export class LoggerDriver implements ILoggerDriver {
 
   constructor(config: LoggerConfig[]) {
     for (const logger of config) {
-      const { driver } = logger
-      switch (driver) {
+      const { type } = logger
+      switch (type) {
         case 'Console':
           this._loggers.push(new ConsoleDriver(logger))
           break

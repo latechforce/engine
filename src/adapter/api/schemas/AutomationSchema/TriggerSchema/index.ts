@@ -5,6 +5,12 @@ import type { IntegrationTriggerAutomationSchema } from './Integration'
  * Trigger type union
  * @title Trigger
  * @description Union type of all possible triggers that can start automations
+ * @example
+ * {
+ *   service: 'Database',
+ *   event: 'RecordCreated',
+ *   table: 'users'
+ * }
  */
 export type TriggerAutomationSchema =
   | ServiceTriggerAutomationSchema

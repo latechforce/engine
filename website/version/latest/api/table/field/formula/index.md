@@ -64,15 +64,14 @@ The default value is `false`.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with a table with a required formula field",
+  "name": "App with a table with a formula field",
   "tables": [
     {
       "name": "table",
       "fields": [
         {
           "name": "single_line_text",
-          "type": "SingleLineText",
-          "required": true
+          "type": "SingleLineText"
         },
         {
           "name": "formula",
@@ -80,8 +79,7 @@ const config: Config = {
           "formula": "single_line_text || \"!\"",
           "output": {
             "type": "SingleLineText"
-          },
-          "required": true
+          }
         }
       ]
     }

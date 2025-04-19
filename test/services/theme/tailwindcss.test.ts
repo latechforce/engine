@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { configServiceThemeTailwindcss } from '/examples/config/service/theme/tailwindcss'
+import { configServiceThemeTailwindcssWithForm } from '/examples/config/service/theme/tailwindcss/withForm'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -9,7 +9,7 @@ mock.page(({ app, browser }) => {
     it('should return link to style.css', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(configServiceThemeTailwindcss)
+      const { url } = await app.start(configServiceThemeTailwindcssWithForm)
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -22,7 +22,7 @@ mock.page(({ app, browser }) => {
     it('should return the tailwind css content', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(configServiceThemeTailwindcss)
+      const { url } = await app.start(configServiceThemeTailwindcssWithForm)
 
       // WHEN
       const response = await page.goto(`${url}/style.css`)
@@ -36,7 +36,7 @@ mock.page(({ app, browser }) => {
     it('should return link to style.js', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(configServiceThemeTailwindcss)
+      const { url } = await app.start(configServiceThemeTailwindcssWithForm)
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -49,7 +49,7 @@ mock.page(({ app, browser }) => {
     it('should return the preline js content', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(configServiceThemeTailwindcss)
+      const { url } = await app.start(configServiceThemeTailwindcssWithForm)
 
       // WHEN
       const response = await page.goto(`${url}/style.js`)

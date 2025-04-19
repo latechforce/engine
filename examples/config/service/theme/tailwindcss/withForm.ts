@@ -1,7 +1,7 @@
 import type { Config } from '/src'
 
-export const configServiceThemeTailwindcss: Config = {
-  name: 'App with tailwindcss theme',
+export const configServiceThemeTailwindcssWithForm: Config = {
+  name: 'App with tailwindcss theme and form',
   forms: [
     {
       name: 'Form',
@@ -17,6 +17,8 @@ export const configServiceThemeTailwindcss: Config = {
     },
   ],
   services: {
-    theme: { type: 'tailwindcss', base: 'src/infrastructure/components/tailwindcss' },
+    theme: {
+      type: 'tailwindcss',
+    },
   },
 }

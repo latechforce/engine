@@ -4,9 +4,9 @@ import type { NotionIntegrationTriggerAutomationSchema } from './Notion'
 import type { YouCanBookMeIntegrationTriggerAutomationSchema } from './YouCanBookMe'
 
 /**
- * The schema for the Integration trigger.
+ * Integration trigger type union
  * @title Integration
- * @description The Integration trigger.
+ * @description Union type of all possible integration triggers that can start automations
  */
 export type IntegrationTriggerAutomationSchema =
   | CalendlyIntegrationTriggerAutomationSchema

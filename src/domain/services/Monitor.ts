@@ -3,17 +3,17 @@ import type { Logger } from './Logger'
 export interface MonitorSentryConfig {
   appName: string
   appVersion: string
-  driver: 'Sentry'
+  type: 'Sentry'
   dsn: string
   environment: string
 }
 
 export interface MonitorConsoleConfig {
-  driver: 'Console'
+  type: 'Console'
 }
 
 export type MonitorConfig = MonitorSentryConfig | MonitorConsoleConfig
-export type MonitorDrivers = MonitorConfig['driver'][]
+export type MonitorType = MonitorConfig['type']
 
 export interface MonitorServices {
   logger: Logger
@@ -25,14 +25,14 @@ export interface IMonitorSpi {
 }
 
 export class Monitor {
-  public drivers: MonitorDrivers
+  public types: MonitorType[]
 
   constructor(
     private _spi: IMonitorSpi,
     public config: MonitorConfig[],
     private _services: MonitorServices
   ) {
-    this.drivers = config.map((c) => c.driver)
+    this.types = config.map((c) => c.type)
   }
 
   captureException = (error: Error) => {

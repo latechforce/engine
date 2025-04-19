@@ -1,11 +1,27 @@
 # Server
 
-The server config for the engine
+Configuration for the server service, excluding app metadata
 
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with a server",
+  "services": {
+    "server": {
+      "port": 3000,
+      "baseUrl": "https://app.example.com"
+    }
+  }
+}
+
+await new App().start(config)
+```
 ## Optional
 
-### apiKeys
+### API Keys
 
+List of API keys for authentication
 >apiKeys?: `string`[]
 
 ```ts
@@ -24,8 +40,9 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### port
+### Port
 
+The port number the server listens on
 >port?: `string` or `number`
 
 ```ts
@@ -42,12 +59,14 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### idleTimeout
+### Idle Timeout
 
+The time in milliseconds before an idle connection is closed
 >idleTimeout?: `string` or `number`
 
-### baseUrl
+### Base URL
 
+The base URL of the server
 >baseUrl?: `string`
 
 ```ts
@@ -64,15 +83,18 @@ const config: Config = {
 
 await new App().start(config)
 ```
-### sslCert
+### SSL Certificate
 
+The SSL certificate file path
 >sslCert?: `string`
 
-### sslKey
+### SSL Key
 
+The SSL key file path
 >sslKey?: `string`
 
-### monitors
+### Monitor Drivers
 
+The monitor drivers to use
 >monitors?: enum: `Sentry`, `Console`[]
 

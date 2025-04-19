@@ -3,9 +3,9 @@ import type { HttpServiceTriggerAutomationSchema } from './Http'
 import type { ScheduleServiceTriggerAutomationSchema } from './Schedule'
 
 /**
- * The schema for the Service trigger.
+ * Service trigger type union
  * @title Service
- * @description The Service trigger.
+ * @description Union type of all possible service triggers that can start automations
  */
 export type ServiceTriggerAutomationSchema =
   | DatabaseServiceTriggerAutomationSchema

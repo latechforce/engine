@@ -10,7 +10,7 @@ describe('on start', () => {
       services: {
         monitors: [
           {
-            driver: 'Sentry',
+            type: 'Sentry',
             dsn: '{{env.TEST_SENTRY_DSN}}',
             environment: 'test',
           },
@@ -35,7 +35,7 @@ describe('on start', () => {
       services: {
         monitors: [
           {
-            driver: 'Sentry',
+            type: 'Sentry',
             dsn: '{{env.TEST_SENTRY_DSN}}',
             environment: 'test',
           },

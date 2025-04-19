@@ -1,13 +1,24 @@
 import type { DatabaseConfig } from '/domain/services'
 
 /**
- * Database config
+ * Database configuration interface
  * @title Database
- * @description The database config for the engine
+ * @description Configuration for the database service
  * @default
  * {
- *   driver: "SQLite",
+ *   type: "SQLite",
  *   url: ":memory:",
  * }
  */
-export type DatabaseServiceSchema = DatabaseConfig
+export type DatabaseServiceSchema = {
+  /**
+   * @title Type
+   * @description The type of database to use.
+   */
+  type: DatabaseConfig['type']
+  /**
+   * @title URL
+   * @description The URL of the database.
+   */
+  url: DatabaseConfig['url']
+}

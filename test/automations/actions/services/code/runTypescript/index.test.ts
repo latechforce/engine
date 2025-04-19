@@ -66,7 +66,7 @@ mock.request(({ app, request }) => {
         services: {
           loggers: [
             {
-              driver: 'File',
+              type: 'File',
               filename,
             },
           ],

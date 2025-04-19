@@ -1,6 +1,6 @@
 # Service
 
-The Service trigger.
+Union type of all possible service triggers that can start automations
 
 ## Any of
 

@@ -1,8 +1,23 @@
 import type { TunnelConfig } from '/domain/services'
 
 /**
- * Tunnel config
  * @title Tunnel
- * @description The tunnel config for the engine
+ * @description Configuration for tunnel service
  */
-export type TunnelServiceSchema = TunnelConfig
+export interface TunnelServiceSchema {
+  /**
+   * @title Type
+   * @description The type of tunnel integration to use
+   */
+  integration: TunnelConfig['integration']
+  /**
+   * @title Authentication token
+   * @description The authentication token for the tunnel service
+   */
+  authToken: TunnelConfig['authToken']
+  /**
+   * @title Account name
+   * @description The account name for the tunnel service
+   */
+  account: TunnelConfig['account']
+}

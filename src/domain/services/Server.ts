@@ -6,7 +6,7 @@ import { JsonResponse } from '../entities/Response/Json'
 import type { PatchRequest } from '/domain/entities/Request/Patch'
 import type { DeleteRequest } from '/domain/entities/Request/Delete'
 import type { Request } from '/domain/entities/Request'
-import type { Monitor, MonitorDrivers } from './Monitor'
+import type { Monitor, MonitorType } from './Monitor'
 import type { Tunnel } from './Tunnel'
 import type { SchemaValidatorJson } from './SchemaValidator'
 
@@ -20,7 +20,7 @@ export interface ServerConfig {
   baseUrl?: string
   sslCert?: string
   sslKey?: string
-  monitors?: MonitorDrivers
+  monitors?: MonitorType[]
 }
 
 export interface ServerServices {

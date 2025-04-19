@@ -1,24 +1,21 @@
 # Tunnel
 
-The tunnel config for the engine
+Configuration for tunnel service
 
 ## Required
 
-### account
+### Type
 
->account: `string`
-
-### authToken
-
->authToken: `string`
-
-### integration
-
+The type of tunnel integration to use
 >integration: const: `Ngrok`
 
-## Optional
+### Authentication token
 
-### baseUrl
+The authentication token for the tunnel service
+>authToken: `string`
 
->baseUrl?: `string`
+### Account name
+
+The account name for the tunnel service
+>account: `string`
 

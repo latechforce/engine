@@ -6,7 +6,7 @@ import type { LoggerServiceSchema } from '../../schemas/ServiceSchema/LoggerSche
 export class LoggerMapper {
   static toService(
     drivers: Drivers,
-    config: LoggerServiceSchema[] = [{ driver: 'Console' }]
+    config: LoggerServiceSchema[] = [{ type: 'Console' }]
   ): Logger {
     const driver = drivers.logger(config)
     const spi = new LoggerSpi(driver)

@@ -8,7 +8,7 @@ export function instrument(config: ConfigSchema) {
   const system = new SystemDriver()
   if (filledConfig.services?.monitors) {
     for (const monitor of filledConfig.services.monitors) {
-      if (monitor.driver === 'Sentry')
+      if (monitor.type === 'Sentry')
         Sentry.init({
           appName: config.name,
           appVersion: config.appVersion ?? system.getAppVersion(),

@@ -1,6 +1,6 @@
 # Integration
 
-The Integration trigger.
+Union type of all possible integration triggers that can start automations
 
 ## Any of
 

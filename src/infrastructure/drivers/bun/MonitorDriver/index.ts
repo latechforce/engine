@@ -8,8 +8,8 @@ export class MonitorDriver implements IMonitorDriver {
 
   constructor(config: MonitorConfig[]) {
     for (const monitor of config) {
-      const { driver } = monitor
-      switch (driver) {
+      const { type } = monitor
+      switch (type) {
         case 'Sentry':
           this._monitors.push(new SentryDriver())
           break
@@ -17,7 +17,7 @@ export class MonitorDriver implements IMonitorDriver {
           this._monitors.push(new ConsoleDriver())
           break
         default:
-          throw new Error('Invalid driver')
+          throw new Error('Invalid type')
       }
     }
   }
