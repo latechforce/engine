@@ -1,6 +1,7 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationSchema } from '/test/common'
+import { configAutomationTriggerServiceHttpWebhookCalled } from '/examples/config/automation/trigger/service/http/webhookCalled'
+import { configAutomationTriggerServiceHttpWebhookCalledAuth } from '/examples/config/automation/trigger/service/http/webhookCalled/auth'
 
 const mock = new Mock(Tester)
 
@@ -8,8 +9,7 @@ mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should run an automation', async () => {
       // GIVEN
-      const config = getAutomationSchema('WebhookCalled')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpWebhookCalled)
 
       // WHEN
       const response = await request.post(`${url}/api/webhook/run`)
@@ -20,8 +20,7 @@ mock.request(({ app, request }) => {
 
     it('should not run an automation with auth', async () => {
       // GIVEN
-      const config = getAutomationSchema('WebhookCalledWithApiKeyAuth')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpWebhookCalledAuth)
 
       // WHEN
       const response = await request.post(`${url}/api/webhook/run`)
@@ -32,8 +31,7 @@ mock.request(({ app, request }) => {
 
     it('should run an automation with auth', async () => {
       // GIVEN
-      const config = getAutomationSchema('WebhookCalledWithApiKeyAuth')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpWebhookCalledAuth)
 
       // WHEN
       const response = await request.post(

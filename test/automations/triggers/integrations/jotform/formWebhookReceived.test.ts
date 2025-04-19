@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationSchema } from '/test/common'
+import { configAutomationTriggerIntegrationJotformFormWebhookReceived } from '/examples/config/automation/trigger/integration/jotform/formWebhookReceived'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['Jotform'] })
 
@@ -12,16 +12,7 @@ mock.request(({ app, drivers }) => {
 
     it('should start an automation', async () => {
       // GIVEN
-      const config = {
-        ...getAutomationSchema('FormWebhookReceived'),
-        services: {
-          server: {
-            baseUrl: 'http://localhost:6001',
-            port: 6001,
-          },
-        },
-      }
-      await app.start(config)
+      await app.start(configAutomationTriggerIntegrationJotformFormWebhookReceived)
 
       // WHEN
       // Add form-specific trigger test here

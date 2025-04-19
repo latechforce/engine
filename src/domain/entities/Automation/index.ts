@@ -10,7 +10,6 @@ import type { Database } from '/domain/services/Database'
 
 export interface AutomationConfig {
   name: string
-  summary?: string
   description?: string
 }
 

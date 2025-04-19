@@ -21,7 +21,6 @@ export interface ApiCalledHttpTriggerConfig extends BaseTriggerConfig {
   input?: SchemaValidatorJson
   output?: TemplateObject
   auth?: ServerMethodOptionsAuth
-  summary?: string
   description?: string
 }
 
@@ -64,7 +63,6 @@ export class ApiCalledHttpTrigger extends BaseTrigger<ApiCalledHttpTriggerConfig
         additionalProperties: false,
       },
       detail: {
-        summary: this._config.summary,
         description: this._config.description,
         tags: ['Automation'],
       },

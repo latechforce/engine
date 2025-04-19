@@ -1,7 +1,7 @@
 import BunTester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/infrastructure/test/bun/Mock'
-import { getAutomationSchema } from '/test/common'
-import type { Config } from '/src'
+import { configAutomation } from '/examples/config/automation'
+import { configAutomationWithErrorActions } from '/examples/config/automation/withErrorActions'
 
 const mock = new Mock(BunTester, { drivers: ['Database'] })
 
@@ -9,8 +9,7 @@ mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should create an automation history', async () => {
       // GIVEN
-      const config = getAutomationSchema('ApiCalled')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomation)
 
       // WHEN
       await request.post(`${url}/api/automation/run`)
@@ -22,40 +21,7 @@ mock.request(({ app, request, drivers }) => {
 
     it('should fail if the first action fails without running the second action', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'ApiCalled',
-        automations: [
-          {
-            name: 'ApiCalled',
-            summary: 'ApiCalled',
-            description: 'ApiCalled',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: '/run',
-            },
-            actions: [
-              {
-                name: 'firstCodeAction',
-                service: 'Code',
-                action: 'RunTypescript',
-                code: String(function () {
-                  throw new Error('firstCodeAction')
-                }),
-              },
-              {
-                name: 'secondCodeAction',
-                service: 'Code',
-                action: 'RunTypescript',
-                code: String(function () {
-                  throw new Error('secondCodeAction')
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationWithErrorActions)
 
       // WHEN
       await request.post(`${url}/api/automation/run`)

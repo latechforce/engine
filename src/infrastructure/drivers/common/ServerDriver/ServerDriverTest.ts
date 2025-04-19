@@ -32,7 +32,6 @@ export function testServerDriver(
         required: ['message'],
       },
       detail: {
-        summary: 'Detail Test POST',
         description: 'Detail Test Description',
         tags: ['Automation'],
       },
@@ -50,7 +49,8 @@ export function testServerDriver(
     })
     driver.notFound(async () => new JsonResponse({ message: 'Not found' }, 404))
 
-    port = await driver.start()
+    port = await driver.findAvailablePort()
+    await driver.start(port)
     browser = await puppeteer.launch({
       args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
     })
@@ -204,17 +204,6 @@ export function testServerDriver(
       const data = await res.json()
       expect(res.status).toBe(201)
       expect(data.message).toBe('POST success')
-    })
-
-    it('should return a swagger OpenAPI with a custom detail summary', async () => {
-      await page.goto(`http://localhost:${port}/api/docs`)
-      expect(
-        await page.waitForFunction(
-          (text) => document.body.innerText.includes(text),
-          {},
-          'Detail Test POST'
-        )
-      ).toBeTruthy()
     })
 
     it('should return a swagger OpenAPI with a custom detail description', async () => {

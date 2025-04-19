@@ -178,10 +178,22 @@ export class ElysiaDriver implements IServerDriver {
     })
   }
 
-  start = async (): Promise<number> => {
-    let { idleTimeout, port } = this._config
+  findAvailablePort = (minPort: number = 1024, maxPort: number = 65535): Promise<number> => {
+    return new Promise((resolve) => {
+      const port = Math.floor(Math.random() * (maxPort - minPort + 1)) + minPort
+      const server = net.createServer()
+      server.on('error', () => {
+        resolve(this.findAvailablePort(minPort, maxPort))
+      })
+      server.listen(port, () => {
+        server.close(() => resolve(port))
+      })
+    })
+  }
+
+  start = async (port: number): Promise<number> => {
+    let { idleTimeout } = this._config
     idleTimeout = idleTimeout ? Number(idleTimeout) : 255
-    port = port ? Number(port) : await this._findRandomAvailablePort()
     this._app.listen({ port, idleTimeout })
     return port
   }
@@ -257,22 +269,6 @@ export class ElysiaDriver implements IServerDriver {
       default:
         throw new Error(`Unsupported schema type: ${schema.type}`)
     }
-  }
-
-  private _findRandomAvailablePort = (
-    minPort: number = 1024,
-    maxPort: number = 65535
-  ): Promise<number> => {
-    return new Promise((resolve) => {
-      const port = Math.floor(Math.random() * (maxPort - minPort + 1)) + minPort
-      const server = net.createServer()
-      server.on('error', () => {
-        resolve(this._findRandomAvailablePort(minPort, maxPort))
-      })
-      server.listen(port, () => {
-        server.close(() => resolve(port))
-      })
-    })
   }
 
   private _formatResponse = (response: EngineResponse) => {

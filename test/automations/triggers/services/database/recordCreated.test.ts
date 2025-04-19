@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationSchema, getFirstTableSchema } from '/test/common'
+import { configAutomationTriggerServiceDatabaseRecordCreated } from '/examples/config/automation/trigger/service/database/recordCreated'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -8,18 +8,16 @@ mock.request(({ app, drivers }) => {
   describe('on record created', () => {
     it('should start an automation', async () => {
       // GIVEN
-      const config = {
-        ...getFirstTableSchema(),
-        ...getAutomationSchema('FirstDatabaseTableRecordCreated'),
-      }
-      await app.start(config)
+      await app.start(configAutomationTriggerServiceDatabaseRecordCreated)
 
       // WHEN
-      await drivers.database.tableFromSchema(config.tables[0]).insert({
-        id: '1',
-        fields: { name: 'John' },
-        created_at: new Date().toISOString(),
-      })
+      await drivers.database
+        .tableFromSchema(configAutomationTriggerServiceDatabaseRecordCreated.tables![0])
+        .insert({
+          id: '1',
+          fields: {},
+          created_at: new Date().toISOString(),
+        })
 
       // THEN
       const histories = await drivers.database.waitForAutomationsHistories()

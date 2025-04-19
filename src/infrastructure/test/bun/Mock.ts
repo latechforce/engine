@@ -467,22 +467,22 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     this.tester.afterEach(async () => {
       await app.stop()
       for (const file of files) {
-        await Promise.all([
-          fs.unlink(file),
-          fs.unlink(file.replace('.db', '.db-shm')),
-          fs.unlink(file.replace('.db', '.db-wal')),
-        ])
+        if (await fs.exists(file)) await fs.unlink(file)
+        if (await fs.exists(file.replace('.db', '.db-shm')))
+          await fs.unlink(file.replace('.db', '.db-shm'))
+        if (await fs.exists(file.replace('.db', '.db-wal')))
+          await fs.unlink(file.replace('.db', '.db-wal'))
       }
       files = []
     })
 
     this.tester.afterAll(async () => {
       for (const file of files) {
-        await Promise.all([
-          fs.unlink(file),
-          fs.unlink(file.replace('.db', '.db-shm')),
-          fs.unlink(file.replace('.db', '.db-wal')),
-        ])
+        if (await fs.exists(file)) await fs.unlink(file)
+        if (await fs.exists(file.replace('.db', '.db-shm')))
+          await fs.unlink(file.replace('.db', '.db-shm'))
+        if (await fs.exists(file.replace('.db', '.db-wal')))
+          await fs.unlink(file.replace('.db', '.db-wal'))
       }
       files = []
     })

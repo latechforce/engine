@@ -6,7 +6,7 @@ import type { ApiCalledHttpTriggerConfig } from '/domain/entities/Trigger/servic
  * @description A trigger that fires when an API is called
  */
 export interface ApiCalledHttpServiceTriggerAutomationSchema
-  extends Omit<ApiCalledHttpTriggerConfig, 'automation' | 'summary' | 'description'> {
+  extends Omit<ApiCalledHttpTriggerConfig, 'automation' | 'description'> {
   service: 'Http'
   event: 'ApiCalled'
 }

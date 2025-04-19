@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationSchema } from '/test/common'
+import { configAutomationTriggerIntegrationYoucanbookmeBookingCreated } from '/examples/config/automation/trigger/integration/youcanbookme/bookingCreated'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['YouCanBookMe'] })
 
@@ -19,16 +19,7 @@ mock.request(({ app, drivers, integrations }) => {
   describe('on booking created', () => {
     it('should start an automation', async () => {
       // GIVEN
-      const config = {
-        ...getAutomationSchema('YouCanBookMeBookingCreated'),
-        services: {
-          server: {
-            baseUrl: 'http://localhost:3001',
-            port: 3001,
-          },
-        },
-      }
-      await app.start(config)
+      await app.start(configAutomationTriggerIntegrationYoucanbookmeBookingCreated)
       const currentProfileResponse = await integrations.youcanbookme.currentProfile()
       if (currentProfileResponse.error) {
         throw new Error('YouCanBookMe username is not configured')

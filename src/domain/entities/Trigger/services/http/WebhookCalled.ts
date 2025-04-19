@@ -9,7 +9,6 @@ import type { System } from '/domain/services/System'
 export interface WebhookCalledHttpTriggerConfig extends BaseTriggerConfig {
   path: string
   auth?: ServerMethodOptionsAuth
-  summary?: string
   description?: string
 }
 
@@ -47,7 +46,6 @@ export class WebhookCalledHttpTrigger extends BaseTrigger<WebhookCalledHttpTrigg
         additionalProperties: false,
       },
       detail: {
-        summary: this._config.summary,
         description: this._config.description,
         tags: ['Webhook'],
       },

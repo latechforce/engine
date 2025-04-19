@@ -9,7 +9,8 @@ import type { DeleteRequest } from '/domain/entities/Request/Delete'
 import type { Request } from '/domain/entities/Request'
 
 export interface IServerDriver {
-  start(): Promise<number>
+  findAvailablePort(): Promise<number>
+  start(port: number): Promise<number>
   stop(): Promise<void>
   get(
     path: string,
@@ -104,8 +105,12 @@ export class ServerSpi implements IServerSpi {
     })
   }
 
-  start = async () => {
-    return this._driver.start()
+  findAvailablePort = async () => {
+    return this._driver.findAvailablePort()
+  }
+
+  start = async (port: number) => {
+    return this._driver.start(port)
   }
 
   stop = async () => {

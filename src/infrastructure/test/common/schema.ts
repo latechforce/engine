@@ -8,7 +8,6 @@ const fullSchema: ConfigSchema = {
   automations: [
     {
       name: 'ApiCalled',
-      summary: 'Trigger an automation',
       description: 'This automation is triggered when an API is called',
       trigger: {
         service: 'Http',

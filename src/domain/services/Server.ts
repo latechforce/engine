@@ -36,14 +36,14 @@ export interface ServerMethodOptions {
   body?: SchemaValidatorJson
   response?: SchemaValidatorJson
   detail?: {
-    summary?: string
     description?: string
     tags?: ('Automation' | 'Webhook' | 'Table')[]
   }
 }
 
 export interface IServerSpi {
-  start: () => Promise<number>
+  findAvailablePort: () => Promise<number>
+  start: (port: number) => Promise<number>
   stop: () => Promise<void>
   get: (
     path: string,
@@ -75,6 +75,7 @@ export class Server {
   postHandlers: string[] = []
   notFoundHandler?: () => Promise<void>
   private _baseUrl?: string
+  private _port?: number
 
   constructor(
     private _spi: IServerSpi,
@@ -82,6 +83,7 @@ export class Server {
     public config: ServerConfig
   ) {
     this._baseUrl = config.baseUrl
+    this._port = config.port ? Number(config.port) : undefined
   }
 
   get baseUrl() {
@@ -89,8 +91,18 @@ export class Server {
     return this._baseUrl
   }
 
+  get port() {
+    if (!this._port) throw new Error('port is not set')
+    return this._port
+  }
+
   init = async (callback: () => Promise<void>) => {
     const { logger } = this._services
+    if (!this._port) {
+      logger.debug('finding available port...')
+      this._port = await this._spi.findAvailablePort()
+    }
+    if (!this._baseUrl) this._baseUrl = `http://localhost:${this._port}`
     logger.debug('initializing server routes...')
     await this.get('/api/health', async () => new JsonResponse({ success: true }))
     await callback()
@@ -183,8 +195,8 @@ export class Server {
   start = async (): Promise<string> => {
     const { logger, tunnel } = this._services
     logger.debug(`starting server...`)
-    const port = await this._spi.start()
-    if (!this._baseUrl) this._baseUrl = await tunnel.start(port)
+    await this._spi.start(this.port)
+    await tunnel.start(this.port)
     this.isListening = true
     logger.debug(`server listening at ${this.baseUrl}`)
     return this.baseUrl

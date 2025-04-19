@@ -6,7 +6,7 @@ import type { WebhookCalledHttpTriggerConfig } from '/domain/entities/Trigger/se
  * @description A trigger that fires when a webhook is called
  */
 export interface WebhookCalledHttpServiceTriggerAutomationSchema
-  extends Omit<WebhookCalledHttpTriggerConfig, 'automation' | 'summary' | 'description'> {
+  extends Omit<WebhookCalledHttpTriggerConfig, 'automation' | 'description'> {
   service: 'Http'
   event: 'WebhookCalled'
 }

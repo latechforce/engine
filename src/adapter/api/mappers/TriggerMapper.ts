@@ -45,7 +45,7 @@ export class TriggerMapper {
     services: TriggerMapperServices,
     integrations: TriggerMapperIntegrations
   ): Trigger {
-    const { name: automation, summary, description } = automationSchema
+    const { name: automation, description } = automationSchema
     if ('integration' in schema) {
       switch (schema.integration) {
         case 'Notion':
@@ -96,15 +96,9 @@ export class TriggerMapper {
         case 'Http':
           switch (schema.event) {
             case 'ApiCalled':
-              return new ApiCalledHttpTrigger(
-                { ...schema, automation, summary, description },
-                services
-              )
+              return new ApiCalledHttpTrigger({ ...schema, automation, description }, services)
             case 'WebhookCalled':
-              return new WebhookCalledHttpTrigger(
-                { ...schema, automation, summary, description },
-                services
-              )
+              return new WebhookCalledHttpTrigger({ ...schema, automation, description }, services)
           }
           break
         case 'Schedule':

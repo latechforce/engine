@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it, beforeEach } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationSchema } from '/test/common'
+import { configAutomationTriggerIntegrationCalendlyInviteeCreated } from '/examples/config/automation/trigger/integration/calendly/inviteeCreated'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['Calendly'] })
 
@@ -25,16 +25,7 @@ mock.request(({ app, drivers, integrations }) => {
 
     it('should start an automation', async () => {
       // GIVEN
-      const config = {
-        ...getAutomationSchema('CalendlyInviteeCreated'),
-        services: {
-          server: {
-            baseUrl: 'http://localhost:6001',
-            port: 6001,
-          },
-        },
-      }
-      await app.start(config)
+      await app.start(configAutomationTriggerIntegrationCalendlyInviteeCreated)
       const response = await integrations.calendly.listWebhookSubscriptions({
         organization: 'https://api.calendly.com/organizations/ABCDEF',
         scope: 'organization',

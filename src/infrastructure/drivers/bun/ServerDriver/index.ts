@@ -47,8 +47,12 @@ export class ServerDriver implements IServerDriver {
     await this._server.notFound(handler)
   }
 
-  start = async (): Promise<number> => {
-    return this._server.start()
+  findAvailablePort = async (): Promise<number> => {
+    return this._server.findAvailablePort()
+  }
+
+  start = async (port: number): Promise<number> => {
+    return this._server.start(port)
   }
 
   stop = async () => {

@@ -1,6 +1,10 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationSchema } from '/test/common'
+import { configAutomationTriggerServiceHttpApiCalledAuth } from '/examples/config/automation/trigger/service/http/apiCalled/auth'
+import { configAutomationTriggerServiceHttpApiCalled } from '/examples/config/automation/trigger/service/http/apiCalled'
+import { configAutomationTriggerServiceHttpApiCalledOutput } from '/examples/config/automation/trigger/service/http/apiCalled/output'
+import { configAutomationTriggerServiceHttpApiCalledWithErrorAction } from '/examples/config/automation/trigger/service/http/apiCalled/withErrorAction'
+import { configAutomationTriggerServiceHttpApiCalledInput } from '/examples/config/automation/trigger/service/http/apiCalled/input'
 
 const mock = new Mock(Tester)
 
@@ -8,8 +12,7 @@ mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should run an automation', async () => {
       // GIVEN
-      const config = getAutomationSchema('ApiCalled')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpApiCalled)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/run`)
@@ -20,8 +23,7 @@ mock.request(({ app, request }) => {
 
     it('should not run an automation with auth', async () => {
       // GIVEN
-      const config = getAutomationSchema('ApiCalledWithApiKeyAuth')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpApiCalledAuth)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/run`)
@@ -32,8 +34,7 @@ mock.request(({ app, request }) => {
 
     it('should run an automation with auth', async () => {
       // GIVEN
-      const config = getAutomationSchema('ApiCalledWithApiKeyAuth')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpApiCalledAuth)
 
       // WHEN
       const response = await request.post(
@@ -50,8 +51,7 @@ mock.request(({ app, request }) => {
 
     it('should return a value', async () => {
       // GIVEN
-      const config = getAutomationSchema('ApiCalledWithReturnedValue')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpApiCalledOutput)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/run`)
@@ -62,8 +62,7 @@ mock.request(({ app, request }) => {
 
     it('should return a error message', async () => {
       // GIVEN
-      const config = getAutomationSchema('ApiCalledWithError')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpApiCalledWithErrorAction)
 
       // WHEN
       const response = await fetch(`${url}/api/automation/run`, {
@@ -82,8 +81,7 @@ mock.request(({ app, request }) => {
 
     it('should return run an automation with a body', async () => {
       // GIVEN
-      const config = getAutomationSchema('ApiCalledWithSingleLineTextInput')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpApiCalledInput)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/run`, { text: 'hello' })
@@ -94,8 +92,7 @@ mock.request(({ app, request }) => {
 
     it('should return an invalid body error', async () => {
       // GIVEN
-      const config = getAutomationSchema('ApiCalledWithSingleLineTextInput')
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationTriggerServiceHttpApiCalledInput)
 
       // WHEN
       const response = await fetch(`${url}/api/automation/run`, {

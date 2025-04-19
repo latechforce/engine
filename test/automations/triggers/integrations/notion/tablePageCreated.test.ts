@@ -1,19 +1,31 @@
-import Tester, { expect, describe, it } from 'bun:test'
+import Tester, { expect, describe, it, beforeAll, afterAll } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getAutomationSchema, getFirstTableSchema } from '/test/common'
+import { configAutomationTriggerIntegrationNotionTablePageCreated } from '/examples/config/automation/trigger/integration/notion/tablePageCreated'
 
 const mock = new Mock(Tester, { drivers: ['Database'], integrations: ['Notion'] })
 
 mock.request(({ app, drivers, integrations }) => {
+  beforeAll(async () => {
+    process.env.NOTION_TABLE_ID = 'table_1'
+  })
+
+  afterAll(async () => {
+    delete process.env.NOTION_TABLE_ID
+  })
+
   describe('on page in table created', () => {
     it('should start an automation', async () => {
       // GIVEN
-      const config = {
-        ...getFirstTableSchema(),
-        ...getAutomationSchema('FirstNotionTablePageCreated'),
-      }
-      const table = await integrations.notion.addTableFromSchema(config.tables[0])
-      await app.start(config)
+      const table = await integrations.notion.addTableFromSchema({
+        name: 'table_1',
+        fields: [
+          {
+            name: 'name',
+            type: 'SingleLineText',
+          },
+        ],
+      })
+      await app.start(configAutomationTriggerIntegrationNotionTablePageCreated)
 
       // WHEN
       await table.insert({
@@ -27,12 +39,16 @@ mock.request(({ app, drivers, integrations }) => {
 
     it('should return the created time of the created page', async () => {
       // GIVEN
-      const config = {
-        ...getFirstTableSchema(),
-        ...getAutomationSchema('FirstNotionTablePageCreated'),
-      }
-      const table = await integrations.notion.addTableFromSchema(config.tables[0])
-      await app.start(config)
+      const table = await integrations.notion.addTableFromSchema({
+        name: 'table_1',
+        fields: [
+          {
+            name: 'name',
+            type: 'SingleLineText',
+          },
+        ],
+      })
+      await app.start(configAutomationTriggerIntegrationNotionTablePageCreated)
 
       // WHEN
       await table.insert({
@@ -47,12 +63,16 @@ mock.request(({ app, drivers, integrations }) => {
 
     it('should return a property with specials characteres of the created page', async () => {
       // GIVEN
-      const config = {
-        ...getFirstTableSchema(['Champs avec charactères (spéciaux)']),
-        ...getAutomationSchema('FirstNotionTablePageCreated'),
-      }
-      const table = await integrations.notion.addTableFromSchema(config.tables[0])
-      await app.start(config)
+      const table = await integrations.notion.addTableFromSchema({
+        name: 'table_1',
+        fields: [
+          {
+            name: 'Champs avec charactères (spéciaux)',
+            type: 'SingleLineText',
+          },
+        ],
+      })
+      await app.start(configAutomationTriggerIntegrationNotionTablePageCreated)
 
       // WHEN
       await table.insert({
