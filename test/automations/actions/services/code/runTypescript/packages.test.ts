@@ -1,6 +1,7 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/domain/services/CodeRunner'
+import { configAutomationActionServiceCodeRunTypescriptWithDateFns } from '/examples/config/automation/action/service/code/runTypescript/withPackage/dateFns'
 
 const mock = new Mock(Tester)
 
@@ -8,38 +9,7 @@ mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should run a Typescript code with the date-fns package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'getDate',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'get-date',
-              output: {
-                date: '{{runJavascriptCode.date}}',
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { dateFns },
-                  } = context
-                  const date = dateFns.format(new Date(2024, 8, 1), 'yyyy-MM-dd')
-                  return { date }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithDateFns)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/get-date`)
