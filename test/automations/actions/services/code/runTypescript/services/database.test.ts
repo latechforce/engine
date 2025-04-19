@@ -1,7 +1,5 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
-import type { CodeRunnerContext } from '/domain/services/CodeRunner'
-import type { TableSchema } from '/adapter/api/schemas/TableSchema'
+import { Mock } from '/test/bun'
 import { configAutomationActionServiceCodeRunTypescriptWithDatabaseInsertService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/insert'
 import { configAutomationActionServiceCodeRunTypescriptWithDatabaseInsertManyService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/insertMany'
 import { configAutomationActionServiceCodeRunTypescriptWithDatabaseUpdateService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/update'
@@ -9,6 +7,13 @@ import { configAutomationActionServiceCodeRunTypescriptWithDatabaseUpdateManySer
 import { configAutomationActionServiceCodeRunTypescriptWithDatabaseReadService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/read'
 import { configAutomationActionServiceCodeRunTypescriptWithDatabaseReadByIdService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/readById'
 import { configAutomationActionServiceCodeRunTypescriptWithDatabaseReadFileByIdService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/readFileById'
+import { configAutomationActionServiceCodeRunTypescriptWithDatabaseReadStringFieldService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/readStringField'
+import { configAutomationActionServiceCodeRunTypescriptWithDatabaseReadNumberFieldService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/readNumberField'
+import { configAutomationActionServiceCodeRunTypescriptWithDatabaseReadBooleanFieldService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/readBooleanField'
+import { configAutomationActionServiceCodeRunTypescriptWithDatabaseReadDateFieldService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/readDateField'
+import { configAutomationActionServiceCodeRunTypescriptWithDatabaseListService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/list'
+import { configAutomationActionServiceCodeRunTypescriptWithDatabaseListWithIsFilterService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/listWithIsFilter'
+import { configAutomationActionServiceCodeRunTypescriptWithDatabaseListWithIsAnyOfFilterService } from '/examples/config/automation/action/service/code/runTypescript/withService/database/listWithIsAnyOfFilter'
 
 const mock = new Mock(Tester, { drivers: ['Database', 'Storage'] })
 
@@ -170,7 +175,7 @@ mock.request(({ app, request, drivers }) => {
                 id: '1',
                 name: 'test.txt',
                 mime_type: 'text/plain',
-                url: 'https://example.com/test.txt',
+                url: 'test.txt',
                 created_at: new Date().toISOString(),
               },
             ],
@@ -189,54 +194,14 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read with a string field', async () => {
       // GIVEN
-      const table: TableSchema = {
-        name: 'users',
-        fields: [{ name: 'name', type: 'SingleLineText' }],
-      }
-      const config: Config = {
-        name: 'App',
-
-        tables: [table],
-        automations: [
-          {
-            name: 'readName',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'read-name',
-              input: {
-                type: 'object',
-                properties: {
-                  id: { type: 'string' },
-                },
-              },
-              output: {
-                name: '{{runJavascriptCode.name}}',
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                input: {
-                  id: '{{trigger.body.id}}',
-                },
-                code: String(async function (context: CodeRunnerContext<{ id: string }>) {
-                  const { inputData, services } = context
-                  const { database } = services
-                  const { id } = inputData
-                  const user = await database.table('users').readById(id)
-                  return { name: user?.getFieldAsString('name') }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithDatabaseReadStringFieldService
+      )
       await drivers.database
-        .tableFromSchema(table)
+        .tableFromSchema(
+          configAutomationActionServiceCodeRunTypescriptWithDatabaseReadStringFieldService
+            .tables![0]
+        )
         .insert({ id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -250,53 +215,14 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read with a number field', async () => {
       // GIVEN
-      const table: TableSchema = { name: 'users', fields: [{ name: 'age', type: 'Number' }] }
-      const config: Config = {
-        name: 'App',
-
-        tables: [table],
-        automations: [
-          {
-            name: 'readAge',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'read-age',
-              input: {
-                type: 'object',
-                properties: {
-                  id: { type: 'string' },
-                },
-              },
-              output: {
-                age: {
-                  number: '{{runJavascriptCode.age}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                input: {
-                  id: '{{trigger.body.id}}',
-                },
-                code: String(async function (context: CodeRunnerContext<{ id: string }>) {
-                  const { inputData, services } = context
-                  const { database } = services
-                  const { id } = inputData
-                  const user = await database.table('users').readById(id)
-                  return { age: user?.getFieldAsNumber('age') }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithDatabaseReadNumberFieldService
+      )
       await drivers.database
-        .tableFromSchema(table)
+        .tableFromSchema(
+          configAutomationActionServiceCodeRunTypescriptWithDatabaseReadNumberFieldService
+            .tables![0]
+        )
         .insert({ id: '1', fields: { age: 35 }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -310,53 +236,14 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read with a boolean field', async () => {
       // GIVEN
-      const table: TableSchema = { name: 'users', fields: [{ name: 'valid', type: 'Checkbox' }] }
-      const config: Config = {
-        name: 'App',
-
-        tables: [table],
-        automations: [
-          {
-            name: 'readValid',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'read-valid',
-              input: {
-                type: 'object',
-                properties: {
-                  id: { type: 'string' },
-                },
-              },
-              output: {
-                valid: {
-                  boolean: '{{runJavascriptCode.valid}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                input: {
-                  id: '{{trigger.body.id}}',
-                },
-                code: String(async function (context: CodeRunnerContext<{ id: string }>) {
-                  const { inputData, services } = context
-                  const { database } = services
-                  const { id } = inputData
-                  const user = await database.table('users').readById(id)
-                  return { valid: user?.getFieldAsBoolean('valid') }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithDatabaseReadBooleanFieldService
+      )
       await drivers.database
-        .tableFromSchema(table)
+        .tableFromSchema(
+          configAutomationActionServiceCodeRunTypescriptWithDatabaseReadBooleanFieldService
+            .tables![0]
+        )
         .insert({ id: '1', fields: { valid: true }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -370,55 +257,14 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database read with a Date field', async () => {
       // GIVEN
-      const table: TableSchema = {
-        name: 'users',
-        fields: [{ name: 'birthdate', type: 'DateTime' }],
-      }
-      const config: Config = {
-        name: 'App',
-
-        tables: [table],
-        automations: [
-          {
-            name: 'readBirthdate',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'read-birthdate',
-              input: {
-                type: 'object',
-                properties: {
-                  id: { type: 'string' },
-                },
-              },
-              output: {
-                birthdate: '{{runJavascriptCode.birthdate}}',
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                input: {
-                  id: '{{trigger.body.id}}',
-                },
-                code: String(async function (context: CodeRunnerContext<{ id: string }>) {
-                  const { inputData, services } = context
-                  const { database } = services
-                  const { id } = inputData
-                  const user = await database.table('users').readById(id)
-                  return { birthdate: user?.getFieldAsDate('birthdate')?.toISOString() }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithDatabaseReadDateFieldService
+      )
       const birthdate = new Date()
       await drivers.database
-        .tableFromSchema(table)
+        .tableFromSchema(
+          configAutomationActionServiceCodeRunTypescriptWithDatabaseReadDateFieldService.tables![0]
+        )
         .insert({ id: '1', fields: { birthdate }, created_at: new Date().toISOString() })
 
       // WHEN
@@ -432,49 +278,18 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database list', async () => {
       // GIVEN
-      const table: TableSchema = {
-        name: 'users',
-        fields: [{ name: 'name', type: 'SingleLineText' }],
-      }
-      const config: Config = {
-        name: 'App',
-
-        tables: [table],
-        automations: [
-          {
-            name: 'listUsers',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'list-users',
-              output: {
-                users: {
-                  json: '{{runJavascriptCode.users}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const { database } = context.services
-                  type User = { name: string }
-                  const users = await database.table<User>('users').list()
-                  return { users: users.map((user) => user.fields) }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-      await drivers.database.tableFromSchema(table).insertMany([
-        { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
-        { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
-        { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
-      ])
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithDatabaseListService
+      )
+      await drivers.database
+        .tableFromSchema(
+          configAutomationActionServiceCodeRunTypescriptWithDatabaseListService.tables![0]
+        )
+        .insertMany([
+          { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
+          { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
+          { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
+        ])
 
       // WHEN
       const response = await request.post(`${url}/api/automation/list-users`, {
@@ -490,52 +305,19 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database list with is filter', async () => {
       // GIVEN
-      const table: TableSchema = {
-        name: 'users',
-        fields: [{ name: 'name', type: 'SingleLineText' }],
-      }
-      const config: Config = {
-        name: 'App',
-
-        tables: [table],
-        automations: [
-          {
-            name: 'listUsers',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'list-users',
-              output: {
-                users: {
-                  json: '{{runJavascriptCode.users}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const { database } = context.services
-                  const users = await database.table('users').list({
-                    field: 'id',
-                    operator: 'Is',
-                    value: '2',
-                  })
-                  return { users: users.map((user) => user.fields) }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-      await drivers.database.tableFromSchema(table).insertMany([
-        { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
-        { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
-        { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
-      ])
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithDatabaseListWithIsFilterService
+      )
+      await drivers.database
+        .tableFromSchema(
+          configAutomationActionServiceCodeRunTypescriptWithDatabaseListWithIsFilterService
+            .tables![0]
+        )
+        .insertMany([
+          { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
+          { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
+          { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
+        ])
 
       // WHEN
       const response = await request.post(`${url}/api/automation/list-users`)
@@ -547,52 +329,19 @@ mock.request(({ app, request, drivers }) => {
 
     it('should run a Typescript code with a database list with isAnyOf filter', async () => {
       // GIVEN
-      const table: TableSchema = {
-        name: 'users',
-        fields: [{ name: 'name', type: 'SingleLineText' }],
-      }
-      const config: Config = {
-        name: 'App',
-
-        tables: [table],
-        automations: [
-          {
-            name: 'listUsers',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'list-users',
-              output: {
-                users: {
-                  json: '{{runJavascriptCode.users}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const { database } = context.services
-                  const users = await database.table('users').list({
-                    field: 'id',
-                    operator: 'IsAnyOf',
-                    value: ['3', '2'],
-                  })
-                  return { users: users.map((user) => user.fields) }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-      await drivers.database.tableFromSchema(table).insertMany([
-        { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
-        { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
-        { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
-      ])
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithDatabaseListWithIsAnyOfFilterService
+      )
+      await drivers.database
+        .tableFromSchema(
+          configAutomationActionServiceCodeRunTypescriptWithDatabaseListWithIsAnyOfFilterService
+            .tables![0]
+        )
+        .insertMany([
+          { id: '1', fields: { name: 'John Doe' }, created_at: new Date().toISOString() },
+          { id: '2', fields: { name: 'John Wick' }, created_at: new Date().toISOString() },
+          { id: '3', fields: { name: 'John Connor' }, created_at: new Date().toISOString() },
+        ])
 
       // WHEN
       const response = await request.post(`${url}/api/automation/list-users`)
