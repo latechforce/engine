@@ -1,5 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
+import { Mock } from '/test/bun'
+import { configAutomationActionServiceDatabaseReadRecord } from '/examples/config/automation/action/service/database/readRecord'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -7,48 +8,7 @@ mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should read a record in database', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-        automations: [
-          {
-            name: 'readRecord',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'read-record',
-              input: {
-                type: 'object',
-                properties: {
-                  recordId: {
-                    type: 'string',
-                  },
-                },
-              },
-              output: {
-                record: {
-                  json: '{{readRecord.record}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Database',
-                action: 'ReadRecord',
-                name: 'readRecord',
-                table: 'records',
-                id: '{{trigger.body.recordId}}',
-              },
-            ],
-          },
-        ],
-        tables: [
-          {
-            name: 'records',
-            fields: [],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceDatabaseReadRecord)
       await drivers.database
         .table({ name: 'records', fields: [] })
         .insert({ id: '1', fields: {}, created_at: new Date().toISOString() })
