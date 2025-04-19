@@ -6,28 +6,29 @@ Updates a page in Notion with the specified properties
 
 ### account
 
-`string`
+>account: `string`
 
 ### action
 
-const: `UpdatePage`
+>action: const: `UpdatePage`
 
 ### id
 
-`string`
+>id: `string`
 
 ### integration
 
-const: `Notion`
+>integration: const: `Notion`
 
 ### name
 
-`string`
+>name: `string`
 
 ### page
 
-Object
+>page: Object
 
 ### table
 
-`string`
+>table: `string`
+

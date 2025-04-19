@@ -6,20 +6,21 @@ Lists payments using GoCardless integration with optional filters
 
 ### account
 
-`string`
+>account: `string`
 
 ### action
 
-const: `ListPayments`
+>action: const: `ListPayments`
 
 ### integration
 
-const: `GoCardless`
+>integration: const: `GoCardless`
 
 ### name
 
-`string`
+>name: `string`
 
 ### params
 
-Object
+>params: Object
+

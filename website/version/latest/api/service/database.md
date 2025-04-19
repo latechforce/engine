@@ -4,10 +4,11 @@ The database config for the engine
 
 ## Required
 
-### driver
+### type
 
-enum: `PostgreSQL`, `SQLite`
+>type: enum: `PostgreSQL`, `SQLite`
 
 ### url
 
-`string`
+>url: `string`
+

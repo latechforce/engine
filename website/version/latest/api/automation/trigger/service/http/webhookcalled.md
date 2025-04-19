@@ -6,18 +6,67 @@ A trigger that fires when a webhook is called
 
 ### event
 
-const: `WebhookCalled`
+>event: const: `WebhookCalled`
 
 ### path
 
-`string`
+>path: `string`
 
 ### service
 
-const: `Http`
+>service: const: `Http`
 
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with an automation with a http webhook called trigger",
+  "automations": [
+    {
+      "name": "WebhookCalled",
+      "trigger": {
+        "service": "Http",
+        "event": "WebhookCalled",
+        "path": "/run"
+      },
+      "actions": []
+    }
+  ]
+}
+
+await new App().start(config)
+```
 ## Optional
 
 ### auth
 
-`unknown`
+>auth?: `unknown`
+
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with an automation with a http webhook called trigger with auth",
+  "automations": [
+    {
+      "name": "WebhookCalledWithApiKeyAuth",
+      "trigger": {
+        "service": "Http",
+        "event": "WebhookCalled",
+        "path": "run",
+        "auth": "ApiKey"
+      },
+      "actions": []
+    }
+  ],
+  "services": {
+    "server": {
+      "apiKeys": [
+        "test-key"
+      ]
+    }
+  }
+}
+
+await new App().start(config)
+```

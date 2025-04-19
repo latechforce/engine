@@ -4,16 +4,20 @@ Represents a field that stores an URL.
 
 ## Required
 
-### name
+### Name
 
-`string`
+The name of the field.
+>name: `string`
 
-### type
+### Type
 
-const: `Url`
+The type of the field.
+>type: const: `Url`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a url field",
   "tables": [
     {
@@ -27,18 +31,21 @@ const: `Url`
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
-### required
+### Required
 
-`boolean`
-
+Whether the field is required.
 The default value is `false`.
+>required?: `boolean`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a required url field",
   "tables": [
     {
@@ -53,4 +60,6 @@ The default value is `false`.
     }
   ]
 }
+
+await new App().start(config)
 ```

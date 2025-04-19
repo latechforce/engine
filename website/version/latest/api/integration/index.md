@@ -10,36 +10,41 @@ Defines configurations for various third-party service integrations
 
 ### airtable
 
-Array of [Airtable](/api/integration/airtable)
+>airtable?: [Airtable](/api/integration/airtable)[]
 
 ### notion
 
-Array of [Notion](/api/integration/notion)
+>notion?: [Notion](/api/integration/notion)[]
 
 ### pappers
 
-Array of [Pappers](/api/integration/pappers)
+>pappers?: [Pappers](/api/integration/pappers)[]
 
 ### qonto
 
-Array of [Qonto](/api/integration/qonto)
+>qonto?: [Qonto](/api/integration/qonto)[]
 
 ### google
 
-Reference of [Google](/api/integration/google)
+>google?: [Google](/api/integration/google)
 
 ### gocardless
 
-Array of [GoCardless](/api/integration/gocardless)
+>gocardless?: [GoCardless](/api/integration/gocardless)[]
 
 ### phantombuster
 
-Array of [Phantombuster](/api/integration/phantombuster)
+>phantombuster?: [Phantombuster](/api/integration/phantombuster)[]
 
 ### calendly
 
-Array of [Calendly](/api/integration/calendly)
+>calendly?: [Calendly](/api/integration/calendly)[]
 
 ### youcanbookme
 
-Array of [YouCanBookMe](/api/integration/youcanbookme)
+>youcanbookme?: [YouCanBookMe](/api/integration/youcanbookme)[]
+
+### jotform
+
+>jotform?: [Jotform](/api/integration/jotform)[]
+

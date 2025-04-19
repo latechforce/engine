@@ -6,37 +6,36 @@ Represents a field that aggregates values from linked records.
 
 ### name
 
-`string`
+>name: `string`
 
 ### type
 
-const: `Rollup`
+>type: const: `Rollup`
 
 ### formula
 
-`string`
+>formula: `string`
 
 ### multipleLinkedRecord
 
-`string`
-
 The multiple linked record field to aggregate values from.
+>multipleLinkedRecord: `string`
 
 ### linkedRecordField
 
-`string`
-
 The field of the multiple linked record table to aggregate values from.
+>linkedRecordField: `string`
 
 ### output
 
-Reference of [Output](/api/table/field/rollup/output)
-
 The output type of the rollup field.
+>output: [Output](/api/table/field/rollup/output)
 
-```json
-{
-  "name": "App with a table with a rollup field as a single line text and a CONCAT formula",
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with a table with a rollup field",
   "tables": [
     {
       "name": "table_1",
@@ -69,19 +68,21 @@ The output type of the rollup field.
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
 ### required
 
-`boolean`
-
 The default value is `false`.
+>required?: `boolean`
 
-```json
-{
-  "name": "App with a table with a required rollup field as a single line text and a CONCAT formula",
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with a table with a required rollup field",
   "tables": [
     {
       "name": "table_1",
@@ -117,4 +118,6 @@ The default value is `false`.
     }
   ]
 }
+
+await new App().start(config)
 ```

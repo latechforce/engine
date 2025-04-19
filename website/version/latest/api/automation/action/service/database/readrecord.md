@@ -6,20 +6,68 @@ Reads a record from the specified database table
 
 ### action
 
-const: `ReadRecord`
+>action: const: `ReadRecord`
 
 ### id
 
-`string`
+>id: `string`
 
 ### name
 
-`string`
+>name: `string`
 
 ### service
 
-const: `Database`
+>service: const: `Database`
 
 ### table
 
-`string`
+>table: `string`
+
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with a database read record action",
+  "automations": [
+    {
+      "name": "readRecord",
+      "trigger": {
+        "service": "Http",
+        "event": "ApiCalled",
+        "path": "read-record",
+        "input": {
+          "type": "object",
+          "properties": {
+            "recordId": {
+              "type": "string"
+            }
+          }
+        },
+        "output": {
+          "record": {
+            "json": "{{readRecord.record}}"
+          }
+        }
+      },
+      "actions": [
+        {
+          "service": "Database",
+          "action": "ReadRecord",
+          "name": "readRecord",
+          "table": "records",
+          "id": "{{trigger.body.recordId}}"
+        }
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "name": "records",
+      "fields": []
+    }
+  ]
+}
+
+await new App().start(config)
+```

@@ -10,4 +10,5 @@ Type alias for bucket storage configuration
 
 ### name
 
-`string`
+>name: `string`
+

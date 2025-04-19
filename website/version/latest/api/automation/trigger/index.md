@@ -7,3 +7,4 @@ Union type of all possible triggers that can start automations
 - [Service](/api/automation/trigger/service)
 
 - [Integration](/api/automation/trigger/integration)
+

@@ -6,20 +6,21 @@ Creates a new payment in GoCardless with the specified details
 
 ### account
 
-`string`
+>account: `string`
 
 ### action
 
-const: `CreatePayment`
+>action: const: `CreatePayment`
 
 ### integration
 
-const: `GoCardless`
+>integration: const: `GoCardless`
 
 ### name
 
-`string`
+>name: `string`
 
 ### payment
 
-Object
+>payment: Object
+

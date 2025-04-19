@@ -6,12 +6,33 @@ A trigger that fires when a cron time is ticked
 
 ### cronTime
 
-`string`
+>cronTime: `string`
 
 ### event
 
-const: `CronTimeTicked`
+>event: const: `CronTimeTicked`
 
 ### service
 
-const: `Schedule`
+>service: const: `Schedule`
+
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with an automation with a cron time ticked trigger",
+  "automations": [
+    {
+      "name": "CronTimeTicked",
+      "trigger": {
+        "service": "Schedule",
+        "event": "CronTimeTicked",
+        "cronTime": "*/2 * * * * *"
+      },
+      "actions": []
+    }
+  ]
+}
+
+await new App().start(config)
+```

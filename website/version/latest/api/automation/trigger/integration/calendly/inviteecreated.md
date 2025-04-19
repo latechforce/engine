@@ -6,12 +6,33 @@ A trigger that fires when an invitee is created in Calendly
 
 ### account
 
-`string`
+>account: `string`
 
 ### event
 
-const: `InviteeCreated`
+>event: const: `InviteeCreated`
 
 ### integration
 
-const: `Calendly`
+>integration: const: `Calendly`
+
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with an automation with a calendly invitee created trigger",
+  "automations": [
+    {
+      "name": "CalendlyInviteeCreated",
+      "trigger": {
+        "integration": "Calendly",
+        "event": "InviteeCreated",
+        "account": "calendly"
+      },
+      "actions": []
+    }
+  ]
+}
+
+await new App().start(config)
+```

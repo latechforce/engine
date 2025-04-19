@@ -6,14 +6,32 @@ The server config for the engine
 
 ### apiKeys
 
-Array of `string`
+>apiKeys?: `string`[]
 
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with an api key",
+  "services": {
+    "server": {
+      "apiKeys": [
+        "api-key"
+      ]
+    }
+  }
+}
+
+await new App().start(config)
+```
 ### port
 
-`string` or `number`
+>port?: `string` or `number`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with port",
   "services": {
     "server": {
@@ -21,18 +39,21 @@ Array of `string`
     }
   }
 }
-```
 
+await new App().start(config)
+```
 ### idleTimeout
 
-`string` or `number`
+>idleTimeout?: `string` or `number`
 
 ### baseUrl
 
-`string`
+>baseUrl?: `string`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with base url",
   "services": {
     "server": {
@@ -40,16 +61,18 @@ Array of `string`
     }
   }
 }
-```
 
+await new App().start(config)
+```
 ### sslCert
 
-`string`
+>sslCert?: `string`
 
 ### sslKey
 
-`string`
+>sslKey?: `string`
 
 ### monitors
 
-Array of enum: `Sentry`, `Console`
+>monitors?: enum: `Sentry`, `Console`[]
+

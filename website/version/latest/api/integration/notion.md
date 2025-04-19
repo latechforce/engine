@@ -6,18 +6,19 @@ A configuration schema for Notion integration
 
 ### account
 
-`string`
+>account: `string`
 
 ### token
 
-`string`
+>token: `string`
 
 ## Optional
 
 ### baseUrl
 
-`string`
+>baseUrl?: `string`
 
 ### pollingInterval
 
-`number`
+>pollingInterval?: `number`
+

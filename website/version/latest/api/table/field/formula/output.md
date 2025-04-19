@@ -6,11 +6,13 @@ Represents the output type of a formula field.
 
 ### type
 
-enum: `Number`, `LongText`, `SingleLineText`, `DateTime`
+>type: enum: `Number`, `LongText`, `SingleLineText`, `DateTime`
 
-```json
-{
-  "name": "App with a table with a formula field as a single line text and an concatenation",
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with a table with a formula field",
   "tables": [
     {
       "name": "table",
@@ -31,4 +33,6 @@ enum: `Number`, `LongText`, `SingleLineText`, `DateTime`
     }
   ]
 }
+
+await new App().start(config)
 ```

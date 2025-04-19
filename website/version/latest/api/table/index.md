@@ -8,14 +8,15 @@ Defines the structure of a database table
 
 ## Required
 
-### name
-
-`string`
+### Name
 
 The unique identifier for the table
+>name: `string`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a name",
   "tables": [
     {
@@ -23,18 +24,21 @@ The unique identifier for the table
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
-### schema
-
-`string`
+### Schema
 
 The database schema where the table is located
+The default value is public.
+>schema?: `string`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a schema",
   "tables": [
     {
@@ -43,16 +47,18 @@ The database schema where the table is located
     }
   ]
 }
+
+await new App().start(config)
 ```
-
-### fields
-
-Array of [Field](/api/table/field)
+### Fields
 
 Array of field definitions for the table
+>fields?: [Field](/api/table/field)[]
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a name and multiple fields",
   "tables": [
     {
@@ -74,4 +80,6 @@ Array of field definitions for the table
     }
   ]
 }
+
+await new App().start(config)
 ```

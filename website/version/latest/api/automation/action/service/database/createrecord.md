@@ -6,20 +6,21 @@ Creates a new record in the specified database table with the given fields
 
 ### action
 
-const: `CreateRecord`
+>action: const: `CreateRecord`
 
 ### fields
 
-Object
+>fields: Object
 
 ### name
 
-`string`
+>name: `string`
 
 ### service
 
-const: `Database`
+>service: const: `Database`
 
 ### table
 
-`string`
+>table: `string`
+

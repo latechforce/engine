@@ -7,3 +7,4 @@ The Qonto integration action.
 - [CreateClient](/api/automation/action/integration/qonto/createclient)
 
 - [RetrieveAttachment](/api/automation/action/integration/qonto/retrieveattachment)
+

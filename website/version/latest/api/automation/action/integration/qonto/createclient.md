@@ -6,20 +6,21 @@ Creates a new client in Qonto with the specified details
 
 ### account
 
-`string`
+>account: `string`
 
 ### action
 
-const: `CreateClient`
+>action: const: `CreateClient`
 
 ### client
 
-Object
+>client: Object
 
 ### integration
 
-const: `Qonto`
+>integration: const: `Qonto`
 
 ### name
 
-`string`
+>name: `string`
+

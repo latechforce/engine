@@ -6,18 +6,19 @@ A configuration schema for Gmail integration
 
 ### account
 
-`string`
+>account: `string`
 
 ### password
 
-`string`
+>password: `string`
 
 ### user
 
-`string`
+>user: `string`
 
 ## Optional
 
 ### baseUrl
 
-`string`
+>baseUrl?: `string`
+

@@ -6,20 +6,21 @@ Sends an email using Google Mail integration
 
 ### account
 
-`string`
+>account: `string`
 
 ### action
 
-const: `SendEmail`
+>action: const: `SendEmail`
 
 ### email
 
-Object
+>email: Object
 
 ### integration
 
-const: `GoogleMail`
+>integration: const: `GoogleMail`
 
 ### name
 
-`string`
+>name: `string`
+

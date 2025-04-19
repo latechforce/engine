@@ -7,3 +7,4 @@ The GoCardless integration action.
 - [CreatePayment](/api/automation/action/integration/gocardless/createpayment)
 
 - [ListPayments](/api/automation/action/integration/gocardless/listpayments)
+

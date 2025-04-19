@@ -6,26 +6,57 @@ Executes JavaScript code with the specified input
 
 ### action
 
-const: `RunJavascript`
+>action: const: `RunJavascript`
 
 ### code
 
-`string`
+>code: `string`
 
 ### name
 
-`string`
+>name: `string`
 
 ### service
 
-const: `Code`
+>service: const: `Code`
 
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App",
+  "automations": [
+    {
+      "name": "runJavascript",
+      "trigger": {
+        "service": "Http",
+        "event": "ApiCalled",
+        "path": "run-javascript",
+        "output": {
+          "message": "{{runJavascriptCode.message}}"
+        }
+      },
+      "actions": [
+        {
+          "service": "Code",
+          "action": "RunJavascript",
+          "name": "runJavascriptCode",
+          "code": "async function() {\n            return { message: \"Hello, world!\" };\n          }"
+        }
+      ]
+    }
+  ]
+}
+
+await new App().start(config)
+```
 ## Optional
 
 ### input
 
-`unknown`
+>input?: `unknown`
 
 ### env
 
-Object
+>env?: Object
+

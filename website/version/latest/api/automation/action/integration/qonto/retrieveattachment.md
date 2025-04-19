@@ -6,20 +6,21 @@ Retrieves an attachment using Qonto integration
 
 ### account
 
-`string`
+>account: `string`
 
 ### action
 
-const: `RetrieveAttachment`
+>action: const: `RetrieveAttachment`
 
 ### attachmentId
 
-`string`
+>attachmentId: `string`
 
 ### integration
 
-const: `Qonto`
+>integration: const: `Qonto`
 
 ### name
 
-`string`
+>name: `string`
+

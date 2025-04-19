@@ -138,8 +138,8 @@ jobs:
       - name: Install website dependencies
         run: cd website && bun install
 
-      - name: Build schema docs
-        run: bun run website:docs
+      - name: Build docs
+        run: bun run build:docs
 
       - name: Build website
         run: bun run website:build

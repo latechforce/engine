@@ -6,14 +6,15 @@ A configuration schema for GoCardless payment integration
 
 ### accessToken
 
-`string`
+>accessToken: `string`
 
 ### account
 
-`string`
+>account: `string`
 
 ## Optional
 
 ### baseUrl
 
-`string`
+>baseUrl?: `string`
+

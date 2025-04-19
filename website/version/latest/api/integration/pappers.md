@@ -6,14 +6,15 @@ A configuration schema for Pappers integration
 
 ### account
 
-`string`
+>account: `string`
 
 ### apiKey
 
-`string`
+>apiKey: `string`
 
 ## Optional
 
 ### baseUrl
 
-`string`
+>baseUrl?: `string`
+

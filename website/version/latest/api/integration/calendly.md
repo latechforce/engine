@@ -6,14 +6,15 @@ A configuration schema for Calendly scheduling integration
 
 ### account
 
-`string`
+>account: `string`
 
 ### user
 
-Object
+>user: Object
 
 ## Optional
 
 ### baseUrl
 
-`string`
+>baseUrl?: `string`
+

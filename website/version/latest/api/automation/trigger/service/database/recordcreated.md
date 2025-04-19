@@ -6,12 +6,39 @@ A trigger that fires when a record is created in a database
 
 ### event
 
-const: `RecordCreated`
+>event: const: `RecordCreated`
 
 ### service
 
-const: `Database`
+>service: const: `Database`
 
 ### table
 
-`string`
+>table: `string`
+
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with an automation with a database record created trigger",
+  "automations": [
+    {
+      "name": "RecordCreated",
+      "trigger": {
+        "service": "Database",
+        "event": "RecordCreated",
+        "table": "table_1"
+      },
+      "actions": []
+    }
+  ],
+  "tables": [
+    {
+      "name": "table_1",
+      "fields": []
+    }
+  ]
+}
+
+await new App().start(config)
+```

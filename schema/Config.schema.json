@@ -7,57 +7,67 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "The name of the engine."
+          "description": "The name of the engine.",
+          "title": "Name"
         },
         "appVersion": {
           "type": "string",
           "description": "The version of the application.",
+          "title": "App version",
           "default": "the `version` property of the `package.json` file or `latest`"
         },
         "engineVersion": {
           "type": "string",
           "description": "The version of the engine.",
+          "title": "Engine version",
           "default": "the `version` of the dependency `@latechforce/engine` of the `package.json` file"
         },
         "description": {
           "type": "string",
-          "description": "The description of the application."
+          "description": "The description of the application.",
+          "title": "Description"
         },
         "forms": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/FormSchema"
           },
-          "description": "The forms of the application."
+          "description": "The forms of the application.",
+          "title": "Forms"
         },
         "automations": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/AutomationSchema"
           },
-          "description": "The automations of the application."
+          "description": "The automations of the application.",
+          "title": "Automations"
         },
         "tables": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/TableSchema"
           },
-          "description": "The tables of the application."
+          "description": "The tables of the application.",
+          "title": "Tables"
         },
         "buckets": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/BucketSchema"
           },
-          "description": "The buckets of the application."
+          "description": "The buckets of the application.",
+          "title": "Buckets"
         },
         "integrations": {
           "$ref": "#/definitions/IntegrationSchema",
-          "description": "The integrations of the application."
+          "description": "The integrations of the application.",
+          "title": "Integrations"
         },
         "services": {
           "$ref": "#/definitions/ServiceSchema",
-          "description": "The services of the application."
+          "description": "The services of the application.",
+          "title": "Services"
         }
       },
       "required": [
@@ -1381,18 +1391,22 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "The unique identifier for the table"
+          "description": "The unique identifier for the table",
+          "title": "Name"
         },
         "schema": {
           "type": "string",
-          "description": "The database schema where the table is located"
+          "description": "The database schema where the table is located",
+          "title": "Schema",
+          "default": "public"
         },
         "fields": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/FieldTableSchema"
           },
-          "description": "Array of field definitions for the table"
+          "description": "Array of field definitions for the table",
+          "title": "Fields"
         }
       },
       "required": [
@@ -1852,14 +1866,20 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "Url"
+          "const": "Url",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },

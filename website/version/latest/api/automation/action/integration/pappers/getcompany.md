@@ -6,20 +6,21 @@ Retrieves company information using Pappers integration
 
 ### account
 
-`string`
+>account: `string`
 
 ### action
 
-const: `GetCompany`
+>action: const: `GetCompany`
 
 ### integration
 
-const: `Pappers`
+>integration: const: `Pappers`
 
 ### name
 
-`string`
+>name: `string`
 
 ### siret
 
-`string`
+>siret: `string`
+

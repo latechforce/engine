@@ -6,14 +6,16 @@ Represents a field that stores a single line of text.
 
 ### name
 
-`string`
+>name: `string`
 
 ### type
 
-const: `SingleLineText`
+>type: const: `SingleLineText`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a single line text field",
   "tables": [
     {
@@ -27,18 +29,20 @@ const: `SingleLineText`
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
 ### required
 
-`boolean`
-
 The default value is `false`.
+>required?: `boolean`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a required single line text field",
   "tables": [
     {
@@ -53,4 +57,6 @@ The default value is `false`.
     }
   ]
 }
+
+await new App().start(config)
 ```

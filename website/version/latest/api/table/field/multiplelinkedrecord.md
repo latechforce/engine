@@ -6,18 +6,20 @@ Represents a field that links to multiple records in another table.
 
 ### name
 
-`string`
+>name: `string`
 
 ### type
 
-const: `MultipleLinkedRecord`
+>type: const: `MultipleLinkedRecord`
 
 ### table
 
-`string`
+>table: `string`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a multiple linked record field",
   "tables": [
     {
@@ -35,18 +37,20 @@ const: `MultipleLinkedRecord`
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
 ### required
 
-`boolean`
-
 The default value is `false`.
+>required?: `boolean`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a required multiple linked record field",
   "tables": [
     {
@@ -65,4 +69,6 @@ The default value is `false`.
     }
   ]
 }
+
+await new App().start(config)
 ```

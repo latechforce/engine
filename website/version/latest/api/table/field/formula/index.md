@@ -6,23 +6,25 @@ Represents a field that calculates a value based on a formula.
 
 ### name
 
-`string`
+>name: `string`
 
 ### type
 
-const: `Formula`
+>type: const: `Formula`
 
 ### formula
 
-`string`
+>formula: `string`
 
 ### output
 
-Reference of [Output](/api/table/field/formula/output)
+>output: [Output](/api/table/field/formula/output)
 
-```json
-{
-  "name": "App with a table with a formula field as a single line text and an concatenation",
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with a table with a formula field",
   "tables": [
     {
       "name": "table",
@@ -43,18 +45,20 @@ Reference of [Output](/api/table/field/formula/output)
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
 ### required
 
-`boolean`
-
 The default value is `false`.
+>required?: `boolean`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a required formula field",
   "tables": [
     {
@@ -78,4 +82,6 @@ The default value is `false`.
     }
   ]
 }
+
+await new App().start(config)
 ```

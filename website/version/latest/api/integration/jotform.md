@@ -1,6 +1,6 @@
-# Airtable
+# Jotform
 
-A configuration schema for Airtable integration
+A configuration schema for Jotform integration
 
 ## Required
 
@@ -11,10 +11,6 @@ A configuration schema for Airtable integration
 ### apiKey
 
 >apiKey: `string`
-
-### databaseId
-
->databaseId: `string`
 
 ## Optional
 

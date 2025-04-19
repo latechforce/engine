@@ -6,18 +6,20 @@ Represents a field that allows selecting a single option from a predefined list.
 
 ### name
 
-`string`
+>name: `string`
 
 ### type
 
-const: `SingleSelect`
+>type: const: `SingleSelect`
 
 ### options
 
-Array of `string`
+>options: `string`[]
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a single select field",
   "tables": [
     {
@@ -26,24 +28,30 @@ Array of `string`
         {
           "name": "single_select",
           "type": "SingleSelect",
-          "options": ["Option 1", "Option 2", "Option 3"]
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3"
+          ]
         }
       ]
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
 ### required
 
-`boolean`
-
 The default value is `false`.
+>required?: `boolean`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a required single select field",
   "tables": [
     {
@@ -52,11 +60,17 @@ The default value is `false`.
         {
           "name": "single_select",
           "type": "SingleSelect",
-          "options": ["Option 1", "Option 2", "Option 3"],
+          "options": [
+            "Option 1",
+            "Option 2",
+            "Option 3"
+          ],
           "required": true
         }
       ]
     }
   ]
 }
+
+await new App().start(config)
 ```

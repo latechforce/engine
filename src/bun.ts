@@ -6,6 +6,8 @@ import type { Drivers } from '/adapter/spi/drivers'
 import type { Integrations } from '/adapter/spi/integrations'
 import type { Components } from '/domain/components'
 
+export * from './types'
+
 export default class extends Engine {
   constructor(options?: {
     drivers?: Partial<Drivers>

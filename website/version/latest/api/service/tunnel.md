@@ -6,18 +6,19 @@ The tunnel config for the engine
 
 ### account
 
-`string`
+>account: `string`
 
 ### authToken
 
-`string`
+>authToken: `string`
 
 ### integration
 
-const: `Ngrok`
+>integration: const: `Ngrok`
 
 ## Optional
 
 ### baseUrl
 
-`string`
+>baseUrl?: `string`
+

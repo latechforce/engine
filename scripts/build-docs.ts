@@ -9,6 +9,9 @@ import {
 } from 'fs'
 import { join, basename, extname } from 'path'
 
+import '../src/adapter/api/schemas/ConfigSchema'
+import './build-schema'
+
 interface JSONSchema {
   title?: string
   description?: string
@@ -68,11 +71,11 @@ function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
       }
       const file = findSchemaFile(ref, schemaFiles)
       if (file) {
-        return `Array of [${file.title}](${file.docsPath})`
+        return `[${file.title}](${file.docsPath})[]`
       }
-      return `Array of [${ref}](#)`
+      return `[${ref}](#)[]`
     } else {
-      return `Array of ${formatType(schema.items as JSONSchema, schemaFiles)}`
+      return `${formatType(schema.items as JSONSchema, schemaFiles)}[]`
     }
   }
   if (schema.type === 'object') return 'Object'
@@ -83,9 +86,9 @@ function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
     }
     const file = findSchemaFile(ref, schemaFiles)
     if (file) {
-      return `Reference of [${file.title}](${file.docsPath})`
+      return `[${file.title}](${file.docsPath})`
     }
-    return `Reference of ${ref}`
+    return `${ref}`
   }
   if (schema.anyOf) return 'anyOf'
   if (schema.oneOf) return 'oneOf'
@@ -105,7 +108,14 @@ async function findExample(file: SchemaFile, key: string): Promise<string> {
     }
   }
   const example = await import(examplePath).then((m) => m[Object.keys(m)[0]])
-  return `\`\`\`json\n${JSON.stringify(example, null, 2)}\n\`\`\`\n\n`
+  return `\`\`\`ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = ${JSON.stringify(example, null, 2)}
+
+await new App().start(config)
+\`\`\`
+`
 }
 
 async function generateMarkdownForDefinition(
@@ -166,14 +176,14 @@ sidebar_position: ${sidebarPosition}
       for (const key of requiredProperties) {
         const prop = schema.properties?.[key]
         if (prop) {
-          markdown += `### ${key}\n\n`
-          markdown += `${formatType(prop, schemaFiles)}\n\n`
+          markdown += `### ${prop.title || key}\n\n`
           if (prop.description) {
             markdown += `${prop.description}\n`
           }
           if (prop.default !== undefined) {
             markdown += `The default value is ${prop.default}.\n`
           }
+          markdown += `>${key}: ${formatType(prop, schemaFiles)}\n\n`
         }
       }
       if (file) {
@@ -185,14 +195,14 @@ sidebar_position: ${sidebarPosition}
       for (const key of optionalProperties) {
         const prop = schema.properties?.[key]
         if (prop) {
-          markdown += `### ${key}\n\n`
-          markdown += `${formatType(prop, schemaFiles)}\n\n`
+          markdown += `### ${prop.title || key}\n\n`
           if (prop.description) {
             markdown += `${prop.description}\n`
           }
           if (prop.default !== undefined) {
             markdown += `The default value is ${prop.default}.\n`
           }
+          markdown += `>${key}?: ${formatType(prop, schemaFiles)}\n\n`
           if (file) {
             markdown += await findExample(file, key)
           }
@@ -285,7 +295,6 @@ async function main() {
           schemaFiles
         )
         writeFileSync(join(basePath.toLowerCase(), `${file.name}.md`), integrationsMarkdown)
-        console.log(`Processing schema file: ${file.path.replace(schemasDir, '')}`)
       }
     }
   }

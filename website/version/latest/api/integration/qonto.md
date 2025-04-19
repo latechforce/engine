@@ -6,22 +6,23 @@ A configuration schema for Qonto banking integration
 
 ### account
 
-`string`
+>account: `string`
 
 ### organisationSlug
 
-`string`
+>organisationSlug: `string`
 
 ### secretKey
 
-`string`
+>secretKey: `string`
 
 ## Optional
 
 ### baseUrl
 
-`string`
+>baseUrl?: `string`
 
 ### stagingToken
 
-`string`
+>stagingToken?: `string`
+

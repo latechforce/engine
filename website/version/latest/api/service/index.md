@@ -6,34 +6,30 @@ Defines configurations for various services
 
 ### server
 
-Reference of [Server](/api/service/server)
+>server?: [Server](/api/service/server)
 
 ### database
 
-Reference of [Database](/api/service/database)
-
 The database of the engine
+>database?: [Database](/api/service/database)
 
 ### monitors
 
-Array of [Monitor](/api/service/monitor)
-
 The monitors of the engine
+>monitors?: [Monitor](/api/service/monitor)[]
 
 ### loggers
 
-Array of [Logger](/api/service/logger)
-
 The loggers of the engine
+>loggers?: [Logger](/api/service/logger)[]
 
 ### tunnel
 
-Reference of [Tunnel](/api/service/tunnel)
-
 The tunnel of the engine
+>tunnel?: [Tunnel](/api/service/tunnel)
 
 ### theme
 
-Reference of [Theme](/api/service/theme)
-
 The themes of the engine
+>theme?: [Theme](/api/service/theme)
+

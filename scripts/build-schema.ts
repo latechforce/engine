@@ -168,7 +168,6 @@ function createSchemaFile() {
 
     // Write the merged schema
     writeFileSync(filePath, JSON.stringify(mergedSchema, null, 2))
-    console.log('Generated merged config.schema.json')
   } catch (error) {
     console.error('Error generating config.schema.json:', error)
     process.exit(1)
@@ -176,8 +175,8 @@ function createSchemaFile() {
 }
 
 try {
-  console.log('Generating config.schema.json...')
   createSchemaFile()
+  console.log('Generated config.schema.json successfully!')
 } catch (error) {
   console.error('Error generating schema:', error)
   process.exit(1)

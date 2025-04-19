@@ -9,3 +9,4 @@ The Service trigger.
 - [Http](/api/automation/trigger/service/http)
 
 - [Schedule](/api/automation/trigger/service/schedule)
+

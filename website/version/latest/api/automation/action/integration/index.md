@@ -13,3 +13,4 @@ Union type of all possible integration actions that can be performed in automati
 - [Google](/api/automation/action/integration/google)
 
 - [GoCardless](/api/automation/action/integration/gocardless)
+

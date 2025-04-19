@@ -6,14 +6,16 @@ Represents a field that stores a numeric value.
 
 ### name
 
-`string`
+>name: `string`
 
 ### type
 
-const: `Number`
+>type: const: `Number`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a number field",
   "tables": [
     {
@@ -27,18 +29,20 @@ const: `Number`
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
 ### required
 
-`boolean`
-
 The default value is `false`.
+>required?: `boolean`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a required number field",
   "tables": [
     {
@@ -53,4 +57,6 @@ The default value is `false`.
     }
   ]
 }
+
+await new App().start(config)
 ```

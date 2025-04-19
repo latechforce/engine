@@ -6,11 +6,13 @@ Represents the output type of a rollup field.
 
 ### type
 
-enum: `Number`, `LongText`, `SingleLineText`, `DateTime`
+>type: enum: `Number`, `LongText`, `SingleLineText`, `DateTime`
 
-```json
-{
-  "name": "App with a table with a rollup field as a single line text and a CONCAT formula",
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with a table with a rollup field",
   "tables": [
     {
       "name": "table_1",
@@ -43,4 +45,6 @@ enum: `Number`, `LongText`, `SingleLineText`, `DateTime`
     }
   ]
 }
+
+await new App().start(config)
 ```

@@ -6,4 +6,5 @@ A configuration schema for Google integration
 
 ### mail
 
-Array of [Mail](/api/integration/google/mail)
+>mail?: [Mail](/api/integration/google/mail)[]
+

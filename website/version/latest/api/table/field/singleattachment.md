@@ -6,14 +6,16 @@ Represents a field that stores a single attachment.
 
 ### name
 
-`string`
+>name: `string`
 
 ### type
 
-const: `SingleAttachment`
+>type: const: `SingleAttachment`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a single attachment field",
   "tables": [
     {
@@ -27,18 +29,20 @@ const: `SingleAttachment`
     }
   ]
 }
-```
 
+await new App().start(config)
+```
 ## Optional
 
 ### required
 
-`boolean`
-
 The default value is `false`.
+>required?: `boolean`
 
-```json
-{
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
   "name": "App with a table with a required single attachment field",
   "tables": [
     {
@@ -53,4 +57,6 @@ The default value is `false`.
     }
   ]
 }
+
+await new App().start(config)
 ```
