@@ -1,7 +1,19 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
-import type { CodeRunnerContext } from '/domain/services/CodeRunner'
+import { Mock } from '/test/bun'
 import { configAutomationActionServiceCodeRunTypescriptWithDateFns } from '/examples/config/automation/action/service/code/runTypescript/withPackage/dateFns'
+import { configAutomationActionServiceCodeRunTypescriptWithDateFnsLocale } from '/examples/config/automation/action/service/code/runTypescript/withPackage/dateFnsLocale'
+import { configAutomationActionServiceCodeRunTypescriptWithDateFnsTz } from '/examples/config/automation/action/service/code/runTypescript/withPackage/dateFnsTz'
+import { configAutomationActionServiceCodeRunTypescriptWithXml2js } from '/examples/config/automation/action/service/code/runTypescript/withPackage/xml2js'
+import { configAutomationActionServiceCodeRunTypescriptWithAxios } from '/examples/config/automation/action/service/code/runTypescript/withPackage/axios'
+import { configAutomationActionServiceCodeRunTypescriptWithHttps } from '/examples/config/automation/action/service/code/runTypescript/withPackage/https'
+import { configAutomationActionServiceCodeRunTypescriptWithFsExtra } from '/examples/config/automation/action/service/code/runTypescript/withPackage/fsExtra'
+import { configAutomationActionServiceCodeRunTypescriptWithSlugify } from '/examples/config/automation/action/service/code/runTypescript/withPackage/slugify'
+import { configAutomationActionServiceCodeRunTypescriptWithSodium } from '/examples/config/automation/action/service/code/runTypescript/withPackage/sodium'
+import { configAutomationActionServiceCodeRunTypescriptWithNotion } from '/examples/config/automation/action/service/code/runTypescript/withPackage/notion'
+import { configAutomationActionServiceCodeRunTypescriptWithAirtable } from '/examples/config/automation/action/service/code/runTypescript/withPackage/airtable'
+import { configAutomationActionServiceCodeRunTypescriptWithPapaparse } from '/examples/config/automation/action/service/code/runTypescript/withPackage/papaparse'
+import { configAutomationActionServiceCodeRunTypescriptWithPuppeteer } from '/examples/config/automation/action/service/code/runTypescript/withPackage/puppeteer'
+import { configAutomationActionServiceCodeRunTypescriptWithMistral } from '/examples/config/automation/action/service/code/runTypescript/withPackage/mistral'
 
 const mock = new Mock(Tester)
 
@@ -20,40 +32,9 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with the date-fns/locale package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'getDateLocale',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'get-date-locale',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { dateFnsLocale },
-                  } = context
-                  const exist = !!dateFnsLocale.fr
-                  return { exist }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithDateFnsLocale
+      )
 
       // WHEN
       const response = await request.post(`${url}/api/automation/get-date-locale`)
@@ -64,40 +45,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with the date-fns-tz package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'getDateTz',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'get-date-tz',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { dateFnsTz },
-                  } = context
-                  const exist = !!dateFnsTz.getTimezoneOffset
-                  return { exist }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithDateFnsTz)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/get-date-tz`)
@@ -108,46 +56,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with xml2js package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'parseXml',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'parse-xml',
-              output: {
-                result: {
-                  json: '{{runJavascriptCode.result}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { xml2js },
-                  } = context
-                  const parser = new xml2js.Parser({
-                    trim: true,
-                    explicitArray: false,
-                  })
-                  const xml =
-                    '<result><root><item>Value1</item><item>Value2</item></root><key> value </key></result>'
-                  const { result } = await parser.parseStringPromise(xml)
-                  return { result }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithXml2js)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/parse-xml`)
@@ -161,39 +70,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with axios package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'axios',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'axios',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { axios },
-                  } = context
-                  return { exist: !!axios?.post }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithAxios)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/axios`)
@@ -204,39 +81,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with https package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'https',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'https',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { https },
-                  } = context
-                  return { exist: !!https?.globalAgent }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithHttps)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/https`)
@@ -247,39 +92,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with fs-extra package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'fsExtra',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'fsExtra',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { fsExtra },
-                  } = context
-                  return { exist: !!fsExtra.copy }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithFsExtra)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/fsExtra`)
@@ -288,170 +101,9 @@ mock.request(({ app, request }) => {
       expect(response.exist).toBeTruthy()
     })
 
-    it('should run a Typescript code with path package', async () => {
-      // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'path',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'path',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { path },
-                  } = context
-                  return { exist: !!path.join }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-
-      // WHEN
-      const response = await request.post(`${url}/api/automation/path`)
-
-      // THEN
-      expect(response.exist).toBeTruthy()
-    })
-
-    it('should run a Typescript code with crypto package', async () => {
-      // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'crypto',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'crypto',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { crypto },
-                  } = context
-                  return { exist: !!crypto?.constants }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-
-      // WHEN
-      const response = await request.post(`${url}/api/automation/crypto`)
-
-      // THEN
-      expect(response.exist).toBeTruthy()
-    })
-
-    it('should run a Typescript code with lodash package', async () => {
-      // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'lodash',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'lodash',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { lodash },
-                  } = context
-                  return { exist: !!lodash?.chunk }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-
-      // WHEN
-      const response = await request.post(`${url}/api/automation/lodash`)
-
-      // THEN
-      expect(response.exist).toBeTruthy()
-    })
-
     it('should run a Typescript code with slugify package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'slugify',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'slugify',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { slugify },
-                  } = context
-                  return { exist: !!slugify.extend }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithSlugify)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/slugify`)
@@ -462,39 +114,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with sodium package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'sodium',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'sodium',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { sodium },
-                  } = context
-                  return { exist: !!sodium.ready }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithSodium)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/sodium`)
@@ -505,39 +125,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with Notion package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'notion',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'notion',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { Notion },
-                  } = context
-                  return { exist: !!new Notion() }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithNotion)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/notion`)
@@ -548,39 +136,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with Airtable package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'airtable',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'airtable',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { Airtable },
-                  } = context
-                  return { exist: !!Airtable.base }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithAirtable)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/airtable`)
@@ -591,39 +147,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with papaparse package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'papaparse',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'papaparse',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { papaparse },
-                  } = context
-                  return { exist: !!papaparse.parse }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithPapaparse)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/papaparse`)
@@ -634,39 +158,7 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with puppeteer package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'puppeteer',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'puppeteer',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { puppeteer },
-                  } = context
-                  return { exist: !!puppeteer.launch }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithPuppeteer)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/puppeteer`)
@@ -677,129 +169,10 @@ mock.request(({ app, request }) => {
 
     it('should run a Typescript code with MistralAI package', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'mistral',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'mistral',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { Mistral },
-                  } = context
-                  const mistral = new Mistral()
-                  return { exist: !!mistral.chat }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(configAutomationActionServiceCodeRunTypescriptWithMistral)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/mistral`)
-
-      // THEN
-      expect(response.exist).toBeTruthy()
-    })
-
-    it('should run a Typescript code with ExcelJS package', async () => {
-      // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'exceljs',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'exceljs',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { ExcelJS },
-                  } = context
-                  return { exist: !!ExcelJS.Workbook }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-
-      // WHEN
-      const response = await request.post(`${url}/api/automation/exceljs`)
-
-      // THEN
-      expect(response.exist).toBeTruthy()
-    })
-
-    it('should run a Typescript code with SheetJS package', async () => {
-      // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'sheetjs',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'sheetjs',
-              output: {
-                exist: {
-                  boolean: '{{runJavascriptCode.exist}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const {
-                    packages: { SheetJS },
-                  } = context
-                  return { exist: !!SheetJS.readFile }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
-
-      // WHEN
-      const response = await request.post(`${url}/api/automation/sheetjs`)
 
       // THEN
       expect(response.exist).toBeTruthy()
