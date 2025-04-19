@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithFsExtra: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithFsExtraPackage: Config = {
   name: 'App with a run typescript action with fs-extra package',
   automations: [
     {

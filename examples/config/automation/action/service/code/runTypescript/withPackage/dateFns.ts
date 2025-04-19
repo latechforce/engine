@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithDateFns: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithDateFnsPackage: Config = {
   name: 'App with a run typescript action with dateFns package',
   automations: [
     {

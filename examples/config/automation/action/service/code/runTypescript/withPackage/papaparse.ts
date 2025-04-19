@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithPapaparse: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithPapaparsePackage: Config = {
   name: 'App with a run typescript action with papaparse package',
   automations: [
     {

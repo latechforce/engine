@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithXml2js: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithXml2jsPackage: Config = {
   name: 'App with a run typescript action with xml2js package',
   automations: [
     {

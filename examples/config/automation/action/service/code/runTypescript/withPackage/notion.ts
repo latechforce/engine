@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithNotion: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithNotionPackage: Config = {
   name: 'App with a run typescript action with Notion package',
   automations: [
     {

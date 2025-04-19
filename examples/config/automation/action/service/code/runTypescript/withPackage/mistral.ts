@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithMistral: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithMistralPackage: Config = {
   name: 'App with a run typescript action with MistralAI package',
   automations: [
     {

@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithSodium: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithSodiumPackage: Config = {
   name: 'App with a run typescript action with sodium package',
   automations: [
     {

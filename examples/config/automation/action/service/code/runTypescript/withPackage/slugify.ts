@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithSlugify: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithSlugifyPackage: Config = {
   name: 'App with a run typescript action with slugify package',
   automations: [
     {

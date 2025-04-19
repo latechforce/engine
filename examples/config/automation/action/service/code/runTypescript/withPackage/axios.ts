@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithAxios: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithAxiosPackage: Config = {
   name: 'App with a run typescript action with axios package',
   automations: [
     {

@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithPuppeteer: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithPuppeteerPackage: Config = {
   name: 'App with a run typescript action with puppeteer package',
   automations: [
     {

@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithAirtable: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithAirtablePackage: Config = {
   name: 'App with a run typescript action with Airtable package',
   automations: [
     {

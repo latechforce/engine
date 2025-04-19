@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const configAutomationActionServiceCodeRunTypescriptWithHttps: Config = {
+export const configAutomationActionServiceCodeRunTypescriptWithHttpsPackage: Config = {
   name: 'App with a run typescript action with https package',
   automations: [
     {
