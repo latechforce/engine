@@ -1,6 +1,5 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
-import type { CodeRunnerContext } from '/domain/services/CodeRunner'
+import { Mock } from '/test/bun'
 import {
   qontoCreateClientInvoiceSample,
   qontoCreateClientSample,
@@ -10,6 +9,10 @@ import type {
   QontoClient,
   QontoClientInvoice,
 } from '/domain/integrations/Qonto/QontoTypes'
+import { configAutomationActionServiceCodeRunTypescriptWithQontoCreateClientIntegration } from '/examples/config/automation/action/service/code/runTypescript/withIntegration/qonto/createClient'
+import { configAutomationActionServiceCodeRunTypescriptWithQontoCreateClientInvoiceIntegration } from '/examples/config/automation/action/service/code/runTypescript/withIntegration/qonto/createClientInvoice'
+import { configAutomationActionServiceCodeRunTypescriptWithQontoListClientInvoicesIntegration } from '/examples/config/automation/action/service/code/runTypescript/withIntegration/qonto/listClientInvoices'
+import { configAutomationActionServiceCodeRunTypescriptWithQontoRetrieveAttachmentIntegration } from '/examples/config/automation/action/service/code/runTypescript/withIntegration/qonto/retrieveAttachment'
 
 const mock = new Mock(Tester, { integrations: ['Qonto'] })
 
@@ -17,50 +20,16 @@ mock.request(({ app, request, integrations }) => {
   describe('on POST', () => {
     it('should run a Typescript code with a Qonto create client', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'createClient',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'create-client',
-              output: {
-                client: {
-                  json: '{{runJavascriptCode.client}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                input: {
-                  createClient: {
-                    json: JSON.stringify(qontoCreateClientSample),
-                  },
-                },
-                code: String(async function (
-                  context: CodeRunnerContext<{ createClient: typeof qontoCreateClientSample }>
-                ) {
-                  const { qonto } = context.integrations
-                  const { createClient } = context.inputData
-                  const client = await qonto.createClient('qonto', createClient)
-                  return { client }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithQontoCreateClientIntegration
+      )
 
       // WHEN
       const response = await request.post<{ client: QontoClient }>(
-        `${url}/api/automation/create-client`
+        `${url}/api/automation/create-client`,
+        {
+          createClient: JSON.stringify(qontoCreateClientSample),
+        }
       )
 
       // THEN
@@ -72,53 +41,16 @@ mock.request(({ app, request, integrations }) => {
       const { data: client } = await integrations.qonto.createClient(qontoCreateClientSample)
       if (!client) throw new Error('Client not created')
       const sample = qontoCreateClientInvoiceSample(client)
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'createClientInvoice',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'create-client-invoice',
-              output: {
-                clientInvoice: {
-                  json: '{{runJavascriptCode.clientInvoice}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                input: {
-                  createClientInvoice: {
-                    json: JSON.stringify(sample),
-                  },
-                },
-                code: String(async function (
-                  context: CodeRunnerContext<{ createClientInvoice: typeof sample }>
-                ) {
-                  const { qonto } = context.integrations
-                  const { createClientInvoice } = context.inputData
-                  const clientInvoice = await qonto.createClientInvoice(
-                    'qonto',
-                    createClientInvoice
-                  )
-                  return { clientInvoice }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithQontoCreateClientInvoiceIntegration
+      )
 
       // WHEN
       const response = await request.post<{ clientInvoice: QontoClientInvoice }>(
-        `${url}/api/automation/create-client-invoice`
+        `${url}/api/automation/create-client-invoice`,
+        {
+          createClientInvoice: JSON.stringify(sample),
+        }
       )
 
       // THEN
@@ -130,38 +62,9 @@ mock.request(({ app, request, integrations }) => {
       const { data: client } = await integrations.qonto.createClient(qontoCreateClientSample)
       if (!client) throw new Error('Client not created')
       await integrations.qonto.createClientInvoice(qontoCreateClientInvoiceSample(client))
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'listClientInvoices',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'list-client-invoices',
-              output: {
-                clientInvoices: {
-                  json: '{{runJavascriptCode.clientInvoices}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                code: String(async function (context: CodeRunnerContext) {
-                  const { qonto } = context.integrations
-                  const clientInvoices = await qonto.listClientInvoices('qonto')
-                  return { clientInvoices }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithQontoListClientInvoicesIntegration
+      )
 
       // WHEN
       const response = await request.post<{ clientInvoices: QontoClientInvoice[] }>(
@@ -180,46 +83,16 @@ mock.request(({ app, request, integrations }) => {
       const { data: invoices = [] } = await integrations.qonto.listClientInvoices()
       const invoice = invoices[0]
       if (!invoice) throw new Error('Invoice not created')
-      const config: Config = {
-        name: 'App',
-
-        automations: [
-          {
-            name: 'retrieveAttachment',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'retrieve-attachment',
-              output: {
-                attachment: {
-                  json: '{{runJavascriptCode.attachment}}',
-                },
-              },
-            },
-            actions: [
-              {
-                service: 'Code',
-                action: 'RunTypescript',
-                name: 'runJavascriptCode',
-                input: {
-                  attachmentId: invoice.attachment_id!,
-                },
-                code: String(async function (context: CodeRunnerContext<{ attachmentId: string }>) {
-                  const { qonto } = context.integrations
-                  const { attachmentId } = context.inputData
-                  const attachment = await qonto.retrieveAttachment('qonto', attachmentId)
-                  return { attachment }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(
+        configAutomationActionServiceCodeRunTypescriptWithQontoRetrieveAttachmentIntegration
+      )
 
       // WHEN
       const response = await request.post<{ attachment: QontoAttachment }>(
-        `${url}/api/automation/retrieve-attachment`
+        `${url}/api/automation/retrieve-attachment`,
+        {
+          attachmentId: invoice.attachment_id!,
+        }
       )
 
       // THEN

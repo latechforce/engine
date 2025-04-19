@@ -1,4 +1,4 @@
-import Tester, { expect, describe, it, beforeEach, afterEach } from 'bun:test'
+import Tester, { expect, describe, it, beforeEach, afterEach, beforeAll, afterAll } from 'bun:test'
 import { Mock } from '/test/bun'
 import {
   airtableTableSample1,
@@ -14,16 +14,22 @@ import { configAutomationActionServiceCodeRunTypescriptWithAirtableReadFieldInte
 const mock = new Mock(Tester, { integrations: ['Airtable'] })
 
 mock.request(({ app, request, integrations }) => {
+  let airtableTableId: string
+
+  beforeAll(async () => {
+    airtableTableId = process.env.TEST_AIRTABLE_TABLE_1_ID!
+  })
+
+  afterAll(async () => {
+    process.env.TEST_AIRTABLE_TABLE_1_ID = airtableTableId
+  })
+
   beforeEach(async () => {
     await integrations.airtable.addTable<AirtableTableSample1>(
       airtableTableSample1.name,
       airtableTableSample1.fields
     )
     process.env.TEST_AIRTABLE_TABLE_1_ID = airtableTableSample1.name
-  })
-
-  afterEach(async () => {
-    delete process.env.TEST_AIRTABLE_TABLE_1_ID
   })
 
   describe('on POST', () => {
