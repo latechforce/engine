@@ -61,10 +61,11 @@ The description of the automation.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with an automation",
+  "name": "App with an automation with a description",
   "automations": [
     {
       "name": "automation_1",
+      "description": "This is a description",
       "trigger": {
         "service": "Http",
         "event": "ApiCalled",

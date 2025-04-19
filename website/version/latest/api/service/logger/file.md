@@ -2,6 +2,23 @@
 
 Configuration for file-based logging services
 
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with a logger",
+  "services": {
+    "loggers": [
+      {
+        "type": "Console",
+        "level": "info"
+      }
+    ]
+  }
+}
+
+await new App().start(config)
+```
 ## Required
 
 ### Type

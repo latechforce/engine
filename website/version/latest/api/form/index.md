@@ -72,11 +72,12 @@ The display title of the form.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with a form",
+  "name": "App with a form with a title",
   "forms": [
     {
       "name": "form",
       "path": "/path",
+      "title": "Form title",
       "table": "table",
       "inputs": [
         {
@@ -110,11 +111,12 @@ The description of the form.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with a form",
+  "name": "App with a form with a description",
   "forms": [
     {
       "name": "form",
       "path": "/path",
+      "description": "Form description",
       "table": "table",
       "inputs": [
         {
@@ -148,7 +150,7 @@ The text displayed on the submit button.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with a form",
+  "name": "App with a form with a submit label",
   "forms": [
     {
       "name": "form",
@@ -159,7 +161,8 @@ const config: Config = {
           "field": "single_line_text",
           "label": "Single Line Text"
         }
-      ]
+      ],
+      "submitLabel": "Save"
     }
   ],
   "tables": [
@@ -186,7 +189,7 @@ The message displayed after successful form submission.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with a form",
+  "name": "App with a form with a success message",
   "forms": [
     {
       "name": "form",
@@ -197,7 +200,8 @@ const config: Config = {
           "field": "single_line_text",
           "label": "Single Line Text"
         }
-      ]
+      ],
+      "successMessage": "Success"
     }
   ],
   "tables": [

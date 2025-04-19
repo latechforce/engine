@@ -86,7 +86,7 @@ The default value is `false`.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App with a table with a rollup field",
+  "name": "App with a table with a required rollup field",
   "tables": [
     {
       "name": "table_1",
@@ -94,7 +94,8 @@ const config: Config = {
         {
           "name": "multiple_linked_record",
           "type": "MultipleLinkedRecord",
-          "table": "table_2"
+          "table": "table_2",
+          "required": true
         },
         {
           "name": "rollup",
@@ -104,7 +105,8 @@ const config: Config = {
           "formula": "CONCAT(values, ', ')",
           "output": {
             "type": "SingleLineText"
-          }
+          },
+          "required": true
         }
       ]
     },
@@ -113,7 +115,8 @@ const config: Config = {
       "fields": [
         {
           "name": "single_line_text",
-          "type": "SingleLineText"
+          "type": "SingleLineText",
+          "required": true
         }
       ]
     }

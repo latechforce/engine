@@ -2,6 +2,24 @@
 
 Defines configurations for various services
 
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with services",
+  "services": {
+    "server": {
+      "port": 3000
+    },
+    "database": {
+      "type": "SQLite",
+      "url": "./tmp/database.sqlite"
+    }
+  }
+}
+
+await new App().start(config)
+```
 ## Optional
 
 ### Server

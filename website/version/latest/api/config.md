@@ -34,7 +34,8 @@ The default value is the `version` property of the `package.json` file or `lates
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App with app version",
+  "appVersion": "1.0.0"
 }
 
 await new App().start(config)
@@ -49,7 +50,8 @@ The default value is the `version` of the dependency `@latechforce/engine` of th
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App with engine version",
+  "engineVersion": "1.0.0"
 }
 
 await new App().start(config)
@@ -63,7 +65,8 @@ The description of the application.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App",
+  "description": "App description"
 }
 
 await new App().start(config)
@@ -77,7 +80,51 @@ The forms of the application.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App with forms",
+  "forms": [
+    {
+      "name": "form_1",
+      "path": "/form_1",
+      "table": "table_1",
+      "inputs": [
+        {
+          "field": "field_1",
+          "label": "Field 1"
+        }
+      ]
+    },
+    {
+      "name": "form_2",
+      "path": "/form_2",
+      "table": "table_2",
+      "inputs": [
+        {
+          "field": "field_2",
+          "label": "Field 2"
+        }
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "name": "table_1",
+      "fields": [
+        {
+          "name": "field_1",
+          "type": "SingleLineText"
+        }
+      ]
+    },
+    {
+      "name": "table_2",
+      "fields": [
+        {
+          "name": "field_2",
+          "type": "SingleLineText"
+        }
+      ]
+    }
+  ]
 }
 
 await new App().start(config)
@@ -91,7 +138,41 @@ The automations of the application.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App with automations",
+  "automations": [
+    {
+      "name": "automation_1",
+      "trigger": {
+        "service": "Schedule",
+        "event": "CronTimeTicked",
+        "cronTime": "0 0 * * *"
+      },
+      "actions": [
+        {
+          "name": "action_1",
+          "service": "Code",
+          "action": "RunJavascript",
+          "code": "async function() { console.log(\"Hello, world!\") }"
+        }
+      ]
+    },
+    {
+      "name": "automation_2",
+      "trigger": {
+        "service": "Http",
+        "event": "WebhookCalled",
+        "path": "/webhook_1"
+      },
+      "actions": [
+        {
+          "name": "action_1",
+          "service": "Code",
+          "action": "RunJavascript",
+          "code": "async function() { console.log(\"Hello, world!\") }"
+        }
+      ]
+    }
+  ]
 }
 
 await new App().start(config)
@@ -105,7 +186,15 @@ The tables of the application.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App with tables",
+  "tables": [
+    {
+      "name": "table_1"
+    },
+    {
+      "name": "table_2"
+    }
+  ]
 }
 
 await new App().start(config)
@@ -119,7 +208,15 @@ The buckets of the application.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App with buckets",
+  "buckets": [
+    {
+      "name": "bucket_1"
+    },
+    {
+      "name": "bucket_2"
+    }
+  ]
 }
 
 await new App().start(config)
@@ -133,7 +230,22 @@ The integrations of the application.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App with integrations",
+  "integrations": {
+    "notion": [
+      {
+        "account": "notion_account",
+        "token": "notion_token"
+      }
+    ],
+    "qonto": [
+      {
+        "account": "qonto_account",
+        "organisationSlug": "qonto_organisation_slug",
+        "secretKey": "qonto_secret_key"
+      }
+    ]
+  }
 }
 
 await new App().start(config)
@@ -147,7 +259,16 @@ The services of the application.
 import App, { type Config } from '@latechforce/engine/bun'
 
 const config: Config = {
-  "name": "App"
+  "name": "App with services",
+  "services": {
+    "server": {
+      "port": 3000
+    },
+    "database": {
+      "type": "SQLite",
+      "url": "./tmp/database.sqlite"
+    }
+  }
 }
 
 await new App().start(config)

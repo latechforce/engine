@@ -6,6 +6,30 @@ sidebar_position: 6
 
 Defines configurations for various third-party service integrations
 
+```ts
+import App, { type Config } from '@latechforce/engine/bun'
+
+const config: Config = {
+  "name": "App with integrations",
+  "integrations": {
+    "notion": [
+      {
+        "account": "notion_account",
+        "token": "notion_token"
+      }
+    ],
+    "qonto": [
+      {
+        "account": "qonto_account",
+        "organisationSlug": "qonto_organisation_slug",
+        "secretKey": "qonto_secret_key"
+      }
+    ]
+  }
+}
+
+await new App().start(config)
+```
 ## Optional
 
 ### Airtable
