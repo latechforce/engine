@@ -1760,20 +1760,28 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "SingleSelect"
+          "const": "SingleSelect",
+          "description": "The type of the field, `SingleSelect`.",
+          "title": "Type"
         },
         "options": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "The options of the field.",
+          "title": "Options"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1873,7 +1881,7 @@
         "type": {
           "type": "string",
           "const": "Url",
-          "description": "The type of the field.",
+          "description": "The type of the field, `Url`.",
           "title": "Type"
         },
         "required": {
