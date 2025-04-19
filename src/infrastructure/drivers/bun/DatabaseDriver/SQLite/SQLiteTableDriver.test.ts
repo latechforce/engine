@@ -1,23 +1,15 @@
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
 import { testDatabaseTableDriver } from '../../../common/DatabaseDriver/DatabaseTableDriverTest'
 import BunTester from 'bun:test'
-import { getFirstAndSecondTableSchema } from '/test/common'
 import { SQLiteDatabaseDriver } from './SQLiteDriver'
 import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
 import { TableMapper } from '/adapter/api/mappers/TableMapper'
+import { configTableWithAllFields } from '/examples/config/table/withAllFields'
 
 const setup = async () => {
   // GIVEN
   const sqliteDatabase = new SQLiteDatabaseDriver({ url: ':memory:', type: 'SQLite' })
-  const {
-    tables: [firstTableSchema, secondTableSchema],
-  } = getFirstAndSecondTableSchema([
-    'name',
-    'multiple_linked_record',
-    'number_rollup',
-    'multiple_select',
-    'single_select',
-  ])
+  const [firstTableSchema, secondTableSchema] = configTableWithAllFields.tables!
   const firstTable = new SQLiteDatabaseTableDriver(
     TableMapper.toConfig(firstTableSchema),
     sqliteDatabase.db

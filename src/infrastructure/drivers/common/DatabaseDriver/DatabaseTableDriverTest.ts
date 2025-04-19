@@ -1,9 +1,8 @@
 import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
 import type BunTester from 'bun:test'
+import { configTableWithAllFields } from '/examples/config/table/withAllFields'
 
-const {
-  tables: [, secondTableSchema],
-} = getFirstAndSecondTableSchema(['name', 'multiple_linked_record', 'number_rollup'])
+const [, secondTableSchema] = configTableWithAllFields.tables!
 
 export function testDatabaseTableDriver(
   { describe, beforeAll, afterAll, it, expect }: typeof BunTester,
