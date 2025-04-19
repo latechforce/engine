@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstBucketSchema } from '/test/common'
+import { configBuckets } from '/examples/config/buckets'
 
 const mock = new Mock(Tester, { drivers: ['Database', 'Storage'] })
 
@@ -8,9 +8,8 @@ mock.app(({ app, drivers }) => {
   describe('on GET', () => {
     it('should fetch a csv file', async () => {
       // GIVEN
-      const config = getFirstBucketSchema()
-      const { url } = await app.start(config)
-      await drivers.storage.bucket(config.buckets[0].name).save({
+      const { url } = await app.start(configBuckets)
+      await drivers.storage.bucket(configBuckets.buckets![0].name).save({
         id: '1',
         name: 'test.csv',
         mime_type: 'text/csv',
@@ -19,7 +18,7 @@ mock.app(({ app, drivers }) => {
       })
 
       // WHEN
-      const response = await fetch(`${url}/api/bucket/${config.buckets[0].name}/1`)
+      const response = await fetch(`${url}/api/bucket/${configBuckets.buckets![0].name}/1`)
 
       // THEN
       expect(response.status).toBe(200)

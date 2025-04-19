@@ -1,40 +1,31 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { getFirstBucketSchema } from '/test/common'
+import { configBuckets } from '/examples/config/buckets'
 
 const mock = new Mock(Tester, { drivers: ['Database', 'Storage'] })
 
 mock.request(({ app, drivers }) => {
   describe('on start', () => {
     it('should create a bucket', async () => {
-      // GIVEN
-      const config = getFirstBucketSchema()
-
       // WHEN
-      await app.start(config)
+      await app.start(configBuckets)
 
       // THEN
-      expect(drivers.storage.bucket(config.buckets[0].name).exists()).resolves.toBe(true)
+      expect(drivers.storage.bucket(configBuckets.buckets![0].name).exists()).resolves.toBe(true)
     })
 
     it('should not create a notion bucket if there is no config', async () => {
-      // GIVEN
-      const config = getFirstBucketSchema()
-
       // WHEN
-      await app.start(config)
+      await app.start(configBuckets)
 
       // THEN
       expect(drivers.storage.bucket('notion_files').exists()).resolves.toBe(false)
     })
 
     it('should create a notion bucket if there is a config', async () => {
-      // GIVEN
-      const config = getFirstBucketSchema()
-
       // WHEN
       await app.start({
-        ...config,
+        ...configBuckets,
         integrations: {
           notion: [
             {
