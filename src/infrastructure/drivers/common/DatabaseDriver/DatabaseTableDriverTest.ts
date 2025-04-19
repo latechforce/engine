@@ -104,7 +104,7 @@ export function testDatabaseTableDriver(
       const call = () =>
         firstTable.insert({
           id: '1',
-          fields: { name: 'John' },
+          fields: { single_line_text: 'John' },
           created_at,
         })
 
@@ -116,7 +116,7 @@ export function testDatabaseTableDriver(
       const call = () =>
         firstTable.insert({
           id: '2',
-          fields: { name: 'John', single_select: 'Red' },
+          fields: { single_line_text: 'John', single_select: 'Red' },
           created_at,
         })
 
@@ -128,7 +128,7 @@ export function testDatabaseTableDriver(
       const call = () =>
         firstTable.insert({
           id: '3',
-          fields: { name: 'John', single_select: '' },
+          fields: { single_line_text: 'John', single_select: '' },
           created_at,
         })
 
@@ -140,7 +140,7 @@ export function testDatabaseTableDriver(
       const call = () =>
         firstTable.insert({
           id: '4',
-          fields: { name: 'John', multiple_select: ['Red', 'Blue'] },
+          fields: { single_line_text: 'John', multiple_select: ['Red', 'Blue'] },
           created_at,
         })
 
@@ -152,7 +152,7 @@ export function testDatabaseTableDriver(
       const call = () =>
         firstTable.insert({
           id: '5',
-          fields: { name: 'John', multiple_select: [] },
+          fields: { single_line_text: 'John', multiple_select: [] },
           created_at,
         })
 
@@ -164,7 +164,7 @@ export function testDatabaseTableDriver(
       const call = () =>
         firstTable.insert({
           id: '1',
-          fields: { name: 'John' },
+          fields: { single_line_text: 'John' },
           created_at,
         })
 
@@ -189,7 +189,7 @@ export function testDatabaseTableDriver(
       // GIVEN
       await secondTable.insert({
         id: '1',
-        fields: { name: 'Row 1' },
+        fields: { single_line_text: 'Row 1' },
         created_at,
       })
 
@@ -214,7 +214,7 @@ export function testDatabaseTableDriver(
       const call = () =>
         firstTable.update({
           id: '1',
-          fields: { name: 'John Doe' },
+          fields: { single_line_text: 'John Doe' },
           updated_at,
         })
 
@@ -226,7 +226,7 @@ export function testDatabaseTableDriver(
     it('should return a row with a filter', async () => {
       // WHEN
       const row = await firstTable.read({
-        field: 'name',
+        field: 'single_line_text',
         operator: 'Is',
         value: 'John Doe',
       })
@@ -235,7 +235,7 @@ export function testDatabaseTableDriver(
       expect(row).toStrictEqual({
         id: '1',
         fields: {
-          name: 'John Doe',
+          single_line_text: 'John Doe',
           multiple_linked_record: [],
           number_rollup: 0,
           multiple_select: [],
@@ -265,7 +265,7 @@ export function testDatabaseTableDriver(
     it('should not return a row with a filter', async () => {
       // WHEN
       const row = await firstTable.read({
-        field: 'name',
+        field: 'single_line_text',
         operator: 'Is',
         value: 'Jane Doe',
       })
@@ -277,7 +277,7 @@ export function testDatabaseTableDriver(
     it('should not return a row', async () => {
       // WHEN
       const row = await firstTable.read({
-        field: 'name',
+        field: 'single_line_text',
         operator: 'Is',
         value: 'Jane Doe',
       })
@@ -297,7 +297,7 @@ export function testDatabaseTableDriver(
       expect(rows.find((row) => row.id === '1')).toStrictEqual({
         id: '1',
         fields: {
-          name: 'John Doe',
+          single_line_text: 'John Doe',
           multiple_linked_record: [],
           number_rollup: 0,
           multiple_select: [],
@@ -327,7 +327,7 @@ export function testDatabaseTableDriver(
     it('should return an empty list of rows with a filter', async () => {
       // WHEN
       const rows = await firstTable.list({
-        field: 'name',
+        field: 'single_line_text',
         operator: 'Is',
         value: 'Jane Doe',
       })

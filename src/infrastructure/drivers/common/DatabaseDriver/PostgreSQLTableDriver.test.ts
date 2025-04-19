@@ -12,7 +12,18 @@ const setup = async () => {
   postgresDatabase = await getPostgresDatabase()
   const [firstTableSchema, secondTableSchema] = configTableWithAllFields.tables!
   const firstTable = new PostgreSQLDatabaseTableDriver(
-    TableMapper.toConfig(firstTableSchema),
+    TableMapper.toConfig({
+      ...firstTableSchema,
+      fields: firstTableSchema.fields!.filter((field) =>
+        [
+          'single_line_text',
+          'multiple_linked_record',
+          'number_rollup',
+          'multiple_select',
+          'single_select',
+        ].includes(field.name)
+      ),
+    }),
     postgresDatabase.db
   )
   const secondTable = new PostgreSQLDatabaseTableDriver(

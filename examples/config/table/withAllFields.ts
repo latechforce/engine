@@ -71,12 +71,12 @@ export const configTableWithAllFields: Config = {
         {
           name: 'single_linked_record',
           type: 'SingleLinkedRecord',
-          table: 'second_table',
+          table: 'table_2',
         },
         {
           name: 'multiple_linked_record',
           type: 'MultipleLinkedRecord',
-          table: 'second_table',
+          table: 'table_2',
         },
         {
           name: 'text_rollup',
@@ -124,7 +124,7 @@ export const configTableWithAllFields: Config = {
       name: 'table_2',
       fields: [
         {
-          name: 'name',
+          name: 'single_line_text',
           type: 'SingleLineText',
         },
         {

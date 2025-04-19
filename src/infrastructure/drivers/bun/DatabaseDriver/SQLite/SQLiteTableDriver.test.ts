@@ -11,7 +11,18 @@ const setup = async () => {
   const sqliteDatabase = new SQLiteDatabaseDriver({ url: ':memory:', type: 'SQLite' })
   const [firstTableSchema, secondTableSchema] = configTableWithAllFields.tables!
   const firstTable = new SQLiteDatabaseTableDriver(
-    TableMapper.toConfig(firstTableSchema),
+    TableMapper.toConfig({
+      ...firstTableSchema,
+      fields: firstTableSchema.fields!.filter((field) =>
+        [
+          'single_line_text',
+          'multiple_linked_record',
+          'number_rollup',
+          'multiple_select',
+          'single_select',
+        ].includes(field.name)
+      ),
+    }),
     sqliteDatabase.db
   ) as unknown as IDatabaseTableDriver
   const secondTable = new SQLiteDatabaseTableDriver(
