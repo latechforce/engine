@@ -2,23 +2,6 @@
 
 Represents a field that links to multiple records in another table.
 
-## Required
-
-### Name
-
-The name of the field.
->name: `string`
-
-### Type
-
-The type of the field.
->type: const: `MultipleLinkedRecord`
-
-### Table
-
-The name of the table to link to.
->table: `string`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -43,6 +26,23 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### Name
+
+The name of the field.
+>name: `string`
+
+### Type
+
+The type of the field.
+>type: const: `MultipleLinkedRecord`
+
+### Table
+
+The name of the table to link to.
+>table: `string`
+
 ## Optional
 
 ### Required

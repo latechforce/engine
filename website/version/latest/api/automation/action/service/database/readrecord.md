@@ -2,28 +2,6 @@
 
 Reads a record from the specified database table
 
-## Required
-
-### action
-
->action: const: `ReadRecord`
-
-### id
-
->id: `string`
-
-### name
-
->name: `string`
-
-### service
-
->service: const: `Database`
-
-### table
-
->table: `string`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -71,3 +49,25 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### action
+
+>action: const: `ReadRecord`
+
+### id
+
+>id: `string`
+
+### name
+
+>name: `string`
+
+### service
+
+>service: const: `Database`
+
+### table
+
+>table: `string`
+

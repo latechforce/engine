@@ -2,20 +2,6 @@
 
 A trigger that fires when a cron time is ticked
 
-## Required
-
-### cronTime
-
->cronTime: `string`
-
-### event
-
->event: const: `CronTimeTicked`
-
-### service
-
->service: const: `Schedule`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -36,3 +22,17 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### cronTime
+
+>cronTime: `string`
+
+### event
+
+>event: const: `CronTimeTicked`
+
+### service
+
+>service: const: `Schedule`
+

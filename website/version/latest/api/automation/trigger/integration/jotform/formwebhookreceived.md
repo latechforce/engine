@@ -2,24 +2,6 @@
 
 A trigger that fires when form webhook is received in Jotform
 
-## Required
-
-### account
-
->account: `string`
-
-### event
-
->event: const: `FormWebhookReceived`
-
-### formId
-
->formId: `string`
-
-### integration
-
->integration: const: `Jotform`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -41,3 +23,21 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### account
+
+>account: `string`
+
+### event
+
+>event: const: `FormWebhookReceived`
+
+### formId
+
+>formId: `string`
+
+### integration
+
+>integration: const: `Jotform`
+

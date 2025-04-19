@@ -2,20 +2,6 @@
 
 A trigger that fires when a webhook is called
 
-## Required
-
-### event
-
->event: const: `WebhookCalled`
-
-### path
-
->path: `string`
-
-### service
-
->service: const: `Http`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -36,6 +22,20 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### event
+
+>event: const: `WebhookCalled`
+
+### path
+
+>path: `string`
+
+### service
+
+>service: const: `Http`
+
 ## Optional
 
 ### auth

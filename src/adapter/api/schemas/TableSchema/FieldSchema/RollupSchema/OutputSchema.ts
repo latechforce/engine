@@ -5,4 +5,11 @@ import type { RollupFieldConfig } from '/domain/entities/Field/Rollup'
  * @title Output
  * @description Represents the output type configuration of a rollup field.
  */
-export type OutputRollupFieldTableSchema = RollupFieldConfig['output']
+export type OutputRollupFieldTableSchema = {
+  /**
+   * Output type
+   * @title Type
+   * @description The type of the output field.
+   */
+  type: RollupFieldConfig['output']['type']
+}

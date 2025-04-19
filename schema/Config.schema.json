@@ -1391,21 +1391,21 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "The unique identifier for the table",
+          "description": "The unique identifier for the table.",
           "title": "Name"
         },
         "schema": {
           "type": "string",
-          "description": "The database schema where the table is located",
+          "description": "The database schema where the table is located.",
           "title": "Schema",
-          "default": "public"
+          "default": "`public`"
         },
         "fields": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/FieldTableSchema"
           },
-          "description": "Array of field definitions for the table",
+          "description": "Array of field definitions for the table.",
           "title": "Fields"
         }
       },
@@ -1413,7 +1413,7 @@
         "name"
       ],
       "additionalProperties": false,
-      "description": "Defines the structure of a database table",
+      "description": "Defines the structure of a database table.",
       "title": "Table"
     },
     "FieldTableSchema": {
@@ -1464,7 +1464,7 @@
           "$ref": "#/definitions/SingleAttachmentFieldTableSchema"
         }
       ],
-      "description": "Union type of all possible field types that can be used in forms and tables",
+      "description": "Union type of all possible field types that can be used in forms and tables.",
       "title": "Field"
     },
     "DateTimeFieldTableSchema": {
@@ -1576,7 +1576,9 @@
             "LongText",
             "SingleLineText",
             "DateTime"
-          ]
+          ],
+          "description": "The type of the output field.",
+          "title": "Type"
         }
       },
       "required": [
@@ -1742,7 +1744,9 @@
             "LongText",
             "SingleLineText",
             "DateTime"
-          ]
+          ],
+          "description": "The type of the output field.",
+          "title": "Type"
         }
       },
       "required": [

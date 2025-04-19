@@ -2,23 +2,6 @@
 
 Represents a field that allows selecting a single option from a predefined list.
 
-## Required
-
-### Name
-
-The name of the field.
->name: `string`
-
-### Type
-
-The type of the field.
->type: const: `SingleSelect`
-
-### Options
-
-The options of the field.
->options: `string`[]
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -44,6 +27,23 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### Name
+
+The name of the field.
+>name: `string`
+
+### Type
+
+The type of the field.
+>type: const: `SingleSelect`
+
+### Options
+
+The options of the field.
+>options: `string`[]
+
 ## Optional
 
 ### Required

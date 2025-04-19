@@ -2,38 +2,6 @@
 
 Represents a field that aggregates values from linked records.
 
-## Required
-
-### Name
-
-The name of the field.
->name: `string`
-
-### Type
-
-The type of the field.
->type: const: `Rollup`
-
-### Formula
-
-The formula expression to calculate the aggregated value.
->formula: `string`
-
-### Multiple Linked Record
-
-The name of the multiple linked record field to aggregate values from.
->multipleLinkedRecord: `string`
-
-### Linked Record Field
-
-The name of the field in the linked record table to aggregate values from.
->linkedRecordField: `string`
-
-### Output
-
-The output type configuration for the rollup field.
->output: [Output](/api/table/field/rollup/output)
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -74,6 +42,38 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### Name
+
+The name of the field.
+>name: `string`
+
+### Type
+
+The type of the field.
+>type: const: `Rollup`
+
+### Formula
+
+The formula expression to calculate the aggregated value.
+>formula: `string`
+
+### Multiple Linked Record
+
+The name of the multiple linked record field to aggregate values from.
+>multipleLinkedRecord: `string`
+
+### Linked Record Field
+
+The name of the field in the linked record table to aggregate values from.
+>linkedRecordField: `string`
+
+### Output
+
+The output type configuration for the rollup field.
+>output: [Output](/api/table/field/rollup/output)
+
 ## Optional
 
 ### Required

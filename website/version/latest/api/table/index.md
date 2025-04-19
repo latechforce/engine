@@ -4,14 +4,7 @@ sidebar_position: 4
 
 # Table
 
-Defines the structure of a database table
-
-## Required
-
-### Name
-
-The unique identifier for the table
->name: `string`
+Defines the structure of a database table.
 
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
@@ -27,12 +20,19 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### Name
+
+The unique identifier for the table.
+>name: `string`
+
 ## Optional
 
 ### Schema
 
-The database schema where the table is located
-The default value is public.
+The database schema where the table is located.
+The default value is `public`.
 >schema?: `string`
 
 ```ts
@@ -52,7 +52,7 @@ await new App().start(config)
 ```
 ### Fields
 
-Array of field definitions for the table
+Array of field definitions for the table.
 >fields?: [Field](/api/table/field)[]
 
 ```ts

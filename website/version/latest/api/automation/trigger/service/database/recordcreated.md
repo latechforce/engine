@@ -2,20 +2,6 @@
 
 A trigger that fires when a record is created in a database
 
-## Required
-
-### event
-
->event: const: `RecordCreated`
-
-### service
-
->service: const: `Database`
-
-### table
-
->table: `string`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -42,3 +28,17 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### event
+
+>event: const: `RecordCreated`
+
+### service
+
+>service: const: `Database`
+
+### table
+
+>table: `string`
+

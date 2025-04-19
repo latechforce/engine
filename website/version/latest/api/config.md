@@ -6,13 +6,6 @@ sidebar_position: 1
 
 This is the configuration of the engine.
 
-## Required
-
-### Name
-
-The name of the engine.
->name: `string`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -22,6 +15,13 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### Name
+
+The name of the engine.
+>name: `string`
+
 ## Optional
 
 ### App version

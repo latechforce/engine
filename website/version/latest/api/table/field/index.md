@@ -1,6 +1,6 @@
 # Field
 
-Union type of all possible field types that can be used in forms and tables
+Union type of all possible field types that can be used in forms and tables.
 
 ## Any of
 

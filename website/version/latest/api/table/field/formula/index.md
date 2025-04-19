@@ -2,28 +2,6 @@
 
 Represents a field that calculates a value based on a formula.
 
-## Required
-
-### Name
-
-The name of the field.
->name: `string`
-
-### Type
-
-The type of the field.
->type: const: `Formula`
-
-### Formula
-
-The formula expression to calculate the field value.
->formula: `string`
-
-### Output
-
-The output type configuration for the formula field.
->output: [Output](/api/table/field/formula/output)
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -52,6 +30,28 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### Name
+
+The name of the field.
+>name: `string`
+
+### Type
+
+The type of the field.
+>type: const: `Formula`
+
+### Formula
+
+The formula expression to calculate the field value.
+>formula: `string`
+
+### Output
+
+The output type configuration for the formula field.
+>output: [Output](/api/table/field/formula/output)
+
 ## Optional
 
 ### Required

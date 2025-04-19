@@ -2,18 +2,6 @@
 
 Represents a field that stores a single attachment.
 
-## Required
-
-### Name
-
-The name of the field.
->name: `string`
-
-### Type
-
-The type of the field.
->type: const: `SingleAttachment`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -34,6 +22,18 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### Name
+
+The name of the field.
+>name: `string`
+
+### Type
+
+The type of the field.
+>type: const: `SingleAttachment`
+
 ## Optional
 
 ### Required

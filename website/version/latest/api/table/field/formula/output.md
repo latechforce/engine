@@ -2,12 +2,6 @@
 
 Represents the output type configuration of a formula field.
 
-## Required
-
-### type
-
->type: enum: `Number`, `LongText`, `SingleLineText`, `DateTime`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -36,3 +30,10 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### Type
+
+The type of the output field.
+>type: enum: `Number`, `LongText`, `SingleLineText`, `DateTime`
+

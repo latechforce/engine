@@ -17,7 +17,7 @@ import type { UrlFieldTableSchema } from './UrlSchema'
 /**
  * Field type union
  * @title Field
- * @description Union type of all possible field types that can be used in forms and tables
+ * @description Union type of all possible field types that can be used in forms and tables.
  */
 export type FieldTableSchema =
   | DateTimeFieldTableSchema

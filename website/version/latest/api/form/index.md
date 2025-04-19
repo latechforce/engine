@@ -6,24 +6,6 @@ sidebar_position: 2
 
 Type alias for form configuration
 
-## Required
-
-### inputs
-
->inputs: [Input](/api/form/input)[]
-
-### name
-
->name: `string`
-
-### path
-
->path: `string`
-
-### table
-
->table: `string`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -57,6 +39,24 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### inputs
+
+>inputs: [Input](/api/form/input)[]
+
+### name
+
+>name: `string`
+
+### path
+
+>path: `string`
+
+### table
+
+>table: `string`
+
 ## Optional
 
 ### title

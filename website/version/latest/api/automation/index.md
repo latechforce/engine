@@ -6,20 +6,6 @@ sidebar_position: 3
 
 Defines an automation workflow with triggers and actions
 
-## Required
-
-### actions
-
->actions: [Action](/api/automation/action)[]
-
-### name
-
->name: `string`
-
-### trigger
-
->trigger: [Trigger](/api/automation/trigger)
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -47,6 +33,20 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### actions
+
+>actions: [Action](/api/automation/action)[]
+
+### name
+
+>name: `string`
+
+### trigger
+
+>trigger: [Trigger](/api/automation/trigger)
+
 ## Optional
 
 ### description

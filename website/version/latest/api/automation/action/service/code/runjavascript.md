@@ -2,24 +2,6 @@
 
 Executes JavaScript code with the specified input
 
-## Required
-
-### action
-
->action: const: `RunJavascript`
-
-### code
-
->code: `string`
-
-### name
-
->name: `string`
-
-### service
-
->service: const: `Code`
-
 ```ts
 import App, { type Config } from '@latechforce/engine/bun'
 
@@ -50,6 +32,24 @@ const config: Config = {
 
 await new App().start(config)
 ```
+## Required
+
+### action
+
+>action: const: `RunJavascript`
+
+### code
+
+>code: `string`
+
+### name
+
+>name: `string`
+
+### service
+
+>service: const: `Code`
+
 ## Optional
 
 ### input

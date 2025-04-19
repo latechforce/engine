@@ -170,6 +170,10 @@ sidebar_position: ${sidebarPosition}
     markdown += `${schema.description}\n\n`
   }
 
+  if (file) {
+    markdown += await findExample(file, 'index')
+  }
+
   if (schema.properties) {
     const requiredProperties = schema.required || []
     const optionalProperties = Object.keys(schema.properties).filter(
@@ -189,9 +193,6 @@ sidebar_position: ${sidebarPosition}
           }
           markdown += `>${key}: ${formatType(prop, schemaFiles)}\n\n`
         }
-      }
-      if (file) {
-        markdown += await findExample(file, 'index')
       }
     }
     if (optionalProperties.length > 0) {
