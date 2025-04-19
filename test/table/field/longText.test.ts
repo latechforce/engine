@@ -5,7 +5,7 @@ import { longText } from '../../../examples/config/table/field/longText'
 const mock = new Mock(Tester)
 
 mock.request(({ app, request }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a table with a long text', async () => {
       // WHEN
       const startedApp = await app.start(longText)
@@ -15,7 +15,7 @@ mock.request(({ app, request }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should create a record with a long text', async () => {
       // GIVEN
       const long_text =

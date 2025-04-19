@@ -5,7 +5,7 @@ import { multipleLinkedRecord } from '../../../examples/config/table/field/multi
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.request(({ app, request, drivers }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a table with a multiple linked record', async () => {
       // WHEN
       const call = () => app.start(multipleLinkedRecord)
@@ -27,7 +27,7 @@ mock.request(({ app, request, drivers }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should create a record with a multiple linked record', async () => {
       // GIVEN
       const { url } = await app.start(multipleLinkedRecord)

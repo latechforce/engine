@@ -6,7 +6,7 @@ import { required } from '/examples/config/table/field/singleLineText/required'
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.request(({ app, request, drivers }) => {
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should return an error if table does not exist', async () => {
       // GIVEN
       const { url } = await app.start(singleLineText)

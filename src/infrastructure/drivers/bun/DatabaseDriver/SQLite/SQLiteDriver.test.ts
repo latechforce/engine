@@ -6,7 +6,7 @@ import { testDatabaseDriver } from '/infrastructure/drivers/common/DatabaseDrive
 
 const setup = async () => {
   return new SQLiteDatabaseDriver({
-    driver: 'SQLite',
+    type: 'SQLite',
     url: ':memory:',
   }) as unknown as Promise<IDatabaseDriver>
 }
@@ -18,7 +18,7 @@ it('should create a database file in a folder that not exists', async () => {
   // WHEN
   const call = () =>
     new SQLiteDatabaseDriver({
-      driver: 'SQLite',
+      type: 'SQLite',
       url,
     })
 

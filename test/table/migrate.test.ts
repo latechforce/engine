@@ -5,7 +5,7 @@ import { singleLineText } from '/examples/config/table/field/singleLineText'
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.app(({ app, drivers }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should migrate an existing table with a new field', async () => {
       // GIVEN
       await drivers.database.tableFromSchema(singleLineText.tables![0]).create()

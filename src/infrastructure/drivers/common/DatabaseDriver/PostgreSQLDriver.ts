@@ -1,10 +1,6 @@
 import pg from 'pg'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
-import type {
-  DatabaseConfig,
-  DatabaseDriverName,
-  DatabaseEventType,
-} from '/domain/services/Database'
+import type { DatabaseConfig, DatabaseEventType, DatabaseType } from '/domain/services/Database'
 import type { EventDto } from '/adapter/spi/dtos/EventDto'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
 import type { TableConfig } from '/domain/entities/Table'
@@ -13,7 +9,7 @@ import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 export class PostgreSQLDatabaseDriver implements IDatabaseDriver {
   public db: pg.Pool
-  public driver: DatabaseDriverName = 'PostgreSQL'
+  public type: DatabaseType = 'PostgreSQL'
   private _client?: pg.PoolClient
   private _interval?: Timer
 

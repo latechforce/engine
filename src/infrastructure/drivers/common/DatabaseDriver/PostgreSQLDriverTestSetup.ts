@@ -11,7 +11,7 @@ export const setupPostgres = async (): Promise<string> => {
 
 export const getPostgresDatabase = async (): Promise<PostgreSQLDatabaseDriver> => {
   const url = await setupPostgres()
-  const postgresDatabase = new PostgreSQLDatabaseDriver({ url, driver: 'PostgreSQL' })
+  const postgresDatabase = new PostgreSQLDatabaseDriver({ url, type: 'PostgreSQL' })
   await postgresDatabase.connect()
   return postgresDatabase
 }

@@ -1,6 +1,8 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/src'
+import { template } from '/examples/config/service/template'
+import { defaultValue } from '/examples/config/service/template/defaultValue'
 
 const mock = new Mock(Tester)
 
@@ -8,44 +10,7 @@ mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should return the name', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-        automations: [
-          {
-            name: 'sendEmail',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'send-email',
-              input: {
-                type: 'object',
-                properties: {
-                  name: {
-                    type: 'string',
-                  },
-                },
-              },
-              output: {
-                name: '{{runCode.name}}',
-              },
-            },
-            actions: [
-              {
-                name: 'runCode',
-                service: 'Code',
-                action: 'RunTypescript',
-                input: {
-                  name: '{{trigger.body.name}}',
-                },
-                code: String(function (context: CodeRunnerContext<{ name: string }>) {
-                  return { name: context.inputData.name }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(template)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/send-email`, {
@@ -58,27 +23,11 @@ mock.request(({ app, request }) => {
 
     it('should throw an error if the name is not linked', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
+      const newConfig: Config = {
+        ...template,
         automations: [
           {
-            name: 'sendEmail',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'send-email',
-              input: {
-                type: 'object',
-                properties: {
-                  name: {
-                    type: 'string',
-                  },
-                },
-              },
-              output: {
-                name: '{{runCode.name}}',
-              },
-            },
+            ...template.automations![0],
             actions: [
               {
                 name: 'runCode',
@@ -95,7 +44,7 @@ mock.request(({ app, request }) => {
           },
         ],
       }
-      const { url } = await app.start(config)
+      const { url } = await app.start(newConfig)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/send-email`, {
@@ -108,36 +57,7 @@ mock.request(({ app, request }) => {
 
     it('should return the default name', async () => {
       // GIVEN
-      const config: Config = {
-        name: 'App',
-        automations: [
-          {
-            name: 'sendEmail',
-            trigger: {
-              service: 'Http',
-              event: 'ApiCalled',
-              path: 'send-email',
-              output: {
-                name: '{{runCode.name}}',
-              },
-            },
-            actions: [
-              {
-                name: 'runCode',
-                service: 'Code',
-                action: 'RunTypescript',
-                input: {
-                  name: '{{trigger.body.name "Jane Doe"}}',
-                },
-                code: String(function (context: CodeRunnerContext<{ name: string }>) {
-                  return { name: context.inputData.name }
-                }),
-              },
-            ],
-          },
-        ],
-      }
-      const { url } = await app.start(config)
+      const { url } = await app.start(defaultValue)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/send-email`, {

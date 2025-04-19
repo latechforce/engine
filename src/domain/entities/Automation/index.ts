@@ -77,7 +77,6 @@ export class Automation {
     }
     await this._history.updateStatus(id, context.status)
     logger.info(`finish automation "${this.name}" with status "${context.status}"`)
-    logger.debug(`result of automation "${this.name}" with "${id}"`, context.run)
     return context
   }
 }

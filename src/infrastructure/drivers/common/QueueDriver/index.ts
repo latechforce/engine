@@ -6,8 +6,8 @@ import { PostgresDriver } from './PostgresDriver'
 export class QueueDriver implements IQueueDriver {
   private _queue: PostgresDriver | SqliteDriver
 
-  constructor({ driver, query, exec }: QueueConfig) {
-    switch (driver) {
+  constructor({ type, query, exec }: QueueConfig) {
+    switch (type) {
       case 'PostgreSQL':
         this._queue = new PostgresDriver(query)
         break

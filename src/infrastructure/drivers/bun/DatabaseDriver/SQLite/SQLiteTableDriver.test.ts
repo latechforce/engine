@@ -8,7 +8,7 @@ import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 const setup = async () => {
   // GIVEN
-  const sqliteDatabase = new SQLiteDatabaseDriver({ url: ':memory:', driver: 'SQLite' })
+  const sqliteDatabase = new SQLiteDatabaseDriver({ url: ':memory:', type: 'SQLite' })
   const {
     tables: [firstTableSchema, secondTableSchema],
   } = getFirstAndSecondTableSchema([

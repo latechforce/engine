@@ -6,8 +6,8 @@ import type { IStorageDriver } from '/adapter/spi/drivers/StorageSpi'
 export class StorageDriver implements IStorageDriver {
   private _storage: PostgreSQLDriver | SQLiteStorageDriver
 
-  constructor({ driver, query, exec }: StorageConfig) {
-    switch (driver) {
+  constructor({ type, query, exec }: StorageConfig) {
+    switch (type) {
       case 'PostgreSQL':
         this._storage = new PostgreSQLDriver(query, exec)
         break

@@ -5,7 +5,7 @@ import { multipleSelect } from '../../../examples/config/table/field/multipleSel
 const mock = new Mock(Tester)
 
 mock.request(({ app, request }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a table with a multiple select', async () => {
       // WHEN
       const call = () => app.start(multipleSelect)
@@ -15,7 +15,7 @@ mock.request(({ app, request }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should create a record with a multiple select', async () => {
       // GIVEN
       const multipleSelectValue = ['Option 1', 'Option 2']

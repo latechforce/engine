@@ -6,7 +6,7 @@ import { Database, type DatabaseServices } from '/domain/services/Database'
 export class DatabaseMapper {
   static toService(
     drivers: Drivers,
-    schema: DatabaseServiceSchema = { url: `:memory:`, driver: 'SQLite' },
+    schema: DatabaseServiceSchema = { url: `:memory:`, type: 'SQLite' },
     services: DatabaseServices
   ): Database {
     const driver = drivers.database(schema)

@@ -13,7 +13,7 @@ export class BaseMockIntegration {
   ) {
     this._db = new SQLiteDatabaseDriver({
       url: config.baseUrl ?? ':memory:',
-      driver: 'SQLite',
+      type: 'SQLite',
     })
     this._db.connectSync()
     this._tokens = this._db.table({

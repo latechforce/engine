@@ -6,7 +6,7 @@ import type { IStorageDriver } from '/adapter/spi/drivers/StorageSpi'
 
 const setup = async (): Promise<IStorageDriver> => {
   const db = new SQLiteDatabaseDriver({
-    driver: 'SQLite',
+    type: 'SQLite',
     url: ':memory:',
   })
   return new SQLiteStorageDriver(db.query, db.exec)

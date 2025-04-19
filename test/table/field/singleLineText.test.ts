@@ -5,7 +5,7 @@ import { singleLineText } from '/examples/config/table/field/singleLineText'
 const mock = new Mock(Tester)
 
 mock.request(({ app, request }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a table with a single line text field', async () => {
       // WHEN
       const call = () => app.start(singleLineText)
@@ -15,7 +15,7 @@ mock.request(({ app, request }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should create a record with a single line text field', async () => {
       // GIVEN
       const name = 'John Doe'

@@ -5,7 +5,7 @@ import { singleLinkedRecord } from '../../../examples/config/table/field/singleL
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.request(({ app, request, drivers }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a table with a single linked record', async () => {
       // WHEN
       const call = () => app.start(singleLinkedRecord)
@@ -51,7 +51,7 @@ mock.request(({ app, request, drivers }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should create a record with a single linked record', async () => {
       // GIVEN
       const { url } = await app.start(singleLinkedRecord)

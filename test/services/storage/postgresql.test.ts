@@ -1,72 +1,45 @@
-import { describe, it, beforeEach, afterEach } from 'bun:test'
-import { MockedApp, type Config } from '/test/bun'
+import Tester, { describe, it, beforeEach, afterEach } from 'bun:test'
+import { Mock } from '/test/bun'
 import {
   setupPostgres,
   teardownPostgres,
 } from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriverTestSetup'
+import { withTable } from '/examples/config/service/database/postgresql/withTable'
 
-describe('on start', () => {
-  let url: string
+const mock = new Mock(Tester)
 
-  beforeEach(async () => {
-    url = await setupPostgres()
-  })
+mock.app(({ app }) => {
+  describe('on start', () => {
+    let url: string
 
-  afterEach(async () => {
-    await teardownPostgres()
-  })
+    beforeEach(async () => {
+      url = await setupPostgres()
+      process.env.DATABASE_URL = url
+    })
 
-  it('should start an app with a PostgreSQL storage', async () => {
-    // GIVEN
-    const config: Config = {
-      name: 'App',
-      buckets: [
-        {
-          name: 'bucket',
-        },
-      ],
-      services: {
-        database: {
-          driver: 'PostgreSQL',
-          url,
-        },
-        loggers: [],
-      },
-    }
-    const app = new MockedApp()
+    afterEach(async () => {
+      await teardownPostgres()
+      delete process.env.DATABASE_URL
+    })
 
-    // WHEN
-    const startedApp = await app.start(config)
+    it('should start an app with a PostgreSQL storage', async () => {
+      // WHEN
+      const startedApp = await app.start(withTable)
 
-    // THEN
-    await startedApp.stop()
-  })
+      // THEN
+      await startedApp.stop()
+    })
 
-  it('should restart an app with a PostgreSQL storage', async () => {
-    // GIVEN
-    const config: Config = {
-      name: 'App',
-      buckets: [
-        {
-          name: 'bucket',
-        },
-      ],
-      services: {
-        database: {
-          driver: 'PostgreSQL',
-          url,
-        },
-        loggers: [],
-      },
-    }
-    const app = new MockedApp()
-    const startedApp = await app.start(config)
-    await startedApp.stop()
+    it('should restart an app with a PostgreSQL storage', async () => {
+      // GIVEN
+      const startedApp = await app.start(withTable)
+      await startedApp.stop()
 
-    // WHEN
-    const restartedApp = await app.start(config)
+      // WHEN
+      const restartedApp = await app.start(withTable)
 
-    // THEN
-    await restartedApp.stop()
+      // THEN
+      await restartedApp.stop()
+    })
   })
 })

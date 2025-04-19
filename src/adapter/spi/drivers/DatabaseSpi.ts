@@ -1,11 +1,11 @@
 import { DatabaseTableSpi, type IDatabaseTableDriver } from './DatabaseTableSpi'
 import type {
-  DatabaseDriverName,
   DatabaseErrorEvent,
   DatabaseEventType,
   DatabaseExec,
   DatabaseNotificationEvent,
   DatabaseQuery,
+  DatabaseType,
   IDatabaseSpi,
 } from '/domain/services/Database'
 import type { EventDto } from '../dtos/EventDto'
@@ -14,7 +14,7 @@ import type { TableConfig } from '/domain/entities/Table'
 import type { TableSchema } from '/adapter/api/schemas/TableSchema'
 
 export interface IDatabaseDriver {
-  driver: DatabaseDriverName
+  type: DatabaseType
   connect: () => Promise<void>
   disconnect: () => Promise<void>
   table: (table: TableConfig) => IDatabaseTableDriver

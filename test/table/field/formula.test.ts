@@ -7,7 +7,7 @@ import { concatenation } from '../../../examples/config/table/field/formula/sing
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.request(({ app, request, drivers }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     describe('should create a table with a single line text formula and', () => {
       it('a concatenation', async () => {
         // GIVEN
@@ -99,7 +99,7 @@ mock.request(({ app, request, drivers }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     describe('should create a record with a single line text formula and', () => {
       it('a concatenation', async () => {
         // GIVEN

@@ -5,7 +5,7 @@ import type { IdGenerator } from './IdGenerator'
 import type { Database } from './Database'
 
 export interface RealtimeConfig {
-  driver: string
+  type: string
   url: string
 }
 
@@ -54,7 +54,7 @@ export class Realtime {
     this._services.logger.debug('setup realtime...')
     this._db.onNotification(this._onEvent)
     await this._db.setupTriggers(this._tables.map((t) => t.db.nameWithSchema))
-    if (this._db.driver === 'PostgreSQL') {
+    if (this._db.type === 'PostgreSQL') {
       await this._db.exec(`LISTEN realtime`)
     }
   }

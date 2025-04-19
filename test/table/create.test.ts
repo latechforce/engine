@@ -8,7 +8,7 @@ import { schema } from '/examples/config/table/schema'
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.app(({ app, drivers }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a not existing table', async () => {
       // GIVEN
       const table = drivers.database.tableFromSchema(singleLineText.tables![0])

@@ -10,11 +10,11 @@ import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 export class DatabaseDriver implements IDatabaseDriver {
   private _db: PostgreSQLDatabaseDriver | SQLiteDatabaseDriver
-  public driver: DatabaseConfig['driver']
+  public type: DatabaseConfig['type']
 
   constructor(config: DatabaseConfig) {
-    this.driver = config.driver
-    switch (this.driver) {
+    this.type = config.type
+    switch (this.type) {
       case 'SQLite':
         this._db = new SQLiteDatabaseDriver(config)
         break

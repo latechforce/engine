@@ -6,7 +6,7 @@ import { concat } from '../../../examples/config/table/field/rollup/singleLineTe
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.request(({ app, request, drivers }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     describe('should create a table with a single line text rollup field and', () => {
       it('a CONCAT formula', async () => {
         // WHEN
@@ -28,7 +28,7 @@ mock.request(({ app, request, drivers }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     describe('should create a record with a single line text rollup and', () => {
       it('a CONCAT formula', async () => {
         // GIVEN

@@ -290,7 +290,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
       extendsConfig.services = {}
       if ('drivers' in this.options) {
         if (this.options.drivers.includes('Database')) {
-          const config: DatabaseConfig = { driver: 'SQLite', url: await getTestDbUrl('database') }
+          const config: DatabaseConfig = { type: 'SQLite', url: await getTestDbUrl('database') }
           const database = new DatabaseDriver(config)
           drivers.database = database
           extendsConfig.services.database = config
@@ -466,7 +466,24 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
 
     this.tester.afterEach(async () => {
       await app.stop()
-      for (const file of files) await fs.unlink(file)
+      for (const file of files) {
+        await Promise.all([
+          fs.unlink(file),
+          fs.unlink(file.replace('.db', '.db-shm')),
+          fs.unlink(file.replace('.db', '.db-wal')),
+        ])
+      }
+      files = []
+    })
+
+    this.tester.afterAll(async () => {
+      for (const file of files) {
+        await Promise.all([
+          fs.unlink(file),
+          fs.unlink(file.replace('.db', '.db-shm')),
+          fs.unlink(file.replace('.db', '.db-wal')),
+        ])
+      }
       files = []
     })
 

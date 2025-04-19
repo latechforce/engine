@@ -2380,7 +2380,7 @@
     "DatabaseServiceSchema": {
       "type": "object",
       "properties": {
-        "driver": {
+        "type": {
           "type": "string",
           "enum": [
             "PostgreSQL",
@@ -2392,7 +2392,7 @@
         }
       },
       "required": [
-        "driver",
+        "type",
         "url"
       ],
       "additionalProperties": false,

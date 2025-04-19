@@ -5,7 +5,7 @@ import { url } from '../../../examples/config/table/field/url'
 const mock = new Mock(Tester)
 
 mock.request(({ app, request }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a table with an url', async () => {
       // WHEN
       const call = () => app.start(url)
@@ -15,7 +15,7 @@ mock.request(({ app, request }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should create a record with an url', async () => {
       // GIVEN
       const urlField = 'https://test.com'

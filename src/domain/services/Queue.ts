@@ -1,10 +1,10 @@
-import type { DatabaseExec, DatabaseQuery, DatabaseDriverName, Database } from './Database'
+import type { DatabaseExec, DatabaseQuery, Database, DatabaseType } from './Database'
 import type { Logger } from './Logger'
 import type { AutomationContext } from '/domain/entities/Automation/Context'
 import type { Monitor } from './Monitor'
 
 export interface QueueConfig {
-  driver: DatabaseDriverName
+  type: DatabaseType
   query: DatabaseQuery
   exec: DatabaseExec
 }

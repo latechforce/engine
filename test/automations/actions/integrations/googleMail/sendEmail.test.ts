@@ -9,7 +9,6 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-
         automations: [
           {
             name: 'sendEmail',
@@ -52,7 +51,6 @@ mock.request(({ app, request }) => {
       // GIVEN
       const config: Config = {
         name: 'App',
-
         automations: [
           {
             name: 'sendEmail',

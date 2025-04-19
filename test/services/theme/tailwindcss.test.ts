@@ -1,35 +1,15 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
+import { Mock } from '/test/bun'
+import { tailwindcss } from '/examples/config/service/theme/tailwindcss'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.page(({ app, browser }) => {
-  const config: Config = {
-    name: 'App',
-    forms: [
-      {
-        name: 'Form',
-        path: 'user',
-        table: 'users',
-        inputs: [],
-      },
-    ],
-    tables: [
-      {
-        name: 'users',
-        fields: [],
-      },
-    ],
-    services: {
-      theme: { type: 'tailwindcss', base: 'src/infrastructure/components/tailwindcss' },
-    },
-  }
-
   describe('on open page', () => {
     it('should return link to style.css', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(config)
+      const { url } = await app.start(tailwindcss)
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -42,7 +22,7 @@ mock.page(({ app, browser }) => {
     it('should return the tailwind css content', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(config)
+      const { url } = await app.start(tailwindcss)
 
       // WHEN
       const response = await page.goto(`${url}/style.css`)
@@ -56,7 +36,7 @@ mock.page(({ app, browser }) => {
     it('should return link to style.js', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(config)
+      const { url } = await app.start(tailwindcss)
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -69,7 +49,7 @@ mock.page(({ app, browser }) => {
     it('should return the preline js content', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(config)
+      const { url } = await app.start(tailwindcss)
 
       // WHEN
       const response = await page.goto(`${url}/style.js`)

@@ -5,7 +5,7 @@ import { singleSelect } from '../../../examples/config/table/field/singleSelect'
 const mock = new Mock(Tester)
 
 mock.request(({ app, request }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a table with a single select', async () => {
       // WHEN
       const call = () => app.start(singleSelect)
@@ -15,7 +15,7 @@ mock.request(({ app, request }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should create a record with a single select', async () => {
       // GIVEN
       const single_select = 'Option 1'

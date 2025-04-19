@@ -5,7 +5,7 @@ import { number } from '../../../examples/config/table/field/number'
 const mock = new Mock(Tester)
 
 mock.request(({ app, request }) => {
-  describe('on app start', () => {
+  describe('on start', () => {
     it('should create a table with a number ', async () => {
       // GIVEN
       const call = () => app.start(number)
@@ -15,7 +15,7 @@ mock.request(({ app, request }) => {
     })
   })
 
-  describe('on API POST', () => {
+  describe('on POST', () => {
     it('should create a record with a number', async () => {
       // GIVEN
       const numberValue = 10

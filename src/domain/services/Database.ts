@@ -5,10 +5,10 @@ import type { RealtimeEvent } from './Realtime'
 import type { Monitor } from './Monitor'
 import type { IdGenerator } from './IdGenerator'
 
-export type DatabaseDriverName = 'PostgreSQL' | 'SQLite'
+export type DatabaseType = 'PostgreSQL' | 'SQLite'
 
 export interface DatabaseConfig {
-  driver: DatabaseDriverName
+  type: DatabaseType
   url: string
 }
 
@@ -42,15 +42,15 @@ export interface IDatabaseSpi {
 }
 
 export class Database {
-  public driver: DatabaseDriverName
+  public type: DatabaseType
 
   constructor(
     private _spi: IDatabaseSpi,
     private _services: DatabaseServices,
     public config: DatabaseConfig
   ) {
-    const { driver } = config
-    this.driver = driver
+    const { type } = config
+    this.type = type
   }
 
   table = (config: TableConfig): DatabaseTable => {
