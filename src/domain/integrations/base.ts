@@ -78,7 +78,10 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
       }
       const response = await spi.testConnection()
       if (response?.error) {
-        return new JsonResponse({ error: response.error.message || 'Unknown error' }, 400)
+        return new JsonResponse(
+          { success: false, error: response.error.message || 'Unknown error' },
+          400
+        )
       }
       return new JsonResponse({ success: true })
     }

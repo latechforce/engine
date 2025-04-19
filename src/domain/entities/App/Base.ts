@@ -15,6 +15,7 @@ import type { Form } from '../Form'
 import type { Theme } from '/domain/services/Theme'
 import type { Client } from '/domain/services/Client'
 import type { ServicesConfig } from '/domain/services'
+import type { Admin } from '../Admin'
 
 export interface AppConfig {
   name: string
@@ -44,6 +45,7 @@ export interface AppEntities {
   automations: Automation[]
   buckets: Bucket[]
   forms: Form[]
+  admin: Admin
 }
 
 type Status = 'stopped' | 'starting' | 'started' | 'stopping'

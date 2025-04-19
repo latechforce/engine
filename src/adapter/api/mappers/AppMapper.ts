@@ -34,6 +34,7 @@ import { CalendlyMapper } from './Integration/CalendlyMapper'
 import type { ConfigSchema } from '../schemas/ConfigSchema'
 import { JotformMapper } from './Integration/JotformMapper'
 import { YouCanBookMeMapper } from './Integration/YouCanBookMeMapper'
+import { Admin } from '/domain/entities/Admin'
 
 export class AppMapper {
   static toEntity = (
@@ -180,6 +181,7 @@ export class AppMapper {
       { tables },
       components
     )
+    const admin = new Admin({ server })
     return new StoppedApp(
       {
         name: schema.name,
@@ -213,6 +215,7 @@ export class AppMapper {
         automations,
         buckets,
         forms,
+        admin,
       },
       {
         notion,

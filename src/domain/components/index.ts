@@ -1,19 +1,28 @@
-import type { CheckboxInput } from './Form/Input/CheckboxInput'
-import type { Form } from './Form'
-import type { FormResponse } from './Form/FormResponse'
-import type { TextInput } from './Form/Input/TextInput'
-import type { SelectInput } from './Form/Input/SelectInput'
-import type { Page } from './Page'
-import type { FileInput } from './Form/Input/FileInput'
-import type { TextareaInput } from './Form/Input/TextareaInput'
+export * from './BasicForms/Checkbox'
+export * from './BasicForms/FileInput'
+export * from './BasicForms/Input'
+export * from './BasicForms/Textarea'
+export * from './Layouts/Form'
+export * from './Layouts/FormResponse'
+export * from './Layouts/Page'
+export * from './AdvancedForms/AdvancedSelect'
+
+import type { Checkbox } from './BasicForms/Checkbox'
+import type { Form } from './Layouts/Form'
+import type { FormResponse } from './Layouts/FormResponse'
+import type { Input } from './BasicForms/Input'
+import type { AdvancedSelect } from './AdvancedForms/AdvancedSelect'
+import type { Page } from './Layouts/Page'
+import type { FileInput } from './BasicForms/FileInput'
+import type { Textarea } from './BasicForms/Textarea'
 
 export type Components = {
   Page: Page
   Form: Form
   FormResponse: FormResponse
-  TextInput: TextInput
-  TextareaInput: TextareaInput
-  SelectInput: SelectInput
-  CheckboxInput: CheckboxInput
+  Input: Input
+  Textarea: Textarea
+  AdvancedSelect: AdvancedSelect
+  Checkbox: Checkbox
   FileInput: FileInput
 }

@@ -1,20 +1,20 @@
 import type { Components } from '/domain/components'
-import { Page } from '../Page'
-import { Form } from './Form/Form'
-import { TextInput } from './Form/Input/TextInput'
-import { FormResponse } from './Form/FormResponse'
-import { CheckboxInput } from './Form/Input/CheckboxInput'
-import { SelectInput } from './Form/Input/SelectInput'
-import { FileInput } from './Form/Input/FileInput'
-import { TextareaInput } from './Form/Input/TextareaInput'
+import { Page } from './Layouts/Page'
+import { Form } from './Layouts/Form'
+import { Input } from './BasicForms/Input'
+import { FormResponse } from './Layouts/FormResponse'
+import { Checkbox } from './BasicForms/Checkbox'
+import { AdvancedSelect } from './AdvancedForms/AdvancedSelect'
+import { FileInput } from './BasicForms/FileInput'
+import { Textarea } from './BasicForms/Textarea'
 
 export const components: Components = {
   Page,
   Form,
   FormResponse,
-  TextInput,
-  TextareaInput,
-  SelectInput,
-  CheckboxInput,
+  Input,
+  Textarea,
+  AdvancedSelect,
+  Checkbox,
   FileInput,
 }

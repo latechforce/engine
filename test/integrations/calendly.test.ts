@@ -19,5 +19,19 @@ mock.request(({ app, request }) => {
       expect(response.error).toBeUndefined()
       expect(response.success).toBe(true)
     })
+
+    it('with a OAuth2 connection', async () => {
+      // GIVEN
+      const { url } = await app.start(configIntegrationCalendly)
+
+      // WHEN
+      const response = await request.post(`${url}/api/integration/calendly/test-connection`, {
+        account: 'calendly',
+      })
+
+      // THEN
+      expect(response.error).toBeUndefined()
+      expect(response.success).toBe(true)
+    })
   })
 })

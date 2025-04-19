@@ -30,7 +30,7 @@ export class StoppedApp extends BaseApp {
 
   init = async (): Promise<void> => {
     const { server, theme, client } = this._services
-    const { tables, automations, buckets, forms } = this._entities
+    const { tables, automations, buckets, forms, admin } = this._entities
     const integrations = Object.values(this._integrations)
     await server.init(async () => {
       for (const integration of integrations) await integration.init()
@@ -38,7 +38,8 @@ export class StoppedApp extends BaseApp {
       for (const automation of automations) await automation.init()
       for (const bucket of buckets) await bucket.init()
       for (const form of forms) await form.init()
-      if (forms.length > 0) await theme.init()
+      await admin.init()
+      await theme.init()
       await client.init()
     })
     this.logger.debug('✅ app is initialized')

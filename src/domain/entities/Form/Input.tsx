@@ -1,12 +1,12 @@
 import type { ConfigError } from '../Error/Config'
 import type { Table } from '../Table/'
 import type {
-  CheckboxInput,
+  Checkbox,
   FileInput,
-  SelectInput,
-  TextareaInput,
-  TextInput,
-} from '/domain/components/Form/Input'
+  AdvancedSelect,
+  Textarea,
+  Input as InputComponent,
+} from '../../components/'
 import {
   EmailField,
   SingleLineTextField,
@@ -30,10 +30,10 @@ export interface InputConfig {
 }
 
 export interface InputComponents {
-  TextInput: TextInput
-  TextareaInput: TextareaInput
-  CheckboxInput: CheckboxInput
-  SelectInput: SelectInput
+  Input: InputComponent
+  Textarea: Textarea
+  Checkbox: Checkbox
+  AdvancedSelect: AdvancedSelect
   FileInput: FileInput
 }
 
@@ -49,7 +49,13 @@ export class Input {
     const field = table.fields.find((field) => field.name === config.field)
     if (!field) throw new Error(`Field ${config.field} not found`)
     this.field = field
-    const { TextInput, CheckboxInput, SelectInput, FileInput, TextareaInput } = this._components
+    const {
+      Input: InputComponent,
+      Checkbox,
+      AdvancedSelect,
+      FileInput,
+      Textarea,
+    } = this._components
     const props = {
       field: config.field,
       label: config.label,
@@ -62,7 +68,7 @@ export class Input {
       field instanceof UrlField
     ) {
       this.Component = () => (
-        <TextInput
+        <InputComponent
           {...props}
           type={field instanceof EmailField ? 'email' : field instanceof UrlField ? 'url' : 'text'}
           placeholder={config.placeholder}
@@ -72,7 +78,7 @@ export class Input {
       )
     } else if (field instanceof LongTextField) {
       this.Component = () => (
-        <TextareaInput
+        <Textarea
           {...props}
           placeholder={config.placeholder}
           maxLength={config.maxLength}
@@ -80,9 +86,9 @@ export class Input {
         />
       )
     } else if (field instanceof CheckboxField) {
-      this.Component = () => <CheckboxInput {...props} />
+      this.Component = () => <Checkbox {...props} />
     } else if (field instanceof SingleSelectField) {
-      this.Component = () => <SelectInput {...props} options={field.options} />
+      this.Component = () => <AdvancedSelect {...props} options={field.options} />
     } else if (field instanceof MultipleAttachmentField) {
       this.Component = () => (
         <FileInput {...props} multiple={true} placeholder={config.placeholder} />
