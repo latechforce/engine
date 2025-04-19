@@ -45,7 +45,7 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
   private _webhooks: SQLiteDatabaseTableDriver
 
   constructor(public config: CalendlyConfig) {
-    super(config, config.user.accessToken)
+    super(config, config.accessToken)
     this._users = this._db.table({
       name: 'users',
       fields: [
@@ -202,7 +202,7 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
   }
 
   currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
-    const user = await this._users.readById<UserRecordFields>(this.config.user.accessToken ?? '')
+    const user = await this._users.readById<UserRecordFields>(this.config.accessToken ?? '')
     if (!user) {
       return { error: { status: 404, message: 'User not found' } }
     }

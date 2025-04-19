@@ -8,10 +8,8 @@ const { TEST_YOUCANBOOKME_BASE_URL, TEST_YOUCANBOOKME_USERNAME, TEST_YOUCANBOOKM
 export const integration = new YouCanBookMeIntegration({
   account: 'test',
   baseUrl: TEST_YOUCANBOOKME_BASE_URL,
-  user: {
-    username: TEST_YOUCANBOOKME_USERNAME,
-    password: TEST_YOUCANBOOKME_PASSWORD,
-  },
+  username: TEST_YOUCANBOOKME_USERNAME,
+  password: TEST_YOUCANBOOKME_PASSWORD,
 })
 
 testYouCanBookMeIntegration(BunTester, integration)

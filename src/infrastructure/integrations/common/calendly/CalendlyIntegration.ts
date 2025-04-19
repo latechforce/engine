@@ -24,7 +24,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     this._instance = axios.create({
       baseURL: config.baseUrl ?? 'https://api.calendly.com',
       headers: {
-        Authorization: `Bearer ${config.user.accessToken}`,
+        Authorization: `Bearer ${config.accessToken}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },

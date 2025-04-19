@@ -5,10 +5,8 @@ import BunTester from 'bun:test'
 export const integration = new YouCanBookMeIntegration({
   account: 'test',
   baseUrl: ':memory:',
-  user: {
-    username: 'mock-username',
-    password: 'mock-password',
-  },
+  username: 'mock-username',
+  password: 'mock-password',
 })
 
 await integration.createToken('mock-username')

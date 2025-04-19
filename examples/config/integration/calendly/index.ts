@@ -6,9 +6,7 @@ export const configIntegrationCalendly: Config = {
     calendly: [
       {
         account: 'calendly_account',
-        user: {
-          accessToken: 'calendly_user_access_token',
-        },
+        accessToken: 'calendly_user_access_token',
       },
     ],
   },

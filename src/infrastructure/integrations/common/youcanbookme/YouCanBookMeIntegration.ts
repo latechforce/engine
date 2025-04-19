@@ -10,12 +10,12 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
   private _instance: AxiosInstance
 
   constructor(public config: YouCanBookMeConfig) {
-    const { baseUrl = 'https://api.youcanbook.me', user } = config
+    const { baseUrl = 'https://api.youcanbook.me', username, password } = config
     this._instance = axios.create({
       baseURL: join(baseUrl, 'v1'),
       auth: {
-        username: user.username,
-        password: user.password,
+        username,
+        password,
       },
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export class YouCanBookMeIntegration implements IYouCanBookMeIntegration {
 
   testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
-      const { username } = this.config.user
+      const { username } = this.config
       await this._instance.get(`/profiles/${username}`)
     } catch (error) {
       return this._responseError(error)

@@ -6,10 +6,8 @@ export const configIntegrationYoucanbookme: Config = {
     youcanbookme: [
       {
         account: 'youcanbookme_account',
-        user: {
-          username: 'youcanbookme_user_username',
-          password: 'youcanbookme_user_password',
-        },
+        username: 'youcanbookme_user_username',
+        password: 'youcanbookme_user_password',
       },
     ],
   },

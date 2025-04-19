@@ -19,16 +19,9 @@ export interface CalendlyIntegrationSchema {
    */
   baseUrl?: CalendlyConfig['baseUrl']
   /**
-   * The user configuration for Calendly
-   * @title User
-   * @description The user configuration for Calendly
+   * The access token for Calendly API authentication
+   * @title Access Token
+   * @description The access token for Calendly API authentication
    */
-  user: {
-    /**
-     * The access token for Calendly API authentication
-     * @title Access Token
-     * @description The access token for Calendly API authentication
-     */
-    accessToken: string
-  }
+  accessToken: string
 }

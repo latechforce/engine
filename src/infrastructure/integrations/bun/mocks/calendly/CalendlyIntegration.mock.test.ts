@@ -5,9 +5,7 @@ import BunTester from 'bun:test'
 export const integration = new CalendlyIntegration({
   account: 'test',
   baseUrl: ':memory:',
-  user: {
-    accessToken: 'https://api.calendly.com/users/123',
-  },
+  accessToken: 'https://api.calendly.com/users/123',
 })
 
 await integration.createToken('https://api.calendly.com/users/123')

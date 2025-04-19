@@ -313,14 +313,12 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
             {
               account: 'calendly',
               baseUrl: await getTestDbUrl('calendly'),
-              user: {
-                accessToken: 'test',
-              },
+              accessToken: 'test',
             },
           ]
           integrations.calendly = new CalendlyIntegration(configs[0])
           extendsConfig.integrations.calendly = configs
-          await integrations.calendly.createToken(configs[0].user.accessToken)
+          await integrations.calendly.createToken(configs[0].accessToken)
         }
         if (this.options.integrations.includes('Notion')) {
           const configs: NotionConfig[] = [
@@ -416,15 +414,13 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
             {
               account: 'youcanbookme',
               baseUrl: await getTestDbUrl('youcanbookme'),
-              user: {
-                username: 'test',
-                password: 'test',
-              },
+              username: 'test',
+              password: 'test',
             },
           ]
           integrations.youcanbookme = new YouCanBookMeIntegration(configs[0])
           extendsConfig.integrations.youcanbookme = configs
-          await integrations.youcanbookme.createToken(configs[0].user.username)
+          await integrations.youcanbookme.createToken(configs[0].username)
         }
         if (this.options.integrations.includes('Jotform')) {
           const configs: JotformConfig[] = [

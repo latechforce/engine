@@ -13,28 +13,21 @@ export interface YouCanBookMeIntegrationSchema {
    */
   account: YouCanBookMeConfig['account']
   /**
+   * The username for YouCanBookMe
+   * @title Username
+   * @description The username for YouCanBookMe
+   */
+  username: string
+  /**
+   * The password for YouCanBookMe
+   * @title Password
+   * @description The password for YouCanBookMe
+   */
+  password: string
+  /**
    * The base URL for YouCanBookMe API
    * @title Base URL
    * @description The base URL for YouCanBookMe API
    */
   baseUrl?: YouCanBookMeConfig['baseUrl']
-  /**
-   * The user credentials for YouCanBookMe
-   * @title User
-   * @description The user credentials for YouCanBookMe
-   */
-  user: {
-    /**
-     * The username for YouCanBookMe
-     * @title Username
-     * @description The username for YouCanBookMe
-     */
-    username: string
-    /**
-     * The password for YouCanBookMe
-     * @title Password
-     * @description The password for YouCanBookMe
-     */
-    password: string
-  }
 }

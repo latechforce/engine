@@ -34,7 +34,7 @@ export class YouCanBookMeIntegration
   private _profiles: SQLiteDatabaseTableDriver
 
   constructor(public config: YouCanBookMeConfig) {
-    super(config, config.user.username)
+    super(config, config.username)
     this._profiles = this._db.table({
       name: 'profiles',
       fields: [
@@ -171,7 +171,7 @@ export class YouCanBookMeIntegration
   }
 
   currentProfile = async (): Promise<IntegrationResponse<YouCanBookMeProfile>> => {
-    const profile = await this.getProfile(this.config.user.username)
+    const profile = await this.getProfile(this.config.username)
 
     if (profile.error) {
       return { error: { status: 404, message: 'No profile found' } }
