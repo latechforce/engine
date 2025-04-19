@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const port: Config = {
+export const configServiceServerPort: Config = {
   name: 'App with port',
   services: {
     server: {

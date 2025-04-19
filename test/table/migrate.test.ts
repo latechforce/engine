@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import { singleLineText } from '/examples/config/table/field/singleLineText'
+import { configTableFieldSingleLineText } from '/examples/config/table/field/singleLineText'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -8,14 +8,14 @@ mock.app(({ app, drivers }) => {
   describe('on start', () => {
     it('should migrate an existing table with a new field', async () => {
       // GIVEN
-      await drivers.database.tableFromSchema(singleLineText.tables![0]).create()
+      await drivers.database.tableFromSchema(configTableFieldSingleLineText.tables![0]).create()
       const newConfig: Config = {
-        ...singleLineText,
+        ...configTableFieldSingleLineText,
         tables: [
           {
-            ...singleLineText.tables![0],
+            ...configTableFieldSingleLineText.tables![0],
             fields: [
-              ...singleLineText.tables![0].fields!,
+              ...configTableFieldSingleLineText.tables![0].fields!,
               { name: 'new_field', type: 'SingleLineText' },
             ],
           },
@@ -35,7 +35,7 @@ mock.app(({ app, drivers }) => {
 
     it('should migrate a table with existing records', async () => {
       // GIVEN
-      const table = drivers.database.tableFromSchema(singleLineText.tables![0])
+      const table = drivers.database.tableFromSchema(configTableFieldSingleLineText.tables![0])
       await table.create()
       await table.insertMany([
         { id: '1', fields: { single_line_text: 'John' }, created_at: new Date().toISOString() },
@@ -44,7 +44,7 @@ mock.app(({ app, drivers }) => {
       ])
 
       // WHEN
-      const call = () => app.start(singleLineText)
+      const call = () => app.start(configTableFieldSingleLineText)
 
       // THEN
       expect(call()).resolves.toBeDefined()

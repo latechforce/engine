@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const number: Config = {
+export const configTableFieldNumber: Config = {
   name: 'App with a table with a number field',
   tables: [
     {

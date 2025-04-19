@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const client: Config = {
+export const configServiceClient: Config = {
   name: 'App with client',
   forms: [
     {

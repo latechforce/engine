@@ -1,8 +1,8 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
 import type { CodeRunnerContext } from '/src'
-import { template } from '/examples/config/service/template'
-import { defaultValue } from '/examples/config/service/template/defaultValue'
+import { configServiceTemplate } from '/examples/config/service/template'
+import { configServiceTemplateDefaultValue } from '/examples/config/service/template/defaultValue'
 
 const mock = new Mock(Tester)
 
@@ -10,7 +10,7 @@ mock.request(({ app, request }) => {
   describe('on POST', () => {
     it('should return the name', async () => {
       // GIVEN
-      const { url } = await app.start(template)
+      const { url } = await app.start(configServiceTemplate)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/send-email`, {
@@ -24,10 +24,10 @@ mock.request(({ app, request }) => {
     it('should throw an error if the name is not linked', async () => {
       // GIVEN
       const newConfig: Config = {
-        ...template,
+        ...configServiceTemplate,
         automations: [
           {
-            ...template.automations![0],
+            ...configServiceTemplate.automations![0],
             actions: [
               {
                 name: 'runCode',
@@ -57,7 +57,7 @@ mock.request(({ app, request }) => {
 
     it('should return the default name', async () => {
       // GIVEN
-      const { url } = await app.start(defaultValue)
+      const { url } = await app.start(configServiceTemplateDefaultValue)
 
       // WHEN
       const response = await request.post(`${url}/api/automation/send-email`, {

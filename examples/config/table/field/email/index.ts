@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const email: Config = {
+export const configTableFieldEmail: Config = {
   name: 'App with a table with an email field',
   tables: [
     {

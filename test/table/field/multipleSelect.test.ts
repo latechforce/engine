@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { multipleSelect } from '../../../examples/config/table/field/multipleSelect'
+import { configTableFieldMultipleSelect } from '/examples/config/table/field/multipleSelect'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a multiple select', async () => {
       // WHEN
-      const call = () => app.start(multipleSelect)
+      const call = () => app.start(configTableFieldMultipleSelect)
 
       // THEN
       expect(call()).resolves.toBeDefined()
@@ -19,12 +19,15 @@ mock.request(({ app, request }) => {
     it('should create a record with a multiple select', async () => {
       // GIVEN
       const multipleSelectValue = ['Option 1', 'Option 2']
-      const { url } = await app.start(multipleSelect)
+      const { url } = await app.start(configTableFieldMultipleSelect)
 
       // WHEN
-      const { record } = await request.post(`${url}/api/table/${multipleSelect.tables![0].name}`, {
-        multiple_select: multipleSelectValue,
-      })
+      const { record } = await request.post(
+        `${url}/api/table/${configTableFieldMultipleSelect.tables![0].name}`,
+        {
+          multiple_select: multipleSelectValue,
+        }
+      )
 
       // THEN
       expect(record.fields.multiple_select).toStrictEqual(multipleSelectValue)
@@ -33,12 +36,15 @@ mock.request(({ app, request }) => {
     it('should not create a record with a wrong value in a multiple select', async () => {
       // GIVEN
       const multipleSelectValue = ['Option 4']
-      const { url } = await app.start(multipleSelect)
+      const { url } = await app.start(configTableFieldMultipleSelect)
 
       // WHEN
-      const { error } = await request.post(`${url}/api/table/${multipleSelect.tables![0].name}`, {
-        multiple_select: multipleSelectValue,
-      })
+      const { error } = await request.post(
+        `${url}/api/table/${configTableFieldMultipleSelect.tables![0].name}`,
+        {
+          multiple_select: multipleSelectValue,
+        }
+      )
 
       // THEN
       expect(error).toStrictEqual({

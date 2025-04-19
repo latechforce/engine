@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const sum: Config = {
+export const configTableFieldRollupNumberSum: Config = {
   name: 'App with a table with a rollup field as a number and a SUM formula',
   tables: [
     {

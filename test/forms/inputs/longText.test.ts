@@ -1,44 +1,17 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
+import { Mock } from '/test/bun'
+import { configFormInputLongText } from '/examples/config/form/input/longText'
+import { configFormInputLongTextRequired } from '/examples/config/form/input/longText/required'
+import { configFormInputLongTextMinLength } from '/examples/config/form/input/longText/minLength'
+import { configFormInputLongTextMaxLength } from '/examples/config/form/input/longText/maxLength'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.page(({ app, browser, drivers }) => {
   describe('open page', () => {
-    const config: Config = {
-      name: 'App',
-      forms: [
-        {
-          name: 'form',
-          path: 'path',
-          table: 'table',
-          inputs: [
-            {
-              field: 'long_text',
-              label: 'Long Text',
-              required: true,
-              minLength: 10,
-              maxLength: 100,
-            },
-          ],
-        },
-      ],
-      tables: [
-        {
-          name: 'table',
-          fields: [
-            {
-              name: 'long_text',
-              type: 'LongText',
-            },
-          ],
-        },
-      ],
-    }
-
     it('should display the textarea', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(configFormInputLongText)
       const page = await browser.newPage()
 
       // WHEN
@@ -51,8 +24,8 @@ mock.page(({ app, browser, drivers }) => {
     it('should create a record with a textarea', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const table = drivers.database.tableFromSchema(config.tables![0])
-      const { url } = await app.start(config)
+      const table = drivers.database.tableFromSchema(configFormInputLongText.tables![0])
+      const { url } = await app.start(configFormInputLongText)
       const longText =
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet.'
 
@@ -70,7 +43,7 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should not submit the form if the textarea is empty', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(configFormInputLongTextRequired)
       const page = await browser.newPage()
       const longText = ''
 
@@ -89,9 +62,9 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should not submit the form if the text is too short', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(configFormInputLongTextMinLength)
       const page = await browser.newPage()
-      const longText = 'short'
+      const longText = 'sho'
 
       // WHEN
       await page.goto(`${url}/form/path`)
@@ -108,9 +81,9 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should submit the form with a text limited to maxLength', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(configFormInputLongTextMaxLength)
       const page = await browser.newPage()
-      const table = drivers.database.tableFromSchema(config.tables![0])
+      const table = drivers.database.tableFromSchema(configFormInputLongTextMaxLength.tables![0])
       const longText =
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos. Lorem ipsum dolor sit amet consectetur adipisicing elit.'
 

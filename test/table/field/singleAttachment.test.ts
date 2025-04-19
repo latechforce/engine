@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { singleAttachment } from '../../../examples/config/table/field/singleAttachment'
+import { configTableFieldSingleAttachment } from '/examples/config/table/field/singleAttachment'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a single select', async () => {
       // WHEN
-      const call = () => app.start(singleAttachment)
+      const call = () => app.start(configTableFieldSingleAttachment)
 
       // THEN
       expect(call()).resolves.toBeDefined()
@@ -22,11 +22,11 @@ mock.request(({ app, request }) => {
         name: 'file1.txt',
         url: 'https://example.com/file1.txt',
       }
-      const { url } = await app.start(singleAttachment)
+      const { url } = await app.start(configTableFieldSingleAttachment)
 
       // WHEN
       const { record } = await request.post(
-        `${url}/api/table/${singleAttachment.tables![0].name}`,
+        `${url}/api/table/${configTableFieldSingleAttachment.tables![0].name}`,
         {
           single_attachment,
         }

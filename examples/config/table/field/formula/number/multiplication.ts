@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const multiplication: Config = {
+export const configTableFieldFormulaNumberMultiplication: Config = {
   name: 'App with a table with a formula field as a number and an multiplication',
   tables: [
     {

@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const withTable: Config = {
+export const configServiceDatabasePostgresqlWithTable: Config = {
   name: 'App with PostgreSQL database with a table',
   tables: [
     {

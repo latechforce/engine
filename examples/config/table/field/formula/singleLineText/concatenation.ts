@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const concatenation: Config = {
+export const configTableFieldFormulaSingleLineTextConcatenation: Config = {
   name: 'App with a table with a formula field as a single line text and an concatenation',
   tables: [
     {

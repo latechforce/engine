@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const tailwindcss: Config = {
+export const configServiceThemeTailwindcss: Config = {
   name: 'App with tailwindcss theme',
   forms: [
     {

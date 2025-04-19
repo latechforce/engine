@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const sqlite: Config = {
+export const configServiceDatabaseSqlite: Config = {
   name: 'App with SQLite database',
   services: {
     database: {

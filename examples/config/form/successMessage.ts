@@ -1,16 +1,16 @@
 import type { Config } from '/src'
 
-export const successMessage: Config = {
+export const configFormSuccessMessage: Config = {
   name: 'App with a form with a success message',
   forms: [
     {
-      name: 'user',
-      path: '/user',
-      table: 'users',
+      name: 'form',
+      path: '/path',
+      table: 'table',
       inputs: [
         {
-          field: 'name',
-          label: 'Name',
+          field: 'single_line_text',
+          label: 'Single Line Text',
         },
       ],
       successMessage: 'Success',
@@ -18,10 +18,10 @@ export const successMessage: Config = {
   ],
   tables: [
     {
-      name: 'users',
+      name: 'table',
       fields: [
         {
-          name: 'name',
+          name: 'single_line_text',
           type: 'SingleLineText',
         },
       ],

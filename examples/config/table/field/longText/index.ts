@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const longText: Config = {
+export const configTableFieldLongText: Config = {
   name: 'App with a table with a long text field',
   tables: [
     {

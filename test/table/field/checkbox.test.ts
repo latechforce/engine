@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { checkbox } from '../../../examples/config/table/field/checkbox'
+import { configTableFieldCheckbox } from '/examples/config/table/field/checkbox'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a checkbox', async () => {
       // GIVEN
-      const call = () => app.start(checkbox)
+      const call = () => app.start(configTableFieldCheckbox)
 
       // THEN
       expect(call()).resolves.toBeDefined()
@@ -19,12 +19,15 @@ mock.request(({ app, request }) => {
     it('should create a record with a checkbox', async () => {
       // GIVEN
       const checkboxValue = true
-      const { url } = await app.start(checkbox)
+      const { url } = await app.start(configTableFieldCheckbox)
 
       // WHEN
-      const { record } = await request.post(`${url}/api/table/${checkbox.tables![0].name}`, {
-        checkbox: checkboxValue,
-      })
+      const { record } = await request.post(
+        `${url}/api/table/${configTableFieldCheckbox.tables![0].name}`,
+        {
+          checkbox: checkboxValue,
+        }
+      )
 
       // THEN
       expect(record.fields.checkbox).toBe(checkboxValue)

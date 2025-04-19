@@ -1,8 +1,8 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
-import { addition } from '../../../examples/config/table/field/formula/number/addition'
-import { multiplication } from '../../../examples/config/table/field/formula/number/multiplication'
-import { concatenation } from '../../../examples/config/table/field/formula/singleLineText/concatenation'
+import { configTableFieldFormulaNumberAddition } from '/examples/config/table/field/formula/number/addition'
+import { configTableFieldFormulaNumberMultiplication } from '/examples/config/table/field/formula/number/multiplication'
+import { configTableFieldFormulaSingleLineTextConcatenation } from '/examples/config/table/field/formula/singleLineText/concatenation'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -11,7 +11,7 @@ mock.request(({ app, request, drivers }) => {
     describe('should create a table with a single line text formula and', () => {
       it('a concatenation', async () => {
         // GIVEN
-        const call = () => app.start(concatenation)
+        const call = () => app.start(configTableFieldFormulaSingleLineTextConcatenation)
 
         // THEN
         expect(call()).resolves.toBeDefined()
@@ -21,7 +21,7 @@ mock.request(({ app, request, drivers }) => {
     describe('should create a table with a number formula and', () => {
       it('an addition', async () => {
         // WHEN
-        const call = () => app.start(addition)
+        const call = () => app.start(configTableFieldFormulaNumberAddition)
 
         // THEN
         expect(call()).resolves.toBeDefined()
@@ -29,7 +29,7 @@ mock.request(({ app, request, drivers }) => {
 
       it('a multiplication', async () => {
         // WHEN
-        const call = () => app.start(multiplication)
+        const call = () => app.start(configTableFieldFormulaNumberMultiplication)
 
         // THEN
         expect(call()).resolves.toBeDefined()
@@ -38,14 +38,16 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table with a new formula', async () => {
       // GIVEN
-      await drivers.database.tableFromSchema(concatenation.tables![0]).create()
+      await drivers.database
+        .tableFromSchema(configTableFieldFormulaSingleLineTextConcatenation.tables![0])
+        .create()
       const newConfig: Config = {
-        ...concatenation,
+        ...configTableFieldFormulaSingleLineTextConcatenation,
         tables: [
           {
-            ...concatenation.tables![0],
+            ...configTableFieldFormulaSingleLineTextConcatenation.tables![0],
             fields: [
-              ...concatenation.tables![0].fields!,
+              ...configTableFieldFormulaSingleLineTextConcatenation.tables![0].fields!,
               {
                 name: 'new_formula',
                 type: 'Formula',
@@ -69,14 +71,16 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table with an updated formula', async () => {
       // GIVEN
-      await drivers.database.tableFromSchema(concatenation.tables![0]).create()
+      await drivers.database
+        .tableFromSchema(configTableFieldFormulaSingleLineTextConcatenation.tables![0])
+        .create()
       const newConfig: Config = {
-        ...concatenation,
+        ...configTableFieldFormulaSingleLineTextConcatenation,
         tables: [
           {
-            ...concatenation.tables![0],
+            ...configTableFieldFormulaSingleLineTextConcatenation.tables![0],
             fields: [
-              concatenation.tables![0].fields![0],
+              configTableFieldFormulaSingleLineTextConcatenation.tables![0].fields![0],
               {
                 name: 'formula',
                 type: 'Formula',
@@ -103,12 +107,15 @@ mock.request(({ app, request, drivers }) => {
     describe('should create a record with a single line text formula and', () => {
       it('a concatenation', async () => {
         // GIVEN
-        const { url } = await app.start(concatenation)
+        const { url } = await app.start(configTableFieldFormulaSingleLineTextConcatenation)
 
         // WHEN
-        const { record } = await request.post(`${url}/api/table/${concatenation.tables![0].name}`, {
-          single_line_text: 'John',
-        })
+        const { record } = await request.post(
+          `${url}/api/table/${configTableFieldFormulaSingleLineTextConcatenation.tables![0].name}`,
+          {
+            single_line_text: 'John',
+          }
+        )
 
         // THEN
         expect(record.fields.formula).toBe('John!')
@@ -117,12 +124,12 @@ mock.request(({ app, request, drivers }) => {
       it('a reference to another single line text formula', async () => {
         // GIVEN
         const config: Config = {
-          ...concatenation,
+          ...configTableFieldFormulaSingleLineTextConcatenation,
           tables: [
             {
-              ...concatenation.tables![0],
+              ...configTableFieldFormulaSingleLineTextConcatenation.tables![0],
               fields: [
-                ...concatenation.tables![0].fields!,
+                ...configTableFieldFormulaSingleLineTextConcatenation.tables![0].fields!,
                 {
                   name: 'formula_reference',
                   type: 'Formula',
@@ -148,12 +155,15 @@ mock.request(({ app, request, drivers }) => {
     describe('should create a record with a number formula and', () => {
       it('an addition', async () => {
         // GIVEN
-        const { url } = await app.start(addition)
+        const { url } = await app.start(configTableFieldFormulaNumberAddition)
 
         // WHEN
-        const { record } = await request.post(`${url}/api/table/${addition.tables![0].name}`, {
-          number: 10,
-        })
+        const { record } = await request.post(
+          `${url}/api/table/${configTableFieldFormulaNumberAddition.tables![0].name}`,
+          {
+            number: 10,
+          }
+        )
 
         // THEN
         expect(record.fields.formula).toBe(11)
@@ -161,11 +171,11 @@ mock.request(({ app, request, drivers }) => {
 
       it('a multiplication', async () => {
         // GIVEN
-        const { url } = await app.start(multiplication)
+        const { url } = await app.start(configTableFieldFormulaNumberMultiplication)
 
         // WHEN
         const { record } = await request.post(
-          `${url}/api/table/${multiplication.tables![0].name}`,
+          `${url}/api/table/${configTableFieldFormulaNumberMultiplication.tables![0].name}`,
           {
             number: 10,
           }
@@ -178,12 +188,12 @@ mock.request(({ app, request, drivers }) => {
       it('a reference to another number formula', async () => {
         // GIVEN
         const config: Config = {
-          ...multiplication,
+          ...configTableFieldFormulaNumberMultiplication,
           tables: [
             {
-              ...multiplication.tables![0],
+              ...configTableFieldFormulaNumberMultiplication.tables![0],
               fields: [
-                ...multiplication.tables![0].fields!,
+                ...configTableFieldFormulaNumberMultiplication.tables![0].fields!,
                 {
                   name: 'formula_reference',
                   type: 'Formula',

@@ -1,7 +1,7 @@
 import type { Config } from '/src'
 
-export const tables: Config = {
-  name: 'App',
+export const configTables: Config = {
+  name: 'App with tables',
   tables: [
     {
       name: 'table_1',

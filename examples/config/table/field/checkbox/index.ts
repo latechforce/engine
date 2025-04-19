@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const checkbox: Config = {
+export const configTableFieldCheckbox: Config = {
   name: 'App with a table with a checkbox field',
   tables: [
     {

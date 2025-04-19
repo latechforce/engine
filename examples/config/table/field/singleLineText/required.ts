@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const required: Config = {
+export const configTableFieldSingleLineTextRequired: Config = {
   name: 'App with a table with a required single line text field',
   tables: [
     {

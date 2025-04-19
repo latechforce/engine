@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { multipleAttachment } from '../../../examples/config/table/field/multipleAttachment'
+import { configTableFieldMultipleAttachment } from '/examples/config/table/field/multipleAttachment'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a multiple select', async () => {
       // WHEN
-      const startedApp = await app.start(multipleAttachment)
+      const startedApp = await app.start(configTableFieldMultipleAttachment)
 
       // THEN
       expect(startedApp).toBeDefined()
@@ -24,11 +24,11 @@ mock.request(({ app, request }) => {
           url: 'https://example.com/file1.txt',
         },
       ]
-      const { url } = await app.start(multipleAttachment)
+      const { url } = await app.start(configTableFieldMultipleAttachment)
 
       // WHEN
       const { record } = await request.post(
-        `${url}/api/table/${multipleAttachment.tables![0].name}`,
+        `${url}/api/table/${configTableFieldMultipleAttachment.tables![0].name}`,
         {
           multiple_attachment,
         }

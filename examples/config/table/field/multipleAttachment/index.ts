@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const multipleAttachment: Config = {
+export const configTableFieldMultipleAttachment: Config = {
   name: 'App with a table with a multiple attachment field',
   tables: [
     {

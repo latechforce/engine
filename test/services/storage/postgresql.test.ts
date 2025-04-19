@@ -4,7 +4,7 @@ import {
   setupPostgres,
   teardownPostgres,
 } from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriverTestSetup'
-import { withTable } from '/examples/config/service/database/postgresql/withTable'
+import { configServiceDatabasePostgresqlWithTable } from '/examples/config/service/database/postgresql/withTable'
 
 const mock = new Mock(Tester)
 
@@ -24,7 +24,7 @@ mock.app(({ app }) => {
 
     it('should start an app with a PostgreSQL storage', async () => {
       // WHEN
-      const startedApp = await app.start(withTable)
+      const startedApp = await app.start(configServiceDatabasePostgresqlWithTable)
 
       // THEN
       await startedApp.stop()
@@ -32,11 +32,11 @@ mock.app(({ app }) => {
 
     it('should restart an app with a PostgreSQL storage', async () => {
       // GIVEN
-      const startedApp = await app.start(withTable)
+      const startedApp = await app.start(configServiceDatabasePostgresqlWithTable)
       await startedApp.stop()
 
       // WHEN
-      const restartedApp = await app.start(withTable)
+      const restartedApp = await app.start(configServiceDatabasePostgresqlWithTable)
 
       // THEN
       await restartedApp.stop()

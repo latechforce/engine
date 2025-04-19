@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const singleSelect: Config = {
+export const configTableFieldSingleSelect: Config = {
   name: 'App with a table with a single select field',
   tables: [
     {

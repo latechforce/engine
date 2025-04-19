@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const postgresql: Config = {
+export const configServiceDatabasePostgresql: Config = {
   name: 'App with PostgreSQL database',
   services: {
     database: {

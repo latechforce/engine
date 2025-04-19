@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const description: Config = {
+export const configDescription: Config = {
   name: 'App',
   description: 'App description',
 }

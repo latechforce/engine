@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const required: Config = {
+export const configTableFieldCheckboxRequired: Config = {
   name: 'App with a table with a required checkbox field',
   tables: [
     {

@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const required: Config = {
+export const configTableFieldSingleSelectRequired: Config = {
   name: 'App with a table with a required single select field',
   tables: [
     {

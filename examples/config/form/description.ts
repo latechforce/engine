@@ -1,27 +1,27 @@
 import type { Config } from '/src'
 
-export const description: Config = {
+export const configFormDescription: Config = {
   name: 'App with a form with a description',
   forms: [
     {
-      name: 'user',
-      path: '/user',
+      name: 'form',
+      path: '/path',
       description: 'Form description',
-      table: 'users',
+      table: 'table',
       inputs: [
         {
-          field: 'name',
-          label: 'Name',
+          field: 'single_line_text',
+          label: 'Single Line Text',
         },
       ],
     },
   ],
   tables: [
     {
-      name: 'users',
+      name: 'table',
       fields: [
         {
-          name: 'name',
+          name: 'single_line_text',
           type: 'SingleLineText',
         },
       ],

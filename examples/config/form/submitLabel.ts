@@ -1,16 +1,16 @@
 import type { Config } from '/src'
 
-export const submitLabel: Config = {
+export const configFormSubmitLabel: Config = {
   name: 'App with a form with a submit label',
   forms: [
     {
-      name: 'user',
-      path: '/user',
-      table: 'users',
+      name: 'form',
+      path: '/path',
+      table: 'table',
       inputs: [
         {
-          field: 'name',
-          label: 'Name',
+          field: 'single_line_text',
+          label: 'Single Line Text',
         },
       ],
       submitLabel: 'Save',
@@ -18,10 +18,10 @@ export const submitLabel: Config = {
   ],
   tables: [
     {
-      name: 'users',
+      name: 'table',
       fields: [
         {
-          name: 'name',
+          name: 'single_line_text',
           type: 'SingleLineText',
         },
       ],

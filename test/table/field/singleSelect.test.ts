@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { singleSelect } from '../../../examples/config/table/field/singleSelect'
+import { configTableFieldSingleSelect } from '/examples/config/table/field/singleSelect'
 
 const mock = new Mock(Tester)
 
@@ -8,7 +8,7 @@ mock.request(({ app, request }) => {
   describe('on start', () => {
     it('should create a table with a single select', async () => {
       // WHEN
-      const call = () => app.start(singleSelect)
+      const call = () => app.start(configTableFieldSingleSelect)
 
       // THEN
       expect(call()).resolves.toBeDefined()
@@ -19,12 +19,15 @@ mock.request(({ app, request }) => {
     it('should create a record with a single select', async () => {
       // GIVEN
       const single_select = 'Option 1'
-      const { url } = await app.start(singleSelect)
+      const { url } = await app.start(configTableFieldSingleSelect)
 
       // WHEN
-      const { record } = await request.post(`${url}/api/table/${singleSelect.tables![0].name}`, {
-        single_select,
-      })
+      const { record } = await request.post(
+        `${url}/api/table/${configTableFieldSingleSelect.tables![0].name}`,
+        {
+          single_select,
+        }
+      )
 
       // THEN
       expect(record.fields.single_select).toBe(single_select)
@@ -33,12 +36,15 @@ mock.request(({ app, request }) => {
     it('should not create a record with a wrong value in a single select', async () => {
       // GIVEN
       const single_select = 'Yellow'
-      const { url } = await app.start(singleSelect)
+      const { url } = await app.start(configTableFieldSingleSelect)
 
       // WHEN
-      const { error } = await request.post(`${url}/api/table/${singleSelect.tables![0].name}`, {
-        single_select,
-      })
+      const { error } = await request.post(
+        `${url}/api/table/${configTableFieldSingleSelect.tables![0].name}`,
+        {
+          single_select,
+        }
+      )
 
       // THEN
       expect(error).toStrictEqual({

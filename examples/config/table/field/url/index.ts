@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const url: Config = {
+export const configTableFieldUrl: Config = {
   name: 'App with a table with a url field',
   tables: [
     {

@@ -1,41 +1,14 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
+import { Mock } from '/test/bun'
+import { configFormInputCheckbox } from '/examples/config/form/input/checkbox'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.page(({ app, browser, drivers }) => {
   describe('open page', () => {
-    const config: Config = {
-      name: 'App',
-      forms: [
-        {
-          name: 'form',
-          path: 'path',
-          table: 'table',
-          inputs: [
-            {
-              field: 'checkbox',
-              label: 'Checkbox',
-            },
-          ],
-        },
-      ],
-      tables: [
-        {
-          name: 'table',
-          fields: [
-            {
-              name: 'checkbox',
-              type: 'Checkbox',
-            },
-          ],
-        },
-      ],
-    }
-
     it('should display the checkbox input', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(configFormInputCheckbox)
       const page = await browser.newPage()
 
       // WHEN
@@ -48,8 +21,8 @@ mock.page(({ app, browser, drivers }) => {
     it('should create a record with a checkbox input', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const table = drivers.database.tableFromSchema(config.tables![0])
-      const { url } = await app.start(config)
+      const table = drivers.database.tableFromSchema(configFormInputCheckbox.tables![0])
+      const { url } = await app.start(configFormInputCheckbox)
 
       // WHEN
       await page.goto(`${url}/form/path`)

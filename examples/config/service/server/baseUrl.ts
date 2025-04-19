@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const baseUrl: Config = {
+export const configServiceServerBaseUrl: Config = {
   name: 'App with base url',
   services: {
     server: {

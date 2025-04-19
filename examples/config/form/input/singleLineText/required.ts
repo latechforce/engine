@@ -1,16 +1,16 @@
 import type { Config } from '/src'
 
-export const required: Config = {
+export const configFormInputSingleLineTextRequired: Config = {
   name: 'App with a form with a required input',
   forms: [
     {
-      name: 'user',
-      path: '/user',
-      table: 'users',
+      name: 'form',
+      path: '/path',
+      table: 'table',
       inputs: [
         {
-          field: 'name',
-          label: 'Name',
+          field: 'single_line_text',
+          label: 'Single Line Text',
           required: true,
         },
       ],
@@ -18,10 +18,10 @@ export const required: Config = {
   ],
   tables: [
     {
-      name: 'users',
+      name: 'table',
       fields: [
         {
-          name: 'name',
+          name: 'single_line_text',
           type: 'SingleLineText',
         },
       ],

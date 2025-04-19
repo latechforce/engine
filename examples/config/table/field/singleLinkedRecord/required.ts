@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const required: Config = {
+export const configTableFieldSingleLinkedRecordRequired: Config = {
   name: 'App with a table with a required single linked record field',
   tables: [
     {

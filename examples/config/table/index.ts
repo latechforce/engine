@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const table: Config = {
+export const configTable: Config = {
   name: 'App with a table with a name',
   tables: [
     {

@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const required: Config = {
+export const configTableFieldSingleAttachmentRequired: Config = {
   name: 'App with a table with a required single attachment field',
   tables: [
     {

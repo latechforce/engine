@@ -1,7 +1,7 @@
 import type { Config } from '/src'
 
-export const concat: Config = {
-  name: 'App with a table with a required rollup field as a single line text and a CONCAT formula',
+export const configTableFieldRollupRequired: Config = {
+  name: 'App with a table with a required rollup field',
   tables: [
     {
       name: 'table_1',

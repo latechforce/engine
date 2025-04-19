@@ -2,8 +2,8 @@ import Tester, { describe, it, beforeEach, afterEach } from 'bun:test'
 import { Mock } from '/test/bun'
 import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
-import { withTableAndAutomation } from '/examples/config/service/database/sqlite/withTableAndAutomation'
-import { withTable } from '/examples/config/service/database/sqlite/withTable'
+import { configServiceDatabaseSqliteWithTableAndAutomation } from '/examples/config/service/database/sqlite/withTableAndAutomation'
+import { configServiceDatabaseSqliteWithTable } from '/examples/config/service/database/sqlite/withTable'
 
 const mock = new Mock(Tester)
 
@@ -24,7 +24,7 @@ mock.app(({ app }) => {
 
     it('should start an app with a SQLite database', async () => {
       // WHEN
-      const startedApp = await app.start(withTable)
+      const startedApp = await app.start(configServiceDatabaseSqliteWithTable)
 
       // THEN
       await startedApp.stop()
@@ -32,11 +32,11 @@ mock.app(({ app }) => {
 
     it('should restart an app with a SQLite database', async () => {
       // GIVEN
-      const startedApp = await app.start(withTable)
+      const startedApp = await app.start(configServiceDatabaseSqliteWithTable)
       await startedApp.stop()
 
       // WHEN
-      const restartedApp = await app.start(withTable)
+      const restartedApp = await app.start(configServiceDatabaseSqliteWithTable)
 
       // THEN
       await restartedApp.stop()
@@ -44,7 +44,7 @@ mock.app(({ app }) => {
 
     it('should start an app with a SQLite database and an automation', async () => {
       // WHEN
-      const startedApp = await app.start(withTableAndAutomation)
+      const startedApp = await app.start(configServiceDatabaseSqliteWithTableAndAutomation)
 
       // THEN
       await startedApp.stop()
@@ -52,11 +52,11 @@ mock.app(({ app }) => {
 
     it('should restart an app with a SQLite database and an automation', async () => {
       // GIVEN
-      const startedApp = await app.start(withTableAndAutomation)
+      const startedApp = await app.start(configServiceDatabaseSqliteWithTableAndAutomation)
       await startedApp.stop()
 
       // WHEN
-      const restartedApp = await app.start(withTableAndAutomation)
+      const restartedApp = await app.start(configServiceDatabaseSqliteWithTableAndAutomation)
 
       // THEN
       await restartedApp.stop()

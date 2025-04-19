@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const multipleLinkedRecord: Config = {
+export const configTableFieldMultipleLinkedRecord: Config = {
   name: 'App with a table with a multiple linked record field',
   tables: [
     {

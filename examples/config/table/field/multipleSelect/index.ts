@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const multipleSelect: Config = {
+export const configTableFieldMultipleSelect: Config = {
   name: 'App with a table with a multiple select field',
   tables: [
     {

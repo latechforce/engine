@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const singleLineText: Config = {
+export const configTableFieldSingleLineText: Config = {
   name: 'App with a table with a single line text field',
   tables: [
     {

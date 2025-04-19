@@ -4,8 +4,8 @@ import {
   setupPostgres,
   teardownPostgres,
 } from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriverTestSetup'
-import { withTable } from '/examples/config/service/database/postgresql/withTable'
-import { withTableAndAutomation } from '/examples/config/service/database/postgresql/withTableAndAutomation'
+import { configServiceDatabasePostgresqlWithTable } from '/examples/config/service/database/postgresql/withTable'
+import { configServiceDatabasePostgresqlWithTableAndAutomation } from '/examples/config/service/database/postgresql/withTableAndAutomation'
 
 const mock = new Mock(Tester)
 
@@ -23,7 +23,7 @@ mock.app(({ app }) => {
 
     it('should start an app with a PostgreSQL database', async () => {
       // WHEN
-      const startedApp = await app.start(withTable)
+      const startedApp = await app.start(configServiceDatabasePostgresqlWithTable)
 
       // THEN
       await startedApp.stop()
@@ -31,11 +31,11 @@ mock.app(({ app }) => {
 
     it('should restart an app with a PostgreSQL database', async () => {
       // GIVEN
-      const startedApp = await app.start(withTable)
+      const startedApp = await app.start(configServiceDatabasePostgresqlWithTable)
       await startedApp.stop()
 
       // WHEN
-      const restartedApp = await app.start(withTable)
+      const restartedApp = await app.start(configServiceDatabasePostgresqlWithTable)
 
       // THEN
       await restartedApp.stop()
@@ -43,7 +43,7 @@ mock.app(({ app }) => {
 
     it('should start an app with a PostgreSQL database and an automation', async () => {
       // WHEN
-      const startedApp = await app.start(withTableAndAutomation)
+      const startedApp = await app.start(configServiceDatabasePostgresqlWithTableAndAutomation)
 
       // THEN
       await startedApp.stop()
@@ -51,11 +51,11 @@ mock.app(({ app }) => {
 
     it('should restart an app with a PostgreSQL database and an automation', async () => {
       // GIVEN
-      const startedApp = await app.start(withTableAndAutomation)
+      const startedApp = await app.start(configServiceDatabasePostgresqlWithTableAndAutomation)
       await startedApp.stop()
 
       // WHEN
-      const restartedApp = await app.start(withTableAndAutomation)
+      const restartedApp = await app.start(configServiceDatabasePostgresqlWithTableAndAutomation)
 
       // THEN
       await restartedApp.stop()

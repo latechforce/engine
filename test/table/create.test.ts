@@ -1,9 +1,9 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { singleLineText } from '/examples/config/table/field/singleLineText'
-import { required } from '/examples/config/table/field/singleLineText/required'
-import { table as tableConfig } from '/examples/config/table'
-import { schema } from '/examples/config/table/schema'
+import { configTableFieldSingleLineText } from '/examples/config/table/field/singleLineText'
+import { configTableFieldSingleLineTextRequired } from '/examples/config/table/field/singleLineText/required'
+import { configTable } from '/examples/config/table'
+import { configTableSchema } from '/examples/config/table/schema'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -11,11 +11,11 @@ mock.app(({ app, drivers }) => {
   describe('on start', () => {
     it('should create a not existing table', async () => {
       // GIVEN
-      const table = drivers.database.tableFromSchema(singleLineText.tables![0])
+      const table = drivers.database.tableFromSchema(configTableFieldSingleLineText.tables![0])
       expect(table.exists()).resolves.toBe(false)
 
       // WHEN
-      await app.start(singleLineText)
+      await app.start(configTableFieldSingleLineText)
 
       // THEN
       expect(table.exists()).resolves.toBe(true)
@@ -23,12 +23,12 @@ mock.app(({ app, drivers }) => {
 
     it('should connect to an existing table', async () => {
       // GIVEN
-      const table = drivers.database.tableFromSchema(singleLineText.tables![0])
+      const table = drivers.database.tableFromSchema(configTableFieldSingleLineText.tables![0])
       await table.create()
       expect(table.exists()).resolves.toBe(true)
 
       // WHEN
-      const call = () => app.start(singleLineText)
+      const call = () => app.start(configTableFieldSingleLineText)
 
       // THEN
       expect(call()).resolves.toBeDefined()
@@ -38,37 +38,37 @@ mock.app(({ app, drivers }) => {
     describe('should create a table with', () => {
       it('a name', async () => {
         // WHEN
-        await app.start(tableConfig)
+        await app.start(configTable)
 
         // THEN
-        const table = drivers.database.tableFromSchema(tableConfig.tables![0])
+        const table = drivers.database.tableFromSchema(configTable.tables![0])
         expect(table.name).toBe('table')
       })
 
       it('a default schema', async () => {
         // WHEN
-        await app.start(singleLineText)
+        await app.start(configTableFieldSingleLineText)
 
         // THEN
-        const table = drivers.database.tableFromSchema(singleLineText.tables![0])
+        const table = drivers.database.tableFromSchema(configTableFieldSingleLineText.tables![0])
         expect(table.getSchema()).resolves.toBe('public')
       })
 
       it('a schema', async () => {
         // WHEN
-        await app.start(schema)
+        await app.start(configTableSchema)
 
         // THEN
-        const table = drivers.database.tableFromSchema(schema.tables![0])
+        const table = drivers.database.tableFromSchema(configTableSchema.tables![0])
         expect(table.getSchema()).resolves.toBe('private')
       })
 
       it('default fields', async () => {
         // WHEN
-        await app.start(singleLineText)
+        await app.start(configTableFieldSingleLineText)
 
         // THEN
-        const table = drivers.database.tableFromSchema(singleLineText.tables![0])
+        const table = drivers.database.tableFromSchema(configTableFieldSingleLineText.tables![0])
         const columns = await table.getColumns()
         expect(columns).toHaveLength(4)
         expect(columns[0].name).toBe('id')
@@ -79,20 +79,22 @@ mock.app(({ app, drivers }) => {
 
       it('a named field', async () => {
         // WHEN
-        await app.start(singleLineText)
+        await app.start(configTableFieldSingleLineText)
 
         // THEN
-        const table = drivers.database.tableFromSchema(singleLineText.tables![0])
+        const table = drivers.database.tableFromSchema(configTableFieldSingleLineText.tables![0])
         const columns = await table.getColumns()
         expect(columns[3].name).toBe('single_line_text')
       })
 
       it('a required field', async () => {
         // WHEN
-        await app.start(required)
+        await app.start(configTableFieldSingleLineTextRequired)
 
         // THEN
-        const table = drivers.database.tableFromSchema(required.tables![0])
+        const table = drivers.database.tableFromSchema(
+          configTableFieldSingleLineTextRequired.tables![0]
+        )
         const columns = await table.getColumns()
         expect(columns[3].required).toBe(true)
       })

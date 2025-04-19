@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const withTableAndAutomation: Config = {
+export const configServiceDatabasePostgresqlWithTableAndAutomation: Config = {
   name: 'App with PostgreSQL database with a table and an automation',
   automations: [
     {

@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const withTableAndAutomation: Config = {
+export const configServiceDatabaseSqliteWithTableAndAutomation: Config = {
   name: 'App with SQLite database with a table and an automation',
   automations: [
     {

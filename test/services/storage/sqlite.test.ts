@@ -2,7 +2,7 @@ import Tester, { describe, it, beforeEach, afterEach } from 'bun:test'
 import { Mock } from '/test/bun'
 import { nanoid } from 'nanoid'
 import fs from 'fs-extra'
-import { withTable } from '/examples/config/service/database/sqlite/withTable'
+import { configServiceDatabaseSqliteWithTable } from '/examples/config/service/database/sqlite/withTable'
 
 const mock = new Mock(Tester)
 
@@ -23,7 +23,7 @@ mock.app(({ app }) => {
 
     it('should start an app with a SQLite storage', async () => {
       // WHEN
-      const startedApp = await app.start(withTable)
+      const startedApp = await app.start(configServiceDatabaseSqliteWithTable)
 
       // THEN
       await startedApp.stop()
@@ -31,11 +31,11 @@ mock.app(({ app }) => {
 
     it('should restart an app with a SQLite storage', async () => {
       // GIVEN
-      const startedApp = await app.start(withTable)
+      const startedApp = await app.start(configServiceDatabaseSqliteWithTable)
       await startedApp.stop()
 
       // WHEN
-      const restartedApp = await app.start(withTable)
+      const restartedApp = await app.start(configServiceDatabaseSqliteWithTable)
 
       // THEN
       await restartedApp.stop()

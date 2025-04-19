@@ -1,6 +1,6 @@
 import Tester, { expect, describe, it } from 'bun:test'
 import { Mock } from '/test/bun'
-import { singleLinkedRecord } from '../../../examples/config/table/field/singleLinkedRecord'
+import { configTableFieldSingleLinkedRecord } from '/examples/config/table/field/singleLinkedRecord'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
@@ -8,7 +8,7 @@ mock.request(({ app, request, drivers }) => {
   describe('on start', () => {
     it('should create a table with a single linked record', async () => {
       // WHEN
-      const call = () => app.start(singleLinkedRecord)
+      const call = () => app.start(configTableFieldSingleLinkedRecord)
 
       // THEN
       expect(call()).resolves.toBeDefined()
@@ -16,14 +16,18 @@ mock.request(({ app, request, drivers }) => {
 
     it('should migrate a table with existing single linked records', async () => {
       // GIVEN
-      const secondTable = drivers.database.tableFromSchema(singleLinkedRecord.tables![1])
+      const secondTable = drivers.database.tableFromSchema(
+        configTableFieldSingleLinkedRecord.tables![1]
+      )
       await secondTable.create()
       await secondTable.insertMany([
         { id: '1', fields: {}, created_at: new Date().toISOString() },
         { id: '2', fields: {}, created_at: new Date().toISOString() },
         { id: '3', fields: {}, created_at: new Date().toISOString() },
       ])
-      const firstTable = drivers.database.tableFromSchema(singleLinkedRecord.tables![0])
+      const firstTable = drivers.database.tableFromSchema(
+        configTableFieldSingleLinkedRecord.tables![0]
+      )
       await firstTable.create()
       await firstTable.insertMany([
         {
@@ -44,7 +48,7 @@ mock.request(({ app, request, drivers }) => {
       ])
 
       // WHEN
-      const call = () => app.start(singleLinkedRecord)
+      const call = () => app.start(configTableFieldSingleLinkedRecord)
 
       // THEN
       expect(call()).resolves.toBeDefined()
@@ -54,8 +58,8 @@ mock.request(({ app, request, drivers }) => {
   describe('on POST', () => {
     it('should create a record with a single linked record', async () => {
       // GIVEN
-      const { url } = await app.start(singleLinkedRecord)
-      await drivers.database.tableFromSchema(singleLinkedRecord.tables![1]).insert({
+      const { url } = await app.start(configTableFieldSingleLinkedRecord)
+      await drivers.database.tableFromSchema(configTableFieldSingleLinkedRecord.tables![1]).insert({
         id: '1',
         fields: {},
         created_at: new Date().toISOString(),
@@ -63,7 +67,7 @@ mock.request(({ app, request, drivers }) => {
 
       // WHEN
       const { record } = await request.post(
-        `${url}/api/table/${singleLinkedRecord.tables![0].name}`,
+        `${url}/api/table/${configTableFieldSingleLinkedRecord.tables![0].name}`,
         {
           single_linked_record: '1',
         }

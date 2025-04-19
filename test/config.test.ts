@@ -1,9 +1,9 @@
 import tester, { it, expect, describe } from 'bun:test'
 import { Mock, type Config } from '/test/bun'
 import { config } from '../examples/config'
-import { description } from '/examples/config/description'
-import { appVersion } from '/examples/config/appVersion'
-import { engineVersion } from '/examples/config/engineVersion'
+import { configDescription } from '/examples/config/description'
+import { configAppVersion } from '/examples/config/appVersion'
+import { configEngineVersion } from '/examples/config/engineVersion'
 
 const mock = new Mock(tester)
 
@@ -30,7 +30,7 @@ mock.app(({ app }) => {
 
     it('with a description', async () => {
       // WHEN
-      const startedApp = await app.start(description)
+      const startedApp = await app.start(configDescription)
 
       // THEN
       expect(startedApp.config.description).toBe('App description')
@@ -38,7 +38,7 @@ mock.app(({ app }) => {
 
     it('with an app version', async () => {
       // WHEN
-      const startedApp = await app.start(appVersion)
+      const startedApp = await app.start(configAppVersion)
 
       // THEN
       expect(startedApp.config.appVersion).toBe('1.0.0')
@@ -46,7 +46,7 @@ mock.app(({ app }) => {
 
     it('with an engine version', async () => {
       // WHEN
-      const startedApp = await app.start(engineVersion)
+      const startedApp = await app.start(configEngineVersion)
 
       // THEN
       expect(startedApp.config.engineVersion).toBe('1.0.0')

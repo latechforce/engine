@@ -1,6 +1,6 @@
 import type { Config } from '/src'
 
-export const dateTime: Config = {
+export const configTableFieldDateTime: Config = {
   name: 'App with a table with a date time field',
   tables: [
     {

@@ -1,6 +1,6 @@
 import type { Config, CodeRunnerContext } from '/src'
 
-export const template: Config = {
+export const configServiceTemplate: Config = {
   name: 'App with a template variable',
   automations: [
     {

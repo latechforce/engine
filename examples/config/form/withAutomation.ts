@@ -1,26 +1,26 @@
 import type { CodeRunnerContext, Config } from '/src'
 
-export const withAutomation: Config = {
+export const configFormWithAutomation: Config = {
   name: 'App with a form and an automation',
   forms: [
     {
-      name: 'user',
-      path: '/user',
-      table: 'users',
+      name: 'form',
+      path: '/path',
+      table: 'table',
       inputs: [
         {
-          field: 'name',
-          label: 'Name',
+          field: 'single_line_text',
+          label: 'Single Line Text',
         },
       ],
     },
   ],
   tables: [
     {
-      name: 'users',
+      name: 'table',
       fields: [
         {
-          name: 'name',
+          name: 'single_line_text',
           type: 'SingleLineText',
         },
       ],
@@ -28,23 +28,23 @@ export const withAutomation: Config = {
   ],
   automations: [
     {
-      name: 'userCreated',
+      name: 'automation',
       trigger: {
         service: 'Database',
         event: 'RecordCreated',
-        table: 'users',
+        table: 'table',
       },
       actions: [
         {
-          name: 'userCreated',
+          name: 'automation',
           service: 'Code',
           action: 'RunTypescript',
           input: {
-            name: '{{trigger.fields.name}}',
+            single_line_text: '{{trigger.fields.single_line_text}}',
           },
-          code: String(function (context: CodeRunnerContext<{ name: string }>) {
-            const { name } = context.inputData
-            return { message: `User created: ${name}` }
+          code: String(function (context: CodeRunnerContext<{ single_line_text: string }>) {
+            const { single_line_text } = context.inputData
+            return { message: `Automation triggered: ${single_line_text}` }
           }),
         },
       ],
