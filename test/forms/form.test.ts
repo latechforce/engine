@@ -1,71 +1,21 @@
 import Tester, { expect, describe, it } from 'bun:test'
-import { Mock, type Config } from '/test/bun'
-import type { CodeRunnerContext } from '/src'
+import { Mock } from '/test/bun'
+import { title } from '/examples/config/form/title'
+import { description } from '/examples/config/form/description'
+import { form } from '/examples/config/form'
+import { submitLabel } from '/examples/config/form/submitLabel'
+import { withAutomation } from '/examples/config/form/withAutomation'
+import { successMessage } from '/examples/config/form/successMessage'
+import { required } from '/examples/config/form/input/required'
+import { requiredFromField } from '/examples/config/form/input/requiredFromField'
 
 const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.page(({ app, browser, drivers }) => {
   describe('open page', () => {
-    const config: Config = {
-      name: 'App',
-      forms: [
-        {
-          name: 'user',
-          path: '/user',
-          title: 'Form title',
-          description: 'Form description',
-          table: 'users',
-          inputs: [
-            {
-              field: 'name',
-              label: 'Name',
-            },
-          ],
-          submitLabel: 'Save',
-          successMessage: 'Success',
-        },
-      ],
-      tables: [
-        {
-          name: 'users',
-          fields: [
-            {
-              name: 'name',
-              type: 'SingleLineText',
-              required: true,
-            },
-          ],
-        },
-      ],
-      automations: [
-        {
-          name: 'user_created',
-          trigger: {
-            service: 'Database',
-            event: 'RecordCreated',
-            table: 'users',
-          },
-          actions: [
-            {
-              name: 'user_created',
-              service: 'Code',
-              action: 'RunTypescript',
-              input: {
-                name: '{{trigger.fields.name}}',
-              },
-              code: String(function (context: CodeRunnerContext<{ name: string }>) {
-                const { name } = context.inputData
-                return { message: `User created: ${name}` }
-              }),
-            },
-          ],
-        },
-      ],
-    }
-
     it('should display the form title', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(title)
       const page = await browser.newPage()
 
       // WHEN
@@ -78,7 +28,7 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should display the form description', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(description)
       const page = await browser.newPage()
 
       // WHEN
@@ -90,7 +40,7 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should display the form inputs', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(form)
       const page = await browser.newPage()
 
       // WHEN
@@ -102,7 +52,7 @@ mock.page(({ app, browser, drivers }) => {
 
     it('should display the form submit button', async () => {
       // GIVEN
-      const { url } = await app.start(config)
+      const { url } = await app.start(submitLabel)
       const page = await browser.newPage()
 
       // WHEN
@@ -112,11 +62,27 @@ mock.page(({ app, browser, drivers }) => {
       expect(page.content()).resolves.toContain('Save')
     })
 
+    it('should display a success message when the form is submitted', async () => {
+      // GIVEN
+      const page = await browser.newPage()
+      const { url } = await app.start(successMessage)
+
+      // WHEN
+      await page.goto(`${url}/form/user`)
+      await page.type('input[name="name"]', 'John Doe')
+      await page.click('button[type="submit"]')
+      await page.waitForText('Success')
+
+      // THEN
+      const html = await page.content()
+      expect(html).toContain('Success')
+    })
+
     it('should create a record when the form is submitted', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const table = drivers.database.tableFromSchema(config.tables![0])
-      const { url } = await app.start(config)
+      const table = drivers.database.tableFromSchema(successMessage.tables![0])
+      const { url } = await app.start(successMessage)
 
       // WHEN
       await page.goto(`${url}/form/user`)
@@ -130,32 +96,16 @@ mock.page(({ app, browser, drivers }) => {
       expect(records[0].fields.name).toBe('John Doe')
     })
 
-    it('should display a success message when the form is submitted', async () => {
-      // GIVEN
-      const page = await browser.newPage()
-      const { url } = await app.start(config)
-
-      // WHEN
-      await page.goto(`${url}/form/user`)
-      await page.type('input[name="name"]', 'John Doe')
-      await page.click('button[type="submit"]')
-      await page.waitForText('Success')
-
-      // THEN
-      const html = await page.content()
-      expect(html).toContain('Success')
-    })
-
     it('should start an automation when the form is submitted', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(config)
+      const { url } = await app.start(withAutomation)
 
       // WHEN
       await page.goto(`${url}/form/user`)
       await page.type('input[name="name"]', 'John Doe')
       await page.click('button[type="submit"]')
-      await page.waitForText('Success')
+      await page.waitForText('Form submitted successfully!')
 
       // THEN
       const histories = await drivers.database.waitForAutomationsHistories()
@@ -166,7 +116,23 @@ mock.page(({ app, browser, drivers }) => {
     it('should not submit the form if the required field is empty', async () => {
       // GIVEN
       const page = await browser.newPage()
-      const { url } = await app.start(config)
+      const { url } = await app.start(required)
+
+      // WHEN
+      await page.goto(`${url}/form/user`)
+      await page.type('input[name="name"]', '')
+      await page.click('button[type="submit"]')
+      await page.waitForTimeout(100)
+      const isValid = await page.$eval('input[name="name"]', (input) => input.checkValidity())
+
+      // THEN
+      expect(isValid).toBe(false)
+    })
+
+    it('should not submit the form if the required field from a field is empty', async () => {
+      // GIVEN
+      const page = await browser.newPage()
+      const { url } = await app.start(requiredFromField)
 
       // WHEN
       await page.goto(`${url}/form/user`)
