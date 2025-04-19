@@ -8,9 +8,13 @@ import {
   existsSync,
 } from 'fs'
 import { join, basename, extname } from 'path'
+import fg from 'fast-glob'
 
-import '../src/adapter/api/schemas/ConfigSchema'
-import './build-schema'
+const files = await fg(['src/adapter/api/schemas/**/*.ts'], { absolute: true })
+
+for (const file of files) {
+  await import(`file://${file}`)
+}
 
 interface JSONSchema {
   title?: string
@@ -303,4 +307,5 @@ async function main() {
   console.log('Documentation generation completed successfully!')
 }
 
+await import('./build-schema')
 await main()

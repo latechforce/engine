@@ -1,6 +1,6 @@
 # Output
 
-Represents the output type of a formula field.
+Represents the output type configuration of a formula field.
 
 ## Required
 

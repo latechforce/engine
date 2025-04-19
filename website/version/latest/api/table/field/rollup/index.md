@@ -4,31 +4,34 @@ Represents a field that aggregates values from linked records.
 
 ## Required
 
-### name
+### Name
 
+The name of the field.
 >name: `string`
 
-### type
+### Type
 
+The type of the field.
 >type: const: `Rollup`
 
-### formula
+### Formula
 
+The formula expression to calculate the aggregated value.
 >formula: `string`
 
-### multipleLinkedRecord
+### Multiple Linked Record
 
-The multiple linked record field to aggregate values from.
+The name of the multiple linked record field to aggregate values from.
 >multipleLinkedRecord: `string`
 
-### linkedRecordField
+### Linked Record Field
 
-The field of the multiple linked record table to aggregate values from.
+The name of the field in the linked record table to aggregate values from.
 >linkedRecordField: `string`
 
-### output
+### Output
 
-The output type of the rollup field.
+The output type configuration for the rollup field.
 >output: [Output](/api/table/field/rollup/output)
 
 ```ts
@@ -73,8 +76,9 @@ await new App().start(config)
 ```
 ## Optional
 
-### required
+### Required
 
+Whether the field is required.
 The default value is `false`.
 >required?: `boolean`
 

@@ -4,20 +4,24 @@ Represents a field that calculates a value based on a formula.
 
 ## Required
 
-### name
+### Name
 
+The name of the field.
 >name: `string`
 
-### type
+### Type
 
+The type of the field.
 >type: const: `Formula`
 
-### formula
+### Formula
 
+The formula expression to calculate the field value.
 >formula: `string`
 
-### output
+### Output
 
+The output type configuration for the formula field.
 >output: [Output](/api/table/field/formula/output)
 
 ```ts
@@ -50,8 +54,9 @@ await new App().start(config)
 ```
 ## Optional
 
-### required
+### Required
 
+Whether the field is required.
 The default value is `false`.
 >required?: `boolean`
 

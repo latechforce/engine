@@ -18,12 +18,6 @@ import type { UrlFieldTableSchema } from './UrlSchema'
  * Field type union
  * @title Field
  * @description Union type of all possible field types that can be used in forms and tables
- * @example
- * {
- *   type: 'SingleLineText',
- *   name: 'full_name',
- *   required: true
- * }
  */
 export type FieldTableSchema =
   | DateTimeFieldTableSchema

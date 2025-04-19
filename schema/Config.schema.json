@@ -1465,27 +1465,26 @@
         }
       ],
       "description": "Union type of all possible field types that can be used in forms and tables",
-      "examples": [
-        {
-          "type": "SingleLineText",
-          "name": "full_name",
-          "required": true
-        }
-      ],
       "title": "Field"
     },
     "DateTimeFieldTableSchema": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "DateTime"
+          "const": "DateTime",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1501,14 +1500,20 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "Email"
+          "const": "Email",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1524,20 +1529,30 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "Formula"
+          "const": "Formula",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "formula": {
-          "type": "string"
+          "type": "string",
+          "description": "The formula expression to calculate the field value.",
+          "title": "Formula"
         },
         "output": {
-          "$ref": "#/definitions/OutputFormulaFieldTableSchema"
+          "$ref": "#/definitions/OutputFormulaFieldTableSchema",
+          "description": "The output type configuration for the formula field.",
+          "title": "Output"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1568,21 +1583,27 @@
         "type"
       ],
       "additionalProperties": false,
-      "description": "Represents the output type of a formula field.",
+      "description": "Represents the output type configuration of a formula field.",
       "title": "Output"
     },
     "LongTextFieldTableSchema": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "LongText"
+          "const": "LongText",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1598,17 +1619,25 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "MultipleLinkedRecord"
+          "const": "MultipleLinkedRecord",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "table": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the table to link to.",
+          "title": "Table"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1625,14 +1654,20 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "Number"
+          "const": "Number",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1648,29 +1683,40 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "Rollup"
+          "const": "Rollup",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "formula": {
-          "type": "string"
+          "type": "string",
+          "description": "The formula expression to calculate the aggregated value.",
+          "title": "Formula"
         },
         "multipleLinkedRecord": {
           "type": "string",
-          "description": "The multiple linked record field to aggregate values from."
+          "description": "The name of the multiple linked record field to aggregate values from.",
+          "title": "Multiple Linked Record"
         },
         "linkedRecordField": {
           "type": "string",
-          "description": "The field of the multiple linked record table to aggregate values from."
+          "description": "The name of the field in the linked record table to aggregate values from.",
+          "title": "Linked Record Field"
         },
         "output": {
           "$ref": "#/definitions/OutputRollupFieldTableSchema",
-          "description": "The output type of the rollup field."
+          "description": "The output type configuration for the rollup field.",
+          "title": "Output"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1703,21 +1749,27 @@
         "type"
       ],
       "additionalProperties": false,
-      "description": "Represents the output type of a rollup field.",
+      "description": "Represents the output type configuration of a rollup field.",
       "title": "Output"
     },
     "SingleLineTextFieldTableSchema": {
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "SingleLineText"
+          "const": "SingleLineText",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1733,17 +1785,25 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "SingleLinkedRecord"
+          "const": "SingleLinkedRecord",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "table": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the table to link to.",
+          "title": "Table"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1767,7 +1827,7 @@
         "type": {
           "type": "string",
           "const": "SingleSelect",
-          "description": "The type of the field, `SingleSelect`.",
+          "description": "The type of the field.",
           "title": "Type"
         },
         "options": {
@@ -1798,20 +1858,28 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "MultipleSelect"
+          "const": "MultipleSelect",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "options": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "The options of the field.",
+          "title": "Options"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1828,14 +1896,20 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "Checkbox"
+          "const": "Checkbox",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1851,14 +1925,20 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "MultipleAttachment"
+          "const": "MultipleAttachment",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },
@@ -1881,7 +1961,7 @@
         "type": {
           "type": "string",
           "const": "Url",
-          "description": "The type of the field, `Url`.",
+          "description": "The type of the field.",
           "title": "Type"
         },
         "required": {
@@ -1903,14 +1983,20 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "description": "The name of the field.",
+          "title": "Name"
         },
         "type": {
           "type": "string",
-          "const": "SingleAttachment"
+          "const": "SingleAttachment",
+          "description": "The type of the field.",
+          "title": "Type"
         },
         "required": {
           "type": "boolean",
+          "description": "Whether the field is required.",
+          "title": "Required",
           "default": "`false`"
         }
       },

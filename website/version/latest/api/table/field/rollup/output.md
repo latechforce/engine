@@ -1,6 +1,6 @@
 # Output
 
-Represents the output type of a rollup field.
+Represents the output type configuration of a rollup field.
 
 ## Required
 

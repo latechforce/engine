@@ -4,16 +4,19 @@ Represents a field that allows selecting multiple options from a predefined list
 
 ## Required
 
-### name
+### Name
 
+The name of the field.
 >name: `string`
 
-### type
+### Type
 
+The type of the field.
 >type: const: `MultipleSelect`
 
-### options
+### Options
 
+The options of the field.
 >options: `string`[]
 
 ```ts
@@ -43,8 +46,9 @@ await new App().start(config)
 ```
 ## Optional
 
-### required
+### Required
 
+Whether the field is required.
 The default value is `false`.
 >required?: `boolean`
 

@@ -4,16 +4,19 @@ Represents a field that links to multiple records in another table.
 
 ## Required
 
-### name
+### Name
 
+The name of the field.
 >name: `string`
 
-### type
+### Type
 
+The type of the field.
 >type: const: `MultipleLinkedRecord`
 
-### table
+### Table
 
+The name of the table to link to.
 >table: `string`
 
 ```ts
@@ -42,8 +45,9 @@ await new App().start(config)
 ```
 ## Optional
 
-### required
+### Required
 
+Whether the field is required.
 The default value is `false`.
 >required?: `boolean`
 

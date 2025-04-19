@@ -11,7 +11,7 @@ The name of the field.
 
 ### Type
 
-The type of the field, `SingleSelect`.
+The type of the field.
 >type: const: `SingleSelect`
 
 ### Options

@@ -4,12 +4,14 @@ Represents a field that stores a numeric value.
 
 ## Required
 
-### name
+### Name
 
+The name of the field.
 >name: `string`
 
-### type
+### Type
 
+The type of the field.
 >type: const: `Number`
 
 ```ts
@@ -34,8 +36,9 @@ await new App().start(config)
 ```
 ## Optional
 
-### required
+### Required
 
+Whether the field is required.
 The default value is `false`.
 >required?: `boolean`
 

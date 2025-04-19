@@ -4,6 +4,13 @@ import { createGenerator, type Config } from 'ts-json-schema-generator'
 import { unlinkSync, readdirSync } from 'fs-extra'
 import { statSync } from 'fs'
 import { removeSync } from 'fs-extra'
+import fg from 'fast-glob'
+
+const files = await fg(['src/adapter/api/schemas/**/*.ts'], { absolute: true })
+
+for (const file of files) {
+  await import(`file://${file}`)
+}
 
 interface SchemaDefinition {
   [key: string]: unknown

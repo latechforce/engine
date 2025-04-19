@@ -11,7 +11,7 @@ The name of the field.
 
 ### Type
 
-The type of the field, `Url`.
+The type of the field.
 >type: const: `Url`
 
 ```ts
