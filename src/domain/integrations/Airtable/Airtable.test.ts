@@ -1,9 +1,11 @@
 import { describe, it, expect, beforeEach, mock } from 'bun:test'
 import { Airtable, type AirtableConfig, type IAirtableSpi } from '.'
+import type { BaseServices } from '../base'
 
 let spi: IAirtableSpi
 let config: AirtableConfig
 let airtable: Airtable
+let services: BaseServices
 
 beforeEach(() => {
   // GIVEN
@@ -13,7 +15,11 @@ beforeEach(() => {
     config,
     testConnection: mock(),
   }
-  airtable = new Airtable([spi])
+  services = {
+    server: mock() as any,
+    schemaValidator: mock() as any,
+  }
+  airtable = new Airtable([spi], services)
 })
 
 describe('validate', () => {

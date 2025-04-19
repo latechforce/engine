@@ -8,9 +8,8 @@ import type { Queue } from '/domain/services/Queue'
 import type { Realtime } from '/domain/services/Realtime'
 import type { Storage } from '/domain/services/Storage'
 import type { Monitor } from '/domain/services/Monitor'
-import type { Notion } from '/domain/integrations/Notion'
 import type { CodeCompiler } from '/domain/services/CodeCompiler'
-import type { IntegrationsConfig } from '/domain/integrations'
+import type { IntegrationsConfig, Integrations } from '/domain/integrations'
 import type { Cron } from '/domain/services/Cron'
 import type { Form } from '../Form'
 import type { Theme } from '/domain/services/Theme'
@@ -47,10 +46,6 @@ export interface AppEntities {
   forms: Form[]
 }
 
-export interface AppIntegrations {
-  notion: Notion
-}
-
 type Status = 'stopped' | 'starting' | 'started' | 'stopping'
 
 export class BaseApp {
@@ -61,7 +56,7 @@ export class BaseApp {
     public config: AppConfig,
     protected _services: AppServices,
     protected _entities: AppEntities,
-    protected _integrations: AppIntegrations
+    protected _integrations: Integrations
   ) {
     this.logger = _services.logger
   }

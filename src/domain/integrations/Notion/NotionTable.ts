@@ -10,7 +10,7 @@ import type { FilterConfig } from '/domain/entities/Filter'
 import type { NotionTableAction } from './NotionTypes'
 import type { INotionTableSpi } from './INotionTableSpi'
 import type { NotionCodeRunnerTable } from './NotionCodeRunner'
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 
 interface Listener {
   id: string
@@ -18,7 +18,7 @@ interface Listener {
   callback: <T extends NotionTablePageProperties>(page: NotionTablePage<T>) => Promise<void>
 }
 
-export interface NotionTableServices {
+export interface NotionTableServices extends BaseServices {
   logger: Logger
   idGenerator: IdGenerator
   fetcher: Fetcher

@@ -1,11 +1,11 @@
 import type { IYouCanBookMeSpi } from './IYouCanBookMeSpi'
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 import type { YouCanBookMeProfile } from './YouCanBookMeTypes'
 import type { YouCanBookMeConfig } from './YouCanBookMeConfig'
 
 export class YouCanBookMe extends Integration<YouCanBookMeConfig, IYouCanBookMeSpi> {
-  constructor(spis: IYouCanBookMeSpi[]) {
-    super(spis)
+  constructor(spis: IYouCanBookMeSpi[], services: BaseServices) {
+    super('youcanbookme', spis, services)
   }
 
   currentProfile = async (account: string): Promise<YouCanBookMeProfile> => {

@@ -1,5 +1,5 @@
 import type { ICalendlySpi } from './ICalendlySpi'
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 import type {
   CalendlyUser,
   CreateWebhookSubscriptionParams,
@@ -13,8 +13,8 @@ import type {
 import type { CalendlyConfig } from './CalendlyConfig'
 
 export class Calendly extends Integration<CalendlyConfig, ICalendlySpi> {
-  constructor(spis: ICalendlySpi[]) {
-    super(spis)
+  constructor(spis: ICalendlySpi[], services: BaseServices) {
+    super('calendly', spis, services)
   }
 
   currentUser = async (account: string): Promise<CalendlyUser> => {

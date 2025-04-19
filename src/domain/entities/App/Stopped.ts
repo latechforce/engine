@@ -1,19 +1,14 @@
 import type { ConfigError } from '/domain/entities/Error/Config'
-import {
-  BaseApp,
-  type AppConfig,
-  type AppEntities,
-  type AppIntegrations,
-  type AppServices,
-} from './Base'
+import { BaseApp, type AppConfig, type AppEntities, type AppServices } from './Base'
 import { StartedApp } from './Started'
+import type { Integrations } from '/domain/integrations'
 
 export class StoppedApp extends BaseApp {
   constructor(
     config: AppConfig,
     services: AppServices,
     entities: AppEntities,
-    integrations: AppIntegrations
+    integrations: Integrations
   ) {
     super(config, services, entities, integrations)
   }
@@ -36,9 +31,9 @@ export class StoppedApp extends BaseApp {
   init = async (): Promise<void> => {
     const { server, theme, client } = this._services
     const { tables, automations, buckets, forms } = this._entities
-    const { notion } = this._integrations
+    const integrations = Object.values(this._integrations)
     await server.init(async () => {
-      if (this.config.integrations?.notion) await notion.init()
+      for (const integration of integrations) await integration.init()
       for (const table of tables) await table.init()
       for (const automation of automations) await automation.init()
       for (const bucket of buckets) await bucket.init()

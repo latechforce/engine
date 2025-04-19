@@ -2456,26 +2456,15 @@
           "description": "The base URL for Calendly API",
           "title": "Base URL"
         },
-        "user": {
-          "type": "object",
-          "properties": {
-            "accessToken": {
-              "type": "string",
-              "description": "The access token for Calendly API authentication",
-              "title": "Access Token"
-            }
-          },
-          "required": [
-            "accessToken"
-          ],
-          "additionalProperties": false,
-          "description": "The user configuration for Calendly",
-          "title": "User"
+        "accessToken": {
+          "type": "string",
+          "description": "The access token for Calendly API authentication",
+          "title": "Access Token"
         }
       },
       "required": [
         "account",
-        "user"
+        "accessToken"
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Calendly scheduling integration",
@@ -2489,37 +2478,26 @@
           "description": "The account identifier for YouCanBookMe",
           "title": "Account"
         },
+        "username": {
+          "type": "string",
+          "description": "The username for YouCanBookMe",
+          "title": "Username"
+        },
+        "password": {
+          "type": "string",
+          "description": "The password for YouCanBookMe",
+          "title": "Password"
+        },
         "baseUrl": {
           "type": "string",
           "description": "The base URL for YouCanBookMe API",
           "title": "Base URL"
-        },
-        "user": {
-          "type": "object",
-          "properties": {
-            "username": {
-              "type": "string",
-              "description": "The username for YouCanBookMe",
-              "title": "Username"
-            },
-            "password": {
-              "type": "string",
-              "description": "The password for YouCanBookMe",
-              "title": "Password"
-            }
-          },
-          "required": [
-            "username",
-            "password"
-          ],
-          "additionalProperties": false,
-          "description": "The user credentials for YouCanBookMe",
-          "title": "User"
         }
       },
       "required": [
         "account",
-        "user"
+        "username",
+        "password"
       ],
       "additionalProperties": false,
       "description": "A configuration schema for YouCanBookMe scheduling integration",

@@ -1,11 +1,11 @@
 import type { GoogleMailEmailOptions, GoogleMailEmailResponse } from './GoogleMailTypes'
 import type { IGoogleMailSpi } from './IGoogleMailSpi'
-import { Integration } from '../../base'
+import { Integration, type BaseServices } from '../../base'
 import type { GoogleMailConfig } from './GoogleMailConfig'
 
 export class GoogleMail extends Integration<GoogleMailConfig, IGoogleMailSpi> {
-  constructor(spis: IGoogleMailSpi[]) {
-    super(spis)
+  constructor(spis: IGoogleMailSpi[], services: BaseServices) {
+    super('google-mail', spis, services)
   }
 
   sendEmail = async (

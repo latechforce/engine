@@ -1,4 +1,4 @@
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 import type { GoCardlessCodeRunner } from './GoCardlessCodeRunner'
 import type { GoCardlessConfig } from './GoCardlessConfig'
 import type {
@@ -10,8 +10,8 @@ import type {
 import type { IGoCardlessSpi } from './IGoCardlessSpi'
 
 export class GoCardless extends Integration<GoCardlessConfig, IGoCardlessSpi> {
-  constructor(spis: IGoCardlessSpi[]) {
-    super(spis)
+  constructor(spis: IGoCardlessSpi[], services: BaseServices) {
+    super('gocardless', spis, services)
   }
 
   get codeRunnerIntegration(): GoCardlessCodeRunner {

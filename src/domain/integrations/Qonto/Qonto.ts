@@ -6,13 +6,13 @@ import type {
   QontoClientInvoice,
   QontoCreateClientInvoice,
 } from './QontoTypes'
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 import type { QontoCodeRunner } from './QontoCodeRunner'
 import type { QontoConfig } from './QontoConfig'
 
 export class Qonto extends Integration<QontoConfig, IQontoSpi> {
-  constructor(spis: IQontoSpi[]) {
-    super(spis)
+  constructor(spis: IQontoSpi[], services: BaseServices) {
+    super('qonto', spis, services)
   }
 
   get codeRunnerIntegration(): QontoCodeRunner {

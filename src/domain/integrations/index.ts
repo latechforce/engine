@@ -8,15 +8,16 @@ export * from './Phantombuster'
 export * from './Calendly'
 export * from './YouCanBookMe'
 
-import type { AirtableConfig } from './Airtable'
-import type { CalendlyConfig } from './Calendly'
-import type { GoCardlessConfig } from './GoCardless'
-import type { GoogleMailConfig } from './Google/Mail'
-import type { NotionConfig } from './Notion'
-import type { PappersConfig } from './Pappers'
-import type { PhantombusterConfig } from './Phantombuster'
-import type { QontoConfig } from './Qonto'
-import type { YouCanBookMeConfig } from './YouCanBookMe'
+import type { Airtable, AirtableConfig } from './Airtable'
+import type { Calendly, CalendlyConfig } from './Calendly'
+import type { GoCardless, GoCardlessConfig } from './GoCardless'
+import type { GoogleMail, GoogleMailConfig } from './Google/Mail'
+import type { Jotform } from './Jotform'
+import type { Notion, NotionConfig } from './Notion'
+import type { Pappers, PappersConfig } from './Pappers'
+import type { Phantombuster, PhantombusterConfig } from './Phantombuster'
+import type { Qonto, QontoConfig } from './Qonto'
+import type { YouCanBookMe, YouCanBookMeConfig } from './YouCanBookMe'
 
 export interface IntegrationsConfig {
   airtable?: AirtableConfig[]
@@ -30,4 +31,17 @@ export interface IntegrationsConfig {
   phantombuster?: PhantombusterConfig[]
   calendly?: CalendlyConfig[]
   youcanbookme?: YouCanBookMeConfig[]
+}
+
+export interface Integrations {
+  notion: Notion
+  calendly: Calendly
+  airtable: Airtable
+  pappers: Pappers
+  qonto: Qonto
+  jotform: Jotform
+  youcanbookme: YouCanBookMe
+  phantombuster: Phantombuster
+  googleMail: GoogleMail
+  gocardless: GoCardless
 }

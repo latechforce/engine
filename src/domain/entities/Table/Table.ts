@@ -31,7 +31,6 @@ export class Table {
   readonly recordPath: string
   readonly db: DatabaseTable
   readonly bucket: Bucket
-  private _validateData: (json: unknown, schema: SchemaValidatorJson) => SchemaError[]
 
   constructor(
     config: TableConfig,
@@ -39,7 +38,7 @@ export class Table {
     entities: TableEntites
   ) {
     const { name } = config
-    const { database, schemaValidator, system } = _services
+    const { database, system } = _services
     const { fields } = entities
     this.name = name
     this.fields = fields
@@ -47,7 +46,6 @@ export class Table {
     this.recordPath = system.joinPath(this.path, ':id')
     this.db = database.table(this.config)
     this.bucket = new Bucket({ name: `table_${name}_attachments` }, _services)
-    this._validateData = schemaValidator.validate
   }
 
   get config(): TableConfig {
@@ -103,15 +101,16 @@ export class Table {
   ): Promise<
     { records: Record[]; error?: undefined } | { records?: undefined; error: SchemaError }
   > => {
+    const { schemaValidator } = this._services
     if (!filterConfig) {
       const records = await this.db.list()
       return { records }
-    } else if (this._validateDataType<FilterConfig>(filterConfig, filterSchema)) {
+    } else if (schemaValidator.validateType<FilterConfig>(filterConfig, filterSchema)) {
       const filter = FilterMapper.toEntity(filterConfig)
       const records = await this.db.list(filter)
       return { records }
     }
-    const [error] = this._validateData(filterConfig, filterSchema)
+    const [error] = schemaValidator.validate(filterConfig, filterSchema)
     return { error }
   }
 
@@ -125,13 +124,14 @@ export class Table {
   ): Promise<
     { record: Record; error?: undefined } | { record?: undefined; error: SchemaError }
   > => {
+    const { schemaValidator } = this._services
     const schema = this._getRecordSchema()
-    if (this._validateDataType<RecordFieldsConfig>(data, schema)) {
+    if (schemaValidator.validateType<RecordFieldsConfig>(data, schema)) {
       const uploadedData = await this._uploadAttachments(data)
       const record = await this.db.insert(uploadedData)
       return { record }
     }
-    const [error] = this._validateData(data, schema)
+    const [error] = schemaValidator.validate(data, schema)
     return { error }
   }
 
@@ -155,12 +155,13 @@ export class Table {
   ): Promise<
     { record: Record; error?: undefined } | { record?: undefined; error: SchemaError }
   > => {
+    const { schemaValidator } = this._services
     const schema = this._getRecordSchema({ required: false })
-    if (this._validateDataType<RecordFieldsConfig>(data, schema)) {
+    if (schemaValidator.validateType<RecordFieldsConfig>(data, schema)) {
       const record = await this.db.update(id, data)
       return { record }
     }
-    const [error] = this._validateData(data, schema)
+    const [error] = schemaValidator.validate(data, schema)
     return { error }
   }
 
@@ -272,10 +273,6 @@ export class Table {
       }
     }
     return schema
-  }
-
-  private _validateDataType = <T>(data: unknown, schema: SchemaValidatorJson): data is T => {
-    return this._validateData(data, schema).length === 0
   }
 
   private _uploadAttachments = async (data: RecordFieldsConfig): Promise<RecordFieldsConfig> => {

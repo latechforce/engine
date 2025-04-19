@@ -2,12 +2,12 @@ import type { AirtableCodeRunner } from './AirtableCodeRunner'
 import { AirtableTable } from './AirtableTable'
 import type { AirtableTableRecordFields } from './AirtableTypes'
 import type { IAirtableSpi } from './IAirtableSpi'
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 import type { AirtableConfig } from './AirtableConfig'
 
 export class Airtable extends Integration<AirtableConfig, IAirtableSpi> {
-  constructor(spis: IAirtableSpi[]) {
-    super(spis)
+  constructor(spis: IAirtableSpi[], services: BaseServices) {
+    super('airtable', spis, services)
   }
 
   get codeRunnerIntegration(): AirtableCodeRunner {

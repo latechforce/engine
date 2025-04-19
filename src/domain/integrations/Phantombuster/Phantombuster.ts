@@ -2,11 +2,11 @@ import type { PhantombusterAgentOutput } from './PhantombusterTypes'
 import type { PhantombusterConfig } from './PhantombusterConfig'
 import type { IPhantombusterSpi } from './IPhantombusterSpi'
 import type { PhantombusterCodeRunner } from './PhantombusterCodeRunner'
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 
 export class Phantombuster extends Integration<PhantombusterConfig, IPhantombusterSpi> {
-  constructor(spis: IPhantombusterSpi[]) {
-    super(spis)
+  constructor(spis: IPhantombusterSpi[], services: BaseServices) {
+    super('phantombuster', spis, services)
   }
 
   get codeRunnerIntegration(): PhantombusterCodeRunner {

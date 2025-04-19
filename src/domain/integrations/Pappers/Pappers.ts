@@ -1,12 +1,12 @@
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 import type { IPappersSpi } from './IPappersSpi'
 import type { PappersEntreprise } from './PappersTypes'
 import type { PappersConfig } from './PappersConfig'
 import type { PappersCodeRunner } from './PappersCodeRunner'
 
 export class Pappers extends Integration<PappersConfig, IPappersSpi> {
-  constructor(spis: IPappersSpi[]) {
-    super(spis)
+  constructor(spis: IPappersSpi[], services: BaseServices) {
+    super('pappers', spis, services)
   }
 
   get codeRunnerIntegration(): PappersCodeRunner {

@@ -1,8 +1,16 @@
 import { ConfigError, type ConfigErrorEntity } from '../entities/Error/Config'
+import type { PostRequest } from '../entities/Request/Post'
+import { JsonResponse } from '../entities/Response/Json'
+import type { SchemaValidator, SchemaValidatorJson, Server } from '/domain/services'
 
 export type BaseConfig = {
   account: string
   baseUrl?: string
+}
+
+export type BaseServices = {
+  server: Server
+  schemaValidator: SchemaValidator
 }
 
 export interface BaseSpi<T extends BaseConfig> {
@@ -28,7 +36,11 @@ export type IntegrationResponse<T> = IntegrationResponseData<T> | IntegrationRes
 export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
   private _isAccountValidated: { [key: string]: boolean } = {}
 
-  constructor(private _spis: T[]) {}
+  constructor(
+    private _name: string,
+    private _spis: T[],
+    private _services: BaseServices
+  ) {}
 
   protected _spi = (account: string): T => {
     const spi = this._spis.find((spi) => spi.config.account === account)
@@ -40,6 +52,38 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
 
   protected _config = (account: string): C => {
     return this._spi(account).config
+  }
+
+  async init() {
+    const { server } = this._services
+    if (this._spis.length > 0) {
+      await server.post(`/api/integration/${this._name}/test-connection`, this.postTestConnection)
+    }
+  }
+
+  postTestConnection = async (request: PostRequest) => {
+    const { schemaValidator } = this._services
+    const schema: SchemaValidatorJson = {
+      type: 'object',
+      properties: {
+        account: { type: 'string' },
+      },
+      required: ['account'],
+    }
+    const { body } = request
+    if (schemaValidator.validateType<{ account: string }>(body, schema)) {
+      const spi = this._spis.find((spi) => spi.config.account === body.account)
+      if (!spi) {
+        return new JsonResponse({ error: 'Account not found' }, 404)
+      }
+      const response = await spi.testConnection()
+      if (response?.error) {
+        return new JsonResponse({ error: response.error.message || 'Unknown error' }, 400)
+      }
+      return new JsonResponse({ success: true })
+    }
+    const [error] = schemaValidator.validate(body, schema)
+    return new JsonResponse({ error: error.message }, 400)
   }
 
   validate = async (params: {

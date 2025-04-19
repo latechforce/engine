@@ -2,21 +2,16 @@ import type {
   CodeRunnerContextIntegrations,
   CodeRunnerContextServices,
 } from '/domain/services/CodeRunner'
-import {
-  BaseApp,
-  type AppConfig,
-  type AppEntities,
-  type AppIntegrations,
-  type AppServices,
-} from './Base'
+import { BaseApp, type AppConfig, type AppEntities, type AppServices } from './Base'
 import { StoppedApp } from './Stopped'
+import type { Integrations } from '/domain/integrations'
 
 export class StartedApp extends BaseApp {
   constructor(
     config: AppConfig,
     services: AppServices,
     entities: AppEntities,
-    integrations: AppIntegrations
+    integrations: Integrations
   ) {
     super(config, services, entities, integrations)
     this._setStatus('started')

@@ -93,27 +93,54 @@ export class AppMapper {
     const realtime = RealtimeMapper.toService({ database, logger, idGenerator }, { tables })
     const notion = NotionMapper.toIntegration(
       integrations,
-      { idGenerator, logger, storage, server, templateCompiler, fetcher, system },
+      { idGenerator, logger, storage, server, templateCompiler, fetcher, system, schemaValidator },
       schema.integrations?.notion
     )
-    const calendly = CalendlyMapper.toIntegration(integrations, schema.integrations?.calendly)
-    const airtable = AirtableMapper.toIntegration(integrations, schema.integrations?.airtable)
-    const pappers = PappersMapper.toIntegration(integrations, schema.integrations?.pappers)
-    const qonto = QontoMapper.toIntegration(integrations, schema.integrations?.qonto)
-    const jotform = JotformMapper.toIntegration(integrations, schema.integrations?.jotform)
+    const calendly = CalendlyMapper.toIntegration(
+      integrations,
+      { server, schemaValidator },
+      schema.integrations?.calendly
+    )
+    const airtable = AirtableMapper.toIntegration(
+      integrations,
+      { server, schemaValidator },
+      schema.integrations?.airtable
+    )
+    const pappers = PappersMapper.toIntegration(
+      integrations,
+      { server, schemaValidator },
+      schema.integrations?.pappers
+    )
+    const qonto = QontoMapper.toIntegration(
+      integrations,
+      { server, schemaValidator },
+      schema.integrations?.qonto
+    )
+    const jotform = JotformMapper.toIntegration(
+      integrations,
+      { server, schemaValidator },
+      schema.integrations?.jotform
+    )
     const youcanbookme = YouCanBookMeMapper.toIntegration(
       integrations,
+      { server, schemaValidator },
       schema.integrations?.youcanbookme
     )
     const phantombuster = PhantombusterMapper.toIntegration(
       integrations,
+      { server, schemaValidator },
       schema.integrations?.phantombuster
     )
     const googleMail = GoogleMailMapper.toIntegration(
       integrations,
+      { server, schemaValidator },
       schema.integrations?.google?.mail
     )
-    const gocardless = GoCardlessMapper.toIntegration(integrations, schema.integrations?.gocardless)
+    const gocardless = GoCardlessMapper.toIntegration(
+      integrations,
+      { server, schemaValidator },
+      schema.integrations?.gocardless
+    )
     const javascriptCompiler = CodeCompilerMapper.toService(
       drivers,
       { logger, fetcher },
@@ -187,7 +214,18 @@ export class AppMapper {
         buckets,
         forms,
       },
-      { notion }
+      {
+        notion,
+        calendly,
+        airtable,
+        pappers,
+        qonto,
+        jotform,
+        youcanbookme,
+        phantombuster,
+        googleMail,
+        gocardless,
+      }
     )
   }
 }

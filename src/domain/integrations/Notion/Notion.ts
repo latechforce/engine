@@ -25,9 +25,9 @@ export class Notion extends Integration<NotionConfig, INotionSpi> {
 
   constructor(
     spis: INotionSpi[],
-    private _services: NotionServices
+    private _notionsServices: NotionServices
   ) {
-    super(spis)
+    super('notion', spis, _notionsServices)
   }
 
   get codeRunnerIntegration(): NotionCodeRunner {
@@ -43,8 +43,9 @@ export class Notion extends Integration<NotionConfig, INotionSpi> {
   }
 
   init = async () => {
+    await super.init()
     const name = 'notion_files'
-    this._bucket = new Bucket({ name }, this._services)
+    this._bucket = new Bucket({ name }, this._notionsServices)
     await this._bucket.init()
   }
 
@@ -65,7 +66,7 @@ export class Notion extends Integration<NotionConfig, INotionSpi> {
     if (!this._bucket) throw new Error('bucket not initialized')
     const newTable = new NotionTable<T>(
       spiTable,
-      this._services,
+      this._notionsServices,
       this._config(account),
       this._bucket
     )

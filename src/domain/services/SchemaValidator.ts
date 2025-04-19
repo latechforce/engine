@@ -31,4 +31,8 @@ export class SchemaValidator {
   validate = (json: unknown, schema: SchemaValidatorJson) => {
     return this._spi.validate(json, schema)
   }
+
+  validateType = <T>(data: unknown, schema: SchemaValidatorJson): data is T => {
+    return this.validate(data, schema).length === 0
+  }
 }

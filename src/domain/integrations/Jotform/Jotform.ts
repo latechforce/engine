@@ -1,12 +1,12 @@
 import type { IJotformSpi } from './IJotformSpi'
-import { Integration } from '../base'
+import { Integration, type BaseServices } from '../base'
 import type { JotformWebhookResponse, JotformWebhookParams } from './JotformTypes'
 import type { JotformConfig } from './JotformConfig'
 import type { DeleteWebhookParams } from './JotformTypes'
 
 export class Jotform extends Integration<JotformConfig, IJotformSpi> {
-  constructor(spis: IJotformSpi[]) {
-    super(spis)
+  constructor(spis: IJotformSpi[], services: BaseServices) {
+    super('jotform', spis, services)
   }
 
   listWebhooks = async (account: string, formId: string): Promise<JotformWebhookResponse> => {
