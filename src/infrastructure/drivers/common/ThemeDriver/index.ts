@@ -4,27 +4,31 @@ import { TailwindCSSDriver } from './TailwindCSSDriver'
 import { NoneDriver } from './NoneDriver'
 
 export class ThemeDriver implements IThemeDriver {
-  private _driver: IThemeDriver
+  private _theme: IThemeDriver
 
   constructor(config: ThemeConfig) {
     const { type } = config
     switch (type) {
       case 'tailwindcss':
-        this._driver = new TailwindCSSDriver(config)
+        this._theme = new TailwindCSSDriver(config)
         break
       case 'none':
-        this._driver = new NoneDriver()
+        this._theme = new NoneDriver()
         break
       default:
         throw new Error(`Unsupported Theme driver: ${type}`)
     }
   }
 
-  buildCss = async (): Promise<string> => {
-    return this._driver.buildCss()
+  loadCssFiles = async (): Promise<{ name: string; content: string }[]> => {
+    return this._theme.loadCssFiles()
   }
 
-  buildJs = async (): Promise<string> => {
-    return this._driver.buildJs()
+  loadJsFiles = async (): Promise<{ name: string; content: string }[]> => {
+    return this._theme.loadJsFiles()
+  }
+
+  icon = (icon: string): React.ReactNode => {
+    return this._theme.icon(icon)
   }
 }

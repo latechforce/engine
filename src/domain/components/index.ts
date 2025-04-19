@@ -6,6 +6,7 @@ export * from './Layouts/Form'
 export * from './Layouts/FormResponse'
 export * from './Layouts/Page'
 export * from './AdvancedForms/AdvancedSelect'
+export * from './Navigations/Sidebar'
 
 import type { Checkbox } from './BasicForms/Checkbox'
 import type { Form } from './Layouts/Form'
@@ -15,6 +16,7 @@ import type { AdvancedSelect } from './AdvancedForms/AdvancedSelect'
 import type { Page } from './Layouts/Page'
 import type { FileInput } from './BasicForms/FileInput'
 import type { Textarea } from './BasicForms/Textarea'
+import type { Sidebar } from './Navigations/Sidebar'
 
 export type Components = {
   Page: Page
@@ -25,4 +27,5 @@ export type Components = {
   AdvancedSelect: AdvancedSelect
   Checkbox: Checkbox
   FileInput: FileInput
+  Sidebar: Sidebar
 }

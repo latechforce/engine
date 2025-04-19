@@ -12,7 +12,6 @@ export class Form {
   table: Table
   path: string
   inputs: Input[]
-  timestamp: string
 
   constructor(
     private _config: FormConfig,
@@ -29,7 +28,6 @@ export class Form {
     this.id = idGenerator.forComponent()
     this.path = system.joinPath(`/form`, path)
     this.inputs = inputs.map((input) => new Input(input, this.table, this._components))
-    this.timestamp = String(+Date.now())
   }
 
   validate = async (): Promise<ConfigError[]> => {
@@ -54,7 +52,7 @@ export class Form {
   }
 
   get = async (): Promise<JsxResponse> => {
-    const { client } = this._services
+    const { client, theme } = this._services
     const { name, title = name, description, submitLabel } = this._config
     const { Form, Page } = this._components
     const htmlAttributes: ClientHtmlAttributesOptions = {
@@ -74,7 +72,12 @@ export class Form {
     const formClientProps = client.getHtmlAttributes(htmlAttributes)
     return new JsxResponse(
       (
-        <Page title={title} description={description} timestamp={this.timestamp}>
+        <Page
+          title={title}
+          description={description}
+          cssFiles={theme.cssFiles}
+          jsFiles={theme.jsFiles}
+        >
           <Form
             id={this.id}
             title={title}

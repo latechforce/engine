@@ -7,7 +7,7 @@ import { Checkbox } from './BasicForms/Checkbox'
 import { AdvancedSelect } from './AdvancedForms/AdvancedSelect'
 import { FileInput } from './BasicForms/FileInput'
 import { Textarea } from './BasicForms/Textarea'
-
+import { Sidebar } from './Navigations/Sidebar'
 export const components: Components = {
   Page,
   Form,
@@ -17,4 +17,5 @@ export const components: Components = {
   AdvancedSelect,
   Checkbox,
   FileInput,
+  Sidebar,
 }

@@ -32,6 +32,7 @@
         "htmx.org": "2.0.4",
         "libsodium-wrappers": "^0.7.15",
         "lodash": "^4.17.21",
+        "lucide": "^0.501.0",
         "mime-types": "^3.0.1",
         "minipass": "^7.1.2",
         "nanoid": "^5.1.5",
@@ -1511,6 +1512,8 @@
     "lowercase-keys": ["lowercase-keys@2.0.0", "", {}, "sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA=="],
 
     "lru-cache": ["lru-cache@10.4.3", "", {}, "sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ=="],
+
+    "lucide": ["lucide@0.501.0", "", {}, "sha512-ufrFxsi7s5dcuDgR/z21CqP61jyMshh2BghKaEviz3nrFohrJWZtjvHvlamDaNzeJU1tGTxxPMbWqkmTPBijjA=="],
 
     "luxon": ["luxon@3.6.1", "", {}, "sha512-tJLxrKJhO2ukZ5z0gyjY1zPh3Rh88Ej9P7jNrZiHMUXHae1yvI2imgOZtL1TO8TW6biMMKfTtAOoEJANgtWBMQ=="],
 

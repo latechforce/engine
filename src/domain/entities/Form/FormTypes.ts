@@ -8,6 +8,7 @@ import type { Form as FormComponent } from '../../components/Layouts/Form'
 import type { FormResponse as FormResponseComponent } from '../../components/Layouts/FormResponse'
 import type { Logger } from '/domain/services/Logger'
 import type { System } from '/domain/services/System'
+import type { Theme } from '/domain/services/Theme'
 
 export interface FormConfig {
   name: string
@@ -26,6 +27,7 @@ export interface FormServices {
   client: Client
   logger: Logger
   system: System
+  theme: Theme
 }
 
 export interface FormEntities {

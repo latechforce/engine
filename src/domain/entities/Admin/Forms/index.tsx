@@ -9,20 +9,20 @@ export type AdminServices = {
   theme: Theme
 }
 
-export class AdminIntegrations extends BaseAdmin {
+export class AdminForms extends BaseAdmin {
   constructor(services: AdminServices, components: Components) {
     super(services, components)
   }
 
   init = async () => {
-    super.init('/admin/integrations')
+    super.init('/admin/forms')
   }
 
   get = async () => {
     return new JsxResponse(
       (
-        <this.layout path="/admin/integrations" title="Integrations | Admin">
-          <h1>Integrations</h1>
+        <this.layout path="/admin/forms" title="Forms | Admin">
+          <h1>Forms</h1>
         </this.layout>
       )
     )

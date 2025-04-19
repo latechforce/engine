@@ -1,7 +1,8 @@
 export interface PageProps extends React.PropsWithChildren {
   title: string
-  timestamp: string
   description?: string
+  cssFiles: string[]
+  jsFiles: string[]
 }
 
 export type Page = React.ComponentType<PageProps>

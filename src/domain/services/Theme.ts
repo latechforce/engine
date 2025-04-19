@@ -20,24 +20,43 @@ export interface ThemeServices {
 }
 
 export interface IThemeSpi {
-  buildCss: () => Promise<string>
-  buildJs: () => Promise<string>
+  loadCssFiles: () => Promise<{ name: string; content: string }[]>
+  loadJsFiles: () => Promise<{ name: string; content: string }[]>
+  icon: (icon: string) => React.ReactNode
 }
 
 export class Theme {
+  timestamp: string
+  jsFiles: string[] = []
+  cssFiles: string[] = []
+
   constructor(
     private _spi: IThemeSpi,
     private _services: ThemeServices,
     public config: ThemeConfig
-  ) {}
+  ) {
+    this.timestamp = Date.now().toString()
+  }
 
   init = async () => {
     const { server, logger } = this._services
     logger.debug(`init theme with "${this.config.type}"`)
-    const css = await this._spi.buildCss()
-    const js = await this._spi.buildJs()
-    await server.get('/style.css', async () => new CssResponse(css))
-    await server.get('/style.js', async () => new JsResponse(js))
-    logger.debug(`theme initialized`)
+    const cssFiles = await this._spi.loadCssFiles()
+    for (const cssFile of cssFiles) {
+      const path = `/${cssFile.name}`
+      this.cssFiles.push(path + `?ts=${this.timestamp}`)
+      await server.get(path, async () => new CssResponse(cssFile.content))
+    }
+    const jsFiles = await this._spi.loadJsFiles()
+    for (const jsFile of jsFiles) {
+      const path = `/${jsFile.name}`
+      this.jsFiles.push(path + `?ts=${this.timestamp}`)
+      await server.get(path, async () => new JsResponse(jsFile.content))
+    }
+    logger.debug(`theme initialized with timestamp ${this.timestamp}`)
+  }
+
+  icon = (icon: string): React.ReactNode => {
+    return this._spi.icon(icon)
   }
 }

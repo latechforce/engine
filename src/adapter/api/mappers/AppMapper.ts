@@ -43,6 +43,7 @@ export class AppMapper {
     components: Components,
     schema: ConfigSchema
   ) => {
+    const timestamp = Date.now().toString()
     const system = SystemMapper.toService(drivers)
     const appVersion = schema.appVersion ?? system.getAppVersion()
     const engineVersion = schema.engineVersion ?? system.getEngineVersion()
@@ -176,12 +177,12 @@ export class AppMapper {
       { notion, pappers, qonto, googleMail, gocardless, calendly, jotform, youcanbookme }
     )
     const forms = FormMapper.toManyEntities(
-      schema.forms,
-      { server, idGenerator, client, logger, system },
+      schema.forms?.map((form) => ({ ...form, timestamp })),
+      { server, idGenerator, client, logger, system, theme },
       { tables },
       components
     )
-    const admin = new Admin({ server })
+    const admin = new Admin({ server, theme }, components)
     return new StoppedApp(
       {
         name: schema.name,
