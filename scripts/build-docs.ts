@@ -106,6 +106,7 @@ async function findExample(file: SchemaFile, key: string): Promise<string> {
     .reverse()
     .filter((p) => p !== 'config')
     .join('/')
+    .toLowerCase()
   let examplePath = join(process.cwd(), 'examples', 'config', parents, file.name, `${key}.ts`)
   console.log(examplePath)
   if (!existsSync(examplePath)) {
