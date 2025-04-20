@@ -16,6 +16,7 @@ import type {
   DeleteWebhookSubscriptionParams,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
+import type { OAuthAccessToken } from '/domain/integrations/OAuth'
 
 export class CalendlyIntegration implements ICalendlyIntegration {
   private _api: AxiosInstance
@@ -25,16 +26,17 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     this._api = axios.create({
       baseURL: config.baseUrl ?? 'https://api.calendly.com',
       headers: {
-        Authorization: `Bearer ${config.accessToken}`,
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
     })
+    const credentials = `${config.clientId}:${config.clientSecret}`
+    const base64Credentials = Buffer.from(credentials).toString('base64')
     this._auth = axios.create({
       baseURL: config.authBaseUrl ?? 'https://auth.calendly.com',
       headers: {
-        Authorization: `Bearer ${config.accessToken}`,
-        'Content-Type': 'application/json',
+        Authorization: `Basic ${base64Credentials}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
         Accept: 'application/json',
       },
     })
@@ -53,25 +55,76 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     throw error
   }
 
-  // TODO: Add a method to manage a OAuth2 authentification for V2 API
-
   authorizationUrl = (redirectUri: string) => {
     const baseUrl = this.config.authBaseUrl ?? 'https://auth.calendly.com'
     return `${baseUrl}/oauth/authorize?client_id=${this.config.clientId}&response_type=code&redirect_uri=${redirectUri}`
   }
 
-  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
+  getAccessTokenFromCode = async (
+    code: string,
+    redirectUri: string
+  ): Promise<IntegrationResponse<OAuthAccessToken>> => {
     try {
-      // Using the /users endpoint as it's a lightweight call to verify authentication
-      await this._api.get<CalendlyUserResponse>('/users/me')
+      const response = await this._auth.post('/oauth/token', {
+        grant_type: 'authorization_code',
+        code,
+        redirect_uri: redirectUri,
+      })
+      return {
+        data: {
+          access_token: response.data.access_token,
+          refresh_token: response.data.refresh_token,
+          expires_in: response.data.expires_in,
+          scope: response.data.scope,
+          token_type: response.data.token_type,
+        },
+      }
+    } catch (error: unknown) {
+      return this._responseError(error)
+    }
+  }
+
+  getAccessTokenFromRefreshToken = async (
+    refreshToken: string
+  ): Promise<IntegrationResponse<OAuthAccessToken>> => {
+    try {
+      const response = await this._auth.post('/oauth/token', {
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+      })
+      return {
+        data: {
+          access_token: response.data.access_token,
+          refresh_token: response.data.refresh_token,
+          expires_in: response.data.expires_in,
+          scope: response.data.scope,
+          token_type: response.data.token_type,
+        },
+      }
+    } catch (error: unknown) {
+      return this._responseError(error)
+    }
+  }
+
+  testConnection = async (accessToken?: string): Promise<IntegrationResponseError | undefined> => {
+    try {
+      await this._api.get<CalendlyUserResponse>('/users/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken ?? this.config.accessToken}`,
+        },
+      })
     } catch (error) {
       return this._responseError(error)
     }
   }
 
-  currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
+  currentUser = async (accessToken?: string): Promise<IntegrationResponse<CalendlyUser>> => {
     try {
-      const response = await this._api.get<CalendlyUserResponse>('/users/me')
+      const response = await this._api.get<CalendlyUserResponse>('/users/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken ?? this.config.accessToken}`,
+        },
+      })
       return {
         data: response.data.resource,
       }
@@ -81,16 +134,25 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   }
 
   createWebhookSubscription = async (
-    params: CreateWebhookSubscriptionParams
+    params: CreateWebhookSubscriptionParams,
+    accessToken?: string
   ): Promise<IntegrationResponse<CreateWebhookSubscriptionResponse>> => {
     try {
-      const response = await this._api.post('/webhook_subscriptions', {
-        url: params.url,
-        events: params.events,
-        organization: params.organization,
-        scope: params.scope,
-        ...(params.user && { user: params.user }),
-      })
+      const response = await this._api.post(
+        '/webhook_subscriptions',
+        {
+          url: params.url,
+          events: params.events,
+          organization: params.organization,
+          scope: params.scope,
+          ...(params.user && { user: params.user }),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken ?? this.config.accessToken}`,
+          },
+        }
+      )
 
       const resource = response.data.resource
 
@@ -115,7 +177,8 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   }
 
   listWebhookSubscriptions = async (
-    params: ListWebhookSubscriptionsParams
+    params: ListWebhookSubscriptionsParams,
+    accessToken?: string
   ): Promise<IntegrationResponse<ListWebhookSubscriptionsResponse>> => {
     try {
       const response = await this._api.get<ListWebhookSubscriptionsResponse>(
@@ -128,9 +191,11 @@ export class CalendlyIntegration implements ICalendlyIntegration {
             ...(params.count && { count: params.count }),
             ...(params.pageToken && { page_token: params.pageToken }),
           },
+          headers: {
+            Authorization: `Bearer ${accessToken ?? this.config.accessToken}`,
+          },
         }
       )
-
       return {
         data: {
           collection: response.data.collection.map((subscription) => ({
@@ -161,12 +226,16 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   }
 
   getWebhookSubscription = async (
-    params: GetWebhookSubscriptionParams
+    params: GetWebhookSubscriptionParams,
+    accessToken?: string
   ): Promise<IntegrationResponse<GetWebhookSubscriptionResponse>> => {
     try {
       const url = new URL(params.webhook_uri)
-
-      const response = await this._api.get<GetWebhookSubscriptionResponse>(`${url.pathname}`)
+      const response = await this._api.get<GetWebhookSubscriptionResponse>(`${url.pathname}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken ?? this.config.accessToken}`,
+        },
+      })
       return { data: response.data }
     } catch (error) {
       return this._responseError(error)
@@ -174,12 +243,16 @@ export class CalendlyIntegration implements ICalendlyIntegration {
   }
 
   deleteWebhookSubscription = async (
-    params: DeleteWebhookSubscriptionParams
+    params: DeleteWebhookSubscriptionParams,
+    accessToken?: string
   ): Promise<IntegrationResponse<void>> => {
     try {
       const url = new URL(params.webhook_uri)
-
-      await this._api.delete(`${url.pathname}`)
+      await this._api.delete(`${url.pathname}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken ?? this.config.accessToken}`,
+        },
+      })
       return { data: undefined }
     } catch (error) {
       return this._responseError(error)

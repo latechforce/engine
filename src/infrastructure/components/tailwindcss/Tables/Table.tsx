@@ -1,6 +1,7 @@
+import { Dropdown } from '../Overlays/Dropdown'
 import type { TableProps } from '/domain/components'
 
-export const Table = ({ columns, rows, actions }: TableProps) => {
+export const Table = ({ columns, rows, dropdown }: TableProps) => {
   return (
     <div className="flex flex-col">
       <div className="-m-1.5 overflow-x-auto">
@@ -18,13 +19,11 @@ export const Table = ({ columns, rows, actions }: TableProps) => {
                       {column.label}
                     </th>
                   ))}
-                  {actions && (
+                  {dropdown && (
                     <th
                       scope="col"
                       className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500"
-                    >
-                      Actions
-                    </th>
+                    ></th>
                   )}
                 </tr>
               </thead>
@@ -48,17 +47,9 @@ export const Table = ({ columns, rows, actions }: TableProps) => {
                         </td>
                       )
                     )}
-                    {actions && (
+                    {dropdown && (
                       <td className="px-6 py-4 text-end text-sm font-medium whitespace-nowrap">
-                        {actions.map((action, index) => (
-                          <a
-                            key={index}
-                            className="inline-flex items-center gap-x-2 rounded-lg border border-transparent text-sm font-semibold text-blue-600 hover:text-blue-800 focus:text-blue-800 focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400"
-                            {...action(row).aAttributes}
-                          >
-                            {action(row).label}
-                          </a>
-                        ))}
+                        <Dropdown {...dropdown(row)} />
                       </td>
                     )}
                   </tr>

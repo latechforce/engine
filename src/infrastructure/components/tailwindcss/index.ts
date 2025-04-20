@@ -9,6 +9,7 @@ import { FileInput } from './BasicForms/FileInput'
 import { Textarea } from './BasicForms/Textarea'
 import { Sidebar } from './Navigations/Sidebar'
 import { Table } from './Tables/Table'
+import { Dropdown } from './Overlays/Dropdown'
 
 export const components: Components = {
   Page,
@@ -21,4 +22,5 @@ export const components: Components = {
   FileInput,
   Sidebar,
   Table,
+  Dropdown,
 }

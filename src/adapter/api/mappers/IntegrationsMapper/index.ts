@@ -19,6 +19,7 @@ import { GoCardlessMapper } from './GoCardlessMapper'
 import type { Fetcher } from '/domain/services/Fetcher'
 import type { System } from '/domain/services/System'
 import type { SchemaValidator } from '/domain/services/SchemaValidator'
+import type { Database } from '/domain/services/Database'
 
 interface IntegrationsServices {
   idGenerator: IdGenerator
@@ -29,6 +30,7 @@ interface IntegrationsServices {
   fetcher: Fetcher
   system: System
   schemaValidator: SchemaValidator
+  database: Database
 }
 
 export class IntegrationsMapper {
@@ -46,6 +48,7 @@ export class IntegrationsMapper {
       fetcher,
       system,
       schemaValidator,
+      database,
     } = services
     const notion = NotionMapper.toIntegration(
       integrations,
@@ -54,7 +57,7 @@ export class IntegrationsMapper {
     )
     const calendly = CalendlyMapper.toIntegration(
       integrations,
-      { server, schemaValidator },
+      { server, schemaValidator, database },
       schema?.calendly
     )
     const airtable = AirtableMapper.toIntegration(

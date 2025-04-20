@@ -15,6 +15,7 @@ import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
 import { AirtableIntegration } from '/infrastructure/integrations/bun/mocks/airtable/AirtableIntegration.mock'
 import type { AirtableConfig } from '/domain/integrations/Airtable'
 import { MockedApp } from './MockedApp'
+import App from '../../../bun'
 import { MockedFetcherDriver } from './MockedFetcherDriver'
 import { GoogleMailIntegration } from '/infrastructure/integrations/bun/mocks/google/mail/GoogleMailIntegration.mock'
 import type { GoogleMailConfig } from '/domain/integrations/Google/Mail'
@@ -94,13 +95,13 @@ type Request = {
   post: <T = any>(url: string, body?: unknown, options?: RequestInit) => Promise<T>
   patch: <T = any>(url: string, body?: unknown, options?: RequestInit) => Promise<T>
 }
-type App = {
+type AppWrapper = {
   start: (_: Config) => Promise<StartedApp>
   stop: () => Promise<void>
 }
 
 type AppHelpers<D extends DriverType[], I extends IntegrationType[]> = {
-  app: App
+  app: AppWrapper
   drivers: D extends (infer U)[]
     ? { [K in U & DriverType as Lowercase<K>]: WithDriverOutput<K> }
     : {}
@@ -118,8 +119,9 @@ type PageHelpers = Page & {
 export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []> {
   constructor(
     private tester: Tester,
-    private options: WithOptions<D, I> & { debug?: boolean } = {
+    private options: WithOptions<D, I> & { debug?: boolean; unmocked?: boolean } = {
       debug: false,
+      unmocked: false,
       drivers: [] as unknown as D,
       integrations: [] as unknown as I,
     }
@@ -265,7 +267,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
   }
 
   private _prepare(): {
-    app: App
+    app: AppWrapper
     drivers: D extends (infer U)[]
       ? { [K in U & DriverType as Lowercase<K>]: WithDriverOutput<K> }
       : {}
@@ -277,7 +279,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
     const drivers: any = {}
     const integrations: any = {}
     const extendsConfig: Partial<Config> = {}
-    const app: App = {
+    const app: AppWrapper = {
       start: async (_: Config): Promise<StartedApp> => {
         throw new Error('App must be initialized before starting')
       },
@@ -447,6 +449,15 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
       }
       let startedApp: StartedApp | undefined
       app.start = async (config: Config) => {
+        if (this.options.unmocked) {
+          return await new App().start({
+            ...config,
+            services: {
+              loggers: this.options.debug ? [{ type: 'Console', level: 'debug' }] : [],
+              ...config.services,
+            },
+          })
+        }
         const options = { drivers: { fetcher: () => drivers.fetcher } }
         const { integrations, services, ...rest } = extendsConfig
         startedApp = await new MockedApp(options).start({

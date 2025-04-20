@@ -2479,7 +2479,6 @@
       },
       "required": [
         "account",
-        "accessToken",
         "clientId",
         "clientSecret"
       ],

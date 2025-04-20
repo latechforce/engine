@@ -8,7 +8,7 @@ export * from './Layouts/Page'
 export * from './AdvancedForms/AdvancedSelect'
 export * from './Navigations/Sidebar'
 export * from './Tables/Table'
-
+export * from './Overlays/Dropdown'
 import type { Checkbox } from './BasicForms/Checkbox'
 import type { Form } from './Layouts/Form'
 import type { FormResponse } from './Layouts/FormResponse'
@@ -19,6 +19,8 @@ import type { FileInput } from './BasicForms/FileInput'
 import type { Textarea } from './BasicForms/Textarea'
 import type { Sidebar } from './Navigations/Sidebar'
 import type { Table } from './Tables/Table'
+import type { Dropdown } from './Overlays/Dropdown'
+
 export type Components = {
   Page: Page
   Form: Form
@@ -30,4 +32,5 @@ export type Components = {
   FileInput: FileInput
   Sidebar: Sidebar
   Table: Table
+  Dropdown: Dropdown
 }

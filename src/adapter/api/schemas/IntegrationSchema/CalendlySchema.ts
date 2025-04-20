@@ -23,7 +23,7 @@ export interface CalendlyIntegrationSchema {
    * @title Access Token
    * @description The access token for Calendly API authentication
    */
-  accessToken: string
+  accessToken?: string
   /**
    * The client ID for Calendly API authentication
    * @title Client ID

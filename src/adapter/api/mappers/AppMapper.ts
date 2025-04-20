@@ -80,6 +80,7 @@ export class AppMapper {
         fetcher,
         system,
         schemaValidator,
+        database,
       },
       schema.integrations
     )

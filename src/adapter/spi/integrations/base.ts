@@ -2,7 +2,7 @@ import type { BaseConfig, IntegrationResponseError } from '/domain/integrations/
 
 export interface BaseIntegration<T extends BaseConfig> {
   config: T
-  testConnection: () => Promise<IntegrationResponseError | undefined>
+  testConnection: (accessToken?: string) => Promise<IntegrationResponseError | undefined>
 }
 
 export class BaseSpi<C extends BaseConfig, T extends BaseIntegration<C>> {
@@ -12,7 +12,7 @@ export class BaseSpi<C extends BaseConfig, T extends BaseIntegration<C>> {
     return this._integration.config
   }
 
-  testConnection = async () => {
-    return this._integration.testConnection()
+  testConnection = async (accessToken?: string) => {
+    return this._integration.testConnection(accessToken)
   }
 }

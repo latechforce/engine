@@ -14,7 +14,7 @@ export class AdminTables extends BaseAdmin {
   get = async () => {
     return new JsxResponse(
       (
-        <this.layout path="/admin/tables" title="Tables | Admin">
+        <this.layout path="/admin/tables" title="Tables">
           <h1>Tables</h1>
         </this.layout>
       )

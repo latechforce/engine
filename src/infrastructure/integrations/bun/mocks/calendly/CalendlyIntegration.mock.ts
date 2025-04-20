@@ -16,6 +16,7 @@ import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfi
 import { BaseMockIntegration } from '../base'
 import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
+import type { OAuthAccessToken } from '/domain/integrations/OAuth'
 
 type UserRecordFields = RecordFields & {
   uri: string
@@ -45,7 +46,7 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
   private _webhooks: SQLiteDatabaseTableDriver
 
   constructor(public config: CalendlyConfig) {
-    super(config, config.accessToken)
+    super(config, config.accessToken ?? config.clientSecret)
     this._users = this._db.table({
       name: 'users',
       fields: [
@@ -81,6 +82,30 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
     return `${this.config.authBaseUrl}/oauth/authorize?client_id=${this.config.clientId}&response_type=code&redirect_uri=${redirectUri}`
   }
 
+  getAccessTokenFromCode = async (): Promise<IntegrationResponse<OAuthAccessToken>> => {
+    return {
+      data: {
+        access_token: 'mock-access-token',
+        refresh_token: 'mock-refresh-token',
+        expires_in: 3600,
+        scope: 'mock-scope',
+        token_type: 'Bearer',
+      },
+    }
+  }
+
+  getAccessTokenFromRefreshToken = async (): Promise<IntegrationResponse<OAuthAccessToken>> => {
+    return {
+      data: {
+        access_token: 'mock-access-token',
+        refresh_token: 'mock-refresh-token',
+        expires_in: 3600,
+        scope: 'mock-scope',
+        token_type: 'Bearer',
+      },
+    }
+  }
+
   createUser = async (user: CalendlyUser): Promise<IntegrationResponse<CalendlyUser>> => {
     await this._users.insert({
       id: user.uri,
@@ -100,7 +125,8 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
   }
 
   createWebhookSubscription = async (
-    params: CreateWebhookSubscriptionParams
+    params: CreateWebhookSubscriptionParams,
+    _accessToken?: string
   ): Promise<IntegrationResponse<CreateWebhookSubscriptionResponse>> => {
     const uri = `https://api.calendly.com/webhook_subscriptions/${Math.random().toString(36).substring(7)}`
     const now = new Date().toISOString()
@@ -139,7 +165,8 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
   }
 
   listWebhookSubscriptions = async (
-    _params: ListWebhookSubscriptionsParams
+    _params: ListWebhookSubscriptionsParams,
+    _accessToken?: string
   ): Promise<IntegrationResponse<ListWebhookSubscriptionsResponse>> => {
     const result = await this._webhooks.list<WebhookSubscriptionRecordFields>()
     return {
@@ -169,7 +196,8 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
   }
 
   getWebhookSubscription = async (
-    params: GetWebhookSubscriptionParams
+    params: GetWebhookSubscriptionParams,
+    _accessToken?: string
   ): Promise<IntegrationResponse<GetWebhookSubscriptionResponse>> => {
     const result = await this._webhooks.readById<WebhookSubscriptionRecordFields>(
       params.webhook_uri
@@ -199,14 +227,17 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
   }
 
   deleteWebhookSubscription = async (
-    params: DeleteWebhookSubscriptionParams
+    params: DeleteWebhookSubscriptionParams,
+    _accessToken?: string
   ): Promise<IntegrationResponse<void>> => {
     await this._webhooks.delete(params.webhook_uri)
     return { data: undefined }
   }
 
-  currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
-    const user = await this._users.readById<UserRecordFields>(this.config.accessToken ?? '')
+  currentUser = async (accessToken?: string): Promise<IntegrationResponse<CalendlyUser>> => {
+    const user = await this._users.readById<UserRecordFields>(
+      accessToken ?? this.config.accessToken ?? this.config.clientSecret
+    )
     if (!user) {
       return { error: { status: 404, message: 'User not found' } }
     }

@@ -1,13 +1,13 @@
 import type { CalendlyIntegrationSchema } from '../../schemas/IntegrationSchema/CalendlySchema'
 import type { Integrations } from '/adapter/spi/integrations'
 import { CalendlySpi } from '/adapter/spi/integrations/CalendlySpi'
-import type { BaseServices } from '/domain/integrations/base'
 import { Calendly } from '/domain/integrations/Calendly'
+import type { OAuthService } from '/domain/integrations/OAuth'
 
 export class CalendlyMapper {
   static toIntegration(
     integrations: Integrations,
-    services: BaseServices,
+    services: OAuthService,
     schemas: CalendlyIntegrationSchema[] = []
   ): Calendly {
     const spis = schemas.map((schema) => {

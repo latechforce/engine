@@ -32,8 +32,8 @@ export class StoppedApp extends BaseApp {
     const { server, theme } = this._services
     const { tables, automations, buckets, forms, admin } = this._entities
     const integrations = Object.values(this._integrations)
-    await server.init(async () => {
-      for (const integration of integrations) await integration.init()
+    await server.init(async (baseUrl: string) => {
+      for (const integration of integrations) await integration.init(baseUrl)
       for (const table of tables) await table.init()
       for (const automation of automations) await automation.init()
       for (const bucket of buckets) await bucket.init()

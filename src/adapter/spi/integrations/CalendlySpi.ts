@@ -6,35 +6,44 @@ import type {
   DeleteWebhookSubscriptionParams,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import type { CalendlyConfig } from '/domain/integrations/Calendly'
-import { OauthSpi } from './oauth'
+import { OAuthSpi } from './OAuthSpi'
 
 export type ICalendlyIntegration = ICalendlySpi
 
 export class CalendlySpi
-  extends OauthSpi<CalendlyConfig, ICalendlyIntegration>
+  extends OAuthSpi<CalendlyConfig, ICalendlyIntegration>
   implements ICalendlySpi
 {
   constructor(integration: ICalendlyIntegration) {
     super(integration)
   }
 
-  currentUser = async () => {
-    return this._integration.currentUser()
+  currentUser = async (accessToken?: string) => {
+    return this._integration.currentUser(accessToken)
   }
 
-  createWebhookSubscription = async (params: CreateWebhookSubscriptionParams) => {
-    return this._integration.createWebhookSubscription(params)
+  createWebhookSubscription = async (
+    params: CreateWebhookSubscriptionParams,
+    accessToken?: string
+  ) => {
+    return this._integration.createWebhookSubscription(params, accessToken)
   }
 
-  listWebhookSubscriptions = async (params: ListWebhookSubscriptionsParams) => {
-    return this._integration.listWebhookSubscriptions(params)
+  listWebhookSubscriptions = async (
+    params: ListWebhookSubscriptionsParams,
+    accessToken?: string
+  ) => {
+    return this._integration.listWebhookSubscriptions(params, accessToken)
   }
 
-  getWebhookSubscription = async (params: GetWebhookSubscriptionParams) => {
-    return this._integration.getWebhookSubscription(params)
+  getWebhookSubscription = async (params: GetWebhookSubscriptionParams, accessToken?: string) => {
+    return this._integration.getWebhookSubscription(params, accessToken)
   }
 
-  deleteWebhookSubscription = async (params: DeleteWebhookSubscriptionParams) => {
-    return this._integration.deleteWebhookSubscription(params)
+  deleteWebhookSubscription = async (
+    params: DeleteWebhookSubscriptionParams,
+    accessToken?: string
+  ) => {
+    return this._integration.deleteWebhookSubscription(params, accessToken)
   }
 }

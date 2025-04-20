@@ -14,7 +14,7 @@ export class AdminAutomations extends BaseAdmin {
   get = async () => {
     return new JsxResponse(
       (
-        <this.layout path="/admin/automations" title="Automations | Admin">
+        <this.layout path="/admin/automations" title="Automations">
           <h1>Automations</h1>
         </this.layout>
       )

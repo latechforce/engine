@@ -28,7 +28,7 @@ export class BaseAdmin {
     const { theme, client } = this._services
     const { Page, Sidebar } = this._components
     return (
-      <Page title={props.title} cssFiles={theme.cssFiles} jsFiles={theme.jsFiles}>
+      <Page title={`${props.title} | Admin`} cssFiles={theme.cssFiles} jsFiles={theme.jsFiles}>
         <Sidebar
           brand="Admin"
           brandHref="/admin"

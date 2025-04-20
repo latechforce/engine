@@ -96,7 +96,7 @@ export class Server {
     return this._port
   }
 
-  init = async (callback: () => Promise<void>) => {
+  init = async (callback: (baseUrl: string) => Promise<void>) => {
     const { logger, tunnel } = this._services
     if (!this._port) {
       logger.debug('finding available port...')
@@ -107,7 +107,7 @@ export class Server {
     }
     logger.debug('initializing server routes...')
     await this.get('/api/health', async () => new JsonResponse({ success: true }))
-    await callback()
+    await callback(this._baseUrl)
     await this.notFound()
   }
 

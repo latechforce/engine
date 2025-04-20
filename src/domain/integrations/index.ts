@@ -45,3 +45,15 @@ export interface Integrations {
   googleMail: GoogleMail
   gocardless: GoCardless
 }
+
+export type Integration =
+  | Notion
+  | Calendly
+  | Airtable
+  | Pappers
+  | Qonto
+  | Jotform
+  | YouCanBookMe
+  | Phantombuster
+  | GoogleMail
+  | GoCardless

@@ -14,7 +14,7 @@ export class AdminForms extends BaseAdmin {
   get = async () => {
     return new JsxResponse(
       (
-        <this.layout path="/admin/forms" title="Forms | Admin">
+        <this.layout path="/admin/forms" title="Forms">
           <h1>Forms</h1>
         </this.layout>
       )

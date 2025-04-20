@@ -11,7 +11,7 @@ import { isPngResponse, type PngResponse } from './Png'
 import { isTxtResponse, type TxtResponse } from './Txt'
 import { isXlsResponse, type XlsResponse } from './Xls'
 import { type XlsxResponse, isXlsxResponse } from './Xlsx'
-
+import { RedirectResponse, isRedirectResponse } from './Redirect'
 export type Response =
   | JsonResponse
   | HtmlResponse
@@ -26,6 +26,7 @@ export type Response =
   | XlsResponse
   | CsvResponse
   | TxtResponse
+  | RedirectResponse
 
 export function isResponse(value: unknown): value is Response {
   return (
@@ -41,6 +42,7 @@ export function isResponse(value: unknown): value is Response {
     isJsxResponse(value) ||
     isXlsResponse(value) ||
     isCsvResponse(value) ||
-    isTxtResponse(value)
+    isTxtResponse(value) ||
+    isRedirectResponse(value)
   )
 }

@@ -32,7 +32,7 @@ export class Admin extends BaseAdmin {
   get = async () => {
     return new JsxResponse(
       (
-        <this.layout path="/admin" title="Dashboard | Admin">
+        <this.layout path="/admin" title="Dashboard">
           <h1>Dashboard</h1>
         </this.layout>
       )

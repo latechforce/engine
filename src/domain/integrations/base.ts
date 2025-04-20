@@ -15,7 +15,7 @@ export type BaseServices = {
 
 export interface BaseSpi<T extends BaseConfig> {
   config: T
-  testConnection: () => Promise<IntegrationResponseError | undefined>
+  testConnection: (accessToken?: string) => Promise<IntegrationResponseError | undefined>
 }
 
 export interface IntegrationResponseData<D> {
@@ -40,9 +40,9 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
   private _isAccountValidated: { [key: string]: boolean } = {}
 
   constructor(
-    private _name: string,
-    private _spis: T[],
-    private _services: BaseServices
+    protected _name: string,
+    protected _spis: T[],
+    protected _services: BaseServices
   ) {
     this.isUsed = this._spis.length > 0
   }
@@ -66,11 +66,17 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
   async init(): Promise<boolean> {
     const { server } = this._services
     if (this._spis.length === 0) return false
-    await server.post(`/api/integration/${this._name}/test-connection`, this.postTestConnection)
+    await server.post(
+      `/api/integration/${this._name.toLowerCase()}/test-connection`,
+      this.postTestConnection
+    )
     return true
   }
 
-  postTestConnection = async (request: PostRequest) => {
+  async postTestConnection(
+    request: PostRequest,
+    getAccessToken?: (account: string) => Promise<string | undefined>
+  ) {
     const { schemaValidator } = this._services
     const schema: SchemaValidatorJson = {
       type: 'object',
@@ -85,7 +91,8 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
       if (!spi) {
         return new JsonResponse({ error: 'Account not found' }, 404)
       }
-      const response = await spi.testConnection()
+      const accessToken = getAccessToken ? await getAccessToken(body.account) : undefined
+      const response = await spi.testConnection(accessToken)
       if (response?.error) {
         return new JsonResponse(
           { success: false, error: response.error.message || 'Unknown error' },

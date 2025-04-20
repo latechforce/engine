@@ -39,7 +39,7 @@ export class Client {
       this.jsFiles.push(path)
       await server.get(path, async () => new JsResponse(jsFile.content))
     }
-    logger.info(`initialized client`)
+    logger.debug(`initialized client`)
   }
 
   getHtmlAttributes = (options: ClientHtmlAttributesOptions) => {
