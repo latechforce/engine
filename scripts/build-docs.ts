@@ -10,10 +10,12 @@ import {
 import { join, basename, extname } from 'path'
 import fg from 'fast-glob'
 
-const files = await fg(['src/adapter/api/schemas/**/*.ts'], { absolute: true })
+if (!process.env.CI) {
+  const files = await fg(['src/adapter/api/schemas/**/*.ts'], { absolute: true })
 
-for (const file of files) {
-  await import(`file://${file}`)
+  for (const file of files) {
+    await import(`file://${file}`)
+  }
 }
 
 interface JSONSchema {
@@ -104,6 +106,8 @@ async function findExample(file: SchemaFile, key: string): Promise<string> {
     .reverse()
     .filter((p) => p !== 'config')
     .join('/')
+  console.log(process.cwd())
+  console.log(existsSync(join(process.cwd(), 'examples')))
   let examplePath = join(process.cwd(), 'examples', 'config', parents, file.name, `${key}.ts`)
   if (!existsSync(examplePath)) {
     examplePath = join(process.cwd(), 'examples', parents, file.name, `${key}.ts`)

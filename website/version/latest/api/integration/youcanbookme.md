@@ -11,10 +11,8 @@ const config: Config = {
     "youcanbookme": [
       {
         "account": "youcanbookme_account",
-        "user": {
-          "username": "youcanbookme_user_username",
-          "password": "youcanbookme_user_password"
-        }
+        "username": "youcanbookme_user_username",
+        "password": "youcanbookme_user_password"
       }
     ]
   }
@@ -29,10 +27,15 @@ await new App().start(config)
 The account identifier for YouCanBookMe
 >account: `string`
 
-### User
+### Username
 
-The user credentials for YouCanBookMe
->user: Object
+The username for YouCanBookMe
+>username: `string`
+
+### Password
+
+The password for YouCanBookMe
+>password: `string`
 
 ## Optional
 

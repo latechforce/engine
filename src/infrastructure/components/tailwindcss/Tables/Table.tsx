@@ -5,7 +5,7 @@ export const Table = ({ columns, rows, actions }: TableProps) => {
     <div className="flex flex-col">
       <div className="-m-1.5 overflow-x-auto">
         <div className="inline-block min-w-full p-1.5 align-middle">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden border-y border-gray-200 dark:border-neutral-700">
             <table className="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
               <thead>
                 <tr>
