@@ -10,6 +10,7 @@ export interface ClientServices {
 export interface ClientHtmlAttributesOptions {
   post?: string
   get?: string
+  values?: string
   target?: string
   action?: 'replace' | 'append' | 'prepend'
   trigger?: 'revealed'

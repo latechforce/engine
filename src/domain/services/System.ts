@@ -32,4 +32,8 @@ export class System {
   getAppVersion = (): string => {
     return this._spi.getAppVersion()
   }
+
+  capitalize = (str: string): string => {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
 }

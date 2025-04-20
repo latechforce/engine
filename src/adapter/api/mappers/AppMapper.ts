@@ -182,7 +182,18 @@ export class AppMapper {
       { tables },
       components
     )
-    const admin = new Admin({ server, theme, client }, components)
+    const admin = new Admin({ server, theme, client, system }, components, {
+      notion,
+      calendly,
+      airtable,
+      pappers,
+      qonto,
+      jotform,
+      youcanbookme,
+      phantombuster,
+      googleMail,
+      gocardless,
+    })
     return new StoppedApp(
       {
         name: schema.name,

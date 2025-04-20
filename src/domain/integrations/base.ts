@@ -34,13 +34,18 @@ export interface IntegrationResponseError {
 export type IntegrationResponse<T> = IntegrationResponseData<T> | IntegrationResponseError
 
 export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
+  public auth: 'ApiKey' | 'OAuth' = 'ApiKey'
+  public isUsed: boolean = false
+
   private _isAccountValidated: { [key: string]: boolean } = {}
 
   constructor(
     private _name: string,
     private _spis: T[],
     private _services: BaseServices
-  ) {}
+  ) {
+    this.isUsed = this._spis.length > 0
+  }
 
   protected _spi = (account: string): T => {
     const spi = this._spis.find((spi) => spi.config.account === account)
@@ -52,6 +57,10 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
 
   protected _config = (account: string): C => {
     return this._spi(account).config
+  }
+
+  get accounts() {
+    return this._spis.map((spi) => spi.config.account)
   }
 
   async init() {

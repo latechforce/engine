@@ -8,7 +8,7 @@ export class AdminTables extends BaseAdmin {
   }
 
   init = async () => {
-    super.init('/admin/tables')
+    await super.init('/admin/tables')
   }
 
   get = async () => {

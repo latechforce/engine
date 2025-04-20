@@ -6,6 +6,9 @@ export const integration = new CalendlyIntegration({
   account: 'test',
   baseUrl: ':memory:',
   accessToken: 'https://api.calendly.com/users/123',
+  clientId: 'test',
+  clientSecret: 'test',
+  authBaseUrl: ':memory:',
 })
 
 await integration.createToken('https://api.calendly.com/users/123')

@@ -8,7 +8,7 @@ export class AdminAutomations extends BaseAdmin {
   }
 
   init = async () => {
-    super.init('/admin/automations')
+    await super.init('/admin/automations')
   }
 
   get = async () => {

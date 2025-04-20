@@ -13,7 +13,9 @@ export const Page = ({ title, description, children, cssFiles, jsFiles }: PagePr
           <script key={index} src={jsFile}></script>
         ))}
       </head>
-      <body>{children}</body>
+      <body>
+        <div className="min-h-screen bg-white dark:bg-black">{children}</div>
+      </body>
     </html>
   )
 }

@@ -24,4 +24,22 @@ export interface CalendlyIntegrationSchema {
    * @description The access token for Calendly API authentication
    */
   accessToken: string
+  /**
+   * The client ID for Calendly API authentication
+   * @title Client ID
+   * @description The client ID for Calendly API authentication
+   */
+  clientId: string
+  /**
+   * The client secret for Calendly API authentication
+   * @title Client Secret
+   * @description The client secret for Calendly API authentication
+   */
+  clientSecret: string
+  /**
+   * The base URL for Calendly API authentication
+   * @title Base URL
+   * @description The base URL for Calendly API authentication
+   */
+  authBaseUrl?: CalendlyConfig['authBaseUrl']
 }

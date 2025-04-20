@@ -318,6 +318,9 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
               account: 'calendly',
               baseUrl: await getTestDbUrl('calendly'),
               accessToken: 'test',
+              clientId: 'test',
+              clientSecret: 'test',
+              authBaseUrl: await getTestDbUrl('calendly-auth'),
             },
           ]
           integrations.calendly = new CalendlyIntegration(configs[0])

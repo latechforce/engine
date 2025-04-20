@@ -1,11 +1,12 @@
 import type { JsxResponse } from '../Response/Jsx'
 import type { Components } from '/domain/components'
-import type { Client, Server, Theme } from '/domain/services'
+import type { Client, Server, System, Theme } from '/domain/services'
 
 export type BaseAdminServices = {
   server: Server
   theme: Theme
   client: Client
+  system: System
 }
 
 export class BaseAdmin {

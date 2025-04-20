@@ -18,11 +18,20 @@ import type {
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 
 export class CalendlyIntegration implements ICalendlyIntegration {
-  private _instance: AxiosInstance
+  private _api: AxiosInstance
+  private _auth: AxiosInstance
 
   constructor(public config: CalendlyConfig) {
-    this._instance = axios.create({
+    this._api = axios.create({
       baseURL: config.baseUrl ?? 'https://api.calendly.com',
+      headers: {
+        Authorization: `Bearer ${config.accessToken}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+    this._auth = axios.create({
+      baseURL: config.authBaseUrl ?? 'https://auth.calendly.com',
       headers: {
         Authorization: `Bearer ${config.accessToken}`,
         'Content-Type': 'application/json',
@@ -46,10 +55,15 @@ export class CalendlyIntegration implements ICalendlyIntegration {
 
   // TODO: Add a method to manage a OAuth2 authentification for V2 API
 
+  authorizationUrl = (redirectUri: string) => {
+    const baseUrl = this.config.authBaseUrl ?? 'https://auth.calendly.com'
+    return `${baseUrl}/oauth/authorize?client_id=${this.config.clientId}&response_type=code&redirect_uri=${redirectUri}`
+  }
+
   testConnection = async (): Promise<IntegrationResponseError | undefined> => {
     try {
       // Using the /users endpoint as it's a lightweight call to verify authentication
-      await this._instance.get<CalendlyUserResponse>('/users/me')
+      await this._api.get<CalendlyUserResponse>('/users/me')
     } catch (error) {
       return this._responseError(error)
     }
@@ -57,7 +71,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
 
   currentUser = async (): Promise<IntegrationResponse<CalendlyUser>> => {
     try {
-      const response = await this._instance.get<CalendlyUserResponse>('/users/me')
+      const response = await this._api.get<CalendlyUserResponse>('/users/me')
       return {
         data: response.data.resource,
       }
@@ -70,7 +84,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     params: CreateWebhookSubscriptionParams
   ): Promise<IntegrationResponse<CreateWebhookSubscriptionResponse>> => {
     try {
-      const response = await this._instance.post('/webhook_subscriptions', {
+      const response = await this._api.post('/webhook_subscriptions', {
         url: params.url,
         events: params.events,
         organization: params.organization,
@@ -104,7 +118,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     params: ListWebhookSubscriptionsParams
   ): Promise<IntegrationResponse<ListWebhookSubscriptionsResponse>> => {
     try {
-      const response = await this._instance.get<ListWebhookSubscriptionsResponse>(
+      const response = await this._api.get<ListWebhookSubscriptionsResponse>(
         '/webhook_subscriptions',
         {
           params: {
@@ -152,7 +166,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     try {
       const url = new URL(params.webhook_uri)
 
-      const response = await this._instance.get<GetWebhookSubscriptionResponse>(`${url.pathname}`)
+      const response = await this._api.get<GetWebhookSubscriptionResponse>(`${url.pathname}`)
       return { data: response.data }
     } catch (error) {
       return this._responseError(error)
@@ -165,7 +179,7 @@ export class CalendlyIntegration implements ICalendlyIntegration {
     try {
       const url = new URL(params.webhook_uri)
 
-      await this._instance.delete(`${url.pathname}`)
+      await this._api.delete(`${url.pathname}`)
       return { data: undefined }
     } catch (error) {
       return this._responseError(error)

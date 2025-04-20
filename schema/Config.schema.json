@@ -2460,11 +2460,28 @@
           "type": "string",
           "description": "The access token for Calendly API authentication",
           "title": "Access Token"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The client ID for Calendly API authentication",
+          "title": "Client ID"
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The client secret for Calendly API authentication",
+          "title": "Client Secret"
+        },
+        "authBaseUrl": {
+          "type": "string",
+          "description": "The base URL for Calendly API authentication",
+          "title": "Base URL"
         }
       },
       "required": [
         "account",
-        "accessToken"
+        "accessToken",
+        "clientId",
+        "clientSecret"
       ],
       "additionalProperties": false,
       "description": "A configuration schema for Calendly scheduling integration",

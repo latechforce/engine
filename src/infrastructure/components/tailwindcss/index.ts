@@ -8,6 +8,8 @@ import { AdvancedSelect } from './AdvancedForms/AdvancedSelect'
 import { FileInput } from './BasicForms/FileInput'
 import { Textarea } from './BasicForms/Textarea'
 import { Sidebar } from './Navigations/Sidebar'
+import { Table } from './Tables/Table'
+
 export const components: Components = {
   Page,
   Form,
@@ -18,4 +20,5 @@ export const components: Components = {
   Checkbox,
   FileInput,
   Sidebar,
+  Table,
 }

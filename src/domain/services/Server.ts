@@ -196,7 +196,7 @@ export class Server {
     const { logger, tunnel } = this._services
     logger.debug(`starting server...`)
     await this._spi.start(this.port)
-    await tunnel.start(this.port)
+    this._baseUrl = await tunnel.start(this.port)
     this.isListening = true
     logger.debug(`server listening at ${this.baseUrl}`)
     return this.baseUrl

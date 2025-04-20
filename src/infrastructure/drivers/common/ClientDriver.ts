@@ -9,12 +9,13 @@ export class ClientDriver implements IClientDriver {
   }
 
   getHtmlAttributes = (options: ClientHtmlAttributesOptions): Record<string, string> => {
-    const { post, get, target, action, trigger, fileUpload, pushUrl } = options
+    const { post, get, target, action, trigger, fileUpload, pushUrl, values } = options
     const attributes: Record<string, string> = {}
     if (post) attributes['hx-post'] = post
     if (get) attributes['hx-get'] = get
     if (target) attributes['hx-target'] = target
     if (pushUrl) attributes['hx-push-url'] = pushUrl
+    if (values) attributes['hx-vals'] = values
     if (fileUpload) attributes['hx-encoding'] = 'multipart/form-data'
     switch (trigger) {
       case 'revealed':

@@ -5,6 +5,7 @@ import { AdminTables } from './Tables'
 import { AdminIntegrations } from './Integrations'
 import { AdminForms } from './Forms'
 import { AdminAutomations } from './Automations'
+import type { Integrations } from '/domain/integrations'
 
 export class Admin extends BaseAdmin {
   private readonly _tables: AdminTables
@@ -12,16 +13,16 @@ export class Admin extends BaseAdmin {
   private readonly _forms: AdminForms
   private readonly _automations: AdminAutomations
 
-  constructor(services: BaseAdminServices, components: Components) {
+  constructor(services: BaseAdminServices, components: Components, integrations: Integrations) {
     super(services, components)
     this._tables = new AdminTables(services, components)
-    this._integrations = new AdminIntegrations(services, components)
+    this._integrations = new AdminIntegrations(services, components, integrations)
     this._automations = new AdminAutomations(services, components)
     this._forms = new AdminForms(services, components)
   }
 
   init = async () => {
-    super.init('/admin')
+    await super.init('/admin')
     await this._tables.init()
     await this._integrations.init()
     await this._automations.init()

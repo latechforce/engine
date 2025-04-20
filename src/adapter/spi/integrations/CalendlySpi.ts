@@ -1,4 +1,3 @@
-import { BaseSpi } from './base'
 import type { ICalendlySpi } from '/domain/integrations/Calendly/ICalendlySpi'
 import type {
   CreateWebhookSubscriptionParams,
@@ -7,11 +6,12 @@ import type {
   DeleteWebhookSubscriptionParams,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import type { CalendlyConfig } from '/domain/integrations/Calendly'
+import { OauthSpi } from './oauth'
 
 export type ICalendlyIntegration = ICalendlySpi
 
 export class CalendlySpi
-  extends BaseSpi<CalendlyConfig, ICalendlyIntegration>
+  extends OauthSpi<CalendlyConfig, ICalendlyIntegration>
   implements ICalendlySpi
 {
   constructor(integration: ICalendlyIntegration) {

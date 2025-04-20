@@ -77,6 +77,10 @@ export class CalendlyIntegration extends BaseMockIntegration implements ICalendl
     this._webhooks.ensureSync()
   }
 
+  authorizationUrl = (redirectUri: string) => {
+    return `${this.config.authBaseUrl}/oauth/authorize?client_id=${this.config.clientId}&response_type=code&redirect_uri=${redirectUri}`
+  }
+
   createUser = async (user: CalendlyUser): Promise<IntegrationResponse<CalendlyUser>> => {
     await this._users.insert({
       id: user.uri,

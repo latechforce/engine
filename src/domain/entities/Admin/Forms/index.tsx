@@ -8,7 +8,7 @@ export class AdminForms extends BaseAdmin {
   }
 
   init = async () => {
-    super.init('/admin/forms')
+    await super.init('/admin/forms')
   }
 
   get = async () => {
