@@ -10,7 +10,7 @@ import { BaseMockIntegration } from '../base'
 import type { IntegrationResponse } from '/domain/integrations/base'
 import type { TableConfig } from '/domain/entities/Table'
 import { TableMapper } from '/adapter/api/mappers/TableMapper'
-import type { TableSchema } from '/adapter/api/schemas/TableSchema'
+import type { TableSchema } from '../../../../../adapter/api/schemas/TableSchema'
 
 export interface TableObject extends RecordFields {
   title: string

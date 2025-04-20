@@ -1,12 +1,4 @@
-import {
-  readFileSync,
-  writeFileSync,
-  mkdirSync,
-  rmSync,
-  readdirSync,
-  statSync,
-  existsSync,
-} from 'fs'
+import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync } from 'fs'
 import { join, basename, extname } from 'path'
 import fg from 'fast-glob'
 
@@ -101,25 +93,35 @@ function formatType(schema: JSONSchema, schemaFiles: SchemaFile[]): string {
   return `\`${schema.type || 'unknown'}\``
 }
 
-async function findExample(file: SchemaFile, key: string): Promise<string> {
-  const parents = [...file.parents]
-    .reverse()
-    .filter((p) => p !== 'config')
-    .map((p) => p.charAt(0).toLowerCase() + p.slice(1))
-    .join('/')
-  let examplePath = join(process.cwd(), 'examples', 'config', parents, file.name, `${key}.ts`)
-  console.log(examplePath)
-  if (!existsSync(examplePath)) {
-    examplePath = join(process.cwd(), 'examples', parents, file.name, `${key}.ts`)
-    console.log(examplePath)
-    if (!existsSync(examplePath)) {
-      examplePath = join(process.cwd(), 'examples', 'config', parents, `${key}.ts`)
-      console.log(examplePath)
-      if (!existsSync(examplePath)) {
-        console.log('No example found')
-        return ''
+function findFileCaseInsensitiveRecursive(dir: string, targetFilePath: string): string | null {
+  const entries = readdirSync(dir, { withFileTypes: true })
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name)
+    if (entry.isFile()) {
+      const path = join(entry.parentPath, entry.name)
+      if (path.toLowerCase() === targetFilePath.toLowerCase()) {
+        return fullPath
       }
+    } else if (entry.isDirectory()) {
+      const result = findFileCaseInsensitiveRecursive(fullPath, targetFilePath)
+      if (result) return result
     }
+  }
+  return null
+}
+
+async function findExample(file: SchemaFile, key: string): Promise<string> {
+  const baseDir = join(process.cwd(), 'examples')
+  const parentsReversed = [...file.parents].reverse()
+  const paths = ['config', ...parentsReversed]
+  if (file.name !== 'index' && file.name !== 'config') {
+    paths.push(file.name)
+  }
+  paths.push(key)
+  const pathToFind = join(baseDir, paths.join('/')) + '.ts'
+  const examplePath = findFileCaseInsensitiveRecursive(baseDir, pathToFind)
+  if (!examplePath) {
+    return ''
   }
   const example = await import(examplePath).then((m) => m[Object.keys(m)[0]])
   return `\`\`\`ts

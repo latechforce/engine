@@ -4,7 +4,7 @@ import type { DatabaseConfig, DatabaseEventType, DatabaseType } from '/domain/se
 import type { EventDto } from '/adapter/spi/dtos/EventDto'
 import { PostgreSQLDatabaseTableDriver } from './PostgreSQLTableDriver'
 import type { TableConfig } from '/domain/entities/Table'
-import type { TableSchema } from '/adapter/api/schemas/TableSchema'
+import type { TableSchema } from '../../../../adapter/api/schemas/TableSchema'
 import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 export class PostgreSQLDatabaseDriver implements IDatabaseDriver {

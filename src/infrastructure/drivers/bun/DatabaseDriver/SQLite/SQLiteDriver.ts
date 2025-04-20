@@ -6,7 +6,7 @@ import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
 import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
 import type { TableConfig } from '/domain/entities/Table'
 import { TableMapper } from '/adapter/api/mappers/TableMapper'
-import type { TableSchema } from '/adapter/api/schemas/TableSchema'
+import type { TableSchema } from '../../../../../adapter/api/schemas/TableSchema'
 
 interface Notification {
   id: number

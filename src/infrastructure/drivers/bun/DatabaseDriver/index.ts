@@ -5,7 +5,7 @@ import { PostgreSQLDatabaseDriver } from '/infrastructure/drivers/common/Databas
 import { SQLiteDatabaseDriver } from './SQLite/SQLiteDriver'
 import type { AutomationHistoryRecord } from '/domain/entities/Automation/History'
 import type { TableConfig } from '/domain/entities/Table'
-import type { TableSchema } from '/adapter/api/schemas/TableSchema'
+import type { TableSchema } from '../../../../adapter/api/schemas/TableSchema'
 import { TableMapper } from '/adapter/api/mappers/TableMapper'
 
 export class DatabaseDriver implements IDatabaseDriver {

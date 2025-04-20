@@ -2,24 +2,6 @@
 
 Configuration for Sentry monitoring services
 
-```ts
-import App, { type Config } from '@latechforce/engine/bun'
-
-const config: Config = {
-  "name": "App with a monitor",
-  "services": {
-    "monitors": [
-      {
-        "type": "Sentry",
-        "dsn": "https://sentry.io/your-sentry-dsn",
-        "environment": "production"
-      }
-    ]
-  }
-}
-
-await new App().start(config)
-```
 ## Required
 
 ### Type

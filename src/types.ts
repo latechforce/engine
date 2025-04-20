@@ -1,13 +1,13 @@
-export type { ConfigSchema as Config } from '/adapter/api/schemas/ConfigSchema'
-export type { AutomationSchema as Automation } from '/adapter/api/schemas/AutomationSchema'
-export type { ActionAutomationSchema as Action } from '/adapter/api/schemas/AutomationSchema/ActionSchema'
-export type { TriggerAutomationSchema as Trigger } from '/adapter/api/schemas/AutomationSchema/TriggerSchema'
-export type { TableSchema as Table } from '/adapter/api/schemas/TableSchema'
-export type { FieldTableSchema as Field } from '/adapter/api/schemas/TableSchema/FieldSchema'
+export type { ConfigSchema as Config } from './adapter/api/schemas/ConfigSchema'
+export type { AutomationSchema as Automation } from './adapter/api/schemas/AutomationSchema'
+export type { ActionAutomationSchema as Action } from './adapter/api/schemas/AutomationSchema/ActionSchema'
+export type { TriggerAutomationSchema as Trigger } from './adapter/api/schemas/AutomationSchema/TriggerSchema'
+export type { TableSchema as Table } from './adapter/api/schemas/TableSchema'
+export type { FieldTableSchema as Field } from './adapter/api/schemas/TableSchema/FieldSchema'
 export type { FilterConfig as Filter } from '/domain/entities/Filter'
-export type { BucketSchema as Bucket } from '/adapter/api/schemas/BucketSchema'
-export type { FormSchema as Form } from '/adapter/api/schemas/FormSchema'
-export type { InputFormSchema as Input } from '/adapter/api/schemas/FormSchema/InputSchema'
+export type { BucketSchema as Bucket } from './adapter/api/schemas/BucketSchema'
+export type { FormSchema as Form } from './adapter/api/schemas/FormSchema'
+export type { InputFormSchema as Input } from './adapter/api/schemas/FormSchema/InputSchema'
 export type {
   DatabaseConfig as Database,
   LoggerConfig as Logger,

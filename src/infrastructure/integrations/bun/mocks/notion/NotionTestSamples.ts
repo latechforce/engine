@@ -4,7 +4,7 @@ import type {
   NotionTablePagePropertyFile,
 } from '/domain/integrations/Notion'
 import env from '/test/env'
-import type { TableSchema } from '/adapter/api/schemas/TableSchema'
+import type { TableSchema } from '../../../../../adapter/api/schemas/TableSchema'
 
 export type NotionTableSample1 = ConvertToNotionTablePageProperties<{
   name?: string | null
