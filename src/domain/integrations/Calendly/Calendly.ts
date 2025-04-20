@@ -11,7 +11,7 @@ import type {
   DeleteWebhookSubscriptionParams,
 } from './CalendlyTypes'
 import type { CalendlyConfig } from './CalendlyConfig'
-import { OAuthIntegration, type OAuthService } from '../OAuth'
+import { OAuthIntegration, type OAuthService } from '../OAudth'
 
 export class Calendly extends OAuthIntegration<CalendlyConfig, ICalendlySpi> {
   constructor(spis: ICalendlySpi[], services: OAuthService) {

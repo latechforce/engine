@@ -16,7 +16,7 @@ import type {
   DeleteWebhookSubscriptionParams,
 } from '/domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
-import type { OAuthAccessToken } from '/domain/integrations/OAuth'
+import type { OAuthAccessToken } from '../../../../domain/integrations/OAudth'
 
 export class CalendlyIntegration implements ICalendlyIntegration {
   private _api: AxiosInstance

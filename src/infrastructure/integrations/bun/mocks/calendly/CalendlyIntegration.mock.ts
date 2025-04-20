@@ -16,7 +16,7 @@ import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfi
 import { BaseMockIntegration } from '../base'
 import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 import type { RecordFields } from '/domain/entities/Record'
-import type { OAuthAccessToken } from '/domain/integrations/OAuth'
+import type { OAuthAccessToken } from '../../../../../domain/integrations/OAudth'
 
 type UserRecordFields = RecordFields & {
   uri: string

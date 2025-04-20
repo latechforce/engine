@@ -2,7 +2,7 @@ import { BaseAdmin, type BaseAdminServices } from '../base'
 import { JsxResponse } from '/domain/entities/Response/Jsx'
 import type { Components, DropdownProps, TableColumn, TableRow } from '/domain/components'
 import type { Integration, Integrations } from '/domain/integrations'
-import { OAuthIntegration } from '../../../integrations/OAuth'
+import { OAuthIntegration } from '../../../integrations/OAudth'
 import { RedirectResponse } from '../../Response/Redirect'
 import type { GetRequest } from '../../Request'
 

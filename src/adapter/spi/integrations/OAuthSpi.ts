@@ -1,6 +1,6 @@
 import { BaseSpi, type BaseIntegration } from './base'
 import type { BaseConfig, IntegrationResponse } from '/domain/integrations/base'
-import type { OAuthAccessToken } from '/domain/integrations/OAuth'
+import type { OAuthAccessToken } from '../../../domain/integrations/OAudth'
 
 export interface OAuthIntegration<T extends BaseConfig> extends BaseIntegration<T> {
   authorizationUrl: (redirectUri: string) => string
