@@ -1,6 +1,6 @@
 import { Table, type TableConfig } from '/domain/entities/Table'
 import type { TableSchema } from '../schemas/TableSchema'
-import { FieldMapper } from './Field'
+import { FieldMapper } from './FieldMapper'
 import type { Server } from '/domain/services/Server'
 import type { Database } from '/domain/services/Database'
 import type { IdGenerator } from '/domain/services/IdGenerator'

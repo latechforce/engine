@@ -14,7 +14,7 @@ export type FormMapperComponents = FormComponents
 
 export class FormMapper {
   static toEntity = (
-    schema: FormSchema & { timestamp: string },
+    schema: FormSchema,
     services: FormMapperServices,
     entities: FormMapperEntities,
     components: FormMapperComponents
@@ -23,7 +23,7 @@ export class FormMapper {
   }
 
   static toManyEntities = (
-    schemas: (FormSchema & { timestamp: string })[] = [],
+    schemas: FormSchema[] = [],
     services: FormMapperServices,
     entities: FormMapperEntities,
     components: FormMapperComponents
