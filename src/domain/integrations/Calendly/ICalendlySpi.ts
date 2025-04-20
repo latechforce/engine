@@ -1,5 +1,5 @@
 import type { IntegrationResponse } from '../base'
-import type { OAuthSpi } from '../OAudth'
+import type { OAuthSpi } from '../OAuth'
 import type { CalendlyConfig } from './CalendlyConfig'
 import type {
   CalendlyUser,
