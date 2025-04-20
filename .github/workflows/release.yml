@@ -17,11 +17,11 @@ jobs:
     name: Run Unit Tests and Linting
     timeout-minutes: 60
     runs-on: ubuntu-latest
-  
+
     permissions:
       contents: read
       id-token: write
-  
+
     env:
       TEST_SENTRY_DSN: ${{ secrets.TEST_SENTRY_DSN }}
       TEST_NOTION_TOKEN: ${{ secrets.TEST_NOTION_TOKEN }}
@@ -49,6 +49,8 @@ jobs:
       TEST_CALENDLY_BASE_URL: ${{ secrets.TEST_CALENDLY_BASE_URL }}
       TEST_CALENDLY_CLIENT_ID: ${{ secrets.TEST_CALENDLY_CLIENT_ID }}
       TEST_CALENDLY_CLIENT_SECRET: ${{ secrets.TEST_CALENDLY_CLIENT_SECRET }}
+      TEST_CALENDLY_WEBHOOK_SIGNING_KEY: ${{ secrets.TEST_CALENDLY_WEBHOOK_SIGNING_KEY }}
+      TEST_CALENDLY_AUTH_BASE_URL: ${{ secrets.TEST_CALENDLY_AUTH_BASE_URL }}
       TEST_CALENDLY_ACCESS_TOKEN: ${{ secrets.TEST_CALENDLY_ACCESS_TOKEN }}
       TEST_YOUCANBOOKME_BASE_URL: ${{ secrets.TEST_YOUCANBOOKME_BASE_URL }}
       TEST_YOUCANBOOKME_USERNAME: ${{ secrets.TEST_YOUCANBOOKME_USERNAME }}
@@ -57,7 +59,7 @@ jobs:
       TEST_JOTFORM_API_KEY: ${{ secrets.TEST_JOTFORM_API_KEY }}
       TEST_JOTFORM_FORM_ID: ${{ secrets.TEST_JOTFORM_FORM_ID }}
       TESTCONTAINERS_RYUK_DISABLED: true
-  
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -73,20 +75,20 @@ jobs:
         run: bun run build
       - name: Run test suite
         run: bun run test
-  
+
   release:
     name: Publish Package to NPM
     needs: test
     runs-on: ubuntu-latest
-  
+
     permissions:
       contents: write
       id-token: write
-  
+
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-  
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -102,7 +104,7 @@ jobs:
         run: bun run build
       - name: Create and publish release
         run: bunx semantic-release
-  
+
   website:
     name: Deploy Documentation to GitHub Pages
     needs: release

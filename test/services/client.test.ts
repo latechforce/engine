@@ -6,7 +6,7 @@ const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.page(({ app, browser }) => {
   describe('on open page', () => {
-    it('should return link to script.js', async () => {
+    it('should return link to htmx.js', async () => {
       // GIVEN
       const page = await browser.newPage()
       const { url } = await app.start(configServiceClient)
@@ -16,7 +16,7 @@ mock.page(({ app, browser }) => {
 
       // THEN
       const html = await page.content()
-      expect(html).toContain('<script src="/script.js?ts=')
+      expect(html).toContain('<script src="/htmx.js?ts=')
     })
 
     it('should return the htmx js content', async () => {
@@ -25,7 +25,7 @@ mock.page(({ app, browser }) => {
       const { url } = await app.start(configServiceClient)
 
       // WHEN
-      const response = await page.goto(`${url}/script.js`)
+      const response = await page.goto(`${url}/htmx.js`)
 
       // THEN
       const js = await response?.text()

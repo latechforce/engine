@@ -14,7 +14,7 @@ mock.request(({ app, drivers }) => {
       expect(drivers.storage.bucket(configBuckets.buckets![0].name).exists()).resolves.toBe(true)
     })
 
-    it('should not create a notion bucket if there is no config', async () => {
+    it('should not create a notion bucket if there is no notion config', async () => {
       // WHEN
       await app.start(configBuckets)
 

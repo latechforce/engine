@@ -42,11 +42,14 @@ export class Notion extends Integration<NotionConfig, INotionSpi> {
     }
   }
 
-  init = async () => {
-    await super.init()
-    const name = 'notion_files'
-    this._bucket = new Bucket({ name }, this._notionsServices)
-    await this._bucket.init()
+  init = async (): Promise<boolean> => {
+    if (await super.init()) {
+      const name = 'notion_files'
+      this._bucket = new Bucket({ name }, this._notionsServices)
+      await this._bucket.init()
+      return true
+    }
+    return false
   }
 
   startPolling = async () => {

@@ -97,12 +97,14 @@ export class Server {
   }
 
   init = async (callback: () => Promise<void>) => {
-    const { logger } = this._services
+    const { logger, tunnel } = this._services
     if (!this._port) {
       logger.debug('finding available port...')
       this._port = await this._spi.findAvailablePort()
     }
-    if (!this._baseUrl) this._baseUrl = `http://localhost:${this._port}`
+    if (!this._baseUrl) {
+      this._baseUrl = await tunnel.start(this.port)
+    }
     logger.debug('initializing server routes...')
     await this.get('/api/health', async () => new JsonResponse({ success: true }))
     await callback()
@@ -193,10 +195,9 @@ export class Server {
   }
 
   start = async (): Promise<string> => {
-    const { logger, tunnel } = this._services
+    const { logger } = this._services
     logger.debug(`starting server...`)
     await this._spi.start(this.port)
-    this._baseUrl = await tunnel.start(this.port)
     this.isListening = true
     logger.debug(`server listening at ${this.baseUrl}`)
     return this.baseUrl

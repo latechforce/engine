@@ -57,8 +57,8 @@ export class StoppedApp extends BaseApp {
     await storage.connect()
     await storage.migrate()
     await realtime.setup()
-    await notion.startPolling()
     await server.start()
+    await notion.startPolling()
     const startedApp = new StartedApp(
       this.config,
       this._services,

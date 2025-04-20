@@ -1,0 +1,3 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match the form response snapshot 1`] = `"<div id="form-response-form-container" class="mx-auto max-w-xl"><div class="text-center"><p class="mt-10 text-gray-600 dark:text-neutral-400">Form Response</p></div></div>"`;

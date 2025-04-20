@@ -6,7 +6,7 @@ const mock = new Mock(Tester, { drivers: ['Database'] })
 
 mock.page(({ app, browser }) => {
   describe('on open page', () => {
-    it('should return link to style.css', async () => {
+    it('should return link to tailwind.css', async () => {
       // GIVEN
       const page = await browser.newPage()
       const { url } = await app.start(configServiceThemeTailwindcssWithForm)
@@ -16,7 +16,7 @@ mock.page(({ app, browser }) => {
 
       // THEN
       const html = await page.content()
-      expect(html).toContain('<link href="/style.css?ts=')
+      expect(html).toContain('<link href="/tailwind.css?ts=')
     })
 
     it('should return the tailwind css content', async () => {
@@ -25,7 +25,7 @@ mock.page(({ app, browser }) => {
       const { url } = await app.start(configServiceThemeTailwindcssWithForm)
 
       // WHEN
-      const response = await page.goto(`${url}/style.css`)
+      const response = await page.goto(`${url}/tailwind.css`)
 
       // THEN
       const css = await response?.text()
@@ -33,7 +33,7 @@ mock.page(({ app, browser }) => {
       expect(css).toContain('w-full')
     })
 
-    it('should return link to style.js', async () => {
+    it('should return link to preline.js', async () => {
       // GIVEN
       const page = await browser.newPage()
       const { url } = await app.start(configServiceThemeTailwindcssWithForm)
@@ -43,7 +43,7 @@ mock.page(({ app, browser }) => {
 
       // THEN
       const html = await page.content()
-      expect(html).toContain('<script src="/style.js?ts=')
+      expect(html).toContain('<script src="/preline.js?ts=')
     })
 
     it('should return the preline js content', async () => {
@@ -52,7 +52,7 @@ mock.page(({ app, browser }) => {
       const { url } = await app.start(configServiceThemeTailwindcssWithForm)
 
       // WHEN
-      const response = await page.goto(`${url}/style.js`)
+      const response = await page.goto(`${url}/preline.js`)
 
       // THEN
       const js = await response?.text()

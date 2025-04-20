@@ -88,7 +88,6 @@ type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> 
   | WithDriverInput<D>
   | WithIntegrationInput<I>
   | (WithDriverInput<D> & WithIntegrationInput<I>)
-  | {}
 
 type Request = {
   get: <T = any>(url: string, options?: RequestInit) => Promise<T>
@@ -119,7 +118,11 @@ type PageHelpers = Page & {
 export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []> {
   constructor(
     private tester: Tester,
-    private options: WithOptions<D, I> = {}
+    private options: WithOptions<D, I> & { debug?: boolean } = {
+      debug: false,
+      drivers: [] as unknown as D,
+      integrations: [] as unknown as I,
+    }
   ) {}
 
   app(tests: (helpers: AppHelpers<D, I>) => void): void {
@@ -454,7 +457,7 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
             ...integrations,
           },
           services: {
-            loggers: [],
+            loggers: this.options.debug ? [{ type: 'Console', level: 'debug' }] : [],
             theme: { type: 'none' },
             ...config.services,
             ...services,

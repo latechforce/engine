@@ -63,11 +63,11 @@ export class Integration<C extends BaseConfig, T extends BaseSpi<C>> {
     return this._spis.map((spi) => spi.config.account)
   }
 
-  async init() {
+  async init(): Promise<boolean> {
     const { server } = this._services
-    if (this._spis.length > 0) {
-      await server.post(`/api/integration/${this._name}/test-connection`, this.postTestConnection)
-    }
+    if (this._spis.length === 0) return false
+    await server.post(`/api/integration/${this._name}/test-connection`, this.postTestConnection)
+    return true
   }
 
   postTestConnection = async (request: PostRequest) => {
