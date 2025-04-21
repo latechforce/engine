@@ -6,6 +6,7 @@ import type { Field } from '../Field'
 import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { RecordFields } from '../Record'
 import type { Record } from '/domain/entities/Record'
+import type { Filter } from '../Filter'
 
 export interface AutomationHistoryRecord extends RecordFields {
   automation_name: string
@@ -16,8 +17,8 @@ export interface AutomationHistoryRecord extends RecordFields {
 
 export interface AutomationHistoryRecordReadModel {
   id: string
-  created_at: string
-  updated_at: string
+  created_at: Date
+  updated_at: Date
   automation_name: string
   trigger_data: string
   actions_data: string
@@ -72,14 +73,14 @@ export class AutomationHistory {
     await this._table.update(id, { status })
   }
 
-  list = async (): Promise<AutomationHistoryRecordReadModel[]> => {
-    const records = await this._table.list<AutomationHistoryRecord>()
+  list = async (filter: Filter): Promise<AutomationHistoryRecordReadModel[]> => {
+    const records = await this._table.list<AutomationHistoryRecord>(filter)
     return records.map(
       (record: Record<AutomationHistoryRecord>): AutomationHistoryRecordReadModel => {
         return {
           id: record.id,
-          created_at: record.created_at.toISOString(),
-          updated_at: record.updated_at?.toISOString() ?? '',
+          created_at: record.created_at,
+          updated_at: record.updated_at,
           automation_name: record.fields.automation_name,
           trigger_data: record.fields.trigger_data,
           actions_data: record.fields.actions_data,
