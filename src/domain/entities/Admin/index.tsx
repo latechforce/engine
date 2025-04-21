@@ -6,7 +6,7 @@ import { AdminIntegrations } from './Integrations'
 import { AdminForms } from './Forms'
 import { AdminAutomations } from './Automations'
 import type { Integrations } from '/domain/integrations'
-import { AdminAutomationsHistory } from './Automations History'
+import { AdminAutomationsHistory } from './Automations/History'
 
 export class Admin extends BaseAdmin {
   private readonly _tables: AdminTables

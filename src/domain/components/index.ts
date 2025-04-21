@@ -20,6 +20,9 @@ import type { Textarea } from './BasicForms/Textarea'
 import type { Sidebar } from './Navigations/Sidebar'
 import type { Table } from './Tables/Table'
 import type { Dropdown } from './Overlays/Dropdown'
+import type { H1 } from './Typography/H1'
+import type { H2 } from './Typography/H2'
+import type { H3 } from './Typography/H3'
 
 export type Components = {
   Page: Page
@@ -33,4 +36,7 @@ export type Components = {
   Sidebar: Sidebar
   Table: Table
   Dropdown: Dropdown
+  H1: H1
+  H2: H2
+  H3: H3
 }
