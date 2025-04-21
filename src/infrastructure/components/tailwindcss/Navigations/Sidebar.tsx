@@ -1,10 +1,11 @@
-import type { SidebarProps } from '/domain/components'
+import type { SidebarItemWithChildren, SidebarProps, SingleSidebarItem } from '/domain/components'
+
+const activeClass =
+  'cursor-pointer flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white'
+const inactiveClass =
+  'cursor-pointer w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200'
 
 export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => {
-  const activeClass =
-    'cursor-pointer flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-white'
-  const inactiveClass =
-    'cursor-pointer w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-800 rounded-lg hover:bg-gray-100 focus:outline-hidden focus:bg-gray-100 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:focus:bg-neutral-700 dark:text-neutral-200'
   return (
     <div>
       <div className="py-16 text-center lg:hidden">
@@ -70,18 +71,13 @@ export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => 
           <nav className="h-full overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500 [&::-webkit-scrollbar-track]:bg-gray-100 dark:[&::-webkit-scrollbar-track]:bg-neutral-700">
             <div className="flex w-full flex-col flex-wrap px-2 pb-0">
               <ul className="space-y-1">
-                {items.map((item) => (
-                  <li key={item.label}>
-                    <a
-                      href={item.href}
-                      className={`${item.active ? activeClass : inactiveClass}`}
-                      {...item.aAttributes}
-                    >
-                      {item.icon}
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
+                {items.map((item) => {
+                  if (item.type === 'with-children') {
+                    return <NavItemWithChildren key={item.label} item={item} />
+                  }
+
+                  return <SingleNavItem key={item.label} item={item} />
+                })}
               </ul>
             </div>
           </nav>
@@ -90,5 +86,80 @@ export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => 
       </div>
       <div className="lg:ml-64">{children}</div>
     </div>
+  )
+}
+
+function SingleNavItem({ item }: { item: SingleSidebarItem }) {
+  return (
+    <li key={item.label}>
+      <a
+        href={item.href}
+        className={`${item.active ? activeClass : inactiveClass}`}
+        {...item.aAttributes}
+      >
+        {item.icon}
+        {item.label}
+      </a>
+    </li>
+  )
+}
+
+function NavItemWithChildren({ item }: { item: SidebarItemWithChildren }) {
+  return (
+    <li className="hs-accordion" id={item.label + '-accordion'}>
+      <button
+        type="button"
+        className={`hs-accordion-toggle w-full ${item.active ? activeClass : inactiveClass}`}
+        aria-expanded="true"
+        aria-controls="users-accordion-collapse-1"
+      >
+        {item.icon}
+        {item.label}
+        <svg
+          className="hs-accordion-active:block ms-auto hidden size-4 text-gray-600 group-hover:text-gray-500 dark:text-neutral-400"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m18 15-6-6-6 6" />
+        </svg>
+        <svg
+          className="hs-accordion-active:hidden ms-auto block size-4 text-gray-600 group-hover:text-gray-500 dark:text-neutral-400"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+      <div
+        id={item.label + '-accordion-collapse-1'}
+        className="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+        role="region"
+        aria-labelledby={item.label + '-accordion'}
+      >
+        <ul className="hs-accordion-group space-y-1 ps-7 pt-1" data-hs-accordion-always-open>
+          {item.children.map((child) => {
+            if (child.type === 'with-children') {
+              return <NavItemWithChildren key={child.label} item={child} />
+            }
+
+            return <SingleNavItem key={child.label} item={child} />
+          })}
+        </ul>
+      </div>
+    </li>
   )
 }
