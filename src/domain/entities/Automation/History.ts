@@ -5,8 +5,19 @@ import { LongTextField } from '../Field/LongText'
 import type { Field } from '../Field'
 import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { RecordFields } from '../Record'
+import type { Record } from '/domain/entities/Record'
 
 export interface AutomationHistoryRecord extends RecordFields {
+  automation_name: string
+  trigger_data: string
+  actions_data: string
+  status: string
+}
+
+export interface AutomationHistoryRecordReadModel {
+  id: string
+  created_at: string
+  updated_at: string
   automation_name: string
   trigger_data: string
   actions_data: string
@@ -59,5 +70,22 @@ export class AutomationHistory {
 
   updateStatus = async (id: string, status: string): Promise<void> => {
     await this._table.update(id, { status })
+  }
+
+  list = async (): Promise<AutomationHistoryRecordReadModel[]> => {
+    const records = await this._table.list<AutomationHistoryRecord>()
+    return records.map(
+      (record: Record<AutomationHistoryRecord>): AutomationHistoryRecordReadModel => {
+        return {
+          id: record.id,
+          created_at: record.created_at.toISOString(),
+          updated_at: record.updated_at?.toISOString() ?? '',
+          automation_name: record.fields.automation_name,
+          trigger_data: record.fields.trigger_data,
+          actions_data: record.fields.actions_data,
+          status: record.fields.status,
+        }
+      }
+    )
   }
 }
