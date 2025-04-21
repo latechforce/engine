@@ -39,7 +39,7 @@ export class AdminAutomations extends BaseAdmin {
     return new JsxResponse(
       (
         <this.layout path="/admin/automations" title="Automations">
-          <H1>Automations History</H1>
+          <H1>Automations</H1>
           <div className="p-6">
             <div className="grid grid-cols-3">
               <Search field="search" placeholder="Search" />
