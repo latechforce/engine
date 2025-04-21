@@ -25,4 +25,9 @@ export const configAutomationActionServiceCodeRunJavascript: Config = {
       ],
     },
   ],
+  services: {
+    server: {
+      port: 3000,
+    },
+  },
 }
