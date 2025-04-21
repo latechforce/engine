@@ -5,7 +5,7 @@ export class Record<T extends RecordFields = RecordFields> {
     readonly id: string,
     readonly fields: T,
     readonly created_at: Date,
-    readonly updated_at?: Date
+    readonly updated_at: Date
   ) {}
 
   toJson(): PersistedRecordFields<T> {
