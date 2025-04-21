@@ -32,7 +32,7 @@ type ContextProps = {
 export const Context = ({ label, description, field, required, children }: ContextProps) => {
   return (
     <div>
-      <Label label={label ?? field} field={field} required={required} />
+      {label && label !== '' ? <Label label={label} field={field} required={required} /> : null}
       {description ? <Description description={description} /> : null}
       {children}
     </div>
