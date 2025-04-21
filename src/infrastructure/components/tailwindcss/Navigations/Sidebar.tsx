@@ -73,7 +73,11 @@ export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => 
               <ul className="space-y-1">
                 {items.map((item) => {
                   if (item.type === 'with-children') {
-                    return <NavItemWithChildren key={item.label} item={item} />
+                    return (
+                      <div className="hs-accordion-group">
+                        <NavItemWithChildren key={item.label} item={item} />
+                      </div>
+                    )
                   }
 
                   return <SingleNavItem key={item.label} item={item} />
@@ -91,7 +95,7 @@ export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => 
 
 function SingleNavItem({ item }: { item: SingleSidebarItem }) {
   return (
-    <li key={item.label}>
+    <li>
       <a
         href={item.href}
         className={`${item.active ? activeClass : inactiveClass}`}
@@ -106,12 +110,12 @@ function SingleNavItem({ item }: { item: SingleSidebarItem }) {
 
 function NavItemWithChildren({ item }: { item: SidebarItemWithChildren }) {
   return (
-    <li className="hs-accordion" id={item.label + '-accordion'}>
+    <li className={`hs-accordion ${item.active ? 'active' : ''}`} id={item.label + '-accordion'}>
       <button
         type="button"
         className={`hs-accordion-toggle w-full ${item.active ? activeClass : inactiveClass}`}
-        aria-expanded="true"
-        aria-controls="users-accordion-collapse-1"
+        aria-expanded={item.active}
+        aria-controls={item.label + '-accordion-collapse-1'}
       >
         {item.icon}
         {item.label}
@@ -149,6 +153,9 @@ function NavItemWithChildren({ item }: { item: SidebarItemWithChildren }) {
         className="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
         role="region"
         aria-labelledby={item.label + '-accordion'}
+        style={{
+          display: item.active ? 'block' : 'none',
+        }}
       >
         <ul className="hs-accordion-group space-y-1 ps-7 pt-1" data-hs-accordion-always-open>
           {item.children.map((child) => {
