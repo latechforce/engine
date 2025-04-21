@@ -1,8 +1,12 @@
 import type { DropdownProps } from '../Overlays/Dropdown'
 
-export type TableColumn = { label: string; key: string }
+export type TableColumn = {
+  label: string
+  key: string
+  formatter?: (value: unknown) => React.ReactNode | string
+}
 
-export type TableRow = Record<string, string | React.ReactNode>
+export type TableRow = Record<string, string | number | Date | React.ReactNode>
 
 export type TableProps = {
   columns: TableColumn[]

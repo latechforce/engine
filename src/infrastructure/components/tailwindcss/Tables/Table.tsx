@@ -30,23 +30,18 @@ export const Table = ({ columns, rows, dropdown }: TableProps) => {
               <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
                 {rows.map((row, index) => (
                   <tr key={index}>
-                    {columns.map((column, index) =>
-                      index === 0 ? (
+                    {columns.map((column, index) => {
+                      const value = row[column.key]
+                      const formattedValue = column.formatter ? column.formatter(value) : value
+                      return (
                         <td
                           key={index}
-                          className="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-800 dark:text-neutral-200"
+                          className={`px-6 py-4 text-sm ${index === 0 ? 'font-medium' : ''} whitespace-nowrap text-gray-800 dark:text-neutral-200`}
                         >
-                          {row[column.key]}
-                        </td>
-                      ) : (
-                        <td
-                          key={index}
-                          className="px-6 py-4 text-sm whitespace-nowrap text-gray-800 dark:text-neutral-200"
-                        >
-                          {row[column.key]}
+                          {formattedValue as string}
                         </td>
                       )
-                    )}
+                    })}
                     {dropdown && (
                       <td className="px-6 py-4 text-end text-sm font-medium whitespace-nowrap">
                         <Dropdown {...dropdown(row)} />
