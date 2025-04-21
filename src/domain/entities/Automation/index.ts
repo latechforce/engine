@@ -44,6 +44,10 @@ export class Automation {
     return this._history
   }
 
+  get entities() {
+    return this._entities
+  }
+
   validate = async (): Promise<ConfigError[]> => {
     const { trigger, actions } = this._entities
     const errors: Promise<ConfigError[]>[] = []

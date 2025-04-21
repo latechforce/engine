@@ -25,7 +25,7 @@ export class Admin extends BaseAdmin {
     super(services, components)
     this._tables = new AdminTables(services, components)
     this._integrations = new AdminIntegrations(services, components, integrations)
-    this._automations = new AdminAutomations(services, components)
+    this._automations = new AdminAutomations(services, components, automations)
     this._forms = new AdminForms(services, components)
     this._automationsHistory = new AdminAutomationsHistory(services, components, automations)
   }
