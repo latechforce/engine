@@ -356,15 +356,11 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
       : { conditions: '', values: [] }
     const { conditions } = transformedConditions
 
-    console.log('page.page', page?.page)
-    console.log('page.perPage', page?.perPage)
-
     if (conditions) query += ` WHERE ${conditions}`
     if (order) query += ` ORDER BY ${order.map((o) => `${o.field} ${o.direction}`).join(', ')}`
     if (page)
       query += ` LIMIT ${page.perPage} OFFSET ${(page.page - 1) * (page?.perPage ?? DEFAULT_PER_PAGE)}`
 
-    console.log(query)
     return query
   }
 
