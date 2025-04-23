@@ -2,6 +2,7 @@ import { BaseAdmin, type BaseAdminServices } from '../base'
 import { JsxResponse } from '/domain/entities/Response/Jsx'
 import type { Components, TableColumn, TableRow } from '/domain/components'
 import type { Automation } from '../../Automation'
+import type { GetRequest } from '../../Request'
 
 export class AdminAutomations extends BaseAdmin {
   protected readonly _automations: Automation[]
@@ -15,8 +16,16 @@ export class AdminAutomations extends BaseAdmin {
     await super.init('/admin/automations')
   }
 
-  get = async () => {
-    const { H1, Table, Search } = this._components
+  get = async (req?: GetRequest) => {
+    const page = Number(req?.getQuery('page') ?? 1)
+    const q = req?.getQuery('q')
+    const tableId = 'automation-table'
+
+    let isHtmxRequest = false
+    if (req?.headers?.['hx-target'] && req.headers['hx-target'] === tableId) {
+      isHtmxRequest = true
+    }
+    const { H1, Table } = this._components
 
     const columns: TableColumn[] = [
       {
@@ -28,7 +37,16 @@ export class AdminAutomations extends BaseAdmin {
         key: 'actions_count',
       },
     ]
-    const rows: TableRow[] = this._automations.map((item) => {
+
+    let filteredAutomations = this._automations
+
+    if (q) {
+      filteredAutomations = filteredAutomations.filter((item) => {
+        return item.name.toLowerCase().includes(q.toLowerCase())
+      })
+    }
+
+    const rows: TableRow[] = filteredAutomations.slice((page - 1) * 10, page * 10).map((item) => {
       return {
         key: `${item.name}`,
         name: item.name,
@@ -36,17 +54,28 @@ export class AdminAutomations extends BaseAdmin {
       }
     })
 
+    const tableComponent = (
+      <Table
+        columns={columns}
+        rows={rows}
+        id={tableId}
+        page={page}
+        perPage={10}
+        count={this._automations.length}
+        searchRoute={`/admin/automations`}
+        query={q}
+      />
+    )
+
+    if (isHtmxRequest) {
+      return new JsxResponse(tableComponent)
+    }
+
     return new JsxResponse(
       (
         <this.layout path="/admin/automations" title="Automations">
           <H1>Automations</H1>
-          <div className="p-6">
-            <div className="grid grid-cols-3">
-              <Search field="search" placeholder="Search" />
-            </div>
-            <div className="grid grid-cols-4"></div>
-          </div>
-          <Table columns={columns} rows={rows} />
+          {tableComponent}
         </this.layout>
       )
     )

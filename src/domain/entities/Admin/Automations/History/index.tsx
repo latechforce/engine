@@ -144,37 +144,28 @@ export class AdminAutomationsHistory extends BaseAdmin {
       status: item.status,
     }))
 
+    const tableComponent = (
+      <Table
+        id={tableId}
+        columns={columns}
+        rows={rows}
+        page={page}
+        perPage={10}
+        count={this._automationsHistoryCount}
+        searchRoute={`/admin/automations/history`}
+        query={q}
+      />
+    )
+
     if (isHtmxRequest) {
-      return new JsxResponse(
-        (
-          <Table
-            id={tableId}
-            columns={columns}
-            rows={rows}
-            page={page}
-            perPage={10}
-            count={this._automationsHistoryCount}
-            searchRoute={`/admin/automations/history`}
-            query={q}
-          />
-        )
-      )
+      return new JsxResponse(tableComponent)
     }
 
     return new JsxResponse(
       (
         <this.layout path="/admin/automations/history" title="Automations History">
           <H1>Automations History</H1>
-          <Table
-            id={tableId}
-            columns={columns}
-            rows={rows}
-            page={page}
-            perPage={10}
-            count={this._automationsHistoryCount}
-            searchRoute={`/admin/automations/history`}
-            query={q}
-          />
+          {tableComponent}
         </this.layout>
       )
     )
