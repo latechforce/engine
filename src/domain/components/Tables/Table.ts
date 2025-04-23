@@ -16,6 +16,8 @@ export type TableProps = {
   count?: number
   page?: number
   perPage?: number
+  query?: string
+  searchRoute?: string
 }
 
 export type Table = React.ComponentType<TableProps>

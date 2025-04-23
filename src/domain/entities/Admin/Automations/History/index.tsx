@@ -99,7 +99,7 @@ export class AdminAutomationsHistory extends BaseAdmin {
         })
       }
     }
-    const { H1, Table, Search } = this._components
+    const { H1, Table } = this._components
 
     const columns: TableColumn[] = [
       {
@@ -144,8 +144,6 @@ export class AdminAutomationsHistory extends BaseAdmin {
       status: item.status,
     }))
 
-    console.log('isHtmxRequest', isHtmxRequest)
-
     if (isHtmxRequest) {
       return new JsxResponse(
         (
@@ -156,6 +154,8 @@ export class AdminAutomationsHistory extends BaseAdmin {
             page={page}
             perPage={10}
             count={this._automationsHistoryCount}
+            searchRoute={`/admin/automations/history`}
+            query={q}
           />
         )
       )
@@ -165,18 +165,6 @@ export class AdminAutomationsHistory extends BaseAdmin {
       (
         <this.layout path="/admin/automations/history" title="Automations History">
           <H1>Automations History</H1>
-          <div className="p-6">
-            <div className="grid grid-cols-3">
-              <Search
-                field="q"
-                placeholder="Search"
-                searchRoute={`/admin/automations/history?page=${page}`}
-                resultsContainer={`#${tableId}`}
-                value={q}
-              />
-            </div>
-            <div className="grid grid-cols-4"></div>
-          </div>
           <Table
             id={tableId}
             columns={columns}
@@ -184,6 +172,8 @@ export class AdminAutomationsHistory extends BaseAdmin {
             page={page}
             perPage={10}
             count={this._automationsHistoryCount}
+            searchRoute={`/admin/automations/history`}
+            query={q}
           />
         </this.layout>
       )
