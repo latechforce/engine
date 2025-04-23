@@ -78,10 +78,17 @@ export class ElysiaDriver implements IServerDriver {
   ): Promise<void> => {
     this._app.get(
       path,
-      async ({ request, query, params }) => {
+      async ({ request, query, params, headers }) => {
         const authFailed = this._verifyAuth(options, request)
         if (authFailed) return authFailed
-        const getDto: GetDto = { path, query, params, baseUrl: '', headers: {}, method: 'GET' }
+        const getDto: GetDto = {
+          path,
+          query,
+          params,
+          baseUrl: '',
+          headers,
+          method: 'GET',
+        }
         return this._formatResponse(await handler(getDto))
       },
       this._preprocessDoc(options)
@@ -95,7 +102,7 @@ export class ElysiaDriver implements IServerDriver {
   ): Promise<void> => {
     this._app.post(
       path,
-      async ({ request, query, params, body }) => {
+      async ({ request, query, params, body, headers }) => {
         const authFailed = this._verifyAuth(options, request)
         if (authFailed) return authFailed
         const postDto: PostDto = {
@@ -104,7 +111,7 @@ export class ElysiaDriver implements IServerDriver {
           params,
           body,
           baseUrl: '',
-          headers: {},
+          headers,
           method: 'POST',
         }
         return this._formatResponse(await handler(postDto))
@@ -120,7 +127,7 @@ export class ElysiaDriver implements IServerDriver {
   ): Promise<void> => {
     this._app.patch(
       path,
-      async ({ request, query, params, body }) => {
+      async ({ request, query, params, body, headers }) => {
         const authFailed = this._verifyAuth(options, request)
         if (authFailed) return authFailed
         const patchDto: PatchDto = {
@@ -129,7 +136,7 @@ export class ElysiaDriver implements IServerDriver {
           params,
           body,
           baseUrl: '',
-          headers: {},
+          headers,
           method: 'PATCH',
         }
         return this._formatResponse(await handler(patchDto))
@@ -145,7 +152,7 @@ export class ElysiaDriver implements IServerDriver {
   ): Promise<void> => {
     this._app.delete(
       path,
-      async ({ request, query, params }) => {
+      async ({ request, query, params, headers }) => {
         const authFailed = this._verifyAuth(options, request)
         if (authFailed) return authFailed
         const deleteDto: DeleteDto = {
@@ -153,7 +160,7 @@ export class ElysiaDriver implements IServerDriver {
           query,
           params,
           baseUrl: '',
-          headers: {},
+          headers,
           method: 'DELETE',
         }
         return this._formatResponse(await handler(deleteDto))
@@ -165,13 +172,13 @@ export class ElysiaDriver implements IServerDriver {
   notFound = async (
     handler: (requestDto: RequestDto) => Promise<EngineResponse>
   ): Promise<void> => {
-    this._app.onError(async ({ path, query, params }) => {
+    this._app.onError(async ({ path, query, params, headers }) => {
       const requestDto: RequestDto = {
         path,
         query,
         params,
         baseUrl: '',
-        headers: {},
+        headers,
         method: 'GET',
       }
       return this._formatResponse(await handler(requestDto))
