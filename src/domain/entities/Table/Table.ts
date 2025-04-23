@@ -107,7 +107,7 @@ export class Table {
       return { records }
     } else if (schemaValidator.validateType<FilterConfig>(filterConfig, filterSchema)) {
       const filter = FilterMapper.toEntity(filterConfig)
-      const records = await this.db.list(filter)
+      const records = await this.db.list({ filter })
       return { records }
     }
     const [error] = schemaValidator.validate(filterConfig, filterSchema)
