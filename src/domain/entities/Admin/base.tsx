@@ -1,3 +1,4 @@
+import type { GetRequest } from '../Request'
 import type { JsxResponse } from '../Response/Jsx'
 import type { Components } from '/domain/components'
 import type { Client, Server, System, Theme } from '/domain/services'
@@ -20,7 +21,7 @@ export class BaseAdmin {
     await server.get(path, this.get)
   }
 
-  get = async (): Promise<JsxResponse> => {
+  get = async (req?: GetRequest): Promise<JsxResponse> => {
     throw new Error('Not implemented')
   }
 

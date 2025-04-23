@@ -1,5 +1,5 @@
 import type { Database } from '/domain/services/Database'
-import type { DatabaseTable } from '/domain/services/DatabaseTable'
+import type { DatabaseTable, ListParams } from '/domain/services/DatabaseTable'
 import { SingleLineTextField } from '../Field/SingleLineText'
 import { LongTextField } from '../Field/LongText'
 import type { Field } from '../Field'
@@ -7,6 +7,7 @@ import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { RecordFields } from '../Record'
 import type { Record } from '/domain/entities/Record'
 import type { Filter } from '../Filter'
+import type { CountParams } from '/adapter/spi/drivers/DatabaseTableSpi'
 
 export interface AutomationHistoryRecord extends RecordFields {
   automation_name: string
@@ -73,8 +74,8 @@ export class AutomationHistory {
     await this._table.update(id, { status })
   }
 
-  list = async (filter: Filter): Promise<AutomationHistoryRecordReadModel[]> => {
-    const records = await this._table.list<AutomationHistoryRecord>(filter)
+  list = async (params: ListParams): Promise<AutomationHistoryRecordReadModel[]> => {
+    const records = await this._table.list<AutomationHistoryRecord>(params)
     return records.map(
       (record: Record<AutomationHistoryRecord>): AutomationHistoryRecordReadModel => {
         return {
@@ -88,5 +89,9 @@ export class AutomationHistory {
         }
       }
     )
+  }
+
+  count = async (params: CountParams): Promise<number> => {
+    return await this._table.count(params)
   }
 }

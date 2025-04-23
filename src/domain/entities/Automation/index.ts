@@ -48,6 +48,10 @@ export class Automation {
     return this._entities
   }
 
+  get services() {
+    return this._services
+  }
+
   validate = async (): Promise<ConfigError[]> => {
     const { trigger, actions } = this._entities
     const errors: Promise<ConfigError[]>[] = []
