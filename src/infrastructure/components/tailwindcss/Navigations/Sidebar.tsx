@@ -74,8 +74,8 @@ export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => 
                 {items.map((item) => {
                   if (item.type === 'with-children') {
                     return (
-                      <div className="hs-accordion-group">
-                        <NavItemWithChildren key={item.label} item={item} />
+                      <div key={item.label} className="hs-accordion-group">
+                        <NavItemWithChildren item={item} />
                       </div>
                     )
                   }
@@ -88,7 +88,9 @@ export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => 
           {/* End Body */}
         </div>
       </div>
-      <div className="lg:ml-64">{children}</div>
+      <div className="lg:ml-64" id="sidebar-content">
+        {children}
+      </div>
     </div>
   )
 }
