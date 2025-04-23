@@ -9,9 +9,11 @@ import type {
 import slugify from 'slugify'
 import type { ColumnInfo, Row } from './SQLiteTypes'
 import type { Column } from './SQLiteTypes'
-import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
+import type { CountParams, IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
 import type { FieldConfig } from '/domain/entities/Field'
 import type { TableConfig } from '/domain/entities/Table'
+import type { OrderConfig } from '/domain/entities/Filter/Order'
+import { DEFAULT_PER_PAGE, type PageConfig } from '/domain/entities/Filter/Page'
 
 export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
   public name: string
@@ -327,24 +329,63 @@ export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
     return this.readByIdSync(id)
   }
 
-  listSync = <T extends RecordFields>(filter?: FilterDto) => {
-    const { conditions, values } = filter
+  listSync = <T extends RecordFields>(
+    filter?: FilterDto,
+    order?: OrderConfig[],
+    page?: PageConfig
+  ) => {
+    const transformedConditions = filter
       ? this._convertFilterToConditions(filter)
       : { conditions: '', values: [] }
-    if (!conditions) {
-      const query = `SELECT * FROM ${this.viewWithSchema}`
-      const records = this._db.prepare(query).all() as Row[]
-      return records.map(this._postprocess<T>)
-    }
-    const query = `SELECT * FROM ${this.viewWithSchema} WHERE ${conditions}`
-    const records = this._db.prepare(query).all(...values) as Row[]
+    const { values } = transformedConditions
+    const query = `SELECT * FROM ${this.viewWithSchema}`
+    const records = this._db
+      .prepare(this.prepareSelectQuery(query, filter, order, page))
+      .all(...values) as Row[]
     return records.map(this._postprocess<T>)
   }
 
+  prepareSelectQuery = (
+    query: string,
+    filter?: FilterDto,
+    order?: OrderConfig[],
+    page?: PageConfig
+  ) => {
+    const transformedConditions = filter
+      ? this._convertFilterToConditions(filter)
+      : { conditions: '', values: [] }
+    const { conditions } = transformedConditions
+
+    console.log('page.page', page?.page)
+    console.log('page.perPage', page?.perPage)
+
+    if (conditions) query += ` WHERE ${conditions}`
+    if (order) query += ` ORDER BY ${order.map((o) => `${o.field} ${o.direction}`).join(', ')}`
+    if (page)
+      query += ` LIMIT ${page.perPage} OFFSET ${(page.page - 1) * (page?.perPage ?? DEFAULT_PER_PAGE)}`
+
+    console.log(query)
+    return query
+  }
+
   list = async <T extends RecordFields>(
-    filter?: FilterDto
+    filter?: FilterDto,
+    order?: OrderConfig[],
+    page?: PageConfig
   ): Promise<PersistedRecordFieldsDto<T>[]> => {
-    return this.listSync(filter)
+    return this.listSync(filter, order, page)
+  }
+
+  count = async ({ filter }: CountParams): Promise<number> => {
+    const transformedConditions = filter
+      ? this._convertFilterToConditions(filter)
+      : { conditions: '', values: [] }
+    const { values } = transformedConditions
+    const query = `SELECT COUNT(*) as "count" FROM ${this.viewWithSchema}`
+    const queryResult = this._db.prepare(this.prepareSelectQuery(query, filter)).get(...values) as {
+      count: number
+    }
+    return queryResult.count
   }
 
   private _insert = <T extends RecordFields>(record: RecordFieldsToCreateDto<T>) => {
