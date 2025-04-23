@@ -1,7 +1,7 @@
 type Base = {
   path: string
   baseUrl: string
-  headers?: { [key: string]: string }
+  headers?: { [key: string]: string | undefined }
   query?: { [key: string]: string | undefined }
   params?: { [key: string]: string }
 }
