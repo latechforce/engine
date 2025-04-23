@@ -1,5 +1,5 @@
 import type { IDatabaseSpi } from './Database'
-import type { Filter } from '../entities/Filter'
+import type { Filter, OrderFilter, PageFilter } from '../entities/Filter'
 import type { Record, RecordFieldsToCreate, RecordFieldsToUpdate } from '/domain/entities/Record'
 import type { Logger } from '/domain/services/Logger'
 import { IsTextFilter } from '/domain/entities/Filter/text/Is'
@@ -7,9 +7,16 @@ import { OrFilter } from '/domain/entities/Filter/Or'
 import type { RecordFields, UpdateRecordFields } from '/domain/entities/Record'
 import type { IdGenerator } from './IdGenerator'
 import type { TableConfig } from '/domain/entities/Table'
+import type { CountParams } from '/adapter/spi/drivers/DatabaseTableSpi'
 export interface DatabaseTableServices {
   logger: Logger
   idGenerator: IdGenerator
+}
+
+export interface ListParams {
+  filter?: Filter
+  order?: OrderFilter[]
+  page?: PageFilter
 }
 
 export interface IDatabaseTableSpi {
@@ -27,7 +34,8 @@ export interface IDatabaseTableSpi {
   delete: (id: string) => Promise<void>
   read: <T extends RecordFields>(filter: Filter) => Promise<Record<T> | undefined>
   readById: <T extends RecordFields>(id: string) => Promise<Record<T> | undefined>
-  list: <T extends RecordFields>(filter?: Filter) => Promise<Record<T>[]>
+  list: <T extends RecordFields>(params?: ListParams) => Promise<Record<T>[]>
+  count: (params: CountParams) => Promise<number>
 }
 
 export class DatabaseTable {
@@ -92,7 +100,7 @@ export class DatabaseTable {
     })
     await this._table.insertMany<T>(recordsWithId)
     const filter = new OrFilter(recordsWithId.map((r) => new IsTextFilter('id', r.id)))
-    return this.list<T>(filter)
+    return this.list<T>({ filter })
   }
 
   update = async <T extends RecordFields>(id: string, record: Partial<T>) => {
@@ -112,7 +120,7 @@ export class DatabaseTable {
       records.map((r) => ({ fields: r.fields, id: r.id, updated_at }))
     )
     const filter = new OrFilter(records.map((r) => new IsTextFilter('id', r.id)))
-    return this.list<T>(filter)
+    return this.list<T>({ filter })
   }
 
   delete = async (id: string) => {
@@ -137,8 +145,13 @@ export class DatabaseTable {
     return record
   }
 
-  list = async <T extends RecordFields>(filter?: Filter) => {
-    this._logger.debug(`list in table "${this.name}" in schema "${this.schema}"`, filter)
-    return this._table.list<T>(filter)
+  list = async <T extends RecordFields>(params?: ListParams) => {
+    this._logger.debug(`list in table "${this.name}" in schema "${this.schema}"`, params)
+    return this._table.list<T>(params)
+  }
+
+  count = async (params: CountParams) => {
+    this._logger.debug(`count in table "${this.name}" in schema "${this.schema}"`, params)
+    return this._table.count(params)
   }
 }
