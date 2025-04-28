@@ -1,6 +1,7 @@
 import { JsResponse } from '../entities/Response/Js'
 import type { Server } from './Server'
 import type { Logger } from './Logger'
+import type { Headers } from '../entities/Request'
 
 export interface ClientServices {
   server: Server
@@ -13,7 +14,7 @@ export interface ClientHtmlAttributesOptions {
   values?: string
   target?: string
   action?: 'replace' | 'append' | 'prepend'
-  trigger?: 'revealed'
+  trigger?: string
   fileUpload?: boolean
   pushUrl?: string
 }
@@ -21,6 +22,7 @@ export interface ClientHtmlAttributesOptions {
 export interface IClientSpi {
   readJsFiles: () => Promise<{ name: string; content: string }[]>
   getHtmlAttributes: (options: ClientHtmlAttributesOptions) => Record<string, string>
+  getTargetIdFromHeaders: (headers: Headers) => string | undefined
 }
 
 export class Client {
@@ -44,5 +46,9 @@ export class Client {
 
   getHtmlAttributes = (options: ClientHtmlAttributesOptions) => {
     return this._spi.getHtmlAttributes(options)
+  }
+
+  getTargetIdFromHeaders = (headers: Headers): string | undefined => {
+    return this._spi.getTargetIdFromHeaders(headers)
   }
 }

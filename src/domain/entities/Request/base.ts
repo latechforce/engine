@@ -1,15 +1,17 @@
 export type BaseRequestParams = {
   path: string
   baseUrl?: string
-  headers?: { [key: string]: string | undefined }
+  headers?: Headers
   query?: { [key: string]: string | undefined }
   params?: { [key: string]: string }
 }
 
+export type Headers = { [key: string]: string | undefined }
+
 export class BaseRequest {
   public path: string
   public baseUrl: string
-  public headers?: { [key: string]: string | undefined }
+  public headers?: Headers
   public query: { [key: string]: string | undefined }
   public params: { [key: string]: string }
 
@@ -25,6 +27,11 @@ export class BaseRequest {
     const { query } = this
     if (key in query) return query[key]
     return undefined
+  }
+
+  getQueryAsNumber = (key: string, defaultValue: number): number => {
+    const value = this.getQuery(key)
+    return value ? Number(value) : defaultValue
   }
 
   getQueryOrThrow = (key: string): string => {

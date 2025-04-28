@@ -22,12 +22,15 @@ export class BaseAdmin {
     await server.get(path, this.get)
   }
 
-  get = async (req?: GetRequest): Promise<JsxResponse> => {
+  get = async (_req: GetRequest): Promise<JsxResponse> => {
     throw new Error('Not implemented')
   }
 
-  isHtmxRequest = (req?: BaseRequest, id?: string): boolean => {
-    return (req?.headers?.['hx-target'] && req.headers['hx-target'] === id) || false
+  isClientRequest = (req?: BaseRequest, id?: string): boolean => {
+    const targetId = req?.headers
+      ? this._services.client.getTargetIdFromHeaders(req.headers)
+      : undefined
+    return targetId === id
   }
 
   protected layout = (props: { title: string; path: string; children: React.ReactNode }) => {

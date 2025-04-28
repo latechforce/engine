@@ -16,14 +16,14 @@ export class AdminAutomations extends BaseAdmin {
     await super.init('/admin/automations')
   }
 
-  get = async (req?: GetRequest) => {
-    const page = Number(req?.getQuery('page') ?? 1)
-    const q = req?.getQuery('q')
-    const perPage = Number(req?.getQuery('perPage') ?? 10)
+  get = async (req: GetRequest) => {
+    const page = req.getQueryAsNumber('page', 1)
+    const q = req.getQuery('q')
+    const perPage = req.getQueryAsNumber('perPage', 10)
 
     const tableId = 'automation-table'
 
-    const { H1, Table } = this._components
+    const { Typography, Table } = this._components
 
     const columns: TableColumn[] = [
       {
@@ -52,6 +52,15 @@ export class AdminAutomations extends BaseAdmin {
       }
     })
 
+    const searchRoute = `/admin/automations`
+
+    const searchAttributes = this._services.client.getHtmlAttributes({
+      get: searchRoute,
+      trigger: 'keyup changed delay:500ms',
+      pushUrl: 'true',
+      target: `#${tableId}`,
+    })
+
     const tableComponent = (
       <Table
         columns={columns}
@@ -60,19 +69,20 @@ export class AdminAutomations extends BaseAdmin {
         page={page}
         perPage={perPage}
         total={this._automations.length}
-        searchRoute={`/admin/automations`}
+        searchRoute={searchRoute}
         query={q}
+        searchAttributes={searchAttributes}
       />
     )
 
-    if (this.isHtmxRequest(req, tableId)) {
+    if (this.isClientRequest(req, tableId)) {
       return new JsxResponse(tableComponent)
     }
 
     return new JsxResponse(
       (
         <this.layout path="/admin/automations" title="Automations">
-          <H1>Automations</H1>
+          <Typography variant="h1">Automations</Typography>
           {tableComponent}
         </this.layout>
       )

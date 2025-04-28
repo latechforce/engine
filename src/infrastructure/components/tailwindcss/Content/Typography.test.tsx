@@ -1,10 +1,10 @@
 import { it, expect } from 'bun:test'
-import { H1 } from './H1'
+import { Typography } from './Typography'
 import { renderToString } from 'react-dom/server'
 
-it('should match the H1 snapshot', async () => {
+it('should match the Typography snapshot', async () => {
   // GIVEN
-  const h1Component = <H1>Titre de test</H1>
+  const h1Component = <Typography variant="h1">Titre de test</Typography>
 
   // WHEN
   const html = renderToString(h1Component)

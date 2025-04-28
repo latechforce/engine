@@ -2,7 +2,6 @@ import { BaseAdmin, type BaseAdminServices } from '../../base'
 import { JsxResponse } from '/domain/entities/Response/Jsx'
 import type { Components, TableColumn, TableRow } from '/domain/components'
 import type { Automation } from '/domain/entities/Automation'
-import { format } from 'date-fns'
 import { IsTextFilter } from '/domain/entities/Filter/text/Is'
 import type { GetRequest } from '/domain/entities/Request'
 import { AutomationHistory } from '/domain/entities/Automation/History'
@@ -21,16 +20,16 @@ type AutomationHistoryReadModel = {
 }
 
 export class AdminAutomationsHistory extends BaseAdmin {
-  protected readonly _automations: Automation[]
-  protected _automationsHistory: AutomationHistoryReadModel[]
-  protected _automationsHistoryCount: number
+  protected _automationsHistory: AutomationHistoryReadModel[] = []
+  protected _automationsHistoryCount: number = 0
   protected _automationsHistoryService?: AutomationHistory
 
-  constructor(services: BaseAdminServices, components: Components, automations: Automation[]) {
+  constructor(
+    services: BaseAdminServices,
+    components: Components,
+    protected readonly _automations: Automation[]
+  ) {
     super(services, components)
-    this._automations = automations
-    this._automationsHistory = []
-    this._automationsHistoryCount = 0
     if (this._automations.length > 0) {
       this._automationsHistoryService = new AutomationHistory(this._automations[0].services)
     }
@@ -40,10 +39,10 @@ export class AdminAutomationsHistory extends BaseAdmin {
     await super.init('/admin/automations/history')
   }
 
-  get = async (req?: GetRequest) => {
-    let page = Number(req?.getQuery('page') ?? 1)
-    const q = req?.getQuery('q')
-    const perPage = Number(req?.getQuery('perPage') ?? 10)
+  get = async (req: GetRequest) => {
+    let page = req.getQueryAsNumber('page', 1)
+    const q = req.getQuery('q')
+    const perPage = req.getQueryAsNumber('perPage', 10)
 
     const tableId = 'automation-history-table'
 
@@ -96,7 +95,7 @@ export class AdminAutomationsHistory extends BaseAdmin {
         })
       }
     }
-    const { H1, Table } = this._components
+    const { Typography, Table } = this._components
 
     const columns: TableColumn[] = [
       {
@@ -115,31 +114,36 @@ export class AdminAutomationsHistory extends BaseAdmin {
         label: 'Runned At',
         key: 'created_at',
         formatter: (value: unknown) => {
-          // Assuming 'format' from 'date-fns' is imported at the top of the file
-          // import { format } from 'date-fns';
           try {
             const dateValue =
               value instanceof Date ? value : new Date(value as string | number | Date)
-            // Check if the date is valid before formatting
             if (isNaN(dateValue.getTime())) {
               return 'Invalid Date'
             }
-            return format(dateValue, 'dd/MM/yyyy HH:mm:ss')
+            return this._services.system.formatDate(dateValue, 'dd/MM/yyyy HH:mm:ss')
           } catch (e) {
             console.error('Error formatting date:', e)
-            // Fallback or error display
             return String(value)
           }
         },
       },
     ]
     const rows: TableRow[] = this._automationsHistory.map((item) => ({
-      key: `${item.automation.name}`,
+      key: item.automation.name,
       name: item.automation.name,
       actions_count: item.automation.actions_count,
       created_at: item.created_at,
       status: item.status,
     }))
+
+    const searchRoute = `/admin/automations/history`
+
+    const searchAttributes = this._services.client.getHtmlAttributes({
+      get: searchRoute,
+      trigger: 'keyup changed delay:500ms',
+      pushUrl: 'true',
+      target: `#${tableId}`,
+    })
 
     const tableComponent = (
       <Table
@@ -149,19 +153,20 @@ export class AdminAutomationsHistory extends BaseAdmin {
         page={page}
         perPage={perPage}
         total={this._automationsHistoryCount}
-        searchRoute={`/admin/automations/history`}
+        searchRoute={searchRoute}
         query={q}
+        searchAttributes={searchAttributes}
       />
     )
 
-    if (this.isHtmxRequest(req, tableId)) {
+    if (this.isClientRequest(req, tableId)) {
       return new JsxResponse(tableComponent)
     }
 
     return new JsxResponse(
       (
         <this.layout path="/admin/automations/history" title="Automations History">
-          <H1>Automations History</H1>
+          <Typography variant="h1">Automations History</Typography>
           {tableComponent}
         </this.layout>
       )

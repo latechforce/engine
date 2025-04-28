@@ -1,27 +1,22 @@
-import { Context } from './Base'
-import type { SearchProps } from '/domain/components/BasicForms/Search'
+import type { TableSearchProps } from '/domain/components/Tables/TableSearch'
 
-export const Search = ({
+export const TableSearch = ({
   field,
   label,
-  description,
   placeholder,
-  required,
-  searchRoute,
-  resultsContainer,
   value,
-}: SearchProps) => {
-  const htmxPropx: Record<string, string> = {}
-  if (searchRoute) {
-    htmxPropx['hx-get'] = searchRoute
-    htmxPropx['hx-trigger'] = 'keyup changed delay:500ms'
-    htmxPropx['hx-push-url'] = 'true'
-    if (resultsContainer) {
-      htmxPropx['hx-target'] = resultsContainer
-    }
-  }
+  searchAttributes = {},
+}: TableSearchProps) => {
   return (
-    <Context label={label} description={description} field={field} required={required}>
+    <div>
+      {label ? (
+        <label
+          htmlFor={field}
+          className="mb-2 block text-sm font-medium text-gray-700 dark:text-white"
+        >
+          {label}
+        </label>
+      ) : null}
       <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
           <svg
@@ -44,13 +39,12 @@ export const Search = ({
           type={'text'}
           name={field}
           placeholder={placeholder}
-          required={!!required}
           aria-describedby="hs-validation-name-success-helper"
           className="block w-full rounded-lg border border-gray-200 bg-white px-4 py-2.5 ps-10 focus:border-blue-500 focus:ring-blue-500 disabled:pointer-events-none disabled:opacity-50 sm:py-3 sm:text-sm dark:border-neutral-700 dark:bg-neutral-900 dark:text-white dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
           value={value}
-          {...htmxPropx}
+          {...searchAttributes}
         />
       </div>
-    </Context>
+    </div>
   )
 }

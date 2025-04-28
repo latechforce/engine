@@ -1,7 +1,9 @@
-import { Search } from '../BasicForms/Search'
+import { TableSearch } from './TableSearch'
 import { Dropdown } from '../Overlays/Dropdown'
 import type { TableProps } from '/domain/components'
 import type { ReactNode } from 'react'
+
+// TODO: refacto HTMX (if needed)
 
 export const Table = ({
   id,
@@ -13,6 +15,7 @@ export const Table = ({
   perPage,
   query,
   searchRoute,
+  searchAttributes,
 }: TableProps) => {
   const pageNumber = page ?? 1
   const perPageNumber = perPage ?? 10
@@ -20,15 +23,14 @@ export const Table = ({
 
   return (
     <div id={id}>
-      {searchRoute && (
+      {searchAttributes && (
         <div className="p-6">
           <div className="grid grid-cols-3">
-            <Search
+            <TableSearch
               field="q"
               placeholder="Search"
-              searchRoute={`${searchRoute}?page=${pageNumber}`}
-              resultsContainer={`#${id}`}
               value={query}
+              searchAttributes={searchAttributes}
             />
           </div>
           <div className="grid grid-cols-4"></div>

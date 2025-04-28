@@ -6,7 +6,6 @@ import type { Field } from '../Field'
 import type { IdGenerator } from '/domain/services/IdGenerator'
 import type { RecordFields } from '../Record'
 import type { Record } from '/domain/entities/Record'
-import type { Filter } from '../Filter'
 import type { CountParams } from '/adapter/spi/drivers/DatabaseTableSpi'
 
 export interface AutomationHistoryRecord extends RecordFields {

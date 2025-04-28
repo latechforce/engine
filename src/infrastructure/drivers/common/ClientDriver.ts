@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import type { IClientDriver } from '/adapter/spi/drivers/ClientSpi'
 import type { ClientHtmlAttributesOptions } from '/domain/services/Client'
+import type { Headers } from '/domain/entities/Request'
 
 export class ClientDriver implements IClientDriver {
   readJsFiles = async (): Promise<{ name: string; content: string }[]> => {
@@ -34,5 +35,9 @@ export class ClientDriver implements IClientDriver {
         break
     }
     return attributes
+  }
+
+  getTargetIdFromHeaders = (headers: Headers): string | undefined => {
+    return headers['hx-target']
   }
 }

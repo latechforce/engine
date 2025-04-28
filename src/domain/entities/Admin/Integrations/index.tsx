@@ -2,7 +2,7 @@ import { BaseAdmin, type BaseAdminServices } from '../base'
 import { JsxResponse } from '/domain/entities/Response/Jsx'
 import type { Components, DropdownProps, TableColumn, TableRow } from '/domain/components'
 import type { Integration, Integrations } from '/domain/integrations'
-import { OAuthIntegration } from '../../../integrations/OAuth'
+import { OAuthIntegration } from '/domain/integrations/OAuth'
 import { RedirectResponse } from '../../Response/Redirect'
 import type { GetRequest } from '../../Request'
 
@@ -47,12 +47,12 @@ export class AdminIntegrations extends BaseAdmin {
     }
   }
 
-  get = async (req?: GetRequest) => {
+  get = async (req: GetRequest) => {
     const { system, theme, client } = this._services
     const { Table } = this._components
-    const page = Number(req?.getQuery('page') ?? 1)
-    const perPage = Number(req?.getQuery('perPage') ?? 10)
-    const q = req?.getQuery('q')
+    const page = req.getQueryAsNumber('page', 1)
+    const perPage = req.getQueryAsNumber('perPage', 10)
+    const q = req.getQuery('q')
     const tableId = 'integrations-table'
     const columns: TableColumn[] = [
       {
@@ -124,6 +124,15 @@ export class AdminIntegrations extends BaseAdmin {
       )
     }
 
+    const searchRoute = `/admin/integrations`
+
+    const searchAttributes = this._services.client.getHtmlAttributes({
+      get: searchRoute,
+      trigger: 'keyup changed delay:500ms',
+      pushUrl: 'true',
+      target: `#${tableId}`,
+    })
+
     const tableComponent = (
       <Table
         id={tableId}
@@ -135,10 +144,11 @@ export class AdminIntegrations extends BaseAdmin {
         page={page}
         perPage={perPage}
         query={q}
+        searchAttributes={searchAttributes}
       />
     )
 
-    if (this.isHtmxRequest(req, tableId)) {
+    if (this.isClientRequest(req, tableId)) {
       return new JsxResponse(tableComponent)
     }
 

@@ -10,10 +10,8 @@ import { Textarea } from './BasicForms/Textarea'
 import { Sidebar } from './Navigations/Sidebar'
 import { Table } from './Tables/Table'
 import { Dropdown } from './Overlays/Dropdown'
-import { H1 } from './Typography/H1/H1'
-import { H2 } from './Typography/H2/H2'
-import { H3 } from './Typography/H3/H3'
-import { Search } from './BasicForms/Search'
+import { Typography } from './Content/Typography'
+import { TableSearch } from './Tables/TableSearch'
 
 export const components: Components = {
   Page,
@@ -27,8 +25,6 @@ export const components: Components = {
   Sidebar,
   Table,
   Dropdown,
-  H1,
-  H2,
-  H3,
-  Search,
+  Typography,
+  TableSearch,
 }

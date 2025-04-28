@@ -4,6 +4,7 @@ export interface ISystemSpi {
   joinPath: (...paths: string[]) => string
   getEngineVersion: () => string
   getAppVersion: () => string
+  formatDate: (date: Date, format: string) => string
 }
 
 export class System {
@@ -35,5 +36,9 @@ export class System {
 
   capitalize = (str: string): string => {
     return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+
+  formatDate = (date: Date, format: string) => {
+    return this._spi.formatDate(date, format)
   }
 }

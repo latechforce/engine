@@ -2,6 +2,7 @@ import type { ISystemDriver } from '/adapter/spi/drivers/SystemSpi'
 import fs from 'fs-extra'
 import path from 'path'
 import mime from 'mime'
+import { format } from 'date-fns'
 
 type PackageJson = {
   version: string
@@ -33,5 +34,9 @@ export class SystemDriver implements ISystemDriver {
 
   getEngineVersion = () => {
     return this._packageJson.dependencies['@latechforce/engine']?.replace('^', '') ?? 'latest'
+  }
+
+  formatDate = (date: Date, formatExpected: string) => {
+    return format(date, formatExpected)
   }
 }

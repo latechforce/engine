@@ -6,6 +6,7 @@ export interface ISystemDriver {
   joinPath: (...paths: string[]) => string
   getEngineVersion: () => string
   getAppVersion: () => string
+  formatDate: (date: Date, format: string) => string
 }
 
 export class SystemSpi implements ISystemSpi {
@@ -29,5 +30,9 @@ export class SystemSpi implements ISystemSpi {
 
   getAppVersion = () => {
     return this._driver.getAppVersion()
+  }
+
+  formatDate = (date: Date, format: string) => {
+    return this._driver.formatDate(date, format)
   }
 }
