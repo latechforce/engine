@@ -1,4 +1,5 @@
 import type { GetRequest } from '../Request'
+import type { BaseRequest } from '../Request/base'
 import type { JsxResponse } from '../Response/Jsx'
 import type { Components } from '/domain/components'
 import type { Client, Server, System, Theme } from '/domain/services'
@@ -23,6 +24,10 @@ export class BaseAdmin {
 
   get = async (req?: GetRequest): Promise<JsxResponse> => {
     throw new Error('Not implemented')
+  }
+
+  isHtmxRequest = (req?: BaseRequest, id?: string): boolean => {
+    return (req?.headers?.['hx-target'] && req.headers['hx-target'] === id) || false
   }
 
   protected layout = (props: { title: string; path: string; children: React.ReactNode }) => {

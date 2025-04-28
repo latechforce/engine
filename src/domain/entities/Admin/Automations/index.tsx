@@ -19,12 +19,10 @@ export class AdminAutomations extends BaseAdmin {
   get = async (req?: GetRequest) => {
     const page = Number(req?.getQuery('page') ?? 1)
     const q = req?.getQuery('q')
+    const perPage = Number(req?.getQuery('perPage') ?? 10)
+
     const tableId = 'automation-table'
 
-    let isHtmxRequest = false
-    if (req?.headers?.['hx-target'] && req.headers['hx-target'] === tableId) {
-      isHtmxRequest = true
-    }
     const { H1, Table } = this._components
 
     const columns: TableColumn[] = [
@@ -60,14 +58,14 @@ export class AdminAutomations extends BaseAdmin {
         rows={rows}
         id={tableId}
         page={page}
-        perPage={10}
-        count={this._automations.length}
+        perPage={perPage}
+        total={this._automations.length}
         searchRoute={`/admin/automations`}
         query={q}
       />
     )
 
-    if (isHtmxRequest) {
+    if (this.isHtmxRequest(req, tableId)) {
       return new JsxResponse(tableComponent)
     }
 

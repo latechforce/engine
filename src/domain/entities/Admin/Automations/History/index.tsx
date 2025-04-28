@@ -43,12 +43,9 @@ export class AdminAutomationsHistory extends BaseAdmin {
   get = async (req?: GetRequest) => {
     let page = Number(req?.getQuery('page') ?? 1)
     const q = req?.getQuery('q')
-    const tableId = 'automation-history-table'
+    const perPage = Number(req?.getQuery('perPage') ?? 10)
 
-    let isHtmxRequest = false
-    if (req?.headers?.['hx-target'] && req.headers['hx-target'] === tableId) {
-      isHtmxRequest = true
-    }
+    const tableId = 'automation-history-table'
 
     const filter: Filter[] = [
       ...this._automations.map((automation) => {
@@ -150,14 +147,14 @@ export class AdminAutomationsHistory extends BaseAdmin {
         columns={columns}
         rows={rows}
         page={page}
-        perPage={10}
-        count={this._automationsHistoryCount}
+        perPage={perPage}
+        total={this._automationsHistoryCount}
         searchRoute={`/admin/automations/history`}
         query={q}
       />
     )
 
-    if (isHtmxRequest) {
+    if (this.isHtmxRequest(req, tableId)) {
       return new JsxResponse(tableComponent)
     }
 

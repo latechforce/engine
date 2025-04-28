@@ -8,7 +8,7 @@ export const Table = ({
   columns,
   rows,
   dropdown,
-  count,
+  total,
   page,
   perPage,
   query,
@@ -16,22 +16,24 @@ export const Table = ({
 }: TableProps) => {
   const pageNumber = page ?? 1
   const perPageNumber = perPage ?? 10
-  const totalPages = count ? Math.ceil(count / perPageNumber) : 1
+  const totalPages = total ? Math.ceil(total / perPageNumber) : 1
 
   return (
     <div id={id}>
-      <div className="p-6">
-        <div className="grid grid-cols-3">
-          <Search
-            field="q"
-            placeholder="Search"
-            searchRoute={`${searchRoute}?page=${pageNumber}`}
-            resultsContainer={`#${id}`}
-            value={query}
-          />
+      {searchRoute && (
+        <div className="p-6">
+          <div className="grid grid-cols-3">
+            <Search
+              field="q"
+              placeholder="Search"
+              searchRoute={`${searchRoute}?page=${pageNumber}`}
+              resultsContainer={`#${id}`}
+              value={query}
+            />
+          </div>
+          <div className="grid grid-cols-4"></div>
         </div>
-        <div className="grid grid-cols-4"></div>
-      </div>
+      )}
       <div className="flex flex-col">
         <div className="-m-1.5 overflow-x-auto">
           <div className="inline-block min-w-full p-1.5 align-middle">
@@ -57,36 +59,57 @@ export const Table = ({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 dark:divide-neutral-700">
-                  {rows.map((row, index) => (
-                    <tr key={index}>
-                      {columns.map((column, index) => {
-                        const value = row[column.key]
-                        const formattedValue = column.formatter ? column.formatter(value) : value
-                        return (
-                          <td
-                            key={index}
-                            className={`px-6 py-4 text-sm ${index === 0 ? 'font-medium' : ''} whitespace-nowrap text-gray-800 dark:text-neutral-200`}
-                          >
-                            {formattedValue as string}
-                          </td>
-                        )
-                      })}
-                      {dropdown && (
-                        <td
-                          key="dropdown"
-                          className="px-6 py-4 text-end text-sm font-medium whitespace-nowrap"
-                        >
-                          <Dropdown {...dropdown(row)} />
-                        </td>
-                      )}
+                  {rows.length === 0 && !query && (
+                    <tr>
+                      <td
+                        colSpan={columns.length}
+                        className="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200"
+                      >
+                        No items available
+                      </td>
                     </tr>
-                  ))}
+                  )}
+                  {rows.length === 0 && query && (
+                    <tr>
+                      <td
+                        colSpan={columns.length}
+                        className="px-6 py-4 text-sm text-gray-800 dark:text-neutral-200"
+                      >
+                        No results found for "{query}"
+                      </td>
+                    </tr>
+                  )}
+                  {rows.length > 0 &&
+                    rows.map((row, index) => (
+                      <tr key={index}>
+                        {columns.map((column, index) => {
+                          const value = row[column.key]
+                          const formattedValue = column.formatter ? column.formatter(value) : value
+                          return (
+                            <td
+                              key={index}
+                              className={`px-6 py-4 text-sm ${index === 0 ? 'font-medium' : ''} whitespace-nowrap text-gray-800 dark:text-neutral-200`}
+                            >
+                              {formattedValue as string}
+                            </td>
+                          )
+                        })}
+                        {dropdown && (
+                          <td
+                            key="dropdown"
+                            className="px-6 py-4 text-end text-sm font-medium whitespace-nowrap"
+                          >
+                            <Dropdown {...dropdown(row)} />
+                          </td>
+                        )}
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </div>
             <div className="flex items-center justify-between px-4 py-2">
               <div>
-                <p className="text-sm">Total {count} items</p>
+                <p className="text-sm">Total {total ?? rows.length} items</p>
               </div>
               <nav className="flex items-center space-x-1" aria-label="Pagination">
                 {pageNumber > 1 && (

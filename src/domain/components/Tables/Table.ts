@@ -9,15 +9,15 @@ export type TableColumn = {
 export type TableRow = Record<string, string | number | Date | React.ReactNode>
 
 export type TableProps = {
-  id?: string
+  id: string
   columns: TableColumn[]
   rows: TableRow[]
   dropdown?: (row: TableRow) => DropdownProps
-  count?: number
+  total: number
   page?: number
   perPage?: number
   query?: string
-  searchRoute?: string
+  searchRoute: string
 }
 
 export type Table = React.ComponentType<TableProps>
