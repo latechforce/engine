@@ -1,7 +1,7 @@
 import { RecordMapper } from '/adapter/spi/mappers/RecordMapper'
 import { FilterMapper } from '../mappers/FilterMapper'
 import type { Filter, FilterDto } from '/domain/entities/Filter'
-import type { IDatabaseTableSpi } from '/domain/services/DatabaseTable'
+import type { IDatabaseTableSpi, ListParams } from '/domain/services/DatabaseTable'
 import type {
   PersistedRecordFieldsDto,
   RecordFieldsToCreateDto,
@@ -13,6 +13,8 @@ import type {
   RecordFieldsToUpdate,
 } from '/domain/entities/Record'
 import type { FieldConfig } from '/domain/entities/Field'
+import type { OrderConfig } from '/domain/entities/Filter/Order'
+import type { PageConfig } from '/domain/entities/Filter/Page'
 
 export interface IDatabaseTableDriver {
   name: string
@@ -33,7 +35,16 @@ export interface IDatabaseTableDriver {
     filter: FilterDto
   ) => Promise<PersistedRecordFieldsDto<T> | undefined>
   readById: <T extends RecordFields>(id: string) => Promise<PersistedRecordFieldsDto<T> | undefined>
-  list: <T extends RecordFields>(filter?: FilterDto) => Promise<PersistedRecordFieldsDto<T>[]>
+  list: <T extends RecordFields>(
+    filter?: FilterDto,
+    order?: OrderConfig[],
+    page?: PageConfig
+  ) => Promise<PersistedRecordFieldsDto<T>[]>
+  count: (params: CountParams) => Promise<number>
+}
+
+export interface CountParams {
+  filter?: FilterDto
 }
 
 export class DatabaseTableSpi implements IDatabaseTableSpi {
@@ -104,10 +115,17 @@ export class DatabaseTableSpi implements IDatabaseTableSpi {
     return RecordMapper.toEntity<T>(persistedRecordDto)
   }
 
-  list = async <T extends RecordFields>(filter?: Filter) => {
+  list = async <T extends RecordFields>(params?: ListParams) => {
     const persistedRecordsDtos = await this._driver.list<T>(
-      filter ? FilterMapper.toDto(filter) : undefined
+      params?.filter ? FilterMapper.toDto(params.filter) : undefined,
+      params?.order,
+      params?.page
     )
     return RecordMapper.toManyEntity<T>(persistedRecordsDtos)
+  }
+
+  count = async (params: CountParams) => {
+    const persistedRecordsDtos = await this._driver.count(params)
+    return persistedRecordsDtos
   }
 }

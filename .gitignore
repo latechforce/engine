@@ -185,3 +185,4 @@ tmp/
 .env
 build-storybook.log
 *storybook.log
+database.sqlite*

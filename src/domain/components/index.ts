@@ -19,7 +19,9 @@ import type { FileInput } from './BasicForms/FileInput'
 import type { Textarea } from './BasicForms/Textarea'
 import type { Sidebar } from './Navigations/Sidebar'
 import type { Table } from './Tables/Table'
+import type { TableSearch } from './Tables/TableSearch'
 import type { Dropdown } from './Overlays/Dropdown'
+import type { Typography } from './Content/Typography'
 
 export type Components = {
   Page: Page
@@ -32,5 +34,7 @@ export type Components = {
   FileInput: FileInput
   Sidebar: Sidebar
   Table: Table
+  TableSearch: TableSearch
   Dropdown: Dropdown
+  Typography: Typography
 }

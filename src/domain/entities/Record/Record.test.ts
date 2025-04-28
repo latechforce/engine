@@ -39,7 +39,7 @@ describe('Record', () => {
       nullField: null,
       undefinedField: undefined,
     }
-    const record = new Record(testId, fields, testCreatedAt)
+    const record = new Record(testId, fields, testCreatedAt, testUpdatedAt)
 
     expect(record.getFieldAsString('stringField')).toBe('string value')
     expect(record.getFieldAsString('numberField')).toBe('42')
@@ -60,7 +60,7 @@ describe('Record', () => {
       nullField: null,
       undefinedField: undefined,
     }
-    const record = new Record(testId, fields, testCreatedAt)
+    const record = new Record(testId, fields, testCreatedAt, testUpdatedAt)
 
     expect(record.getFieldAsDate('dateField')).toEqual(testDate)
     expect(record.getFieldAsDate('stringDateField')).toEqual(new Date('2023-01-01T12:00:00Z'))
@@ -80,7 +80,7 @@ describe('Record', () => {
       nullField: null,
       undefinedField: undefined,
     }
-    const record = new Record(testId, fields, testCreatedAt)
+    const record = new Record(testId, fields, testCreatedAt, testUpdatedAt)
 
     expect(record.getFieldAsNumber('numberField')).toBe(42)
     expect(record.getFieldAsNumber('stringNumberField')).toBe(123.45)
@@ -101,7 +101,7 @@ describe('Record', () => {
       nullField: null,
       undefinedField: undefined,
     }
-    const record = new Record(testId, fields, testCreatedAt)
+    const record = new Record(testId, fields, testCreatedAt, testUpdatedAt)
 
     expect(record.getFieldAsBoolean('booleanField')).toBe(true)
     expect(record.getFieldAsBoolean('falseField')).toBe(false)
@@ -142,7 +142,7 @@ describe('Record', () => {
       undefinedField: undefined,
     }
 
-    const record = new Record(testId, fields, testCreatedAt)
+    const record = new Record(testId, fields, testCreatedAt, testUpdatedAt)
 
     expect(record.getFieldAsArrayAttachment('validAttachments')).toEqual(validAttachments)
     expect(record.getFieldAsArrayAttachment('invalidAttachments')).toEqual([])
@@ -163,7 +163,7 @@ describe('Record', () => {
       nullField: null,
       undefinedField: undefined,
     }
-    const record = new Record(testId, fields, testCreatedAt)
+    const record = new Record(testId, fields, testCreatedAt, testUpdatedAt)
 
     expect(record.getFieldAsArrayString('validStringArray')).toEqual(['one', 'two', 'three'])
     expect(record.getFieldAsArrayString('singleString')).toBeNull()
@@ -192,7 +192,7 @@ describe('Record', () => {
       undefinedField: undefined,
     }
 
-    const record = new Record(testId, fields, testCreatedAt)
+    const record = new Record(testId, fields, testCreatedAt, testUpdatedAt)
 
     expect(record.getFieldAsAttachment('validAttachment')).toEqual(validAttachment)
     expect(record.getFieldAsAttachment('stringField')).toBeNull()

@@ -37,6 +37,8 @@ import {
 } from './text'
 import { AndFilter, andFilterSchema, type AndFilterConfig } from './And'
 import { OrFilter, orFilterSchema, type OrFilterConfig } from './Or'
+import type { OrderConfig } from './Order'
+import type { PageConfig } from './Page'
 
 export type FilterWithOperatorConfig =
   | BooleanFilterConfig
@@ -64,6 +66,10 @@ export type Filter =
   | NumberFilter
   | SelectFilter
   | TextFilter
+
+export type OrderFilter = OrderConfig
+
+export type PageFilter = PageConfig
 
 export const filterSchema: SchemaValidatorJson = {
   type: 'object',

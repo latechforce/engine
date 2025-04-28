@@ -6,19 +6,28 @@ import { AdminIntegrations } from './Integrations'
 import { AdminForms } from './Forms'
 import { AdminAutomations } from './Automations'
 import type { Integrations } from '/domain/integrations'
+import { AdminAutomationsHistory } from './Automations/History'
+import type { Automation } from '/domain/entities/Automation'
 
 export class Admin extends BaseAdmin {
   private readonly _tables: AdminTables
   private readonly _integrations: AdminIntegrations
   private readonly _forms: AdminForms
   private readonly _automations: AdminAutomations
+  private readonly _automationsHistory: AdminAutomationsHistory
 
-  constructor(services: BaseAdminServices, components: Components, integrations: Integrations) {
+  constructor(
+    services: BaseAdminServices,
+    components: Components,
+    integrations: Integrations,
+    automations: Automation[]
+  ) {
     super(services, components)
     this._tables = new AdminTables(services, components)
     this._integrations = new AdminIntegrations(services, components, integrations)
-    this._automations = new AdminAutomations(services, components)
+    this._automations = new AdminAutomations(services, components, automations)
     this._forms = new AdminForms(services, components)
+    this._automationsHistory = new AdminAutomationsHistory(services, components, automations)
   }
 
   init = async () => {
@@ -27,6 +36,7 @@ export class Admin extends BaseAdmin {
     await this._integrations.init()
     await this._automations.init()
     await this._forms.init()
+    await this._automationsHistory.init()
   }
 
   get = async () => {

@@ -1,3 +1,5 @@
+import type { GetRequest } from '../Request'
+import type { BaseRequest } from '../Request/base'
 import type { JsxResponse } from '../Response/Jsx'
 import type { Components } from '/domain/components'
 import type { Client, Server, System, Theme } from '/domain/services'
@@ -20,8 +22,15 @@ export class BaseAdmin {
     await server.get(path, this.get)
   }
 
-  get = async (): Promise<JsxResponse> => {
+  get = async (_req: GetRequest): Promise<JsxResponse> => {
     throw new Error('Not implemented')
+  }
+
+  isClientRequest = (req?: BaseRequest, id?: string): boolean => {
+    const targetId = req?.headers
+      ? this._services.client.getTargetIdFromHeaders(req.headers)
+      : undefined
+    return targetId === id
   }
 
   protected layout = (props: { title: string; path: string; children: React.ReactNode }) => {
@@ -34,6 +43,7 @@ export class BaseAdmin {
           brandHref="/admin"
           items={[
             {
+              type: 'single',
               label: 'Dashboard',
               href: '/admin',
               icon: theme.icon('gauge'),
@@ -45,6 +55,7 @@ export class BaseAdmin {
               }),
             },
             {
+              type: 'single',
               label: 'Forms',
               href: '/admin/forms',
               icon: theme.icon('text-cursor-input'),
@@ -57,18 +68,41 @@ export class BaseAdmin {
               }),
             },
             {
+              type: 'with-children',
               label: 'Automations',
-              href: '/admin/automations',
               icon: theme.icon('bot'),
-              active: props.path === '/admin/automations',
-              aAttributes: client.getHtmlAttributes({
-                get: '/admin/automations',
-                action: 'replace',
-                target: 'body',
-                pushUrl: 'true',
-              }),
+              active: props.path.startsWith('/admin/automations'),
+              children: [
+                {
+                  type: 'single',
+                  label: 'Automations',
+                  href: '/admin/automations',
+                  icon: theme.icon('gallery-vertical-end'),
+                  active: props.path === '/admin/automations',
+                  aAttributes: client.getHtmlAttributes({
+                    get: '/admin/automations',
+                    action: 'replace',
+                    target: 'body',
+                    pushUrl: 'true',
+                  }),
+                },
+                {
+                  type: 'single',
+                  label: 'History',
+                  href: '/admin/automations/history',
+                  icon: theme.icon('history'),
+                  active: props.path === '/admin/automations/history',
+                  aAttributes: client.getHtmlAttributes({
+                    get: '/admin/automations/history',
+                    action: 'replace',
+                    target: 'body',
+                    pushUrl: 'true',
+                  }),
+                },
+              ],
             },
             {
+              type: 'single',
               label: 'Tables',
               href: '/admin/tables',
               icon: theme.icon('table-properties'),
@@ -81,6 +115,7 @@ export class BaseAdmin {
               }),
             },
             {
+              type: 'single',
               label: 'Integrations',
               href: '/admin/integrations',
               icon: theme.icon('cable'),

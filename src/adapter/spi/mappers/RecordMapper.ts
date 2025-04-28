@@ -17,7 +17,7 @@ export class RecordMapper {
       id,
       fields,
       new Date(created_at),
-      updated_at ? new Date(updated_at) : undefined
+      updated_at ? new Date(updated_at) : new Date(created_at)
     )
   }
 
