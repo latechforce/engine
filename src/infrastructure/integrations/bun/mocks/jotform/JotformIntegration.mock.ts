@@ -69,18 +69,39 @@ export class JotformIntegration extends BaseMockIntegration implements IJotformI
   addWebhook = async (
     params: JotformWebhookParams
   ): Promise<IntegrationResponse<JotformWebhookResponse>> => {
-    await this._webhooks.insert<FormWebhookRecordFields>({
-      id: params.formId,
-      created_at: new Date().toISOString(),
-      fields: {
-        content: JSON.stringify({ '0': params.webhookUrl }),
-      },
-    })
+    const existingWebhook = await this._webhooks.readById<FormWebhookRecordFields>(params.formId)
+    let webhookContent: Record<string, string> = { '0': params.webhookUrl }
+    if (existingWebhook) {
+      // merge the existing webhook with the new webhook
+      webhookContent = JSON.parse(existingWebhook.fields.content ?? '{}') ?? {}
+      const newWebhookId: number =
+        (Object.keys(webhookContent)
+          ?.map((k) => Number(k))
+          .sort()
+          .pop() ?? -1) + 1
+      webhookContent[newWebhookId.toString()] = params.webhookUrl
+
+      await this._webhooks.updateSync<FormWebhookRecordFields>({
+        id: params.formId,
+        updated_at: new Date().toISOString(),
+        fields: {
+          content: JSON.stringify(webhookContent),
+        },
+      })
+    } else {
+      await this._webhooks.insertSync<FormWebhookRecordFields>({
+        id: params.formId,
+        created_at: new Date().toISOString(),
+        fields: {
+          content: JSON.stringify(webhookContent),
+        },
+      })
+    }
     return {
       data: {
         responseCode: 200,
         message: 'success',
-        content: { '0': params.webhookUrl },
+        content: webhookContent,
         'limit-left': 100,
       },
     }

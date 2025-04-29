@@ -3,6 +3,22 @@ import type BunTester from 'bun:test'
 import { assertIsDefined } from '/test/common'
 import env from '/test/env'
 
+async function addWebhook(integration: IJotformIntegration) {
+  const params = {
+    formId: env.TEST_JOTFORM_FORM_ID,
+    webhookUrl: 'http://example.com/webhook',
+  }
+  return await integration.addWebhook(params)
+}
+
+async function deleteWebhook(integration: IJotformIntegration) {
+  const params = {
+    formId: env.TEST_JOTFORM_FORM_ID,
+    webhookId: '0',
+  }
+  return await integration.deleteWebhook(params)
+}
+
 export function testJotformIntegration(
   { describe, it, expect }: typeof BunTester,
   integration: IJotformIntegration
@@ -32,12 +48,11 @@ export function testJotformIntegration(
       })
 
       it('should add a webhook to a form', async () => {
+        // GIVEN
+        await deleteWebhook(integration)
+
         // WHEN
-        const params = {
-          formId: env.TEST_JOTFORM_FORM_ID,
-          webhookUrl: 'http://example.com/webhook',
-        }
-        const result = await integration.addWebhook(params)
+        const result = await addWebhook(integration)
 
         //THEN
         expect(result.data).toBeDefined()
@@ -50,11 +65,7 @@ export function testJotformIntegration(
 
       it('should delete a webhook', async () => {
         // WHEN
-        const params = {
-          formId: env.TEST_JOTFORM_FORM_ID,
-          webhookId: '0',
-        }
-        const result = await integration.deleteWebhook(params)
+        const result = await deleteWebhook(integration)
 
         //THEN
         expect(result.data).toBeDefined()
