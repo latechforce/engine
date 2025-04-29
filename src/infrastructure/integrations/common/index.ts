@@ -10,6 +10,7 @@ import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
+import type { ZoomConfig } from '/domain/integrations/Zoom/ZoomConfig'
 
 import { NotionIntegration } from './notion/NotionIntegration'
 import { PappersIntegration } from './pappers/PappersIntegration'
@@ -22,6 +23,7 @@ import { PhantombusterIntegration } from './phantombuster/PhantombusterIntegrati
 import { CalendlyIntegration } from './calendly/CalendlyIntegration'
 import { YouCanBookMeIntegration } from './youcanbookme/YouCanBookMeIntegration'
 import { JotformIntegration } from './jotform/JotformIntegration'
+import { ZoomIntegration } from './zoom/ZoomIntegration'
 
 export const integrations: Integrations = {
   airtable: (config: AirtableConfig) => new AirtableIntegration(config),
@@ -35,4 +37,5 @@ export const integrations: Integrations = {
   calendly: (config: CalendlyConfig) => new CalendlyIntegration(config),
   youCanBookMe: (config: YouCanBookMeConfig) => new YouCanBookMeIntegration(config),
   jotform: (config: JotformConfig) => new JotformIntegration(config),
+  zoom: (config: ZoomConfig) => new ZoomIntegration(config),
 }
