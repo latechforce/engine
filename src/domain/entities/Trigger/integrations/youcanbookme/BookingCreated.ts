@@ -38,7 +38,11 @@ export class BookingCreatedTrigger extends BaseTrigger<BookingCreatedTriggerConf
       '/' + system.joinPath('api', 'trigger', 'you-can-book-me', 'invitee-created', automation)
     await server.post(triggerPath, this.onTriggerCalled)
     const triggerUrl = system.joinPath(server.baseUrl, triggerPath)
-    const currentProfile = await youcanbookme.currentProfile(account)
+    const { data: currentProfile } = await youcanbookme.currentProfile(account)
+
+    if (!currentProfile) {
+      throw new Error('Current profile not found')
+    }
 
     const youCanBookMeWebhookActions = currentProfile.actions?.filter(
       (action) => action.type === 'WEBHOOK'
