@@ -4,6 +4,11 @@ import type { ZoomConfig } from '/domain/integrations/Zoom/ZoomConfig'
 import { BaseMockIntegration } from '../base'
 import type { OAuthAccessToken } from '/domain/integrations/OAuth'
 import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
+import type {
+  CreateEventSubscriptionParams,
+  EventSubscription,
+} from '/domain/integrations/Zoom/ZoomTypes'
+import { randomUUID } from 'crypto'
 
 export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegration {
   private _users: SQLiteDatabaseTableDriver
@@ -15,7 +20,6 @@ export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegra
     this._users = this._db.table({
       name: 'users',
       fields: [
-        { name: 'id', type: 'SingleLineText' },
         { name: 'display_name', type: 'SingleLineText' },
         { name: 'email', type: 'SingleLineText' },
         { name: 'timezone', type: 'SingleLineText' },
@@ -62,6 +66,43 @@ export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegra
         expires_in: 3600,
         scope: 'mock-scope',
         token_type: 'Bearer',
+      },
+    }
+  }
+
+  createEventSubscription = async (
+    params: CreateEventSubscriptionParams
+  ): Promise<IntegrationResponse<EventSubscription>> => {
+    const eventSubscriptionId = randomUUID()
+    const subscriberId = params.subscriber_id || randomUUID()
+
+    // Need to convert params to match the table schema
+    const record = {
+      id: eventSubscriptionId,
+      fields: {
+        event_subscription_id: eventSubscriptionId,
+        event_subscription_name: params.event_subscription_name,
+        event_webhook_url: params.event_webhook_url,
+        events: params.events.join(','),
+        subscription_scope: params.subscription_scope,
+        created_source: 'default',
+        subscriber_id: subscriberId,
+      },
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    }
+
+    this._webhooks.insert(record)
+
+    return {
+      data: {
+        event_subscription_id: eventSubscriptionId,
+        events: params.events,
+        event_subscription_name: params.event_subscription_name,
+        event_webhook_url: params.event_webhook_url,
+        subscription_scope: params.subscription_scope,
+        created_source: 'openapi',
+        subscriber_id: subscriberId,
       },
     }
   }

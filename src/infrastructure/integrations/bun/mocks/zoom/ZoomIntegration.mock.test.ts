@@ -10,4 +10,6 @@ export const integration = new ZoomIntegration({
   authBaseUrl: ':memory:',
 })
 
+await integration.createToken('test')
+
 testZoomIntegration(BunTester, integration)

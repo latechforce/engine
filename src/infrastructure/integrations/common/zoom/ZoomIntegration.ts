@@ -3,6 +3,10 @@ import type { IntegrationResponse, IntegrationResponseError } from '/domain/inte
 import type { OAuthAccessToken } from '/domain/integrations/OAuth'
 import type { ZoomConfig } from '/domain/integrations/Zoom/ZoomConfig'
 import type { ZoomError } from '/domain/integrations/Zoom/ZoomTypes'
+import type {
+  CreateEventSubscriptionParams,
+  EventSubscription,
+} from '/domain/integrations/Zoom/ZoomTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 
 export class ZoomIntegration implements IZoomIntegration {
@@ -100,6 +104,24 @@ export class ZoomIntegration implements IZoomIntegration {
         },
       })
     } catch (error) {
+      return this._responseError(error)
+    }
+  }
+
+  createEventSubscription = async (
+    params: CreateEventSubscriptionParams,
+    accessToken?: string
+  ): Promise<IntegrationResponse<EventSubscription>> => {
+    try {
+      const response = await this._api.post('/marketplace/app/event_subscription', params, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return {
+        data: response.data as EventSubscription,
+      }
+    } catch (error: unknown) {
       return this._responseError(error)
     }
   }
