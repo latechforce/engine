@@ -1,4 +1,4 @@
-import type { CronTimeTickedScheduleTriggerConfig } from '/domain/entities/Trigger/services/schedule/CronTimeTicked'
+import type { CronTimeTickedScheduleTriggerConfig } from '../../../../../../../domain/entities/Trigger/services/schedule/CronTimeTicked'
 
 /**
  * Cron Time Ticked Schedule Trigger

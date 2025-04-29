@@ -1,4 +1,4 @@
-import type { NotionConfig } from '/domain/integrations/Notion'
+import type { NotionConfig } from '../../../../domain/integrations/Notion'
 
 /**
  * Notion configuration schema

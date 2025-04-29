@@ -1,6 +1,6 @@
-import type { Drivers } from '/adapter/spi/drivers'
-import { TunnelSpi } from '/adapter/spi/drivers/TunnelSpi'
-import { Tunnel } from '/domain/services/Tunnel'
+import type { Drivers } from '../../../spi/drivers'
+import { TunnelSpi } from '../../../spi/drivers/TunnelSpi'
+import { Tunnel } from '../../../../domain/services/Tunnel'
 import type { TunnelServiceSchema } from '../../schemas/ServiceSchema/TunnelSchema'
 
 export class TunnelMapper {

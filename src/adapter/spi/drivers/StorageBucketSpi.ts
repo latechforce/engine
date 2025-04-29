@@ -1,7 +1,7 @@
-import type { IStorageBucketSpi } from '/domain/services/StorageBucket'
+import type { IStorageBucketSpi } from '../../../domain/services/StorageBucket'
 import type { FileDto } from '../dtos/FileDto'
 import { FileMapper } from '../mappers/FileMapper'
-import type { FileToSave } from '/domain/entities/File'
+import type { FileToSave } from '../../../domain/entities/File'
 
 export interface IStorageBucketDriver {
   exists: () => Promise<boolean>

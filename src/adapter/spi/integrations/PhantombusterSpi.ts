@@ -2,9 +2,9 @@ import type {
   IPhantombusterSpi,
   PhantombusterAgentOutput,
   PhantombusterConfig,
-} from '/domain/integrations/Phantombuster'
+} from '../../../domain/integrations/Phantombuster'
 import { BaseSpi, type BaseIntegration } from './base'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { IntegrationResponse } from '../../../domain/integrations/base'
 export interface IPhantombusterIntegration extends BaseIntegration<PhantombusterConfig> {
   fetchAgentOutput: (agentId: string) => Promise<IntegrationResponse<PhantombusterAgentOutput>>
 }

@@ -1,4 +1,4 @@
-import type { JotformConfig } from '/domain/integrations/Jotform'
+import type { JotformConfig } from '../../../../domain/integrations/Jotform'
 
 /**
  * Jotform configuration schema

@@ -2,9 +2,9 @@ import { BaseSpi, type BaseIntegration } from './base'
 import {
   AirtableTableSpi,
   type IAirtableTableIntegration,
-} from '/adapter/spi/integrations/AirtableTableSpi'
-import type { IAirtableSpi, AirtableConfig } from '/domain/integrations/Airtable'
-import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTypes'
+} from './AirtableTableSpi'
+import type { IAirtableSpi, AirtableConfig } from '../../../domain/integrations/Airtable'
+import type { AirtableTableRecordFields } from '../../../domain/integrations/Airtable/AirtableTypes'
 
 export interface IAirtableIntegration extends BaseIntegration<AirtableConfig> {
   getTable: <T extends AirtableTableRecordFields>(

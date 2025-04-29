@@ -1,4 +1,4 @@
-import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
+import type { PhantombusterConfig } from '../../../../domain/integrations/Phantombuster'
 
 /**
  * Phantombuster configuration schema

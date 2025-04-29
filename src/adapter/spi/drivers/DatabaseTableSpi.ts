@@ -1,7 +1,7 @@
-import { RecordMapper } from '/adapter/spi/mappers/RecordMapper'
+import { RecordMapper } from '../mappers/RecordMapper'
 import { FilterMapper } from '../mappers/FilterMapper'
-import type { Filter, FilterDto } from '/domain/entities/Filter'
-import type { IDatabaseTableSpi } from '/domain/services/DatabaseTable'
+import type { Filter, FilterDto } from '../../../domain/entities/Filter'
+import type { IDatabaseTableSpi } from '../../../domain/services/DatabaseTable'
 import type {
   PersistedRecordFieldsDto,
   RecordFieldsToCreateDto,
@@ -11,8 +11,8 @@ import type {
   RecordFields,
   RecordFieldsToCreate,
   RecordFieldsToUpdate,
-} from '/domain/entities/Record'
-import type { FieldConfig } from '/domain/entities/Field'
+} from '../../../domain/entities/Record'
+import type { FieldConfig } from '../../../domain/entities/Field'
 
 export interface IDatabaseTableDriver {
   name: string

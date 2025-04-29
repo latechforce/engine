@@ -1,0 +1,74 @@
+{
+  "name": "v2.2",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node bin/server.ts",
+    "build": "node ace build",
+    "dev": "node ace serve --hmr",
+    "test": "node ace test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "imports": {
+    "#controllers/*": "./src/app/controllers/*.js",
+    "#exceptions/*": "./src/app/exceptions/*.js",
+    "#models/*": "./src/app/models/*.js",
+    "#mails/*": "./src/app/mails/*.js",
+    "#services/*": "./src/app/services/*.js",
+    "#listeners/*": "./src/app/listeners/*.js",
+    "#events/*": "./src/app/events/*.js",
+    "#middleware/*": "./src/app/middleware/*.js",
+    "#validators/*": "./src/app/validators/*.js",
+    "#providers/*": "./src/providers/*.js",
+    "#policies/*": "./src/app/policies/*.js",
+    "#abilities/*": "./src/app/abilities/*.js",
+    "#database/*": "./src/database/*.js",
+    "#tests/*": "./src/tests/*.js",
+    "#start/*": "./src/start/*.js",
+    "#config/*": "./src/config/*.js"
+  },
+  "devDependencies": {
+    "@adonisjs/assembler": "^7.8.2",
+    "@adonisjs/eslint-config": "^2.0.0",
+    "@adonisjs/prettier-config": "^1.4.0",
+    "@adonisjs/tsconfig": "^1.4.0",
+    "@japa/assert": "^4.0.1",
+    "@japa/plugin-adonisjs": "^4.0.0",
+    "@japa/runner": "^4.2.0",
+    "@swc/core": "1.10.7",
+    "@types/luxon": "^3.6.2",
+    "@types/node": "^22.13.2",
+    "eslint": "^9.20.1",
+    "hot-hook": "^0.4.0",
+    "pino-pretty": "^13.0.0",
+    "prettier": "^3.5.0",
+    "ts-node-maintained": "^10.9.5",
+    "typescript": "~5.7",
+    "vite": "^6.1.0"
+  },
+  "dependencies": {
+    "@adonisjs/auth": "^9.3.1",
+    "@adonisjs/core": "^6.17.2",
+    "@adonisjs/lucid": "^21.6.0",
+    "@adonisjs/session": "^7.5.1",
+    "@adonisjs/shield": "^8.1.2",
+    "@adonisjs/static": "^1.1.1",
+    "@adonisjs/vite": "^4.0.0",
+    "@vinejs/vine": "^3.0.0",
+    "better-sqlite3": "^11.9.1",
+    "edge.js": "^6.2.1",
+    "luxon": "^3.6.1",
+    "reflect-metadata": "^0.2.2"
+  },
+  "hotHook": {
+    "boundaries": [
+      "./src/app/controllers/**/*.ts",
+      "./src/app/middleware/*.ts"
+    ]
+  },
+  "prettier": "@adonisjs/prettier-config"
+}

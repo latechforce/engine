@@ -1,4 +1,4 @@
-import type { TunnelConfig } from '/domain/services'
+import type { TunnelConfig } from '../../../../domain/services'
 
 /**
  * @title Tunnel

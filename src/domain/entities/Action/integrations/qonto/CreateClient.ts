@@ -1,12 +1,12 @@
-import { type BaseActionIntegrationConfig } from '/domain/entities/Action/integrations/base'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
+import { type BaseActionIntegrationConfig } from '../base'
+import type { AutomationContext } from '../../../Automation/Context'
 import {
   Template,
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
-} from '/domain/services/Template'
-import type { QontoClient } from '/domain/integrations/Qonto/QontoTypes'
-import type { QontoCreateClient } from '/domain/integrations/Qonto/QontoTypes'
+} from '../../../../services/Template'
+import type { QontoClient } from '../../../../integrations/Qonto/QontoTypes'
+import type { QontoCreateClient } from '../../../../integrations/Qonto/QontoTypes'
 import {
   BaseQontoAction,
   type BaseQontoActionIntegrations,

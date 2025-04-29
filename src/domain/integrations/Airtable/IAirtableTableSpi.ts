@@ -1,7 +1,7 @@
 import type { AirtableTableRecordFields } from './AirtableTypes'
 import type { AirtableTableRecord } from './AirtableTableRecord'
 import type { UpdateAirtableTableRecord } from './AirtableTypes'
-import type { Filter } from '/domain/entities/Filter'
+import type { Filter } from '../../entities/Filter'
 import type { IntegrationResponse } from '../base'
 
 export interface IAirtableTableSpi<

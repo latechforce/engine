@@ -1,9 +1,9 @@
-import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
+import type { IAirtableIntegration } from '../../../../../adapter/spi/integrations/AirtableSpi'
 import { AirtableTableIntegration } from './AirtableTableIntegration.mock'
-import type { AirtableConfig, AirtableTableRecordFields } from '/domain/integrations/Airtable'
+import type { AirtableConfig, AirtableTableRecordFields } from '../../../../../domain/integrations/Airtable'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { RecordFields } from '/domain/entities/Record'
-import type { FieldConfig } from '/domain/entities/Field'
+import type { RecordFields } from '../../../../../domain/entities/Record'
+import type { FieldConfig } from '../../../../../domain/entities/Field'
 import { BaseMockIntegration } from '../base'
 import slugify from 'slugify'
 

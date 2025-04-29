@@ -1,8 +1,8 @@
 import type { MonitorServiceSchema } from '../../schemas/ServiceSchema/MonitorSchema'
-import type { Drivers } from '/adapter/spi/drivers'
-import { MonitorSpi } from '/adapter/spi/drivers/MonitorSpi'
-import { Monitor } from '/domain/services/Monitor'
-import type { MonitorServices } from '/domain/services/Monitor'
+import type { Drivers } from '../../../spi/drivers'
+import { MonitorSpi } from '../../../spi/drivers/MonitorSpi'
+import { Monitor } from '../../../../domain/services/Monitor'
+import type { MonitorServices } from '../../../../domain/services/Monitor'
 export class MonitorMapper {
   static toService(
     drivers: Drivers,

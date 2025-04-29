@@ -3,9 +3,9 @@ import type {
   GoogleMailEmailOptions,
   GoogleMailEmailResponse,
   IGoogleMailSpi,
-} from '/domain/integrations/Google/Mail'
+} from '../../../domain/integrations/Google/Mail'
 import { BaseSpi, type BaseIntegration } from './base'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { IntegrationResponse } from '../../../domain/integrations/base'
 
 export interface IGoogleMailIntegration extends BaseIntegration<GoogleMailConfig> {
   sendEmail: (

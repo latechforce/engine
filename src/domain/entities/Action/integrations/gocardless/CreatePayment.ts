@@ -1,16 +1,16 @@
-import { type BaseActionServices } from '/domain/entities/Action/base'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import { type BaseActionServices } from '../../base'
+import type { AutomationContext } from '../../../Automation/Context'
+import type { TemplateCompiler } from '../../../../services/TemplateCompiler'
 import type {
   GoCardlessCreatePayment,
   GoCardlessPayment,
   GoCardless,
-} from '/domain/integrations/GoCardless'
+} from '../../../../integrations/GoCardless'
 import {
   Template,
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
-} from '/domain/services/Template'
+} from '../../../../services/Template'
 import { BaseIntegrationAction, type BaseActionIntegrationConfig } from '../base'
 
 type GoCardlessCreatePaymentAsTemplateObjectCompiled =

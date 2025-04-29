@@ -1,4 +1,4 @@
-import type { InviteeCreatedCalendlyTriggerConfig } from '/domain/entities/Trigger/integrations/calendly/InviteeCreated'
+import type { InviteeCreatedCalendlyTriggerConfig } from '../../../../../../../domain/entities/Trigger/integrations/calendly/InviteeCreated'
 
 /**
  * Invitee Created Calendly Trigger

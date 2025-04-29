@@ -1,5 +1,5 @@
 import { Context } from './Base'
-import type { InputProps } from '/domain/components/BasicForms/Input'
+import type { InputProps } from '../../../../domain/components/BasicForms/Input'
 
 export const Input = ({
   field,

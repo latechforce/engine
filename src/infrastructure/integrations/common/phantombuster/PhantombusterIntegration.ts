@@ -1,10 +1,10 @@
-import type { IPhantombusterIntegration } from '/adapter/spi/integrations/PhantombusterSpi'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
+import type { IPhantombusterIntegration } from '../../../../adapter/spi/integrations/PhantombusterSpi'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../domain/integrations/base'
 import type {
   PhantombusterConfig,
   PhantombusterAgentOutput,
   PhantombusterError,
-} from '/domain/integrations/Phantombuster'
+} from '../../../../domain/integrations/Phantombuster'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import { join } from 'path'
 

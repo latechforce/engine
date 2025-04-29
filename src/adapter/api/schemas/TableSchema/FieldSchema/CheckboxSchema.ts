@@ -1,4 +1,4 @@
-import type { CheckboxFieldConfig } from '/domain/entities/Field/Checkbox'
+import type { CheckboxFieldConfig } from '../../../../../domain/entities/Field/Checkbox'
 
 /**
  * Checkbox field interface

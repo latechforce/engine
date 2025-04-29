@@ -1,8 +1,8 @@
-import type { IYouCanBookMeIntegration } from '/adapter/spi/integrations/YouCanBookMeSpi'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
-import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
-import type { YouCanBookMeError } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
-import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
+import type { IYouCanBookMeIntegration } from '../../../../adapter/spi/integrations/YouCanBookMeSpi'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../domain/integrations/base'
+import type { YouCanBookMeConfig } from '../../../../domain/integrations/YouCanBookMe/YouCanBookMeConfig'
+import type { YouCanBookMeError } from '../../../../domain/integrations/YouCanBookMe/YouCanBookMeTypes'
+import type { YouCanBookMeProfile } from '../../../../domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import { join } from 'path'
 

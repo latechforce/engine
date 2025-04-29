@@ -1,10 +1,10 @@
 import { BaseMockIntegration } from '../base'
-import type { IPhantombusterIntegration } from '/adapter/spi/integrations/PhantombusterSpi'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { IPhantombusterIntegration } from '../../../../../adapter/spi/integrations/PhantombusterSpi'
+import type { IntegrationResponse } from '../../../../../domain/integrations/base'
 import type {
   PhantombusterConfig,
   PhantombusterAgentOutput,
-} from '/domain/integrations/Phantombuster'
+} from '../../../../../domain/integrations/Phantombuster'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 
 type AgentOutputRecordFields = {

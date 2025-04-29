@@ -1,16 +1,16 @@
 import type { ActionAutomationSchema } from '../schemas/AutomationSchema/ActionSchema'
-import { CreatePaymentGoCardlessAction } from '/domain/entities/Action/integrations/gocardless/CreatePayment'
-import { ListPaymentsGoCardlessAction } from '/domain/entities/Action/integrations/gocardless/ListPayments'
-import { SendEmailGoogleMailAction } from '/domain/entities/Action/integrations/googleMail/SendEmail'
-import { UpdatePageNotionAction } from '/domain/entities/Action/integrations/notion/UpdatePage'
-import { GetCompanyPappersAction } from '/domain/entities/Action/integrations/pappers/GetCompany'
-import { CreateClientQontoAction } from '/domain/entities/Action/integrations/qonto/CreateClient'
-import { RetrieveAttachmentQontoAction } from '/domain/entities/Action/integrations/qonto/RetrieveAttachment'
-import { CreateRecordDatabaseAction } from '/domain/entities/Action/services/database/CreateRecord'
-import { RunTypescriptCodeAction } from '/domain/entities/Action/services/code/RunTypescript'
-import { ReadRecordDatabaseAction } from '/domain/entities/Action/services/database/ReadRecord'
-import { RunJavascriptCodeAction } from '/domain/entities/Action/services/code/RunJavascript'
-import type { TemplateCompiler, Logger, Monitor, CodeCompiler, IdGenerator } from '/domain/services'
+import { CreatePaymentGoCardlessAction } from '../../../domain/entities/Action/integrations/gocardless/CreatePayment'
+import { ListPaymentsGoCardlessAction } from '../../../domain/entities/Action/integrations/gocardless/ListPayments'
+import { SendEmailGoogleMailAction } from '../../../domain/entities/Action/integrations/googleMail/SendEmail'
+import { UpdatePageNotionAction } from '../../../domain/entities/Action/integrations/notion/UpdatePage'
+import { GetCompanyPappersAction } from '../../../domain/entities/Action/integrations/pappers/GetCompany'
+import { CreateClientQontoAction } from '../../../domain/entities/Action/integrations/qonto/CreateClient'
+import { RetrieveAttachmentQontoAction } from '../../../domain/entities/Action/integrations/qonto/RetrieveAttachment'
+import { CreateRecordDatabaseAction } from '../../../domain/entities/Action/services/database/CreateRecord'
+import { RunTypescriptCodeAction } from '../../../domain/entities/Action/services/code/RunTypescript'
+import { ReadRecordDatabaseAction } from '../../../domain/entities/Action/services/database/ReadRecord'
+import { RunJavascriptCodeAction } from '../../../domain/entities/Action/services/code/RunJavascript'
+import type { TemplateCompiler, Logger, Monitor, CodeCompiler, IdGenerator } from '../../../domain/services'
 import type {
   Pappers,
   Qonto,
@@ -18,9 +18,9 @@ import type {
   GoogleMail,
   GoCardless,
   YouCanBookMe,
-} from '/domain/integrations'
-import type { Table } from '/domain/entities/Table'
-import type { Action } from '/domain/entities/Action'
+} from '../../../domain/integrations'
+import type { Table } from '../../../domain/entities/Table'
+import type { Action } from '../../../domain/entities/Action'
 
 export type ActionMapperServices = {
   templateCompiler: TemplateCompiler

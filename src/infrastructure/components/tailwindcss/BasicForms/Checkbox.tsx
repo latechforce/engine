@@ -1,5 +1,5 @@
 import { Context } from './Base'
-import type { CheckboxProps } from '/domain/components/BasicForms/Checkbox'
+import type { CheckboxProps } from '../../../../domain/components/BasicForms/Checkbox'
 
 export const Checkbox = ({ field, label, description, required }: CheckboxProps) => {
   return (

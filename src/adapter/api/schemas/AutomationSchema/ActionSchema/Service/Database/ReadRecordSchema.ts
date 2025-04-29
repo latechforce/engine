@@ -1,4 +1,4 @@
-import type { ReadRecordDatabaseActionConfig } from '/domain/entities/Action/services/database/ReadRecord'
+import type { ReadRecordDatabaseActionConfig } from '../../../../../../../domain/entities/Action/services/database/ReadRecord'
 
 /**
  * Interface for reading a record from the database

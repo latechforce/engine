@@ -1,12 +1,12 @@
 import type { ConfigError } from '../Error/Config'
-import type { Table } from '../Table/'
+import type { Table } from '../Table'
 import type {
   Checkbox,
   FileInput,
   AdvancedSelect,
   Textarea,
   Input as InputComponent,
-} from '../../components/'
+} from '../../components'
 import {
   EmailField,
   SingleLineTextField,
@@ -17,7 +17,7 @@ import {
   SingleAttachmentField,
   type Field,
   UrlField,
-} from '/domain/entities/Field'
+} from '../Field'
 
 export interface InputConfig {
   field: string

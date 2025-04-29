@@ -1,21 +1,21 @@
-import { type BaseActionServices } from '/domain/entities/Action/base'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import { type BaseActionServices } from '../../base'
+import type { AutomationContext } from '../../../Automation/Context'
+import type { TemplateCompiler } from '../../../../services/TemplateCompiler'
 import {
   Template,
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
-} from '/domain/services/Template'
+} from '../../../../services/Template'
 import type {
   Notion,
   NotionTablePageJson,
   NotionTablePageProperties,
-} from '/domain/integrations/Notion'
-import type { NotionTable } from '/domain/integrations/Notion/NotionTable'
+} from '../../../../integrations/Notion'
+import type { NotionTable } from '../../../../integrations/Notion/NotionTable'
 import {
   BaseIntegrationAction,
   type BaseActionIntegrationConfig,
-} from '/domain/entities/Action/integrations/base'
+} from '../base'
 
 type NotionTablePagePropertiesAsTemplateObjectCompiled =
   ConvertToTemplateObjectCompiled<NotionTablePageProperties>

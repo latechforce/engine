@@ -1,5 +1,5 @@
 import type { FileDto } from '../dtos/FileDto'
-import { type FileToSave, File } from '/domain/entities/File'
+import { type FileToSave, File } from '../../../domain/entities/File'
 
 export class FileMapper {
   static toDto = (fileToSave: FileToSave): FileDto => {

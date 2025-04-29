@@ -1,4 +1,4 @@
-import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe'
+import type { YouCanBookMeConfig } from '../../../../domain/integrations/YouCanBookMe'
 
 /**
  * YouCanBookMe configuration schema

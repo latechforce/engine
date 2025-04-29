@@ -1,6 +1,6 @@
-import type { Integrations } from '/adapter/spi/integrations'
-import { NotionSpi } from '/adapter/spi/integrations/NotionSpi'
-import { Notion, type NotionServices } from '/domain/integrations/Notion'
+import type { Integrations } from '../../../spi/integrations'
+import { NotionSpi } from '../../../spi/integrations/NotionSpi'
+import { Notion, type NotionServices } from '../../../../domain/integrations/Notion'
 import type { NotionIntegrationSchema } from '../../schemas/IntegrationSchema/NotionSchema'
 
 export class NotionMapper {

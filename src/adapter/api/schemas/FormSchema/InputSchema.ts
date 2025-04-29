@@ -1,4 +1,4 @@
-import type { InputConfig } from '/domain/entities/Form/Input'
+import type { InputConfig } from '../../../../domain/entities/Form/Input'
 
 /**
  * Input configuration interface

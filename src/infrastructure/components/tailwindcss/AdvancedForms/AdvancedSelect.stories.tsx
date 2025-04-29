@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { AdvancedSelect } from './AdvancedSelect'
 import { Form } from '../Layouts/Form'
-import type { AdvancedSelectProps } from '/domain/components/AdvancedForms/AdvancedSelect'
+import type { AdvancedSelectProps } from '../../../../domain/components/AdvancedForms/AdvancedSelect'
 
 const AdvancedSelectWithForm = (props: AdvancedSelectProps) => (
   <Form id="id" title="Form" submitLabel="Save">

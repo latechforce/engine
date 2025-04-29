@@ -1,4 +1,4 @@
-import type { RecordFieldValue } from '/domain/entities/Record'
+import type { RecordFieldValue } from '../../../../../domain/entities/Record'
 
 export interface ColumnInfo {
   name: string

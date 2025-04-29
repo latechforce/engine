@@ -1,4 +1,4 @@
-import type { SendEmailGoogleMailActionConfig } from '/domain/entities/Action/integrations/googleMail/SendEmail'
+import type { SendEmailGoogleMailActionConfig } from '../../../../../../../../domain/entities/Action/integrations/googleMail/SendEmail'
 
 /**
  * Interface for sending an email through Google Mail

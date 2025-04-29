@@ -2,9 +2,9 @@ import type {
   QontoClient,
   QontoCreateClient,
   QontoCreateClientInvoice,
-} from '/domain/integrations/Qonto/QontoTypes'
+} from '../../../../../domain/integrations/Qonto/QontoTypes'
 import { format } from 'date-fns'
-import env from '/test/env'
+import env from '../../../../test/env'
 
 export const qontoCreateClientSample: QontoCreateClient = {
   name: 'John Doe',

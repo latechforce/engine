@@ -1,12 +1,12 @@
 import type { IDatabaseSpi } from './Database'
 import type { Filter } from '../entities/Filter'
-import type { Record, RecordFieldsToCreate, RecordFieldsToUpdate } from '/domain/entities/Record'
-import type { Logger } from '/domain/services/Logger'
-import { IsTextFilter } from '/domain/entities/Filter/text/Is'
-import { OrFilter } from '/domain/entities/Filter/Or'
-import type { RecordFields, UpdateRecordFields } from '/domain/entities/Record'
+import type { Record, RecordFieldsToCreate, RecordFieldsToUpdate } from '../entities/Record'
+import type { Logger } from './Logger'
+import { IsTextFilter } from '../entities/Filter/text/Is'
+import { OrFilter } from '../entities/Filter/Or'
+import type { RecordFields, UpdateRecordFields } from '../entities/Record'
 import type { IdGenerator } from './IdGenerator'
-import type { TableConfig } from '/domain/entities/Table'
+import type { TableConfig } from '../entities/Table'
 export interface DatabaseTableServices {
   logger: Logger
   idGenerator: IdGenerator

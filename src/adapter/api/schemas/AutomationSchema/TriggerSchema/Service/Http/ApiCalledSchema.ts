@@ -1,4 +1,4 @@
-import type { ApiCalledHttpTriggerConfig } from '/domain/entities/Trigger/services/http/ApiCalled'
+import type { ApiCalledHttpTriggerConfig } from '../../../../../../../domain/entities/Trigger/services/http/ApiCalled'
 
 /**
  * Api Called HTTP Trigger

@@ -2,12 +2,12 @@ import type {
   GoogleMailConfig,
   GoogleMailEmailOptions,
   GoogleMailEmailResponse,
-} from '/domain/integrations/Google/Mail'
-import type { IGoogleMailIntegration } from '/adapter/spi/integrations/GoogleMailSpi'
+} from '../../../../../../domain/integrations/Google/Mail'
+import type { IGoogleMailIntegration } from '../../../../../../adapter/spi/integrations/GoogleMailSpi'
 import { BaseMockIntegration } from '../../base'
 import type { SQLiteDatabaseTableDriver } from '../../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { RecordFields } from '/domain/entities/Record'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { RecordFields } from '../../../../../../domain/entities/Record'
+import type { IntegrationResponse } from '../../../../../../domain/integrations/base'
 
 type EmailFields = {
   to_address: string

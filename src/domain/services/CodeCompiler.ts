@@ -1,4 +1,4 @@
-import { type FilterConfig, FilterMapper } from '/domain/entities/Filter'
+import { type FilterConfig, FilterMapper } from '../entities/Filter'
 import { CodeRunner } from './CodeRunner'
 import type {
   ICodeRunnerSpi,
@@ -11,7 +11,7 @@ import type {
   CodeRunnerServices,
   CodeRunnerContextServicesFetcher,
 } from './CodeRunner'
-import type { RecordFields, UpdateRecordFields } from '/domain/entities/Record'
+import type { RecordFields, UpdateRecordFields } from '../entities/Record'
 
 export type CodeCompilerServices = CodeRunnerServices
 

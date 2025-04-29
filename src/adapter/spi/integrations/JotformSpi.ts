@@ -1,12 +1,12 @@
 import { BaseSpi } from './base'
-import type { IJotformSpi } from '/domain/integrations/Jotform/IJotformSpi'
+import type { IJotformSpi } from '../../../domain/integrations/Jotform/IJotformSpi'
 import type {
   JotformWebhookResponse,
   JotformWebhookParams,
   DeleteWebhookParams,
-} from '/domain/integrations/Jotform/JotformTypes'
-import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
-import type { IntegrationResponse } from '/domain/integrations/base'
+} from '../../../domain/integrations/Jotform/JotformTypes'
+import type { JotformConfig } from '../../../domain/integrations/Jotform/JotformConfig'
+import type { IntegrationResponse } from '../../../domain/integrations/base'
 
 export type IJotformIntegration = IJotformSpi
 

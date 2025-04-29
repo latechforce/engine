@@ -1,4 +1,4 @@
-import type { PageProps } from '/domain/components/Layouts/Page'
+import type { PageProps } from '../../../../domain/components/Layouts/Page'
 
 export const Page = ({ title, description, children, cssFiles, jsFiles }: PageProps) => {
   return (

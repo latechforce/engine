@@ -1,9 +1,9 @@
-import type { Queue } from '/domain/services/Queue'
+import type { Queue } from '../../../../services/Queue'
 import { BaseTrigger, type BaseTriggerIntegrationConfig } from '../../base'
 import type { AutomationContext } from '../../../Automation/Context'
-import type { Calendly } from '/domain/integrations/Calendly'
-import type { Server } from '/domain/services/Server'
-import type { System } from '/domain/services/System'
+import type { Calendly } from '../../../../integrations/Calendly'
+import type { Server } from '../../../../services/Server'
+import type { System } from '../../../../services/System'
 import type { PostRequest } from '../../../Request'
 import { JsonResponse } from '../../../Response/Json'
 

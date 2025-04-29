@@ -1,15 +1,15 @@
-import type { Table } from '/domain/entities/Table'
-import type { FilterConfig } from '/domain/entities/Filter'
+import type { Table } from '../entities/Table'
+import type { FilterConfig } from '../entities/Filter'
 import type {
   Notion,
   NotionCodeRunner,
   NotionCodeRunnerTable,
   NotionTablePageProperties,
-} from '/domain/integrations/Notion'
-import type { Record, UpdateRecordFields } from '/domain/entities/Record'
-import { Logger } from '/domain/services/Logger'
-import type { RecordFields } from '/domain/entities/Record'
-import type { Airtable, AirtableCodeRunner } from '/domain/integrations/Airtable'
+} from '../integrations/Notion'
+import type { Record, UpdateRecordFields } from '../entities/Record'
+import { Logger } from './Logger'
+import type { RecordFields } from '../entities/Record'
+import type { Airtable, AirtableCodeRunner } from '../integrations/Airtable'
 import type { Fetcher } from './Fetcher'
 import type { Qonto, QontoCodeRunner } from '../integrations/Qonto'
 import type { GoCardless, GoCardlessCodeRunner } from '../integrations/GoCardless'

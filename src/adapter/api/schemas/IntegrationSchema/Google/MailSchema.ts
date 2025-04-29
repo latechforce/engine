@@ -1,4 +1,4 @@
-import type { GoogleMailConfig } from '/domain/integrations/Google/Mail'
+import type { GoogleMailConfig } from '../../../../../domain/integrations/Google/Mail'
 
 /**
  * Gmail configuration schema

@@ -1,10 +1,10 @@
 import type {
   QontoCreateClient,
   QontoCreateClientInvoice,
-} from '/domain/integrations/Qonto/QontoTypes'
+} from '../../../domain/integrations/Qonto/QontoTypes'
 import { BaseSpi } from './base'
-import type { IQontoSpi } from '/domain/integrations/Qonto/IQontoSpi'
-import type { QontoConfig } from '/domain/integrations/Qonto'
+import type { IQontoSpi } from '../../../domain/integrations/Qonto/IQontoSpi'
+import type { QontoConfig } from '../../../domain/integrations/Qonto'
 
 export type IQontoIntegration = IQontoSpi
 

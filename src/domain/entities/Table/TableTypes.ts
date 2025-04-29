@@ -1,12 +1,12 @@
-import type { Server } from '/domain/services/Server'
-import type { Database } from '/domain/services/Database'
-import type { Storage } from '/domain/services/Storage'
+import type { Server } from '../../services/Server'
+import type { Database } from '../../services/Database'
+import type { Storage } from '../../services/Storage'
 import type { Field, FieldConfig } from '../Field'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
-import { IdGenerator } from '/domain/services/IdGenerator'
-import type { SchemaValidator } from '/domain/services/SchemaValidator'
-import type { Monitor } from '/domain/services/Monitor'
-import type { System } from '/domain/services/System'
+import type { TemplateCompiler } from '../../services/TemplateCompiler'
+import { IdGenerator } from '../../services/IdGenerator'
+import type { SchemaValidator } from '../../services/SchemaValidator'
+import type { Monitor } from '../../services/Monitor'
+import type { System } from '../../services/System'
 
 export interface TableConfig {
   name: string

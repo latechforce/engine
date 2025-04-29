@@ -1,13 +1,13 @@
 import { AppMapper } from './mappers/AppMapper'
-import type { StoppedApp } from '/domain/entities/App/Stopped'
+import type { StoppedApp } from '../../domain/entities/App/Stopped'
 import type { ConfigSchema } from './schemas/ConfigSchema'
-import type { SchemaError } from '/domain/entities/Error/Schema'
-import type { Drivers } from '/adapter/spi/drivers'
-import type { SchemaValidator } from '/domain/services/SchemaValidator'
+import type { SchemaError } from '../../domain/entities/Error/Schema'
+import type { Drivers } from '../spi/drivers'
+import type { SchemaValidator } from '../../domain/services/SchemaValidator'
 import { SchemaValidatorMapper } from './mappers/ServicesMapper/SchemaValidatorMapper'
-import type { Integrations } from '/adapter/spi/integrations'
-import type { StartedApp } from '/domain/entities/App/Started'
-import type { Components } from '/domain/components'
+import type { Integrations } from '../spi/integrations'
+import type { StartedApp } from '../../domain/entities/App/Started'
+import type { Components } from '../../domain/components'
 
 export class Engine {
   private _schemaValidator: SchemaValidator

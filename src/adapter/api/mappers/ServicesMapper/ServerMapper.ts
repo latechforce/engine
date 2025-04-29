@@ -1,7 +1,7 @@
 import type { ServerServiceSchema } from '../../schemas/ServiceSchema/ServerSchema'
-import type { Drivers } from '/adapter/spi/drivers'
-import { ServerSpi } from '/adapter/spi/drivers/ServerSpi'
-import { Server, type ServerServices } from '/domain/services/Server'
+import type { Drivers } from '../../../spi/drivers'
+import { ServerSpi } from '../../../spi/drivers/ServerSpi'
+import { Server, type ServerServices } from '../../../../domain/services/Server'
 
 export class ServerMapper {
   static toService(

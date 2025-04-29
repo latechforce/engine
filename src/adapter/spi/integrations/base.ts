@@ -1,4 +1,4 @@
-import type { BaseConfig, IntegrationResponseError } from '/domain/integrations/base'
+import type { BaseConfig, IntegrationResponseError } from '../../../domain/integrations/base'
 
 export interface BaseIntegration<T extends BaseConfig> {
   config: T

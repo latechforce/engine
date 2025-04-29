@@ -1,5 +1,5 @@
 import { Context } from '../BasicForms/Base'
-import type { AdvancedSelectProps } from '/domain/components/AdvancedForms/AdvancedSelect'
+import type { AdvancedSelectProps } from '../../../../domain/components/AdvancedForms/AdvancedSelect'
 
 // https://preline.co/docs/advanced-select.html
 

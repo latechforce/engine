@@ -1,4 +1,4 @@
-import type { IFetcherDriver } from '/adapter/spi/drivers/FetcherSpi'
+import type { IFetcherDriver } from '../../../adapter/spi/drivers/FetcherSpi'
 
 export class MockedFetcherDriver implements IFetcherDriver {
   private _endpoints: {

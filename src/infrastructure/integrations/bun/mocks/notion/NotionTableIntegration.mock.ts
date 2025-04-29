@@ -1,14 +1,14 @@
-import type { FilterDto } from '/domain/entities/Filter'
-import type { NotionTablePageDto } from '/adapter/spi/dtos/NotionTablePageDto'
-import type { INotionTableIntegration } from '/adapter/spi/integrations/NotionTableSpi'
-import { type NotionTablePageProperties } from '/domain/integrations/Notion'
+import type { FilterDto } from '../../../../../domain/entities/Filter'
+import type { NotionTablePageDto } from '../../../../../adapter/spi/dtos/NotionTablePageDto'
+import type { INotionTableIntegration } from '../../../../../adapter/spi/integrations/NotionTableSpi'
+import { type NotionTablePageProperties } from '../../../../../domain/integrations/Notion'
 import type { TableObject } from './NotionIntegration.mock'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { PersistedRecordFieldsDto } from '/adapter/spi/dtos/RecordDto'
+import type { PersistedRecordFieldsDto } from '../../../../../adapter/spi/dtos/RecordDto'
 import { customAlphabet } from 'nanoid'
-import type { RecordFields } from '/domain/entities/Record'
-import type { FieldConfig } from '/domain/entities/Field'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { RecordFields } from '../../../../../domain/entities/Record'
+import type { FieldConfig } from '../../../../../domain/entities/Field'
+import type { IntegrationResponse } from '../../../../../domain/integrations/base'
 
 export class NotionTableIntegration<T extends NotionTablePageProperties>
   implements INotionTableIntegration<T>

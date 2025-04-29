@@ -1,14 +1,14 @@
 import type { InputComponents, InputConfig } from './Input'
-import type { Server } from '/domain/services/Server'
-import type { Table } from '../Table/'
-import type { IdGenerator } from '/domain/services/IdGenerator'
-import type { Client } from '/domain/services/Client'
+import type { Server } from '../../services/Server'
+import type { Table } from '../Table'
+import type { IdGenerator } from '../../services/IdGenerator'
+import type { Client } from '../../services/Client'
 import type { Page as PageComponent } from '../../components/Layouts/Page'
 import type { Form as FormComponent } from '../../components/Layouts/Form'
 import type { FormResponse as FormResponseComponent } from '../../components/Layouts/FormResponse'
-import type { Logger } from '/domain/services/Logger'
-import type { System } from '/domain/services/System'
-import type { Theme } from '/domain/services/Theme'
+import type { Logger } from '../../services/Logger'
+import type { System } from '../../services/System'
+import type { Theme } from '../../services/Theme'
 
 export interface FormConfig {
   name: string

@@ -1,5 +1,5 @@
-import type { ConvertToAirtableTableRecordFields } from '/domain/integrations/Airtable'
-import type { TableConfig } from '/domain/entities/Table'
+import type { ConvertToAirtableTableRecordFields } from '../../../../../domain/integrations/Airtable'
+import type { TableConfig } from '../../../../../domain/entities/Table'
 
 export type AirtableTableSample1 = ConvertToAirtableTableRecordFields<{
   name?: string | null

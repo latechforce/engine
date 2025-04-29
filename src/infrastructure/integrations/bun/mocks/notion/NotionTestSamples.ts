@@ -1,9 +1,9 @@
-import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
+import type { NotionUserDto } from '../../../../../adapter/spi/dtos/NotionUserDto'
 import type {
   ConvertToNotionTablePageProperties,
   NotionTablePagePropertyFile,
-} from '/domain/integrations/Notion'
-import env from '/test/env'
+} from '../../../../../domain/integrations/Notion'
+import env from '../../../../test/env'
 import type { TableSchema } from '../../../../../adapter/api/schemas/TableSchema'
 
 export type NotionTableSample1 = ConvertToNotionTablePageProperties<{

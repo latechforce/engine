@@ -2,12 +2,12 @@ import {
   BaseAction,
   type BaseActionConfig,
   type BaseActionServices,
-} from '/domain/entities/Action/base'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
-import type { Table } from '/domain/entities/Table'
-import type { Template } from '/domain/services/Template'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
-import type { Record } from '/domain/entities/Record'
+} from '../../base'
+import type { AutomationContext } from '../../../Automation/Context'
+import type { Table } from '../../../Table'
+import type { Template } from '../../../../services/Template'
+import type { TemplateCompiler } from '../../../../services/TemplateCompiler'
+import type { Record } from '../../../Record'
 
 export interface ReadRecordDatabaseActionConfig extends BaseActionConfig {
   id: string

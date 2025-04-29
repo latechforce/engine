@@ -1,8 +1,8 @@
-import type { FilterConfig } from '/domain/entities/Filter'
+import type { FilterConfig } from '../../entities/Filter'
 import type { AirtableTableRecord } from './AirtableTableRecord'
 import type { IAirtableTableSpi } from './IAirtableTableSpi'
 import type { UpdateAirtableTableRecord } from './AirtableTypes'
-import { FilterMapper } from '/domain/entities/Filter'
+import { FilterMapper } from '../../entities/Filter'
 import type { AirtableTableRecordFields } from './AirtableTypes'
 import { Integration } from '../base'
 

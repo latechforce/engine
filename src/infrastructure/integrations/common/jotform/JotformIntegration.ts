@@ -1,12 +1,12 @@
-import type { IJotformIntegration } from '/adapter/spi/integrations/JotformSpi'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
-import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
+import type { IJotformIntegration } from '../../../../adapter/spi/integrations/JotformSpi'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../domain/integrations/base'
+import type { JotformConfig } from '../../../../domain/integrations/Jotform/JotformConfig'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import type {
   DeleteWebhookParams,
   JotformWebhookParams,
   JotformWebhookResponse,
-} from '/domain/integrations/Jotform/JotformTypes'
+} from '../../../../domain/integrations/Jotform/JotformTypes'
 
 export class JotformIntegration implements IJotformIntegration {
   private _instance: AxiosInstance

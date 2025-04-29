@@ -1,0 +1,19 @@
+{
+  "name": "v2",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "dev": "bun run src/index.ts",
+    "test": "bun test"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@adonisjs/core": "^6.17.2",
+    "@vinejs/vine": "^3.0.1"
+  }
+}

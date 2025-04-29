@@ -1,7 +1,7 @@
 import type { DatabaseServiceSchema } from '../../schemas/ServiceSchema/DatabaseSchema'
-import type { Drivers } from '/adapter/spi/drivers'
-import { DatabaseSpi } from '/adapter/spi/drivers/DatabaseSpi'
-import { Database, type DatabaseServices } from '/domain/services/Database'
+import type { Drivers } from '../../../spi/drivers'
+import { DatabaseSpi } from '../../../spi/drivers/DatabaseSpi'
+import { Database, type DatabaseServices } from '../../../../domain/services/Database'
 
 export class DatabaseMapper {
   static toService(

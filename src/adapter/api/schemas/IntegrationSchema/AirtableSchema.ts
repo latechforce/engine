@@ -1,4 +1,4 @@
-import type { AirtableConfig } from '/domain/integrations/Airtable'
+import type { AirtableConfig } from '../../../../domain/integrations/Airtable'
 
 /**
  * Airtable configuration schema

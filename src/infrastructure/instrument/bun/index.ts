@@ -1,7 +1,7 @@
 import type { ConfigSchema } from '../../../adapter/api/schemas/ConfigSchema'
 import * as Sentry from './Sentry'
-import { SystemDriver } from '/infrastructure/drivers/common/SystemDriver'
-import { Engine } from '/adapter/api'
+import { SystemDriver } from '../../drivers/common/SystemDriver'
+import { Engine } from '../../../adapter/api'
 
 export function instrument(config: ConfigSchema) {
   const filledConfig = Engine.fillEnv(config) as ConfigSchema

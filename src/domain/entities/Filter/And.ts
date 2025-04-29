@@ -1,4 +1,4 @@
-import type { SchemaValidatorJson } from '/domain/services/SchemaValidator'
+import type { SchemaValidatorJson } from '../../services/SchemaValidator'
 import { type Filter, type FilterDto } from '.'
 
 export type AndFilterConfig = {

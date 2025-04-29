@@ -1,7 +1,7 @@
 import type { IntegrationResponse } from '../base'
 import type { NotionTablePage } from './NotionTablePage'
 import type { NotionTablePageProperties, UpdateNotionTablePageProperties } from './NotionTypes'
-import type { Filter } from '/domain/entities/Filter'
+import type { Filter } from '../../entities/Filter'
 
 export interface INotionTableSpi<T extends NotionTablePageProperties = NotionTablePageProperties> {
   id: string

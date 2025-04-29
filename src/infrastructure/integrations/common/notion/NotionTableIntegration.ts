@@ -1,10 +1,10 @@
-import type { FilterDto } from '/domain/entities/Filter'
-import type { NotionTablePageDto } from '/adapter/spi/dtos/NotionTablePageDto'
-import type { INotionTableIntegration } from '/adapter/spi/integrations/NotionTableSpi'
+import type { FilterDto } from '../../../../domain/entities/Filter'
+import type { NotionTablePageDto } from '../../../../adapter/spi/dtos/NotionTablePageDto'
+import type { INotionTableIntegration } from '../../../../adapter/spi/integrations/NotionTableSpi'
 import {
   type NotionTablePageProperties,
   type NotionTablePagePropertyValue,
-} from '/domain/integrations/Notion'
+} from '../../../../domain/integrations/Notion'
 import { Client } from '@notionhq/client'
 import type {
   CreatePageParameters,
@@ -20,7 +20,7 @@ import type {
 } from '@notionhq/client/build/src/api-endpoints'
 import { format, parse, formatISO } from 'date-fns'
 import { NotionIntegration } from './NotionIntegration'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { IntegrationResponse } from '../../../../domain/integrations/base'
 
 export class NotionTableIntegration<T extends NotionTablePageProperties>
   implements INotionTableIntegration<T>

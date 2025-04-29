@@ -1,8 +1,8 @@
-import type { Record } from '/domain/entities/Record'
-import type { Queue } from '/domain/services/Queue'
-import type { Realtime } from '/domain/services/Realtime'
-import { BaseTrigger, type BaseTriggerConfig } from '/domain/entities/Trigger/base'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
+import type { Record } from '../../../Record'
+import type { Queue } from '../../../../services/Queue'
+import type { Realtime } from '../../../../services/Realtime'
+import { BaseTrigger, type BaseTriggerConfig } from '../../base'
+import type { AutomationContext } from '../../../Automation/Context'
 
 export interface RecordCreatedDatabaseTriggerConfig extends BaseTriggerConfig {
   table: string

@@ -1,4 +1,4 @@
-import type { FormWebhookReceivedTriggerConfig } from '/domain/entities/Trigger/integrations/jotform/FormWebhookReceived'
+import type { FormWebhookReceivedTriggerConfig } from '../../../../../../../domain/entities/Trigger/integrations/jotform/FormWebhookReceived'
 
 /**
  * Form Webhook Received Jotform Trigger

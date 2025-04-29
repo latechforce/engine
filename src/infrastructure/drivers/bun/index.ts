@@ -1,8 +1,8 @@
-import type { Drivers } from '/adapter/spi/drivers'
-import type { DatabaseConfig } from '/domain/services/Database'
-import type { MonitorConfig } from '/domain/services/Monitor'
-import type { ServerConfig } from '/domain/services/Server'
-import type { StorageConfig } from '/domain/services/Storage'
+import type { Drivers } from '../../../adapter/spi/drivers'
+import type { DatabaseConfig } from '../../../domain/services/Database'
+import type { MonitorConfig } from '../../../domain/services/Monitor'
+import type { ServerConfig } from '../../../domain/services/Server'
+import type { StorageConfig } from '../../../domain/services/Storage'
 
 import { DatabaseDriver } from './DatabaseDriver'
 import { MonitorDriver } from './MonitorDriver'

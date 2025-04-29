@@ -1,5 +1,5 @@
 import { Dropdown } from '../Overlays/Dropdown'
-import type { TableProps } from '/domain/components'
+import type { TableProps } from '../../../../domain/components'
 
 export const Table = ({ columns, rows, dropdown }: TableProps) => {
   return (

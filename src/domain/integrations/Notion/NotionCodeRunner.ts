@@ -1,7 +1,7 @@
 import type { NotionTablePage } from './NotionTablePage'
 import type { NotionTablePageProperties, UpdateNotionTablePageProperties } from './NotionTypes'
 import type { NotionUser } from './NotionUser'
-import type { FilterConfig } from '/domain/entities/Filter'
+import type { FilterConfig } from '../../entities/Filter'
 
 export interface NotionCodeRunner {
   getTable: <T extends NotionTablePageProperties>(

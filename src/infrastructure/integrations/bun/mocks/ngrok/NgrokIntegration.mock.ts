@@ -1,7 +1,7 @@
-import type { INgrokIntegration } from '/adapter/spi/integrations/NgrokSpi'
-import type { NgrokConfig } from '/domain/integrations/Ngrok'
+import type { INgrokIntegration } from '../../../../../adapter/spi/integrations/NgrokSpi'
+import type { NgrokConfig } from '../../../../../domain/integrations/Ngrok'
 import { BaseMockIntegration } from '../base'
-import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
+import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 
 export class NgrokIntegration extends BaseMockIntegration implements INgrokIntegration {
   private _configs: SQLiteDatabaseTableDriver

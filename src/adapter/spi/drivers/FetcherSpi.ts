@@ -1,4 +1,4 @@
-import type { IFetcherSpi } from '/domain/services/Fetcher'
+import type { IFetcherSpi } from '../../../domain/services/Fetcher'
 
 export interface IFetcherDriver {
   get: (url: string, options?: RequestInit) => Promise<Response>

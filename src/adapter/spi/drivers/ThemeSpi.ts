@@ -1,4 +1,4 @@
-import type { IThemeSpi } from '/domain/services/Theme'
+import type { IThemeSpi } from '../../../domain/services/Theme'
 
 export interface IThemeDriver {
   loadCssFiles: () => Promise<{ name: string; content: string }[]>

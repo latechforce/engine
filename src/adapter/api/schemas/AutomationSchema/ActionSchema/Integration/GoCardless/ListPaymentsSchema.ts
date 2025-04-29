@@ -1,4 +1,4 @@
-import type { ListPaymentsGoCardlessActionConfig } from '/domain/entities/Action/integrations/gocardless/ListPayments'
+import type { ListPaymentsGoCardlessActionConfig } from '../../../../../../../domain/entities/Action/integrations/gocardless/ListPayments'
 
 /**
  * Interface for listing payments from GoCardless

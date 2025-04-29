@@ -1,14 +1,14 @@
-import type { IAirtableIntegration } from '/adapter/spi/integrations/AirtableSpi'
+import type { IAirtableIntegration } from '../../../../adapter/spi/integrations/AirtableSpi'
 import { AirtableTableIntegration } from './AirtableTableIntegration'
 import type {
   AirtableBaseSchema,
   AirtableConfig,
   AirtableError,
   AirtableTableRecordFields,
-} from '/domain/integrations/Airtable'
+} from '../../../../domain/integrations/Airtable'
 import Airtable from 'airtable'
 import axios, { type AxiosInstance } from 'axios'
-import type { IntegrationResponseError } from '/domain/integrations/base'
+import type { IntegrationResponseError } from '../../../../domain/integrations/base'
 import { join } from 'path'
 
 export class AirtableIntegration implements IAirtableIntegration {

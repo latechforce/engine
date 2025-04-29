@@ -1,4 +1,4 @@
-import type { Components } from '/domain/components'
+import type { Components } from '../../../domain/components'
 import { Page } from './Layouts/Page'
 import { Form } from './Layouts/Form'
 import { Input } from './BasicForms/Input'

@@ -1,4 +1,4 @@
-import type { SingleLinkedRecordFieldConfig } from '/domain/entities/Field/SingleLinkedRecord'
+import type { SingleLinkedRecordFieldConfig } from '../../../../../domain/entities/Field/SingleLinkedRecord'
 
 /**
  * Single linked record field interface

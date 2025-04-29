@@ -4,7 +4,7 @@ import {
   type FormComponents,
   type FormEntities,
   type FormServices,
-} from '/domain/entities/Form'
+} from '../../../domain/entities/Form'
 
 export type FormMapperServices = FormServices
 

@@ -1,5 +1,5 @@
-import type { MonitorConfig } from '/domain/services/Monitor'
-import type { IMonitorDriver } from '/adapter/spi/drivers/MonitorSpi'
+import type { MonitorConfig } from '../../../../domain/services/Monitor'
+import type { IMonitorDriver } from '../../../../adapter/spi/drivers/MonitorSpi'
 import { SentryDriver } from './SentryDriver'
 import { ConsoleDriver } from '../../common/MonitorDriver/ConsoleDriver'
 

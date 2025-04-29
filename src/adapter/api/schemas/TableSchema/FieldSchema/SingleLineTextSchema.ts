@@ -1,4 +1,4 @@
-import type { SingleLineTextFieldConfig } from '/domain/entities/Field/SingleLineText'
+import type { SingleLineTextFieldConfig } from '../../../../../domain/entities/Field/SingleLineText'
 
 /**
  * Single line text field interface

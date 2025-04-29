@@ -1,5 +1,5 @@
 import { Context } from './Base'
-import type { TextareaProps } from '/domain/components/BasicForms/Textarea'
+import type { TextareaProps } from '../../../../domain/components/BasicForms/Textarea'
 
 export const Textarea = ({
   field,

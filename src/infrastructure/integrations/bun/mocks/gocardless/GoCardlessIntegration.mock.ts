@@ -1,16 +1,16 @@
-import type { IGoCardlessIntegration } from '/adapter/spi/integrations/GoCardlessSpi'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { IGoCardlessIntegration } from '../../../../../adapter/spi/integrations/GoCardlessSpi'
+import type { IntegrationResponse } from '../../../../../domain/integrations/base'
 import type {
   GoCardlessPayment,
   GoCardlessConfig,
   GoCardlessCreatePayment,
   GoCardlessListPayment,
   GoCardlessPaymentList,
-} from '/domain/integrations/GoCardless'
+} from '../../../../../domain/integrations/GoCardless'
 import { BaseMockIntegration } from '../base'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { RecordFields } from '/domain/entities/Record'
-import type { FilterDto } from '/domain/entities/Filter'
+import type { RecordFields } from '../../../../../domain/entities/Record'
+import type { FilterDto } from '../../../../../domain/entities/Filter'
 
 type PaymentFields = {
   amount: number

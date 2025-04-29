@@ -1,4 +1,4 @@
-import type { SingleAttachmentFieldConfig } from '/domain/entities/Field/SingleAttachment'
+import type { SingleAttachmentFieldConfig } from '../../../../../domain/entities/Field/SingleAttachment'
 
 /**
  * Single attachment field interface

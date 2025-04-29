@@ -1,4 +1,4 @@
-import type { ThemeConfigNone } from '/domain/services'
+import type { ThemeConfigNone } from '../../../../../domain/services'
 
 /**
  * @title None

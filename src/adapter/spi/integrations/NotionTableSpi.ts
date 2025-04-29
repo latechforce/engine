@@ -1,13 +1,13 @@
-import { type Filter, type FilterDto } from '/domain/entities/Filter'
+import { type Filter, type FilterDto } from '../../../domain/entities/Filter'
 import { FilterMapper } from '../mappers/FilterMapper'
 import type {
   NotionTablePageProperties,
   UpdateNotionTablePageProperties,
-} from '/domain/integrations/Notion/NotionTypes'
+} from '../../../domain/integrations/Notion/NotionTypes'
 import { NotionTablePageMapper } from '../mappers/NotionTablePageMapper'
 import type { NotionTablePageDto } from '../dtos/NotionTablePageDto'
-import type { IntegrationResponse } from '/domain/integrations/base'
-import type { INotionTableSpi } from '/domain/integrations/Notion/INotionTableSpi'
+import type { IntegrationResponse } from '../../../domain/integrations/base'
+import type { INotionTableSpi } from '../../../domain/integrations/Notion/INotionTableSpi'
 
 export interface INotionTableIntegration<
   T extends NotionTablePageProperties = NotionTablePageProperties,

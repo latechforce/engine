@@ -1,14 +1,14 @@
-import type { IJotformIntegration } from '/adapter/spi/integrations/JotformSpi'
-import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
+import type { IJotformIntegration } from '../../../../../adapter/spi/integrations/JotformSpi'
+import type { JotformConfig } from '../../../../../domain/integrations/Jotform/JotformConfig'
 import { BaseMockIntegration } from '../base'
 import type {
   DeleteWebhookParams,
   JotformWebhookParams,
   JotformWebhookResponse,
-} from '/domain/integrations/Jotform/JotformTypes'
-import type { IntegrationResponse } from '/domain/integrations/base'
-import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { RecordFields } from '/domain/entities/Record/RecordTypes'
+} from '../../../../../domain/integrations/Jotform/JotformTypes'
+import type { IntegrationResponse } from '../../../../../domain/integrations/base'
+import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
+import type { RecordFields } from '../../../../../domain/entities/Record/RecordTypes'
 
 export type FormWebhookRecordFields = RecordFields & {
   content: string

@@ -1,4 +1,4 @@
-import type { SidebarProps } from '/domain/components'
+import type { SidebarProps } from '../../../../domain/components'
 
 export const Sidebar = ({ brand, brandHref, items, children }: SidebarProps) => {
   const activeClass =

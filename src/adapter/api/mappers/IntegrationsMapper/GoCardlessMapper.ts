@@ -1,8 +1,8 @@
 import type { GoCardlessIntegrationSchema } from '../../schemas/IntegrationSchema/GoCardlessSchema'
-import type { Integrations } from '/adapter/spi/integrations'
-import { GoCardlessSpi } from '/adapter/spi/integrations/GoCardlessSpi'
-import { GoCardless } from '/domain/integrations/GoCardless'
-import type { BaseServices } from '/domain/integrations/base'
+import type { Integrations } from '../../../spi/integrations'
+import { GoCardlessSpi } from '../../../spi/integrations/GoCardlessSpi'
+import { GoCardless } from '../../../../domain/integrations/GoCardless'
+import type { BaseServices } from '../../../../domain/integrations/base'
 export class GoCardlessMapper {
   static toIntegration(
     integrations: Integrations,

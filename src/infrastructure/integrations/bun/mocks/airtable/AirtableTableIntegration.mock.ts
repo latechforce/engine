@@ -1,17 +1,17 @@
-import type { FilterDto } from '/domain/entities/Filter'
-import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
+import type { FilterDto } from '../../../../../domain/entities/Filter'
+import type { IAirtableTableIntegration } from '../../../../../adapter/spi/integrations/AirtableTableSpi'
 import type { TableObject } from './AirtableIntegration.mock'
-import type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
-import type { PersistedRecordFieldsDto } from '/adapter/spi/dtos/RecordDto'
+import type { AirtableTableRecordDto } from '../../../../../adapter/spi/dtos/AirtableTableRecordDto'
+import type { PersistedRecordFieldsDto } from '../../../../../adapter/spi/dtos/RecordDto'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { FieldConfig } from '/domain/entities/Field'
+import type { FieldConfig } from '../../../../../domain/entities/Field'
 import { customAlphabet } from 'nanoid'
-import type { RecordFields } from '/domain/entities/Record'
+import type { RecordFields } from '../../../../../domain/entities/Record'
 import type {
   AirtableTableRecordFields,
   UpdateAirtableTableRecord,
-} from '/domain/integrations/Airtable'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
+} from '../../../../../domain/integrations/Airtable'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../../domain/integrations/base'
 
 export class AirtableTableIntegration<T extends AirtableTableRecordFields>
   implements IAirtableTableIntegration<T>

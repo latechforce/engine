@@ -1,5 +1,5 @@
-import { RollupField } from '/domain/entities/Field/Rollup'
-import { ConfigError } from '/domain/entities/Error/Config'
+import { RollupField } from '../../../../domain/entities/Field/Rollup'
+import { ConfigError } from '../../../../domain/entities/Error/Config'
 import type { RollupFieldTableSchema } from '../../schemas/TableSchema/FieldSchema/RollupSchema'
 import type { FieldTableSchema } from '../../schemas/TableSchema/FieldSchema'
 

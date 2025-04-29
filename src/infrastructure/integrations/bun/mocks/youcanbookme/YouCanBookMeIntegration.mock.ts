@@ -1,10 +1,10 @@
-import type { IYouCanBookMeIntegration } from '/adapter/spi/integrations/YouCanBookMeSpi'
-import type { IntegrationResponse } from '/domain/integrations/base'
-import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
-import type { YouCanBookMeProfile } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
+import type { IYouCanBookMeIntegration } from '../../../../../adapter/spi/integrations/YouCanBookMeSpi'
+import type { IntegrationResponse } from '../../../../../domain/integrations/base'
+import type { YouCanBookMeConfig } from '../../../../../domain/integrations/YouCanBookMe/YouCanBookMeConfig'
+import type { YouCanBookMeProfile } from '../../../../../domain/integrations/YouCanBookMe/YouCanBookMeTypes'
 import { BaseMockIntegration } from '../base'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { RecordFields } from '/domain/entities/Record'
+import type { RecordFields } from '../../../../../domain/entities/Record'
 import { nanoid } from 'nanoid'
 
 type ProfileRecordFields = RecordFields & {

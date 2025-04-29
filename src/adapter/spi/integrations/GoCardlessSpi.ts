@@ -5,9 +5,9 @@ import type {
   GoCardlessPayment,
   GoCardlessListPayment,
   GoCardlessPaymentList,
-} from '/domain/integrations/GoCardless'
+} from '../../../domain/integrations/GoCardless'
 import { BaseSpi, type BaseIntegration } from './base'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { IntegrationResponse } from '../../../domain/integrations/base'
 
 export interface IGoCardlessIntegration extends BaseIntegration<GoCardlessConfig> {
   createPayment: (

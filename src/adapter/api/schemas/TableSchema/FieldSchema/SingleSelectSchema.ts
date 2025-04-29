@@ -1,4 +1,4 @@
-import type { SingleSelectFieldConfig } from '/domain/entities/Field/SingleSelect'
+import type { SingleSelectFieldConfig } from '../../../../../domain/entities/Field/SingleSelect'
 
 /**
  * Single select field interface

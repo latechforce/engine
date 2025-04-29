@@ -1,4 +1,4 @@
-import type { WebhookCalledHttpTriggerConfig } from '/domain/entities/Trigger/services/http/WebhookCalled'
+import type { WebhookCalledHttpTriggerConfig } from '../../../../../../../domain/entities/Trigger/services/http/WebhookCalled'
 
 /**
  * Webhook Called HTTP Trigger

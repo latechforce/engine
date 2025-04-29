@@ -1,5 +1,5 @@
 import type { OutputFormulaFieldTableSchema } from './OutputSchema'
-import type { FormulaFieldConfig } from '/domain/entities/Field/Formula'
+import type { FormulaFieldConfig } from '../../../../../../domain/entities/Field/Formula'
 
 /**
  * Formula field interface

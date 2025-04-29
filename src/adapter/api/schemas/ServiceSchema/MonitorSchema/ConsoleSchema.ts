@@ -1,4 +1,4 @@
-import type { MonitorConsoleConfig } from '/domain/services'
+import type { MonitorConsoleConfig } from '../../../../../domain/services'
 
 /**
  * Console Monitor Service Schema

@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid'
-import type { BaseConfig, IntegrationResponseError } from '/domain/integrations/base'
+import type { BaseConfig, IntegrationResponseError } from '../../../../domain/integrations/base'
 import { SQLiteDatabaseDriver } from '../../../drivers/bun/DatabaseDriver/SQLite/SQLiteDriver'
 import { SQLiteDatabaseTableDriver } from '../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 

@@ -2,7 +2,7 @@ import { addDays, format } from 'date-fns'
 import type {
   GoCardlessCreatePayment,
   GoCardlessListPayment,
-} from '/domain/integrations/GoCardless'
+} from '../../../../../domain/integrations/GoCardless'
 
 export const goCardlessCreatePaymentSample: GoCardlessCreatePayment = {
   amount: 1000,

@@ -1,10 +1,10 @@
-import type { Monitor } from '/domain/services/Monitor'
+import type { Monitor } from '../../services/Monitor'
 import type { AutomationContext, AutomationContextAction } from '../Automation/Context'
 import type { Bucket } from '../Bucket'
 import { ConfigError } from '../Error/Config'
-import type { Table } from '../Table/'
-import { Logger } from '/domain/services/Logger'
-import type { ConvertToTemplateObject } from '/domain/services/Template'
+import type { Table } from '../Table'
+import { Logger } from '../../services/Logger'
+import type { ConvertToTemplateObject } from '../../services/Template'
 
 export interface BaseActionConfig {
   name: string

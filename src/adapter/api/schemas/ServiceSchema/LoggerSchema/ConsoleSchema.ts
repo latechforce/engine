@@ -1,4 +1,4 @@
-import type { LoggerConsoleConfig } from '/domain/services'
+import type { LoggerConsoleConfig } from '../../../../../domain/services'
 
 /**
  * Console Logger Service Schema

@@ -1,11 +1,11 @@
 import { Database } from 'bun:sqlite'
 import fs from 'fs-extra'
-import type { DatabaseConfig, DatabaseEventType, DatabaseType } from '/domain/services/Database'
-import type { EventDto, EventNotificationDto } from '/adapter/spi/dtos/EventDto'
+import type { DatabaseConfig, DatabaseEventType, DatabaseType } from '../../../../../domain/services/Database'
+import type { EventDto, EventNotificationDto } from '../../../../../adapter/spi/dtos/EventDto'
 import { SQLiteDatabaseTableDriver } from './SQLiteTableDriver'
-import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
-import type { TableConfig } from '/domain/entities/Table'
-import { TableMapper } from '/adapter/api/mappers/TableMapper'
+import type { IDatabaseDriver } from '../../../../../adapter/spi/drivers/DatabaseSpi'
+import type { TableConfig } from '../../../../../domain/entities/Table'
+import { TableMapper } from '../../../../../adapter/api/mappers/TableMapper'
 import type { TableSchema } from '../../../../../adapter/api/schemas/TableSchema'
 
 interface Notification {

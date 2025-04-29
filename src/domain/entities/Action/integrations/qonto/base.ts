@@ -1,6 +1,6 @@
-import type { Qonto } from '/domain/integrations/Qonto'
-import { type BaseActionServices } from '/domain/entities/Action/base'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import type { Qonto } from '../../../../integrations/Qonto'
+import { type BaseActionServices } from '../../base'
+import type { TemplateCompiler } from '../../../../services/TemplateCompiler'
 import { BaseIntegrationAction, type BaseActionIntegrationConfig } from '../base'
 
 export interface BaseQontoActionServices extends BaseActionServices {

@@ -1,4 +1,4 @@
-import type { DatabaseConfig } from '/domain/services'
+import type { DatabaseConfig } from '../../../../domain/services'
 
 /**
  * Database configuration interface

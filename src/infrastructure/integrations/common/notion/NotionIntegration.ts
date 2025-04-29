@@ -1,15 +1,15 @@
-import type { INotionIntegration } from '/adapter/spi/integrations/NotionSpi'
+import type { INotionIntegration } from '../../../../adapter/spi/integrations/NotionSpi'
 import { APIErrorCode, Client, isNotionClientError } from '@notionhq/client'
 import { NotionTableIntegration } from './NotionTableIntegration'
-import type { NotionConfig } from '/domain/integrations/Notion'
+import type { NotionConfig } from '../../../../domain/integrations/Notion'
 import type {
   DatabaseObjectResponse,
   ListUsersResponse,
   PartialDatabaseObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints'
-import type { NotionUserDto } from '/adapter/spi/dtos/NotionUserDto'
-import type { NotionTablePageProperties } from '/domain/integrations/Notion'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
+import type { NotionUserDto } from '../../../../adapter/spi/dtos/NotionUserDto'
+import type { NotionTablePageProperties } from '../../../../domain/integrations/Notion'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../domain/integrations/base'
 
 export class NotionIntegration implements INotionIntegration {
   private _notion: Client

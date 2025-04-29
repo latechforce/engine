@@ -1,4 +1,4 @@
-import type { MultipleLinkedRecordFieldConfig } from '/domain/entities/Field/MultipleLinkedRecord'
+import type { MultipleLinkedRecordFieldConfig } from '../../../../../domain/entities/Field/MultipleLinkedRecord'
 
 /**
  * Multiple linked record field interface

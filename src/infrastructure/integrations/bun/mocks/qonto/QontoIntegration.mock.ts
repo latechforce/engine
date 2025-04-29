@@ -5,13 +5,13 @@ import type {
   QontoCreateClientInvoice,
   QontoOrganization,
   QontoAttachment,
-} from '/domain/integrations/Qonto/QontoTypes'
-import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
+} from '../../../../../domain/integrations/Qonto/QontoTypes'
+import type { IQontoIntegration } from '../../../../../adapter/spi/integrations/QontoSpi'
 import { Database } from 'bun:sqlite'
 import fsExtra from 'fs-extra'
 import PDFDocument from 'pdfkit'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
-import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../../domain/integrations/base'
+import type { QontoConfig } from '../../../../../domain/integrations/Qonto/QontoConfig'
 import { BaseMockIntegration } from '../base'
 
 export class QontoIntegration extends BaseMockIntegration implements IQontoIntegration {

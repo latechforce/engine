@@ -1,4 +1,4 @@
-import type { IThemeDriver } from '/adapter/spi/drivers/ThemeSpi'
+import type { IThemeDriver } from '../../../../adapter/spi/drivers/ThemeSpi'
 
 export class NoneDriver implements IThemeDriver {
   constructor() {}

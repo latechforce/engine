@@ -1,8 +1,8 @@
 import type { PhantombusterIntegrationSchema } from '../../schemas/IntegrationSchema/PhantombusterSchema'
-import type { Integrations } from '/adapter/spi/integrations'
-import { PhantombusterSpi } from '/adapter/spi/integrations/PhantombusterSpi'
-import type { BaseServices } from '/domain/integrations/base'
-import { Phantombuster } from '/domain/integrations/Phantombuster'
+import type { Integrations } from '../../../spi/integrations'
+import { PhantombusterSpi } from '../../../spi/integrations/PhantombusterSpi'
+import type { BaseServices } from '../../../../domain/integrations/base'
+import { Phantombuster } from '../../../../domain/integrations/Phantombuster'
 
 export class PhantombusterMapper {
   static toIntegration(

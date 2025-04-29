@@ -1,7 +1,7 @@
 import Ajv, { type ErrorObject } from 'ajv'
 import configSchema from '../../../../schema/config.schema.json'
-import type { ISchemaValidatorDriver } from '/adapter/spi/drivers/SchemaValidatorSpi'
-import type { SchemaValidatorJson } from '/domain/services/SchemaValidator'
+import type { ISchemaValidatorDriver } from '../../../adapter/spi/drivers/SchemaValidatorSpi'
+import type { SchemaValidatorJson } from '../../../domain/services/SchemaValidator'
 
 export class SchemaValidatorDriver implements ISchemaValidatorDriver {
   private _ajv: Ajv

@@ -1,11 +1,11 @@
-import type { ICalendlySpi } from '/domain/integrations/Calendly/ICalendlySpi'
+import type { ICalendlySpi } from '../../../domain/integrations/Calendly/ICalendlySpi'
 import type {
   CreateWebhookSubscriptionParams,
   ListWebhookSubscriptionsParams,
   GetWebhookSubscriptionParams,
   DeleteWebhookSubscriptionParams,
-} from '/domain/integrations/Calendly/CalendlyTypes'
-import type { CalendlyConfig } from '/domain/integrations/Calendly'
+} from '../../../domain/integrations/Calendly/CalendlyTypes'
+import type { CalendlyConfig } from '../../../domain/integrations/Calendly'
 import { OAuthSpi } from './OAuthSpi'
 
 export type ICalendlyIntegration = ICalendlySpi

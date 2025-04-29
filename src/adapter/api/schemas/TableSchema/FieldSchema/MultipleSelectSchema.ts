@@ -1,4 +1,4 @@
-import type { MultipleSelectFieldConfig } from '/domain/entities/Field/MultipleSelect'
+import type { MultipleSelectFieldConfig } from '../../../../../domain/entities/Field/MultipleSelect'
 
 /**
  * Multiple select field interface

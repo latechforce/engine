@@ -1,14 +1,14 @@
-import { Table, type TableConfig } from '/domain/entities/Table'
+import { Table, type TableConfig } from '../../../domain/entities/Table'
 import type { TableSchema } from '../schemas/TableSchema'
 import { FieldMapper } from './FieldMapper'
-import type { Server } from '/domain/services/Server'
-import type { Database } from '/domain/services/Database'
-import type { IdGenerator } from '/domain/services/IdGenerator'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
-import type { SchemaValidator } from '/domain/services/SchemaValidator'
-import type { Monitor } from '/domain/services/Monitor'
-import type { Storage } from '/domain/services/Storage'
-import type { System } from '/domain/services/System'
+import type { Server } from '../../../domain/services/Server'
+import type { Database } from '../../../domain/services/Database'
+import type { IdGenerator } from '../../../domain/services/IdGenerator'
+import type { TemplateCompiler } from '../../../domain/services/TemplateCompiler'
+import type { SchemaValidator } from '../../../domain/services/SchemaValidator'
+import type { Monitor } from '../../../domain/services/Monitor'
+import type { Storage } from '../../../domain/services/Storage'
+import type { System } from '../../../domain/services/System'
 
 export interface TableMapperServices {
   server: Server

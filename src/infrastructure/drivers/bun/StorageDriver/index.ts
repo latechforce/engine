@@ -1,7 +1,7 @@
 import { PostgreSQLDriver } from '../../common/StorageDriver/PostgreSQLDriver'
 import { SQLiteStorageDriver } from './SQLiteDriver'
-import type { StorageConfig } from '/domain/services/Storage'
-import type { IStorageDriver } from '/adapter/spi/drivers/StorageSpi'
+import type { StorageConfig } from '../../../../domain/services/Storage'
+import type { IStorageDriver } from '../../../../adapter/spi/drivers/StorageSpi'
 
 export class StorageDriver implements IStorageDriver {
   private _storage: PostgreSQLDriver | SQLiteStorageDriver

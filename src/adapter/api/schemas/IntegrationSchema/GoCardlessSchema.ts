@@ -1,4 +1,4 @@
-import type { GoCardlessConfig } from '/domain/integrations/GoCardless'
+import type { GoCardlessConfig } from '../../../../domain/integrations/GoCardless'
 
 /**
  * GoCardless configuration schema

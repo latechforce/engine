@@ -1,4 +1,4 @@
-import { Automation } from '/domain/entities/Automation'
+import { Automation } from '../../../domain/entities/Automation'
 import type { AutomationSchema } from '../schemas/AutomationSchema'
 import {
   ActionMapper,
@@ -11,7 +11,7 @@ import {
   type TriggerMapperServices,
   type TriggerMapperIntegrations,
 } from './TriggerMapper'
-import type { Database } from '/domain/services/Database'
+import type { Database } from '../../../domain/services/Database'
 
 export type AutomationMapperServices = ActionMapperServices &
   TriggerMapperServices & {

@@ -1,10 +1,10 @@
-import type { Queue } from '/domain/services/Queue'
-import type { Server, ServerMethodOptionsAuth } from '/domain/services/Server'
-import { JsonResponse } from '/domain/entities/Response/Json'
-import type { PostRequest } from '/domain/entities/Request/Post'
+import type { Queue } from '../../../../services/Queue'
+import type { Server, ServerMethodOptionsAuth } from '../../../../services/Server'
+import { JsonResponse } from '../../../Response/Json'
+import type { PostRequest } from '../../../Request/Post'
 import { BaseTrigger, type BaseTriggerConfig } from '../../base'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
-import type { System } from '/domain/services/System'
+import type { AutomationContext } from '../../../Automation/Context'
+import type { System } from '../../../../services/System'
 
 export interface WebhookCalledHttpTriggerConfig extends BaseTriggerConfig {
   path: string

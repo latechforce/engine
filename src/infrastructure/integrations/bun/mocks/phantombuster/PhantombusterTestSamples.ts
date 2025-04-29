@@ -1,5 +1,5 @@
-import type { PhantombusterAgentOutput } from '/domain/integrations/Phantombuster'
-import env from '/infrastructure/test/env'
+import type { PhantombusterAgentOutput } from '../../../../../domain/integrations/Phantombuster'
+import env from '../../../../test/env'
 
 const { TEST_PHANTOMBUSTER_AGENT_ID } = env
 

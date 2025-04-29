@@ -1,5 +1,5 @@
 import type { OutputRollupFieldTableSchema } from './OutputSchema'
-import type { RollupFieldConfig } from '/domain/entities/Field/Rollup'
+import type { RollupFieldConfig } from '../../../../../../domain/entities/Field/Rollup'
 
 /**
  * Rollup field interface

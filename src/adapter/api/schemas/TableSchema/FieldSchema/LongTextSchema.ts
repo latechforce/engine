@@ -1,4 +1,4 @@
-import type { LongTextFieldConfig } from '/domain/entities/Field/LongText'
+import type { LongTextFieldConfig } from '../../../../../domain/entities/Field/LongText'
 
 /**
  * Long text field interface

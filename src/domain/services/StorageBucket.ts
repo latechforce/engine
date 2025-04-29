@@ -1,5 +1,5 @@
 import type { Logger } from './Logger'
-import type { IStorageSpi } from '/domain/services/Storage'
+import type { IStorageSpi } from './Storage'
 import type { File, FileToSave } from '../entities/File'
 
 export interface StorageBucketConfig {

@@ -1,4 +1,4 @@
-import type { RetrieveAttachmentQontoActionConfig } from '/domain/entities/Action/integrations/qonto/RetrieveAttachment'
+import type { RetrieveAttachmentQontoActionConfig } from '../../../../../../../domain/entities/Action/integrations/qonto/RetrieveAttachment'
 
 /**
  * Interface for retrieving an attachment from Qonto

@@ -1,4 +1,4 @@
-import type { DropdownProps } from '/domain/components'
+import type { DropdownProps } from '../../../../domain/components'
 
 export const Dropdown = ({ label, items }: DropdownProps) => {
   return (

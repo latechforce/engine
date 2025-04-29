@@ -1,6 +1,6 @@
-import type { IQontoIntegration } from '/adapter/spi/integrations/QontoSpi'
-import type { IntegrationResponseError } from '/domain/integrations/base'
-import type { QontoConfig } from '/domain/integrations/Qonto/QontoConfig'
+import type { IQontoIntegration } from '../../../../adapter/spi/integrations/QontoSpi'
+import type { IntegrationResponseError } from '../../../../domain/integrations/base'
+import type { QontoConfig } from '../../../../domain/integrations/Qonto/QontoConfig'
 import {
   type QontoClient,
   type QontoClientInvoice,
@@ -8,7 +8,7 @@ import {
   type QontoCreateClientInvoice,
   type QontoAttachment,
   type QontoError,
-} from '/domain/integrations/Qonto/QontoTypes'
+} from '../../../../domain/integrations/Qonto/QontoTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import { join } from 'path'
 

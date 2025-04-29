@@ -1,7 +1,7 @@
-import type { IPappersIntegration } from '/adapter/spi/integrations/PappersSpi'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
-import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
-import type { PappersEntreprise } from '/domain/integrations/Pappers/PappersTypes'
+import type { IPappersIntegration } from '../../../../adapter/spi/integrations/PappersSpi'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../domain/integrations/base'
+import type { PappersConfig } from '../../../../domain/integrations/Pappers/PappersConfig'
+import type { PappersEntreprise } from '../../../../domain/integrations/Pappers/PappersTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import { join } from 'path'
 

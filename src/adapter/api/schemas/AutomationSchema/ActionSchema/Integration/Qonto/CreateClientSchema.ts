@@ -1,4 +1,4 @@
-import type { CreateClientQontoActionConfig } from '/domain/entities/Action/integrations/qonto/CreateClient'
+import type { CreateClientQontoActionConfig } from '../../../../../../../domain/entities/Action/integrations/qonto/CreateClient'
 
 /**
  * Interface for creating a client in Qonto

@@ -1,6 +1,6 @@
-import type { IPappersSpi } from '/domain/integrations/Pappers/IPappersSpi'
+import type { IPappersSpi } from '../../../domain/integrations/Pappers/IPappersSpi'
 import { BaseSpi } from './base'
-import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
+import type { PappersConfig } from '../../../domain/integrations/Pappers/PappersConfig'
 
 export type IPappersIntegration = IPappersSpi
 

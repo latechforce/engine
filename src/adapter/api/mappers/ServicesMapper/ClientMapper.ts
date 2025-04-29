@@ -1,6 +1,6 @@
-import type { Drivers } from '/adapter/spi/drivers'
-import { ClientSpi } from '/adapter/spi/drivers/ClientSpi'
-import { Client, type ClientServices } from '/domain/services/Client'
+import type { Drivers } from '../../../spi/drivers'
+import { ClientSpi } from '../../../spi/drivers/ClientSpi'
+import { Client, type ClientServices } from '../../../../domain/services/Client'
 
 export class ClientMapper {
   static toService(drivers: Drivers, services: ClientServices): Client {

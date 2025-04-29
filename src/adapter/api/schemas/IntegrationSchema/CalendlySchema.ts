@@ -1,4 +1,4 @@
-import type { CalendlyConfig } from '/domain/integrations/Calendly'
+import type { CalendlyConfig } from '../../../../domain/integrations/Calendly'
 
 /**
  * Calendly configuration schema

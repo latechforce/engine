@@ -1,20 +1,20 @@
-import { type BaseActionServices } from '/domain/entities/Action/base'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import { type BaseActionServices } from '../../base'
+import type { AutomationContext } from '../../../Automation/Context'
+import type { TemplateCompiler } from '../../../../services/TemplateCompiler'
 import {
   Template,
   type ConvertToTemplateObjectCompiled,
   type ConvertToTemplateObjectFilled,
-} from '/domain/services/Template'
+} from '../../../../services/Template'
 import type {
   GoogleMail,
   GoogleMailEmailOptions,
   GoogleMailEmailResponse,
-} from '/domain/integrations/Google/Mail'
+} from '../../../../integrations/Google/Mail'
 import {
   BaseIntegrationAction,
   type BaseActionIntegrationConfig,
-} from '/domain/entities/Action/integrations/base'
+} from '../base'
 
 type GoogleMailSendEmailAsTemplateObjectCompiled =
   ConvertToTemplateObjectCompiled<GoogleMailEmailOptions>

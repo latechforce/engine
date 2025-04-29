@@ -1,10 +1,10 @@
 import type {
   CodeRunnerContextIntegrations,
   CodeRunnerContextServices,
-} from '/domain/services/CodeRunner'
+} from '../../services/CodeRunner'
 import { BaseApp, type AppConfig, type AppEntities, type AppServices } from './Base'
 import { StoppedApp } from './Stopped'
-import type { Integrations } from '/domain/integrations'
+import type { Integrations } from '../../integrations'
 
 export class StartedApp extends BaseApp {
   constructor(

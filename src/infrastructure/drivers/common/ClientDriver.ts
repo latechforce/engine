@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
-import type { IClientDriver } from '/adapter/spi/drivers/ClientSpi'
-import type { ClientHtmlAttributesOptions } from '/domain/services/Client'
+import type { IClientDriver } from '../../../adapter/spi/drivers/ClientSpi'
+import type { ClientHtmlAttributesOptions } from '../../../domain/services/Client'
 
 export class ClientDriver implements IClientDriver {
   readJsFiles = async (): Promise<{ name: string; content: string }[]> => {

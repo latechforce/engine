@@ -1,7 +1,7 @@
-import { type BaseActionIntegrationConfig } from '/domain/entities/Action/integrations/base'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
-import { Template } from '/domain/services/Template'
-import type { QontoAttachment } from '/domain/integrations/Qonto/QontoTypes'
+import { type BaseActionIntegrationConfig } from '../base'
+import type { AutomationContext } from '../../../Automation/Context'
+import { Template } from '../../../../services/Template'
+import type { QontoAttachment } from '../../../../integrations/Qonto/QontoTypes'
 import {
   BaseQontoAction,
   type BaseQontoActionIntegrations,

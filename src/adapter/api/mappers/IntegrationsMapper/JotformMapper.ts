@@ -1,8 +1,8 @@
-import type { Integrations } from '/adapter/spi/integrations'
-import { JotformSpi } from '/adapter/spi/integrations/JotformSpi'
-import { Jotform } from '/domain/integrations/Jotform'
+import type { Integrations } from '../../../spi/integrations'
+import { JotformSpi } from '../../../spi/integrations/JotformSpi'
+import { Jotform } from '../../../../domain/integrations/Jotform'
 import type { JotformIntegrationSchema } from '../../schemas/IntegrationSchema/JotformSchema'
-import type { BaseServices } from '/domain/integrations/base'
+import type { BaseServices } from '../../../../domain/integrations/base'
 
 export class JotformMapper {
   static toIntegration(

@@ -1,4 +1,4 @@
-import type { ISystemSpi } from '/domain/services/System'
+import type { ISystemSpi } from '../../../domain/services/System'
 
 export interface ISystemDriver {
   fileExists: (path: string) => boolean

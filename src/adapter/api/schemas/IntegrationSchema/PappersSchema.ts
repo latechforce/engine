@@ -1,4 +1,4 @@
-import type { PappersConfig } from '/domain/integrations/Pappers'
+import type { PappersConfig } from '../../../../domain/integrations/Pappers'
 
 /**
  * Pappers configuration schema

@@ -1,8 +1,8 @@
-import type { Integrations } from '/adapter/spi/integrations'
-import { GoogleMailSpi } from '/adapter/spi/integrations/GoogleMailSpi'
-import { GoogleMail } from '/domain/integrations/Google/Mail'
+import type { Integrations } from '../../../spi/integrations'
+import { GoogleMailSpi } from '../../../spi/integrations/GoogleMailSpi'
+import { GoogleMail } from '../../../../domain/integrations/Google/Mail'
 import type { MailGoogleIntegrationSchema } from '../../schemas/IntegrationSchema/Google/MailSchema'
-import type { BaseServices } from '/domain/integrations/base'
+import type { BaseServices } from '../../../../domain/integrations/base'
 
 export class GoogleMailMapper {
   static toIntegration(

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Checkbox } from './Checkbox'
 import { Form } from '../Layouts/Form'
-import type { CheckboxProps } from '/domain/components/BasicForms/Checkbox'
+import type { CheckboxProps } from '../../../../domain/components/BasicForms/Checkbox'
 
 const CheckboxWithForm = (props: CheckboxProps) => (
   <Form id="id" title="Form" submitLabel="Save">

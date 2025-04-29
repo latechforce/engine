@@ -1,4 +1,4 @@
-import type { TablePageCreatedNotionTriggerConfig } from '/domain/entities/Trigger/integrations/notion/TablePageCreated'
+import type { TablePageCreatedNotionTriggerConfig } from '../../../../../../../domain/entities/Trigger/integrations/notion/TablePageCreated'
 
 /**
  * Table Page Created Notion Trigger

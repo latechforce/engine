@@ -1,6 +1,6 @@
-import type { Pappers } from '/domain/integrations/Pappers'
-import { type BaseActionServices } from '/domain/entities/Action/base'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
+import type { Pappers } from '../../../../integrations/Pappers'
+import { type BaseActionServices } from '../../base'
+import type { TemplateCompiler } from '../../../../services/TemplateCompiler'
 import { BaseIntegrationAction, type BaseActionIntegrationConfig } from '../base'
 
 export interface BasePappersActionServices extends BaseActionServices {

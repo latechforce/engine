@@ -1,20 +1,20 @@
-import type { Server, ServerMethodOptionsAuth } from '/domain/services/Server'
-import { JsonResponse } from '/domain/entities/Response/Json'
-import type { PostRequest } from '/domain/entities/Request/Post'
+import type { Server, ServerMethodOptionsAuth } from '../../../../services/Server'
+import { JsonResponse } from '../../../Response/Json'
+import type { PostRequest } from '../../../Request/Post'
 import type {
   SchemaValidatorJson,
   SchemaValidatorJsonProperties,
-} from '/domain/services/SchemaValidator'
-import { AutomationContext } from '/domain/entities/Automation/Context'
-import { BaseTrigger, type BaseTriggerConfig } from '/domain/entities/Trigger/base'
+} from '../../../../services/SchemaValidator'
+import { AutomationContext } from '../../../Automation/Context'
+import { BaseTrigger, type BaseTriggerConfig } from '../../base'
 import {
   Template,
   type TemplateObject,
   type TemplateObjectCompiled,
-} from '/domain/services/Template'
-import type { TemplateCompiler } from '/domain/services/TemplateCompiler'
-import type { Monitor } from '/domain/services/Monitor'
-import type { System } from '/domain/services/System'
+} from '../../../../services/Template'
+import type { TemplateCompiler } from '../../../../services/TemplateCompiler'
+import type { Monitor } from '../../../../services/Monitor'
+import type { System } from '../../../../services/System'
 
 export interface ApiCalledHttpTriggerConfig extends BaseTriggerConfig {
   path: string

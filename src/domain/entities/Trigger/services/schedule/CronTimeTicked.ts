@@ -1,7 +1,7 @@
-import type { Queue } from '/domain/services/Queue'
+import type { Queue } from '../../../../services/Queue'
 import { BaseTrigger, type BaseTriggerConfig } from '../../base'
 import type { AutomationContext } from '../../../Automation/Context'
-import type { Cron } from '/domain/services/Cron'
+import type { Cron } from '../../../../services/Cron'
 
 export interface CronTimeTickedScheduleTriggerConfig extends BaseTriggerConfig {
   automation: string

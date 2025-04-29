@@ -1,8 +1,8 @@
 import type { QontoIntegrationSchema } from '../../schemas/IntegrationSchema/QontoSchema'
-import type { Integrations } from '/adapter/spi/integrations'
-import { QontoSpi } from '/adapter/spi/integrations/QontoSpi'
-import type { BaseServices } from '/domain/integrations/base'
-import { Qonto } from '/domain/integrations/Qonto'
+import type { Integrations } from '../../../spi/integrations'
+import { QontoSpi } from '../../../spi/integrations/QontoSpi'
+import type { BaseServices } from '../../../../domain/integrations/base'
+import { Qonto } from '../../../../domain/integrations/Qonto'
 
 export class QontoMapper {
   static toIntegration(

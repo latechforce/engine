@@ -1,4 +1,4 @@
-import type { SchemaError } from '/domain/entities/Error/Schema'
+import type { SchemaError } from '../entities/Error/Schema'
 
 type SchemaValidatorJsonType = 'string' | 'number' | 'boolean' | 'array' | 'object'
 

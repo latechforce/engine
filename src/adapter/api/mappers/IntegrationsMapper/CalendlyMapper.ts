@@ -1,7 +1,7 @@
 import type { CalendlyIntegrationSchema } from '../../schemas/IntegrationSchema/CalendlySchema'
-import type { Integrations } from '/adapter/spi/integrations'
-import { CalendlySpi } from '/adapter/spi/integrations/CalendlySpi'
-import { Calendly } from '/domain/integrations/Calendly'
+import type { Integrations } from '../../../spi/integrations'
+import { CalendlySpi } from '../../../spi/integrations/CalendlySpi'
+import { Calendly } from '../../../../domain/integrations/Calendly'
 import type { OAuthService } from '../../../../domain/integrations/OAuth'
 
 export class CalendlyMapper {

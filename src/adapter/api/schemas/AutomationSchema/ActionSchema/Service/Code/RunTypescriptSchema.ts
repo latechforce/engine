@@ -1,4 +1,4 @@
-import type { RunTypescriptCodeActionConfig } from '/domain/entities/Action/services/code/RunTypescript'
+import type { RunTypescriptCodeActionConfig } from '../../../../../../../domain/entities/Action/services/code/RunTypescript'
 
 /**
  * Interface for running TypeScript code

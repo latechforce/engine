@@ -1,12 +1,12 @@
-import type { Queue } from '/domain/services/Queue'
+import type { Queue } from '../../../../services/Queue'
 import { BaseTrigger, type BaseTriggerIntegrationConfig } from '../../base'
 import type { AutomationContext } from '../../../Automation/Context'
-import type { YouCanBookMe } from '/domain/integrations/YouCanBookMe'
+import type { YouCanBookMe } from '../../../../integrations/YouCanBookMe'
 import type { PostRequest } from '../../../Request'
-import type { Server } from '/domain/services/Server'
-import type { System } from '/domain/services/System'
+import type { Server } from '../../../../services/Server'
+import type { System } from '../../../../services/System'
 import { JsonResponse } from '../../../Response/Json'
-import type { YouCanBookMeWebhookAction } from '/domain/integrations/YouCanBookMe/YouCanBookMeTypes'
+import type { YouCanBookMeWebhookAction } from '../../../../integrations/YouCanBookMe/YouCanBookMeTypes'
 
 export type BookingCreatedTriggerConfig = BaseTriggerIntegrationConfig
 

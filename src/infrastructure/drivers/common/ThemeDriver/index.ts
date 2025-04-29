@@ -1,5 +1,5 @@
-import type { IThemeDriver } from '/adapter/spi/drivers/ThemeSpi'
-import type { ThemeConfig } from '/domain/services/Theme'
+import type { IThemeDriver } from '../../../../adapter/spi/drivers/ThemeSpi'
+import type { ThemeConfig } from '../../../../domain/services/Theme'
 import { TailwindCSSDriver } from './TailwindCSSDriver'
 import { NoneDriver } from './NoneDriver'
 

@@ -1,7 +1,7 @@
-import type { ConfigError } from '/domain/entities/Error/Config'
+import type { ConfigError } from '../Error/Config'
 import { BaseApp, type AppConfig, type AppEntities, type AppServices } from './Base'
 import { StartedApp } from './Started'
-import type { Integrations } from '/domain/integrations'
+import type { Integrations } from '../../integrations'
 
 export class StoppedApp extends BaseApp {
   constructor(

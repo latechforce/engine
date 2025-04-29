@@ -1,6 +1,6 @@
 import { BaseAdmin, type BaseAdminServices } from '../base'
-import { JsxResponse } from '/domain/entities/Response/Jsx'
-import type { Components } from '/domain/components'
+import { JsxResponse } from '../../Response/Jsx'
+import type { Components } from '../../../components'
 
 export class AdminForms extends BaseAdmin {
   constructor(services: BaseAdminServices, components: Components) {

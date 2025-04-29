@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Textarea } from './Textarea'
 import { Form } from '../Layouts/Form'
-import type { TextareaProps } from '/domain/components/BasicForms/Textarea'
+import type { TextareaProps } from '../../../../domain/components/BasicForms/Textarea'
 
 const TextareaWithForm = (props: TextareaProps) => (
   <Form id="id" title="Form" submitLabel="Save">

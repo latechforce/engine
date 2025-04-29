@@ -1,4 +1,4 @@
-import type { QontoConfig } from '/domain/integrations/Qonto'
+import type { QontoConfig } from '../../../../domain/integrations/Qonto'
 
 /**
  * Qonto configuration schema

@@ -1,11 +1,11 @@
-import type { Queue } from '/domain/services/Queue'
+import type { Queue } from '../../../../services/Queue'
 import { BaseTrigger, type BaseTriggerIntegrationConfig } from '../../base'
-import type { Jotform } from '/domain/integrations/Jotform'
-import type { Server } from '/domain/services/Server'
-import type { System } from '/domain/services/System'
-import type { AutomationContext } from '/domain/entities/Automation/Context'
-import type { PostRequest } from '/domain/entities/Request'
-import { JsonResponse } from '/domain/entities/Response/Json'
+import type { Jotform } from '../../../../integrations/Jotform'
+import type { Server } from '../../../../services/Server'
+import type { System } from '../../../../services/System'
+import type { AutomationContext } from '../../../Automation/Context'
+import type { PostRequest } from '../../../Request'
+import { JsonResponse } from '../../../Response/Json'
 
 export type FormWebhookReceivedTriggerConfig = BaseTriggerIntegrationConfig & {
   formId: string

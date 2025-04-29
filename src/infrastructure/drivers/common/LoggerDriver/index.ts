@@ -1,5 +1,5 @@
-import type { ILoggerDriver } from '/adapter/spi/drivers/LoggerSpi'
-import type { LoggerConfig } from '/domain/services/Logger'
+import type { ILoggerDriver } from '../../../../adapter/spi/drivers/LoggerSpi'
+import type { LoggerConfig } from '../../../../domain/services/Logger'
 import { ConsoleDriver } from './ConsoleDriver'
 import { FileDriver } from './FileDriver'
 

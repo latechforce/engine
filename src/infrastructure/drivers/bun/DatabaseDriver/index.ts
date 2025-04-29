@@ -1,12 +1,12 @@
-import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
-import type { DatabaseConfig, DatabaseEventType } from '/domain/services/Database'
-import type { EventDto } from '/adapter/spi/dtos/EventDto'
-import { PostgreSQLDatabaseDriver } from '/infrastructure/drivers/common/DatabaseDriver/PostgreSQLDriver'
+import type { IDatabaseDriver } from '../../../../adapter/spi/drivers/DatabaseSpi'
+import type { DatabaseConfig, DatabaseEventType } from '../../../../domain/services/Database'
+import type { EventDto } from '../../../../adapter/spi/dtos/EventDto'
+import { PostgreSQLDatabaseDriver } from '../../common/DatabaseDriver/PostgreSQLDriver'
 import { SQLiteDatabaseDriver } from './SQLite/SQLiteDriver'
-import type { AutomationHistoryRecord } from '/domain/entities/Automation/History'
-import type { TableConfig } from '/domain/entities/Table'
+import type { AutomationHistoryRecord } from '../../../../domain/entities/Automation/History'
+import type { TableConfig } from '../../../../domain/entities/Table'
 import type { TableSchema } from '../../../../adapter/api/schemas/TableSchema'
-import { TableMapper } from '/adapter/api/mappers/TableMapper'
+import { TableMapper } from '../../../../adapter/api/mappers/TableMapper'
 
 export class DatabaseDriver implements IDatabaseDriver {
   private _db: PostgreSQLDatabaseDriver | SQLiteDatabaseDriver

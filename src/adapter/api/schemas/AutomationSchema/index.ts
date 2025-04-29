@@ -1,4 +1,4 @@
-import type { AutomationConfig } from '/domain/entities/Automation'
+import type { AutomationConfig } from '../../../../domain/entities/Automation'
 import type { TriggerAutomationSchema } from './TriggerSchema'
 import type { ActionAutomationSchema } from './ActionSchema'
 

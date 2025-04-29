@@ -1,5 +1,5 @@
 import { Context } from './Base'
-import type { FileInputProps } from '/domain/components/BasicForms/FileInput'
+import type { FileInputProps } from '../../../../domain/components/BasicForms/FileInput'
 
 // https://preline.co/docs/file-input.html
 

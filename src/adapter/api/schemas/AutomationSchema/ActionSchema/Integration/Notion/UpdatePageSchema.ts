@@ -1,4 +1,4 @@
-import type { UpdatePageNotionActionConfig } from '/domain/entities/Action/integrations/notion/UpdatePage'
+import type { UpdatePageNotionActionConfig } from '../../../../../../../domain/entities/Action/integrations/notion/UpdatePage'
 
 /**
  * Interface for updating a page in Notion

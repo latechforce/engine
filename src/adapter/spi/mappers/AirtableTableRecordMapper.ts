@@ -1,6 +1,6 @@
 import type { AirtableTableRecordDto } from '../dtos/AirtableTableRecordDto'
-import { AirtableTableRecord } from '/domain/integrations/Airtable/AirtableTableRecord'
-import type { AirtableTableRecordFields } from '/domain/integrations/Airtable/AirtableTypes'
+import { AirtableTableRecord } from '../../../domain/integrations/Airtable/AirtableTableRecord'
+import type { AirtableTableRecordFields } from '../../../domain/integrations/Airtable/AirtableTypes'
 
 export class AirtableTableRecordMapper {
   static toEntity<T extends AirtableTableRecordFields>(

@@ -1,4 +1,4 @@
-import type { ServerConfig } from '/domain/services'
+import type { ServerConfig } from '../../../../domain/services'
 
 /**
  * Server configuration interface

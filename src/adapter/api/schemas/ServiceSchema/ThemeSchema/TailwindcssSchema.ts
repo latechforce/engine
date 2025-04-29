@@ -1,4 +1,4 @@
-import type { ThemeConfigTailwindCSS } from '/domain/services'
+import type { ThemeConfigTailwindCSS } from '../../../../../domain/services'
 
 /**
  * @title TailwindCSS

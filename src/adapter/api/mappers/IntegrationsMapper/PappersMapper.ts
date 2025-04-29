@@ -1,8 +1,8 @@
 import type { PappersIntegrationSchema } from '../../schemas/IntegrationSchema/PappersSchema'
-import type { Integrations } from '/adapter/spi/integrations'
-import { PappersSpi } from '/adapter/spi/integrations/PappersSpi'
-import { Pappers } from '/domain/integrations/Pappers'
-import type { BaseServices } from '/domain/integrations/base'
+import type { Integrations } from '../../../spi/integrations'
+import { PappersSpi } from '../../../spi/integrations/PappersSpi'
+import { Pappers } from '../../../../domain/integrations/Pappers'
+import type { BaseServices } from '../../../../domain/integrations/base'
 
 export class PappersMapper {
   static toIntegration(

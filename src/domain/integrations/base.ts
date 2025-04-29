@@ -1,7 +1,7 @@
 import { ConfigError, type ConfigErrorEntity } from '../entities/Error/Config'
 import type { PostRequest } from '../entities/Request/Post'
 import { JsonResponse } from '../entities/Response/Json'
-import type { SchemaValidator, SchemaValidatorJson, Server } from '/domain/services'
+import type { SchemaValidator, SchemaValidatorJson, Server } from '../services'
 
 export type BaseConfig = {
   account: string

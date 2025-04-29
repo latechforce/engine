@@ -1,11 +1,11 @@
 import { JsxResponse } from '../Response/Jsx'
-import type { Components } from '/domain/components'
+import type { Components } from '../../components'
 import { BaseAdmin, type BaseAdminServices } from './base'
 import { AdminTables } from './Tables'
 import { AdminIntegrations } from './Integrations'
 import { AdminForms } from './Forms'
 import { AdminAutomations } from './Automations'
-import type { Integrations } from '/domain/integrations'
+import type { Integrations } from '../../integrations'
 
 export class Admin extends BaseAdmin {
   private readonly _tables: AdminTables

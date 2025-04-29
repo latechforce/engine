@@ -1,4 +1,4 @@
-import type { FilterConfig } from '/domain/entities/Filter'
+import type { FilterConfig } from '../../entities/Filter'
 import type { UpdateAirtableTableRecord } from './AirtableTypes'
 import type { AirtableTableRecordFields } from './AirtableTypes'
 import type { AirtableTableRecord } from './AirtableTableRecord'

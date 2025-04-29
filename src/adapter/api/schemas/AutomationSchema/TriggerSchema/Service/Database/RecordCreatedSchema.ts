@@ -1,4 +1,4 @@
-import type { RecordCreatedDatabaseTriggerConfig } from '/domain/entities/Trigger/services/database/RecordCreated'
+import type { RecordCreatedDatabaseTriggerConfig } from '../../../../../../../domain/entities/Trigger/services/database/RecordCreated'
 
 /**
  * Record Created Database Trigger

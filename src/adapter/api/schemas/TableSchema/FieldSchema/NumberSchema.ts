@@ -1,4 +1,4 @@
-import type { NumberFieldConfig } from '/domain/entities/Field/Number'
+import type { NumberFieldConfig } from '../../../../../domain/entities/Field/Number'
 
 /**
  * Number field interface

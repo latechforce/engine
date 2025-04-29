@@ -1,5 +1,5 @@
 import type { InputFormSchema } from './InputSchema'
-import type { FormConfig } from '/domain/entities/Form'
+import type { FormConfig } from '../../../../domain/entities/Form'
 
 /**
  * Form configuration interface

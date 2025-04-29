@@ -1,8 +1,8 @@
 import type { AirtableIntegrationSchema } from '../../schemas/IntegrationSchema/AirtableSchema'
-import type { Integrations } from '/adapter/spi/integrations'
-import { AirtableSpi } from '/adapter/spi/integrations/AirtableSpi'
-import { Airtable } from '/domain/integrations/Airtable'
-import type { BaseServices } from '/domain/integrations/base'
+import type { Integrations } from '../../../spi/integrations'
+import { AirtableSpi } from '../../../spi/integrations/AirtableSpi'
+import { Airtable } from '../../../../domain/integrations/Airtable'
+import type { BaseServices } from '../../../../domain/integrations/base'
 
 export class AirtableMapper {
   static toIntegration(

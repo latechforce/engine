@@ -1,17 +1,17 @@
 import {
   NotionTableSpi,
   type INotionTableIntegration,
-} from '/adapter/spi/integrations/NotionTableSpi'
+} from './NotionTableSpi'
 import type {
   INotionSpi,
   NotionConfig,
   NotionTablePageProperties,
   NotionUser,
-} from '/domain/integrations/Notion'
+} from '../../../domain/integrations/Notion'
 import { NotionUserMapper } from '../mappers/NotionUserMapper'
 import type { NotionUserDto } from '../dtos/NotionUserDto'
 import { BaseSpi, type BaseIntegration } from './base'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { IntegrationResponse } from '../../../domain/integrations/base'
 export interface INotionIntegration extends BaseIntegration<NotionConfig> {
   getTable: <T extends NotionTablePageProperties>(id: string) => Promise<INotionTableIntegration<T>>
   listAllUsers: () => Promise<IntegrationResponse<NotionUserDto[]>>

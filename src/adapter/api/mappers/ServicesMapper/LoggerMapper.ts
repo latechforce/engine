@@ -1,6 +1,6 @@
-import type { Drivers } from '/adapter/spi/drivers'
-import { LoggerSpi } from '/adapter/spi/drivers/LoggerSpi'
-import { Logger } from '/domain/services/Logger'
+import type { Drivers } from '../../../spi/drivers'
+import { LoggerSpi } from '../../../spi/drivers/LoggerSpi'
+import { Logger } from '../../../../domain/services/Logger'
 import type { LoggerServiceSchema } from '../../schemas/ServiceSchema/LoggerSchema'
 
 export class LoggerMapper {

@@ -1,4 +1,4 @@
-import type { RunJavascriptCodeActionConfig } from '/domain/entities/Action/services/code/RunJavascript'
+import type { RunJavascriptCodeActionConfig } from '../../../../../../../domain/entities/Action/services/code/RunJavascript'
 
 /**
  * Interface for running JavaScript code

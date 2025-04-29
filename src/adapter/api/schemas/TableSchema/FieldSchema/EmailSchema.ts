@@ -1,4 +1,4 @@
-import type { EmailFieldConfig } from '/domain/entities/Field/Email'
+import type { EmailFieldConfig } from '../../../../../domain/entities/Field/Email'
 
 /**
  * Email field interface

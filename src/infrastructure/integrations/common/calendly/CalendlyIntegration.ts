@@ -1,11 +1,11 @@
-import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
-import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
+import type { ICalendlyIntegration } from '../../../../adapter/spi/integrations/CalendlySpi'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../domain/integrations/base'
+import type { CalendlyConfig } from '../../../../domain/integrations/Calendly/CalendlyConfig'
 import type {
   CalendlyError,
   CalendlyUser,
   CalendlyUserResponse,
-} from '/domain/integrations/Calendly/CalendlyTypes'
+} from '../../../../domain/integrations/Calendly/CalendlyTypes'
 import type {
   CreateWebhookSubscriptionParams,
   CreateWebhookSubscriptionResponse,
@@ -14,7 +14,7 @@ import type {
   GetWebhookSubscriptionParams,
   GetWebhookSubscriptionResponse,
   DeleteWebhookSubscriptionParams,
-} from '/domain/integrations/Calendly/CalendlyTypes'
+} from '../../../../domain/integrations/Calendly/CalendlyTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 import type { OAuthAccessToken } from '../../../../domain/integrations/OAuth'
 

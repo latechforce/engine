@@ -1,4 +1,4 @@
-import type { CreatePaymentGoCardlessActionConfig } from '/domain/entities/Action/integrations/gocardless/CreatePayment'
+import type { CreatePaymentGoCardlessActionConfig } from '../../../../../../../domain/entities/Action/integrations/gocardless/CreatePayment'
 
 /**
  * Interface for creating a payment in GoCardless

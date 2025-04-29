@@ -1,7 +1,7 @@
 import type { ThemeServiceSchema } from '../../schemas/ServiceSchema/ThemeSchema'
-import type { Drivers } from '/adapter/spi/drivers'
-import { ThemeSpi } from '/adapter/spi/drivers/ThemeSpi'
-import { Theme, type ThemeServices } from '/domain/services/Theme'
+import type { Drivers } from '../../../spi/drivers'
+import { ThemeSpi } from '../../../spi/drivers/ThemeSpi'
+import { Theme, type ThemeServices } from '../../../../domain/services/Theme'
 
 export class ThemeMapper {
   static toService(

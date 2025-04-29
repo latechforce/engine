@@ -1,4 +1,4 @@
-import type { MultipleAttachmentFieldConfig } from '/domain/entities/Field/MultipleAttachment'
+import type { MultipleAttachmentFieldConfig } from '../../../../../domain/entities/Field/MultipleAttachment'
 
 /**
  * Multiple attachment field interface

@@ -1,7 +1,7 @@
-import type { IPappersIntegration } from '/adapter/spi/integrations/PappersSpi'
-import type { PappersConfig } from '/domain/integrations/Pappers/PappersConfig'
-import type { PappersEntreprise } from '/domain/integrations/Pappers/PappersTypes'
-import type { IntegrationResponse } from '/domain/integrations/base'
+import type { IPappersIntegration } from '../../../../../adapter/spi/integrations/PappersSpi'
+import type { PappersConfig } from '../../../../../domain/integrations/Pappers/PappersConfig'
+import type { PappersEntreprise } from '../../../../../domain/integrations/Pappers/PappersTypes'
+import type { IntegrationResponse } from '../../../../../domain/integrations/base'
 import { BaseMockIntegration } from '../base'
 import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
 

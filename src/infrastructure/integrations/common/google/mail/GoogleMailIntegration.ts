@@ -3,10 +3,10 @@ import type {
   GoogleMailConfig,
   GoogleMailEmailOptions,
   GoogleMailEmailResponse,
-} from '/domain/integrations/Google/Mail'
-import type { IGoogleMailIntegration } from '/adapter/spi/integrations/GoogleMailSpi'
-import type { IntegrationResponseError } from '/domain/integrations/base'
-import type { IntegrationResponse } from '/domain/integrations/base'
+} from '../../../../../domain/integrations/Google/Mail'
+import type { IGoogleMailIntegration } from '../../../../../adapter/spi/integrations/GoogleMailSpi'
+import type { IntegrationResponseError } from '../../../../../domain/integrations/base'
+import type { IntegrationResponse } from '../../../../../domain/integrations/base'
 
 export class GoogleMailIntegration implements IGoogleMailIntegration {
   private _transporter: nodemailer.Transporter

@@ -1,4 +1,4 @@
-import type { DateTimeFieldConfig } from '/domain/entities/Field/DateTime'
+import type { DateTimeFieldConfig } from '../../../../../domain/entities/Field/DateTime'
 
 /**
  * Date time field interface

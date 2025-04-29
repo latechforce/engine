@@ -1,4 +1,4 @@
-import type { UrlFieldConfig } from '/domain/entities/Field/Url'
+import type { UrlFieldConfig } from '../../../../../domain/entities/Field/Url'
 
 /**
  * Url field interface

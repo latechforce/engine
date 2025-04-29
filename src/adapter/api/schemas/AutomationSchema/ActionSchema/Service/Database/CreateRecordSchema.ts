@@ -1,4 +1,4 @@
-import type { CreateRecordDatabaseActionConfig } from '/domain/entities/Action/services/database/CreateRecord'
+import type { CreateRecordDatabaseActionConfig } from '../../../../../../../domain/entities/Action/services/database/CreateRecord'
 
 /**
  * Interface for creating a new record in a database table

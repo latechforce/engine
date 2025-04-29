@@ -5,9 +5,9 @@ import type { BaseServices, IntegrationResponse } from './base'
 import type { BaseSpi } from './base'
 import type { BaseConfig } from './base'
 import { Integration } from './base'
-import type { Field } from '/domain/entities/Field'
-import type { Database, DatabaseTable } from '/domain/services'
-import type { Record } from '/domain/entities/Record'
+import type { Field } from '../entities/Field'
+import type { Database, DatabaseTable } from '../services'
+import type { Record } from '../entities/Record'
 import type { PostRequest } from '../entities/Request/Post'
 
 export type OAuthAccessToken = {

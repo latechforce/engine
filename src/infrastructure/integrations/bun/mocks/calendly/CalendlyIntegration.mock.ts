@@ -1,4 +1,4 @@
-import type { ICalendlyIntegration } from '/adapter/spi/integrations/CalendlySpi'
+import type { ICalendlyIntegration } from '../../../../../adapter/spi/integrations/CalendlySpi'
 import type {
   CalendlyUser,
   CalendlyScope,
@@ -10,12 +10,12 @@ import type {
   GetWebhookSubscriptionResponse,
   ListWebhookSubscriptionsParams,
   ListWebhookSubscriptionsResponse,
-} from '/domain/integrations/Calendly/CalendlyTypes'
-import type { IntegrationResponse } from '/domain/integrations/base'
-import type { CalendlyConfig } from '/domain/integrations/Calendly/CalendlyConfig'
+} from '../../../../../domain/integrations/Calendly/CalendlyTypes'
+import type { IntegrationResponse } from '../../../../../domain/integrations/base'
+import type { CalendlyConfig } from '../../../../../domain/integrations/Calendly/CalendlyConfig'
 import { BaseMockIntegration } from '../base'
-import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
-import type { RecordFields } from '/domain/entities/Record'
+import type { SQLiteDatabaseTableDriver } from '../../../../drivers/bun/DatabaseDriver/SQLite/SQLiteTableDriver'
+import type { RecordFields } from '../../../../../domain/entities/Record'
 import type { OAuthAccessToken } from '../../../../../domain/integrations/OAuth'
 
 type UserRecordFields = RecordFields & {

@@ -1,4 +1,4 @@
-import type { Table, TableConfig } from '/domain/entities/Table'
+import type { Table, TableConfig } from '../entities/Table'
 import { DatabaseTable, type IDatabaseTableSpi } from './DatabaseTable'
 import type { Logger } from './Logger'
 import type { RealtimeEvent } from './Realtime'

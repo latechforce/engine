@@ -1,17 +1,17 @@
-import type { FilterDto } from '/domain/entities/Filter'
-import type { IAirtableTableIntegration } from '/adapter/spi/integrations/AirtableTableSpi'
+import type { FilterDto } from '../../../../domain/entities/Filter'
+import type { IAirtableTableIntegration } from '../../../../adapter/spi/integrations/AirtableTableSpi'
 import type { Table, FieldSet, Record } from 'airtable'
 import { chunk } from 'lodash'
 import type { QueryParams } from 'airtable/lib/query_params'
 import { formatISO, parse } from 'date-fns'
-import type { AirtableTableRecordDto } from '/adapter/spi/dtos/AirtableTableRecordDto'
+import type { AirtableTableRecordDto } from '../../../../adapter/spi/dtos/AirtableTableRecordDto'
 import type {
   AirtableTableRecordFields,
   AirtableTableRecordFieldValue,
   UpdateAirtableTableRecord,
   AirtableField,
-} from '/domain/integrations/Airtable'
-import type { AirtableBaseSchemaTable } from '/domain/integrations/Airtable'
+} from '../../../../domain/integrations/Airtable'
+import type { AirtableBaseSchemaTable } from '../../../../domain/integrations/Airtable'
 import { AirtableIntegration } from './AirtableIntegration'
 
 export class AirtableTableIntegration<T extends AirtableTableRecordFields>

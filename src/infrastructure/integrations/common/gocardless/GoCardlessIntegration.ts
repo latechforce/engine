@@ -1,12 +1,12 @@
-import type { IGoCardlessIntegration } from '/adapter/spi/integrations/GoCardlessSpi'
-import type { IntegrationResponse, IntegrationResponseError } from '/domain/integrations/base'
+import type { IGoCardlessIntegration } from '../../../../adapter/spi/integrations/GoCardlessSpi'
+import type { IntegrationResponse, IntegrationResponseError } from '../../../../domain/integrations/base'
 import type {
   GoCardlessPayment,
   GoCardlessConfig,
   GoCardlessCreatePayment,
   GoCardlessListPayment,
   GoCardlessPaymentList,
-} from '/domain/integrations/GoCardless'
+} from '../../../../domain/integrations/GoCardless'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 
 export class GoCardlessIntegration implements IGoCardlessIntegration {

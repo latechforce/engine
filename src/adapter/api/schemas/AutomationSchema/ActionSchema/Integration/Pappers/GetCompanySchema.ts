@@ -1,4 +1,4 @@
-import type { GetCompanyPappersActionConfig } from '/domain/entities/Action/integrations/pappers/GetCompany'
+import type { GetCompanyPappersActionConfig } from '../../../../../../../domain/entities/Action/integrations/pappers/GetCompany'
 
 /**
  * Interface for retrieving company information from Pappers

@@ -1,4 +1,4 @@
-import type { LoggerFileConfig } from '/domain/services'
+import type { LoggerFileConfig } from '../../../../../domain/services'
 
 /**
  * File Logger Service Schema

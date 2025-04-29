@@ -1,4 +1,4 @@
-import type { ISystemDriver } from '/adapter/spi/drivers/SystemSpi'
+import type { ISystemDriver } from '../../../adapter/spi/drivers/SystemSpi'
 import fs from 'fs-extra'
 import path from 'path'
 import mime from 'mime'

@@ -7,10 +7,10 @@ import type {
   DatabaseQuery,
   DatabaseType,
   IDatabaseSpi,
-} from '/domain/services/Database'
+} from '../../../domain/services/Database'
 import type { EventDto } from '../dtos/EventDto'
 import { EventMapper } from '../mappers/EventMapper'
-import type { TableConfig } from '/domain/entities/Table'
+import type { TableConfig } from '../../../domain/entities/Table'
 import type { TableSchema } from '../../api/schemas/TableSchema'
 
 export interface IDatabaseDriver {

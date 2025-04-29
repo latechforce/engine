@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import { Input } from './Input'
 import { Form } from '../Layouts/Form'
-import type { InputProps } from '/domain/components/BasicForms/Input'
+import type { InputProps } from '../../../../domain/components/BasicForms/Input'
 
 const InputWithForm = (props: InputProps) => (
   <Form id="id" title="Form" submitLabel="Save">

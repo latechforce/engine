@@ -8,7 +8,7 @@ import {
   type RecordFields,
   type RecordFieldsToCreate,
   type RecordFieldsToUpdate,
-} from '/domain/entities/Record'
+} from '../../../domain/entities/Record'
 
 export class RecordMapper {
   static toEntity = <T extends RecordFields>(record: PersistedRecordFieldsDto<T>): Record<T> => {

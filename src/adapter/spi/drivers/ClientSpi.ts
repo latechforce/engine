@@ -1,4 +1,4 @@
-import type { ClientHtmlAttributesOptions, IClientSpi } from '/domain/services/Client'
+import type { ClientHtmlAttributesOptions, IClientSpi } from '../../../domain/services/Client'
 
 export interface IClientDriver {
   readJsFiles: () => Promise<{ name: string; content: string }[]>

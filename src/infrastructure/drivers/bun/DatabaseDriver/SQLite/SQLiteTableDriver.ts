@@ -1,17 +1,17 @@
 import { Database } from 'bun:sqlite'
-import type { FilterDto } from '/domain/entities/Filter'
-import type { RecordFields, RecordFieldValue } from '/domain/entities/Record'
+import type { FilterDto } from '../../../../../domain/entities/Filter'
+import type { RecordFields, RecordFieldValue } from '../../../../../domain/entities/Record'
 import type {
   PersistedRecordFieldsDto,
   RecordFieldsToCreateDto,
   RecordFieldsToUpdateDto,
-} from '/adapter/spi/dtos/RecordDto'
+} from '../../../../../adapter/spi/dtos/RecordDto'
 import slugify from 'slugify'
 import type { ColumnInfo, Row } from './SQLiteTypes'
 import type { Column } from './SQLiteTypes'
-import type { IDatabaseTableDriver } from '/adapter/spi/drivers/DatabaseTableSpi'
-import type { FieldConfig } from '/domain/entities/Field'
-import type { TableConfig } from '/domain/entities/Table'
+import type { IDatabaseTableDriver } from '../../../../../adapter/spi/drivers/DatabaseTableSpi'
+import type { FieldConfig } from '../../../../../domain/entities/Field'
+import type { TableConfig } from '../../../../../domain/entities/Table'
 
 export class SQLiteDatabaseTableDriver implements IDatabaseTableDriver {
   public name: string

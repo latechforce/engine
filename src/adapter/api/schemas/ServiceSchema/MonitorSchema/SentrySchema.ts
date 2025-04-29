@@ -1,4 +1,4 @@
-import type { MonitorSentryConfig } from '/domain/services'
+import type { MonitorSentryConfig } from '../../../../../domain/services'
 
 /**
  * Sentry Monitor Service Schema
