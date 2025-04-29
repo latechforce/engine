@@ -69,6 +69,7 @@ export class AppMapper {
       jotform,
       youcanbookme,
       googleMail,
+      zoom,
     } = IntegrationsMapper.toEntities(
       integrations,
       {
@@ -115,7 +116,7 @@ export class AppMapper {
         system,
       },
       { tables },
-      { notion, pappers, qonto, googleMail, gocardless, calendly, jotform, youcanbookme }
+      { notion, pappers, qonto, googleMail, gocardless, calendly, jotform, youcanbookme, zoom }
     )
     const forms = FormMapper.toManyEntities(
       schema.forms,
@@ -134,6 +135,7 @@ export class AppMapper {
       phantombuster,
       googleMail,
       gocardless,
+      zoom,
     })
     return new StoppedApp(
       {
@@ -180,6 +182,7 @@ export class AppMapper {
         phantombuster,
         googleMail,
         gocardless,
+        zoom,
       }
     )
   }

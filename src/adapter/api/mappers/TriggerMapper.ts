@@ -20,6 +20,7 @@ import type { Jotform } from '/domain/integrations/Jotform'
 import { FormWebhookReceivedTrigger } from '/domain/entities/Trigger/integrations/jotform/FormWebhookReceived'
 import type { YouCanBookMe } from '/domain/integrations/YouCanBookMe'
 import { BookingCreatedTrigger } from '../../../domain/entities/Trigger/integrations/youcanbookme/BookingCreated'
+import type { Zoom } from '/domain/integrations/Zoom'
 
 export interface TriggerMapperServices {
   server: Server
@@ -36,6 +37,7 @@ export interface TriggerMapperIntegrations {
   calendly: Calendly
   jotform: Jotform
   youcanbookme: YouCanBookMe
+  zoom: Zoom
 }
 
 export class TriggerMapper {

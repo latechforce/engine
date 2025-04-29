@@ -92,26 +92,15 @@ export class ZoomIntegration implements IZoomIntegration {
     throw error
   }
 
-  testConnection = async (): Promise<IntegrationResponseError | undefined> => {
+  testConnection = async (accessToken?: string): Promise<IntegrationResponseError | undefined> => {
     try {
-      // Use the standard /users/me endpoint to verify authentication
-      await this._api.get('/users/me')
-      // If the request succeeds, connection is considered valid
-      return undefined
+      await this._api.get('/users/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
     } catch (error) {
-      // If request fails, map the error
       return this._responseError(error)
     }
   }
-
-  // Placeholder for future specific Zoom API methods
-  // Example:
-  // sendNotification = async (userId: string, message: string): Promise<IntegrationResponse<void>> => {
-  //   try {
-  //     await this._instance.post('/app/notifications', { user_id: userId, message: { text: message } });
-  //     return { data: undefined };
-  //   } catch (error) {
-  //     return this._responseError(error);
-  //   }
-  // }
 }

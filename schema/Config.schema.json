@@ -2206,6 +2206,14 @@
           },
           "description": "Configuration for Jotform integrations.",
           "title": "Jotform"
+        },
+        "zoom": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ZoomIntegrationSchema"
+          },
+          "description": "Configuration for Zoom integrations.",
+          "title": "Zoom"
         }
       },
       "additionalProperties": false,
@@ -2545,6 +2553,49 @@
       "additionalProperties": false,
       "description": "A configuration schema for Jotform integration",
       "title": "Jotform"
+    },
+    "ZoomIntegrationSchema": {
+      "type": "object",
+      "properties": {
+        "account": {
+          "type": "string",
+          "description": "The account identifier for Zoom",
+          "title": "Account"
+        },
+        "baseUrl": {
+          "type": "string",
+          "description": "The base URL for Zoom API",
+          "title": "Base URL"
+        },
+        "accessToken": {
+          "type": "string",
+          "description": "The access token for Zoom API authentication",
+          "title": "Access Token"
+        },
+        "clientId": {
+          "type": "string",
+          "description": "The client ID for Zoom API authentication",
+          "title": "Client ID"
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "The client secret for Zoom API authentication",
+          "title": "Client Secret"
+        },
+        "authBaseUrl": {
+          "type": "string",
+          "description": "The base URL for Zoom API authentication",
+          "title": "Base URL"
+        }
+      },
+      "required": [
+        "account",
+        "clientId",
+        "clientSecret"
+      ],
+      "additionalProperties": false,
+      "description": "A configuration schema for Zoom integration",
+      "title": "Zoom"
     },
     "ServiceSchema": {
       "type": "object",

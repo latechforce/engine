@@ -11,7 +11,7 @@ export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegra
 
   constructor(public config: ZoomConfig) {
     // Use accessToken if available, otherwise clientId for the mock check
-    super(config, config.accessToken ?? config.clientSecret)
+    super(config, config.clientSecret)
     this._users = this._db.table({
       name: 'users',
       fields: [
