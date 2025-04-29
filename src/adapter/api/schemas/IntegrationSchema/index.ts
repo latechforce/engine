@@ -8,6 +8,7 @@ import type { CalendlyIntegrationSchema } from './CalendlySchema'
 import type { GoogleIntegrationSchema } from './Google'
 import type { YouCanBookMeIntegrationSchema } from './YouCanBookMeSchema'
 import type { JotformIntegrationSchema } from './JotformSchema'
+import type { ZoomIntegrationSchema } from './ZoomSchema'
 
 /**
  * Integrations configuration interface
@@ -75,4 +76,10 @@ export interface IntegrationSchema {
    * @description Configuration for Jotform integrations.
    */
   jotform?: JotformIntegrationSchema[]
+  /**
+   * Zoom integrations
+   * @title Zoom
+   * @description Configuration for Zoom integrations.
+   */
+  zoom?: ZoomIntegrationSchema[]
 }
