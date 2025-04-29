@@ -9,7 +9,7 @@ export const configAutomationTriggerIntegrationJotformFormWebhookReceived: Confi
         integration: 'Jotform',
         event: 'FormWebhookReceived',
         account: 'jotform',
-        formId: '{{ env.JOTFORM_FORM_ID }}',
+        formId: '{{ env.TEST_JOTFORM_FORM_ID }}',
       },
       actions: [],
     },

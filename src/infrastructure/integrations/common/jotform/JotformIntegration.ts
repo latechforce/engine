@@ -15,7 +15,7 @@ export class JotformIntegration implements IJotformIntegration {
     const { baseUrl = 'https://api.jotform.com', apiKey } = config
     const headers = {
       APIKEY: apiKey,
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/json',
     }
     this._instance = axios.create({
       baseURL: baseUrl,
@@ -85,6 +85,7 @@ export class JotformIntegration implements IJotformIntegration {
       const response = await this._instance.delete(
         `/form/${params.formId}/webhooks/${params.webhookId}`
       )
+
       return { data: response.data }
     } catch (error) {
       return this._responseError(error)
