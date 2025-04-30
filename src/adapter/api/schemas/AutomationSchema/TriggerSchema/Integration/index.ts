@@ -2,6 +2,7 @@ import type { CalendlyIntegrationTriggerAutomationSchema } from './Calendly'
 import type { JotformIntegrationTriggerAutomationSchema } from './Jotform'
 import type { NotionIntegrationTriggerAutomationSchema } from './Notion'
 import type { YouCanBookMeIntegrationTriggerAutomationSchema } from './YouCanBookMe'
+import type { ZoomIntegrationTriggerAutomationSchema } from './Zoom'
 
 /**
  * Integration trigger type union
@@ -13,3 +14,4 @@ export type IntegrationTriggerAutomationSchema =
   | NotionIntegrationTriggerAutomationSchema
   | JotformIntegrationTriggerAutomationSchema
   | YouCanBookMeIntegrationTriggerAutomationSchema
+  | ZoomIntegrationTriggerAutomationSchema

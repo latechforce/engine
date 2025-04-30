@@ -514,6 +514,9 @@
         },
         {
           "$ref": "#/definitions/YouCanBookMeIntegrationTriggerAutomationSchema"
+        },
+        {
+          "$ref": "#/definitions/ZoomIntegrationTriggerAutomationSchema"
         }
       ],
       "description": "Union type of all possible integration triggers that can start automations",
@@ -670,6 +673,39 @@
       "additionalProperties": false,
       "description": "A trigger that fires when a booking is created in YouCanBookMe",
       "title": "Booking Created"
+    },
+    "ZoomIntegrationTriggerAutomationSchema": {
+      "$ref": "#/definitions/WebinarParticipantJoinedZoomIntegrationTriggerAutomationSchema",
+      "description": "The Zoom integration trigger.",
+      "title": "Zoom"
+    },
+    "WebinarParticipantJoinedZoomIntegrationTriggerAutomationSchema": {
+      "type": "object",
+      "properties": {
+        "integration": {
+          "type": "string",
+          "const": "Zoom",
+          "description": "The integration type for this trigger",
+          "title": "Integration"
+        },
+        "event": {
+          "type": "string",
+          "const": "WebinarParticipantJoinedTrigger",
+          "description": "The event type for this trigger",
+          "title": "Event"
+        },
+        "account": {
+          "type": "string",
+          "description": "The account identifier for this trigger",
+          "title": "Account"
+        }
+      },
+      "required": [
+        "integration",
+        "event",
+        "account"
+      ],
+      "additionalProperties": false
     },
     "ActionAutomationSchema": {
       "anyOf": [

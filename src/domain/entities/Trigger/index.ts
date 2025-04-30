@@ -6,6 +6,7 @@ import type { CronTimeTickedScheduleTrigger } from '/domain/entities/Trigger/ser
 import type { InviteeCreatedCalendlyTrigger } from '/domain/entities/Trigger/integrations/calendly/InviteeCreated'
 import type { FormWebhookReceivedTrigger } from '/domain/entities/Trigger/integrations/jotform/FormWebhookReceived'
 import type { BookingCreatedTrigger } from './integrations/youcanbookme/BookingCreated'
+import type { WebinarParticipantJoinedTrigger } from './integrations/zoom/WebinarParticipantJoined'
 
 export type Trigger =
   | WebhookCalledHttpTrigger
@@ -16,3 +17,4 @@ export type Trigger =
   | InviteeCreatedCalendlyTrigger
   | FormWebhookReceivedTrigger
   | BookingCreatedTrigger
+  | WebinarParticipantJoinedTrigger

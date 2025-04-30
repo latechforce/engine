@@ -41,10 +41,11 @@ export class WebinarParticipantJoinedTrigger extends BaseTrigger<WebinarParticip
     // Register webhook with Zoom for webinar.participant_joined event
     // Note: Implementation depends on the Zoom API client implementation
     try {
-      await zoom.registerWebhook({
-        account,
+      await zoom.registerWebhook(account, {
         event: 'webinar.participant_joined',
         url: triggerUrl,
+        account_id: account,
+        user_id: account,
       })
     } catch (error) {
       console.error('Failed to register Zoom webhook:', error)
@@ -63,18 +64,7 @@ export class WebinarParticipantJoinedTrigger extends BaseTrigger<WebinarParticip
   onTriggerCalled = async (request: PostRequest) => {
     const { queue } = this._services
     const { automation } = this._config
-
-    // Extract the request body which contains the webinar participant joined data
-    const webhookData = request.getBodyAsObject()
-
-    // Validate that this is the correct event type
-    if (webhookData.event !== 'webinar.participant_joined') {
-      return new JsonResponse({ success: false, error: 'Invalid event type' }, 400)
-    }
-
-    // Add the webhook data to the queue for processing
-    await queue.add(automation, webhookData)
-
+    await queue.add(automation, request.getBodyAsObject())
     return new JsonResponse({ success: true })
   }
 }

@@ -8,6 +8,7 @@ import type {
   EventSubscription,
   GetUserEventSubscriptionsParams,
   GetUserEventSubscriptionsResponse,
+  RegisterWebhookParams,
 } from '/domain/integrations/Zoom/ZoomTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 
@@ -172,6 +173,49 @@ export class ZoomIntegration implements IZoomIntegration {
       }
     } catch (error: unknown) {
       return this._responseError(error)
+    }
+  }
+
+  registerWebhook = async (
+    params: RegisterWebhookParams,
+    accessToken?: string
+  ): Promise<IntegrationResponse<void>> => {
+    try {
+      const eventSubscriptions = await this.getUserEventSubscriptions(
+        {
+          user_id: params.user_id,
+          account_id: params.account_id,
+        },
+        accessToken
+      )
+
+      if (
+        eventSubscriptions.data?.event_subscriptions.find((e) => e.event_webhook_url === params.url)
+      ) {
+        return { data: undefined }
+      }
+
+      await this.createEventSubscription(
+        {
+          event_subscription_name: params.event,
+          event_webhook_url: params.url,
+          events: [params.event],
+          subscription_scope: 'account',
+          account_id: params.account_id,
+          user_ids: [params.user_id],
+        },
+        accessToken
+      )
+
+      return { data: undefined }
+    } catch (error) {
+      const axiosError = error as AxiosError<ZoomError>
+      return {
+        error: {
+          status: axiosError.response?.status || 500,
+          message: axiosError.response?.data?.message || 'Failed to register webhook',
+        },
+      }
     }
   }
 }

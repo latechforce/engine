@@ -9,6 +9,7 @@ import type {
   EventSubscription,
   GetUserEventSubscriptionsParams,
   GetUserEventSubscriptionsResponse,
+  RegisterWebhookParams,
 } from '/domain/integrations/Zoom/ZoomTypes'
 import { randomUUID } from 'crypto'
 
@@ -57,6 +58,29 @@ export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegra
     })
     this._webhooks.ensureSync()
   }
+  async registerWebhook(params: RegisterWebhookParams): Promise<IntegrationResponse<void>> {
+    const eventSubscriptions = await this.getUserEventSubscriptions({
+      user_id: params.user_id,
+      account_id: params.account_id,
+    })
+
+    if (
+      eventSubscriptions.data?.event_subscriptions.find((e) => e.event_webhook_url === params.url)
+    ) {
+      return { data: undefined }
+    }
+
+    await this.createEventSubscription({
+      event_subscription_name: params.event,
+      event_webhook_url: params.url,
+      events: [params.event],
+      subscription_scope: 'account',
+      account_id: params.account_id,
+      user_ids: [params.user_id],
+    })
+
+    return { data: undefined }
+  }
 
   authorizationUrl = (redirectUri: string) => {
     return `${this.config.authBaseUrl}/oauth/authorize?client_id=${this.config.clientId}&response_type=code&redirect_uri=${redirectUri}`
@@ -90,7 +114,7 @@ export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegra
     params: CreateEventSubscriptionParams
   ): Promise<IntegrationResponse<EventSubscription>> => {
     const eventSubscriptionId = randomUUID()
-    const subscriberId = params.subscriber_id || randomUUID()
+    const subscriberId = params.user_ids?.[0] || randomUUID()
 
     // Need to convert params to match the table schema
     const record = {

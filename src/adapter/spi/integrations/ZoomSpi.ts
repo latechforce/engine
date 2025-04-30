@@ -4,6 +4,7 @@ import type { ZoomConfig } from '/domain/integrations/Zoom/ZoomConfig'
 import type {
   CreateEventSubscriptionParams,
   GetUserEventSubscriptionsParams,
+  RegisterWebhookParams,
 } from '/domain/integrations/Zoom/ZoomTypes'
 
 export type IZoomIntegration = IZoomSpi
@@ -26,5 +27,9 @@ export class ZoomSpi extends OAuthSpi<ZoomConfig, IZoomIntegration> implements I
     accessToken?: string
   ) => {
     return this._integration.getUserEventSubscriptions(params, accessToken)
+  }
+
+  registerWebhook = async (params: RegisterWebhookParams, accessToken?: string) => {
+    return this._integration.registerWebhook(params, accessToken)
   }
 }

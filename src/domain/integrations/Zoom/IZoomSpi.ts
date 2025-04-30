@@ -6,6 +6,7 @@ import type {
   EventSubscription,
   GetUserEventSubscriptionsParams,
   GetUserEventSubscriptionsResponse,
+  RegisterWebhookParams,
 } from './ZoomTypes'
 
 // Just duplicate the template without filling it
@@ -24,4 +25,9 @@ export interface IZoomSpi extends OAuthSpi<ZoomConfig> {
     params: GetUserEventSubscriptionsParams,
     accessToken?: string
   ) => Promise<IntegrationResponse<GetUserEventSubscriptionsResponse>>
+
+  registerWebhook: (
+    params: RegisterWebhookParams,
+    accessToken?: string
+  ) => Promise<IntegrationResponse<void>>
 }

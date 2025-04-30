@@ -5,12 +5,20 @@ export interface ZoomError {
 
 export type EventSubscriptionScope = 'user' | 'account' | 'master_account'
 
+export interface RegisterWebhookParams {
+  event: string
+  url: string
+  account_id: string
+  user_id: string
+}
+
 export interface CreateEventSubscriptionParams {
   event_subscription_name: string
   event_webhook_url: string
   events: string[]
   subscription_scope: EventSubscriptionScope
-  subscriber_id?: string
+  account_id?: string
+  user_ids?: string[]
 }
 
 export interface EventSubscription {

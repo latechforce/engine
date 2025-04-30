@@ -35,7 +35,6 @@ export class BaseMockIntegration {
       value: this._token,
     })
 
-    console.log('token', token)
     if (!token) {
       return {
         error: {

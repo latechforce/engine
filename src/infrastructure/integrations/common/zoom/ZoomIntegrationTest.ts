@@ -1,5 +1,9 @@
 import type { IZoomIntegration } from '/adapter/spi/integrations/ZoomSpi'
 import type BunTester from 'bun:test'
+import type {
+  CreateEventSubscriptionParams,
+  RegisterWebhookParams,
+} from '/domain/integrations/Zoom'
 
 export function testZoomIntegration(
   { describe, it, expect }: typeof BunTester,
@@ -16,13 +20,13 @@ export function testZoomIntegration(
 
     it('should create an event subscription', async () => {
       // GIVEN
-      const params = {
+      const params: CreateEventSubscriptionParams = {
         event_subscription_name: 'Test Subscription',
         event_webhook_url: 'https://example.com/webhook',
         events: ['meeting.ended', 'meeting.started'],
-        subscription_scope: 'user' as const,
-        subscriber_id: '12345',
-        access_token: 'mock-access-token',
+        subscription_scope: 'user',
+        user_ids: ['user_id'],
+        account_id: 'account_id',
       }
 
       // WHEN
@@ -73,6 +77,24 @@ export function testZoomIntegration(
         expect(result.data.page_size).toBe(params.page_size)
         expect(Array.isArray(result.data.event_subscriptions)).toBe(true)
       }
+    })
+
+    it('should register a webhook', async () => {
+      // GIVEN
+      const params: RegisterWebhookParams = {
+        event: 'meeting.started',
+        url: 'https://example.com/webhook',
+        user_id: 'user_id',
+        account_id: 'account_id',
+      }
+
+      // WHEN
+      const result = await integration.registerWebhook(params)
+
+      // THEN
+      expect(result).toBeDefined()
+      expect(result.error).toBeUndefined()
+      expect(result.data).toBeUndefined()
     })
   })
 }

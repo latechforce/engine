@@ -6,6 +6,7 @@ import type {
   EventSubscription,
   GetUserEventSubscriptionsParams,
   GetUserEventSubscriptionsResponse,
+  RegisterWebhookParams,
 } from './ZoomTypes'
 
 // Just duplicate the template without filling it
@@ -44,6 +45,14 @@ export class Zoom extends OAuthIntegration<ZoomConfig, IZoomSpi> {
     const response = await this._spi(account).getUserEventSubscriptions(params, accessToken)
     if (response.error)
       return OAuthIntegration.throwError('getUserEventSubscriptions', response.error)
+    return response.data
+  }
+
+  registerWebhook = async (account: string, params: RegisterWebhookParams): Promise<void> => {
+    const accessToken = await this.getAccessToken(account)
+
+    const response = await this._spi(account).registerWebhook(params, accessToken)
+    if (response.error) return OAuthIntegration.throwError('registerWebhook', response.error)
     return response.data
   }
 }

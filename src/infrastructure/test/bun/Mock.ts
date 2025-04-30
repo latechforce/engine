@@ -29,6 +29,8 @@ import { YouCanBookMeIntegration } from '/infrastructure/integrations/bun/mocks/
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe/YouCanBookMeConfig'
 import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
 import { JotformIntegration } from '/infrastructure/integrations/bun/mocks/jotform/JotformIntegration.mock'
+import { ZoomIntegration } from '/infrastructure/integrations/bun/mocks/zoom/ZoomIntegration.mock'
+import type { ZoomConfig } from '/domain/integrations/Zoom'
 
 type Tester = {
   describe: (message: string, tests: () => void) => void
@@ -50,7 +52,7 @@ type IntegrationType =
   | 'Calendly'
   | 'YouCanBookMe'
   | 'Jotform'
-
+  | 'Zoom'
 // Generic definitions for drivers
 type WithDriverInput<D extends DriverType[]> = { drivers: D }
 type WithDriverOutput<D extends DriverType> = D extends 'Database'
@@ -83,7 +85,9 @@ type WithIntegrationOutput<I extends IntegrationType> = I extends 'Notion'
                   ? YouCanBookMeIntegration
                   : I extends 'Jotform'
                     ? JotformIntegration
-                    : never
+                    : I extends 'Zoom'
+                      ? ZoomIntegration
+                      : never
 
 type WithOptions<D extends DriverType[] = [], I extends IntegrationType[] = []> =
   | WithDriverInput<D>
@@ -445,6 +449,20 @@ export class Mock<D extends DriverType[] = [], I extends IntegrationType[] = []>
           integrations.jotform = new JotformIntegration(configs[0])
           extendsConfig.integrations.jotform = configs
           await integrations.jotform.createToken(configs[0].apiKey)
+        }
+        if (this.options.integrations.includes('Zoom')) {
+          const configs: ZoomConfig[] = [
+            {
+              account: 'zoom',
+              baseUrl: await getTestDbUrl('zoom'),
+              clientId: 'test',
+              clientSecret: 'test',
+              authBaseUrl: await getTestDbUrl('zoom-auth'),
+            },
+          ]
+          integrations.zoom = new ZoomIntegration(configs[0])
+          extendsConfig.integrations.zoom = configs
+          await integrations.zoom.createToken(configs[0].clientId)
         }
       }
       let startedApp: StartedApp | undefined
