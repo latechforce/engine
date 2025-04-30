@@ -1,0 +1,25 @@
+{
+  "name": "v2.3",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "test": "bun test",
+    "db:generate:pg": "bunx drizzle-kit generate  --config=drizzle.config.pg.ts",
+    "db:generate:sqlite": "bunx drizzle-kit generate  --config=drizzle.config.sqlite.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.11",
+    "@types/pg": "^8.11.14",
+    "drizzle-kit": "^0.31.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "better-auth": "^1.2.7",
+    "drizzle-orm": "^0.43.1",
+    "hono": "^4.7.8",
+    "zod": "^3.24.3"
+  }
+}
