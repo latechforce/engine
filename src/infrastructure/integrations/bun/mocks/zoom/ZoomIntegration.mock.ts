@@ -7,8 +7,24 @@ import type { SQLiteDatabaseTableDriver } from '/infrastructure/drivers/bun/Data
 import type {
   CreateEventSubscriptionParams,
   EventSubscription,
+  GetUserEventSubscriptionsParams,
+  GetUserEventSubscriptionsResponse,
 } from '/domain/integrations/Zoom/ZoomTypes'
 import { randomUUID } from 'crypto'
+
+// Assumed structure of webhook records based on the code
+interface WebhookRecord {
+  id: string
+  fields: {
+    event_subscription_id: string
+    events: string
+    event_subscription_name: string
+    event_webhook_url: string
+    subscription_scope: string
+    created_source: string
+    subscriber_id: string
+  }
+}
 
 export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegration {
   private _users: SQLiteDatabaseTableDriver
@@ -124,6 +140,45 @@ export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegra
           message: 'Failed to delete event subscription',
         },
       }
+    }
+  }
+
+  getUserEventSubscriptions = async (
+    params: GetUserEventSubscriptionsParams
+  ): Promise<IntegrationResponse<GetUserEventSubscriptionsResponse>> => {
+    // Get subscriptions from the database
+    const pageSize = params.page_size || 30
+
+    // Filter based on subscription_scope if provided
+    // In a real implementation we would construct a proper FilterDto object
+    // Here we'll just use listSync which returns all records
+    const records = this._webhooks.listSync() as unknown as WebhookRecord[]
+
+    // Filter records by subscription_scope if needed
+    const filteredRecords = params.subscription_scope
+      ? records.filter((record) => record.fields.subscription_scope === params.subscription_scope)
+      : records
+
+    // Limit to page size
+    const limitedRecords = filteredRecords.slice(0, pageSize)
+
+    // Transform the records to EventSubscription objects
+    const eventSubscriptions = limitedRecords.map((record: WebhookRecord) => ({
+      event_subscription_id: record.fields.event_subscription_id,
+      events: record.fields.events.split(','),
+      event_subscription_name: record.fields.event_subscription_name,
+      event_webhook_url: record.fields.event_webhook_url,
+      subscription_scope: record.fields.subscription_scope as 'user' | 'account' | 'master_account',
+      created_source: record.fields.created_source,
+      subscriber_id: record.fields.subscriber_id,
+    }))
+
+    return {
+      data: {
+        page_size: pageSize,
+        next_page_token: limitedRecords.length === pageSize ? randomUUID() : undefined,
+        event_subscriptions: eventSubscriptions,
+      },
     }
   }
 }

@@ -1,7 +1,12 @@
 import type { IZoomSpi } from './IZoomSpi'
 import type { ZoomConfig } from './ZoomConfig'
 import { OAuthIntegration, type OAuthService } from '../OAuth'
-import type { CreateEventSubscriptionParams, EventSubscription } from './ZoomTypes'
+import type {
+  CreateEventSubscriptionParams,
+  EventSubscription,
+  GetUserEventSubscriptionsParams,
+  GetUserEventSubscriptionsResponse,
+} from './ZoomTypes'
 
 // Just duplicate the template without filling it
 export class Zoom extends OAuthIntegration<ZoomConfig, IZoomSpi> {
@@ -28,6 +33,17 @@ export class Zoom extends OAuthIntegration<ZoomConfig, IZoomSpi> {
     )
     if (response.error)
       return OAuthIntegration.throwError('deleteEventSubscription', response.error)
+    return response.data
+  }
+
+  getUserEventSubscriptions = async (
+    account: string,
+    params: GetUserEventSubscriptionsParams
+  ): Promise<GetUserEventSubscriptionsResponse> => {
+    const accessToken = await this.getAccessToken(account)
+    const response = await this._spi(account).getUserEventSubscriptions(params, accessToken)
+    if (response.error)
+      return OAuthIntegration.throwError('getUserEventSubscriptions', response.error)
     return response.data
   }
 }

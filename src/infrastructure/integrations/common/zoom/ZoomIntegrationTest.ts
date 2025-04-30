@@ -52,5 +52,27 @@ export function testZoomIntegration(
       expect(result.error).toBeUndefined()
       expect(result.data).toBeUndefined()
     })
+
+    it('should get user event subscriptions', async () => {
+      // GIVEN
+      const params = {
+        user_id: 'test-user-id',
+        account_id: 'test-account-id',
+        page_size: 30,
+        subscription_scope: 'user' as const,
+      }
+
+      // WHEN
+      const result = await integration.getUserEventSubscriptions(params)
+
+      // THEN
+      expect(result).toBeDefined()
+      expect(result.error).toBeUndefined()
+      expect(result.data).toBeDefined()
+      if (result.data) {
+        expect(result.data.page_size).toBe(params.page_size)
+        expect(Array.isArray(result.data.event_subscriptions)).toBe(true)
+      }
+    })
   })
 }

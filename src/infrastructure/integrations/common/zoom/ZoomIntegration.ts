@@ -6,6 +6,8 @@ import type { ZoomError } from '/domain/integrations/Zoom/ZoomTypes'
 import type {
   CreateEventSubscriptionParams,
   EventSubscription,
+  GetUserEventSubscriptionsParams,
+  GetUserEventSubscriptionsResponse,
 } from '/domain/integrations/Zoom/ZoomTypes'
 import axios, { AxiosError, type AxiosInstance } from 'axios'
 
@@ -137,6 +139,37 @@ export class ZoomIntegration implements IZoomIntegration {
         },
       })
       return { data: undefined }
+    } catch (error: unknown) {
+      return this._responseError(error)
+    }
+  }
+
+  getUserEventSubscriptions = async (
+    params: GetUserEventSubscriptionsParams,
+    accessToken?: string
+  ): Promise<IntegrationResponse<GetUserEventSubscriptionsResponse>> => {
+    try {
+      // Build the query parameters
+      const queryParams = new URLSearchParams()
+      if (params.page_size) queryParams.append('page_size', params.page_size.toString())
+      if (params.next_page_token) queryParams.append('next_page_token', params.next_page_token)
+      if (params.user_id) queryParams.append('user_id', params.user_id)
+      if (params.subscription_scope)
+        queryParams.append('subscription_scope', params.subscription_scope)
+      if (params.account_id) queryParams.append('account_id', params.account_id)
+
+      const response = await this._api.get(
+        `/marketplace/app/event_subscription?${queryParams.toString()}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      )
+
+      return {
+        data: response.data as GetUserEventSubscriptionsResponse,
+      }
     } catch (error: unknown) {
       return this._responseError(error)
     }

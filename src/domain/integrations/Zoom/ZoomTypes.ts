@@ -22,3 +22,17 @@ export interface EventSubscription {
   created_source: string
   subscriber_id?: string
 }
+
+export interface GetUserEventSubscriptionsParams {
+  page_size?: number
+  next_page_token?: string
+  user_id: string
+  subscription_scope?: EventSubscriptionScope
+  account_id: string
+}
+
+export interface GetUserEventSubscriptionsResponse {
+  next_page_token?: string
+  page_size: number
+  event_subscriptions: EventSubscription[]
+}

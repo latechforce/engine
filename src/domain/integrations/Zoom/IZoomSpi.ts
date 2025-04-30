@@ -1,7 +1,12 @@
 import type { OAuthSpi } from '../OAuth'
 import type { ZoomConfig } from './ZoomConfig'
 import type { IntegrationResponse } from '../base'
-import type { CreateEventSubscriptionParams, EventSubscription } from './ZoomTypes'
+import type {
+  CreateEventSubscriptionParams,
+  EventSubscription,
+  GetUserEventSubscriptionsParams,
+  GetUserEventSubscriptionsResponse,
+} from './ZoomTypes'
 
 // Just duplicate the template without filling it
 export interface IZoomSpi extends OAuthSpi<ZoomConfig> {
@@ -14,4 +19,9 @@ export interface IZoomSpi extends OAuthSpi<ZoomConfig> {
     eventSubscriptionId: string,
     accessToken?: string
   ) => Promise<IntegrationResponse<void>>
+
+  getUserEventSubscriptions: (
+    params: GetUserEventSubscriptionsParams,
+    accessToken?: string
+  ) => Promise<IntegrationResponse<GetUserEventSubscriptionsResponse>>
 }

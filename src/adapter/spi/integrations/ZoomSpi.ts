@@ -1,7 +1,10 @@
 import { OAuthSpi } from './OAuthSpi'
 import type { IZoomSpi } from '/domain/integrations/Zoom/IZoomSpi'
 import type { ZoomConfig } from '/domain/integrations/Zoom/ZoomConfig'
-import type { CreateEventSubscriptionParams } from '/domain/integrations/Zoom/ZoomTypes'
+import type {
+  CreateEventSubscriptionParams,
+  GetUserEventSubscriptionsParams,
+} from '/domain/integrations/Zoom/ZoomTypes'
 
 export type IZoomIntegration = IZoomSpi
 
@@ -16,5 +19,12 @@ export class ZoomSpi extends OAuthSpi<ZoomConfig, IZoomIntegration> implements I
 
   deleteEventSubscription = async (eventSubscriptionId: string, accessToken?: string) => {
     return this._integration.deleteEventSubscription(eventSubscriptionId, accessToken)
+  }
+
+  getUserEventSubscriptions = async (
+    params: GetUserEventSubscriptionsParams,
+    accessToken?: string
+  ) => {
+    return this._integration.getUserEventSubscriptions(params, accessToken)
   }
 }
