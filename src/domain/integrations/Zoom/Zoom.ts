@@ -19,4 +19,15 @@ export class Zoom extends OAuthIntegration<ZoomConfig, IZoomSpi> {
       return OAuthIntegration.throwError('createEventSubscription', response.error)
     return response.data
   }
+
+  deleteEventSubscription = async (account: string, eventSubscriptionId: string): Promise<void> => {
+    const accessToken = await this.getAccessToken(account)
+    const response = await this._spi(account).deleteEventSubscription(
+      eventSubscriptionId,
+      accessToken
+    )
+    if (response.error)
+      return OAuthIntegration.throwError('deleteEventSubscription', response.error)
+    return response.data
+  }
 }

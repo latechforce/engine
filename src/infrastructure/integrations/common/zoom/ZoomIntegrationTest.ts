@@ -39,5 +39,18 @@ export function testZoomIntegration(
         expect(result.data.subscription_scope).toBe(params.subscription_scope)
       }
     })
+
+    it('should delete an event subscription', async () => {
+      // GIVEN
+      const eventSubscriptionId = 'test-subscription-id'
+
+      // WHEN
+      const result = await integration.deleteEventSubscription(eventSubscriptionId)
+
+      // THEN
+      expect(result).toBeDefined()
+      expect(result.error).toBeUndefined()
+      expect(result.data).toBeUndefined()
+    })
   })
 }

@@ -9,4 +9,9 @@ export interface IZoomSpi extends OAuthSpi<ZoomConfig> {
     params: CreateEventSubscriptionParams,
     accessToken?: string
   ) => Promise<IntegrationResponse<EventSubscription>>
+
+  deleteEventSubscription: (
+    eventSubscriptionId: string,
+    accessToken?: string
+  ) => Promise<IntegrationResponse<void>>
 }

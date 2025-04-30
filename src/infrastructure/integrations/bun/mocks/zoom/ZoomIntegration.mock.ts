@@ -106,4 +106,24 @@ export class ZoomIntegration extends BaseMockIntegration implements IZoomIntegra
       },
     }
   }
+
+  deleteEventSubscription = async (
+    eventSubscriptionId: string
+  ): Promise<IntegrationResponse<void>> => {
+    // For mock implementation, we'll use a direct approach
+    // In a real implementation, we would properly search for the record first
+    try {
+      // Just log that we would delete the event subscription
+      this._webhooks.delete(eventSubscriptionId)
+      return { data: undefined }
+    } catch (error) {
+      console.error('Error deleting event subscription:', error)
+      return {
+        error: {
+          status: 500,
+          message: 'Failed to delete event subscription',
+        },
+      }
+    }
+  }
 }

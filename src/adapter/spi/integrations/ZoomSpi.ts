@@ -13,4 +13,8 @@ export class ZoomSpi extends OAuthSpi<ZoomConfig, IZoomIntegration> implements I
   createEventSubscription = async (params: CreateEventSubscriptionParams, accessToken?: string) => {
     return this._integration.createEventSubscription(params, accessToken)
   }
+
+  deleteEventSubscription = async (eventSubscriptionId: string, accessToken?: string) => {
+    return this._integration.deleteEventSubscription(eventSubscriptionId, accessToken)
+  }
 }

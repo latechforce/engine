@@ -125,4 +125,20 @@ export class ZoomIntegration implements IZoomIntegration {
       return this._responseError(error)
     }
   }
+
+  deleteEventSubscription = async (
+    eventSubscriptionId: string,
+    accessToken?: string
+  ): Promise<IntegrationResponse<void>> => {
+    try {
+      await this._api.delete(`/marketplace/app/event_subscription/${eventSubscriptionId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      return { data: undefined }
+    } catch (error: unknown) {
+      return this._responseError(error)
+    }
+  }
 }
