@@ -9,6 +9,7 @@ import type { PhantombusterConfig } from '/domain/integrations/Phantombuster'
 import type { CalendlyConfig } from '/domain/integrations/Calendly'
 import type { YouCanBookMeConfig } from '/domain/integrations/YouCanBookMe'
 import type { JotformConfig } from '/domain/integrations/Jotform/JotformConfig'
+import type { ZoomConfig } from '/domain/integrations/Zoom/ZoomConfig'
 
 import type { IPappersIntegration } from './PappersSpi'
 import type { INotionIntegration } from './NotionSpi'
@@ -21,6 +22,7 @@ import type { IPhantombusterIntegration } from './PhantombusterSpi'
 import type { ICalendlyIntegration } from './CalendlySpi'
 import type { IYouCanBookMeIntegration } from './YouCanBookMeSpi'
 import type { IJotformIntegration } from './JotformSpi'
+import type { IZoomIntegration } from './ZoomSpi'
 
 export interface Integrations {
   airtable: (config: AirtableConfig) => IAirtableIntegration
@@ -34,4 +36,5 @@ export interface Integrations {
   calendly: (config: CalendlyConfig) => ICalendlyIntegration
   youCanBookMe: (config: YouCanBookMeConfig) => IYouCanBookMeIntegration
   jotform: (config: JotformConfig) => IJotformIntegration
+  zoom: (config: ZoomConfig) => IZoomIntegration
 }

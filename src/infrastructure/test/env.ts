@@ -33,6 +33,12 @@ const {
   TEST_JOTFORM_API_KEY,
   TEST_JOTFORM_BASE_URL,
   TEST_JOTFORM_FORM_ID,
+  TEST_ZOOM_ACCOUNT_ID,
+  TEST_ZOOM_CLIENT_ID,
+  TEST_ZOOM_CLIENT_SECRET,
+  TEST_ZOOM_SECRET_TOKEN,
+  TEST_ZOOM_BASE_URL,
+  TEST_ZOOM_AUTH_BASE_URL,
 } = process.env
 
 if (!TEST_SENTRY_DSN) throw new Error('TEST_SENTRY_DSN env var is not defined')
@@ -80,6 +86,12 @@ if (!TEST_YOUCANBOOKME_PASSWORD)
 if (!TEST_JOTFORM_API_KEY) throw new Error('TEST_JOTFORM_API_KEY env var is not defined')
 if (!TEST_JOTFORM_BASE_URL) throw new Error('TEST_JOTFORM_BASE_URL env var is not defined')
 if (!TEST_JOTFORM_FORM_ID) throw new Error('TEST_JOTFORM_FORM_ID env var is not defined')
+if (!TEST_ZOOM_CLIENT_ID) throw new Error('TEST_ZOOM_CLIENT_ID env var is not defined')
+if (!TEST_ZOOM_CLIENT_SECRET) throw new Error('TEST_ZOOM_CLIENT_SECRET env var is not defined')
+if (!TEST_ZOOM_BASE_URL) throw new Error('TEST_ZOOM_BASE_URL env var is not defined')
+if (!TEST_ZOOM_AUTH_BASE_URL) throw new Error('TEST_ZOOM_AUTH_BASE_URL env var is not defined')
+if (!TEST_ZOOM_ACCOUNT_ID) throw new Error('TEST_ZOOM_ACCOUNT_ID env var is not defined')
+if (!TEST_ZOOM_SECRET_TOKEN) throw new Error('TEST_ZOOM_SECRET_TOKEN env var is not defined')
 
 const env = {
   TEST_SENTRY_DSN,
@@ -116,6 +128,12 @@ const env = {
   TEST_JOTFORM_API_KEY,
   TEST_JOTFORM_BASE_URL,
   TEST_JOTFORM_FORM_ID,
+  TEST_ZOOM_CLIENT_ID,
+  TEST_ZOOM_CLIENT_SECRET,
+  TEST_ZOOM_SECRET_TOKEN,
+  TEST_ZOOM_BASE_URL,
+  TEST_ZOOM_AUTH_BASE_URL,
+  TEST_ZOOM_ACCOUNT_ID,
 }
 
 export default env

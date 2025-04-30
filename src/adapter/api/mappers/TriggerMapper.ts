@@ -20,6 +20,8 @@ import type { Jotform } from '/domain/integrations/Jotform'
 import { FormWebhookReceivedTrigger } from '/domain/entities/Trigger/integrations/jotform/FormWebhookReceived'
 import type { YouCanBookMe } from '/domain/integrations/YouCanBookMe'
 import { BookingCreatedTrigger } from '../../../domain/entities/Trigger/integrations/youcanbookme/BookingCreated'
+import type { Zoom } from '/domain/integrations/Zoom'
+import { WebinarParticipantJoinedTrigger } from '/domain/entities/Trigger/integrations/zoom/WebinarParticipantJoined'
 
 export interface TriggerMapperServices {
   server: Server
@@ -36,6 +38,7 @@ export interface TriggerMapperIntegrations {
   calendly: Calendly
   jotform: Jotform
   youcanbookme: YouCanBookMe
+  zoom: Zoom
 }
 
 export class TriggerMapper {
@@ -62,6 +65,16 @@ export class TriggerMapper {
           switch (schema.event) {
             case 'InviteeCreated':
               return new InviteeCreatedCalendlyTrigger(
+                { ...schema, automation },
+                services,
+                integrations
+              )
+          }
+          break
+        case 'Zoom':
+          switch (schema.event) {
+            case 'WebinarParticipantJoinedTrigger':
+              return new WebinarParticipantJoinedTrigger(
                 { ...schema, automation },
                 services,
                 integrations

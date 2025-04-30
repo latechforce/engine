@@ -18,6 +18,7 @@ import type { Pappers, PappersConfig } from './Pappers'
 import type { Phantombuster, PhantombusterConfig } from './Phantombuster'
 import type { Qonto, QontoConfig } from './Qonto'
 import type { YouCanBookMe, YouCanBookMeConfig } from './YouCanBookMe'
+import type { Zoom, ZoomConfig } from './Zoom'
 
 export interface IntegrationsConfig {
   airtable?: AirtableConfig[]
@@ -31,6 +32,7 @@ export interface IntegrationsConfig {
   phantombuster?: PhantombusterConfig[]
   calendly?: CalendlyConfig[]
   youcanbookme?: YouCanBookMeConfig[]
+  zoom?: ZoomConfig[]
 }
 
 export interface Integrations {
@@ -44,6 +46,7 @@ export interface Integrations {
   phantombuster: Phantombuster
   googleMail: GoogleMail
   gocardless: GoCardless
+  zoom: Zoom
 }
 
 export type Integration =
@@ -57,3 +60,4 @@ export type Integration =
   | Phantombuster
   | GoogleMail
   | GoCardless
+  | Zoom

@@ -21,6 +21,7 @@ import type {
 } from '/domain/integrations'
 import type { Table } from '/domain/entities/Table'
 import type { Action } from '/domain/entities/Action'
+import type { Zoom } from '/domain/integrations/Zoom'
 
 export type ActionMapperServices = {
   templateCompiler: TemplateCompiler
@@ -42,6 +43,7 @@ export type ActionMapperIntegrations = {
   googleMail: GoogleMail
   gocardless: GoCardless
   youcanbookme: YouCanBookMe
+  zoom: Zoom
 }
 
 export class ActionMapper {

@@ -34,6 +34,7 @@ export class BaseMockIntegration {
       operator: 'Is',
       value: this._token,
     })
+
     if (!token) {
       return {
         error: {

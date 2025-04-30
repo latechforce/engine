@@ -20,6 +20,7 @@ import type { Fetcher } from '/domain/services/Fetcher'
 import type { System } from '/domain/services/System'
 import type { SchemaValidator } from '/domain/services/SchemaValidator'
 import type { Database } from '/domain/services/Database'
+import { ZoomMapper } from './ZoomMapper'
 
 interface IntegrationsServices {
   idGenerator: IdGenerator
@@ -100,6 +101,11 @@ export class IntegrationsMapper {
       { server, schemaValidator },
       schema?.gocardless
     )
+    const zoom = ZoomMapper.toIntegration(
+      integrations,
+      { server, schemaValidator, database },
+      schema?.zoom
+    )
     return {
       notion,
       calendly,
@@ -111,6 +117,7 @@ export class IntegrationsMapper {
       phantombuster,
       googleMail,
       gocardless,
+      zoom,
     }
   }
 }
