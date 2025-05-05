@@ -87,7 +87,7 @@
     "htmx.org": "2.0.4",
     "libsodium-wrappers": "^0.7.15",
     "lodash": "^4.17.21",
-    "lucide": "^0.501.0",
+    "lucide": "^0.507.0",
     "lucide-react": "^0.501.0",
     "mime-types": "^3.0.1",
     "minipass": "^7.1.2",
