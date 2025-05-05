@@ -92,7 +92,7 @@
     "mime-types": "^3.0.1",
     "minipass": "^7.1.2",
     "nanoid": "^5.1.5",
-    "nodemailer": "^6.10.1",
+    "nodemailer": "^7.0.2",
     "papaparse": "^5.5.2",
     "pdfkit": "^0.17.0",
     "pg": "^8.14.1",
