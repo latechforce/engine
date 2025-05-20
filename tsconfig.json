@@ -1,30 +1,43 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext", "dom"],
+    // Environment setup & latest features
+    "lib": ["esnext", "dom"],
     "target": "ESNext",
     "module": "ESNext",
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,
+
+    // Bundler mode
     "moduleResolution": "bundler",
-    "noEmit": true,
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
+    "noEmit": true,
+
+    // Best practices
     "strict": true,
+    "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+
+    // Some stricter flags (disabled by default)
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noPropertyAccessFromIndexSignature": false,
+
+    // Paths
     "baseUrl": ".",
     "paths": {
-      "/src": ["src"],
-      "/infrastructure/*": ["src/infrastructure/*"],
-      "/adapter/*": ["src/adapter/*"],
-      "/domain/*": ["src/domain/*"],
-      "/test/*": ["src/infrastructure/test/*"],
-      "/examples/*": ["examples/*"]
+      "@/example": ["example"],
+      "@/example/*": ["example/*"],
+      "@/e2e/*": ["e2e/*"],
+      "@/app": ["src"],
+      "@/*": ["src/*"]
     },
-    "esModuleInterop": false
+
+    // inversify
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["src", "examples", "test", "scripts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "test", "example", "script", "src/infrastructure/db", "e2e"]
 }

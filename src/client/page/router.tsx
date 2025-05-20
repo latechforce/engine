@@ -1,0 +1,24 @@
+import { createRouter } from '@tanstack/react-router'
+import { homeRoute } from './home.page'
+import { rootRoute } from './layout'
+import { dashboardAdminRoute } from './admin/dashboard.page'
+import { automationsAdminRoute } from './admin/automations.page'
+import { runsHistoryAdminRoute } from './admin/runs.page'
+import { loginAdminRoute } from './admin/login.page'
+import { openapiAdminRoute } from './admin/openapi.page'
+const routeTree = rootRoute.addChildren([
+  homeRoute,
+  loginAdminRoute,
+  dashboardAdminRoute,
+  automationsAdminRoute,
+  runsHistoryAdminRoute,
+  openapiAdminRoute,
+])
+
+export const router = createRouter({ routeTree })
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router
+  }
+}

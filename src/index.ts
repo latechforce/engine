@@ -1,39 +1,25 @@
-import { drivers } from '/infrastructure/drivers/common'
-import { integrations } from '/infrastructure/integrations/common'
-import { components } from '/infrastructure/components/tailwindcss'
-import { Engine } from '/adapter/api'
-import type { Drivers } from '/adapter/spi/drivers'
-import type { Integrations } from '/adapter/spi/integrations'
-import type { Components } from '/domain/components'
-import type { IDatabaseDriver } from '/adapter/spi/drivers/DatabaseSpi'
-import type { DatabaseConfig } from '/domain/services/Database'
-import type { MonitorConfig } from '/domain/services/Monitor'
-import type { IMonitorDriver } from '/adapter/spi/drivers/MonitorSpi'
-import type { ServerConfig } from '/domain/services/Server'
-import type { IServerDriver } from '/adapter/spi/drivers/ServerSpi'
-import type { IStorageDriver } from '/adapter/spi/drivers/StorageSpi'
-import type { StorageConfig } from '/domain/services/Storage'
+import 'reflect-metadata'
+import { registerDependencies } from '@/infrastructure/di/container'
+import TYPES from '@/infrastructure/di/types'
+import type { StartAppUseCase } from '@/application/use-case/app/start-app.use-case'
+import type { ValidateAppUseCase } from './application/use-case/app/validate-app.use-case'
 
-export * from './types'
+type Options = {
+  externals?: Record<string, unknown>
+}
 
-export default class extends Engine {
-  constructor(options: {
-    drivers: Partial<Drivers> & {
-      database: (config: DatabaseConfig) => IDatabaseDriver
-      monitor: (config: MonitorConfig[]) => IMonitorDriver
-      server: (config: ServerConfig) => IServerDriver
-      storage: (config: StorageConfig) => IStorageDriver
-    }
-    integrations?: Partial<Integrations>
-    components?: Partial<Components>
-  }) {
-    const customDrivers = options?.drivers ?? {}
-    const customIntegrations = options?.integrations ?? {}
-    const customComponents = options?.components ?? {}
-    super(
-      { ...drivers, ...customDrivers },
-      { ...integrations, ...customIntegrations },
-      { ...components, ...customComponents }
-    )
+export default class App {
+  constructor(private readonly options: Options = {}) {}
+
+  async validate(unknownSchema: unknown) {
+    const container = await registerDependencies(this.options.externals)
+    const validateAppUseCase = container.get<ValidateAppUseCase>(TYPES.UseCase.ValidateApp)
+    return validateAppUseCase.execute(unknownSchema)
+  }
+
+  async start(unknownSchema: unknown = {}) {
+    const container = await registerDependencies(this.options.externals)
+    const startAppUseCase = container.get<StartAppUseCase>(TYPES.UseCase.StartApp)
+    return startAppUseCase.execute(unknownSchema)
   }
 }

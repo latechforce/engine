@@ -10,11 +10,10 @@ on:
 
 env:
   NODE_ENV: production
-  bun-version: 1.2.5
 
 jobs:
   test:
-    name: Run Unit Tests and Linting
+    name: Run Linting and Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
@@ -22,59 +21,19 @@ jobs:
       contents: read
       id-token: write
 
-    env:
-      TEST_SENTRY_DSN: ${{ secrets.TEST_SENTRY_DSN }}
-      TEST_NOTION_TOKEN: ${{ secrets.TEST_NOTION_TOKEN }}
-      TEST_NOTION_TABLE_1_ID: ${{ secrets.TEST_NOTION_TABLE_1_ID }}
-      TEST_NOTION_TABLE_2_ID: ${{ secrets.TEST_NOTION_TABLE_2_ID }}
-      TEST_NOTION_TABLE_3_ID: ${{ secrets.TEST_NOTION_TABLE_3_ID }}
-      TEST_NOTION_TABLE_FILES_ID: ${{ secrets.TEST_NOTION_TABLE_FILES_ID }}
-      TEST_AIRTABLE_API_KEY: ${{ secrets.TEST_AIRTABLE_API_KEY }}
-      TEST_AIRTABLE_BASE_ID: ${{ secrets.TEST_AIRTABLE_BASE_ID }}
-      TEST_AIRTABLE_TABLE_1_ID: ${{ secrets.TEST_AIRTABLE_TABLE_1_ID }}
-      TEST_AIRTABLE_TABLE_2_ID: ${{ secrets.TEST_AIRTABLE_TABLE_2_ID }}
-      TEST_PAPPERS_API_KEY: ${{ secrets.TEST_PAPPERS_API_KEY }}
-      TEST_QONTO_BASE_URL: ${{ secrets.TEST_QONTO_BASE_URL }}
-      TEST_QONTO_ORGANISATION_SLUG: ${{ secrets.TEST_QONTO_ORGANISATION_SLUG }}
-      TEST_QONTO_SECRET_KEY: ${{ secrets.TEST_QONTO_SECRET_KEY }}
-      TEST_QONTO_STAGING_TOKEN: ${{ secrets.TEST_QONTO_STAGING_TOKEN }}
-      TEST_QONTO_IBAN: ${{ secrets.TEST_QONTO_IBAN }}
-      TEST_GOCARDLESS_BASE_URL: ${{ secrets.TEST_GOCARDLESS_BASE_URL }}
-      TEST_GOCARDLESS_ACCESS_TOKEN: ${{ secrets.TEST_GOCARDLESS_ACCESS_TOKEN }}
-      TEST_NGROK_AUTH_TOKEN: ${{ secrets.TEST_NGROK_AUTH_TOKEN }}
-      TEST_GOOGLE_MAIL_USER: ${{ secrets.TEST_GOOGLE_MAIL_USER }}
-      TEST_GOOGLE_MAIL_PASSWORD: ${{ secrets.TEST_GOOGLE_MAIL_PASSWORD }}
-      TEST_PHANTOMBUSTER_API_KEY: ${{ secrets.TEST_PHANTOMBUSTER_API_KEY }}
-      TEST_PHANTOMBUSTER_AGENT_ID: ${{ secrets.TEST_PHANTOMBUSTER_AGENT_ID }}
-      TEST_CALENDLY_BASE_URL: ${{ secrets.TEST_CALENDLY_BASE_URL }}
-      TEST_CALENDLY_CLIENT_ID: ${{ secrets.TEST_CALENDLY_CLIENT_ID }}
-      TEST_CALENDLY_CLIENT_SECRET: ${{ secrets.TEST_CALENDLY_CLIENT_SECRET }}
-      TEST_CALENDLY_WEBHOOK_SIGNING_KEY: ${{ secrets.TEST_CALENDLY_WEBHOOK_SIGNING_KEY }}
-      TEST_CALENDLY_AUTH_BASE_URL: ${{ secrets.TEST_CALENDLY_AUTH_BASE_URL }}
-      TEST_CALENDLY_ACCESS_TOKEN: ${{ secrets.TEST_CALENDLY_ACCESS_TOKEN }}
-      TEST_YOUCANBOOKME_BASE_URL: ${{ secrets.TEST_YOUCANBOOKME_BASE_URL }}
-      TEST_YOUCANBOOKME_USERNAME: ${{ secrets.TEST_YOUCANBOOKME_USERNAME }}
-      TEST_YOUCANBOOKME_PASSWORD: ${{ secrets.TEST_YOUCANBOOKME_PASSWORD }}
-      TEST_JOTFORM_BASE_URL: ${{ secrets.TEST_JOTFORM_BASE_URL }}
-      TEST_JOTFORM_API_KEY: ${{ secrets.TEST_JOTFORM_API_KEY }}
-      TEST_JOTFORM_FORM_ID: ${{ secrets.TEST_JOTFORM_FORM_ID }}
-      TESTCONTAINERS_RYUK_DISABLED: true
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Setup Bun runtime
         uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: ${{ env.bun-version }}
       - name: Install project dependencies
         run: bun install
       - name: Run code linting
         run: bun run lint
-      - name: Build project
-        run: bun run build
-      - name: Run test suite
+      - name: Run unit test suite
         run: bun run test
+      - name: Run e2e test suite
+        run: bun run e2e
 
   release:
     name: Publish Package to NPM
@@ -96,12 +55,8 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
       - name: Setup Bun runtime
         uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: ${{ env.bun-version }}
       - name: Install project dependencies
         run: bun install
-      - name: Build project
-        run: bun run build
       - name: Create and publish release
         run: bunx semantic-release
 
@@ -131,20 +86,12 @@ jobs:
 
       - name: Setup Bun runtime
         uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: ${{ env.bun-version }}
-
-      - name: Install project dependencies
-        run: bun install
 
       - name: Install website dependencies
         run: cd website && bun install
 
-      - name: Build docs
-        run: bun run build:docs
-
       - name: Build website
-        run: bun run website:build
+        run: cd website && bun run build
 
       - name: Deploy to GitHub Pages
-        run: bun run website:deploy
+        run: cd website && bun run deploy

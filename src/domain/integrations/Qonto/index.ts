@@ -1,5 +1,0 @@
-export * from './Qonto'
-export * from './QontoConfig'
-export * from './QontoTypes'
-export * from './IQontoSpi'
-export * from './QontoCodeRunner'

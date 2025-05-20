@@ -5,21 +5,20 @@ import type * as Preset from '@docusaurus/preset-classic'
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Engine',
-  tagline: 'Web app generator',
+  title: 'My Site',
+  tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://engine.latechforce.com',
+  url: 'https://your-docusaurus-site.example.com',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'latechforce', // Usually your GitHub org/user name.
-  projectName: 'engine', // Usually your repo name.
-  trailingSlash: false,
+  organizationName: 'facebook', // Usually your GitHub org/user name.
+  projectName: 'docusaurus', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -37,10 +36,26 @@ const config: Config = {
       'classic',
       {
         docs: {
-          path: 'version/latest',
-          routeBasePath: '/',
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/latechforce/engine/tree/main/website/',
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
+          editUrl:
+            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+        },
+        blog: {
+          showReadingTime: true,
+          feedOptions: {
+            type: ['rss', 'atom'],
+            xslt: true,
+          },
+          // Please change this to your repo.
+          // Remove this to remove the "edit this page" links.
+          editUrl:
+            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // Useful options to enforce blogging best practices
+          onInlineTags: 'warn',
+          onInlineAuthors: 'warn',
+          onUntruncatedBlogPosts: 'warn',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -51,36 +66,23 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/android-chrome-512x512.png',
-    algolia: {
-      appId: 'O9A2Y5CN7H',
-      apiKey: '8a0302bcb20acd738753d2d70d17f32b',
-      indexName: 'engine-latechforce',
-      contextualSearch: true,
-      searchParameters: {},
-      searchPagePath: 'search',
-    },
+    image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'LTF Engine',
+      title: 'My Site',
       logo: {
-        alt: 'LTF Engine Logo',
-        src: 'img/android-chrome-512x512.png',
+        alt: 'My Site Logo',
+        src: 'img/logo.svg',
       },
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'docs',
+          sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Docs',
+          label: 'Tutorial',
         },
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
-          type: 'docSidebar',
-          sidebarId: 'api',
-          position: 'left',
-          label: 'Schema API',
-        },
-        {
-          href: 'https://github.com/latechforce/engine',
+          href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
           position: 'right',
         },
@@ -90,16 +92,46 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Links',
+          title: 'Docs',
           items: [
             {
+              label: 'Tutorial',
+              to: '/docs/intro',
+            },
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            {
+              label: 'Stack Overflow',
+              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+            },
+            {
+              label: 'Discord',
+              href: 'https://discordapp.com/invite/docusaurus',
+            },
+            {
+              label: 'X',
+              href: 'https://x.com/docusaurus',
+            },
+          ],
+        },
+        {
+          title: 'More',
+          items: [
+            {
+              label: 'Blog',
+              to: '/blog',
+            },
+            {
               label: 'GitHub',
-              href: 'https://github.com/latechforce/engine',
+              href: 'https://github.com/facebook/docusaurus',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} La Tech Force.`,
+      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

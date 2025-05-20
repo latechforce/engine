@@ -24,6 +24,6 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ['**/dist/**', '**/docs/**', 'node_modules', '**/website/**'],
+    ignores: ['**/dist/**', 'node_modules', '**/.docusaurus/**'],
   }
 )
