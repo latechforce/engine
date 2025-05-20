@@ -4,6 +4,7 @@ import { spawn, ChildProcess } from 'child_process'
 import { createInterface } from 'readline'
 import { Readable } from 'stream'
 import fs from 'fs'
+import { join } from 'path'
 
 // Declare your fixture types
 type StartAppFixture = {
@@ -11,7 +12,30 @@ type StartAppFixture = {
     filter?: string
     loggedOnAdmin?: boolean
     env?: Partial<EnvSchema>
-  }) => Promise<Page>
+  }) => Promise<{ page: Page; env: EnvSchema }>
+}
+
+function getCallerFile(): string {
+  const originalPrepareStackTrace = Error.prepareStackTrace
+
+  Error.prepareStackTrace = (err, stackTraces) => stackTraces
+
+  const err = new Error()
+  const stack = err.stack as unknown as NodeJS.CallSite[]
+
+  Error.prepareStackTrace = originalPrepareStackTrace
+
+  // Find the first caller that is in our e2e directory and is a .spec.ts file
+  const caller = stack?.find((callSite) => {
+    const fileName = callSite.getFileName()
+    return fileName?.includes('/e2e/') && fileName?.includes('.spec.ts')
+  })
+
+  const fileName = caller?.getFileName()
+  if (!fileName) {
+    throw new Error('Caller spec file not found')
+  }
+  return fileName?.replace('file://', '').replace(process.cwd(), '')
 }
 
 // Extend the base test type
@@ -19,17 +43,38 @@ export const test = base.extend<StartAppFixture>({
   startExampleApp: async ({ browser }, use) => {
     let proc: ChildProcess | undefined
     let page: Page | undefined
-    let env: Partial<EnvSchema> | undefined
+    let env: EnvSchema = {}
 
     const startExampleApp = async (
       options: { filter?: string; loggedOnAdmin?: boolean; env?: Partial<EnvSchema> } = {}
-    ): Promise<Page> => {
+    ): Promise<{ page: Page; env: EnvSchema }> => {
       const { filter, loggedOnAdmin = false } = options
-
       env = options.env || {}
 
       const command = ['run', 'script/run-example.ts']
-      if (filter) command.push(filter)
+
+      const callerFile = getCallerFile()
+      if (!callerFile.includes('default') && !filter?.includes('/')) {
+        const baseExampleFile = join(
+          process.cwd(),
+          callerFile.replace('e2e', 'example').replace('.spec.ts', '')
+        )
+        let exampleFile = join(baseExampleFile, (filter ?? 'index') + '.ts')
+
+        if (!fs.existsSync(exampleFile)) {
+          exampleFile = baseExampleFile + '.ts'
+        }
+
+        if (fs.existsSync(exampleFile)) {
+          const file = await import(exampleFile)
+          env = { ...file.env, ...env }
+          command.push(exampleFile)
+        } else {
+          throw new Error(`Example file ${exampleFile.replace(process.cwd(), '')} not found`)
+        }
+      } else if (filter) {
+        command.push(filter)
+      }
 
       proc = spawn('bun', command, {
         env: {
@@ -51,6 +96,9 @@ export const test = base.extend<StartAppFixture>({
 
       const url = await new Promise<string>((resolve, reject) => {
         rl.on('line', async (line) => {
+          if (env.LOG_LEVEL) {
+            console.log(line)
+          }
           const urlMatch = line.match(/http:\/\/localhost:(\d+)/)
           if (urlMatch) {
             const url = urlMatch[0]
@@ -80,7 +128,7 @@ export const test = base.extend<StartAppFixture>({
         await page.waitForURL('/_admin')
       }
 
-      return page
+      return { page, env }
     }
 
     // Provide the fixture value

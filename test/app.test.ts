@@ -26,7 +26,7 @@ describe('start', () => {
     const app = await new App().start()
 
     // THEN
-    expect(app.schema.name).toBe('App name')
+    expect(app.schema.name).toBe('My fantastic app')
   })
 
   it('should have the default version', async () => {
@@ -42,7 +42,7 @@ describe('start', () => {
     const app = await new App().start()
 
     // THEN
-    expect(app.schema.description).toBe('App description')
+    expect(app.schema.description).toBe('My fantastic app description')
   })
 })
 

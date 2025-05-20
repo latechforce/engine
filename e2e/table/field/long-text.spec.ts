@@ -3,7 +3,7 @@ import { expect, test } from '@/e2e/fixtures'
 test.describe('POST /api/table/:name', () => {
   test.skip('should create a record with a long text field', async ({ startExampleApp }) => {
     // GIVEN
-    const page = await startExampleApp({ filter: 'table/field/long-text' })
+    const { page } = await startExampleApp()
     const longText = 'Hello, world!'.repeat(100)
 
     // WHEN

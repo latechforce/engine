@@ -1,81 +1,79 @@
 import { expect, test } from '@/e2e/fixtures'
 
-test.describe('POST /api/automation/:path', () => {
-  test('should not found the automation with a get request', async ({ startExampleApp }) => {
-    // GIVEN
-    const page = await startExampleApp({ filter: 'http/post' })
+test('should not found the automation with a get request', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp()
 
-    // WHEN
-    const response = await page.request.get('/api/automation/post')
+  // WHEN
+  const response = await page.request.get('/api/automation/post')
 
-    // THEN
-    expect(response.status()).toBe(404)
+  // THEN
+  expect(response.status()).toBe(404)
+})
+
+test('should not found the automation with a wrong path', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp()
+
+  // WHEN
+  const response = await page.request.post('/api/automation/wrong-path')
+
+  // THEN
+  expect(response.status()).toBe(404)
+})
+
+test('should trigger an automation', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp()
+
+  // WHEN
+  const response = await page.request.post('/api/automation/post')
+
+  // THEN
+  expect(response.status()).toBe(200)
+  expect(await response.text()).toBe('OK')
+})
+
+test('should trigger an automation with immediate response', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'respond-immediately' })
+
+  // WHEN
+  const response = await page.request.post('/api/automation/post')
+
+  // THEN
+  expect(response.status()).toBe(200)
+  expect(await response.text()).toBe('OK')
+})
+
+test('should not trigger an automation with a invalid body', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'request-body' })
+
+  // WHEN
+  const response = await page.request.post('/api/automation/post', {
+    data: {
+      date: '2021-01-01',
+    },
   })
 
-  test('should not found the automation with a wrong path', async ({ startExampleApp }) => {
-    // GIVEN
-    const page = await startExampleApp({ filter: 'http/post' })
+  // THEN
+  expect(response.status()).toBe(400)
+  expect(await response.json()).toEqual({ error: 'Invalid body' })
+})
 
-    // WHEN
-    const response = await page.request.post('/api/automation/wrong-path')
+test('should trigger an automation with a valid body', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'request-body' })
 
-    // THEN
-    expect(response.status()).toBe(404)
+  // WHEN
+  const response = await page.request.post('/api/automation/post', {
+    data: {
+      name: 'John Doe',
+    },
   })
 
-  test('should trigger an automation', async ({ startExampleApp }) => {
-    // GIVEN
-    const page = await startExampleApp({ filter: 'http/post' })
-
-    // WHEN
-    const response = await page.request.post('/api/automation/post')
-
-    // THEN
-    expect(response.status()).toBe(200)
-    expect(await response.text()).toBe('OK')
-  })
-
-  test('should trigger an automation with immediate response', async ({ startExampleApp }) => {
-    // GIVEN
-    const page = await startExampleApp({ filter: 'http/post/respond-immediately' })
-
-    // WHEN
-    const response = await page.request.post('/api/automation/post')
-
-    // THEN
-    expect(response.status()).toBe(200)
-    expect(await response.text()).toBe('OK')
-  })
-
-  test('should not trigger an automation with a invalid body', async ({ startExampleApp }) => {
-    // GIVEN
-    const page = await startExampleApp({ filter: 'http/post/request-body' })
-
-    // WHEN
-    const response = await page.request.post('/api/automation/post', {
-      data: {
-        date: '2021-01-01',
-      },
-    })
-
-    // THEN
-    expect(response.status()).toBe(400)
-    expect(await response.json()).toEqual({ error: 'Invalid body' })
-  })
-
-  test('should trigger an automation with a valid body', async ({ startExampleApp }) => {
-    // GIVEN
-    const page = await startExampleApp({ filter: 'http/post/request-body' })
-
-    // WHEN
-    const response = await page.request.post('/api/automation/post', {
-      data: {
-        name: 'John Doe',
-      },
-    })
-
-    // THEN
-    const data = await response.json()
-    expect(data.message).toBe('Hello, John Doe!')
-  })
+  // THEN
+  const data = await response.json()
+  expect(data.message).toBe('Hello, John Doe!')
 })

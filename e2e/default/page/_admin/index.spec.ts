@@ -1,0 +1,24 @@
+import { expect, test } from '@/e2e/fixtures'
+
+test('should redirect to the login page if not authenticated', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp()
+
+  // WHEN
+  await page.goto('/_admin')
+  await page.waitForURL('/_admin/login')
+
+  // THEN
+  expect(page.url()).toContain('/_admin/login')
+})
+
+test('should return the admin dashboard', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ loggedOnAdmin: true })
+
+  // WHEN
+  await page.goto('/_admin')
+
+  // THEN
+  await expect(page).toHaveScreenshot()
+})
