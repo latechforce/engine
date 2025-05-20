@@ -28,6 +28,8 @@ jobs:
         uses: oven-sh/setup-bun@v2
       - name: Install project dependencies
         run: bun install
+      - name: Install Playwright Browsers
+        run: bunx playwright install --with-deps
       - name: Run code linting
         run: bun run lint
       - name: Run unit test suite
