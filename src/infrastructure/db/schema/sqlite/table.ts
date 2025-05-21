@@ -1,15 +1,15 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 export const table = sqliteTable('table', {
-  id: integer().notNull(),
+  id: integer().primaryKey(),
   name: text().notNull(),
   created_at: integer({ mode: 'timestamp' }).notNull(),
   updated_at: integer({ mode: 'timestamp' }).notNull(),
 })
 
 export const field = sqliteTable('field', {
-  id: integer().notNull(),
-  table_id: text()
+  id: integer().primaryKey(),
+  table_id: integer()
     .notNull()
     .references(() => table.id, { onDelete: 'cascade' }),
   name: text().notNull(),
@@ -17,7 +17,7 @@ export const field = sqliteTable('field', {
 })
 
 export const record = sqliteTable('record', {
-  id: text().notNull(),
+  id: text().primaryKey(),
   table_id: integer()
     .notNull()
     .references(() => table.id, { onDelete: 'cascade' }),
@@ -26,14 +26,14 @@ export const record = sqliteTable('record', {
 })
 
 export const recordField = sqliteTable('record_field', {
-  id: text().notNull(),
-  record_id: integer()
+  id: text().primaryKey(),
+  record_id: text()
     .notNull()
     .references(() => record.id, { onDelete: 'cascade' }),
   field_id: integer()
     .notNull()
     .references(() => field.id, { onDelete: 'cascade' }),
-  value: text().notNull(),
+  value: text(),
   created_at: integer({ mode: 'timestamp' }).notNull(),
   updated_at: integer({ mode: 'timestamp' }).notNull(),
 })

@@ -2,7 +2,7 @@ import { pgTable, text, timestamp, json } from 'drizzle-orm/pg-core'
 import type { AutomationSchema } from '@/types'
 
 export const run = pgTable('run', {
-  id: text().notNull(),
+  id: text().primaryKey(),
   automation_schema: json().$type<AutomationSchema>().notNull(),
   status: text({ enum: ['playing', 'success', 'stopped'] }).notNull(),
   data: json().$type<Record<string, object>>().notNull(),

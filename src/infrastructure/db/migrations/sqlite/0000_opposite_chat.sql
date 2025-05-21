@@ -54,7 +54,7 @@ CREATE TABLE `verification` (
 );
 --> statement-breakpoint
 CREATE TABLE `run` (
-	`id` text NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`automation_schema` text NOT NULL,
 	`status` text NOT NULL,
 	`data` text NOT NULL,
@@ -65,15 +65,15 @@ CREATE TABLE `run` (
 );
 --> statement-breakpoint
 CREATE TABLE `field` (
-	`id` integer NOT NULL,
-	`table_id` text NOT NULL,
+	`id` integer PRIMARY KEY NOT NULL,
+	`table_id` integer NOT NULL,
 	`name` text NOT NULL,
 	`type` text NOT NULL,
 	FOREIGN KEY (`table_id`) REFERENCES `table`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `record` (
-	`id` text NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`table_id` integer NOT NULL,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
@@ -81,10 +81,10 @@ CREATE TABLE `record` (
 );
 --> statement-breakpoint
 CREATE TABLE `record_field` (
-	`id` text NOT NULL,
-	`record_id` integer NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
+	`record_id` text NOT NULL,
 	`field_id` integer NOT NULL,
-	`value` text NOT NULL,
+	`value` text,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
 	FOREIGN KEY (`record_id`) REFERENCES `record`(`id`) ON UPDATE no action ON DELETE cascade,
@@ -92,7 +92,7 @@ CREATE TABLE `record_field` (
 );
 --> statement-breakpoint
 CREATE TABLE `table` (
-	`id` integer NOT NULL,
+	`id` integer PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL

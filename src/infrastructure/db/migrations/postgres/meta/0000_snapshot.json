@@ -1,5 +1,5 @@
 {
-  "id": "8629f7d2-6270-4fe0-9e50-ff3593d7edf8",
+  "id": "cd7aa0a4-c2cb-4f91-9d1b-89e9f64012c6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -93,8 +93,12 @@
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -170,8 +174,12 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -181,7 +189,9 @@
         "session_token_unique": {
           "name": "session_token_unique",
           "nullsNotDistinct": false,
-          "columns": ["token"]
+          "columns": [
+            "token"
+          ]
         }
       },
       "policies": {},
@@ -266,7 +276,9 @@
         "user_email_unique": {
           "name": "user_email_unique",
           "nullsNotDistinct": false,
-          "columns": ["email"]
+          "columns": [
+            "email"
+          ]
         }
       },
       "policies": {},
@@ -329,7 +341,7 @@
         "id": {
           "name": "id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "automation_schema": {
@@ -390,12 +402,12 @@
         "id": {
           "name": "id",
           "type": "integer",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "table_id": {
           "name": "table_id",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -418,8 +430,12 @@
           "name": "field_table_id_table_id_fk",
           "tableFrom": "field",
           "tableTo": "table",
-          "columnsFrom": ["table_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "table_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -437,7 +453,7 @@
         "id": {
           "name": "id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "table_id": {
@@ -465,8 +481,12 @@
           "name": "record_table_id_table_id_fk",
           "tableFrom": "record",
           "tableTo": "table",
-          "columnsFrom": ["table_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "table_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -484,12 +504,12 @@
         "id": {
           "name": "id",
           "type": "text",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "record_id": {
           "name": "record_id",
-          "type": "integer",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -524,8 +544,12 @@
           "name": "record_field_record_id_record_id_fk",
           "tableFrom": "record_field",
           "tableTo": "record",
-          "columnsFrom": ["record_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "record_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -533,8 +557,12 @@
           "name": "record_field_field_id_field_id_fk",
           "tableFrom": "record_field",
           "tableTo": "field",
-          "columnsFrom": ["field_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "field_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -552,7 +580,7 @@
         "id": {
           "name": "id",
           "type": "integer",
-          "primaryKey": false,
+          "primaryKey": true,
           "notNull": true
         },
         "name": {

@@ -1,15 +1,15 @@
 import { integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 
 export const table = pgTable('table', {
-  id: integer().notNull(),
+  id: integer().primaryKey(),
   name: text().notNull(),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),
 })
 
 export const field = pgTable('field', {
-  id: integer().notNull(),
-  table_id: text()
+  id: integer().primaryKey(),
+  table_id: integer()
     .notNull()
     .references(() => table.id, { onDelete: 'cascade' }),
   name: text().notNull(),
@@ -17,7 +17,7 @@ export const field = pgTable('field', {
 })
 
 export const record = pgTable('record', {
-  id: text().notNull(),
+  id: text().primaryKey(),
   table_id: integer()
     .notNull()
     .references(() => table.id, { onDelete: 'cascade' }),
@@ -26,8 +26,8 @@ export const record = pgTable('record', {
 })
 
 export const recordField = pgTable('record_field', {
-  id: text().notNull(),
-  record_id: integer()
+  id: text().primaryKey(),
+  record_id: text()
     .notNull()
     .references(() => record.id, { onDelete: 'cascade' }),
   field_id: integer()

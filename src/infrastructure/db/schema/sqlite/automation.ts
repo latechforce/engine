@@ -2,7 +2,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import type { AutomationSchema } from '@/types'
 
 export const run = sqliteTable('run', {
-  id: text().notNull(),
+  id: text().primaryKey(),
   automation_schema: text({ mode: 'json' }).$type<AutomationSchema>().notNull(),
   status: text({ enum: ['playing', 'success', 'stopped'] }).notNull(),
   data: text({ mode: 'json' }).$type<Record<string, object>>().notNull(),

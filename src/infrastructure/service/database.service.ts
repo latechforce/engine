@@ -27,17 +27,18 @@ export class DatabaseService {
     this.logger = this.logger.child('database-service')
     this.provider = this.env.get('DATABASE_PROVIDER')
     this.url = this.env.get('DATABASE_URL')
-    fs.mkdirSync(path.dirname(this.url), { recursive: true })
     this.logger.debug(`init with "${this.provider}" provider`)
     if (this.provider === 'postgres') {
       this.postgresDb = drizzlePostgres(this.url, {
         schema: postgresSchema,
       })
     } else {
+      if (this.isLocalSQLiteFile(this.url)) {
+        fs.mkdirSync(path.dirname(this.url), { recursive: true })
+      }
       this.sqliteDb = drizzleSqlite(this.url, {
         schema: sqliteSchema,
       })
-      this.sqliteDb.query.run.findMany()
     }
   }
 
@@ -134,5 +135,15 @@ export class DatabaseService {
         },
       }
     }
+  }
+
+  private isLocalSQLiteFile(url: string): boolean {
+    if (url === ':memory:' || url.startsWith('file::memory:')) return false
+    if (url.startsWith('file:')) {
+      const pathPart = url.slice(5)
+      const pathWithoutQuery = pathPart.split('?')[0]
+      return !pathWithoutQuery?.startsWith(':') && pathWithoutQuery !== ''
+    }
+    return !url.includes(':')
   }
 }

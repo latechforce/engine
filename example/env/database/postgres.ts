@@ -1,0 +1,10 @@
+import type { AppSchema, EnvSchema } from '@/types'
+
+export const env: EnvSchema = {
+  DATABASE_PROVIDER: 'postgres',
+  DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/postgres',
+}
+
+export const postgresDatabase: AppSchema = {
+  name: 'My app with postgres database',
+}
