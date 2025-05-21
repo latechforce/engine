@@ -8,6 +8,46 @@
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
     <entry>
+        <title type="html"><![CDATA[Fix 0.46.1]]></title>
+        <id>https://engine.latechforce.com/blog/fix-0-46-1</id>
+        <link href="https://engine.latechforce.com/blog/fix-0-46-1"/>
+        <updated>2025-05-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Changelog for version 0.46.1]]></summary>
+        <content type="html"><![CDATA[<ul>
+<li>Merge branch 'main' of <a href="https://github.com/latechforce/engine" target="_blank" rel="noopener noreferrer">https://github.com/latechforce/engine</a> (<a href="https://github.com/latechforce/engine/commit/f47d36cc0b866cf3846f62c47e0fb40339daec97" target="_blank" rel="noopener noreferrer"></a>)</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="chore">chore<a href="https://engine.latechforce.com/blog/fix-0-46-1#chore" class="hash-link" aria-label="Direct link to chore" title="Direct link to chore">​</a></h3>
+<ul>
+<li>add author in changelog (<a href="https://github.com/latechforce/engine/commit/dcece1fa16af14436295be72f37519883bfbdb2a" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>add blog post automated creation (<a href="https://github.com/latechforce/engine/commit/738bb1ed642ae04bef3def0013d8bf0d5984a8d9" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>add build-guides (<a href="https://github.com/latechforce/engine/commit/79e393f0298d3c83bb6b083cda75255c7fde6295" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>add build-guides in CI (<a href="https://github.com/latechforce/engine/commit/d95ff1a730fc30b3393c29fe97f80e701b698717" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>add CNAME for website (<a href="https://github.com/latechforce/engine/commit/6b6e9c953146aae837503a98fe795d665a7b3373" target="_blank" rel="noopener noreferrer"></a>)</li>
+</ul>
+<ul>
+<li>add green test: should start with a custom postgres DATABASE_URL (<a href="https://github.com/latechforce/engine/commit/711eb00ac5862e7ac679f74761bdffc4d3c6364c" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>add guides in homepage (<a href="https://github.com/latechforce/engine/commit/9c2e38b32edaaaf597c75fa9dfcdc67cc9d605bf" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>add new examples in guides (<a href="https://github.com/latechforce/engine/commit/c74d59196a5eccf08cfe4c95dff9acf07275e57d" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li><strong>CI:</strong> fix artefacts downloads (<a href="https://github.com/latechforce/engine/commit/4fd9dc0715ebb2971dec46c4ccf110a88109bfc6" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>fix artefact path for website pages (<a href="https://github.com/latechforce/engine/commit/5886244bee7ab9faab8735da836099901cd8bb7d" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>fix e2e tests (<a href="https://github.com/latechforce/engine/commit/3d119f5866a4a945c766487539ac2859ee10f7c4" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>update ci (<a href="https://github.com/latechforce/engine/commit/962e3c400a66cb3b54b936864816cca76d0ba17a" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>update ci (<a href="https://github.com/latechforce/engine/commit/4a082edd59c3720a01d2d505cd6d6ea2525bcb02" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>update ci with guides artefacts (<a href="https://github.com/latechforce/engine/commit/80b7091e11b411e4d07e3622a9224c7e0ac9ce48" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>update docusaurus config (<a href="https://github.com/latechforce/engine/commit/4ef975941b348a3110378063c6a4335d34924ce8" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>update website homepage (<a href="https://github.com/latechforce/engine/commit/57d8f0bdce5982dd02c745833686c84536f4baa6" target="_blank" rel="noopener noreferrer"></a>)</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="fix">fix<a href="https://engine.latechforce.com/blog/fix-0-46-1#fix" class="hash-link" aria-label="Direct link to fix" title="Direct link to fix">​</a></h3>
+<ul>
+<li><strong>package:</strong> add tsconfig.json in npm package (<a href="https://github.com/latechforce/engine/commit/5a3625c85cb313af6d89f2c7ce91e3da83b1eca3" target="_blank" rel="noopener noreferrer"></a>)</li>
+</ul>]]></content>
+        <author>
+            <name>Thomas Jeanneau</name>
+            <uri>https://github.com/thomas-jeanneau</uri>
+        </author>
+        <category label="Fix" term="Fix"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[Release 0.46.0]]></title>
         <id>https://engine.latechforce.com/blog/release-0-46-0</id>
         <link href="https://engine.latechforce.com/blog/release-0-46-0"/>
