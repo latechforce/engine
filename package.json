@@ -46,7 +46,8 @@
     "auth:generate:postgres": "bunx --bun @better-auth/cli generate --output src/infrastructure/db/schema/postgres/auth.ts --config src/infrastructure/db/config/better-auth-postgres.config.ts --y",
     "auth:generate:sqlite": "bunx --bun @better-auth/cli generate --output src/infrastructure/db/schema/sqlite/auth.ts --config src/infrastructure/db/config/better-auth-sqlite.config.ts --y",
     "auth:generate": "bun run auth:generate:postgres && bun run auth:generate:sqlite",
-    "ui:add": "bunx --bun shadcn@latest add"
+    "ui:add": "bunx --bun shadcn@latest add",
+    "release:test": "semantic-release --dry-run"
   },
   "dependencies": {
     "@eslint/js": "^9.27.0",
