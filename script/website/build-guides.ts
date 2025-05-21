@@ -1,4 +1,4 @@
-import { readdir, writeFile, mkdir } from 'fs/promises'
+import { readdir, writeFile, mkdir, readFile } from 'fs/promises'
 import { join, dirname } from 'path'
 import { existsSync } from 'fs'
 import type { AppSchema } from '@/types'
@@ -40,7 +40,7 @@ function formatCategoryName(category: string): string {
 function generateGuideCard(guide: Guide): string {
   return `
     <Link to="/guides/${guide.path}">
-      <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>${guide.description}</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>${guide.description}</p>
     </Link>
   `
 }
@@ -191,7 +191,7 @@ ${generateBreadcrumb(guide)}
 
 ${guide.description}
 
-\`\`\`typescript
+\`\`\`typescript title="index.ts"
 ${guide.code}
 \`\`\`
 
@@ -240,6 +240,50 @@ ${categories
   await writeFile(join(outputDir, 'index.mdx'), mdxContent)
 }
 
+async function updateMainIndexPage(guides: Guide[]) {
+  const indexPath = join(process.cwd(), 'website/src/pages/index.mdx')
+  const content = await readFile(indexPath, 'utf-8')
+
+  // Remove existing categories section if it exists
+  const contentWithoutCategories = content.replace(
+    /<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '120px' }}>[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/main>\s*<\/div>/,
+    '</div>\n</div>\n</main>\n</div>'
+  )
+
+  const categories = [...new Set(guides.map((g) => g.category))]
+
+  const categoriesSection = `
+<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '120px' }}>
+
+<div>
+# Learn by example
+
+<p style={{ margin: 0 }}>A collection of code samples and walkthroughs for configuring and using LTF Engine.</p>
+</div>
+
+${categories
+  .map((category) =>
+    generateCategorySection(
+      category,
+      guides.filter((g) => g.category === category)
+    )
+  )
+  .join('\n')}
+</div>
+
+</div>
+</div>
+</main>
+</div>`
+
+  const newContent = contentWithoutCategories.replace(
+    /<\/div>\s*<\/div>\s*<\/main>\s*<\/div>/,
+    categoriesSection
+  )
+
+  await writeFile(indexPath, newContent)
+}
+
 async function main() {
   const exampleDir = join(process.cwd(), 'example')
   const outputDir = join(process.cwd(), 'website/src/pages/guides')
@@ -260,6 +304,9 @@ async function main() {
 
   // Generate index page
   await generateIndexPage(guides, outputDir)
+
+  // Update main index page with categories
+  await updateMainIndexPage(guides)
 
   console.log('Guides generated successfully!')
 }

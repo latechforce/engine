@@ -1,54 +1,95 @@
 ---
-title: HTTP response action with static body
-description: Automation with HTTP response action with static body
-category: automation
+hide_table_of_contents: true
 ---
 
 import Link from '@docusaurus/Link'
 
+<div className="main-wrapper">
+  <main className="margin-vert--lg container">
+    <div className="row">
+      <div className="col col--8 col--offset-2">
 
-<div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.9rem', color: 'var(--ifm-color-emphasis-600)' }}>
-  <Link to="/guides">Guides</Link>
-  <span>/</span>
-  <Link to="/guides#automation">Automation</Link>
-  <span>/</span>
-</div>
-  
+<h1 style={{ fontSize: '4rem', lineHeight: '4.2rem' }}>LTF Engine is a web app generator</h1>
 
-# HTTP response action with static body
+<p style={{ margin: '36px 0' }}>
+  Build an app with database, automations, and more... all in a JSON file. LTF Engine is a web app generator that allows you to create web apps with a simple and intuitive
+  schema. It runs on Bun. It is designed to be used by non-technical users to create web apps.
+</p>
 
-Automation with HTTP response action with static body
+## 1. Install Bun
+
+```bash
+$ curl -fsSL https://bun.sh/install | bash
+```
+
+## 2. Create a new project
+
+```bash
+$ mkdir my-fantastic-app && cd my-fantastic-app
+$ bun init
+$ bun add @latechforce/engine
+```
+
+## 3. Write an app schema
 
 ```typescript title="index.ts"
-import { App, type AppSchema } from '@latechforce/engine';
+import App, { type AppSchema } from '@latechforce/engine'
 
 const schema: AppSchema = {
+  name: 'My Fantastic App',
   automations: [
     {
-      name: 'response',
+      name: 'get-message',
       trigger: {
         service: 'http',
-        event: 'post',
-        path: 'response',
+        event: 'get',
+        path: '/message',
       },
       actions: [
         {
-          name: 'response',
-          service: 'http',
-          action: 'response',
-          body: {
-            message: 'Hello, world!',
-          },
+          service: 'code',
+          action: 'run-typescript',
+          name: 'reply-message',
+          code: String(function () {
+            return { message: 'Hello, world!' }
+          }),
         },
       ],
     },
   ],
-};
+}
 
-await new App().start(schema);
+const app = await new App().start(schema)
+
+console.log(`App is available at ${app.url()}`)
 ```
 
+## 4. Run the app
+
+```bash
+$ bun run index.ts
+```
+
+## 5. Enjoy!
+
+```bash
+$ curl http://localhost:3000/api/automation/message
+{"message":"Hello, world!"}
+```
+
+
+
+
+
+
 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '120px' }}>
+
+<div>
+# Learn by example
+
+<p style={{ margin: 0 }}>A collection of code samples and walkthroughs for configuring and using LTF Engine.</p>
+</div>
+
 
   <div>
     <h2 id="env">Env</h2>
@@ -168,6 +209,11 @@ await new App().start(schema);
     </Link>
   
 
+    <Link to="/guides/automation/action/http/response/post-body">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP response action with static body</p>
+    </Link>
+  
+
     <Link to="/guides/automation/action/http/response">
       <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP response action</p>
     </Link>
@@ -175,4 +221,9 @@ await new App().start(schema);
     </div>
   </div>
   
+</div>
+
+</div>
+</div>
+</main>
 </div>
