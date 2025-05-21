@@ -56,6 +56,9 @@ jobs:
       - name: Build website static files
         run: bun run build:static
 
+      - name: Build website guides
+        run: bun run build:guides
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
