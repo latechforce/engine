@@ -24,18 +24,45 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Setup Bun runtime
         uses: oven-sh/setup-bun@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+            **/.bun
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
       - name: Install project dependencies
         run: bun install
+
       - name: Install Playwright Browsers
         run: bunx playwright install --with-deps
+
       - name: Run code linting
         run: bun run lint
+
       - name: Run unit test suite
         run: bun run test
+
       - name: Run e2e test suite
         run: bun run e2e
+
+      - name: Build website
+        run: bun run website:build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: |
+            website/static/
+          retention-days: 1
 
   release:
     name: Publish Package to NPM
@@ -55,10 +82,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_TOKEN }}
+
       - name: Setup Bun runtime
         uses: oven-sh/setup-bun@v2
-      - name: Install project dependencies
-        run: bun install
+
       - name: Create and publish release
         run: bunx semantic-release
 
@@ -89,11 +116,24 @@ jobs:
       - name: Setup Bun runtime
         uses: oven-sh/setup-bun@v2
 
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/node_modules
+            **/.bun
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
       - name: Install website dependencies
         run: cd website && bun install
 
-      - name: Build website
-        run: cd website && bun run build
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build
+          path: .
 
       - name: Deploy to GitHub Pages
         run: cd website && bun run deploy

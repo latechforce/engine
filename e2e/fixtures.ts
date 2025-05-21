@@ -8,6 +8,7 @@ import { join } from 'path'
 
 // Function to strip ANSI color codes
 function stripAnsiCodes(str: string): string {
+  // eslint-disable-next-line no-control-regex
   return str.replace(/\x1B\[\d+m/g, '')
 }
 

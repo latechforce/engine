@@ -55,11 +55,7 @@
                     "$ref": "#/$defs/__schema0"
                   }
                 },
-                "required": [
-                  "service",
-                  "event",
-                  "path"
-                ],
+                "required": ["service", "event", "path"],
                 "additionalProperties": false
               },
               {
@@ -81,11 +77,7 @@
                     "type": "boolean"
                   }
                 },
-                "required": [
-                  "service",
-                  "event",
-                  "path"
-                ],
+                "required": ["service", "event", "path"],
                 "additionalProperties": false
               }
             ]
@@ -129,12 +121,7 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "name",
-                        "service",
-                        "action",
-                        "code"
-                      ],
+                      "required": ["name", "service", "action", "code"],
                       "additionalProperties": false
                     },
                     {
@@ -165,12 +152,7 @@
                           "type": "string"
                         }
                       },
-                      "required": [
-                        "name",
-                        "service",
-                        "action",
-                        "code"
-                      ],
+                      "required": ["name", "service", "action", "code"],
                       "additionalProperties": false
                     }
                   ]
@@ -197,22 +179,14 @@
                       "additionalProperties": {}
                     }
                   },
-                  "required": [
-                    "name",
-                    "service",
-                    "action"
-                  ],
+                  "required": ["name", "service", "action"],
                   "additionalProperties": false
                 }
               ]
             }
           }
         },
-        "required": [
-          "name",
-          "trigger",
-          "actions"
-        ],
+        "required": ["name", "trigger", "actions"],
         "additionalProperties": false
       }
     },
@@ -252,11 +226,7 @@
                       "const": "single-line-text"
                     }
                   },
-                  "required": [
-                    "id",
-                    "name",
-                    "type"
-                  ]
+                  "required": ["id", "name", "type"]
                 },
                 {
                   "title": "Long Text",
@@ -273,31 +243,17 @@
                       "const": "long-text"
                     }
                   },
-                  "required": [
-                    "id",
-                    "name",
-                    "type"
-                  ]
+                  "required": ["id", "name", "type"]
                 }
               ]
             }
           }
         },
-        "required": [
-          "id",
-          "name",
-          "fields"
-        ]
+        "required": ["id", "name", "fields"]
       }
     }
   },
-  "required": [
-    "name",
-    "version",
-    "description",
-    "automations",
-    "tables"
-  ],
+  "required": ["name", "version", "description", "automations", "tables"],
   "additionalProperties": false,
   "$defs": {
     "__schema0": {
@@ -308,28 +264,12 @@
         "type": {
           "anyOf": [
             {
-              "enum": [
-                "string",
-                "number",
-                "integer",
-                "boolean",
-                "object",
-                "array",
-                "null"
-              ]
+              "enum": ["string", "number", "integer", "boolean", "object", "array", "null"]
             },
             {
               "type": "array",
               "items": {
-                "enum": [
-                  "string",
-                  "number",
-                  "integer",
-                  "boolean",
-                  "object",
-                  "array",
-                  "null"
-                ]
+                "enum": ["string", "number", "integer", "boolean", "object", "array", "null"]
               }
             }
           ]
