@@ -104,11 +104,23 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'Resources',
           items: [
             {
-              label: 'Tutorial',
+              label: 'App Schema',
+              to: '/app-schema',
+            },
+            {
+              label: 'Test Report',
+              to: '/test-report',
+            },
+            {
+              label: 'Docs',
               to: '/docs/intro',
+            },
+            {
+              label: 'Guides',
+              to: '/guides',
             },
           ],
         },
