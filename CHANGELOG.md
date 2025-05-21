@@ -1,3 +1,10 @@
+## [0.46.3](https://github.com/latechforce/engine/compare/v0.46.2...v0.46.3) (2025-05-21)
+
+
+### Bug Fixes
+
+* **package:** add all files and .json in npm package ([aba9b90]()) — Thomas JEANNEAU
+
 ## [0.46.2](https://github.com/latechforce/engine/compare/v0.46.1...v0.46.2) (2025-05-21)
 
 ### Bug Fixes
