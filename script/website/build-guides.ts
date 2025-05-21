@@ -20,6 +20,19 @@ const prettierConfig: Options = {
   trailingComma: 'es5',
 }
 
+function replaceLast(str: string, pattern: RegExp, replacement: string) {
+  const matches = [...str.matchAll(pattern)]
+  if (matches.length === 0) return str
+
+  const lastMatch = matches[matches.length - 1]
+  if (!lastMatch) return str
+
+  const start = lastMatch.index
+  const end = start + lastMatch[0].length
+
+  return str.slice(0, start) + replacement + str.slice(end)
+}
+
 function formatCategoryName(category: string): string {
   return category.charAt(0).toUpperCase() + category.slice(1)
 }
@@ -70,6 +83,11 @@ async function getAllFiles(dir: string): Promise<string[]> {
     } else if (entry.isFile() && entry.name.endsWith('.ts')) {
       if (entry.name.endsWith('index.ts') || fullPath.includes('example/env')) {
         files.push(fullPath)
+      } else {
+        const file = await import(fullPath)
+        if (file.inGuides) {
+          files.push(fullPath)
+        }
       }
     }
   }
@@ -83,23 +101,65 @@ async function generateGuideFromExample(filePath: string): Promise<Guide> {
   const category = filePath.match(/(?<=example\/)[^/]+/)?.[0] || 'uncategorized'
   const { name, description, ...schema }: AppSchema = file.default
 
+  const isTypescript = filePath.includes('typescript')
+  const isExternals = filePath.includes('externals')
+  const isInputData = filePath.includes('input-data')
+
   const envCode = file.env
     ? `
   process.env = ${JSON.stringify(file.env, null, 2)}
   `
     : ''
 
+  const externalsCode = file.externals
+    ? `
+  const externals = ${JSON.stringify(
+    file.externals,
+    (key, value) => {
+      if (typeof value === 'function') {
+        return value.toString()
+      }
+      return value
+    },
+    2
+  )}
+  `
+    : ''
+
   const code = `
-  import { App, type AppSchema } from '@latechforce/engine'
+  import { App, type AppSchema ${isTypescript && (isExternals || isInputData) ? ', type CodeContext' : ''} } from '@latechforce/engine'
 
   ${envCode}
+  ${externalsCode}
 
   const schema: AppSchema = ${JSON.stringify(schema, null, 2)}
 
-  await new App().start(schema)`
+  await new App(${isExternals ? '{ externals }' : ''} ).start(schema)`
+
+  let visualCode = replaceLast(code, / }"/g, '})')
+    .replace(/"\(\) => {/g, '() => {')
+    .replace(/"function\(\) {/g, 'String(function() {')
+    .replace(/"function\(context\) {/g, 'String(function(context) {')
+    .replace(/ }"/g, '}')
+    .replace(/\\n/g, '')
+    .replace(/\\"/g, '"')
+
+  if (isTypescript && isInputData) {
+    visualCode = visualCode.replace(
+      /function\(context\)/g,
+      'function(context: CodeContext<{ name: string }>)'
+    )
+  }
+
+  if (isTypescript && isExternals) {
+    visualCode = visualCode.replace(
+      /function\(context\)/g,
+      'function(context: CodeContext<{}, typeof externals>)'
+    )
+  }
 
   // Format the code using Prettier
-  const formattedCode = await prettier.format(code, prettierConfig)
+  const formattedCode = await prettier.format(visualCode, prettierConfig)
 
   // Extract title from filename (convert kebab-case to Title Case)
   const title = name || 'Untitled'

@@ -2,7 +2,7 @@ import type { AppSchema } from '@/types'
 
 export default {
   name: 'HTTP response action',
-  description: 'Automation with http response action',
+  description: 'Automation with HTTP response action',
   automations: [
     {
       name: 'response',

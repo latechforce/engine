@@ -2,7 +2,7 @@ import type { AppSchema } from '@/types'
 
 export default {
   name: 'HTTP GET trigger',
-  description: 'Automation with http get trigger',
+  description: 'Automation with HTTP GET trigger',
   automations: [
     {
       name: 'get',

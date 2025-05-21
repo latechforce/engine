@@ -1,7 +1,7 @@
 ---
-title: SQLite database
-description: App with SQLite database
-category: env
+title: Run TypeScript code action with input data
+description: Automation with run TypeScript code action and input data
+category: automation
 ---
 
 import Link from '@docusaurus/Link'
@@ -10,24 +10,53 @@ import Link from '@docusaurus/Link'
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.9rem', color: 'var(--ifm-color-emphasis-600)' }}>
   <Link to="/guides">Guides</Link>
   <span>/</span>
-  <Link to="/guides#env">Env</Link>
+  <Link to="/guides#automation">Automation</Link>
   <span>/</span>
 </div>
   
 
-# SQLite database
+# Run TypeScript code action with input data
 
-App with SQLite database
+Automation with run TypeScript code action and input data
 
 ```typescript
-import { App, type AppSchema } from '@latechforce/engine';
+import { App, type AppSchema, type CodeContext } from '@latechforce/engine';
 
-process.env = {
-  DATABASE_PROVIDER: 'sqlite',
-  DATABASE_URL: './tmp/test.db',
+const schema: AppSchema = {
+  automations: [
+    {
+      name: 'run-typescript',
+      trigger: {
+        service: 'http',
+        event: 'post',
+        path: '/run-typescript',
+        requestBody: {
+          type: 'object',
+          properties: {
+            name: {
+              type: 'string',
+            },
+          },
+          required: ['name'],
+        },
+      },
+      actions: [
+        {
+          service: 'code',
+          action: 'run-typescript',
+          name: 'runTypescriptCode',
+          inputData: {
+            name: '{{trigger.body.name}}',
+          },
+          code: String(function (context: CodeContext<{ name: string }>) {
+            const { name } = context.inputData;
+            return { message: `Hello, ${name}!` };
+          }),
+        },
+      ],
+    },
+  ],
 };
-
-const schema: AppSchema = {};
 
 await new App().start(schema);
 ```
@@ -45,6 +74,11 @@ await new App().start(schema);
       
     <Link to="/guides/env/database/postgres">
       <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>App with PostgreSQL database</p>
+    </Link>
+  
+
+    <Link to="/guides/env/database/sqlite">
+      <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>App with SQLite database</p>
     </Link>
   
 
@@ -109,11 +143,6 @@ await new App().start(schema);
 
     <Link to="/guides/automation/trigger/http/get">
       <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP GET trigger</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/code/run-typescript/input-data">
-      <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with run TypeScript code action and input data</p>
     </Link>
   
 

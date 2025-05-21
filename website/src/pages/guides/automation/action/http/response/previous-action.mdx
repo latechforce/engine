@@ -1,7 +1,7 @@
 ---
-title: SQLite database
-description: App with SQLite database
-category: env
+title: HTTP response action with previous action and dynamic body
+description: Automation with HTTP response action with previous action and dynamic body
+category: automation
 ---
 
 import Link from '@docusaurus/Link'
@@ -10,24 +10,48 @@ import Link from '@docusaurus/Link'
 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.9rem', color: 'var(--ifm-color-emphasis-600)' }}>
   <Link to="/guides">Guides</Link>
   <span>/</span>
-  <Link to="/guides#env">Env</Link>
+  <Link to="/guides#automation">Automation</Link>
   <span>/</span>
 </div>
   
 
-# SQLite database
+# HTTP response action with previous action and dynamic body
 
-App with SQLite database
+Automation with HTTP response action with previous action and dynamic body
 
 ```typescript
 import { App, type AppSchema } from '@latechforce/engine';
 
-process.env = {
-  DATABASE_PROVIDER: 'sqlite',
-  DATABASE_URL: './tmp/test.db',
+const schema: AppSchema = {
+  automations: [
+    {
+      name: 'response',
+      trigger: {
+        service: 'http',
+        event: 'post',
+        path: 'response',
+      },
+      actions: [
+        {
+          name: 'buildMessage',
+          service: 'code',
+          action: 'run-typescript',
+          code: String(function () {
+            return { message: 'Hello world!' };
+          }),
+        },
+        {
+          name: 'sendResponse',
+          service: 'http',
+          action: 'response',
+          body: {
+            message: '{{ buildMessage.message }}',
+          },
+        },
+      ],
+    },
+  ],
 };
-
-const schema: AppSchema = {};
 
 await new App().start(schema);
 ```
@@ -45,6 +69,11 @@ await new App().start(schema);
       
     <Link to="/guides/env/database/postgres">
       <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>App with PostgreSQL database</p>
+    </Link>
+  
+
+    <Link to="/guides/env/database/sqlite">
+      <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>App with SQLite database</p>
     </Link>
   
 
@@ -139,11 +168,6 @@ await new App().start(schema);
 
     <Link to="/guides/automation/action/code/run-javascript">
       <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with run JavaScript code action</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/http/response/previous-action">
-      <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP response action with previous action and dynamic body</p>
     </Link>
   
 

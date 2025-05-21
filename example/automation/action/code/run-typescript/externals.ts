@@ -1,11 +1,16 @@
 import type { AppSchema, CodeContext } from '@/types'
-import { z } from 'zod/v4'
 
 export const externals = {
-  zod: z,
+  customFunction: () => {
+    return 'Hello, world!'
+  },
 }
 
+export const inGuides = true
+
 export default {
+  name: 'Run TypeScript code action with externals',
+  description: 'Automation with run TypeScript code action and externals',
   automations: [
     {
       name: 'run-typescript',
@@ -20,12 +25,9 @@ export default {
           action: 'run-typescript',
           name: 'runTypescriptCode',
           code: String(function (context: CodeContext<{}, typeof externals>) {
-            const { zod } = context.externals
-            const schema = zod.object({
-              name: zod.string(),
-            })
-            const result = schema.safeParse({ name: 'John' })
-            return result
+            const { customFunction } = context.externals
+            const message = customFunction()
+            return { message }
           }),
         },
       ],

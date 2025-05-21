@@ -2,7 +2,7 @@ import type { AppSchema } from '@/types'
 
 export default {
   name: 'Run JavaScript code action',
-  description: 'Automation with run-javascript code action',
+  description: 'Automation with run JavaScript code action',
   automations: [
     {
       name: 'run-javascript',

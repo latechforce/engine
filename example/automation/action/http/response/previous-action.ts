@@ -1,6 +1,10 @@
 import type { AppSchema } from '@/types'
 
+export const inGuides = true
+
 export default {
+  name: 'HTTP response action with previous action and dynamic body',
+  description: 'Automation with HTTP response action with previous action and dynamic body',
   automations: [
     {
       name: 'response',
@@ -11,20 +15,20 @@ export default {
       },
       actions: [
         {
+          name: 'buildMessage',
           service: 'code',
           action: 'run-typescript',
-          name: 'runTypescriptCode',
-          code: String(async function () {
+          code: String(function () {
             const message: string = 'Hello world!'
             return { message }
           }),
         },
         {
-          name: 'response',
+          name: 'sendResponse',
           service: 'http',
           action: 'response',
           body: {
-            message: '{{ runTypescriptCode.message }}',
+            message: '{{ buildMessage.message }}',
           },
         },
       ],

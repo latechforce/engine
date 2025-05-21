@@ -2,7 +2,7 @@ import type { AppSchema } from '@/types'
 
 export default {
   name: 'HTTP POST trigger',
-  description: 'Automation with http post trigger',
+  description: 'Automation with HTTP POST trigger',
   automations: [
     {
       name: 'post',

@@ -1,11 +1,16 @@
 import type { AppSchema } from '@/types'
-import { z } from 'zod/v4'
 
 export const externals = {
-  zod: z,
+  customFunction: () => {
+    return 'Hello, world!'
+  },
 }
 
+export const inGuides = true
+
 export default {
+  name: 'Run JavaScript code action with externals',
+  description: 'Automation with run JavaScript code action and externals',
   automations: [
     {
       name: 'run-javascript',
@@ -21,12 +26,9 @@ export default {
           name: 'runJavascriptCode',
           // @ts-expect-error - CodeContext is not defined in the externals
           code: String(function (context) {
-            const { zod } = context.externals
-            const schema = zod.object({
-              name: zod.string(),
-            })
-            const result = schema.safeParse({ name: 'John' })
-            return result
+            const { customFunction } = context.externals
+            const message = customFunction()
+            return { message }
           }),
         },
       ],
