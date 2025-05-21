@@ -1,3 +1,10 @@
+## [0.46.2](https://github.com/latechforce/engine/compare/v0.46.1...v0.46.2) (2025-05-21)
+
+
+### Bug Fixes
+
+* **package:** add .json files in npm package for database migration ([85f640244957fe8764f65764aef8607b75b2f08f]()) — Thomas JEANNEAU
+
 ## [0.46.1](https://github.com/latechforce/engine/compare/v0.46.0...v0.46.1) (2025-05-21)
 
 ### Fix
