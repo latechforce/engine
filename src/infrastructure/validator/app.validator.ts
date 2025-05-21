@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { automationValidator } from './automation.validator'
 import { tableValidator } from './table.validator'
 
@@ -11,5 +11,8 @@ export const appValidator = z
     tables: z.array(tableValidator).default([]),
   })
   .strict()
+  .meta({
+    title: 'App',
+  })
 
 export type AppSchema = z.infer<typeof appValidator>

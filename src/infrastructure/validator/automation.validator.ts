@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 import { triggerValidator } from './trigger'
 import { actionValidator } from './action'
 
@@ -9,5 +9,9 @@ export const automationValidator = z
     actions: z.array(actionValidator).default([]),
   })
   .strict()
+  .meta({
+    title: 'Automation',
+    description: 'The automation is a set of actions that are triggered by a trigger',
+  })
 
 export type AutomationSchema = z.infer<typeof automationValidator>

@@ -81,7 +81,8 @@ const config: Config = {
           label: 'Tutorial',
         },
         { to: '/blog', label: 'Blog', position: 'left' },
-        { to: '/report', label: 'Test Report', position: 'right' },
+        { to: '/app-schema', label: 'App Schema', position: 'right' },
+        { to: '/test-report', label: 'Test Report', position: 'right' },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -139,6 +140,8 @@ const config: Config = {
       darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
+
+  themes: ['docusaurus-json-schema-plugin'],
 }
 
 export default config

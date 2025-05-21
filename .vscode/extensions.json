@@ -11,6 +11,7 @@
     "yzhang.markdown-all-in-one",
     "tomoki1207.pdf",
     "bradlc.vscode-tailwindcss",
-    "ms-playwright.playwright"
+    "ms-playwright.playwright",
+    "unifiedjs.vscode-mdx"
   ]
 }

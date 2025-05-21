@@ -32,6 +32,7 @@ import { SetupFieldUseCase } from '@/application/use-case/field/setup-field.use-
 import { TriggerHttpUseCase } from '@/application/use-case/trigger/trigger-http.use-case'
 import { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
 import { ValidateAppUseCase } from '@/application/use-case/app/validate-app.use-case'
+import { ValidatorService } from '../service/validator.service'
 
 export async function registerDependencies(externals: Record<string, unknown> = {}) {
   const container = new Container()
@@ -47,6 +48,7 @@ export async function registerDependencies(externals: Record<string, unknown> = 
   container.bind<AuthService>(TYPES.Service.Auth).to(AuthService).inSingletonScope()
   container.bind<CodeService>(TYPES.Service.Code).toConstantValue(new CodeService(externals))
   container.bind<TemplateService>(TYPES.Service.Template).to(TemplateService).inSingletonScope()
+  container.bind<ValidatorService>(TYPES.Service.Validator).to(ValidatorService).inSingletonScope()
 
   // Register repositories
   container.bind<IAppRepository>(TYPES.Repository.App).to(AppRepository).inSingletonScope()

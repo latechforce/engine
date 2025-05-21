@@ -7,6 +7,7 @@ const TYPES = {
     Auth: Symbol.for('AuthService'),
     Code: Symbol.for('CodeService'),
     Template: Symbol.for('TemplateService'),
+    Validator: Symbol.for('ValidatorService'),
   },
   Repository: {
     App: Symbol.for('IAppRepository'),

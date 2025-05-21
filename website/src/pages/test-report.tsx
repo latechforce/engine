@@ -21,7 +21,12 @@ export const PlaywrightReport = () => {
       ref={iframeRef}
       src="/playwright-report/index.html"
       title="Playwright Report"
-      style={{ width: '100%', height: `${iframeHeight}px`, border: 'none' }}
+      style={{
+        width: 'calc(100% + 48px)',
+        height: `${iframeHeight}px`,
+        border: 'none',
+        margin: '0 -24px',
+      }}
     />
   )
 }
@@ -29,7 +34,16 @@ export const PlaywrightReport = () => {
 export default function PlaywrightReportPage() {
   return (
     <Layout title="Test Report">
-      <PlaywrightReport />
+      <div className="main-wrapper">
+        <main className="margin-vert--lg container">
+          <div className="row">
+            <div className="col">
+              <h1>Test Report</h1>
+              <PlaywrightReport />
+            </div>
+          </div>
+        </main>
+      </div>
     </Layout>
   )
 }

@@ -6,6 +6,11 @@ import { Readable } from 'stream'
 import fs from 'fs'
 import { join } from 'path'
 
+// Function to strip ANSI color codes
+function stripAnsiCodes(str: string): string {
+  return str.replace(/\x1B\[\d+m/g, '')
+}
+
 // Declare your fixture types
 type StartAppFixture = {
   startExampleApp: (options: {
@@ -116,7 +121,7 @@ export const test = base.extend<StartAppFixture>({
           if (proc?.stderr) {
             proc.stderr.on('data', (data) => {
               if (!data.includes('[Better Auth]')) {
-                reject(data.toString())
+                reject(stripAnsiCodes(data.toString()))
               }
             })
           }

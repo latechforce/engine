@@ -4,7 +4,7 @@ import type { IAutomationRepository } from '@/domain/repository-interface/automa
 import { inject, injectable } from 'inversify'
 import type { TemplateService } from '../service/template.service'
 import type { JSONSchema7 } from 'json-schema'
-import { validatorService } from '../service/validator.service'
+import { type ValidatorService } from '../service/validator.service'
 
 @injectable()
 export class AutomationRepository implements IAutomationRepository {
@@ -12,7 +12,9 @@ export class AutomationRepository implements IAutomationRepository {
     @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
     @inject(TYPES.Service.Template)
-    private readonly templateService: TemplateService
+    private readonly templateService: TemplateService,
+    @inject(TYPES.Service.Validator)
+    private readonly validatorService: ValidatorService
   ) {
     this.logger = this.logger.child('automation-repository')
   }
@@ -30,6 +32,6 @@ export class AutomationRepository implements IAutomationRepository {
   }
 
   validateTriggerData(schema: JSONSchema7, data: unknown): boolean {
-    return validatorService.validate(schema, data)
+    return this.validatorService.validate(schema, data)
   }
 }

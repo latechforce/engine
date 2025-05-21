@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 export const envValidator = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
