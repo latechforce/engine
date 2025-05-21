@@ -2,7 +2,7 @@
 
 ### Bug Fixes
 
-- **package:** add all files and .json in npm package ([aba9b90]()) — Thomas JEANNEAU
+- **package:** add all files and .json in npm package ([aba9b90](https://github.com/latechforce/engine/commit/aba9b9035e9f471499a91b481fb20905da2a192e)) — Thomas JEANNEAU
 
 ## [0.46.2](https://github.com/latechforce/engine/compare/v0.46.1...v0.46.2) (2025-05-21)
 
