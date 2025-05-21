@@ -6,7 +6,7 @@
       "@semantic-release/release-notes-generator",
       {
         "writerOpts": {
-          "transform": "./scripts/changelog-transform.js"
+          "commitPartial": "* {{#if scope}}**{{scope}}:** {{/if}}{{#if subject}}{{subject}} ([{{hash}}]({{href}})) — {{author.name}}{{/if}}\n"
         }
       }
     ],

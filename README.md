@@ -8,7 +8,7 @@ We use [Bun](https://bun.sh/) 1.2 or later to run the engine.
 
 ## Installation
 
-Install the engine in your project like any other NPM package:
+Install the engine in your Bun project like any other NPM package:
 
 ```bash
 bun add @latechforce/engine

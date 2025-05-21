@@ -101,9 +101,6 @@ jobs:
       - name: Create and publish release
         run: bunx semantic-release
 
-      - name: Build website blog
-        run: bun run build:blog
-
       - name: Upload blog artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -148,6 +145,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-bun-
 
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build website blog
+        run: bun run build:blog
+
       - name: Install website dependencies
         run: cd website && bun install
 
@@ -162,12 +165,6 @@ jobs:
         with:
           name: pages
           path: website/src/pages
-
-      - name: Download blog artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: blog
-          path: website/blog
 
       - name: Deploy to GitHub Pages
         run: cd website && bun run deploy
