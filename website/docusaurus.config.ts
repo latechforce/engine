@@ -89,9 +89,9 @@ const config: Config = {
           position: 'left',
           label: 'Docs',
         },
+        { to: '/schema', label: 'Schema', position: 'left' },
         { to: '/guides', label: 'Guides', position: 'left' },
-        { to: '/blog', label: 'Blog', position: 'left' },
-        { to: '/app-schema', label: 'App Schema', position: 'right' },
+        { to: '/blog', label: 'Blog', position: 'right' },
         { to: '/test-report', label: 'Test Report', position: 'right' },
         {
           href: 'https://github.com/latechforce/engine',

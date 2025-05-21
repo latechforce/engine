@@ -26,6 +26,9 @@
     "lint": "eslint . --fix",
     "format": "prettier --write .",
     "example": "PORT=3000 DATABASE_URL=./data/sqlite.db bun --watch run script/run-example.ts",
+    "website": "cd website && bun start",
+    "build:static": "bun run script/website/build-static.ts",
+    "build:blog": "bun run script/website/build-blog.ts",
     "test": "bun test --bail",
     "test:watch": "bun test --watch",
     "test:snapshot": "bun test --update-snapshots",
@@ -40,9 +43,7 @@
     "auth:generate:postgres": "bunx --bun @better-auth/cli generate --output src/infrastructure/db/schema/postgres/auth.ts --config src/infrastructure/db/config/better-auth-postgres.config.ts --y",
     "auth:generate:sqlite": "bunx --bun @better-auth/cli generate --output src/infrastructure/db/schema/sqlite/auth.ts --config src/infrastructure/db/config/better-auth-sqlite.config.ts --y",
     "auth:generate": "bun run auth:generate:postgres && bun run auth:generate:sqlite",
-    "ui:add": "bunx --bun shadcn@latest add",
-    "website": "cd website && bun start",
-    "website:build": "bun run script/build-website.ts"
+    "ui:add": "bunx --bun shadcn@latest add"
   },
   "dependencies": {
     "@eslint/js": "^9.27.0",

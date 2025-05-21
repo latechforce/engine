@@ -13,6 +13,7 @@ hide_table_of_contents: true
 ## Installation
 
 ```bash
+mkdir my-fantastic-app && cd my-fantastic-app
 bun init
 bun add @latechforce/engine
 ```

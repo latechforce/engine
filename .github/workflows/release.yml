@@ -53,15 +53,14 @@ jobs:
       - name: Run e2e test suite
         run: bun run e2e
 
-      - name: Build website
-        run: bun run website:build
+      - name: Build website static files
+        run: bun run build:static
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build
-          path: |
-            website/static/
+          path: website/static/
           retention-days: 1
 
   release:
@@ -91,6 +90,16 @@ jobs:
 
       - name: Create and publish release
         run: bunx semantic-release
+
+      - name: Build website blog
+        run: bun run build:blog
+
+      - name: Upload blog artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: blog
+          path: website/blog/
+          retention-days: 1
 
   website:
     name: Deploy Documentation to GitHub Pages
@@ -137,6 +146,12 @@ jobs:
         with:
           name: build
           path: website/static
+
+      - name: Download blog artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: blog
+          path: website/blog
 
       - name: Deploy to GitHub Pages
         run: cd website && bun run deploy

@@ -5,12 +5,12 @@ import Layout from '@theme/Layout'
 
 export default function AppSchemaPage() {
   return (
-    <Layout title="App Schema">
+    <Layout title="Schema">
       <div className="main-wrapper">
         <main className="margin-vert--lg container">
           <div className="row">
             <div className="col">
-              <h1>App Schema</h1>
+              <h1>Schema</h1>
               <p>
                 Source :{' '}
                 <a
