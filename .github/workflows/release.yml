@@ -65,7 +65,7 @@ jobs:
           name: static
           path: |
             website/static/
-            website/guides/
+            website/src/pages/
           retention-days: 1
 
   release:
@@ -152,7 +152,7 @@ jobs:
           name: static
           path: |
             website/static/
-            website/guides/
+            website/src/pages/
 
       - name: Download blog artifacts
         uses: actions/download-artifact@v4
