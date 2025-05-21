@@ -84,7 +84,12 @@ date: ${date}
 tags: [${tag}]
 ---
 
-<p class="before-truncate">${combinedContent.replace(/#/gm, '').replace(/\n/gm, ' ')}</p>
+<p class="before-truncate">${combinedContent
+    .replace(/#/gm, '')
+    .replace(/\n/gm, ' ')
+    .replace(/\*\*/gm, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .slice(0, 260)}...</p>
 
 <!-- truncate -->
 
