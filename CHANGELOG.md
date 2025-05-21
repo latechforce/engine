@@ -1,3 +1,10 @@
+## [0.46.5](https://github.com/latechforce/engine/compare/v0.46.4...v0.46.5) (2025-05-21)
+
+
+### Bug Fixes
+
+* **package:** load migrations from node_modules ([a78a1a5](https://github.com/latechforce/engine/commit/a78a1a5a79838a2f32d9a4383a2ad51293933769)) — Thomas JEANNEAU
+
 ## [0.46.4](https://github.com/latechforce/engine/compare/v0.46.3...v0.46.4) (2025-05-21)
 
 
