@@ -1,3 +1,10 @@
+## [0.46.4](https://github.com/latechforce/engine/compare/v0.46.3...v0.46.4) (2025-05-21)
+
+
+### Bug Fixes
+
+* test ([6a80b3b](https://github.com/latechforce/engine/commit/6a80b3b7d5da19cc9d44578644753b3346146c8c)) — Thomas JEANNEAU
+
 ## [0.46.3](https://github.com/latechforce/engine/compare/v0.46.2...v0.46.3) (2025-05-21)
 
 ### Bug Fixes
