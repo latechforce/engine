@@ -51,12 +51,7 @@ test('should run a TypeScript code with externals', async ({ startExampleApp }) 
   const data = await response.json()
 
   // THEN
-  expect(data).toEqual({
-    success: true,
-    data: {
-      name: 'John',
-    },
-  })
+  expect(data).toEqual({ message: 'Hello, world!' })
 })
 
 test('should run a TypeScript code with globals variables', async ({ startExampleApp }) => {
