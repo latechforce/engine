@@ -39,8 +39,8 @@ export default defineConfig({
 
     toHaveScreenshot: {
       // An acceptable amount of pixels that could be different, unset by default.
-      maxDiffPixels: 10,
       pathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}{ext}',
+      maxDiffPixelRatio: 0.1,
     },
 
     toMatchSnapshot: {
