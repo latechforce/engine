@@ -2,3 +2,8 @@ release:
   label: Release
   permalink: /release
   description: Release notes
+
+fix:
+  label: Fix
+  permalink: /fix
+  description: Fix notes

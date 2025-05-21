@@ -42,7 +42,11 @@ authors: [thomasjeanneau]
 tags: [${tag}]
 ---
 
-${content}
+${content.split('\n').slice(0, 10).join('\n')}
+
+<!-- truncate -->
+
+${content.split('\n').slice(10).join('\n')}
 `
 
   fs.writeFileSync(blogFilePath, markdown)
