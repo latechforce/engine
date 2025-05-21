@@ -9,52 +9,77 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Fix 0.46.1]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-46-1</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-46-1</guid>
+            <title><![CDATA[Fix 0.46.4]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-46-4</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-46-4</guid>
             <pubDate>Wed, 21 May 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.46.1]]></description>
-            <content:encoded><![CDATA[<ul>
-<li>Merge branch 'main' of <a href="https://github.com/latechforce/engine" target="_blank" rel="noopener noreferrer">https://github.com/latechforce/engine</a> (<a href="https://github.com/latechforce/engine/commit/f47d36cc0b866cf3846f62c47e0fb40339daec97" target="_blank" rel="noopener noreferrer"></a>)</li>
-</ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="chore">chore<a href="https://engine.latechforce.com/blog/fix-0-46-1#chore" class="hash-link" aria-label="Direct link to chore" title="Direct link to chore">​</a></h3>
+            <description><![CDATA[Changelog for version 0.46.4]]></description>
+            <content:encoded><![CDATA[<p class="before-truncate"> 0.46.4   Bug Fixes  * test (6a80b3b) — Thomas JEANNEAU   0.46.3   Bug Fixes  - package: add all files and .json in npm package (aba9b90) — Thomas JEANNEAU   0.46.2   Bug Fixes  - package: add .json files in npm package for database migration (85f6402) — Thoma...</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0464">0.46.4<a href="https://engine.latechforce.com/blog/fix-0-46-4#0464" class="hash-link" aria-label="Direct link to 0.46.4" title="Direct link to 0.46.4">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-4#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
-<li>add author in changelog (<a href="https://github.com/latechforce/engine/commit/dcece1fa16af14436295be72f37519883bfbdb2a" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>add blog post automated creation (<a href="https://github.com/latechforce/engine/commit/738bb1ed642ae04bef3def0013d8bf0d5984a8d9" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>add build-guides (<a href="https://github.com/latechforce/engine/commit/79e393f0298d3c83bb6b083cda75255c7fde6295" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>add build-guides in CI (<a href="https://github.com/latechforce/engine/commit/d95ff1a730fc30b3393c29fe97f80e701b698717" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>add CNAME for website (<a href="https://github.com/latechforce/engine/commit/6b6e9c953146aae837503a98fe795d665a7b3373" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li>test (<a href="https://github.com/latechforce/engine/commit/6a80b3b7d5da19cc9d44578644753b3346146c8c" target="_blank" rel="noopener noreferrer">6a80b3b</a>) — Thomas JEANNEAU</li>
 </ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0463">0.46.3<a href="https://engine.latechforce.com/blog/fix-0-46-4#0463" class="hash-link" aria-label="Direct link to 0.46.3" title="Direct link to 0.46.3">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-4#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
-<li>add green test: should start with a custom postgres DATABASE_URL (<a href="https://github.com/latechforce/engine/commit/711eb00ac5862e7ac679f74761bdffc4d3c6364c" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>add guides in homepage (<a href="https://github.com/latechforce/engine/commit/9c2e38b32edaaaf597c75fa9dfcdc67cc9d605bf" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>add new examples in guides (<a href="https://github.com/latechforce/engine/commit/c74d59196a5eccf08cfe4c95dff9acf07275e57d" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li><strong>CI:</strong> fix artefacts downloads (<a href="https://github.com/latechforce/engine/commit/4fd9dc0715ebb2971dec46c4ccf110a88109bfc6" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>fix artefact path for website pages (<a href="https://github.com/latechforce/engine/commit/5886244bee7ab9faab8735da836099901cd8bb7d" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>fix e2e tests (<a href="https://github.com/latechforce/engine/commit/3d119f5866a4a945c766487539ac2859ee10f7c4" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>update ci (<a href="https://github.com/latechforce/engine/commit/962e3c400a66cb3b54b936864816cca76d0ba17a" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>update ci (<a href="https://github.com/latechforce/engine/commit/4a082edd59c3720a01d2d505cd6d6ea2525bcb02" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>update ci with guides artefacts (<a href="https://github.com/latechforce/engine/commit/80b7091e11b411e4d07e3622a9224c7e0ac9ce48" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>update docusaurus config (<a href="https://github.com/latechforce/engine/commit/4ef975941b348a3110378063c6a4335d34924ce8" target="_blank" rel="noopener noreferrer"></a>)</li>
-<li>update website homepage (<a href="https://github.com/latechforce/engine/commit/57d8f0bdce5982dd02c745833686c84536f4baa6" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li><strong>package:</strong> add all files and .json in npm package (<a href="https://github.com/latechforce/engine/commit/aba9b9035e9f471499a91b481fb20905da2a192e" target="_blank" rel="noopener noreferrer">aba9b90</a>) — Thomas JEANNEAU</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="fix">fix<a href="https://engine.latechforce.com/blog/fix-0-46-1#fix" class="hash-link" aria-label="Direct link to fix" title="Direct link to fix">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0462">0.46.2<a href="https://engine.latechforce.com/blog/fix-0-46-4#0462" class="hash-link" aria-label="Direct link to 0.46.2" title="Direct link to 0.46.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-4#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
-<li><strong>package:</strong> add tsconfig.json in npm package (<a href="https://github.com/latechforce/engine/commit/5a3625c85cb313af6d89f2c7ce91e3da83b1eca3" target="_blank" rel="noopener noreferrer"></a>)</li>
+<li><strong>package:</strong> add .json files in npm package for database migration (<a href="https://github.com/latechforce/engine/commit/85f640244957fe8764f65764aef8607b75b2f08f" target="_blank" rel="noopener noreferrer">85f6402</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0461">0.46.1<a href="https://engine.latechforce.com/blog/fix-0-46-4#0461" class="hash-link" aria-label="Direct link to 0.46.1" title="Direct link to 0.46.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-3">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-4#bug-fixes-3" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li><strong>package:</strong> add tsconfig.json in npm package (<a href="https://github.com/latechforce/engine/commit/5a3625c85cb313af6d89f2c7ce91e3da83b1eca3" target="_blank" rel="noopener noreferrer">5a3625c</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0460">0.46.0<a href="https://engine.latechforce.com/blog/fix-0-46-4#0460" class="hash-link" aria-label="Direct link to 0.46.0" title="Direct link to 0.46.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-46-4#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>init V3 infrastructure (<a href="https://github.com/latechforce/engine/commit/f351d2d9ffa4692d0c31b53c076e4912242837f8" target="_blank" rel="noopener noreferrer">f351d2d</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
             <category>Fix</category>
         </item>
         <item>
-            <title><![CDATA[Release 0.46.0]]></title>
-            <link>https://engine.latechforce.com/blog/release-0-46-0</link>
-            <guid>https://engine.latechforce.com/blog/release-0-46-0</guid>
+            <title><![CDATA[Fix 0.46.5]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-46-5</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-46-5</guid>
             <pubDate>Wed, 21 May 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.46.0]]></description>
-            <content:encoded><![CDATA[<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-46-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+            <description><![CDATA[Changelog for version 0.46.5]]></description>
+            <content:encoded><![CDATA[<p class="before-truncate"> 0.46.5   Bug Fixes  * package: load migrations from node_modules (a78a1a5) — Thomas JEANNEAU   0.46.4   Bug Fixes  * test (6a80b3b) — Thomas JEANNEAU   0.46.3   Bug Fixes  - package: add all files and .json in npm package (aba9b90) — Thomas JEANNEAU   0.46.2 ...</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0465">0.46.5<a href="https://engine.latechforce.com/blog/fix-0-46-5#0465" class="hash-link" aria-label="Direct link to 0.46.5" title="Direct link to 0.46.5">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
-<li>init V3 infrastructure (by @thomasjeanneau) (<a href="https://github.com/latechforce/engine/commit/f351d2d9ffa4692d0c31b53c076e4912242837f8" target="_blank" rel="noopener noreferrer">f351d2d</a>)</li>
+<li><strong>package:</strong> load migrations from node_modules (<a href="https://github.com/latechforce/engine/commit/a78a1a5a79838a2f32d9a4383a2ad51293933769" target="_blank" rel="noopener noreferrer">a78a1a5</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0464">0.46.4<a href="https://engine.latechforce.com/blog/fix-0-46-5#0464" class="hash-link" aria-label="Direct link to 0.46.4" title="Direct link to 0.46.4">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>test (<a href="https://github.com/latechforce/engine/commit/6a80b3b7d5da19cc9d44578644753b3346146c8c" target="_blank" rel="noopener noreferrer">6a80b3b</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0463">0.46.3<a href="https://engine.latechforce.com/blog/fix-0-46-5#0463" class="hash-link" aria-label="Direct link to 0.46.3" title="Direct link to 0.46.3">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li><strong>package:</strong> add all files and .json in npm package (<a href="https://github.com/latechforce/engine/commit/aba9b9035e9f471499a91b481fb20905da2a192e" target="_blank" rel="noopener noreferrer">aba9b90</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0462">0.46.2<a href="https://engine.latechforce.com/blog/fix-0-46-5#0462" class="hash-link" aria-label="Direct link to 0.46.2" title="Direct link to 0.46.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-3">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes-3" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li><strong>package:</strong> add .json files in npm package for database migration (<a href="https://github.com/latechforce/engine/commit/85f640244957fe8764f65764aef8607b75b2f08f" target="_blank" rel="noopener noreferrer">85f6402</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0461">0.46.1<a href="https://engine.latechforce.com/blog/fix-0-46-5#0461" class="hash-link" aria-label="Direct link to 0.46.1" title="Direct link to 0.46.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-4">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes-4" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li><strong>package:</strong> add tsconfig.json in npm package (<a href="https://github.com/latechforce/engine/commit/5a3625c85cb313af6d89f2c7ce91e3da83b1eca3" target="_blank" rel="noopener noreferrer">5a3625c</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0460">0.46.0<a href="https://engine.latechforce.com/blog/fix-0-46-5#0460" class="hash-link" aria-label="Direct link to 0.46.0" title="Direct link to 0.46.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-46-5#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>init V3 infrastructure (<a href="https://github.com/latechforce/engine/commit/f351d2d9ffa4692d0c31b53c076e4912242837f8" target="_blank" rel="noopener noreferrer">f351d2d</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
-            <category>Release</category>
+            <category>Fix</category>
         </item>
     </channel>
 </rss>
