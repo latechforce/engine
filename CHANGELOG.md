@@ -1,3 +1,10 @@
+## [0.46.6](https://github.com/latechforce/engine/compare/v0.46.5...v0.46.6) (2025-05-21)
+
+
+### Bug Fixes
+
+* **package:** add fix default values for PORT and DATABASE_URL ([af8d244](https://github.com/latechforce/engine/commit/af8d244a9f0b919768500151175722c941916ced)) — Thomas JEANNEAU
+
 ## [0.46.5](https://github.com/latechforce/engine/compare/v0.46.4...v0.46.5) (2025-05-21)
 
 
