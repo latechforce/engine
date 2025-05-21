@@ -9,12 +9,10 @@ export class TableRepository implements ITableRepository {
   constructor(
     @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService
-  ) {
-    this.logger = this.logger.child('table-repository')
-  }
+  ) {}
 
   debug(message: string) {
-    this.logger.debug(message)
+    this.logger.child('table-repository').debug(message)
   }
 
   async setup(table: Table) {

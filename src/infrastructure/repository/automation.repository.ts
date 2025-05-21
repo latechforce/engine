@@ -15,12 +15,10 @@ export class AutomationRepository implements IAutomationRepository {
     private readonly templateService: TemplateService,
     @inject(TYPES.Service.Validator)
     private readonly validatorService: ValidatorService
-  ) {
-    this.logger = this.logger.child('automation-repository')
-  }
+  ) {}
 
   debug(message: string) {
-    this.logger.debug(message)
+    this.logger.child('automation-repository').debug(message)
   }
 
   info(message: string) {

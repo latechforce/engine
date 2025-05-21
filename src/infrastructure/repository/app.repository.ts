@@ -29,16 +29,14 @@ export class AppRepository implements IAppRepository {
     private readonly listRunsUseCase: ListRunsUseCase,
     @inject(TYPES.UseCase.TriggerHttp)
     private readonly triggerHttpUseCase: TriggerHttpUseCase
-  ) {
-    this.logger = this.logger.child('app-repository')
-  }
+  ) {}
 
   info(message: string) {
     this.logger.info(message)
   }
 
   error(message: string) {
-    this.logger.error(message)
+    this.logger.child('app-repository').error(message)
   }
 
   async loadEnv() {
