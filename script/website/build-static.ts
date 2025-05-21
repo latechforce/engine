@@ -38,7 +38,7 @@ function updatePlaywrightReportHtml() {
   // To display the report in full width
   html = html.replace(
     'body{overflow:auto;max-width:1024px;margin:0 auto;width:100%}',
-    'body{overflow:auto;margin:0 auto;width:100%}'
+    'body{overflow:hidden;margin:0 auto;width:100%;padding-top:8px}'
   )
   fs.writeFileSync(reportPath, html)
 }

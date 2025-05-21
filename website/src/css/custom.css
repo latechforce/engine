@@ -33,6 +33,7 @@
 }
 
 p,
+article li,
 a.navbar__link,
 a.navbar__brand {
   font-size: 1.2rem;
@@ -40,4 +41,8 @@ a.navbar__brand {
 
 h1 {
   font-size: 3rem;
+}
+
+#__blog-post-container .before-truncate {
+  display: none;
 }

@@ -4,7 +4,7 @@ export const inGuides = true
 
 export default {
   name: 'HTTP POST trigger with request body',
-  description: 'Automation with HTTP POST trigger with request body',
+  description: 'Automation with HTTP POST trigger and request body',
   automations: [
     {
       name: 'post',

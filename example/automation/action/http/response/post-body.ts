@@ -4,7 +4,7 @@ export const inGuides = true
 
 export default {
   name: 'HTTP response action with static body',
-  description: 'Automation with HTTP response action with static body',
+  description: 'Automation with HTTP response action and static body',
   automations: [
     {
       name: 'response',

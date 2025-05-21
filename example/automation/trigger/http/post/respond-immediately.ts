@@ -4,7 +4,7 @@ export const inGuides = true
 
 export default {
   name: 'HTTP POST trigger with immediate response',
-  description: 'Automation with HTTP POST trigger with immediate response',
+  description: 'Automation with HTTP POST trigger and immediate response',
   automations: [
     {
       name: 'post',

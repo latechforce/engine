@@ -4,7 +4,7 @@ export const inGuides = true
 
 export default {
   name: 'HTTP GET trigger with immediate response',
-  description: 'Automation with HTTP GET trigger with immediate response',
+  description: 'Automation with HTTP GET trigger and immediate response',
   automations: [
     {
       name: 'get',

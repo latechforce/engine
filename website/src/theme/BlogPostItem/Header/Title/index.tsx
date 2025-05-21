@@ -11,7 +11,7 @@ export default function BlogPostItemHeaderTitle({ className }: Props): ReactNode
   const { permalink, title } = metadata
   const TitleHeading = isBlogPostPage ? 'h1' : 'h2'
   return (
-    <TitleHeading className={clsx(styles.title, className)}>
+    <TitleHeading className={clsx(!isBlogPostPage ? styles.title : '', className)}>
       {isBlogPostPage ? title : <Link to={permalink}>{title}</Link>}
     </TitleHeading>
   )

@@ -39,6 +39,17 @@ function formatCategoryName(category: string): string {
 
 function generateGuideCard(guide: Guide): string {
   return `
+    <Link to="/guides/${guide.path}" style={{ width: '100%', display: 'block', textDecoration: 'none' }}>
+      <div className="guide-card">
+        <span style={{ fontSize: '1rem', color: 'var(--ifm-color-emphasis-600)' }}>${guide.category.charAt(0).toUpperCase() + guide.category.slice(1)}</span>
+        <h3 style={{ margin: 0, fontWeight: '500' }}>${guide.title}</h3>
+      </div>
+    </Link>
+  `
+}
+
+function generateGuideLink(guide: Guide): string {
+  return `
     <Link to="/guides/${guide.path}">
       <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>${guide.description}</p>
     </Link>
@@ -55,7 +66,7 @@ function generateCategorySection(category: string, guides: Guide[]): string {
       borderTop: '1px solid var(--ifm-color-emphasis-200)'
     }} />
     <div>
-      ${guides.map(generateGuideCard).join('\n')}
+      ${guides.map(generateGuideLink).join('\n')}
     </div>
   </div>
   `
@@ -230,9 +241,31 @@ title: Guides
 
 import Link from '@docusaurus/Link'
 
+<style>{\`
+  .guide-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--ifm-color-emphasis-200);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--ifm-color-emphasis-0);
+    width: 100%;
+    transition: border-color 0.2s ease;
+  }
+  .guide-card:hover {
+    border-color: var(--ifm-color-emphasis-400);
+  }
+\`}</style>
+
 # Guides
 
 A collection of code samples and walkthroughs for configuring and using LTF Engine.
+
+<div style={{ display: 'flex', flexDirection: 'row', gap: '2rem', marginBottom: '2rem' }}>
+  ${generateGuideCard(guides.find((g) => g.path.includes('http/post/request'))!)}
+  ${generateGuideCard(guides.find((g) => g.path.includes('typescript/externals'))!)}
+  ${generateGuideCard(guides.find((g) => g.path.includes('response/previous-action'))!)}
+</div>
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
 ${categories

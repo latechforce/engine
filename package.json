@@ -9,8 +9,7 @@
   "author": "Thomas JEANNEAU",
   "license": "Fair Use License",
   "files": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
+    "src/**/*",
     "src/**/*.json",
     "tsconfig.json"
   ],

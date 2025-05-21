@@ -22,10 +22,11 @@ export const PlaywrightReport = () => {
       src="/playwright-report/index.html"
       title="Playwright Report"
       style={{
-        width: 'calc(100% + 48px)',
+        width: '100%',
         height: `${iframeHeight}px`,
-        border: 'none',
-        margin: '0 -24px',
+        border: '1px solid var(--ifm-color-emphasis-200)',
+        backgroundColor: 'var(--ifm-color-emphasis-0)',
+        borderRadius: '0.5rem',
       }}
     />
   )
