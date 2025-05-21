@@ -36,7 +36,10 @@ function updatePlaywrightReportHtml() {
   // To adapt the iframe height to the content
   html = html.replace('</body>', snipet + '</body>')
   // To display the report in full width
-  html = html.replace('max-width: 1024px;', '')
+  html = html.replace(
+    'body{overflow:auto;max-width:1024px;margin:0 auto;width:100%}',
+    'body{overflow:auto;margin:0 auto;width:100%}'
+  )
   fs.writeFileSync(reportPath, html)
 }
 
