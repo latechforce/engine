@@ -59,13 +59,18 @@ jobs:
       - name: Build website guides
         run: bun run build:guides
 
-      - name: Upload build artifacts
+      - name: Upload static artifacts
         uses: actions/upload-artifact@v4
         with:
           name: static
-          path: |
-            website/static/
-            website/src/pages/
+          path: website/static
+          retention-days: 1
+
+      - name: Upload pages artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages
+          path: website/src/pages
           retention-days: 1
 
   release:
@@ -150,9 +155,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: static
-          path: |
-            website/static/
-            website/src/pages/
+          path: website/static
+
+      - name: Download pages artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: pages
+          path: website/src/pages
 
       - name: Download blog artifacts
         uses: actions/download-artifact@v4
