@@ -1,13 +1,15 @@
 {
   "branches": ["main"],
+  "repositoryUrl": "https://github.com/latechforce/engine",
   "plugins": [
     "@semantic-release/commit-analyzer",
     [
       "@semantic-release/release-notes-generator",
       {
         "writerOpts": {
-          "commitPartial": "* {{#if scope}}**{{scope}}:** {{/if}}{{#if subject}}{{subject}} ([{{hash}}]({{href}})) — {{author.name}}{{/if}}\n"
-        }
+          "commitPartial": "* {{#if scope}}**{{scope}}:** {{/if}}{{#if subject}}{{subject}} ([{{shortHash}}]({{commitUrl}})) — {{#if author.login}}[@{{author.login}}](https://github.com/{{author.login}}){{else}}{{author.name}}{{/if}}\n"
+        },
+        "commitUrlFormat": "https://github.com/latechforce/engine/commit/{{hash}}"
       }
     ],
     "@semantic-release/changelog",

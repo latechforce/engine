@@ -32,6 +32,12 @@
   --ifm-navbar-background-color: #1e1e1e;
 }
 
-p, a.navbar__link, a.navbar__brand {
+p,
+a.navbar__link,
+a.navbar__brand {
   font-size: 1.2rem;
+}
+
+h1 {
+  font-size: 3rem;
 }

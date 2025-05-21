@@ -38,7 +38,6 @@ title: "${title}"
 description: "Changelog for version ${version}"
 slug: "${slug}"
 date: ${date}
-authors: [thomasjeanneau]
 tags: [${tag}]
 ---
 
