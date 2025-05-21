@@ -9,6 +9,8 @@ import type { LoggerService } from './logger.service'
 import * as postgresSchema from '@/infrastructure/db/schema/postgres'
 import * as sqliteSchema from '@/infrastructure/db/schema/sqlite'
 import { eq } from 'drizzle-orm'
+import fs from 'fs'
+import path from 'path'
 
 export class DatabaseService {
   private postgresDb?
@@ -25,6 +27,7 @@ export class DatabaseService {
     this.logger = this.logger.child('database-service')
     this.provider = this.env.get('DATABASE_PROVIDER')
     this.url = this.env.get('DATABASE_URL')
+    fs.mkdirSync(path.dirname(this.url), { recursive: true })
     this.logger.debug(`init with "${this.provider}" provider`)
     if (this.provider === 'postgres') {
       this.postgresDb = drizzlePostgres(this.url, {
