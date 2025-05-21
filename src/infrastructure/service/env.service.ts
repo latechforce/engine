@@ -14,7 +14,7 @@ export class EnvService {
 
   async load(): Promise<Env> {
     if (this.env) return this.env
-    const port = this.parsedEnv.PORT ?? String(await this.findAvailablePort())
+    const port = this.parsedEnv.PORT === '*' ? await this.findAvailablePort() : this.parsedEnv.PORT
     this.env = {
       ...this.parsedEnv,
       PORT: port,
@@ -30,7 +30,7 @@ export class EnvService {
     return this.env[key]
   }
 
-  private async findAvailablePort(): Promise<number> {
+  private async findAvailablePort(): Promise<string> {
     return new Promise((resolve, reject) => {
       const server = net.createServer()
       server.on('error', (error) => {
@@ -44,7 +44,7 @@ export class EnvService {
         }
 
         const port = address.port
-        server.close(() => resolve(port))
+        server.close(() => resolve(String(port)))
       })
     })
   }

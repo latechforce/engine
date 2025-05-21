@@ -93,6 +93,9 @@ export const test = base.extend<StartAppFixture>({
           env: {
             ...process.env,
             NODE_ENV: 'production',
+            PORT: '*',
+            DATABASE_PROVIDER: 'sqlite',
+            DATABASE_URL: ':memory:',
             ...env,
           },
           stdio: ['pipe', 'pipe', 'pipe'],

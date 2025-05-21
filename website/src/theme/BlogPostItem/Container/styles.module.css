@@ -1,0 +1,13 @@
+.card {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: var(--ifm-color-emphasis-0);
+  transition: border-color 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.card:hover {
+  border-color: var(--ifm-color-emphasis-400);
+}

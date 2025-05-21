@@ -60,9 +60,7 @@ const schema: AppSchema = {
   ],
 }
 
-const app = await new App().start(schema)
-
-console.log(`App is available at ${app.url()}`)
+await new App().start(schema)
 ```
 
 ## 4. Run the app

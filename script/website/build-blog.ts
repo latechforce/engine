@@ -76,6 +76,15 @@ releasesByDate.forEach((releases, date) => {
   const blogFilename = `${date}-${slug}.md`
   const blogFilePath = path.join(blogDir, blogFilename)
 
+  // Delete existing file for the same date if it exists
+  const existingFiles = fs.readdirSync(blogDir)
+  const datePrefix = `${date}-`
+  existingFiles.forEach((file) => {
+    if (file.startsWith(datePrefix)) {
+      fs.unlinkSync(path.join(blogDir, file))
+    }
+  })
+
   const markdown = `---
 title: "${title}"
 description: "Changelog for version ${firstRelease.version}"
