@@ -10,7 +10,6 @@
   "license": "Fair Use License",
   "files": [
     "src/**/*",
-    "src/**/*.json",
     "tsconfig.json"
   ],
   "repository": {

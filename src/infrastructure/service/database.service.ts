@@ -10,7 +10,7 @@ import * as postgresSchema from '@/infrastructure/db/schema/postgres'
 import * as sqliteSchema from '@/infrastructure/db/schema/sqlite'
 import { eq } from 'drizzle-orm'
 import fs from 'fs'
-import path from 'path'
+import path, { join } from 'path'
 
 export class DatabaseService {
   private postgresDb?
@@ -46,11 +46,11 @@ export class DatabaseService {
     this.logger.debug('migrate')
     if (this.provider === 'postgres') {
       await migratePostgres(this.postgres, {
-        migrationsFolder: './src/infrastructure/db/migrations/postgres',
+        migrationsFolder: join(__dirname, '../db/migrations/postgres'),
       })
     } else {
       migrateSqlite(this.sqlite, {
-        migrationsFolder: './src/infrastructure/db/migrations/sqlite',
+        migrationsFolder: join(__dirname, '../db/migrations/sqlite'),
       })
     }
   }
