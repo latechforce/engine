@@ -4,6 +4,8 @@ import TYPES from '@/infrastructure/di/types'
 import type { StartAppUseCase } from '@/application/use-case/app/start-app.use-case'
 import type { ValidateAppUseCase } from './application/use-case/app/validate-app.use-case'
 
+export * from './types'
+
 type Options = {
   externals?: Record<string, unknown>
 }
