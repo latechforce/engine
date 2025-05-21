@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const errorRunJavascriptCodeAction: AppSchema = {
+export default {
   automations: [
     {
       name: 'run-javascript',
@@ -21,4 +21,4 @@ export const errorRunJavascriptCodeAction: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

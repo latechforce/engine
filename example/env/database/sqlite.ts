@@ -5,6 +5,7 @@ export const env: EnvSchema = {
   DATABASE_URL: './tmp/test.db',
 }
 
-export const sqliteDatabase: AppSchema = {
-  name: 'My app with sqlite database',
-}
+export default {
+  name: 'SQLite database',
+  description: 'App with SQLite database',
+} satisfies AppSchema

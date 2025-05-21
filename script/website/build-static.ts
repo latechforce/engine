@@ -3,7 +3,7 @@ import fs from 'fs'
 import { join } from 'path'
 import { z } from 'zod/v4'
 
-const websiteStaticPath = join(__dirname, '..', 'website', 'static')
+const websiteStaticPath = join(__dirname, '../..', 'website', 'static')
 
 function updatePlaywrightReportHtml() {
   const reportPath = join(websiteStaticPath, 'playwright-report', 'index.html')

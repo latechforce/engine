@@ -67,16 +67,7 @@ if (searchTerm) {
     return {}
   })
 
-  const schema: AppSchema = await import(selectedFile).then(async (m) => {
-    const keys = Object.keys(m)
-    for (const key of keys) {
-      const { appSchema } = await new App({ externals }).validate(m[key])
-      if (appSchema) {
-        return m[key]
-      }
-    }
-    throw new Error('Invalid example file')
-  })
+  const schema: AppSchema = await import(selectedFile).then((m) => m.default)
 
   await new App({ externals }).start(schema)
 } else {

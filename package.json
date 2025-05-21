@@ -29,6 +29,7 @@
     "website": "cd website && bun start",
     "build:static": "bun run script/website/build-static.ts",
     "build:blog": "bun run script/website/build-blog.ts",
+    "build:guides": "bun run script/website/build-guides.ts",
     "test": "bun test --bail",
     "test:watch": "bun test --watch",
     "test:snapshot": "bun test --update-snapshots",

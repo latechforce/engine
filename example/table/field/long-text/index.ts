@@ -1,6 +1,8 @@
 import type { AppSchema } from '@/types'
 
-export const longTextField: AppSchema = {
+export default {
+  name: 'Long text field',
+  description: 'Table with long text field',
   tables: [
     {
       id: 1,
@@ -14,4 +16,4 @@ export const longTextField: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

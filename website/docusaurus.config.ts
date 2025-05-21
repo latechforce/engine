@@ -90,9 +90,18 @@ const config: Config = {
           label: 'Docs',
         },
         { to: '/schema', label: 'Schema', position: 'left' },
-        { to: '/guides', label: 'Guides', position: 'left' },
+        {
+          to: '/guides',
+          label: 'Guides',
+          position: 'left',
+          editUrl: 'https://github.com/latechforce/engine/tree/main/website/src/pages/guides',
+        },
         { to: '/blog', label: 'Blog', position: 'right' },
-        { to: '/test-report', label: 'Test Report', position: 'right' },
+        {
+          to: '/test-report',
+          label: 'Test Report',
+          position: 'right',
+        },
         {
           href: 'https://github.com/latechforce/engine',
           label: 'GitHub',
@@ -107,12 +116,8 @@ const config: Config = {
           title: 'Resources',
           items: [
             {
-              label: 'App Schema',
-              to: '/app-schema',
-            },
-            {
-              label: 'Test Report',
-              to: '/test-report',
+              label: 'Schema',
+              to: '/schema',
             },
             {
               label: 'Docs',
@@ -141,6 +146,10 @@ const config: Config = {
               to: '/blog',
             },
             {
+              label: 'Test Report',
+              to: '/test-report',
+            },
+            {
               label: 'GitHub',
               href: 'https://github.com/latechforce/engine',
             },
@@ -150,8 +159,8 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} ESSENTIAL SERVICES.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: prismThemes.vsDark,
+      darkTheme: prismThemes.vsDark,
     },
   } satisfies Preset.ThemeConfig,
 

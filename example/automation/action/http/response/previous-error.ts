@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const previousErrorResponseHttpAction: AppSchema = {
+export default {
   automations: [
     {
       name: 'response',
@@ -29,4 +29,4 @@ export const previousErrorResponseHttpAction: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

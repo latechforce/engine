@@ -1,6 +1,8 @@
 import type { AppSchema } from '@/types'
 
-export const runTypescriptCodeAction: AppSchema = {
+export default {
+  name: 'Run TypeScript code action',
+  description: 'Automation with run-typescript code action',
   automations: [
     {
       name: 'run-typescript',
@@ -22,4 +24,4 @@ export const runTypescriptCodeAction: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

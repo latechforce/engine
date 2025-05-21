@@ -1,6 +1,8 @@
 import type { AppSchema } from '@/types'
 
-export const singleLineTextField: AppSchema = {
+export default {
+  name: 'Single line text field',
+  description: 'Table with single line text field',
   tables: [
     {
       id: 1,
@@ -14,4 +16,4 @@ export const singleLineTextField: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

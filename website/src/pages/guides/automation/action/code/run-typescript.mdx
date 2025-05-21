@@ -1,14 +1,52 @@
 ---
-title: Guides
+title: Run TypeScript code action
+description: Automation with run-typescript code action
+category: automation
 ---
 
 import Link from '@docusaurus/Link'
 
-# Guides
 
-A collection of code samples and walkthroughs for configuring and using LTF Engine.
+<div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.9rem', color: 'var(--ifm-color-emphasis-600)' }}>
+  <Link to="/guides">Guides</Link>
+  <span>/</span>
+  <Link to="/guides#automation">Automation</Link>
+  <span>/</span>
+</div>
+  
 
-<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+# Run TypeScript code action
+
+Automation with run-typescript code action
+
+```typescript
+import { App, type AppSchema } from '@latechforce/engine';
+
+const schema: AppSchema = {
+  automations: [
+    {
+      name: 'run-typescript',
+      trigger: {
+        service: 'http',
+        event: 'post',
+        path: '/run-typescript',
+      },
+      actions: [
+        {
+          service: 'code',
+          action: 'run-typescript',
+          name: 'runTypescriptCode',
+          code: 'function() {\n            return { message: "Hello, world!" };\n          }',
+        },
+      ],
+    },
+  ],
+};
+
+await new App().start(schema);
+```
+
+<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '120px' }}>
 
   <div>
     <h2 id="env">Env</h2>
@@ -75,11 +113,6 @@ A collection of code samples and walkthroughs for configuring and using LTF Engi
 
     <Link to="/guides/automation/trigger/http/get">
       <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with http get trigger</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/code/run-typescript">
-      <p style={{ fontSize: '1.2rem', fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with run-typescript code action</p>
     </Link>
   
 

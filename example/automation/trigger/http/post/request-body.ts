@@ -1,6 +1,7 @@
 import type { AppSchema } from '@/types'
 
-export const requestBodyPostHttpTrigger: AppSchema = {
+export default {
+  name: 'Automation with HTTP POST trigger and a request body',
   automations: [
     {
       name: 'post',
@@ -30,4 +31,4 @@ export const requestBodyPostHttpTrigger: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

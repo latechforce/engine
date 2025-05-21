@@ -5,6 +5,7 @@ export const env: EnvSchema = {
   DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/postgres',
 }
 
-export const postgresDatabase: AppSchema = {
-  name: 'My app with postgres database',
-}
+export default {
+  name: 'PostgreSQL database',
+  description: 'App with PostgreSQL database',
+} satisfies AppSchema

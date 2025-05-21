@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const inputDataRunJavascriptCodeAction: AppSchema = {
+export default {
   automations: [
     {
       name: 'run-javascript',
@@ -36,4 +36,4 @@ export const inputDataRunJavascriptCodeAction: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

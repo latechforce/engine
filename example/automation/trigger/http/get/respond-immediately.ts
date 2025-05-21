@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const respondImmediatelyGetHttpTrigger: AppSchema = {
+export default {
   automations: [
     {
       name: 'get',
@@ -22,4 +22,4 @@ export const respondImmediatelyGetHttpTrigger: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

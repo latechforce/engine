@@ -5,7 +5,7 @@ export const externals = {
   zod: z,
 }
 
-export const externalsRunTypescriptCodeAction: AppSchema = {
+export default {
   automations: [
     {
       name: 'run-typescript',
@@ -31,4 +31,4 @@ export const externalsRunTypescriptCodeAction: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

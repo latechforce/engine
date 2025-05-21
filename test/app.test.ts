@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'bun:test'
 import App from '@/app'
-import { metadata } from '@/example/metadata'
+import metadata from '@/example/metadata'
 
 describe('validate', () => {
   it('should throw an error if there are unrecognized keys', async () => {
@@ -52,7 +52,7 @@ describe('start with metadata', () => {
     const app = await new App().start(metadata)
 
     // THEN
-    expect(app.schema.name).toBe('My App')
+    expect(app.schema.name).toBe('App with metadata')
   })
 
   it('should have a version', async () => {

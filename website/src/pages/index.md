@@ -8,19 +8,19 @@ hide_table_of_contents: true
 > It runs on Bun.
 > It is designed to be used by non-technical users to create web apps.
 
-## [Get started](/docs/intro) | [App Schema](/app-schema) | [Test Report](/test-report)
+## [Get started](/docs/intro) | [Schema](/schema) | [Guides](/guides) | [Test Report](/test-report)
 
 ## Installation
 
 ```bash
-mkdir my-fantastic-app && cd my-fantastic-app
-bun init
-bun add @latechforce/engine
+$ mkdir my-fantastic-app && cd my-fantastic-app
+$ bun init
+$ bun add @latechforce/engine
 ```
 
 ## Example
 
-```ts
+```typescript
 import App, { type AppSchema } from '@latechforce/engine'
 
 const schema: AppSchema = {

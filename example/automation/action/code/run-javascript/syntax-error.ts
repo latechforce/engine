@@ -2,7 +2,7 @@
 // @ts-nocheck
 import type { AppSchema } from '@/types'
 
-export const syntaxErrorRunJavascriptCodeAction: AppSchema = {
+export default {
   automations: [
     {
       name: 'run-javascript',
@@ -24,4 +24,4 @@ export const syntaxErrorRunJavascriptCodeAction: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

@@ -1,6 +1,8 @@
 import type { AppSchema } from '@/types'
 
-export const responseHttpAction: AppSchema = {
+export default {
+  name: 'HTTP response action',
+  description: 'Automation with http response action',
   automations: [
     {
       name: 'response',
@@ -18,4 +20,4 @@ export const responseHttpAction: AppSchema = {
       ],
     },
   ],
-}
+} satisfies AppSchema

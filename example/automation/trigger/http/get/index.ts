@@ -1,6 +1,8 @@
 import type { AppSchema } from '@/types'
 
-export const getHttpTrigger: AppSchema = {
+export default {
+  name: 'HTTP GET trigger',
+  description: 'Automation with http get trigger',
   automations: [
     {
       name: 'get',
@@ -12,4 +14,4 @@ export const getHttpTrigger: AppSchema = {
       actions: [],
     },
   ],
-}
+} satisfies AppSchema
