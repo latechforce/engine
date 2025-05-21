@@ -86,24 +86,8 @@ jobs:
       - name: Setup Bun runtime
         uses: oven-sh/setup-bun@v2
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            **/node_modules
-            **/.bun
-          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
-          restore-keys: |
-            ${{ runner.os }}-bun-
-
       - name: Install project dependencies
         run: bun install
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build
-          path: .
 
       - name: Create and publish release
         run: bunx semantic-release
@@ -153,6 +137,11 @@ jobs:
         with:
           name: build
           path: .
+
+      - name: Move static files to website directory
+        run: |
+          mkdir -p website/static
+          cp -r static/* website/static/
 
       - name: Deploy to GitHub Pages
         run: cd website && bun run deploy
