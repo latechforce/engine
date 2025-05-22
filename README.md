@@ -51,7 +51,7 @@ await new App().start(schema)
 ## 4. Run the app
 
 ```bash
-$ bun start
+$ bun dev
 ```
 
 ## 5. Enjoy!
