@@ -39,5 +39,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src", "test", "example", "script", "src/infrastructure/db", "e2e"]
+  "include": ["src", "test", "example", "script", "src/infrastructure/db", "e2e", "config"]
 }

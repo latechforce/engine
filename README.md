@@ -1,32 +1,64 @@
-# LTF Engine
+# LTF Engine is a web app generator
 
-LTF Engine is a NPM package that generate a web application from a JSON configuration. This package is under Fair Use License.
+Build an app with database, automations, and more... all in a JSON file. LTF Engine is a web app
+generator that allows you to create web apps with a simple and intuitive schema. It runs on Bun.
+It is designed to be used by non-technical users to create web apps.
 
-## Requirements
-
-We use [Bun](https://bun.sh/) 1.2 or later to run the engine.
-
-## Installation
-
-Install the engine in your Bun project like any other NPM package:
+## 1. Install Bun
 
 ```bash
-bun add @latechforce/engine
+$ curl -fsSL https://bun.sh/install | bash
 ```
 
-## Usage
+## 2. Create a new project from a template
 
-Create a new file `index.ts` and import the engine:
+```bash
+$ bun create https://github.com/latechforce/engine-template my-fantastic-app
+```
 
-```ts
-import App from '@latechforce/engine'
+## 3. Configure the app schema
 
-const app = await new App().start({
-  name: 'My fantastic app',
-  version: '1.0.0',
-})
+```typescript title="index.ts"
+import App, { type AppSchema } from '@latechforce/engine'
 
-console.log(`App is running at ${app.url()}`)
+const schema: AppSchema = {
+  name: 'My Fantastic App',
+  automations: [
+    {
+      name: 'get-message',
+      trigger: {
+        service: 'http',
+        event: 'get',
+        path: '/message',
+      },
+      actions: [
+        {
+          service: 'code',
+          action: 'run-typescript',
+          name: 'reply-message',
+          code: String(function () {
+            return { message: 'Hello, world!' }
+          }),
+        },
+      ],
+    },
+  ],
+}
+
+await new App().start(schema)
+```
+
+## 4. Run the app
+
+```bash
+$ bun start
+```
+
+## 5. Enjoy!
+
+```bash
+$ curl http://localhost:3000/api/automation/message
+{"message":"Hello, world!"}
 ```
 
 ## License
