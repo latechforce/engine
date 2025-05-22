@@ -4,7 +4,7 @@ import type { LoggerService } from './logger.service'
 import { Hono, type Handler, type MiddlewareHandler } from 'hono'
 import { trimTrailingSlash } from 'hono/trailing-slash'
 import { inject, injectable } from 'inversify'
-import spa from '@/client/index.html'
+import index from '@/client/index.html'
 import type { EnvService } from './env.service'
 import type { AuthService, AuthType } from './auth.service'
 import type { App } from '@/domain/entity/app.entity'
@@ -141,10 +141,12 @@ export class ServerService {
           GET: this.server.fetch,
           POST: this.server.fetch,
         },
-        '/*': spa,
+        '/*': {
+          GET: index,
+        },
       },
       port: Number(this.env.get('PORT')),
-      development: this.env.get('NODE_ENV') === 'development',
+      development: this.env.get('NODE_ENV') !== 'production',
     })
   }
 
