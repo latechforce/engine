@@ -111,7 +111,8 @@ jobs:
 
   website:
     name: Deploy Documentation to GitHub Pages
-    needs: release
+    needs: [test, release]
+    if: always() && needs.test.result == 'success'
     runs-on: ubuntu-latest
 
     permissions:
