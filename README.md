@@ -6,14 +6,22 @@ It is designed to be used by non-technical users to create web apps.
 
 ## 1. Install Bun
 
+### macOS/Linux
+
 ```bash
-$ curl -fsSL https://bun.sh/install | bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+### Windows
+
+```powershell
+powershell -c "irm https://bun.sh/install.ps1 | iex"
 ```
 
 ## 2. Create a new project from a template
 
 ```bash
-$ bun create latechforce/engine-template my-fantastic-app
+bun create latechforce/engine-template my-app
 ```
 
 ## 3. Configure the app schema
@@ -22,7 +30,7 @@ $ bun create latechforce/engine-template my-fantastic-app
 import App, { type AppSchema } from '@latechforce/engine'
 
 const schema: AppSchema = {
-  name: 'My Fantastic App',
+  name: 'My app',
   automations: [
     {
       name: 'get-message',
@@ -51,13 +59,13 @@ await new App().start(schema)
 ## 4. Run the app
 
 ```bash
-$ bun dev
+bun dev
 ```
 
 ## 5. Enjoy!
 
 ```bash
-$ curl http://localhost:3000/api/automation/message
+curl http://localhost:3000/api/automation/message
 {"message":"Hello, world!"}
 ```
 

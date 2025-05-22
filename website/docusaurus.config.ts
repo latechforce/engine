@@ -83,18 +83,18 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'docs',
           position: 'left',
           label: 'Docs',
         },
-        { to: '/schema', label: 'Schema', position: 'left' },
         {
           to: '/guides',
           label: 'Guides',
           position: 'left',
           editUrl: 'https://github.com/latechforce/engine/tree/main/website/src/pages/guides',
         },
-        { to: '/blog', label: 'Blog', position: 'right' },
+        { to: '/blog', label: 'Blog', position: 'left' },
+        { to: '/schema-explorer', label: 'Schema Explorer', position: 'right' },
         {
           to: '/test-report',
           label: 'Test Report',

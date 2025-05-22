@@ -2,46 +2,41 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Introduction
 
-Let's discover **Docusaurus in less than 5 minutes**.
+## What is LTF Engine?
 
-## Getting Started
+LTF Engine is a web application generation engine. It's a simple NPM package with a Fair Use license that allows you to launch a server with a database, APIs, a web client, etc... from a single configuration file.
 
-Get started by **creating a new site**.
+## Why LTF Engine?
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+LTF Engine is designed to combine the best of both Code and No Code worlds. It allows you to easily create a complete web application with minimal code.
 
-### What you'll need
+The idea is to recreate the classic No Code development experience like with Zapier, Airtable, or JotForm, but with the power of Code, particularly by enabling the use of collaboration and versioning tools and complete application hosting.
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+LTF Engine aims to allow you to create your own custom information system without needing to know code, while maintaining the ability to optimize and adapt it to your needs quickly while having complete control over the code and database.
 
-## Generate a new site
+## How does it work?
 
-Generate a new Docusaurus site using the **classic template**.
+LTF Engine is built on top of [Bun](https://bun.sh/), a fast and secure runtime for JavaScript and TypeScript.
 
-The classic template will automatically be added to your project after you run the command:
+You can configure an application in few lines of code.
 
-```bash
-npm init docusaurus@latest my-website classic
+```ts file="index.ts"
+import App from '@latechforce/engine'
+
+await new App().start({
+  name: 'My App',
+  version: '1.0.0',
+})
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
+You can then start the application with the following command:
 
 ```bash
-cd my-website
-npm run start
+bun run index.ts
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+And your app will be available at `http://localhost:3000`.
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+All you have to do then is to configure your application following the [app schema](/schema). 

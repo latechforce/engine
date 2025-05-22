@@ -18,7 +18,7 @@ export class LoggerService {
     } else {
       this.logger = createLogger({
         level: this.env.get('LOG_LEVEL'),
-        silent: this.env.get('LOG_SILENT') === 'true',
+        silent: this.env.get('LOG_LEVEL') === 'silent',
         format: format.combine(
           format.colorize(),
           format.timestamp(),

@@ -10,17 +10,22 @@ export default function AppSchemaPage() {
         <main className="margin-vert--lg container">
           <div className="row">
             <div className="col">
-              <h1>Schema</h1>
+              <h1>Schema Explorer</h1>
               <p>
-                Source :{' '}
+                This is the schema of the app. You can navigate through the schema to see the
+                different properties and their descriptions.
+              </p>
+              <JSONSchemaViewer schema={Schema} />
+              <p>
+                The JSON Schema source is available at{' '}
                 <a
                   href="/schema/app.schema.json"
                   target="_blank"
                 >
-                  app.schema.json
+                  /schema/app.schema.json
                 </a>
+                .
               </p>
-              <JSONSchemaViewer schema={Schema} />
             </div>
           </div>
         </main>

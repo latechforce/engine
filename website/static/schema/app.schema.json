@@ -3,7 +3,7 @@
   "type": "object",
   "properties": {
     "name": {
-      "default": "My fantastic app",
+      "default": "My app",
       "type": "string",
       "minLength": 3
     },
@@ -13,7 +13,7 @@
       "minLength": 1
     },
     "description": {
-      "default": "My fantastic app description",
+      "default": "My app description",
       "type": "string",
       "minLength": 1
     },

@@ -16,7 +16,6 @@
   --ifm-background-color: #f9fafb;
   --ifm-navbar-background-color: #f9fafb;
   --ifm-code-font-size: 95%;
-  --ifm-navbar-height: 4.5rem;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -32,16 +31,10 @@
   --ifm-navbar-background-color: #1e1e1e;
 }
 
-p,
-article li,
-a.navbar__link,
-a.navbar__brand {
-  font-size: 1.2rem;
-}
-
 h1 {
   font-size: 3rem;
 }
+
 
 #__blog-post-container .before-truncate {
   display: none;
