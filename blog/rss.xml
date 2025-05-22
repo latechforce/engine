@@ -4,49 +4,58 @@
         <title>LTF Engine Blog</title>
         <link>https://engine.latechforce.com/blog</link>
         <description>LTF Engine Blog</description>
-        <lastBuildDate>Wed, 21 May 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Thu, 22 May 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Fix 0.46.6]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-46-6</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-46-6</guid>
-            <pubDate>Wed, 21 May 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.46.6]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-46-6"><p class="before-truncate"> 0.46.6   Bug Fixes  * package: add fix default values for PORT and DATABASE_URL (af8d244) — Thomas JEANNEAU   0.46.5   Bug Fixes  * package: load migrations from node_modules (a78a1a5) — Thomas JEANNEAU   0.46.4   Bug Fixes  * test (6a80b3b) — Thomas JEANNEAU...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0466"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-46-6">0.46.6</a><a href="https://engine.latechforce.com/blog/fix-0-46-6#0466" class="hash-link" aria-label="Direct link to 0.46.6" title="Direct link to 0.46.6">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-6#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+            <title><![CDATA[Release 0.47.0]]></title>
+            <link>https://engine.latechforce.com/blog/release-0-47-0</link>
+            <guid>https://engine.latechforce.com/blog/release-0-47-0</guid>
+            <pubDate>Thu, 22 May 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Changelog for version 0.47.0]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-47-0"><p class="before-truncate"> 0.47.0   Features  * package: publish new architecture (8866011) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0470"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-47-0">0.47.0</a><a href="https://engine.latechforce.com/blog/release-0-47-0#0470" class="hash-link" aria-label="Direct link to 0.47.0" title="Direct link to 0.47.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-47-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
-<li><strong>package:</strong> add fix default values for PORT and DATABASE_URL (<a href="https://github.com/latechforce/engine/commit/af8d244a9f0b919768500151175722c941916ced" target="_blank" rel="noopener noreferrer">af8d244</a>) — Thomas JEANNEAU</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0465">0.46.5<a href="https://engine.latechforce.com/blog/fix-0-46-6#0465" class="hash-link" aria-label="Direct link to 0.46.5" title="Direct link to 0.46.5">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-6#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<li><strong>package:</strong> publish new architecture (<a href="https://github.com/latechforce/engine/commit/8866011aa1b768cbfd36f7ba4a41ba8587b7bc03" target="_blank" rel="noopener noreferrer">8866011</a>) — Thomas JEANNEAU</li>
+</ul>]]></content:encoded>
+            <category>Release</category>
+        </item>
+        <item>
+            <title><![CDATA[Fix 0.46.5]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-46-5</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-46-5</guid>
+            <pubDate>Wed, 21 May 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Changelog for version 0.46.5]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-46-5"><p class="before-truncate"> 0.46.5   Bug Fixes  * package: load migrations from node_modules (a78a1a5) — Thomas JEANNEAU   0.46.4   Bug Fixes  * test (6a80b3b) — Thomas JEANNEAU   0.46.3   Bug Fixes  - package: add all files and .json in npm package (aba9b90) — Thomas JEANNEAU   0.46.2 ...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0465"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-46-5">0.46.5</a><a href="https://engine.latechforce.com/blog/fix-0-46-5#0465" class="hash-link" aria-label="Direct link to 0.46.5" title="Direct link to 0.46.5">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>package:</strong> load migrations from node_modules (<a href="https://github.com/latechforce/engine/commit/a78a1a5a79838a2f32d9a4383a2ad51293933769" target="_blank" rel="noopener noreferrer">a78a1a5</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0464">0.46.4<a href="https://engine.latechforce.com/blog/fix-0-46-6#0464" class="hash-link" aria-label="Direct link to 0.46.4" title="Direct link to 0.46.4">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-6#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0464">0.46.4<a href="https://engine.latechforce.com/blog/fix-0-46-5#0464" class="hash-link" aria-label="Direct link to 0.46.4" title="Direct link to 0.46.4">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>test (<a href="https://github.com/latechforce/engine/commit/6a80b3b7d5da19cc9d44578644753b3346146c8c" target="_blank" rel="noopener noreferrer">6a80b3b</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0463">0.46.3<a href="https://engine.latechforce.com/blog/fix-0-46-6#0463" class="hash-link" aria-label="Direct link to 0.46.3" title="Direct link to 0.46.3">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-3">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-6#bug-fixes-3" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0463">0.46.3<a href="https://engine.latechforce.com/blog/fix-0-46-5#0463" class="hash-link" aria-label="Direct link to 0.46.3" title="Direct link to 0.46.3">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>package:</strong> add all files and .json in npm package (<a href="https://github.com/latechforce/engine/commit/aba9b9035e9f471499a91b481fb20905da2a192e" target="_blank" rel="noopener noreferrer">aba9b90</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0462">0.46.2<a href="https://engine.latechforce.com/blog/fix-0-46-6#0462" class="hash-link" aria-label="Direct link to 0.46.2" title="Direct link to 0.46.2">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-4">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-6#bug-fixes-4" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0462">0.46.2<a href="https://engine.latechforce.com/blog/fix-0-46-5#0462" class="hash-link" aria-label="Direct link to 0.46.2" title="Direct link to 0.46.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-3">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes-3" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>package:</strong> add .json files in npm package for database migration (<a href="https://github.com/latechforce/engine/commit/85f640244957fe8764f65764aef8607b75b2f08f" target="_blank" rel="noopener noreferrer">85f6402</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0461">0.46.1<a href="https://engine.latechforce.com/blog/fix-0-46-6#0461" class="hash-link" aria-label="Direct link to 0.46.1" title="Direct link to 0.46.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-5">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-6#bug-fixes-5" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0461">0.46.1<a href="https://engine.latechforce.com/blog/fix-0-46-5#0461" class="hash-link" aria-label="Direct link to 0.46.1" title="Direct link to 0.46.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-4">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-46-5#bug-fixes-4" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>package:</strong> add tsconfig.json in npm package (<a href="https://github.com/latechforce/engine/commit/5a3625c85cb313af6d89f2c7ce91e3da83b1eca3" target="_blank" rel="noopener noreferrer">5a3625c</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0460">0.46.0<a href="https://engine.latechforce.com/blog/fix-0-46-6#0460" class="hash-link" aria-label="Direct link to 0.46.0" title="Direct link to 0.46.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-46-6#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0460">0.46.0<a href="https://engine.latechforce.com/blog/fix-0-46-5#0460" class="hash-link" aria-label="Direct link to 0.46.0" title="Direct link to 0.46.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-46-5#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li>init V3 infrastructure (<a href="https://github.com/latechforce/engine/commit/f351d2d9ffa4692d0c31b53c076e4912242837f8" target="_blank" rel="noopener noreferrer">f351d2d</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
