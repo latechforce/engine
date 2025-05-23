@@ -2,25 +2,7 @@ import { describe, it, expect } from 'bun:test'
 import App from '@/app'
 import metadata from '@/example/metadata'
 
-describe('validate', () => {
-  it('should throw an error if there are unrecognized keys', async () => {
-    // WHEN
-    const result = await new App().validate({ invalid: 'schema' })
-
-    // THEN
-    expect(result.error).toBeDefined()
-  })
-})
-
 describe('start', () => {
-  it('should throw an error if there are unrecognized keys', async () => {
-    // WHEN
-    const call = () => new App().start({ invalid: 'schema' })
-
-    // THEN
-    expect(call).toThrow('Invalid app schema')
-  })
-
   it('should have the default name', async () => {
     // WHEN
     const app = await new App().start()

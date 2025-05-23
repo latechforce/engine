@@ -22,12 +22,12 @@ export class StartAppUseCase {
   async execute(unknownSchema: unknown): Promise<App> {
     this.appRepository.info('Starting app...')
     const env = await this.appRepository.loadEnv()
-    const { appSchema, error } = await this.validateAppUseCase.execute(unknownSchema)
-    if (!appSchema) {
+    const { schema, error } = await this.validateAppUseCase.execute(unknownSchema)
+    if (!schema) {
       this.appRepository.error(error)
       throw new Error('Invalid app schema')
     }
-    const app = new App(appSchema, env)
+    const app = new App(schema, env)
     await this.appRepository.setup(app)
     for (const automation of app.automations) {
       await this.setupAutomationUseCase.execute(automation)

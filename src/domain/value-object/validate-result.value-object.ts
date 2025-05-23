@@ -1,5 +1,5 @@
 import type { AppSchemaValidated } from '@/types'
 
 export type ValidateResult =
-  | { appSchema: AppSchemaValidated; error?: undefined }
-  | { appSchema?: undefined; error: string }
+  | { schema: AppSchemaValidated; error?: undefined }
+  | { schema?: undefined; error: string }

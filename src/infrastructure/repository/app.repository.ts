@@ -49,7 +49,7 @@ export class AppRepository implements IAppRepository {
     if (!success) {
       return { error: z.prettifyError(error) }
     }
-    return { appSchema: data }
+    return { schema: data }
   }
 
   async setup(app: App) {

@@ -13,8 +13,15 @@ export class ValidateAppUseCase {
 
   async execute(unknownSchema: unknown): Promise<ValidateResult> {
     const result = this.appRepository.validate(unknownSchema)
-    if (result.appSchema) {
-      result.appSchema = this.fillEnv(result.appSchema) as AppSchemaValidated
+    if (result.schema) {
+      try {
+        result.schema = this.fillEnv(result.schema) as AppSchemaValidated
+      } catch (error) {
+        return {
+          schema: undefined,
+          error: error instanceof Error ? error.message : 'Unknown error',
+        }
+      }
     }
     return result
   }
