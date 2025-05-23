@@ -335,6 +335,78 @@ Error generating stack: `+u.message+`
       // Initial height
       postHeight(root.scrollHeight)
     }
+    </script><script>
+    function postHeight(height) {
+      window.parent.postMessage(
+        {
+          type: 'iframeHeight',
+          height,
+        },
+        '*'
+      )
+    }
+
+    const root = document.getElementById('root')
+    if (root) {
+      const observer = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          postHeight(entry.contentRect.height)
+        }
+      })
+
+      observer.observe(root)
+
+      // Initial height
+      postHeight(root.scrollHeight)
+    }
+    </script><script>
+    function postHeight(height) {
+      window.parent.postMessage(
+        {
+          type: 'iframeHeight',
+          height,
+        },
+        '*'
+      )
+    }
+
+    const root = document.getElementById('root')
+    if (root) {
+      const observer = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          postHeight(entry.contentRect.height)
+        }
+      })
+
+      observer.observe(root)
+
+      // Initial height
+      postHeight(root.scrollHeight)
+    }
+    </script><script>
+    function postHeight(height) {
+      window.parent.postMessage(
+        {
+          type: 'iframeHeight',
+          height,
+        },
+        '*'
+      )
+    }
+
+    const root = document.getElementById('root')
+    if (root) {
+      const observer = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          postHeight(entry.contentRect.height)
+        }
+      })
+
+      observer.observe(root)
+
+      // Initial height
+      postHeight(root.scrollHeight)
+    }
     </script></body>
 </html>
 <script>

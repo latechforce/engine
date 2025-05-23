@@ -7,7 +7,7 @@ export const responseHttpActionValidator = baseHttpActionValidator
     body: z.record(z.string(), z.unknown()).optional(),
   })
   .meta({
-    title: 'Response HTTP ',
+    title: 'Response',
     description: 'The response HTTP action is an action that is performed by the automation',
   })
 

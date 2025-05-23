@@ -34,59 +34,93 @@
             "description": "The trigger is the event that triggers the automation",
             "anyOf": [
               {
-                "title": "Post",
-                "description": "The post HTTP trigger is a trigger that is triggered by a POST request",
-                "type": "object",
-                "properties": {
-                  "service": {
-                    "const": "http"
+                "title": "HTTP",
+                "description": "The HTTP trigger is a trigger that is triggered by an HTTP request",
+                "anyOf": [
+                  {
+                    "title": "POST",
+                    "description": "The POST HTTP trigger is a trigger that is triggered by a POST request",
+                    "type": "object",
+                    "properties": {
+                      "service": {
+                        "const": "http"
+                      },
+                      "event": {
+                        "const": "post"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "respondImmediately": {
+                        "default": false,
+                        "type": "boolean"
+                      },
+                      "requestBody": {
+                        "$ref": "#/$defs/__schema0"
+                      }
+                    },
+                    "required": [
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
                   },
-                  "event": {
-                    "const": "post"
-                  },
-                  "path": {
-                    "type": "string"
-                  },
-                  "respondImmediately": {
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "requestBody": {
-                    "$ref": "#/$defs/__schema0"
+                  {
+                    "title": "GET",
+                    "description": "The GET HTTP trigger is a trigger that is triggered by a GET request",
+                    "type": "object",
+                    "properties": {
+                      "service": {
+                        "const": "http"
+                      },
+                      "event": {
+                        "const": "get"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "respondImmediately": {
+                        "default": false,
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
                   }
-                },
-                "required": [
-                  "service",
-                  "event",
-                  "path"
-                ],
-                "additionalProperties": false
+                ]
               },
               {
-                "title": "Get",
-                "description": "The get HTTP trigger is a trigger that is triggered by a GET request",
-                "type": "object",
-                "properties": {
-                  "service": {
-                    "const": "http"
-                  },
-                  "event": {
-                    "const": "get"
-                  },
-                  "path": {
-                    "type": "string"
-                  },
-                  "respondImmediately": {
-                    "default": false,
-                    "type": "boolean"
+                "title": "Calendly",
+                "description": "The Calendly trigger is a trigger that is triggered by a Calendly event",
+                "anyOf": [
+                  {
+                    "title": "Invite Created",
+                    "description": "The Calendly invite created trigger is a trigger that is triggered by a invite created event",
+                    "type": "object",
+                    "properties": {
+                      "service": {
+                        "const": "calendly"
+                      },
+                      "event": {
+                        "const": "invite-created"
+                      },
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
                   }
-                },
-                "required": [
-                  "service",
-                  "event",
-                  "path"
-                ],
-                "additionalProperties": false
+                ]
               }
             ]
           },
@@ -180,7 +214,7 @@
                   "description": "The HTTP action is an action that is performed by the automation",
                   "anyOf": [
                     {
-                      "title": "GET HTTP ",
+                      "title": "GET",
                       "description": "The GET HTTP action is an action that is performed by the automation",
                       "type": "object",
                       "properties": {
@@ -215,8 +249,8 @@
                       "additionalProperties": false
                     },
                     {
-                      "title": "GET HTTP ",
-                      "description": "The GET HTTP action is an action that is performed by the automation",
+                      "title": "POST",
+                      "description": "The POST HTTP action is an action that is performed by the automation",
                       "type": "object",
                       "properties": {
                         "name": {
@@ -257,7 +291,7 @@
                       "additionalProperties": false
                     },
                     {
-                      "title": "Response HTTP ",
+                      "title": "Response",
                       "description": "The response HTTP action is an action that is performed by the automation",
                       "type": "object",
                       "properties": {

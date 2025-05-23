@@ -10,8 +10,8 @@ export const postHttpTriggerValidator = basehttpTriggerValidator
     requestBody: jsonSchemaValidator.optional(),
   })
   .meta({
-    title: 'Post',
-    description: 'The post HTTP trigger is a trigger that is triggered by a POST request',
+    title: 'POST',
+    description: 'The POST HTTP trigger is a trigger that is triggered by a POST request',
   })
 
 export type PostHttpTriggerSchema = z.infer<typeof postHttpTriggerValidator>

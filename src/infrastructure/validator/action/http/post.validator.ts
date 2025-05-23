@@ -9,8 +9,8 @@ export const postHttpActionValidator = baseHttpActionValidator
     body: z.record(z.string(), z.unknown()).optional(),
   })
   .meta({
-    title: 'GET HTTP ',
-    description: 'The GET HTTP action is an action that is performed by the automation',
+    title: 'POST',
+    description: 'The POST HTTP action is an action that is performed by the automation',
   })
 
 export type PostHttpActionSchema = z.infer<typeof postHttpActionValidator>

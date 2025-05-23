@@ -8,7 +8,7 @@ export const getHttpActionValidator = baseHttpActionValidator
     headers: z.record(z.string(), z.string()).optional(),
   })
   .meta({
-    title: 'GET HTTP ',
+    title: 'GET',
     description: 'The GET HTTP action is an action that is performed by the automation',
   })
 
