@@ -23,6 +23,7 @@ You can define the metadata of the app at the root of the schema.
 ## Automations
 
 An automation is a collection of actions that are triggered by an event.
+
 ```json
 {
   "automations": [
@@ -45,4 +46,23 @@ An automation is a collection of actions that are triggered by an event.
       ]
     }
   ]
+```
+
+## Using Environment Variables
+
+You can use environment variables anywhere in the app schema.
+It will be replaced with the value of the environment variable at runtime.
+
+```json
+{
+  "name": "{{env.NAME}}"
+}
+```
+
+You can also provide a default value if the environment variable is not found.
+
+```json
+{
+  "name": "{{env.NAME "default"}}",
+}
 ```
