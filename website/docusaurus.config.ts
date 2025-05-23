@@ -145,6 +145,14 @@ const config: Config = {
               label: 'Blog',
               to: '/blog',
             },
+            {
+              label: 'Experts Skills',
+              to: '/experts',
+            },
+            {
+              label: 'Experts Methodology',
+              to: '/experts/methodology',
+            },
           ],
         },
         {
