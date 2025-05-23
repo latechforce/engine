@@ -93,6 +93,21 @@ const config: Config = {
           position: 'left',
           editUrl: 'https://github.com/latechforce/engine/tree/main/website/src/pages/guides',
         },
+        {
+          label: 'Experts',
+          position: 'left',
+          to: '/experts',
+          items: [
+            {
+              label: 'Our skills',
+              href: '/experts',
+            },
+            {
+              label: 'Our methodology',
+              href: '/experts/methodology',
+            },
+          ],
+        },
         { to: '/blog', label: 'Blog', position: 'left' },
         { to: '/schema-explorer', label: 'Schema Explorer', position: 'right' },
         {
