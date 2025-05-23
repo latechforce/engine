@@ -1,8 +1,8 @@
 import type { AppSchema } from '@/types'
 
 export default {
-  name: 'Long text field',
-  description: 'Table with long text field',
+  name: 'Configure a table with a long text field',
+  description: 'Table with a long text field',
   tables: [
     {
       id: 1,

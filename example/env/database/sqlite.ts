@@ -6,6 +6,6 @@ export const env: EnvSchema = {
 }
 
 export default {
-  name: 'SQLite database',
+  name: 'Start with a SQLite database',
   description: 'App with SQLite database',
 } satisfies AppSchema

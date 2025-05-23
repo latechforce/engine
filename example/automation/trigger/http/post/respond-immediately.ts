@@ -3,8 +3,8 @@ import type { AppSchema } from '@/types'
 export const inGuides = true
 
 export default {
-  name: 'HTTP POST trigger with immediate response',
-  description: 'Automation with HTTP POST trigger and immediate response',
+  name: 'Trigger an automation with an HTTP POST request and respond immediately',
+  description: 'Automation with HTTP POST trigger and respond immediately',
   automations: [
     {
       name: 'post',

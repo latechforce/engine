@@ -5,6 +5,6 @@ export const env: EnvSchema = {
 }
 
 export default {
-  name: 'Custom PORT',
+  name: 'Start with a custom PORT',
   description: 'App with custom PORT',
 } satisfies AppSchema

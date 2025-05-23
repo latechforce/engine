@@ -1,8 +1,8 @@
 import type { AppSchema } from '@/types'
 
 export default {
-  name: 'Single line text field',
-  description: 'Table with single line text field',
+  name: 'Configure a table with a single line text field',
+  description: 'Table with a single line text field',
   tables: [
     {
       id: 1,

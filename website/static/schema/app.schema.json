@@ -178,31 +178,114 @@
                 {
                   "title": "HTTP",
                   "description": "The HTTP action is an action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "const": "http"
-                    },
-                    "action": {
-                      "const": "response"
-                    },
-                    "body": {
+                  "anyOf": [
+                    {
+                      "title": "GET HTTP ",
+                      "description": "The GET HTTP action is an action that is performed by the automation",
                       "type": "object",
-                      "propertyNames": {
-                        "type": "string"
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "service": {
+                          "const": "http"
+                        },
+                        "action": {
+                          "const": "get"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "headers": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        }
                       },
-                      "additionalProperties": {}
+                      "required": [
+                        "name",
+                        "service",
+                        "action",
+                        "url"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "title": "GET HTTP ",
+                      "description": "The GET HTTP action is an action that is performed by the automation",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "service": {
+                          "const": "http"
+                        },
+                        "action": {
+                          "const": "post"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "headers": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "body": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "service",
+                        "action",
+                        "url"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "title": "Response HTTP ",
+                      "description": "The response HTTP action is an action that is performed by the automation",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "service": {
+                          "const": "http"
+                        },
+                        "action": {
+                          "const": "response"
+                        },
+                        "body": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "service",
+                        "action"
+                      ],
+                      "additionalProperties": false
                     }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action"
-                  ],
-                  "additionalProperties": false
+                  ]
                 }
               ]
             }

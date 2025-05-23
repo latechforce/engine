@@ -1,7 +1,9 @@
 import type { AppSchema } from '@/types'
 
+export const inGuides = true
+
 export default {
-  name: 'HTTP GET action with headers',
+  name: 'Make an HTTP GET request with headers',
   description: 'Automation with HTTP GET action and headers',
   automations: [
     {

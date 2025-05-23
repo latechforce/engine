@@ -3,7 +3,7 @@ import type { AppSchema } from '@/types'
 export const inGuides = true
 
 export default {
-  name: 'HTTP POST trigger with request body',
+  name: 'Trigger an automation with an HTTP POST request with request body',
   description: 'Automation with HTTP POST trigger and request body',
   automations: [
     {

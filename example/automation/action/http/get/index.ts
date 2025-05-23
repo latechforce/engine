@@ -1,7 +1,7 @@
 import type { AppSchema } from '@/types'
 
 export default {
-  name: 'HTTP GET action',
+  name: 'Make an HTTP GET request',
   description: 'Automation with HTTP GET action',
   automations: [
     {

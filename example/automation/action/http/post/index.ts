@@ -1,8 +1,8 @@
 import type { AppSchema } from '@/types'
 
 export default {
-  name: 'HTTP POST action',
-  description: 'Automation with HTTP POST action',
+  name: 'Make an HTTP POST request',
+  description: 'Automation with HTTP POST action and body',
   automations: [
     {
       name: 'post',

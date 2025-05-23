@@ -6,6 +6,6 @@ export const env: EnvSchema = {
 }
 
 export default {
-  name: 'PostgreSQL database',
+  name: 'Start with a PostgreSQL database',
   description: 'App with PostgreSQL database',
 } satisfies AppSchema

@@ -1,8 +1,10 @@
 import type { AppSchema } from '@/types'
 
+export const inGuides = true
+
 export default {
-  name: 'HTTP POST action',
-  description: 'Automation with HTTP POST action',
+  name: 'Make an HTTP POST request with body',
+  description: 'Automation with HTTP POST action and body',
   automations: [
     {
       name: 'post',

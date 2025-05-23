@@ -1,6 +1,6 @@
 ---
 title: Run TypeScript code action with externals
-description: Automation with run TypeScript code action and externals
+description: Automation with run TypeScript code action and externals. You can use any NPM package in the code by adding it to the `externals` object.
 category: automation
 ---
 
@@ -26,7 +26,7 @@ import Link from '@docusaurus/Link'
   </a>
 </div>
 
-Automation with run TypeScript code action and externals
+Automation with run TypeScript code action and externals. You can use any NPM package in the code by adding it to the `externals` object.
 
 ```typescript title="index.ts"
 import { App, type AppSchema, type CodeContext } from '@latechforce/engine';
@@ -64,7 +64,7 @@ const schema: AppSchema = {
 await new App({ externals }).start(schema);
 ```
 
-<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '120px' }}>
+<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '72px' }}>
 
   <div>
     <h2 id="env">Env</h2>
@@ -76,17 +76,17 @@ await new App({ externals }).start(schema);
     <div>
       
     <Link to="/guides/env/database/postgres">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>App with PostgreSQL database</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Start with a PostgreSQL database</p>
     </Link>
   
 
     <Link to="/guides/env/database/sqlite">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>App with SQLite database</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Start with a SQLite database</p>
     </Link>
   
 
     <Link to="/guides/env/port">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>App with custom PORT</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Start with a custom PORT</p>
     </Link>
   
     </div>
@@ -103,12 +103,12 @@ await new App({ externals }).start(schema);
     <div>
       
     <Link to="/guides/table/field/single-line-text">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Table with single line text field</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Configure a table with a single line text field</p>
     </Link>
   
 
     <Link to="/guides/table/field/long-text">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Table with long text field</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Configure a table with a long text field</p>
     </Link>
   
     </div>
@@ -125,67 +125,92 @@ await new App({ externals }).start(schema);
     <div>
       
     <Link to="/guides/automation/trigger/http/post/respond-immediately">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP POST trigger and immediate response</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP POST request and respond immediately</p>
     </Link>
   
 
     <Link to="/guides/automation/trigger/http/post/request-body">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP POST trigger and request body</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP POST request with request body</p>
     </Link>
   
 
     <Link to="/guides/automation/trigger/http/post">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP POST trigger</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP POST request</p>
     </Link>
   
 
     <Link to="/guides/automation/trigger/http/get/respond-immediately">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP GET trigger and immediate response</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP GET request and respond immediately</p>
     </Link>
   
 
     <Link to="/guides/automation/trigger/http/get">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP GET trigger</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP GET request</p>
     </Link>
   
 
     <Link to="/guides/automation/action/code/run-typescript/input-data">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with run TypeScript code action and input data</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run TypeScript code action with input data</p>
     </Link>
   
 
     <Link to="/guides/automation/action/code/run-typescript">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with run TypeScript code action</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run TypeScript code action</p>
     </Link>
   
 
     <Link to="/guides/automation/action/code/run-javascript/input-data">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with run JavaScript code action and input data</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run JavaScript code action with input data</p>
     </Link>
   
 
     <Link to="/guides/automation/action/code/run-javascript/externals">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with run JavaScript code action and externals</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run JavaScript code action with externals</p>
     </Link>
   
 
     <Link to="/guides/automation/action/code/run-javascript">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with run JavaScript code action</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run JavaScript code action</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/http/post">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/http/post/body">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request with body</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/http/post/env">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request with environment variables</p>
     </Link>
   
 
     <Link to="/guides/automation/action/http/response/previous-action">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP response action, previous action and dynamic body</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Respond to an HTTP request with a dynamic body</p>
     </Link>
   
 
     <Link to="/guides/automation/action/http/response/post-body">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP response action and static body</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Respond to an HTTP request with a static body</p>
     </Link>
   
 
     <Link to="/guides/automation/action/http/response">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Automation with HTTP response action</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Respond to an HTTP request</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/http/get/headers">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP GET request with headers</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/http/get">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP GET request</p>
     </Link>
   
     </div>

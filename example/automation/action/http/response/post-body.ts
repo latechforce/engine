@@ -3,7 +3,7 @@ import type { AppSchema } from '@/types'
 export const inGuides = true
 
 export default {
-  name: 'HTTP response action with static body',
+  name: 'Respond to an HTTP request with a static body',
   description: 'Automation with HTTP response action and static body',
   automations: [
     {

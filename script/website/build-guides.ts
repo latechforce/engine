@@ -51,7 +51,7 @@ function generateGuideCard(guide: Guide): string {
 function generateGuideLink(guide: Guide): string {
   return `
     <Link to="/guides/${guide.path}">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>${guide.description}</p>
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>${guide.title}</p>
     </Link>
   `
 }
@@ -215,7 +215,7 @@ ${guide.description}
 ${guide.code}
 \`\`\`
 
-<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '120px' }}>
+<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '72px' }}>
 ${categories
   .map((category) =>
     generateCategorySection(
@@ -262,9 +262,9 @@ import Link from '@docusaurus/Link'
 A collection of code samples and walkthroughs for configuring and using LTF Engine.
 
 <div style={{ display: 'flex', flexDirection: 'row', gap: '2rem', marginBottom: '2rem' }}>
-  ${generateGuideCard(guides.find((g) => g.path.includes('http/post/request'))!)}
+  ${generateGuideCard(guides.find((g) => g.path.includes('database/postgres'))!)}
+  ${generateGuideCard(guides.find((g) => g.path.includes('table/field/single-line-text'))!)}
   ${generateGuideCard(guides.find((g) => g.path.includes('typescript/externals'))!)}
-  ${generateGuideCard(guides.find((g) => g.path.includes('response/previous-action'))!)}
 </div>
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -288,14 +288,14 @@ async function updateMainIndexPage(guides: Guide[]) {
 
   // Remove existing categories section if it exists
   const contentWithoutCategories = content.replace(
-    /<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '120px' }}>[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/main>\s*<\/div>/,
+    /<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '72px' }}>[\s\S]*?<\/div>\s*<\/div>\s*<\/div>\s*<\/main>\s*<\/div>/,
     '</div>\n</div>\n</main>\n</div>'
   )
 
   const categories = [...new Set(guides.map((g) => g.category))]
 
   const categoriesSection = `
-<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '120px' }}>
+<div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '72px' }}>
 
 <div>
 # Learn by example
