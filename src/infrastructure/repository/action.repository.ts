@@ -35,4 +35,10 @@ export class ActionRepository implements IActionRepository {
       runTypescript: (code: string) => this.codeService.runTypescript(code, inputData),
     }
   }
+
+  http(url: string) {
+    return {
+      get: () => fetch(url).then((res) => res.json()),
+    }
+  }
 }

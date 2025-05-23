@@ -28,6 +28,8 @@ export class RunActionUseCase {
         switch (schema.action) {
           case 'response':
             return {}
+          case 'get':
+            return this.actionRepository.http(schema.url).get()
         }
         break
     }
