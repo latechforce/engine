@@ -29,7 +29,7 @@ export class RunActionUseCase {
           case 'response':
             return {}
           case 'get':
-            return this.actionRepository.http(schema.url).get()
+            return this.actionRepository.http(schema.url, { headers: schema.headers }).get()
         }
         break
     }

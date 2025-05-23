@@ -7,7 +7,10 @@ export type IActionRepository = {
     runJavascript: (code: string) => Promise<object>
     runTypescript: (code: string) => Promise<object>
   }
-  http: (url: string) => {
+  http: (
+    url: string,
+    options?: RequestInit
+  ) => {
     get: () => Promise<object>
   }
 }
