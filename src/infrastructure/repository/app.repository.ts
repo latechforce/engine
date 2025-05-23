@@ -11,6 +11,7 @@ import type { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-c
 import type { TriggerHttpUseCase } from '@/application/use-case/trigger/trigger-http.use-case'
 import { appValidator } from '../validator/app.validator'
 import type { ValidateResult } from '@/domain/value-object/validate-result.value-object'
+import { z } from 'zod/v4'
 
 @injectable()
 export class AppRepository implements IAppRepository {
@@ -46,7 +47,7 @@ export class AppRepository implements IAppRepository {
   validate(unknownSchema: unknown): ValidateResult {
     const { success, error, data } = appValidator.safeParse(unknownSchema)
     if (!success) {
-      return { error: JSON.stringify(error?.flatten(), null, 2) }
+      return { error: z.prettifyError(error) }
     }
     return { appSchema: data }
   }

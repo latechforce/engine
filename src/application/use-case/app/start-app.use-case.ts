@@ -4,6 +4,7 @@ import { App } from '@/domain/entity/app.entity'
 import type { IAppRepository } from '@/domain/repository-interface/app-repository.interface'
 import type { SetupAutomationUseCase } from '../automation/setup-automation.use-case'
 import type { SetupTableUseCase } from '../table/setup-table.use-case'
+import type { ValidateAppUseCase } from './validate-app.use-case'
 
 @injectable()
 export class StartAppUseCase {
@@ -13,13 +14,15 @@ export class StartAppUseCase {
     @inject(TYPES.UseCase.SetupAutomation)
     private readonly setupAutomationUseCase: SetupAutomationUseCase,
     @inject(TYPES.UseCase.SetupTable)
-    private readonly setupTableUseCase: SetupTableUseCase
+    private readonly setupTableUseCase: SetupTableUseCase,
+    @inject(TYPES.UseCase.ValidateApp)
+    private readonly validateAppUseCase: ValidateAppUseCase
   ) {}
 
   async execute(unknownSchema: unknown): Promise<App> {
     this.appRepository.info('Starting app...')
     const env = await this.appRepository.loadEnv()
-    const { appSchema, error } = this.appRepository.validate(unknownSchema)
+    const { appSchema, error } = await this.validateAppUseCase.execute(unknownSchema)
     if (!appSchema) {
       this.appRepository.error(error)
       throw new Error('Invalid app schema')

@@ -17,7 +17,7 @@ type StartAppFixture = {
   startExampleApp: (options: {
     filter?: string
     loggedOnAdmin?: boolean
-    env?: Partial<EnvSchema>
+    env?: Record<string, string>
     test: typeof test
   }) => Promise<{ page: Page; env: EnvSchema }>
 }
@@ -41,7 +41,7 @@ function getCallerFile(): string {
 
 async function getExampleFileFilter(
   filter?: string
-): Promise<{ exampleFileFilter?: string; env: Partial<EnvSchema> }> {
+): Promise<{ exampleFileFilter?: string; env: Record<string, string> }> {
   const callerFile = getCallerFile()
   let exampleFileFilter = filter
   if (callerFile.includes('example') && !filter?.includes('/')) {

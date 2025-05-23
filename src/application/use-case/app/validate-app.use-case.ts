@@ -2,6 +2,7 @@ import TYPES from '@/infrastructure/di/types'
 import { injectable, inject } from 'inversify'
 import type { IAppRepository } from '@/domain/repository-interface/app-repository.interface'
 import type { ValidateResult } from '@/domain/value-object/validate-result.value-object'
+import type { AppSchemaValidated } from '@/types'
 
 @injectable()
 export class ValidateAppUseCase {
@@ -11,6 +12,56 @@ export class ValidateAppUseCase {
   ) {}
 
   async execute(unknownSchema: unknown): Promise<ValidateResult> {
-    return this.appRepository.validate(unknownSchema)
+    const result = this.appRepository.validate(unknownSchema)
+    if (result.appSchema) {
+      result.appSchema = this.fillEnv(result.appSchema) as AppSchemaValidated
+    }
+    return result
+  }
+
+  private fillEnv(config: unknown): unknown {
+    const env = Bun.env
+
+    function replaceToken(value: string): string {
+      const content = value.replace(/^{{\s*env\.|}}$/g, '').trim()
+      const [envKey, ...defaultValueParts] = content.split(' ')
+      const defaultValue =
+        defaultValueParts.length > 0 ? defaultValueParts.join(' ').replace(/^"|"$/g, '') : undefined
+      if (envKey && envKey in env) {
+        const envValue = env[envKey]
+        if (envValue === undefined) {
+          throw new Error(
+            `Environment variable "${envKey}" not found and no default value provided`
+          )
+        }
+        return envValue
+      } else if (defaultValue !== undefined) {
+        return defaultValue
+      }
+      throw new Error(`Environment variable "${envKey}" not found and no default value provided`)
+    }
+
+    if (Array.isArray(config)) {
+      return config.map((item) => this.fillEnv(item))
+    }
+
+    if (typeof config !== 'object' || config === null) {
+      if (typeof config === 'string' && config.match(/^{{\s*env\./)) {
+        return replaceToken(config)
+      }
+      return config
+    }
+
+    const result = { ...config } as Record<string, unknown>
+    for (const [key, value] of Object.entries(config)) {
+      if (typeof value === 'string' && value.match(/^{{\s*env\./)) {
+        result[key] = replaceToken(value)
+      } else if (typeof value === 'object' && value !== null) {
+        result[key] = this.fillEnv(value)
+      } else {
+        result[key] = value
+      }
+    }
+    return result
   }
 }
