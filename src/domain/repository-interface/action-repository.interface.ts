@@ -12,5 +12,6 @@ export type IActionRepository = {
     options?: RequestInit
   ) => {
     get: () => Promise<object>
+    post: () => Promise<object>
   }
 }
