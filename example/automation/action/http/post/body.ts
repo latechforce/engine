@@ -1,8 +1,8 @@
 import type { AppSchema } from '@/types'
 
 export default {
-  name: 'HTTP POST action with headers',
-  description: 'Automation with HTTP POST action and headers',
+  name: 'HTTP POST action',
+  description: 'Automation with HTTP POST action',
   automations: [
     {
       name: 'post',
@@ -17,8 +17,8 @@ export default {
           service: 'http',
           action: 'post',
           url: 'https://httpbin.org/post',
-          headers: {
-            'X-Custom-Header': 'test',
+          body: {
+            message: 'Hello, world!',
           },
         },
       ],

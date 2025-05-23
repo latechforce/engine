@@ -39,7 +39,10 @@ export class ActionRepository implements IActionRepository {
   http(url: string, options?: RequestInit) {
     return {
       get: () => fetch(url, options).then((res) => res.json()),
-      post: () => fetch(url, { ...options, method: 'POST' }).then((res) => res.json()),
+      post: (body?: Record<string, unknown>) =>
+        fetch(url, { ...options, method: 'POST', body: JSON.stringify(body ?? {}) }).then((res) =>
+          res.json()
+        ),
     }
   }
 }

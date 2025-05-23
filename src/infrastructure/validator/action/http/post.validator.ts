@@ -6,6 +6,7 @@ export const postHttpActionValidator = baseHttpActionValidator
     action: z.literal('post'),
     url: z.string(),
     headers: z.record(z.string(), z.string()).optional(),
+    body: z.record(z.string(), z.unknown()).optional(),
   })
   .meta({
     title: 'GET HTTP ',

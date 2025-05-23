@@ -24,3 +24,15 @@ test('should run a post http action with headers', async ({ startExampleApp }) =
   const data = await response.json()
   expect(data.headers['X-Custom-Header']).toBe('test')
 })
+
+test('should run a post http action with body', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'body', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automation/post')
+
+  // THEN
+  const data = await response.json()
+  expect(data.json).toEqual({ message: 'Hello, world!' })
+})
