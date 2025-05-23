@@ -101,6 +101,11 @@ const config: Config = {
           position: 'right',
         },
         {
+          href: 'https://discord.gg/NgdRhz76',
+          label: 'Discord',
+          position: 'right',
+        },
+        {
           href: 'https://github.com/latechforce/engine',
           label: 'GitHub',
           position: 'right',
@@ -114,16 +119,16 @@ const config: Config = {
           title: 'Resources',
           items: [
             {
-              label: 'Schema',
-              to: '/schema',
-            },
-            {
               label: 'Docs',
               to: '/docs/intro',
             },
             {
               label: 'Guides',
               to: '/guides',
+            },
+            {
+              label: 'Blog',
+              to: '/blog',
             },
           ],
         },
@@ -132,7 +137,7 @@ const config: Config = {
           items: [
             {
               label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
+              href: 'https://discord.gg/NgdRhz76',
             },
           ],
         },
@@ -140,8 +145,8 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'Schema Explorer',
+              to: '/schema-explorer',
             },
             {
               label: 'Test Report',

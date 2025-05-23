@@ -4,7 +4,8 @@ export const inGuides = true
 
 export default {
   name: 'Run TypeScript code action with input data',
-  description: 'Automation with run TypeScript code action and input data',
+  description:
+    'Automation with run TypeScript code action and input data. You can enforce the body type of the request by adding a `requestBody` object to the trigger.',
   automations: [
     {
       name: 'run-typescript',
