@@ -13,7 +13,7 @@ test('should run a post http action', async ({ startExampleApp }) => {
   expect(data.url).toBe('https://httpbin.org/post')
 })
 
-test.skip('should run a post http action with headers', async ({ startExampleApp }) => {
+test('should run a post http action with headers', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ filter: 'headers', test })
 

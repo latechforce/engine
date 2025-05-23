@@ -31,7 +31,7 @@ export class RunActionUseCase {
           case 'get':
             return this.actionRepository.http(schema.url, { headers: schema.headers }).get()
           case 'post':
-            return this.actionRepository.http(schema.url).post()
+            return this.actionRepository.http(schema.url, { headers: schema.headers }).post()
         }
         break
     }
