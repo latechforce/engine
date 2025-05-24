@@ -9,9 +9,12 @@ import type { AuthService } from '../service/auth.service'
 import type { App } from '@/domain/entity/app.entity'
 import type { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
 import type { TriggerHttpUseCase } from '@/application/use-case/trigger/trigger-http.use-case'
-import { appValidator } from '../validator/app.validator'
+import { appValidator } from '../../domain/validator/app.validator'
 import type { ValidateResult } from '@/domain/value-object/validate-result.value-object'
 import { z } from 'zod/v4'
+import type { ListAutomationsUseCase } from '@/application/use-case/automation/list-automations.use-case'
+import type { ListConnectionsUseCase } from '@/application/use-case/connection/list-connections.use-case'
+import type { AuthenticateConnectionUseCase } from '@/application/use-case/connection/authenticate-connection.use-case'
 
 @injectable()
 export class AppRepository implements IAppRepository {
@@ -29,7 +32,13 @@ export class AppRepository implements IAppRepository {
     @inject(TYPES.UseCase.ListRuns)
     private readonly listRunsUseCase: ListRunsUseCase,
     @inject(TYPES.UseCase.TriggerHttp)
-    private readonly triggerHttpUseCase: TriggerHttpUseCase
+    private readonly triggerHttpUseCase: TriggerHttpUseCase,
+    @inject(TYPES.UseCase.ListAutomations)
+    private readonly listAutomationsUseCase: ListAutomationsUseCase,
+    @inject(TYPES.UseCase.ListConnections)
+    private readonly listConnectionsUseCase: ListConnectionsUseCase,
+    @inject(TYPES.UseCase.AuthenticateConnection)
+    private readonly authenticateConnectionUseCase: AuthenticateConnectionUseCase
   ) {}
 
   info(message: string) {
@@ -61,7 +70,10 @@ export class AppRepository implements IAppRepository {
       c.set('app', app)
       c.set('logger', this.logger)
       c.set('listRunsUseCase', this.listRunsUseCase)
+      c.set('listAutomationsUseCase', this.listAutomationsUseCase)
+      c.set('listConnectionsUseCase', this.listConnectionsUseCase)
       c.set('triggerHttpUseCase', this.triggerHttpUseCase)
+      c.set('authenticateConnectionUseCase', this.authenticateConnectionUseCase)
       await next()
     })
     this.server.setupOpenAPI(app)

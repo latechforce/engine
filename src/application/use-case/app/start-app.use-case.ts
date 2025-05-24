@@ -5,6 +5,7 @@ import type { IAppRepository } from '@/domain/repository-interface/app-repositor
 import type { SetupAutomationUseCase } from '../automation/setup-automation.use-case'
 import type { SetupTableUseCase } from '../table/setup-table.use-case'
 import type { ValidateAppUseCase } from './validate-app.use-case'
+import type { SetupConnectionUseCase } from '../connection/setup-connection.use-case'
 
 @injectable()
 export class StartAppUseCase {
@@ -15,6 +16,8 @@ export class StartAppUseCase {
     private readonly setupAutomationUseCase: SetupAutomationUseCase,
     @inject(TYPES.UseCase.SetupTable)
     private readonly setupTableUseCase: SetupTableUseCase,
+    @inject(TYPES.UseCase.SetupConnection)
+    private readonly setupConnectionUseCase: SetupConnectionUseCase,
     @inject(TYPES.UseCase.ValidateApp)
     private readonly validateAppUseCase: ValidateAppUseCase
   ) {}
@@ -29,11 +32,14 @@ export class StartAppUseCase {
     }
     const app = new App(schema, env)
     await this.appRepository.setup(app)
-    for (const automation of app.automations) {
-      await this.setupAutomationUseCase.execute(automation)
+    for (const connection of app.connections) {
+      await this.setupConnectionUseCase.execute(connection)
     }
     for (const table of app.tables) {
       await this.setupTableUseCase.execute(table)
+    }
+    for (const automation of app.automations) {
+      await this.setupAutomationUseCase.execute(automation)
     }
     await this.appRepository.start()
     this.appRepository.info(`App "${app.schema.name}" is running at ${app.url()}`)

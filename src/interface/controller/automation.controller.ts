@@ -4,7 +4,8 @@ import type { HonoType } from '@/infrastructure/service/server.service'
 export class AutomationController {
   static async list(c: Context<HonoType>) {
     const app = c.get('app')
-    const automations = app.automations.map((automation) => automation.schema)
+    const listAutomationsUseCase = c.get('listAutomationsUseCase')
+    const automations = await listAutomationsUseCase.execute(app)
     return c.json(automations)
   }
 

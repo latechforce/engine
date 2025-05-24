@@ -1,4 +1,4 @@
-import { appValidator } from '@/infrastructure/validator/app.validator'
+import { appValidator } from '@/domain/validator/app.validator'
 import fs from 'fs'
 import { join } from 'path'
 import { z } from 'zod/v4'

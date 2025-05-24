@@ -1,14 +1,11 @@
-import type { AppSchema as AppSchemaValidated } from '@/infrastructure/validator/app.validator'
-import type { EnvSchema as EnvSchemaValidated } from '@/infrastructure/validator/env.validator'
-export type { ActionSchema } from '@/infrastructure/validator/action'
-export type { AutomationSchema } from '@/infrastructure/validator/automation.validator'
-export type { TriggerSchema } from '@/infrastructure/validator/trigger'
+export type { AppSchema } from '@/domain/validator/app.validator'
+export type { EnvSchema } from '@/domain/validator/env.validator'
+export type { ActionSchema } from '@/domain/validator/action'
+export type { AutomationSchema } from '@/domain/validator/automation.validator'
+export type { TriggerSchema } from '@/domain/validator/trigger'
 export type { CodeContext } from '@/infrastructure/service/code.service'
-export type { FieldSchema } from '@/infrastructure/validator/field'
-export type { TableSchema } from '@/infrastructure/validator/table.validator'
-export type { ResponseHttpActionSchema } from '@/infrastructure/validator/action/http/response.validator'
-
-export type AppSchema = Partial<AppSchemaValidated>
-export type EnvSchema = Partial<EnvSchemaValidated>
-
-export type { AppSchemaValidated, EnvSchemaValidated }
+export type { FieldSchema } from '@/domain/validator/field'
+export type { TableSchema } from '@/domain/validator/table.validator'
+export type { ConnectionSchema } from '@/domain/validator/connection'
+export type { ResponseHttpActionSchema } from '@/domain/validator/action/http/response.validator'
+export type { Mock } from '@/domain/value-object/mock.value-object'

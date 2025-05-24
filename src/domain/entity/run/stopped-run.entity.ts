@@ -1,7 +1,7 @@
 import { Automation } from '../automation.entity'
 import type { AutomationSchema } from '@/types'
 
-export class RunStopped {
+export class StoppedRun {
   public readonly status = 'stopped'
   public readonly automation: Automation
 

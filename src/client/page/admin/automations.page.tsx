@@ -3,11 +3,11 @@ import { rootRoute } from '../layout'
 import Layout from './layout'
 import { useQuery } from '@tanstack/react-query'
 import { DataTable } from '@/client/component/data-table.component'
-import type { AutomationSchema } from '@/types'
 import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '@/client/lib/client.lib'
+import type { AutomationDto } from '@/application/dto/automation.dto'
 
-export const columns: ColumnDef<AutomationSchema>[] = [
+export const columns: ColumnDef<AutomationDto>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
@@ -15,7 +15,7 @@ export const columns: ColumnDef<AutomationSchema>[] = [
 ]
 
 export const AutomationsDataTable = () => {
-  const { isPending, error, data } = useQuery<AutomationSchema[]>({
+  const { isPending, error, data } = useQuery<AutomationDto[]>({
     queryKey: ['automationsData'],
     queryFn: () => client.automations.$get().then((res) => res.json()),
   })

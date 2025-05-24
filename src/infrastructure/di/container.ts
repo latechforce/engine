@@ -33,6 +33,15 @@ import { TriggerHttpUseCase } from '@/application/use-case/trigger/trigger-http.
 import { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
 import { ValidateAppUseCase } from '@/application/use-case/app/validate-app.use-case'
 import { ValidatorService } from '../service/validator.service'
+import { ListAutomationsUseCase } from '@/application/use-case/automation/list-automations.use-case'
+import { ListConnectionsUseCase } from '@/application/use-case/connection/list-connections.use-case'
+import { AuthenticateConnectionUseCase } from '@/application/use-case/connection/authenticate-connection.use-case'
+import { ConnectionRepository } from '../repository/connection.repository'
+import type { IConnectionRepository } from '@/domain/repository-interface/connection-repository.interface'
+import { SetupConnectionUseCase } from '@/application/use-case/connection/setup-connection.use-case'
+import type { ITokenRepository } from '@/domain/repository-interface/token-repository.interface'
+import { TokenRepository } from '../repository/token.repository'
+import { MockAppUseCase } from '@/application/use-case/app/mock-app.use-case'
 
 export async function registerDependencies(externals: Record<string, unknown> = {}) {
   const container = new Container()
@@ -64,6 +73,11 @@ export async function registerDependencies(externals: Record<string, unknown> = 
   container.bind<IRunRepository>(TYPES.Repository.Run).to(RunRepository).inSingletonScope()
   container.bind<ITableRepository>(TYPES.Repository.Table).to(TableRepository).inSingletonScope()
   container.bind<IFieldRepository>(TYPES.Repository.Field).to(FieldRepository).inSingletonScope()
+  container
+    .bind<IConnectionRepository>(TYPES.Repository.Connection)
+    .to(ConnectionRepository)
+    .inSingletonScope()
+  container.bind<ITokenRepository>(TYPES.Repository.Token).to(TokenRepository).inSingletonScope()
 
   // Register use cases
   container.bind<StartAppUseCase>(TYPES.UseCase.StartApp).to(StartAppUseCase).inSingletonScope()
@@ -98,9 +112,26 @@ export async function registerDependencies(externals: Record<string, unknown> = 
     .inSingletonScope()
   container.bind<ListRunsUseCase>(TYPES.UseCase.ListRuns).to(ListRunsUseCase).inSingletonScope()
   container
+    .bind<ListAutomationsUseCase>(TYPES.UseCase.ListAutomations)
+    .to(ListAutomationsUseCase)
+    .inSingletonScope()
+  container
+    .bind<ListConnectionsUseCase>(TYPES.UseCase.ListConnections)
+    .to(ListConnectionsUseCase)
+    .inSingletonScope()
+  container
     .bind<ValidateAppUseCase>(TYPES.UseCase.ValidateApp)
     .to(ValidateAppUseCase)
     .inSingletonScope()
+  container
+    .bind<AuthenticateConnectionUseCase>(TYPES.UseCase.AuthenticateConnection)
+    .to(AuthenticateConnectionUseCase)
+    .inSingletonScope()
+  container
+    .bind<SetupConnectionUseCase>(TYPES.UseCase.SetupConnection)
+    .to(SetupConnectionUseCase)
+    .inSingletonScope()
+  container.bind<MockAppUseCase>(TYPES.UseCase.MockApp).to(MockAppUseCase).inSingletonScope()
 
   return container
 }

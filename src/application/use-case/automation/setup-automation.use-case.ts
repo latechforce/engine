@@ -6,7 +6,7 @@ import type { SetupActionUseCase } from '../action/setup-action.use-case'
 import type { RunAutomationUseCase } from './run-automation.use-case'
 import type { IRunRepository } from '@/domain/repository-interface/run-repository.interface'
 import type { IAutomationRepository } from '@/domain/repository-interface/automation-repository.interface'
-import { RunPlaying } from '@/domain/entity/run/run-playing.entity'
+import { PlayingRun } from '@/domain/entity/run/playing-run.entity'
 
 @injectable()
 export class SetupAutomationUseCase {
@@ -29,7 +29,7 @@ export class SetupAutomationUseCase {
       await this.setupActionUseCase.execute(action)
     }
     await this.setupTriggerUseCase.execute(automation)
-    this.runRepository.onCreate((run: RunPlaying) => this.runAutomationUseCase.execute(run))
+    this.runRepository.onCreate((run: PlayingRun) => this.runAutomationUseCase.execute(run))
     const runs = await this.runRepository.listPlaying()
     for (const run of runs) {
       await this.runAutomationUseCase.execute(run)

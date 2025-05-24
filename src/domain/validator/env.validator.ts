@@ -13,4 +13,5 @@ export const envValidator = z.object({
   AUTH_SECRET: z.string().default('secret'),
 })
 
-export type EnvSchema = z.infer<typeof envValidator>
+export type EnvSchemaValidated = z.infer<typeof envValidator>
+export type EnvSchema = Partial<EnvSchemaValidated>

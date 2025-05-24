@@ -1,6 +1,6 @@
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/client/ui/sidebar.ui'
 import { Sidebar } from '@/client/component/sidebar.component'
-import { History, Zap, Gauge, Webhook } from 'lucide-react'
+import { History, Zap, Gauge, Webhook, Link } from 'lucide-react'
 import { RequireAuth } from '@/client/context/require-auth.context'
 import { Separator } from '@/client/ui/separator.ui'
 import {
@@ -30,6 +30,11 @@ const items = [
     icon: History,
   },
   {
+    title: 'Connections',
+    url: '/_admin/connections',
+    icon: Link,
+  },
+  {
     title: 'OpenAPI',
     url: '/_admin/openapi',
     icon: Webhook,
@@ -52,7 +57,7 @@ export default function Layout({
     <RequireAuth to="/_admin/login">
       <SidebarProvider>
         <Sidebar
-          title="WAG Admin"
+          title="Admin"
           items={items}
         />
         <SidebarInset>

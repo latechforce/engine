@@ -1,12 +1,12 @@
 import net from 'net'
 import type { Env } from '@/domain/value-object/env.value-object'
 import { injectable } from 'inversify'
-import { envValidator, type EnvSchema } from '../validator/env.validator'
+import { envValidator, type EnvSchemaValidated } from '../../domain/validator/env.validator'
 
 @injectable()
 export class EnvService {
   private env: Env | null = null
-  private parsedEnv: EnvSchema
+  private parsedEnv: EnvSchemaValidated
 
   constructor() {
     this.parsedEnv = envValidator.parse(Bun.env)

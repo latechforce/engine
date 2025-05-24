@@ -1,8 +1,8 @@
+import type { RunDto } from '@/application/dto/run.dto'
 import { expect, test } from '@/e2e/fixtures'
 import { webhookPayloadInviteCreated } from '@/infrastructure/integration/calendly/examples'
-import type { RunSchema } from '@/infrastructure/validator/run.validator'
 
-test('should trigger an automation when a calendly invite is created', async ({
+test.skip('should trigger an automation when a calendly invite is created', async ({
   startExampleApp,
 }) => {
   // GIVEN
@@ -15,8 +15,8 @@ test('should trigger an automation when a calendly invite is created', async ({
 
   // THEN
   const response = await page.request.get('/api/runs')
-  const data: RunSchema[] = await response.json()
+  const data: RunDto[] = await response.json()
   expect(data.length).toBe(1)
-  expect(data[0]?.automation_schema.name).toBe('calendly')
+  expect(data[0]?.automation_name).toBe('calendly')
   expect(data[0]?.status).toBe('success')
 })

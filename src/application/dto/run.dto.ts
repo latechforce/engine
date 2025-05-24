@@ -1,15 +1,19 @@
-import type { RunSchema } from '@/infrastructure/validator/run.validator'
-import { type Run, RunStopped } from '@/domain/entity/run'
+import { type Run } from '@/domain/entity/run'
 
-export function toRunDto(run: Run): RunSchema {
+export type RunDto = {
+  id: string
+  status: string
+  created_at: string
+  updated_at: string
+  automation_name: string
+}
+
+export function toRunDto(run: Run): RunDto {
   return {
     id: run.id,
     status: run.status,
     created_at: run.createdAt.toISOString(),
     updated_at: run.updatedAt.toISOString(),
-    automation_schema: run.automation.schema,
-    data: run.data,
-    last_action_name: run.lastActionName,
-    error_message: run instanceof RunStopped ? run.errorMessage : null,
+    automation_name: run.automation.schema.name,
   }
 }

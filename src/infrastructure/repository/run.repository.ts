@@ -3,7 +3,7 @@ import type { DatabaseService } from '../service/database.service'
 import TYPES from '../di/types'
 import type { IRunRepository } from '@/domain/repository-interface/run-repository.interface'
 import { EventEmitter } from 'events'
-import { type Run, RunPlaying, RunSuccess, RunStopped } from '@/domain/entity/run'
+import { type Run, PlayingRun, SuccessRun, StoppedRun } from '@/domain/entity/run'
 
 @injectable()
 export class RunRepository implements IRunRepository {
@@ -14,7 +14,7 @@ export class RunRepository implements IRunRepository {
     private readonly database: DatabaseService
   ) {}
 
-  async create(run: RunPlaying) {
+  async create(run: PlayingRun) {
     await this.database.table.run.create({
       id: run.id,
       automation_schema: run.automation.schema,
@@ -27,7 +27,7 @@ export class RunRepository implements IRunRepository {
     this.eventEmitter.emit('create', run)
   }
 
-  onCreate(handler: (run: RunPlaying) => Promise<void>) {
+  onCreate(handler: (run: PlayingRun) => Promise<void>) {
     this.eventEmitter.on('create', handler)
   }
 
@@ -37,7 +37,7 @@ export class RunRepository implements IRunRepository {
       data: run.data,
       updated_at: run.updatedAt,
       last_action_name: run.lastActionName,
-      error_message: run instanceof RunStopped ? run.errorMessage : undefined,
+      error_message: run instanceof StoppedRun ? run.errorMessage : undefined,
     })
     this.eventEmitter.emit('update', run)
   }
@@ -51,7 +51,7 @@ export class RunRepository implements IRunRepository {
     return runs.map((run) => this.toEntity(run))
   }
 
-  async listPlaying(): Promise<RunPlaying[]> {
+  async listPlaying(): Promise<PlayingRun[]> {
     const runs = await this.database.table.run.listPlaying()
     return runs.map((run) => this.toEntityPlaying(run))
   }
@@ -77,8 +77,8 @@ export class RunRepository implements IRunRepository {
     }
   }
 
-  private toEntityPlaying(run: typeof this.database.schema.run.$inferSelect): RunPlaying {
-    return new RunPlaying(
+  private toEntityPlaying(run: typeof this.database.schema.run.$inferSelect): PlayingRun {
+    return new PlayingRun(
       run.automation_schema,
       run.data,
       run.id,
@@ -88,8 +88,8 @@ export class RunRepository implements IRunRepository {
     )
   }
 
-  private toEntitySuccess(run: typeof this.database.schema.run.$inferSelect): RunSuccess {
-    return new RunSuccess(
+  private toEntitySuccess(run: typeof this.database.schema.run.$inferSelect): SuccessRun {
+    return new SuccessRun(
       run.automation_schema,
       run.id,
       run.created_at,
@@ -99,8 +99,8 @@ export class RunRepository implements IRunRepository {
     )
   }
 
-  private toEntityStopped(run: typeof this.database.schema.run.$inferSelect): RunStopped {
-    return new RunStopped(
+  private toEntityStopped(run: typeof this.database.schema.run.$inferSelect): StoppedRun {
+    return new StoppedRun(
       run.automation_schema,
       run.id,
       run.created_at,

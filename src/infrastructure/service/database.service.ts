@@ -8,7 +8,7 @@ import { migrate as migrateSqlite } from 'drizzle-orm/bun-sqlite/migrator'
 import type { LoggerService } from './logger.service'
 import * as postgresSchema from '@/infrastructure/db/schema/postgres'
 import * as sqliteSchema from '@/infrastructure/db/schema/sqlite'
-import { eq } from 'drizzle-orm'
+import { eq, inArray } from 'drizzle-orm'
 import fs from 'fs'
 import path, { join } from 'path'
 
@@ -110,6 +110,40 @@ export class DatabaseService {
           delete: async (id: string) =>
             this.postgres.delete(this.postgresSchema.run).where(eq(this.postgresSchema.run.id, id)),
         },
+        token: {
+          create: async (data: typeof this.postgresSchema.token.$inferInsert) =>
+            this.postgres.insert(this.postgresSchema.token).values(data),
+          update: async (
+            id: number,
+            data: Partial<Omit<typeof this.postgresSchema.token.$inferInsert, 'id'>>
+          ) =>
+            this.postgres
+              .update(this.postgresSchema.token)
+              .set(data)
+              .where(eq(this.postgresSchema.token.id, id)),
+          get: async (id: number) =>
+            this.postgres.query.token.findFirst({ where: eq(this.postgresSchema.token.id, id) }),
+        },
+        connection_status: {
+          create: async (data: typeof this.postgresSchema.connection_status.$inferInsert) =>
+            this.postgres.insert(this.postgresSchema.connection_status).values(data),
+          update: async (
+            id: number,
+            data: Partial<Omit<typeof this.postgresSchema.connection_status.$inferInsert, 'id'>>
+          ) =>
+            this.postgres
+              .update(this.postgresSchema.connection_status)
+              .set(data)
+              .where(eq(this.postgresSchema.connection_status.id, id)),
+          get: async (id: number) =>
+            this.postgres.query.connection_status.findFirst({
+              where: eq(this.postgresSchema.connection_status.id, id),
+            }),
+          listByIds: async (ids: number[]) =>
+            this.postgres.query.connection_status.findMany({
+              where: inArray(this.postgresSchema.connection_status.id, ids),
+            }),
+        },
       }
     } else {
       return {
@@ -132,6 +166,40 @@ export class DatabaseService {
             this.sqlite.query.run.findMany({ where: eq(this.sqliteSchema.run.status, 'playing') }),
           delete: async (id: string) =>
             this.sqlite.delete(this.sqliteSchema.run).where(eq(this.sqliteSchema.run.id, id)),
+        },
+        token: {
+          create: async (data: typeof this.sqliteSchema.token.$inferInsert) =>
+            this.sqlite.insert(this.sqliteSchema.token).values(data),
+          update: async (
+            id: number,
+            data: Partial<Omit<typeof this.sqliteSchema.token.$inferInsert, 'id'>>
+          ) =>
+            this.sqlite
+              .update(this.sqliteSchema.token)
+              .set(data)
+              .where(eq(this.sqliteSchema.token.id, id)),
+          get: async (id: number) =>
+            this.sqlite.query.token.findFirst({ where: eq(this.sqliteSchema.token.id, id) }),
+        },
+        connection_status: {
+          create: async (data: typeof this.sqliteSchema.connection_status.$inferInsert) =>
+            this.sqlite.insert(this.sqliteSchema.connection_status).values(data),
+          update: async (
+            id: number,
+            data: Partial<Omit<typeof this.sqliteSchema.connection_status.$inferInsert, 'id'>>
+          ) =>
+            this.sqlite
+              .update(this.sqliteSchema.connection_status)
+              .set(data)
+              .where(eq(this.sqliteSchema.connection_status.id, id)),
+          get: async (id: number) =>
+            this.sqlite.query.connection_status.findFirst({
+              where: eq(this.sqliteSchema.connection_status.id, id),
+            }),
+          listByIds: async (ids: number[]) =>
+            this.sqlite.query.connection_status.findMany({
+              where: inArray(this.sqliteSchema.connection_status.id, ids),
+            }),
         },
       }
     }

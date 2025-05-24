@@ -53,6 +53,13 @@ CREATE TABLE `verification` (
 	`updated_at` integer
 );
 --> statement-breakpoint
+CREATE TABLE `connection_status` (
+	`id` integer PRIMARY KEY NOT NULL,
+	`connected` integer NOT NULL,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE `run` (
 	`id` text PRIMARY KEY NOT NULL,
 	`automation_schema` text NOT NULL,
@@ -62,6 +69,16 @@ CREATE TABLE `run` (
 	`error_message` text,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE `token` (
+	`id` integer PRIMARY KEY NOT NULL,
+	`token_type` text NOT NULL,
+	`access_token` text NOT NULL,
+	`refresh_token` text,
+	`expires_in` integer,
+	`scope` text,
+	`created_at` integer NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `field` (

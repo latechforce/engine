@@ -67,9 +67,16 @@ if (searchTerm) {
     return {}
   })
 
+  const mock = await import(selectedFile).then((m) => {
+    if (process.env.MOCK && m.mock) {
+      return m.mock
+    }
+    return {}
+  })
+
   const schema: AppSchema = await import(selectedFile).then((m) => m.default)
 
-  await new App({ externals }).start(schema)
+  await new App({ externals, mock }).start(schema)
 } else {
   await new App().start()
 }

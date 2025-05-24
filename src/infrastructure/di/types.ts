@@ -18,6 +18,8 @@ const TYPES = {
     Run: Symbol.for('IRunRepository'),
     Table: Symbol.for('ITableRepository'),
     Field: Symbol.for('IFieldRepository'),
+    Connection: Symbol.for('IConnectionRepository'),
+    Token: Symbol.for('ITokenRepository'),
   },
   UseCase: {
     StartApp: Symbol.for('StartAppUseCase'),
@@ -30,8 +32,13 @@ const TYPES = {
     SetupTable: Symbol.for('SetupTableUseCase'),
     SetupField: Symbol.for('SetupFieldUseCase'),
     ListRuns: Symbol.for('ListRunsUseCase'),
+    ListAutomations: Symbol.for('ListAutomationsUseCase'),
+    ListConnections: Symbol.for('ListConnectionsUseCase'),
+    AuthenticateConnection: Symbol.for('AuthenticateConnectionUseCase'),
     TriggerHttp: Symbol.for('TriggerHttpUseCase'),
     ValidateApp: Symbol.for('ValidateAppUseCase'),
+    SetupConnection: Symbol.for('SetupConnectionUseCase'),
+    MockApp: Symbol.for('MockAppUseCase'),
   },
 }
 

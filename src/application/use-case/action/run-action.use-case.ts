@@ -2,7 +2,7 @@ import TYPES from '@/infrastructure/di/types'
 import { injectable, inject } from 'inversify'
 import type { IActionRepository } from '@/domain/repository-interface/action-repository.interface'
 import type { Action } from '@/domain/entity/action.entity'
-import type { RunPlaying } from '@/domain/entity/run'
+import type { PlayingRun } from '@/domain/entity/run'
 
 @injectable()
 export class RunActionUseCase {
@@ -11,7 +11,7 @@ export class RunActionUseCase {
     private readonly actionRepository: IActionRepository
   ) {}
 
-  async execute(action: Action, run: RunPlaying): Promise<object> {
+  async execute(action: Action, run: PlayingRun): Promise<object> {
     const { schema } = action
     switch (schema.service) {
       case 'code': {

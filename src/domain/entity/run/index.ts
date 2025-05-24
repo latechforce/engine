@@ -1,7 +1,7 @@
-import { RunPlaying } from './run-playing.entity'
-import { RunSuccess } from './run-success.entity'
-import { RunStopped } from './run-stopped.entity'
+import { PlayingRun } from './playing-run.entity'
+import { SuccessRun } from './success-run.entity'
+import { StoppedRun } from './stopped-run.entity'
 
-export type Run = RunPlaying | RunSuccess | RunStopped
+export type Run = PlayingRun | SuccessRun | StoppedRun
 
-export { RunPlaying, RunSuccess, RunStopped }
+export { PlayingRun, SuccessRun, StoppedRun }

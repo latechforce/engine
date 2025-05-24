@@ -1,4 +1,4 @@
-import type { AppSchemaValidated } from '@/types'
+import type { AppSchemaValidated } from '@/domain/validator/app.validator'
 
 export type ValidateResult =
   | { schema: AppSchemaValidated; error?: undefined }

@@ -1,10 +1,10 @@
 import crypto from 'crypto'
 import { Automation } from '../automation.entity'
 import type { AutomationSchema } from '@/types'
-import { RunSuccess } from './run-success.entity'
-import { RunStopped } from './run-stopped.entity'
+import { SuccessRun } from './success-run.entity'
+import { StoppedRun } from './stopped-run.entity'
 
-export class RunPlaying {
+export class PlayingRun {
   public readonly status = 'playing'
   public readonly automation: Automation
 
@@ -26,7 +26,7 @@ export class RunPlaying {
   }
 
   success() {
-    return new RunSuccess(
+    return new SuccessRun(
       this.automation.schema,
       this.id,
       this.createdAt,
@@ -37,7 +37,7 @@ export class RunPlaying {
   }
 
   stop(actionName: string, error: Error) {
-    return new RunStopped(
+    return new StoppedRun(
       this.automation.schema,
       this.id,
       this.createdAt,

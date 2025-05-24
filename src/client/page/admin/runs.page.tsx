@@ -3,14 +3,14 @@ import { rootRoute } from '../layout'
 import Layout from './layout'
 import { DataTable } from '@/client/component/data-table.component'
 import { useQuery } from '@tanstack/react-query'
-import type { RunSchema } from '@/infrastructure/validator/run.validator'
 import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { client } from '@/client/lib/client.lib'
+import type { RunDto } from '@/application/dto/run.dto'
 
-export const columns: ColumnDef<RunSchema>[] = [
+export const columns: ColumnDef<RunDto>[] = [
   {
-    accessorKey: 'automation_schema.name',
+    accessorKey: 'automation_name',
     header: 'Automation',
   },
   {
@@ -34,7 +34,7 @@ export const columns: ColumnDef<RunSchema>[] = [
 ]
 
 export const RunsDataTable = () => {
-  const { isPending, error, data } = useQuery<RunSchema[]>({
+  const { isPending, error, data } = useQuery<RunDto[]>({
     queryKey: ['runsData'],
     queryFn: () => client.runs.$get().then((res) => res.json()),
   })

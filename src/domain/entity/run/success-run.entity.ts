@@ -1,7 +1,7 @@
 import { Automation } from '../automation.entity'
 import type { AutomationSchema } from '@/types'
 
-export class RunSuccess {
+export class SuccessRun {
   public readonly status = 'success'
   public readonly automation: Automation
 

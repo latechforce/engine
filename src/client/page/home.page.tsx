@@ -12,15 +12,14 @@ export const HomePage = () => {
               {/* Title */}
               <div className="mt-5 max-w-2xl">
                 <h1 className="block text-4xl font-semibold text-gray-800 md:text-5xl lg:text-6xl dark:text-neutral-200">
-                  WAG
+                  LTF Engine
                 </h1>
               </div>
               {/* End Title */}
 
               <div className="mt-5 max-w-3xl">
                 <p className="text-lg text-gray-600 dark:text-neutral-400">
-                  WAG (Web Application Generator) is a tool that helps you create web applications
-                  quickly and easily.
+                  LTF Engine is a tool that helps you create web applications quickly and easily.
                 </p>
               </div>
 

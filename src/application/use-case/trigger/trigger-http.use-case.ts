@@ -1,5 +1,5 @@
 import type { Automation } from '@/domain/entity/automation.entity'
-import { RunPlaying } from '@/domain/entity/run/run-playing.entity'
+import { PlayingRun } from '@/domain/entity/run/playing-run.entity'
 import type { IAutomationRepository } from '@/domain/repository-interface/automation-repository.interface'
 import type { IRunRepository } from '@/domain/repository-interface/run-repository.interface'
 import TYPES from '@/infrastructure/di/types'
@@ -38,9 +38,9 @@ export class TriggerHttpUseCase {
         return { error: 'Invalid body' }
       }
     }
-    const run = new RunPlaying(automation.schema, { trigger: triggerData })
+    const run = new PlayingRun(automation.schema, { trigger: triggerData })
     await this.runRepository.create(run)
-    if (schema.respondImmediately) {
+    if (schema.service === 'http' && schema.respondImmediately) {
       return {}
     }
     const responseActionSchema = automation.schema.actions.find(

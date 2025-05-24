@@ -1,6 +1,7 @@
 import { z } from 'zod/v4'
 import { automationValidator } from './automation.validator'
 import { tableValidator } from './table.validator'
+import { connectionValidator } from './connection'
 
 export const appValidator = z
   .object({
@@ -9,10 +10,12 @@ export const appValidator = z
     description: z.string().trim().min(1).default('My app description'),
     automations: z.array(automationValidator).default([]),
     tables: z.array(tableValidator).default([]),
+    connections: z.array(connectionValidator).default([]),
   })
   .strict()
   .meta({
     title: 'App',
   })
 
-export type AppSchema = z.infer<typeof appValidator>
+export type AppSchemaValidated = z.infer<typeof appValidator>
+export type AppSchema = Partial<AppSchemaValidated>

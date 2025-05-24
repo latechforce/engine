@@ -17,6 +17,9 @@ import { join } from 'path'
 import { prettyJSON } from 'hono/pretty-json'
 import { api } from '@/interface/routes'
 import type { SchemaObject } from 'ajv'
+import type { ListAutomationsUseCase } from '@/application/use-case/automation/list-automations.use-case'
+import type { ListConnectionsUseCase } from '@/application/use-case/connection/list-connections.use-case'
+import type { AuthenticateConnectionUseCase } from '@/application/use-case/connection/authenticate-connection.use-case'
 
 export type HonoType = {
   Variables: AuthType & {
@@ -26,6 +29,9 @@ export type HonoType = {
     logger: LoggerService
     listRunsUseCase: ListRunsUseCase
     triggerHttpUseCase: TriggerHttpUseCase
+    listAutomationsUseCase: ListAutomationsUseCase
+    listConnectionsUseCase: ListConnectionsUseCase
+    authenticateConnectionUseCase: AuthenticateConnectionUseCase
   }
 }
 
