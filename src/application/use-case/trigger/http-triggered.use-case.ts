@@ -38,7 +38,7 @@ export class HttpTriggeredUseCase {
     }
     const run = new PlayingRun(automation.schema, { trigger })
     await this.runRepository.create(run)
-    if (schema.service === 'http' && schema.respondImmediately) {
+    if ((schema.service === 'http' && schema.respondImmediately) || schema.service !== 'http') {
       return {}
     }
     const responseActionSchema = automation.schema.actions.find(

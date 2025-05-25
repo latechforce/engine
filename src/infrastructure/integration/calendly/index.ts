@@ -87,7 +87,7 @@ export class CalendlyIntegration extends OAuthIntegration {
         break
       }
       default:
-        throw new Error(`Unsupported trigger type: ${event}`)
+        throw new Error(`Unsupported trigger type: ${schema.event}`)
     }
   }
 
