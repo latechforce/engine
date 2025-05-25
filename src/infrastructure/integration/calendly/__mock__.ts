@@ -1,4 +1,8 @@
-import type { WebhookPayload } from './types'
+import type {
+  ListWebhookSubscriptionsResponse,
+  WebhookPayload,
+  CreateWebhookSubscriptionResponse,
+} from './types'
 
 export const webhookPayloadInviteCreated: WebhookPayload = {
   created_at: '2020-11-23T17:51:19.000000Z',
@@ -64,5 +68,50 @@ export const webhookPayloadInviteCreated: WebhookPayload = {
         },
       ],
     },
+  },
+}
+
+export const listWebhookSubscriptionsResponse: ListWebhookSubscriptionsResponse = {
+  collection: [
+    {
+      uri: 'https://api.calendly.com/webhook_subscriptions/AAAAAAAAAAAAAAAA',
+      callback_url: 'https://blah.foo/bar',
+      created_at: '2019-08-24T14:15:22.123456Z',
+      updated_at: '2019-08-24T14:15:22.123456Z',
+      retry_started_at: '2019-08-24T14:15:22.123456Z',
+      state: 'active',
+      events: ['invitee.created'],
+      scope: 'user',
+      organization: 'https://api.calendly.com/organizations/AAAAAAAAAAAAAAAA',
+      user: 'https://api.calendly.com/users/AAAAAAAAAAAAAAAA',
+      group: 'https://api.calendly.com/groups/AAAAAAAAAAAAAAAA',
+      creator: 'https://api.calendly.com/users/AAAAAAAAAAAAAAAA',
+    },
+  ],
+  pagination: {
+    count: 20,
+    next_page:
+      'https://api.calendly.com/webhook_subscriptions?count=1&page_token=sNjq4TvMDfUHEl7zHRR0k0E1PCEJWvdi',
+    previous_page:
+      'https://api.calendly.com/webhook_subscriptions?count=1&page_token=VJs2rfDYeY8ahZpq0QI1O114LJkNjd7H',
+    next_page_token: 'sNjq4TvMDfUHEl7zHRR0k0E1PCEJWvdi',
+    previous_page_token: 'VJs2rfDYeY8ahZpq0QI1O114LJkNjd7H',
+  },
+}
+
+export const createWebhookSubscriptionResponse: CreateWebhookSubscriptionResponse = {
+  resource: {
+    uri: 'https://api.calendly.com/webhook_subscriptions/AAAAAAAAAAAAAAAA',
+    callback_url: 'https://blah.foo/bar',
+    created_at: '2019-08-24T14:15:22.123456Z',
+    updated_at: '2019-08-24T14:15:22.123456Z',
+    retry_started_at: '2019-08-24T14:15:22.123456Z',
+    state: 'active',
+    events: ['invitee.created'],
+    scope: 'user',
+    organization: 'https://api.calendly.com/organizations/AAAAAAAAAAAAAAAA',
+    user: 'https://api.calendly.com/users/AAAAAAAAAAAAAAAA',
+    group: 'https://api.calendly.com/groups/AAAAAAAAAAAAAAAA',
+    creator: 'https://api.calendly.com/users/AAAAAAAAAAAAAAAA',
   },
 }

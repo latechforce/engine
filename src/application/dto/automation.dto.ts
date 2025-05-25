@@ -6,6 +6,6 @@ export type AutomationDto = {
 
 export function toAutomationDto(automation: Automation): AutomationDto {
   return {
-    name: automation.name,
+    name: automation.schema.name,
   }
 }

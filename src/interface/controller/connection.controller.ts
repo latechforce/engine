@@ -27,8 +27,6 @@ export class ConnectionController {
         <body>
           <script>
             // Notify opener window and close this one
-            console.log(window.opener)
-            console.log(window.location.href)
             if (window.opener) {
               window.opener.postMessage('oauth:success', '*')
               window.close()

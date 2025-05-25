@@ -13,11 +13,13 @@ export class App {
     public readonly schema: AppSchemaValidated,
     public readonly env: Env
   ) {
-    this.automations = this.schema.automations.map((automation) => new Automation(automation))
-    this.tables = this.schema.tables.map((table) => new Table(table))
     this.connections = this.schema.connections.map(
       (connection) => new Connection(connection, this.env.BASE_URL)
     )
+    this.automations = this.schema.automations.map(
+      (automation) => new Automation(automation, this.connections)
+    )
+    this.tables = this.schema.tables.map((table) => new Table(table))
   }
 
   url(path = ''): string {

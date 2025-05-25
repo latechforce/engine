@@ -8,7 +8,7 @@ import type { DatabaseService } from '../service/database.service'
 import type { AuthService } from '../service/auth.service'
 import type { App } from '@/domain/entity/app.entity'
 import type { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
-import type { TriggerHttpUseCase } from '@/application/use-case/trigger/trigger-http.use-case'
+import type { HttpTriggeredUseCase } from '@/application/use-case/trigger/http-triggered.use-case'
 import { appValidator } from '../../domain/validator/app.validator'
 import type { ValidateResult } from '@/domain/value-object/validate-result.value-object'
 import { z } from 'zod/v4'
@@ -32,7 +32,7 @@ export class AppRepository implements IAppRepository {
     @inject(TYPES.UseCase.ListRuns)
     private readonly listRunsUseCase: ListRunsUseCase,
     @inject(TYPES.UseCase.TriggerHttp)
-    private readonly triggerHttpUseCase: TriggerHttpUseCase,
+    private readonly httpTriggeredUseCase: HttpTriggeredUseCase,
     @inject(TYPES.UseCase.ListAutomations)
     private readonly listAutomationsUseCase: ListAutomationsUseCase,
     @inject(TYPES.UseCase.ListConnections)
@@ -72,7 +72,7 @@ export class AppRepository implements IAppRepository {
       c.set('listRunsUseCase', this.listRunsUseCase)
       c.set('listAutomationsUseCase', this.listAutomationsUseCase)
       c.set('listConnectionsUseCase', this.listConnectionsUseCase)
-      c.set('triggerHttpUseCase', this.triggerHttpUseCase)
+      c.set('httpTriggeredUseCase', this.httpTriggeredUseCase)
       c.set('authenticateConnectionUseCase', this.authenticateConnectionUseCase)
       await next()
     })

@@ -24,15 +24,17 @@ export class SetupAutomationUseCase {
   ) {}
 
   async execute(automation: Automation) {
-    this.automationRepository.debug(`setup "${automation.name}"`)
+    this.automationRepository.debug(`setup "${automation.schema.name}"`)
     for (const action of automation.actions) {
       await this.setupActionUseCase.execute(action)
     }
     await this.setupTriggerUseCase.execute(automation)
-    this.runRepository.onCreate((run: PlayingRun) => this.runAutomationUseCase.execute(run))
+    this.runRepository.onCreate((run: PlayingRun) =>
+      this.runAutomationUseCase.execute(run, automation)
+    )
     const runs = await this.runRepository.listPlaying()
     for (const run of runs) {
-      await this.runAutomationUseCase.execute(run)
+      await this.runAutomationUseCase.execute(run, automation)
     }
   }
 }

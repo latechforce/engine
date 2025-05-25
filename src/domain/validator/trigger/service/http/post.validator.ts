@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
 import { basehttpTriggerValidator } from './base'
-import { jsonSchemaValidator } from '../../json-schema.validator'
+import { jsonSchemaValidator } from '../../../json-schema.validator'
 
 export const postHttpTriggerValidator = basehttpTriggerValidator
   .extend({

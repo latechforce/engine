@@ -69,3 +69,44 @@ export type WebhookPayload = {
     }
   }
 }
+
+export type ListWebhookSubscriptionsResponse = {
+  collection: {
+    uri: string
+    callback_url: string
+    created_at: string // ISO 8601 datetime string
+    updated_at: string
+    retry_started_at: string
+    state: 'active' | 'disabled' | 'paused' // possible known values
+    events: string[] // e.g., ['invitee.created']
+    scope: 'user' | 'organization' | string // may be limited to these
+    organization?: string // URL
+    user?: string // URL
+    group?: string // URL
+    creator: string // URL
+  }[]
+  pagination: {
+    count: number
+    next_page: string | null
+    previous_page: string | null
+    next_page_token: string | null
+    previous_page_token: string | null
+  }
+}
+
+export type CreateWebhookSubscriptionResponse = {
+  resource: {
+    uri: string
+    callback_url: string
+    created_at: string // ISO 8601
+    updated_at: string
+    retry_started_at: string
+    state: 'active' | 'disabled' | 'paused'
+    events: string[] // e.g., ['invitee.created']
+    scope: 'user' | 'organization' | string
+    organization?: string
+    user?: string
+    group?: string
+    creator: string
+  }
+}

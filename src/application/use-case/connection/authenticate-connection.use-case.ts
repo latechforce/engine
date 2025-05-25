@@ -16,7 +16,7 @@ export class AuthenticateConnectionUseCase {
   async execute(connection: Connection, code: string) {
     try {
       this.connectionRepository.debug(`authenticate "${connection.schema.name}"`)
-      const token = await this.connectionRepository.getAccessToken(connection, code)
+      const token = await this.connectionRepository.getAccessTokenFromCode(connection, code)
       const existingToken = await this.tokenRepository.get(token.id)
       if (existingToken) {
         await this.tokenRepository.update(token)

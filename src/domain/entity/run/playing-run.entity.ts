@@ -1,23 +1,19 @@
 import crypto from 'crypto'
-import { Automation } from '../automation.entity'
 import type { AutomationSchema } from '@/types'
 import { SuccessRun } from './success-run.entity'
 import { StoppedRun } from './stopped-run.entity'
 
 export class PlayingRun {
   public readonly status = 'playing'
-  public readonly automation: Automation
 
   constructor(
-    automation: AutomationSchema,
+    public readonly automation_schema: AutomationSchema,
     public data: Record<string, object> = {},
     public readonly id: string = crypto.randomUUID(),
     public readonly createdAt: Date = new Date(),
     public updatedAt: Date = new Date(),
     public lastActionName: string | null = null
-  ) {
-    this.automation = new Automation(automation)
-  }
+  ) {}
 
   actionSuccess(actionName: string, result: object) {
     this.data[actionName] = result
@@ -27,7 +23,7 @@ export class PlayingRun {
 
   success() {
     return new SuccessRun(
-      this.automation.schema,
+      this.automation_schema,
       this.id,
       this.createdAt,
       this.updatedAt,
@@ -38,7 +34,7 @@ export class PlayingRun {
 
   stop(actionName: string, error: Error) {
     return new StoppedRun(
-      this.automation.schema,
+      this.automation_schema,
       this.id,
       this.createdAt,
       this.updatedAt,

@@ -29,7 +29,7 @@ import { FieldRepository } from '../repository/field.repository'
 import { TableRepository } from '../repository/table.repository'
 import type { ITableRepository } from '@/domain/repository-interface/table-repository.interface'
 import { SetupFieldUseCase } from '@/application/use-case/field/setup-field.use-case'
-import { TriggerHttpUseCase } from '@/application/use-case/trigger/trigger-http.use-case'
+import { HttpTriggeredUseCase } from '@/application/use-case/trigger/http-triggered.use-case'
 import { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
 import { ValidateAppUseCase } from '@/application/use-case/app/validate-app.use-case'
 import { ValidatorService } from '../service/validator.service'
@@ -107,8 +107,8 @@ export async function registerDependencies(externals: Record<string, unknown> = 
     .to(SetupFieldUseCase)
     .inSingletonScope()
   container
-    .bind<TriggerHttpUseCase>(TYPES.UseCase.TriggerHttp)
-    .to(TriggerHttpUseCase)
+    .bind<HttpTriggeredUseCase>(TYPES.UseCase.TriggerHttp)
+    .to(HttpTriggeredUseCase)
     .inSingletonScope()
   container.bind<ListRunsUseCase>(TYPES.UseCase.ListRuns).to(ListRunsUseCase).inSingletonScope()
   container

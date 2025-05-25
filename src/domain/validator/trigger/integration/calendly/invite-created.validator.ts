@@ -5,6 +5,8 @@ export const inviteCreatedCalendlyTriggerValidator = baseCalendlyTriggerValidato
   .extend({
     event: z.literal('invite-created'),
     path: z.string(),
+    organization: z.string(),
+    scope: z.enum(['user', 'organization', 'group']),
   })
   .meta({
     title: 'Invite Created',

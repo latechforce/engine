@@ -35,7 +35,7 @@ const TYPES = {
     ListAutomations: Symbol.for('ListAutomationsUseCase'),
     ListConnections: Symbol.for('ListConnectionsUseCase'),
     AuthenticateConnection: Symbol.for('AuthenticateConnectionUseCase'),
-    TriggerHttp: Symbol.for('TriggerHttpUseCase'),
+    TriggerHttp: Symbol.for('HttpTriggeredUseCase'),
     ValidateApp: Symbol.for('ValidateAppUseCase'),
     SetupConnection: Symbol.for('SetupConnectionUseCase'),
     MockApp: Symbol.for('MockAppUseCase'),

@@ -1,3 +1,5 @@
+import type { IntegrationAction } from '../entity/action/integration-action.entity'
+
 export type IActionRepository = {
   debug(message: string): void
   error: (message: string) => void
@@ -14,4 +16,5 @@ export type IActionRepository = {
     get: () => Promise<object>
     post: (body?: Record<string, unknown>) => Promise<object>
   }
+  runIntegration: (action: IntegrationAction) => Promise<object>
 }

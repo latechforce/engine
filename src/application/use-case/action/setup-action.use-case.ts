@@ -1,7 +1,7 @@
 import TYPES from '@/infrastructure/di/types'
 import { injectable, inject } from 'inversify'
 import type { IActionRepository } from '@/domain/repository-interface/action-repository.interface'
-import type { Action } from '@/domain/entity/action.entity'
+import type { Action } from '@/domain/entity/action'
 
 @injectable()
 export class SetupActionUseCase {
@@ -11,7 +11,7 @@ export class SetupActionUseCase {
   ) {}
 
   async execute(action: Action) {
-    this.actionRepository.debug(`setup "${action.name}"`)
+    this.actionRepository.debug(`setup "${action.schema.name}"`)
     const { schema } = action
     switch (schema.service) {
       case 'code': {

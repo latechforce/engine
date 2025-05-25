@@ -28,7 +28,6 @@ export default {
       service: 'calendly',
       clientId: '{{env.CALENDLY_CLIENT_ID}}',
       clientSecret: '{{env.CALENDLY_CLIENT_SECRET}}',
-      webhookSigningKey: '{{env.CALENDLY_WEBHOOK_SIGNING_KEY}}',
     },
   ],
 } satisfies AppSchema

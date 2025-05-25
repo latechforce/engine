@@ -7,6 +7,7 @@ import type { Token } from '@/domain/value-object/token.value-object'
 import { mapIntegration } from '../integration/mapper'
 import { Connection } from '@/domain/entity/connection.entity'
 import type { ConnectionStatus } from '@/domain/value-object/connection-status.value-object'
+import type { ITokenRepository } from '@/domain/repository-interface/token-repository.interface'
 
 @injectable()
 export class ConnectionRepository implements IConnectionRepository {
@@ -14,7 +15,9 @@ export class ConnectionRepository implements IConnectionRepository {
     @inject(TYPES.Service.Database)
     private readonly database: DatabaseService,
     @inject(TYPES.Service.Logger)
-    private readonly logger: LoggerService
+    private readonly logger: LoggerService,
+    @inject(TYPES.Repository.Token)
+    private readonly tokenRepository: ITokenRepository
   ) {}
 
   debug(message: string) {
@@ -30,14 +33,14 @@ export class ConnectionRepository implements IConnectionRepository {
     return integration.getAuthorizationUrl()
   }
 
-  async getAccessToken(connection: Connection, code: string): Promise<Token> {
+  async getAccessTokenFromCode(connection: Connection, code: string): Promise<Token> {
     const integration = mapIntegration(connection)
-    return integration.getAccessToken(code)
+    return integration.getAccessTokenFromCode(code)
   }
 
   async check(connection: Connection): Promise<boolean> {
     const integration = mapIntegration(connection)
-    const token = await this.database.table.token.get(connection.schema.id)
+    const token = await this.tokenRepository.getAccessToken(connection)
     return integration.checkConnection(token)
   }
 

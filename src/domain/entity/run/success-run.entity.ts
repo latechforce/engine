@@ -1,20 +1,16 @@
-import { Automation } from '../automation.entity'
 import type { AutomationSchema } from '@/types'
 
 export class SuccessRun {
   public readonly status = 'success'
-  public readonly automation: Automation
 
   constructor(
-    automation: AutomationSchema,
+    public readonly automation_schema: AutomationSchema,
     public readonly id: string,
     public readonly createdAt: Date,
     public readonly updatedAt: Date,
     public readonly data: Record<string, object>,
     public readonly lastActionName: string | null
-  ) {
-    this.automation = new Automation(automation)
-  }
+  ) {}
 
   getLastActionData() {
     if (!this.lastActionName) {
@@ -27,7 +23,9 @@ export class SuccessRun {
   }
 
   getLastAction() {
-    const action = this.automation.actions.find((action) => action.name === this.lastActionName)
+    const action = this.automation_schema.actions.find(
+      (action) => action.name === this.lastActionName
+    )
     if (!action) {
       throw new Error('Action not found')
     }

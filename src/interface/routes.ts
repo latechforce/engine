@@ -18,7 +18,7 @@ export const api = server
   .get('/automations', AutomationController.list)
   .get('/connections', ConnectionController.list)
   .get('/connection/auth', ConnectionController.authenticate)
-  .post('/automation/:path', AutomationController.triggerHttp)
-  .get('/automation/:path', AutomationController.triggerHttp)
+  .post('/automation/:path', AutomationController.trigger)
+  .get('/automation/:path', AutomationController.trigger)
 
 export type AppType = typeof api

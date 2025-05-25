@@ -14,6 +14,6 @@ export function toRunDto(run: Run): RunDto {
     status: run.status,
     created_at: run.createdAt.toISOString(),
     updated_at: run.updatedAt.toISOString(),
-    automation_name: run.automation.schema.name,
+    automation_name: run.automation_schema.name,
   }
 }

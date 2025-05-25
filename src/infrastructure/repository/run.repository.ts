@@ -17,7 +17,7 @@ export class RunRepository implements IRunRepository {
   async create(run: PlayingRun) {
     await this.database.table.run.create({
       id: run.id,
-      automation_schema: run.automation.schema,
+      automation_schema: run.automation_schema,
       status: run.status,
       data: run.data,
       created_at: run.createdAt,

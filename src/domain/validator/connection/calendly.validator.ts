@@ -6,7 +6,6 @@ export const calendlyConnectionValidator = baseConnectionValidator
     service: z.literal('calendly'),
     clientId: z.string(),
     clientSecret: z.string(),
-    webhookSigningKey: z.string(),
   })
   .meta({
     title: 'Calendly Connection',

@@ -9,7 +9,7 @@ import type { EnvService } from './env.service'
 import type { AuthService, AuthType } from './auth.service'
 import type { App } from '@/domain/entity/app.entity'
 import type { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
-import type { TriggerHttpUseCase } from '@/application/use-case/trigger/trigger-http.use-case'
+import type { HttpTriggeredUseCase } from '@/application/use-case/trigger/http-triggered.use-case'
 import { Scalar } from '@scalar/hono-api-reference'
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
 import { z } from 'zod'
@@ -28,7 +28,7 @@ export type HonoType = {
     env: EnvService
     logger: LoggerService
     listRunsUseCase: ListRunsUseCase
-    triggerHttpUseCase: TriggerHttpUseCase
+    httpTriggeredUseCase: HttpTriggeredUseCase
     listAutomationsUseCase: ListAutomationsUseCase
     listConnectionsUseCase: ListConnectionsUseCase
     authenticateConnectionUseCase: AuthenticateConnectionUseCase
@@ -65,14 +65,16 @@ export class ServerService {
     const openapiServer = new OpenAPIHono()
     for (const automation of app.automations) {
       const { schema } = automation.trigger
-      if (schema.service === 'http') {
-        const responseAction = automation.getResponseAction()
+      if (schema.path) {
+        const responseAction = automation.actions.find(
+          (action) => action.schema.service === 'http' && action.schema.action === 'response'
+        )
         const response =
-          responseAction && responseAction.schema.body
+          responseAction && 'body' in responseAction.schema && responseAction.schema.body
             ? this.generateJsonSchema(responseAction.schema.body)
             : undefined
         const route = createRoute({
-          method: schema.event,
+          method: schema.event === 'get' ? 'get' : 'post',
           path: '/' + join('automation', schema.path),
           description: `Run the automation "${automation.schema.name}" from a ${schema.event.toUpperCase()} request`,
           tags: ['Automations'],

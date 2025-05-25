@@ -1,8 +1,9 @@
 import TYPES from '@/infrastructure/di/types'
 import { injectable, inject } from 'inversify'
 import type { IActionRepository } from '@/domain/repository-interface/action-repository.interface'
-import type { Action } from '@/domain/entity/action.entity'
+import type { Action } from '@/domain/entity/action'
 import type { PlayingRun } from '@/domain/entity/run'
+import { IntegrationAction } from '@/domain/entity/action/integration-action.entity'
 
 @injectable()
 export class RunActionUseCase {
@@ -12,6 +13,9 @@ export class RunActionUseCase {
   ) {}
 
   async execute(action: Action, run: PlayingRun): Promise<object> {
+    if (action instanceof IntegrationAction) {
+      return this.actionRepository.runIntegration(action)
+    }
     const { schema } = action
     switch (schema.service) {
       case 'code': {
@@ -24,7 +28,7 @@ export class RunActionUseCase {
         }
         break
       }
-      case 'http':
+      case 'http': {
         switch (schema.action) {
           case 'response':
             return {}
@@ -36,6 +40,7 @@ export class RunActionUseCase {
               .post(schema.body)
         }
         break
+      }
     }
   }
 }
