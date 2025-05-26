@@ -2,9 +2,15 @@ import { z } from 'zod/v4'
 import { httpTriggerValidator } from './service/http'
 import { calendlyTriggerValidator } from './integration/calendly'
 import { facebookLeadAdsTriggerValidator } from './integration/facebook/lead-ads'
+import { linkedinAdsTriggerValidator } from './integration/linkedin/ads'
 
 export const triggerValidator = z
-  .union([httpTriggerValidator, calendlyTriggerValidator, facebookLeadAdsTriggerValidator])
+  .union([
+    httpTriggerValidator,
+    calendlyTriggerValidator,
+    facebookLeadAdsTriggerValidator,
+    linkedinAdsTriggerValidator,
+  ])
   .meta({
     title: 'Trigger',
     description: 'The trigger is the event that triggers the automation',

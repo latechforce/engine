@@ -2,12 +2,14 @@ import { z } from 'zod/v4'
 import { calendlyConnectionValidator } from './calendly.validator'
 import { googleSheetsConnectionValidator } from './google-sheets.validator'
 import { facebookLeadAdsConnectionValidator } from './facebook-lead-ads.validator'
+import { linkedinAdsConnectionValidator } from './linkedin-ads.validator'
 
 export const connectionValidator = z
   .union([
     calendlyConnectionValidator,
     googleSheetsConnectionValidator,
     facebookLeadAdsConnectionValidator,
+    linkedinAdsConnectionValidator,
   ])
   .meta({
     title: 'Connection',

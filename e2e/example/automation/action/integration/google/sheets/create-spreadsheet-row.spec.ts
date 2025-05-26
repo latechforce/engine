@@ -1,6 +1,7 @@
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
 
+// TODO: [@thomas-jeanneau] - should run a google sheets create spreadsheet row action
 test.skip('should run a google sheets create spreadsheet row action', async ({
   startExampleApp,
 }) => {
