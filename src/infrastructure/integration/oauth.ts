@@ -13,9 +13,22 @@ export class OAuthIntegration {
     return this.connection.appBaseUrl + '/api/connection/auth?id=' + id
   }
 
+  get clientId() {
+    if (!('clientId' in this.connection.schema)) {
+      throw new Error('Client ID is not set')
+    }
+    return this.connection.schema.clientId
+  }
+
+  get clientSecret() {
+    if (!('clientSecret' in this.connection.schema)) {
+      throw new Error('Client secret is not set')
+    }
+    return this.connection.schema.clientSecret
+  }
+
   getAuthorizationUrl() {
-    const { clientId } = this.connection.schema
-    return `${this.authBaseUrl}/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${this.redirectUri}`
+    return `${this.authBaseUrl}/oauth/authorize?client_id=${this.clientId}&response_type=code&redirect_uri=${this.redirectUri}`
   }
 
   getTokenHeader(token: Token) {

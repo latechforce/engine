@@ -7,6 +7,6 @@ export class Connection {
   ) {}
 
   get authType() {
-    return this.schema.clientId && this.schema.clientSecret ? 'oauth' : 'api-key'
+    return 'clientId' in this.schema && 'clientSecret' in this.schema ? 'oauth' : 'api-key'
   }
 }

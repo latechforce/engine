@@ -1,6 +1,10 @@
 import { z } from 'zod/v4'
-import { listWebhookSubscriptionsCalendlyActionValidator } from './calendly/list-webhook-subscriptions.validator'
+import { calendlyActionValidator } from './calendly'
+import { googleSheetsActionValidator } from './google/sheets'
 
-export const integrationActionValidator = z.union([listWebhookSubscriptionsCalendlyActionValidator])
+export const integrationActionValidator = z.union([
+  calendlyActionValidator,
+  googleSheetsActionValidator,
+])
 
 export type IntegrationActionSchema = z.infer<typeof integrationActionValidator>

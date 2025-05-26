@@ -11,13 +11,13 @@ export const mock: Mock = {
 }
 
 export default {
-  name: 'Start with a Jotform connection',
-  description: 'App with a Jotform connection',
+  name: 'Start with a Google Sheets connection',
+  description: 'App with a Google Sheets connection',
   connections: [
     {
       id: 1,
-      name: 'Jotform',
-      service: 'jotform',
+      name: 'Google Sheets',
+      service: 'google-sheets',
     },
   ],
 } satisfies AppSchema

@@ -65,7 +65,7 @@ export const AutomationHistoryPage = () => {
   )
 }
 
-export const runsHistoryAdminRoute = createRoute({
+export const automationHistoryAdminRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/_admin/automation/history',
   component: AutomationHistoryPage,

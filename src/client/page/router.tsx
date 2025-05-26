@@ -3,7 +3,7 @@ import { homeRoute } from './home.page'
 import { rootRoute } from './layout'
 import { dashboardAdminRoute } from './admin/dashboard.page'
 import { automationsAdminRoute } from './admin/automations.page'
-import { runsHistoryAdminRoute } from './admin/runs.page'
+import { automationHistoryAdminRoute } from './admin/automation-history.page'
 import { loginAdminRoute } from './admin/login.page'
 import { openapiAdminRoute } from './admin/openapi.page'
 import { connectionsAdminRoute } from './admin/connections.page'
@@ -13,7 +13,7 @@ const routeTree = rootRoute.addChildren([
   loginAdminRoute,
   dashboardAdminRoute,
   automationsAdminRoute,
-  runsHistoryAdminRoute,
+  automationHistoryAdminRoute,
   openapiAdminRoute,
   connectionsAdminRoute,
 ])

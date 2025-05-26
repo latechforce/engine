@@ -16,8 +16,8 @@ export class CalendlyIntegration extends OAuthIntegration {
   }
 
   private async getAccessToken(body: Record<string, string>): Promise<Token> {
-    const { id, clientId, clientSecret } = this.connection.schema
-    const credentials = `${clientId}:${clientSecret}`
+    const { id } = this.connection.schema
+    const credentials = `${this.clientId}:${this.clientSecret}`
     const base64Credentials = Buffer.from(credentials).toString('base64')
     const response = await ky
       .post(`${this.authBaseUrl}/oauth/token`, {
