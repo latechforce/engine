@@ -1,5 +1,7 @@
 import type { AppSchema, Mock } from '@/types'
 
+export const inGuides = false
+
 export const mock: Mock = {
   '/oauth/token': {
     POST: () => ({
@@ -19,7 +21,7 @@ export const mock: Mock = {
 }
 
 export default {
-  name: 'Calendly Connection',
+  name: 'Start with a Calendly connection',
   description: 'App with a Calendly connection',
   connections: [
     {

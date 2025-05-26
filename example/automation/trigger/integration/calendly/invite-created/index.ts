@@ -5,6 +5,8 @@ import {
   listWebhookSubscriptionsResponse,
 } from '@/infrastructure/integration/calendly/__mock__'
 
+export const inGuides = false
+
 export const mock: Mock = {
   ...calendlyMock,
   '/webhook_subscriptions': {
@@ -18,7 +20,7 @@ export const mock: Mock = {
 }
 
 export default {
-  name: 'Calendly invite created',
+  name: 'Trigger an automation with a Calendly invite created event',
   description: 'Automation with Calendly invite created trigger',
   automations: [
     {

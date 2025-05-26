@@ -2,6 +2,8 @@ import type { AppSchema, Mock } from '@/types'
 import calendlyConnection, { mock as calendlyMock } from '@/example/connection/calendly'
 import { listWebhookSubscriptionsResponse } from '@/infrastructure/integration/calendly/__mock__'
 
+export const inGuides = false
+
 export const mock: Mock = {
   ...calendlyMock,
   '/webhook_subscriptions': {

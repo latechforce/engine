@@ -1,5 +1,7 @@
 import type { AppSchema } from '@/types'
 
+export const inGuides = true
+
 export default {
   name: 'Run JavaScript code action',
   description: 'Automation with run JavaScript code action',
