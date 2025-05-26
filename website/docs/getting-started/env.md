@@ -109,3 +109,11 @@ AUTH_SECRET=72f83bbf-42a0-4dce-a7c1-f427f76c0641
 Default: `secret`
 
 > Should be set for production environment.
+
+## SENTRY_DSN
+
+The `SENTRY_DSN` environment variable is used to set the Sentry DSN.
+
+```env
+SENTRY_DSN=https://examplePublicKey@o0.ingest.sentry.io/0
+```

@@ -74,6 +74,9 @@ const config: Config = {
       searchParameters: {},
       searchPagePath: 'search',
     },
+    hotjar: {
+      applicationId: '6416155',
+    },
     navbar: {
       title: 'LTF Engine',
       logo: {
@@ -219,31 +222,8 @@ const config: Config = {
           },
         ]
       : [],
+    process.env.NODE_ENV === 'production' ? 'docusaurus-plugin-hotjar' : [],
   ],
-
-  scripts:
-    process.env.NODE_ENV === 'production'
-      ? [
-          {
-            // Optional: load only in production
-            src: 'https://static.hotjar.com/c/hotjar-6416155.js?sv=6',
-            async: true,
-          },
-          {
-            // Inline initialization script
-            content: `
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:6416155,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-      `,
-          },
-        ]
-      : [],
 }
 
 export default config

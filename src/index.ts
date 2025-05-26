@@ -1,3 +1,4 @@
+import './instrument'
 import 'reflect-metadata'
 import { registerDependencies } from '@/infrastructure/di/container'
 import TYPES from '@/infrastructure/di/types'
