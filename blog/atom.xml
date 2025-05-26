@@ -2,33 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://engine.latechforce.com/blog</id>
     <title>LTF Engine Blog</title>
-    <updated>2025-05-26T00:00:00.000Z</updated>
+    <updated>2025-05-22T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://engine.latechforce.com/blog"/>
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
-    <entry>
-        <title type="html"><![CDATA[Release 0.48.0]]></title>
-        <id>https://engine.latechforce.com/blog/release-0-48-0</id>
-        <link href="https://engine.latechforce.com/blog/release-0-48-0"/>
-        <updated>2025-05-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.48.0]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-48-0"><p class="before-truncate"> 0.48.0   Features  * should connect to calendly (fbcae13) — Thomas JEANNEAU * should run a get http action (5182921) — Thomas JEANNEAU * should run a get http action with headers (fefe944) — Thomas JEANNEAU * should run a post http action (5701725) — Thomas J...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0480"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-48-0">0.48.0</a><a href="https://engine.latechforce.com/blog/release-0-48-0#0480" class="hash-link" aria-label="Direct link to 0.48.0" title="Direct link to 0.48.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-48-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
-<ul>
-<li>should connect to calendly (<a href="https://github.com/latechforce/engine/commit/fbcae13fa460deb960b664b902afd0d6312ff451" target="_blank" rel="noopener noreferrer">fbcae13</a>) — Thomas JEANNEAU</li>
-<li>should run a get http action (<a href="https://github.com/latechforce/engine/commit/518292118f4fd38316bc61db83884ece0f8ad043" target="_blank" rel="noopener noreferrer">5182921</a>) — Thomas JEANNEAU</li>
-<li>should run a get http action with headers (<a href="https://github.com/latechforce/engine/commit/fefe9448d7a572ba7e16c0881bd9ac5e2fa3499d" target="_blank" rel="noopener noreferrer">fefe944</a>) — Thomas JEANNEAU</li>
-<li>should run a post http action (<a href="https://github.com/latechforce/engine/commit/5701725ccf883a2e421d648c8a21498aac06e579" target="_blank" rel="noopener noreferrer">5701725</a>) — Thomas JEANNEAU</li>
-<li>should run a post http action with body (<a href="https://github.com/latechforce/engine/commit/63c4f93c8c5cd6c6542086426c647f9a383f9d0d" target="_blank" rel="noopener noreferrer">63c4f93</a>) — Thomas JEANNEAU</li>
-<li>should run a post http action with default env headers (<a href="https://github.com/latechforce/engine/commit/72e8708da6a5317a7adebd422699578b2c93440d" target="_blank" rel="noopener noreferrer">72e8708</a>) — Thomas JEANNEAU</li>
-<li>should run a post http action with env headers (<a href="https://github.com/latechforce/engine/commit/95c3795bdeba1f94e49778808241f9b5ea3303f5" target="_blank" rel="noopener noreferrer">95c3795</a>) — Thomas JEANNEAU</li>
-<li>should run a post http action with headers (<a href="https://github.com/latechforce/engine/commit/b5353dd18d8d7528a15e54a951f059847855bf0e" target="_blank" rel="noopener noreferrer">b5353dd</a>) — Thomas JEANNEAU</li>
-<li>should trigger an automation when a calendly invite is created (<a href="https://github.com/latechforce/engine/commit/55420a3987596f79c39fe4fd936a3b41cea1ab83" target="_blank" rel="noopener noreferrer">55420a3</a>) — Thomas JEANNEAU</li>
-</ul>]]></content>
-        <category label="Release" term="Release"/>
-    </entry>
     <entry>
         <title type="html"><![CDATA[Release 0.47.0]]></title>
         <id>https://engine.latechforce.com/blog/release-0-47-0</id>
