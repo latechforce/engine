@@ -141,5 +141,5 @@ jobs:
       - name: Commit downloaded artifacts
         run: |
           git add website
-          git commit -m "chore: update website from deployment" || echo "No changes to commit"
+          git commit -m "chore: update website from deployment [skip ci]" || echo "No changes to commit"
           git push origin main
