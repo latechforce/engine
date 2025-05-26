@@ -200,6 +200,11 @@ const config: Config = {
       theme: prismThemes.vsDark,
       darkTheme: prismThemes.vsDark,
     },
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: false, // allow user to toggle manually
+      respectPrefersColorScheme: true, // this is what you want
+    },
   } satisfies Preset.ThemeConfig,
 
   themes: ['docusaurus-json-schema-plugin'],
