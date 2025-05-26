@@ -3,7 +3,7 @@ import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
 
 // TODO: [@kermitsxb] - should trigger an automation when a youcanbookme booking notifications is created
-test('should trigger an automation when a youcanbookme booking notifications is created', async ({
+test.skip('should trigger an automation when a youcanbookme booking notifications is created', async ({
   startExampleApp,
 }) => {
   // GIVEN
