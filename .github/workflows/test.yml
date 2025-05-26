@@ -1,0 +1,41 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  NODE_ENV: production
+
+jobs:
+  test:
+    name: Run Linting and Tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, 'website:') && !contains(github.event.head_commit.message, 'release:') }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun runtime
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install project dependencies
+        run: bun install
+
+      - name: Install Playwright Browsers
+        run: bunx playwright install --with-deps
+
+      - name: Run code linting
+        run: bun run lint
+
+      - name: Run unit test suite
+        run: bun run test
+
+      - name: Run e2e test suite
+        run: bun run e2e

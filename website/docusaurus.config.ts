@@ -169,25 +169,25 @@ const config: Config = {
               label: 'Blog',
               to: '/blog',
             },
+          ],
+        },
+        {
+          title: 'Experts',
+          items: [
             {
               label: 'What we do',
               to: '/experts',
             },
             {
-              label: 'Experts Methodology',
+              label: 'Our methodology',
               to: '/experts/methodology',
             },
-          ],
-        },
-        {
-          title: 'Community',
-          items: [
             {
               label: 'Work with us',
               to: '/experts/work-with-us',
             },
             {
-              label: 'Discord',
+              label: 'Join us',
               href: 'https://discord.gg/NgdRhz76',
             },
           ],
@@ -202,6 +202,10 @@ const config: Config = {
             {
               label: 'Test Report',
               to: '/test-report',
+            },
+            {
+              label: 'Discord',
+              href: 'https://discord.gg/NgdRhz76',
             },
             {
               label: 'GitHub',
