@@ -63,6 +63,6 @@ You can also provide a default value if the environment variable is not found.
 
 ```json
 {
-  "name": "{{env.NAME "default"}}",
+  "name": "{{env.NAME \"default\"}}"
 }
 ```
