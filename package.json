@@ -106,6 +106,7 @@
     "@types/pg": "^8.15.2",
     "@types/react": "^19.1.5",
     "@types/react-dom": "^19.1.5",
+    "conventional-changelog-conventionalcommits": "^9.0.0",
     "drizzle-kit": "^0.31.1",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.4.0",
