@@ -71,12 +71,14 @@ export class CalendlyIntegration extends OAuthIntegration {
     const { schema } = trigger
     switch (schema.event) {
       case 'invite-created': {
-        const user = await this.getCurrentUser(token)
-        const organization = schema.organization ?? user.resource.current_organization
+        const currentUser = await this.getCurrentUser(token)
+        const organization = schema.organization ?? currentUser.resource.current_organization
         const scope = schema.scope ?? 'user'
+        const user = scope === 'user' ? currentUser.resource.uri : undefined
         const webhookSubscriptions = await this.listWebhookSubscriptions(token, {
           organization,
           scope,
+          user,
         })
         const webhookSubscription = webhookSubscriptions.collection.find((subscription) =>
           subscription.callback_url.includes(schema.path)
@@ -87,6 +89,7 @@ export class CalendlyIntegration extends OAuthIntegration {
             events: ['invitee.created'],
             organization,
             scope,
+            user,
           })
         }
         break
@@ -100,14 +103,16 @@ export class CalendlyIntegration extends OAuthIntegration {
     const { schema } = action
     switch (schema.action) {
       case 'list-webhook-subscriptions': {
-        const user = await this.getCurrentUser(token)
-        const organization = schema.organization ?? user.resource.current_organization
+        const currentUser = await this.getCurrentUser(token)
+        const organization = schema.organization ?? currentUser.resource.current_organization
         const scope = schema.scope ?? 'user'
         const count = schema.count ?? 20
+        const user = scope === 'user' ? currentUser.resource.uri : undefined
         return this.listWebhookSubscriptions(token, {
           organization,
           scope,
           count,
+          user,
         })
       }
     }
@@ -115,10 +120,16 @@ export class CalendlyIntegration extends OAuthIntegration {
 
   private async listWebhookSubscriptions(
     token: Token,
-    { organization, scope, count }: { organization: string; scope: string; count?: number }
+    {
+      organization,
+      scope,
+      count,
+      user,
+    }: { organization: string; scope: string; count?: number; user?: string }
   ): Promise<ListWebhookSubscriptionsResponse> {
     const query = new URLSearchParams({ organization, scope })
     if (count) query.set('count', count.toString())
+    if (user) query.set('user', user)
     const response = await ky.get(this.baseUrl + '/webhook_subscriptions?' + query.toString(), {
       headers: this.getTokenHeader(token),
     })
@@ -138,6 +149,7 @@ export class CalendlyIntegration extends OAuthIntegration {
         | 'invitee_no_show.deleted'
         | 'routing_form_submission.created',
       ]
+      user?: string
     }
   ): Promise<CreateWebhookSubscriptionResponse> {
     return await ky

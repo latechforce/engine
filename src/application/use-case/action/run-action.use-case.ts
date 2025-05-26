@@ -4,6 +4,7 @@ import type { IActionRepository } from '@/domain/repository-interface/action-rep
 import type { Action } from '@/domain/entity/action'
 import type { PlayingRun } from '@/domain/entity/run'
 import { IntegrationAction } from '@/domain/entity/action/integration-action.entity'
+import type { ActionResult } from '@/domain/value-object/action-result.value-object'
 
 @injectable()
 export class RunActionUseCase {
@@ -12,34 +13,51 @@ export class RunActionUseCase {
     private readonly actionRepository: IActionRepository
   ) {}
 
-  async execute(action: Action, run: PlayingRun): Promise<object> {
+  async execute(action: Action, run: PlayingRun): Promise<ActionResult> {
     if (action instanceof IntegrationAction) {
       return this.actionRepository.runIntegration(action)
-    }
-    const { schema } = action
-    switch (schema.service) {
-      case 'code': {
-        const inputData = this.actionRepository.code(schema.inputData).fillInputData(run.data)
-        switch (schema.action) {
-          case 'run-typescript':
-            return this.actionRepository.code(inputData).runTypescript(schema.code)
-          case 'run-javascript':
-            return this.actionRepository.code(inputData).runJavascript(schema.code)
+    } else {
+      try {
+        let data: object = {}
+        const { schema } = action
+        switch (schema.service) {
+          case 'code': {
+            const inputData = this.actionRepository.code(schema.inputData).fillInputData(run.data)
+            switch (schema.action) {
+              case 'run-typescript':
+                data = await this.actionRepository.code(inputData).runTypescript(schema.code)
+                break
+              case 'run-javascript':
+                data = await this.actionRepository.code(inputData).runJavascript(schema.code)
+                break
+            }
+            break
+          }
+          case 'http': {
+            switch (schema.action) {
+              case 'get':
+                data = await this.actionRepository
+                  .http(schema.url, { headers: schema.headers })
+                  .get()
+                break
+              case 'post':
+                data = await this.actionRepository
+                  .http(schema.url, { headers: schema.headers })
+                  .post(schema.body)
+                break
+            }
+            break
+          }
         }
-        break
-      }
-      case 'http': {
-        switch (schema.action) {
-          case 'response':
-            return {}
-          case 'get':
-            return this.actionRepository.http(schema.url, { headers: schema.headers }).get()
-          case 'post':
-            return this.actionRepository
-              .http(schema.url, { headers: schema.headers })
-              .post(schema.body)
+        return { data }
+      } catch (error) {
+        if (error instanceof Error) {
+          this.actionRepository.error(error.message)
+          return { error: { message: error.message } }
+        } else {
+          this.actionRepository.error(String(error))
+          return { error: { message: 'Unknown error' } }
         }
-        break
       }
     }
   }

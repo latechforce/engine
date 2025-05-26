@@ -23,9 +23,9 @@ export class Automation {
           `Connection "${trigger.connection}" not found for trigger "${trigger.service}/${trigger.event}"`
         )
       }
-      this.trigger = new IntegrationTrigger(trigger, connection)
+      this.trigger = new IntegrationTrigger(trigger, this.schema.name, connection)
     } else {
-      this.trigger = new ServiceTrigger(trigger)
+      this.trigger = new ServiceTrigger(trigger, this.schema.name)
     }
     this.actions = schema.actions.map((action) => {
       if ('connection' in action) {

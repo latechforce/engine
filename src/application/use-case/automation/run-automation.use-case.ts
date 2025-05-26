@@ -27,25 +27,21 @@ export class RunAutomationUseCase {
         if (run.data[action.schema.name]) {
           continue
         }
-        try {
-          const result = await this.runActionUseCase.execute(action, run)
-          run.actionSuccess(action.schema.name, result)
-          await this.runRepository.update(run)
-          this.automationRepository.info(`action "${action.schema.name}" succeeded`)
-        } catch (error) {
-          const StoppedRun = run.stop(
-            action.schema.name,
-            error instanceof Error ? error : new Error(String(error))
-          )
-          await this.runRepository.update(StoppedRun)
+        const { data, error } = await this.runActionUseCase.execute(action, run)
+        if (error) {
+          const stoppedRun = run.stop(action.schema.name, error)
+          await this.runRepository.update(stoppedRun)
           this.automationRepository.info(
-            `action "${action.schema.name}" stopped with error: ${error}`
+            `action "${action.schema.name}" stopped with error: ${error.message}`
           )
-          break
+          return
         }
+        run.actionSuccess(action.schema.name, data)
+        await this.runRepository.update(run)
+        this.automationRepository.info(`action "${action.schema.name}" succeeded`)
       }
-      const SuccessRun = run.success()
-      await this.runRepository.update(SuccessRun)
+      const successRun = run.success()
+      await this.runRepository.update(successRun)
     }
     this.automationRepository.info(`automation "${run.automation_schema.name}" finished`)
   }

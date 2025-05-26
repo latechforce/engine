@@ -7,6 +7,9 @@ import type { TemplateService } from '../service/template.service'
 import type { IntegrationAction } from '@/domain/entity/action/integration-action.entity'
 import { mapIntegration } from '../integration/mapper'
 import type { ITokenRepository } from '@/domain/repository-interface/token-repository.interface'
+import { HTTPError } from 'ky'
+import type { ActionResult } from '@/domain/value-object/action-result.value-object'
+import type { IntegrationError } from '@/domain/value-object/integration-error.value.object'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -51,10 +54,36 @@ export class ActionRepository implements IActionRepository {
     }
   }
 
-  async runIntegration(action: IntegrationAction) {
-    const integration = mapIntegration(action.connection)
-    const token = await this.tokenRepository.getAccessToken(action.connection)
-    if (!token) throw new Error(`Token not found for connection ${action.connection.schema.id}`)
-    return integration.runAction(action, token)
+  async runIntegration(action: IntegrationAction): Promise<ActionResult<IntegrationError>> {
+    try {
+      const integration = mapIntegration(action.connection)
+      const token = await this.tokenRepository.getAccessToken(action.connection)
+      if (!token) throw new Error(`Token not found for connection ${action.connection.schema.id}`)
+      const data = await integration.runAction(action, token)
+      return { data }
+    } catch (error) {
+      if (error instanceof HTTPError) {
+        const result = {
+          error: {
+            status: error.response.status,
+            message: error.message,
+            response: await error.response.json(),
+          },
+        }
+        this.logger.error(JSON.stringify(result, null, 2))
+        return result
+      } else if (error instanceof Error) {
+        this.logger.error(error.message)
+        return {
+          error: {
+            status: 500,
+            message: error.message,
+          },
+        }
+      } else {
+        this.logger.error(String(error))
+        return { error: { status: 500, message: 'Unknown error' } }
+      }
+    }
   }
 }

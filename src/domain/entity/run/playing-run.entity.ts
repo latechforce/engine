@@ -2,6 +2,8 @@ import crypto from 'crypto'
 import type { AutomationSchema } from '@/types'
 import { SuccessRun } from './success-run.entity'
 import { StoppedRun } from './stopped-run.entity'
+import type { IntegrationError } from '@/domain/value-object/integration-error.value.object'
+import type { ServiceError } from '@/domain/value-object/service-error.value-object'
 
 export class PlayingRun {
   public readonly status = 'playing'
@@ -32,7 +34,10 @@ export class PlayingRun {
     )
   }
 
-  stop(actionName: string, error: Error) {
+  stop(actionName: string, error: IntegrationError | ServiceError) {
+    this.data[actionName] = error
+    this.updatedAt = new Date()
+    this.lastActionName = actionName
     return new StoppedRun(
       this.automation_schema,
       this.id,

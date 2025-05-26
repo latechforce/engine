@@ -4,14 +4,16 @@ import type { IntegrationTriggerSchema } from '@/domain/validator/trigger/integr
 export class IntegrationTrigger {
   constructor(
     public readonly schema: IntegrationTriggerSchema,
+    public readonly automationName: string,
     public readonly connection: Connection
   ) {}
 
   get url(): string {
-    return (
-      this.connection.appBaseUrl.replace(/\/$/, '') +
-      '/api/automation/' +
-      this.schema.path.replace(/^\//, '')
-    )
+    let baseUrl = this.connection.appBaseUrl.replace(/\/$/, '')
+    const path = this.schema.path.replace(/^\//, '')
+    if (baseUrl.includes('localhost')) {
+      baseUrl = baseUrl.replace(this.connection.appBaseUrl, 'https://example.com')
+    }
+    return `${baseUrl}/api/automation/${path}`
   }
 }
