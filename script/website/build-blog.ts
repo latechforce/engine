@@ -98,7 +98,7 @@ tags: [${tag}]
     .replace(/\n/gm, ' ')
     .replace(/\*\*/gm, '')
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
-    .slice(0, 260)}...</p>
+    .slice(0, 300)}...</p>
 
 <!-- truncate -->
 

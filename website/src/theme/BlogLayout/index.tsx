@@ -10,7 +10,7 @@ export default function BlogLayout(props: Props): ReactNode {
     <Layout {...layoutProps}>
       <div className="container--fluid margin-vert--lg container">
         <div className="row">
-          <main className={clsx('col', 'col--8 col--offset-2')}>{children}</main>
+          <main className={clsx('col', 'col--9 col--offset-1')}>{children}</main>
           {toc && <div className="col col--2">{toc}</div>}
         </div>
       </div>
