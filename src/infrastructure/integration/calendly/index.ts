@@ -115,6 +115,8 @@ export class CalendlyIntegration extends OAuthIntegration {
           user,
         })
       }
+      default:
+        throw new Error(`Unsupported Calendly action type: ${schema.action}`)
     }
   }
 

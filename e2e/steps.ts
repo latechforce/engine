@@ -11,12 +11,14 @@ export async function loginToAdmin(page: Page) {
   })
 }
 
-export async function connectTo(service: 'calendly' | 'google', page: Page) {
+export async function connectTo(service: 'calendly' | 'google' | 'facebook', page: Page) {
   let loginUrl: string
   if (service === 'calendly') {
     loginUrl = 'https://calendly.com/app/login'
   } else if (service === 'google') {
     loginUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
+  } else if (service === 'facebook') {
+    loginUrl = 'https://www.facebook.com/v18.0/dialog/oauth'
   }
   await test.step(`Connect to ${service}`, async () => {
     await page.goto('/_admin/connections')
