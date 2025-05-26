@@ -34,59 +34,118 @@
             "description": "The trigger is the event that triggers the automation",
             "anyOf": [
               {
-                "title": "Post",
-                "description": "The post HTTP trigger is a trigger that is triggered by a POST request",
-                "type": "object",
-                "properties": {
-                  "service": {
-                    "const": "http"
+                "title": "HTTP",
+                "description": "The HTTP trigger is a trigger that is triggered by an HTTP request",
+                "anyOf": [
+                  {
+                    "title": "POST",
+                    "description": "The POST HTTP trigger is a trigger that is triggered by a POST request",
+                    "type": "object",
+                    "properties": {
+                      "service": {
+                        "const": "http"
+                      },
+                      "event": {
+                        "const": "post"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "respondImmediately": {
+                        "default": false,
+                        "type": "boolean"
+                      },
+                      "requestBody": {
+                        "$ref": "#/$defs/__schema0"
+                      }
+                    },
+                    "required": [
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
                   },
-                  "event": {
-                    "const": "post"
-                  },
-                  "path": {
-                    "type": "string"
-                  },
-                  "respondImmediately": {
-                    "default": false,
-                    "type": "boolean"
-                  },
-                  "requestBody": {
-                    "$ref": "#/$defs/__schema0"
+                  {
+                    "title": "GET",
+                    "description": "The GET HTTP trigger is a trigger that is triggered by a GET request",
+                    "type": "object",
+                    "properties": {
+                      "service": {
+                        "const": "http"
+                      },
+                      "event": {
+                        "const": "get"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "respondImmediately": {
+                        "default": false,
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
                   }
-                },
-                "required": [
-                  "service",
-                  "event",
-                  "path"
-                ],
-                "additionalProperties": false
+                ]
               },
               {
-                "title": "Get",
-                "description": "The get HTTP trigger is a trigger that is triggered by a GET request",
-                "type": "object",
-                "properties": {
-                  "service": {
-                    "const": "http"
-                  },
-                  "event": {
-                    "const": "get"
-                  },
-                  "path": {
-                    "type": "string"
-                  },
-                  "respondImmediately": {
-                    "default": false,
-                    "type": "boolean"
+                "title": "Calendly",
+                "description": "The Calendly trigger is a trigger that is triggered by a Calendly event",
+                "anyOf": [
+                  {
+                    "title": "Invite Created",
+                    "description": "The Calendly invite created trigger is a trigger that is triggered by a invite created event",
+                    "type": "object",
+                    "properties": {
+                      "connection": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "service": {
+                        "const": "calendly"
+                      },
+                      "event": {
+                        "const": "invite-created"
+                      },
+                      "path": {
+                        "type": "string"
+                      },
+                      "organization": {
+                        "description": "The organization of the trigger",
+                        "default": "Current user organization",
+                        "type": "string"
+                      },
+                      "scope": {
+                        "description": "The scope of the trigger",
+                        "default": "user",
+                        "enum": [
+                          "user",
+                          "organization",
+                          "group"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "connection",
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
                   }
-                },
-                "required": [
-                  "service",
-                  "event",
-                  "path"
-                ],
-                "additionalProperties": false
+                ]
               }
             ]
           },
@@ -178,31 +237,170 @@
                 {
                   "title": "HTTP",
                   "description": "The HTTP action is an action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "const": "http"
-                    },
-                    "action": {
-                      "const": "response"
-                    },
-                    "body": {
+                  "anyOf": [
+                    {
+                      "title": "GET",
+                      "description": "The GET HTTP action is an action that is performed by the automation",
                       "type": "object",
-                      "propertyNames": {
-                        "type": "string"
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "service": {
+                          "const": "http"
+                        },
+                        "action": {
+                          "const": "get"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "headers": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        }
                       },
-                      "additionalProperties": {}
+                      "required": [
+                        "name",
+                        "service",
+                        "action",
+                        "url"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "title": "POST",
+                      "description": "The POST HTTP action is an action that is performed by the automation",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "service": {
+                          "const": "http"
+                        },
+                        "action": {
+                          "const": "post"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "headers": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {
+                            "type": "string"
+                          }
+                        },
+                        "body": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "service",
+                        "action",
+                        "url"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "title": "Response",
+                      "description": "The response HTTP action is an action that is performed by the automation",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "service": {
+                          "const": "http"
+                        },
+                        "action": {
+                          "const": "response"
+                        },
+                        "body": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "service",
+                        "action"
+                      ],
+                      "additionalProperties": false
                     }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action"
-                  ],
-                  "additionalProperties": false
+                  ]
+                },
+                {
+                  "title": "Calendly",
+                  "description": "The Calendly action is a action that is used to interact with the Calendly API",
+                  "anyOf": [
+                    {
+                      "title": "List Webhook Subscriptions",
+                      "description": "The Calendly list webhook subscriptions action is a action that lists the webhook subscriptions for a given organization",
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "connection": {
+                          "anyOf": [
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "service": {
+                          "const": "calendly"
+                        },
+                        "action": {
+                          "const": "list-webhook-subscriptions"
+                        },
+                        "organization": {
+                          "type": "string"
+                        },
+                        "scope": {
+                          "enum": [
+                            "user",
+                            "organization",
+                            "group"
+                          ]
+                        },
+                        "count": {
+                          "type": "number",
+                          "minimum": 1,
+                          "maximum": 100
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "connection",
+                        "service",
+                        "action",
+                        "organization",
+                        "scope"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
                 }
               ]
             }
@@ -256,7 +454,8 @@
                     "id",
                     "name",
                     "type"
-                  ]
+                  ],
+                  "additionalProperties": false
                 },
                 {
                   "title": "Long Text",
@@ -277,7 +476,8 @@
                     "id",
                     "name",
                     "type"
-                  ]
+                  ],
+                  "additionalProperties": false
                 }
               ]
             }
@@ -287,6 +487,47 @@
           "id",
           "name",
           "fields"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "connections": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "title": "Connection",
+        "description": "The connection is a connection to an external service",
+        "anyOf": [
+          {
+            "title": "Calendly Connection",
+            "description": "The Calendly connection is a connection to the Calendly API",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "service": {
+                "const": "calendly"
+              },
+              "clientId": {
+                "type": "string"
+              },
+              "clientSecret": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "service",
+              "clientId",
+              "clientSecret"
+            ],
+            "additionalProperties": false
+          }
         ]
       }
     }
@@ -296,7 +537,8 @@
     "version",
     "description",
     "automations",
-    "tables"
+    "tables",
+    "connections"
   ],
   "additionalProperties": false,
   "$defs": {
@@ -489,8 +731,9 @@
           ]
         }
       },
-      "required": []
+      "required": [],
+      "additionalProperties": false
     }
   },
-  "$schema": "https://json-schema.org/draft-2020-12/schema"
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
 }
