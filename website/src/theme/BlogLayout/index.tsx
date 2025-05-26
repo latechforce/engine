@@ -6,7 +6,6 @@ import type { Props } from '@theme/BlogLayout'
 export default function BlogLayout(props: Props): ReactNode {
   const { sidebar, toc, children, ...layoutProps } = props
 
-  console.log(toc)
   return (
     <Layout {...layoutProps}>
       <div className="container--fluid margin-vert--lg container">
