@@ -4,6 +4,7 @@ import { httpActionValidator } from './service/http'
 import { calendlyActionValidator } from './integration/calendly'
 import { googleSheetsActionValidator } from './integration/google/sheets'
 import { filterActionValidator } from './service/filter'
+import { pathsActionValidator } from './service/paths'
 
 export const actionValidator = z
   .union([
@@ -12,6 +13,7 @@ export const actionValidator = z
     filterActionValidator,
     calendlyActionValidator,
     googleSheetsActionValidator,
+    pathsActionValidator,
   ])
   .meta({
     title: 'Action',

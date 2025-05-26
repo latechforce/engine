@@ -1,15 +1,11 @@
 import { z } from 'zod/v4'
 import { baseFilterActionValidator } from './base'
+import { conditionValidator } from '@/domain/validator/condition'
 
 export const onlyContinueIfFilterActionValidator = baseFilterActionValidator
   .extend({
     action: z.literal('only-continue-if'),
-    conditions: z.array(
-      z.object({
-        input: z.string(),
-        operator: z.enum(['is-not-empty']),
-      })
-    ),
+    conditions: z.array(conditionValidator),
   })
   .meta({
     title: 'Only continue if',
