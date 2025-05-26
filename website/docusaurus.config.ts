@@ -110,6 +110,10 @@ const config: Config = {
               label: 'Work with us',
               href: '/experts/work-with-us',
             },
+            {
+              label: 'Join us',
+              href: 'https://discord.gg/NgdRhz76',
+            },
           ],
         },
         { to: '/blog', label: 'Blog', position: 'left' },
@@ -150,7 +154,7 @@ const config: Config = {
               to: '/blog',
             },
             {
-              label: 'Experts Skills',
+              label: 'What we do',
               to: '/experts',
             },
             {
@@ -162,6 +166,10 @@ const config: Config = {
         {
           title: 'Community',
           items: [
+            {
+              label: 'Work with us',
+              to: '/experts/work-with-us',
+            },
             {
               label: 'Discord',
               href: 'https://discord.gg/NgdRhz76',

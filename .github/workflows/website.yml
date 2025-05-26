@@ -16,7 +16,7 @@ jobs:
     name: Run Linting and Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    if: contains(github.event.head_commit.message, 'release:')
+    if: contains(github.event.head_commit.message, 'website:')
 
     permissions:
       contents: read
@@ -54,37 +54,9 @@ jobs:
           path: website/static/playwright-report
           retention-days: 1
 
-  release:
-    name: Publish Package to NPM
-    needs: test
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      id-token: write
-
-    env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GH_TOKEN }}
-
-      - name: Setup Bun runtime
-        uses: oven-sh/setup-bun@v2
-
-      - name: Install project dependencies
-        run: bun install
-
-      - name: Create and publish release
-        run: bunx semantic-release
-
   website:
     name: Deploy Documentation to GitHub Pages
-    needs: [test, release]
+    needs: [test]
     runs-on: ubuntu-latest
 
     permissions:
@@ -112,14 +84,8 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Build website blog
-        run: bun run build:blog
-
       - name: Build website guides
         run: bun run build:guides
-
-      - name: Build website schema
-        run: bun run build:schema
 
       - name: Download test-report artifacts
         uses: actions/download-artifact@v4

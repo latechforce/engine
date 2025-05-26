@@ -92,13 +92,9 @@ async function getAllFiles(dir: string): Promise<string[]> {
     if (entry.isDirectory()) {
       files.push(...(await getAllFiles(fullPath)))
     } else if (entry.isFile() && entry.name.endsWith('.ts')) {
-      if (entry.name.endsWith('index.ts') || fullPath.includes('example/env')) {
+      const file = await import(fullPath)
+      if (file.inGuides) {
         files.push(fullPath)
-      } else {
-        const file = await import(fullPath)
-        if (file.inGuides) {
-          files.push(fullPath)
-        }
       }
     }
   }
