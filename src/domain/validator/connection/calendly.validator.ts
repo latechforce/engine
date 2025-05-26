@@ -8,7 +8,7 @@ export const calendlyConnectionValidator = baseConnectionValidator
     clientSecret: z.string(),
   })
   .meta({
-    title: 'Calendly Connection',
+    title: 'Calendly',
     description: 'The Calendly connection is a connection to the Calendly API',
   })
 

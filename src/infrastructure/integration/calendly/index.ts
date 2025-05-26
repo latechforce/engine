@@ -100,10 +100,14 @@ export class CalendlyIntegration extends OAuthIntegration {
     const { schema } = action
     switch (schema.action) {
       case 'list-webhook-subscriptions': {
+        const user = await this.getCurrentUser(token)
+        const organization = schema.organization ?? user.resource.current_organization
+        const scope = schema.scope ?? 'user'
+        const count = schema.count ?? 20
         return this.listWebhookSubscriptions(token, {
-          organization: schema.organization,
-          scope: schema.scope,
-          count: schema.count,
+          organization,
+          scope,
+          count,
         })
       }
     }

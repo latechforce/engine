@@ -4,9 +4,15 @@ import { baseCalendlyActionValidator } from './base'
 export const listWebhookSubscriptionsCalendlyActionValidator = baseCalendlyActionValidator
   .extend({
     action: z.literal('list-webhook-subscriptions'),
-    organization: z.string(),
-    scope: z.enum(['user', 'organization', 'group']),
-    count: z.number().min(1).max(100).optional(),
+    organization: z.string().optional().meta({
+      default: 'Current user organisation',
+    }),
+    scope: z.enum(['user', 'organization', 'group']).optional().meta({
+      default: 'user',
+    }),
+    count: z.number().min(1).max(100).optional().meta({
+      default: 20,
+    }),
   })
   .meta({
     title: 'List Webhook Subscriptions',
