@@ -1,4 +1,5 @@
 import type { Connection } from '@/domain/entity/connection.entity'
+import type { Token } from '@/domain/value-object/token.value-object'
 
 export class OAuthIntegration {
   constructor(
@@ -15,5 +16,11 @@ export class OAuthIntegration {
   getAuthorizationUrl() {
     const { clientId } = this.connection.schema
     return `${this.authBaseUrl}/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${this.redirectUri}`
+  }
+
+  getTokenHeader(token: Token) {
+    return {
+      Authorization: `Bearer ${token.access_token}`,
+    }
   }
 }

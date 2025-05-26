@@ -12,9 +12,6 @@ export default tseslint.config(
         'error',
         { argsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
-      '@typescript-eslint/no-require-imports': 'off',
-      '@typescript-eslint/no-empty-object-type': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off',
     },
   },
   {

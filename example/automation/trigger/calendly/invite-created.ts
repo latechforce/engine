@@ -28,8 +28,6 @@ export default {
         event: 'invite-created',
         path: '/calendly-invite-created',
         connection: 'Calendly',
-        organization: 'https://api.calendly.com/organizations/AAAAAAAAAAAAAAAA',
-        scope: 'user',
       },
       actions: [],
     },

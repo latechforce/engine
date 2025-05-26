@@ -2,6 +2,7 @@ import type {
   ListWebhookSubscriptionsResponse,
   WebhookPayload,
   CreateWebhookSubscriptionResponse,
+  GetCurrentUserResponse,
 } from './types'
 
 export const webhookPayloadInviteCreated: WebhookPayload = {
@@ -113,5 +114,23 @@ export const createWebhookSubscriptionResponse: CreateWebhookSubscriptionRespons
     user: 'https://api.calendly.com/users/AAAAAAAAAAAAAAAA',
     group: 'https://api.calendly.com/groups/AAAAAAAAAAAAAAAA',
     creator: 'https://api.calendly.com/users/AAAAAAAAAAAAAAAA',
+  },
+}
+
+export const getCurrentUserResponse: GetCurrentUserResponse = {
+  resource: {
+    uri: 'https://api.calendly.com/users/AAAAAAAAAAAAAAAA',
+    name: 'John Doe',
+    slug: 'acmesales',
+    email: 'user@example.com',
+    scheduling_url: 'https://calendly.com/acmesales',
+    timezone: 'America/New York',
+    time_notation: '12h',
+    avatar_url: 'https://01234567890.cloudfront.net/uploads/user/avatar/0123456/a1b2c3d4.png',
+    created_at: '2019-01-02T03:04:05.678123Z',
+    updated_at: '2019-08-07T06:05:04.321123Z',
+    current_organization: 'https://api.calendly.com/organizations/AAAAAAAAAAAAAAAA',
+    resource_type: 'User',
+    locale: 'en',
   },
 }

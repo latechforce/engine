@@ -110,3 +110,21 @@ export type CreateWebhookSubscriptionResponse = {
     creator: string
   }
 }
+
+export type GetCurrentUserResponse = {
+  resource: {
+    uri: string
+    name: string
+    slug: string
+    email: string
+    scheduling_url: string
+    timezone: string
+    time_notation: '12h' | '24h'
+    avatar_url: string
+    created_at: string // ISO 8601 format
+    updated_at: string // ISO 8601 format
+    current_organization: string
+    resource_type: 'User'
+    locale: string
+  }
+}

@@ -4,7 +4,11 @@ import type { Connection } from '@/domain/entity/connection.entity'
 import type { Token } from '@/domain/value-object/token.value-object'
 import type { IntegrationTrigger } from '@/domain/entity/trigger/integration-trigger.entity'
 import type { IntegrationAction } from '@/domain/entity/action/integration-action.entity'
-import type { CreateWebhookSubscriptionResponse, ListWebhookSubscriptionsResponse } from './types'
+import type {
+  CreateWebhookSubscriptionResponse,
+  GetCurrentUserResponse,
+  ListWebhookSubscriptionsResponse,
+} from './types'
 
 export class CalendlyIntegration extends OAuthIntegration {
   constructor(connection: Connection) {
@@ -53,25 +57,26 @@ export class CalendlyIntegration extends OAuthIntegration {
   }
 
   async checkConnection(token?: Token): Promise<boolean> {
-    if (!token) {
+    if (!token) return false
+    try {
+      await this.getCurrentUser(token)
+      return true
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (error) {
       return false
     }
-    const { access_token } = token
-    const response = await ky.get(this.baseUrl + '/users/me', {
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-      },
-    })
-    return response.ok
   }
 
   async setupTrigger(trigger: IntegrationTrigger, token: Token) {
     const { schema } = trigger
     switch (schema.event) {
       case 'invite-created': {
+        const user = await this.getCurrentUser(token)
+        const organization = schema.organization ?? user.resource.current_organization
+        const scope = schema.scope ?? 'user'
         const webhookSubscriptions = await this.listWebhookSubscriptions(token, {
-          organization: schema.organization,
-          scope: schema.scope,
+          organization,
+          scope,
         })
         const webhookSubscription = webhookSubscriptions.collection.find((subscription) =>
           subscription.callback_url.includes(schema.path)
@@ -80,8 +85,8 @@ export class CalendlyIntegration extends OAuthIntegration {
           await this.createWebhookSubscription(token, {
             url: trigger.url,
             events: ['invitee.created'],
-            organization: schema.organization,
-            scope: schema.scope,
+            organization,
+            scope,
           })
         }
         break
@@ -111,9 +116,7 @@ export class CalendlyIntegration extends OAuthIntegration {
     const query = new URLSearchParams({ organization, scope })
     if (count) query.set('count', count.toString())
     const response = await ky.get(this.baseUrl + '/webhook_subscriptions?' + query.toString(), {
-      headers: {
-        Authorization: `Bearer ${token.access_token}`,
-      },
+      headers: this.getTokenHeader(token),
     })
     return response.json<ListWebhookSubscriptionsResponse>()
   }
@@ -133,12 +136,19 @@ export class CalendlyIntegration extends OAuthIntegration {
       ]
     }
   ): Promise<CreateWebhookSubscriptionResponse> {
-    const response = await ky.post(this.baseUrl + '/webhook_subscriptions', {
-      json: body,
-      headers: {
-        Authorization: `Bearer ${token.access_token}`,
-      },
-    })
-    return response.json<CreateWebhookSubscriptionResponse>()
+    return await ky
+      .post(this.baseUrl + '/webhook_subscriptions', {
+        json: body,
+        headers: this.getTokenHeader(token),
+      })
+      .json<CreateWebhookSubscriptionResponse>()
+  }
+
+  private async getCurrentUser(token: Token): Promise<GetCurrentUserResponse> {
+    return await ky
+      .get(this.baseUrl + '/users/me', {
+        headers: this.getTokenHeader(token),
+      })
+      .json<GetCurrentUserResponse>()
   }
 }
