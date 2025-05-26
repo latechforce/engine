@@ -29,7 +29,7 @@ export default {
         service: 'calendly',
         event: 'invite-created',
         path: '/calendly-invite-created',
-        connection: 'Calendly',
+        account: 'Calendly',
       },
       actions: [],
     },

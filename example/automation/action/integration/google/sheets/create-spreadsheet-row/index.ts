@@ -23,7 +23,7 @@ export default {
       actions: [
         {
           name: 'create-spreadsheet-row',
-          connection: 'Google Sheets',
+          account: 'Google Sheets',
           service: 'google-sheets',
           action: 'create-spreadsheet-row',
         },

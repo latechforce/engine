@@ -17,7 +17,7 @@ export default {
         service: 'linkedin-ads',
         event: 'new-lead-gen-form-response',
         path: '/linkedin-ads-new-lead-gen-form-response',
-        connection: 'LinkedIn Ads',
+        account: 'LinkedIn Ads',
       },
       actions: [],
     },

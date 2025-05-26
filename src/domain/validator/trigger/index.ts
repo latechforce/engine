@@ -3,6 +3,7 @@ import { httpTriggerValidator } from './service/http'
 import { calendlyTriggerValidator } from './integration/calendly'
 import { facebookLeadAdsTriggerValidator } from './integration/facebook/lead-ads'
 import { linkedinAdsTriggerValidator } from './integration/linkedin/ads'
+import { youcanbookmeTriggerValidator } from './integration/youcanbookme'
 
 export const triggerValidator = z
   .union([
@@ -10,6 +11,7 @@ export const triggerValidator = z
     calendlyTriggerValidator,
     facebookLeadAdsTriggerValidator,
     linkedinAdsTriggerValidator,
+    youcanbookmeTriggerValidator,
   ])
   .meta({
     title: 'Trigger',

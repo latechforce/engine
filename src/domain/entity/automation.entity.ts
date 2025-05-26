@@ -16,11 +16,11 @@ export class Automation {
     public readonly connections: Connection[]
   ) {
     const { trigger } = schema
-    if ('connection' in trigger) {
-      const connection = this.getConnection(trigger.connection)
+    if ('account' in trigger) {
+      const connection = this.getAccount(trigger.account, trigger.service)
       if (!connection) {
         throw new Error(
-          `Connection "${trigger.connection}" not found for trigger "${trigger.service}/${trigger.event}"`
+          `Account "${trigger.account}" not found for trigger "${trigger.service}/${trigger.event}"`
         )
       }
       this.trigger = new IntegrationTrigger(trigger, this.schema.name, connection)
@@ -28,11 +28,11 @@ export class Automation {
       this.trigger = new ServiceTrigger(trigger, this.schema.name)
     }
     this.actions = schema.actions.map((action) => {
-      if ('connection' in action) {
-        const connection = this.getConnection(action.connection)
+      if ('account' in action) {
+        const connection = this.getAccount(action.account, action.service)
         if (!connection) {
           throw new Error(
-            `Connection "${action.connection}" not found for action "${action.service}/${action.action}"`
+            `Account "${action.account}" not found for action "${action.service}/${action.action}"`
           )
         }
         return new IntegrationAction(action, schema, connection)
@@ -42,9 +42,11 @@ export class Automation {
     })
   }
 
-  private getConnection(nameOrId: string | number) {
+  private getAccount(nameOrId: string | number, service: string) {
     return this.connections.find(
-      (connection) => connection.schema.id === nameOrId || connection.schema.name === nameOrId
+      (connection) =>
+        (connection.schema.id === nameOrId || connection.schema.name === nameOrId) &&
+        connection.schema.service === service
     )
   }
 }

@@ -27,7 +27,7 @@ export default {
       actions: [
         {
           name: 'list-webhook-subscriptions',
-          connection: 'Calendly',
+          account: 'Calendly',
           service: 'calendly',
           action: 'list-webhook-subscriptions',
         },

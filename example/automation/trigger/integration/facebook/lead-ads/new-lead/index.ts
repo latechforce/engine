@@ -19,7 +19,7 @@ export default {
         service: 'facebook-lead-ads',
         event: 'new-lead',
         path: '/facebook-lead-ads-new-lead',
-        connection: 'Facebook Lead Ads',
+        account: 'Facebook Lead Ads',
       },
       actions: [],
     },

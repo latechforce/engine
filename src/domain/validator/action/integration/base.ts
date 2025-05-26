@@ -3,6 +3,6 @@ import { baseActionValidator } from '../base'
 
 export const baseIntegrationActionValidator = baseActionValidator
   .extend({
-    connection: z.union([z.number(), z.string()]),
+    account: z.union([z.number(), z.string()]),
   })
   .strict()

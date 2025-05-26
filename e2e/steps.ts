@@ -12,7 +12,7 @@ export async function loginToAdmin(page: Page) {
 }
 
 export async function connectTo(
-  service: 'calendly' | 'google' | 'facebook' | 'linkedin',
+  service: 'calendly' | 'google' | 'facebook' | 'linkedin' | 'youcanbookme',
   page: Page
 ) {
   let loginUrl: string
@@ -24,6 +24,8 @@ export async function connectTo(
     loginUrl = 'https://www.facebook.com/v18.0/dialog/oauth'
   } else if (service === 'linkedin') {
     loginUrl = 'https://www.linkedin.com/oauth/v2/authorization'
+  } else if (service === 'youcanbookme') {
+    loginUrl = 'https://app.youcanbook.me/oauth/authorize'
   }
   await test.step(`Connect to ${service}`, async () => {
     await page.goto('/_admin/connections')

@@ -3,6 +3,7 @@ import { calendlyConnectionValidator } from './calendly.validator'
 import { googleSheetsConnectionValidator } from './google-sheets.validator'
 import { facebookLeadAdsConnectionValidator } from './facebook-lead-ads.validator'
 import { linkedinAdsConnectionValidator } from './linkedin-ads.validator'
+import { youcanbookmeConnectionValidator } from './youcanbookme.validator'
 
 export const connectionValidator = z
   .union([
@@ -10,6 +11,7 @@ export const connectionValidator = z
     googleSheetsConnectionValidator,
     facebookLeadAdsConnectionValidator,
     linkedinAdsConnectionValidator,
+    youcanbookmeConnectionValidator,
   ])
   .meta({
     title: 'Connection',
