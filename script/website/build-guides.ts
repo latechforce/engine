@@ -95,7 +95,7 @@ async function getAllFiles(dir: string): Promise<string[]> {
       files.push(...(await getAllFiles(fullPath)))
     } else if (entry.isFile() && entry.name.endsWith('.ts')) {
       const file = await import(fullPath)
-      if (file.inGuides) {
+      if (file.inGuides === true) {
         files.push(fullPath)
       }
     }
@@ -262,7 +262,7 @@ A collection of code samples and walkthroughs for configuring and using LTF Engi
 
 <div style={{ display: 'flex', flexDirection: 'row', gap: '2rem', marginBottom: '2rem' }}>
   ${generateGuideCard(guides.find((g) => g.path.includes('database/postgres'))!)}
-  ${generateGuideCard(guides.find((g) => g.path.includes('table/field/single-line-text'))!)}
+  ${generateGuideCard(guides.find((g) => g.path.includes('trigger/service/http/post/request-body'))!)}
   ${generateGuideCard(guides.find((g) => g.path.includes('typescript/externals'))!)}
 </div>
 

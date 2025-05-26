@@ -104,8 +104,8 @@ await new App({ externals }).start(schema);
     }} />
     <div>
       
-    <Link to="/guides/automation/trigger/service/http/post">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP POST request</p>
+    <Link to="/guides/automation/trigger/service/http/post/respond-immediately">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP POST request and respond immediately</p>
     </Link>
   
 
@@ -114,13 +114,8 @@ await new App({ externals }).start(schema);
     </Link>
   
 
-    <Link to="/guides/automation/trigger/service/http/post/respond-immediately">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP POST request and respond immediately</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/trigger/service/http/get">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP GET request</p>
+    <Link to="/guides/automation/trigger/service/http/post">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP POST request</p>
     </Link>
   
 
@@ -129,8 +124,48 @@ await new App({ externals }).start(schema);
     </Link>
   
 
-    <Link to="/guides/automation/action/service/http/response">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Respond to an HTTP request</p>
+    <Link to="/guides/automation/trigger/service/http/get">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Trigger an automation with an HTTP GET request</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/service/code/run-typescript/input-data">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run TypeScript code action with input data</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/service/code/run-typescript/externals">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run TypeScript code action with externals</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/service/code/run-typescript">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run TypeScript code action</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/service/code/run-javascript/input-data">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run JavaScript code action with input data</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/service/code/run-javascript">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run JavaScript code action</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/service/http/post">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/service/http/post/body">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request with body</p>
+    </Link>
+  
+
+    <Link to="/guides/automation/action/service/http/post/env">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request with environment variables</p>
     </Link>
   
 
@@ -144,23 +179,8 @@ await new App({ externals }).start(schema);
     </Link>
   
 
-    <Link to="/guides/automation/action/service/http/post">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/service/http/post/env">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request with environment variables</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/service/http/post/body">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP POST request with body</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/service/http/get">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP GET request</p>
+    <Link to="/guides/automation/action/service/http/response">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Respond to an HTTP request</p>
     </Link>
   
 
@@ -169,28 +189,8 @@ await new App({ externals }).start(schema);
     </Link>
   
 
-    <Link to="/guides/automation/action/service/code/run-typescript/input-data">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run TypeScript code action with input data</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/service/code/run-typescript">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run TypeScript code action</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/service/code/run-typescript/externals">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run TypeScript code action with externals</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/service/code/run-javascript/input-data">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run JavaScript code action with input data</p>
-    </Link>
-  
-
-    <Link to="/guides/automation/action/service/code/run-javascript">
-      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Run JavaScript code action</p>
+    <Link to="/guides/automation/action/service/http/get">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Make an HTTP GET request</p>
     </Link>
   
     </div>
