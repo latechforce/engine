@@ -4,6 +4,19 @@ import type * as Preset from '@docusaurus/preset-classic'
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
+const plugins = []
+
+if (process.env.NODE_ENV === 'production') {
+  plugins.push([
+    '@docusaurus/plugin-google-gtag',
+    {
+      trackingID: 'G-GQHS5TXCN1', // your GA4 tracking ID
+      anonymizeIP: true, // Optional
+    },
+  ])
+  plugins.push('docusaurus-plugin-hotjar')
+}
+
 const config: Config = {
   title: 'LTF Engine',
   tagline: 'Web app generator',
@@ -212,18 +225,7 @@ const config: Config = {
 
   themes: ['docusaurus-json-schema-plugin'],
 
-  plugins: [
-    process.env.NODE_ENV === 'production'
-      ? [
-          '@docusaurus/plugin-google-gtag',
-          {
-            trackingID: 'G-GQHS5TXCN1', // your GA4 tracking ID
-            anonymizeIP: true, // Optional
-          },
-        ]
-      : [],
-    process.env.NODE_ENV === 'production' ? 'docusaurus-plugin-hotjar' : [],
-  ],
+  plugins,
 }
 
 export default config
