@@ -99,12 +99,16 @@ const config: Config = {
           to: '/experts',
           items: [
             {
-              label: 'Our skills',
+              label: 'What we do',
               href: '/experts',
             },
             {
               label: 'Our methodology',
               href: '/experts/methodology',
+            },
+            {
+              label: 'Work with us',
+              href: '/experts/work-with-us',
             },
           ],
         },
