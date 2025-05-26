@@ -59,7 +59,8 @@ function generateGuideLink(guide: Guide): string {
 function generateCategorySection(category: string, guides: Guide[]): string {
   return `
   <div>
-    <h2 id="${category.toLowerCase()}">${formatCategoryName(category)}</h2>
+    ## ${formatCategoryName(category)}
+    
     <hr style={{ 
       margin: '0.5rem 0',
       border: 'none',
