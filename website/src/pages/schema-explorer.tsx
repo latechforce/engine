@@ -7,9 +7,9 @@ export default function AppSchemaPage() {
   return (
     <Layout title="Schema">
       <div className="main-wrapper">
-        <main className="margin-vert--lg container">
+        <main className="margin-vert--lg container--fluid container">
           <div className="row">
-            <div className="col">
+            <div className="col col--10 col--offset-1">
               <h1>Schema Explorer</h1>
               <p>
                 This is the schema of the app. You can navigate through the schema to see the

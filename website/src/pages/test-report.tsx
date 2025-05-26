@@ -36,9 +36,9 @@ export default function PlaywrightReportPage() {
   return (
     <Layout title="Test Report">
       <div className="main-wrapper">
-        <main className="margin-vert--lg container">
+        <main className="margin-vert--lg container--fluid container">
           <div className="row">
-            <div className="col">
+            <div className="col col--10 col--offset-1">
               <h1>Test Report</h1>
               <p>
                 This is the last test report for LTF Engine. Skipped tests are the next planned
