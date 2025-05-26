@@ -22,7 +22,7 @@ const config: Config = {
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'throw',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -208,6 +208,16 @@ const config: Config = {
   } satisfies Preset.ThemeConfig,
 
   themes: ['docusaurus-json-schema-plugin'],
+
+  plugins: [
+    [
+      '@docusaurus/plugin-google-gtag',
+      {
+        trackingID: 'G-GQHS5TXCN1', // your GA4 tracking ID
+        anonymizeIP: true, // Optional
+      },
+    ],
+  ],
 }
 
 export default config
