@@ -1,5 +1,6 @@
 import { expect, test } from '@/e2e/fixtures'
 
+// TODO: [@thomas-jeanneau] - should create a record with a long text field
 test.skip('should create a record with a long text field', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })

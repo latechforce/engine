@@ -2,6 +2,7 @@ import { z } from 'zod/v4'
 import { automationValidator } from './automation.validator'
 import { tableValidator } from './table.validator'
 import { connectionValidator } from './connection'
+import { formValidator } from './form.validator'
 
 export const appValidator = z
   .object({
@@ -10,6 +11,7 @@ export const appValidator = z
     description: z.string().trim().min(1).default('My app description'),
     automations: z.array(automationValidator).default([]),
     tables: z.array(tableValidator).default([]),
+    forms: z.array(formValidator).default([]),
     connections: z.array(connectionValidator).default([]),
   })
   .strict()

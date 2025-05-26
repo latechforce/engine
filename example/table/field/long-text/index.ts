@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const inGuides = true
+export const inGuides = false
 
 export default {
   name: 'Configure a table with a long text field',
