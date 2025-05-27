@@ -1,6 +1,6 @@
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/client/ui/sidebar.ui'
 import { Sidebar } from '@/client/component/sidebar.component'
-import { History, Zap, Gauge, Webhook, Link } from 'lucide-react'
+import { History, Zap, Gauge, Webhook, Link, FileText } from 'lucide-react'
 import { RequireAuth } from '@/client/context/require-auth.context'
 import { Separator } from '@/client/ui/separator.ui'
 import {
@@ -18,6 +18,11 @@ const items = [
     title: 'Dashboard',
     url: '/_admin',
     icon: Gauge,
+  },
+  {
+    title: 'Forms',
+    url: '/_admin/forms',
+    icon: FileText,
   },
   {
     title: 'Automations',

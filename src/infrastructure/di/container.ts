@@ -42,6 +42,7 @@ import { SetupConnectionUseCase } from '@/application/use-case/connection/setup-
 import type { ITokenRepository } from '@/domain/repository-interface/token-repository.interface'
 import { TokenRepository } from '../repository/token.repository'
 import { MockAppUseCase } from '@/application/use-case/app/mock-app.use-case'
+import { ListFormsUseCase } from '@/application/use-case/form/list-forms.use-case'
 
 export async function registerDependencies(externals: Record<string, unknown> = {}) {
   const container = new Container()
@@ -132,6 +133,7 @@ export async function registerDependencies(externals: Record<string, unknown> = 
     .to(SetupConnectionUseCase)
     .inSingletonScope()
   container.bind<MockAppUseCase>(TYPES.UseCase.MockApp).to(MockAppUseCase).inSingletonScope()
+  container.bind<ListFormsUseCase>(TYPES.UseCase.ListForms).to(ListFormsUseCase).inSingletonScope()
 
   return container
 }

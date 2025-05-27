@@ -7,6 +7,7 @@ import { automationHistoryAdminRoute } from './admin/automation-history.page'
 import { loginAdminRoute } from './admin/login.page'
 import { openapiAdminRoute } from './admin/openapi.page'
 import { connectionsAdminRoute } from './admin/connections.page'
+import { formsAdminRoute } from './admin/forms.page'
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
@@ -16,6 +17,7 @@ const routeTree = rootRoute.addChildren([
   automationHistoryAdminRoute,
   openapiAdminRoute,
   connectionsAdminRoute,
+  formsAdminRoute,
 ])
 
 export const router = createRouter({ routeTree })

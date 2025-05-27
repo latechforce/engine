@@ -15,6 +15,7 @@ import { z } from 'zod/v4'
 import type { ListAutomationsUseCase } from '@/application/use-case/automation/list-automations.use-case'
 import type { ListConnectionsUseCase } from '@/application/use-case/connection/list-connections.use-case'
 import type { AuthenticateConnectionUseCase } from '@/application/use-case/connection/authenticate-connection.use-case'
+import type { ListFormsUseCase } from '@/application/use-case/form/list-forms.use-case'
 
 @injectable()
 export class AppRepository implements IAppRepository {
@@ -37,6 +38,8 @@ export class AppRepository implements IAppRepository {
     private readonly listAutomationsUseCase: ListAutomationsUseCase,
     @inject(TYPES.UseCase.ListConnections)
     private readonly listConnectionsUseCase: ListConnectionsUseCase,
+    @inject(TYPES.UseCase.ListForms)
+    private readonly listFormsUseCase: ListFormsUseCase,
     @inject(TYPES.UseCase.AuthenticateConnection)
     private readonly authenticateConnectionUseCase: AuthenticateConnectionUseCase
   ) {}
@@ -72,6 +75,7 @@ export class AppRepository implements IAppRepository {
       c.set('listRunsUseCase', this.listRunsUseCase)
       c.set('listAutomationsUseCase', this.listAutomationsUseCase)
       c.set('listConnectionsUseCase', this.listConnectionsUseCase)
+      c.set('listFormsUseCase', this.listFormsUseCase)
       c.set('httpTriggeredUseCase', this.httpTriggeredUseCase)
       c.set('authenticateConnectionUseCase', this.authenticateConnectionUseCase)
       await next()

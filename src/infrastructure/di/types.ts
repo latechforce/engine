@@ -39,6 +39,7 @@ const TYPES = {
     ValidateApp: Symbol.for('ValidateAppUseCase'),
     SetupConnection: Symbol.for('SetupConnectionUseCase'),
     MockApp: Symbol.for('MockAppUseCase'),
+    ListForms: Symbol.for('ListFormsUseCase'),
   },
 }
 
