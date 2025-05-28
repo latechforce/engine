@@ -13,6 +13,12 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    initialState: {
+      columnPinning: {
+        left: ['expand-column'],
+        right: ['actions-column'],
+      },
+    },
   })
 
   return (

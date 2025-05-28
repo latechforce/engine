@@ -1,6 +1,6 @@
 import { createRoute } from '@tanstack/react-router'
-import { rootRoute } from '../layout'
-import Layout from './layout'
+import { rootRoute } from '../../layout'
+import Layout from '../layout'
 import { DataTable } from '@/client/component/data-table.component'
 import { useQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
@@ -50,7 +50,7 @@ export const RunsDataTable = () => {
   )
 }
 
-export const AutomationHistoryPage = () => {
+export const RunsPage = () => {
   return (
     <Layout
       breadcrumbs={[
@@ -65,18 +65,18 @@ export const AutomationHistoryPage = () => {
   )
 }
 
-export const automationHistoryAdminRoute = createRoute({
+export const runsAdminRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/_admin/automation/history',
-  component: AutomationHistoryPage,
+  path: '/_admin/automations/runs',
+  component: RunsPage,
   head: () => ({
     meta: [
       {
-        title: 'Automation History - Admin',
+        title: 'Runs - Admin',
       },
       {
         name: 'description',
-        content: `Automation history page for admin`,
+        content: `Runs page for admin`,
       },
     ],
   }),

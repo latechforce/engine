@@ -1,5 +1,5 @@
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/client/ui/sidebar.ui'
-import { Sidebar } from '@/client/component/sidebar.component'
+import { Sidebar, type SidebarGroup } from '@/client/component/sidebar.component'
 import { History, Zap, Gauge, Webhook, Link, FileText } from 'lucide-react'
 import { RequireAuth } from '@/client/context/require-auth.context'
 import { Separator } from '@/client/ui/separator.ui'
@@ -13,36 +13,56 @@ import {
 } from '@/client/ui/breadcrumb.ui'
 
 // Menu items.
-const items = [
+const items: SidebarGroup[] = [
   {
-    title: 'Dashboard',
-    url: '/_admin',
-    icon: Gauge,
+    title: 'Application',
+    items: [
+      {
+        title: 'Dashboard',
+        url: '/_admin',
+        icon: Gauge,
+      },
+    ],
   },
   {
     title: 'Forms',
-    url: '/_admin/forms',
-    icon: FileText,
+    items: [
+      {
+        title: 'Forms',
+        url: '/_admin/forms',
+        icon: FileText,
+      },
+    ],
   },
   {
     title: 'Automations',
-    url: '/_admin/automations',
-    icon: Zap,
+    items: [
+      {
+        title: 'Automations',
+        url: '/_admin/automations',
+        icon: Zap,
+      },
+      {
+        title: 'Runs',
+        url: '/_admin/automations/runs',
+        icon: History,
+      },
+      {
+        title: 'Connections',
+        url: '/_admin/automations/connections',
+        icon: Link,
+      },
+    ],
   },
   {
-    title: 'Automation History',
-    url: '/_admin/automation/history',
-    icon: History,
-  },
-  {
-    title: 'Connections',
-    url: '/_admin/connections',
-    icon: Link,
-  },
-  {
-    title: 'OpenAPI',
-    url: '/_admin/openapi',
-    icon: Webhook,
+    title: 'Admin',
+    items: [
+      {
+        title: 'OpenAPI',
+        url: '/_admin/openapi',
+        icon: Webhook,
+      },
+    ],
   },
 ]
 
@@ -63,7 +83,7 @@ export default function Layout({
       <SidebarProvider>
         <Sidebar
           title="Admin"
-          items={items}
+          groups={items}
         />
         <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">

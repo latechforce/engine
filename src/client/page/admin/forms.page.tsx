@@ -14,16 +14,17 @@ export const columns: ColumnDef<FormDto>[] = [
     header: 'Title',
   },
   {
-    accessorKey: 'actions',
-    header: '',
+    id: 'actions-column',
     cell: ({ row }) => {
       return (
-        <a
-          href={row.original.path}
-          target="_blank"
-        >
-          <Button>Ouvrir</Button>
-        </a>
+        <div className="flex justify-end">
+          <a
+            href={row.original.path}
+            target="_blank"
+          >
+            <Button>Ouvrir</Button>
+          </a>
+        </div>
       )
     },
   },
@@ -49,7 +50,7 @@ export const FormsDataTable = () => {
 export const FormsPage = () => {
   return (
     <Layout breadcrumbs={[{ title: 'Forms', url: '/_admin/forms' }]}>
-      <div className="p-6">
+      <div className="container mx-auto max-w-4xl p-6">
         <FormsDataTable />
       </div>
     </Layout>

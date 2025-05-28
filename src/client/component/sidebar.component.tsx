@@ -7,20 +7,28 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
+  SidebarGroupLabel,
 } from '@/client/ui/sidebar.ui'
 import { TypographyH3 } from '../ui/typography.ui'
 import { Link } from '@tanstack/react-router'
 
-export type SidebarProps = React.ComponentPropsWithoutRef<'div'> & {
-  title?: string
-  items?: {
-    title: string
-    url: string
-    icon: React.ElementType
-  }[]
+export type SidebarItem = {
+  title: string
+  url: string
+  icon: React.ElementType
 }
 
-export function Sidebar({ title, items, ...props }: SidebarProps) {
+export type SidebarGroup = {
+  title: string
+  items: SidebarItem[]
+}
+
+export type SidebarProps = React.ComponentPropsWithoutRef<'div'> & {
+  title?: string
+  groups?: SidebarGroup[]
+}
+
+export function Sidebar({ title, groups, ...props }: SidebarProps) {
   return (
     <SidebarUI {...props}>
       <SidebarHeader>
@@ -29,11 +37,12 @@ export function Sidebar({ title, items, ...props }: SidebarProps) {
         </SidebarGroup>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          {items && (
+        {groups?.map((group) => (
+          <SidebarGroup key={group.title}>
+            <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {items.map((item) => (
+                {group.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
@@ -48,8 +57,8 @@ export function Sidebar({ title, items, ...props }: SidebarProps) {
                 ))}
               </SidebarMenu>
             </SidebarGroupContent>
-          )}
-        </SidebarGroup>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
     </SidebarUI>
   )

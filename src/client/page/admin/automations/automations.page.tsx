@@ -1,6 +1,6 @@
 import { createRoute } from '@tanstack/react-router'
-import { rootRoute } from '../layout'
-import Layout from './layout'
+import { rootRoute } from '../../layout'
+import Layout from '../layout'
 import { useQuery } from '@tanstack/react-query'
 import { DataTable } from '@/client/component/data-table.component'
 import type { ColumnDef } from '@tanstack/react-table'
