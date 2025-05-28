@@ -1,4 +1,4 @@
-import type { FormDto } from '@/application/dto/forms.dto'
+import type { FormDto } from '@/application/dto/form.dto'
 import { expect, test } from '@/e2e/fixtures'
 
 test('should return a list of forms', async ({ startExampleApp }) => {

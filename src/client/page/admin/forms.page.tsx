@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { DataTable } from '@/client/component/data-table.component'
 import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '@/client/lib/client.lib'
-import type { FormDto } from '@/application/dto/forms.dto'
+import type { FormDto } from '@/application/dto/form.dto'
 import { Button } from '@/client/ui/button.ui'
 
 export const columns: ColumnDef<FormDto>[] = [
@@ -22,7 +22,7 @@ export const columns: ColumnDef<FormDto>[] = [
             href={row.original.path}
             target="_blank"
           >
-            <Button>Ouvrir</Button>
+            <Button>Open</Button>
           </a>
         </div>
       )
