@@ -3,7 +3,7 @@ import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-tabl
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/client/ui/table.ui'
 
-interface DataTableProps<TData, TValue> {
+type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }

@@ -8,9 +8,11 @@ import { loginAdminRoute } from './admin/login.page'
 import { openapiAdminRoute } from './admin/openapi.page'
 import { connectionsAdminRoute } from './admin/connections.page'
 import { formsAdminRoute } from './admin/forms.page'
+import { formRoute } from './form.page'
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
+  formRoute,
   loginAdminRoute,
   dashboardAdminRoute,
   automationsAdminRoute,
