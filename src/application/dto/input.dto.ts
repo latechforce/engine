@@ -3,7 +3,7 @@ import type { InputSchema } from '@/domain/validator/input'
 
 export type InputDto = {
   name: string
-  label?: string
+  label: string
   type: InputSchema['type']
   description?: string
   placeholder?: string
@@ -14,7 +14,7 @@ export type InputDto = {
 export function toInputDto(input: Input): InputDto {
   return {
     name: input.schema.name,
-    label: input.schema.label,
+    label: input.schema.label ?? input.schema.name,
     description: input.schema.description,
     placeholder: input.schema.placeholder,
     required: input.schema.required,

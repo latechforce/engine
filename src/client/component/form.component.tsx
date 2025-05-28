@@ -60,6 +60,13 @@ function FormInput({
           type="email"
         />
       )
+    case 'url':
+      return (
+        <Input
+          {...props}
+          type="url"
+        />
+      )
     case 'long-text':
       return <Textarea {...props} />
     default:
@@ -97,7 +104,12 @@ export function Form({ inputs, onSubmit }: FormProps) {
                 children={(field) => {
                   return (
                     <FormItem>
-                      <FormLabel htmlFor={field.name}>{input.label}</FormLabel>
+                      <FormLabel htmlFor={field.name}>
+                        <div className="flex w-full items-center justify-between gap-2">
+                          <span>{input.label}</span>
+                          {input.required ? <span className="text-red-500">*</span> : null}
+                        </div>
+                      </FormLabel>
                       <FormDescription>{input.description}</FormDescription>
                       <FormInput
                         formField={field}
