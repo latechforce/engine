@@ -27,6 +27,7 @@ type SelectInputDto = BaseInputDto & {
 
 type AttachmentInputDto = BaseInputDto & {
   type: 'single-attachment'
+  accept?: string
 }
 
 export type InputDto = TextInputDto | CheckboxInputDto | SelectInputDto | AttachmentInputDto
@@ -68,6 +69,7 @@ export function toInputDto(input: Input): InputDto {
       return {
         ...props,
         type: input.schema.type,
+        accept: input.schema.accept,
       }
   }
 }

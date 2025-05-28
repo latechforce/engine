@@ -66,12 +66,14 @@ export const formRoute = createRoute({
   component: FormPage,
   loader: async ({ context: { queryClient }, params: { path } }) =>
     queryClient.ensureQueryData(formQueryOptions(path)),
-  head: () => ({
-    title: 'Form',
+  head: ({ loaderData }) => ({
     meta: [
       {
+        title: loaderData && 'form' in loaderData ? `${loaderData.form.title} - Form` : '',
+      },
+      {
         name: 'description',
-        content: `Form page`,
+        content: loaderData && 'form' in loaderData ? loaderData.form.description : '',
       },
     ],
   }),

@@ -15,6 +15,7 @@ export default {
           label: 'Attachment',
           name: 'attachment',
           type: 'single-attachment',
+          accept: 'image/*',
         },
       ],
     },

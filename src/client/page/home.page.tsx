@@ -29,12 +29,14 @@ export const homeRoute = createRoute({
   path: '/',
   component: HomePage,
   loader: async ({ context }) => context.queryClient.ensureQueryData(metadataQueryOptions()),
-  head: () => ({
-    title: 'Home',
+  head: ({ loaderData }) => ({
     meta: [
       {
+        title: loaderData?.metadata.name,
+      },
+      {
         name: 'description',
-        content: `Home page`,
+        content: loaderData?.metadata.description,
       },
     ],
   }),

@@ -110,6 +110,18 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
           </SelectContent>
         </Select>
       )
+    case 'single-attachment':
+      return (
+        <Input
+          {...props}
+          type="file"
+          required={input.required}
+          accept={input.accept}
+          onChange={(e) => {
+            field.handleChange(e.target.files?.[0])
+          }}
+        />
+      )
     default:
       return null
   }
