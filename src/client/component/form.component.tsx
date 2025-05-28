@@ -5,6 +5,7 @@ import { Input } from '../ui/input.ui'
 import { Button } from '../ui/button.ui'
 import type { InputDto } from '@/application/dto/input.dto'
 import { Textarea } from '../ui/textarea.ui'
+import { Checkbox } from '../ui/checkbox.ui'
 
 function FormInfo({ formField }: { formField: AnyFieldApi }) {
   return (
@@ -33,7 +34,7 @@ function FormInput({
     name: formField.name,
     value: String(formField.state.value ?? ''),
     onBlur: formField.handleBlur,
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>) =>
       formField.handleChange(e.target.value),
     required,
     placeholder,
@@ -69,6 +70,16 @@ function FormInput({
       )
     case 'long-text':
       return <Textarea {...props} />
+    case 'checkbox':
+      return (
+        <Checkbox
+          id={formField.name}
+          name={formField.name}
+          checked={formField.state.value === true}
+          onCheckedChange={(checked) => formField.handleChange(checked)}
+          required={required}
+        />
+      )
     default:
       return null
   }
