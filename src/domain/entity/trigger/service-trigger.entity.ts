@@ -5,4 +5,8 @@ export class ServiceTrigger {
     public readonly schema: ServiceTriggerSchema,
     public readonly automationName: string
   ) {}
+
+  get path() {
+    return this.schema.path.replace(/^\//, '')
+  }
 }

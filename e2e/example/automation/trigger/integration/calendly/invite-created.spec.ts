@@ -17,8 +17,8 @@ test('should trigger an automation when a calendly invite is created', async ({
 
   // THEN
   const response = await page.request.get('/api/runs')
-  const data: RunDto[] = await response.json()
-  expect(data.length).toBe(1)
-  expect(data[0]?.automation_name).toBe('calendly')
-  expect(data[0]?.status).toBe('success')
+  const { runs }: { runs: RunDto[] } = await response.json()
+  expect(runs.length).toBe(1)
+  expect(runs[0]?.automation_name).toBe('calendly')
+  expect(runs[0]?.status).toBe('success')
 })

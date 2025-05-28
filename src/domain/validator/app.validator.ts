@@ -7,7 +7,7 @@ import { formValidator } from './form.validator'
 export const appValidator = z
   .object({
     name: z.string().trim().min(3).default('My app'),
-    version: z.string().trim().min(1).default('0.0.1'),
+    version: z.string().trim().min(1).default('1.0.0'),
     description: z.string().trim().min(1).default('My app description'),
     automations: z.array(automationValidator).default([]),
     tables: z.array(tableValidator).default([]),

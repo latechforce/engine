@@ -25,7 +25,7 @@ export const record = pgTable('record', {
   updated_at: timestamp().notNull(),
 })
 
-export const recordField = pgTable('record_field', {
+export const recordColumn = pgTable('record_field', {
   id: text().primaryKey(),
   record_id: text()
     .notNull()

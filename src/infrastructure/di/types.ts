@@ -1,4 +1,7 @@
 const TYPES = {
+  Di: {
+    Server: Symbol.for('ServerDi'),
+  },
   Service: {
     Env: Symbol.for('EnvService'),
     Logger: Symbol.for('LoggerService'),
@@ -17,7 +20,7 @@ const TYPES = {
     Action: Symbol.for('IActionRepository'),
     Run: Symbol.for('IRunRepository'),
     Table: Symbol.for('ITableRepository'),
-    Field: Symbol.for('IFieldRepository'),
+    Column: Symbol.for('IColumnRepository'),
     Connection: Symbol.for('IConnectionRepository'),
     Token: Symbol.for('ITokenRepository'),
   },
@@ -30,7 +33,7 @@ const TYPES = {
     RunAutomation: Symbol.for('RunAutomationUseCase'),
     RunAction: Symbol.for('RunActionUseCase'),
     SetupTable: Symbol.for('SetupTableUseCase'),
-    SetupField: Symbol.for('SetupFieldUseCase'),
+    SetupColumn: Symbol.for('SetupColumnUseCase'),
     ListRuns: Symbol.for('ListRunsUseCase'),
     ListAutomations: Symbol.for('ListAutomationsUseCase'),
     ListConnections: Symbol.for('ListConnectionsUseCase'),
@@ -40,6 +43,8 @@ const TYPES = {
     SetupConnection: Symbol.for('SetupConnectionUseCase'),
     MockApp: Symbol.for('MockAppUseCase'),
     ListForms: Symbol.for('ListFormsUseCase'),
+    GetForm: Symbol.for('GetFormUseCase'),
+    GetAppMetadata: Symbol.for('GetAppMetadataUseCase'),
   },
 }
 

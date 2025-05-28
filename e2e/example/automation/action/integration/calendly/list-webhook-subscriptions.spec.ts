@@ -12,6 +12,6 @@ test('should run a calendly list webhook subscriptions action', async ({ startEx
   const response = await page.request.post('/api/automation/list-webhook-subscriptions')
 
   // THEN
-  const data: ListWebhookSubscriptionsResponse = await response.json()
+  const { data }: { data: ListWebhookSubscriptionsResponse } = await response.json()
   expect(data).toStrictEqual(listWebhookSubscriptionsResponse)
 })

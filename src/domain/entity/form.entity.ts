@@ -1,9 +1,14 @@
 import type { FormSchema } from '@/domain/validator/form.validator'
+import { Input } from './input.entity'
 
 export class Form {
-  constructor(public readonly schema: FormSchema) {}
+  public readonly inputs: Input[] = []
+
+  constructor(public readonly schema: FormSchema) {
+    this.inputs = schema.inputs.map((input) => new Input(input))
+  }
 
   get path() {
-    return `/form/${this.schema.path.replace(/^\//, '')}`
+    return this.schema.path.replace(/^\//, '')
   }
 }

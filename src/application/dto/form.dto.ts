@@ -1,13 +1,18 @@
 import type { Form } from '@/domain/entity/form.entity'
+import { toInputDto, type InputDto } from './input.dto'
 
 export type FormDto = {
   title: string
   path: string
+  description?: string
+  inputs: InputDto[]
 }
 
 export function toFormDto(form: Form): FormDto {
   return {
     title: form.schema.title,
     path: form.path,
+    description: form.schema.description,
+    inputs: form.inputs.map(toInputDto),
   }
 }

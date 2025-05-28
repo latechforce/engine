@@ -1,8 +1,10 @@
-import { Field, useForm, type AnyFieldApi } from '@tanstack/react-form'
+import { useForm, type AnyFieldApi } from '@tanstack/react-form'
 
 import { FormDescription, FormItem, FormLabel, FormMessage } from '@/client/ui/form.ui'
 import { Input } from '../ui/input.ui'
 import { Button } from '../ui/button.ui'
+import type { InputDto } from '@/application/dto/input.dto'
+import { Textarea } from '../ui/textarea.ui'
 
 function FormInfo({ formField }: { formField: AnyFieldApi }) {
   return (
@@ -15,36 +17,62 @@ function FormInfo({ formField }: { formField: AnyFieldApi }) {
   )
 }
 
-function FormInput({ type, formField }: { formField: AnyFieldApi; type: 'single-line-text' }) {
+function FormInput({
+  type,
+  formField,
+  required,
+  placeholder,
+}: {
+  formField: AnyFieldApi
+  type: InputDto['type']
+  required?: boolean
+  placeholder?: string
+}) {
+  const props = {
+    id: formField.name,
+    name: formField.name,
+    value: String(formField.state.value ?? ''),
+    onBlur: formField.handleBlur,
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      formField.handleChange(e.target.value),
+    required,
+    placeholder,
+  }
   switch (type) {
     case 'single-line-text':
       return (
         <Input
-          id={formField.name}
-          name={formField.name}
-          value={String(formField.state.value ?? '')}
-          onBlur={formField.handleBlur}
-          onChange={(e) => formField.handleChange(e.target.value)}
+          {...props}
+          type="text"
         />
       )
+    case 'phone':
+      return (
+        <Input
+          {...props}
+          type="tel"
+        />
+      )
+    case 'email':
+      return (
+        <Input
+          {...props}
+          type="email"
+        />
+      )
+    case 'long-text':
+      return <Textarea {...props} />
     default:
       return null
   }
 }
 
-export type Field = {
-  name: string
-  label?: string
-  description?: string
-  type: 'single-line-text'
-}
-
 type FormProps = {
-  fields: Field[]
+  inputs: InputDto[]
   onSubmit: (values: unknown) => Promise<void>
 }
 
-export function Form({ fields, onSubmit }: FormProps) {
+export function Form({ inputs, onSubmit }: FormProps) {
   const form = useForm({
     onSubmit: async ({ value }) => {
       await onSubmit(value)
@@ -60,23 +88,25 @@ export function Form({ fields, onSubmit }: FormProps) {
           form.handleSubmit()
         }}
       >
-        <div>
-          {fields.map((field) => {
+        <div className="space-y-4">
+          {inputs.map((input) => {
             return (
               <form.Field
-                key={field.name}
-                name={field.name}
-                children={(formField) => {
+                key={input.name}
+                name={input.name}
+                children={(field) => {
                   return (
                     <FormItem>
-                      <FormLabel htmlFor={formField.name}>{field.label}</FormLabel>
-                      <FormDescription>{field.description}</FormDescription>
+                      <FormLabel htmlFor={field.name}>{input.label}</FormLabel>
+                      <FormDescription>{input.description}</FormDescription>
                       <FormInput
-                        formField={formField}
-                        type={field.type}
+                        formField={field}
+                        type={input.type}
+                        required={input.required}
+                        placeholder={input.placeholder}
                       />
                       <FormMessage>
-                        <FormInfo formField={formField} />
+                        <FormInfo formField={field} />
                       </FormMessage>
                     </FormItem>
                   )
@@ -88,19 +118,12 @@ export function Form({ fields, onSubmit }: FormProps) {
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
-            <div className="flex gap-2">
+            <div className="mt-4 flex justify-end gap-4">
               <Button
                 type="submit"
                 disabled={!canSubmit}
               >
                 {isSubmitting ? '...' : 'Submit'}
-              </Button>
-              <Button
-                type="reset"
-                onClick={() => form.reset()}
-                variant="secondary"
-              >
-                Reset
               </Button>
             </div>
           )}

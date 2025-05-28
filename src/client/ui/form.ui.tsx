@@ -3,6 +3,7 @@ import * as LabelPrimitive from '@radix-ui/react-label'
 
 import { cn } from '@/client/lib/utils.lib'
 import { Label } from '@/client/ui/label.ui'
+import { Skeleton } from './skeleton.ui'
 
 function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   return (
@@ -59,4 +60,21 @@ function FormMessage({ className, children, ...props }: React.ComponentProps<'p'
   )
 }
 
-export { FormItem, FormLabel, FormDescription, FormMessage }
+function FormSkeleton({ fields = 3, className }: { fields?: number; className?: string }) {
+  return (
+    <div className={cn('space-y-6', className)}>
+      {Array.from({ length: fields }).map((_, i) => (
+        <div
+          key={i}
+          className="grid gap-2"
+        >
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-4 w-48" />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export { FormItem, FormLabel, FormDescription, FormMessage, FormSkeleton }

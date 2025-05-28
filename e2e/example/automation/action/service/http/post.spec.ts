@@ -9,7 +9,7 @@ test('should run a post http action', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const data = await response.json()
+  const { data } = await response.json()
   expect(data.url).toBe('https://httpbin.org/post')
 })
 
@@ -21,7 +21,7 @@ test('should run a post http action with headers', async ({ startExampleApp }) =
   const response = await page.request.post('/api/automation/post')
 
   // THEN
-  const data = await response.json()
+  const { data } = await response.json()
   expect(data.headers['X-Custom-Header']).toBe('test')
 })
 
@@ -33,7 +33,7 @@ test('should run a post http action with env headers', async ({ startExampleApp 
   const response = await page.request.post('/api/automation/post')
 
   // THEN
-  const data = await response.json()
+  const { data } = await response.json()
   expect(data.headers['X-Custom-Header']).toBe('test')
 })
 
@@ -45,7 +45,7 @@ test('should run a post http action with default env headers', async ({ startExa
   const response = await page.request.post('/api/automation/post')
 
   // THEN
-  const data = await response.json()
+  const { data } = await response.json()
   expect(data.headers['X-Custom-Header']).toBe('test')
 })
 
@@ -57,6 +57,6 @@ test('should run a post http action with body', async ({ startExampleApp }) => {
   const response = await page.request.post('/api/automation/post')
 
   // THEN
-  const data = await response.json()
+  const { data } = await response.json()
   expect(data.json).toEqual({ message: 'Hello, world!' })
 })

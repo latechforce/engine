@@ -16,6 +16,6 @@ export class TableRepository implements ITableRepository {
   }
 
   async setup(table: Table) {
-    this.logger.info(`setup table "${table.name}"`)
+    this.logger.info(`setup table "${table.schema.name}"`)
   }
 }

@@ -24,11 +24,11 @@ import { TemplateService } from '../service/template.service'
 import type { IRunRepository } from '@/domain/repository-interface/run-repository.interface'
 import { RunRepository } from '../repository/run.repository'
 import { SetupTableUseCase } from '@/application/use-case/table/setup-table.use-case'
-import type { IFieldRepository } from '@/domain/repository-interface/field-repository.interface'
-import { FieldRepository } from '../repository/field.repository'
+import type { IColumnRepository } from '@/domain/repository-interface/column-repository.interface'
+import { ColumnRepository } from '../repository/column.repository'
 import { TableRepository } from '../repository/table.repository'
 import type { ITableRepository } from '@/domain/repository-interface/table-repository.interface'
-import { SetupFieldUseCase } from '@/application/use-case/field/setup-field.use-case'
+import { SetupColumnUseCase } from '@/application/use-case/column/setup-column.use-case'
 import { HttpTriggeredUseCase } from '@/application/use-case/trigger/http-triggered.use-case'
 import { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
 import { ValidateAppUseCase } from '@/application/use-case/app/validate-app.use-case'
@@ -43,6 +43,9 @@ import type { ITokenRepository } from '@/domain/repository-interface/token-repos
 import { TokenRepository } from '../repository/token.repository'
 import { MockAppUseCase } from '@/application/use-case/app/mock-app.use-case'
 import { ListFormsUseCase } from '@/application/use-case/form/list-forms.use-case'
+import { ServerDi } from './server.di'
+import { GetFormUseCase } from '@/application/use-case/form/get-form.use-case'
+import { GetAppMetadataUseCase } from '@/application/use-case/app/get-app-metadata.use-case'
 
 export async function registerDependencies(externals: Record<string, unknown> = {}) {
   const container = new Container()
@@ -73,7 +76,7 @@ export async function registerDependencies(externals: Record<string, unknown> = 
   container.bind<IActionRepository>(TYPES.Repository.Action).to(ActionRepository).inSingletonScope()
   container.bind<IRunRepository>(TYPES.Repository.Run).to(RunRepository).inSingletonScope()
   container.bind<ITableRepository>(TYPES.Repository.Table).to(TableRepository).inSingletonScope()
-  container.bind<IFieldRepository>(TYPES.Repository.Field).to(FieldRepository).inSingletonScope()
+  container.bind<IColumnRepository>(TYPES.Repository.Column).to(ColumnRepository).inSingletonScope()
   container
     .bind<IConnectionRepository>(TYPES.Repository.Connection)
     .to(ConnectionRepository)
@@ -104,8 +107,8 @@ export async function registerDependencies(externals: Record<string, unknown> = 
     .to(SetupTableUseCase)
     .inSingletonScope()
   container
-    .bind<SetupFieldUseCase>(TYPES.UseCase.SetupField)
-    .to(SetupFieldUseCase)
+    .bind<SetupColumnUseCase>(TYPES.UseCase.SetupColumn)
+    .to(SetupColumnUseCase)
     .inSingletonScope()
   container
     .bind<HttpTriggeredUseCase>(TYPES.UseCase.TriggerHttp)
@@ -134,6 +137,14 @@ export async function registerDependencies(externals: Record<string, unknown> = 
     .inSingletonScope()
   container.bind<MockAppUseCase>(TYPES.UseCase.MockApp).to(MockAppUseCase).inSingletonScope()
   container.bind<ListFormsUseCase>(TYPES.UseCase.ListForms).to(ListFormsUseCase).inSingletonScope()
+  container.bind<GetFormUseCase>(TYPES.UseCase.GetForm).to(GetFormUseCase).inSingletonScope()
+  container
+    .bind<GetAppMetadataUseCase>(TYPES.UseCase.GetAppMetadata)
+    .to(GetAppMetadataUseCase)
+    .inSingletonScope()
+
+  // Register DI
+  container.bind<ServerDi>(TYPES.Di.Server).to(ServerDi).inSingletonScope()
 
   return container
 }

@@ -11,7 +11,7 @@ test('should return a list of runs', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const runs: RunDto[] = await response.json()
+  const { runs }: { runs: RunDto[] } = await response.json()
   expect(runs.length).toBe(1)
   expect(runs[0]?.automation_name).toBe('post')
   expect(runs[0]?.status).toBe('success')

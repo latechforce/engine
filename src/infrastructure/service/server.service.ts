@@ -6,10 +6,7 @@ import { trimTrailingSlash } from 'hono/trailing-slash'
 import { inject, injectable } from 'inversify'
 import index from '@/client/index.html'
 import type { EnvService } from './env.service'
-import type { AuthService, AuthType } from './auth.service'
 import type { App } from '@/domain/entity/app.entity'
-import type { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
-import type { HttpTriggeredUseCase } from '@/application/use-case/trigger/http-triggered.use-case'
 import { Scalar } from '@scalar/hono-api-reference'
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
 import { z } from 'zod'
@@ -17,25 +14,7 @@ import { join } from 'path'
 import { prettyJSON } from 'hono/pretty-json'
 import { api } from '@/interface/routes'
 import type { SchemaObject } from 'ajv'
-import type { ListAutomationsUseCase } from '@/application/use-case/automation/list-automations.use-case'
-import type { ListConnectionsUseCase } from '@/application/use-case/connection/list-connections.use-case'
-import type { AuthenticateConnectionUseCase } from '@/application/use-case/connection/authenticate-connection.use-case'
-import type { ListFormsUseCase } from '@/application/use-case/form/list-forms.use-case'
-
-export type HonoType = {
-  Variables: AuthType & {
-    app: App
-    auth: AuthService
-    env: EnvService
-    logger: LoggerService
-    listRunsUseCase: ListRunsUseCase
-    httpTriggeredUseCase: HttpTriggeredUseCase
-    listAutomationsUseCase: ListAutomationsUseCase
-    listConnectionsUseCase: ListConnectionsUseCase
-    listFormsUseCase: ListFormsUseCase
-    authenticateConnectionUseCase: AuthenticateConnectionUseCase
-  }
-}
+import type { HonoType } from '../di/server.di'
 
 @injectable()
 export class ServerService {
@@ -136,15 +115,15 @@ export class ServerService {
         },
       ],
     })
-    openapiServer.get('/scalar', Scalar({ url: '/_openapi/schema', theme: 'alternate' }))
-    this.server.route('/_openapi', openapiServer)
+    openapiServer.get('/scalar', Scalar({ url: '/openapi/schema', theme: 'alternate' }))
+    this.server.route('/openapi', openapiServer)
   }
 
   start() {
     this.server.route('/api', api)
     Bun.serve({
       routes: {
-        '/_openapi/*': {
+        '/openapi/*': {
           GET: this.server.fetch,
         },
         '/api/*': {

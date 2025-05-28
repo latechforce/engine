@@ -4,10 +4,10 @@ import Layout from './layout'
 
 export const OpenAPIPage = () => {
   return (
-    <Layout breadcrumbs={[{ title: 'OpenAPI', url: '/_admin/openapi' }]}>
+    <Layout breadcrumbs={[{ title: 'OpenAPI', url: '/admin/openapi' }]}>
       <div className="h-full w-full">
         <iframe
-          src="/_openapi/scalar"
+          src="/openapi/scalar"
           title="API Documentation"
           width="100%"
           height="100%"
@@ -20,7 +20,7 @@ export const OpenAPIPage = () => {
 
 export const openapiAdminRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/_admin/openapi',
+  path: '/admin/openapi',
   component: OpenAPIPage,
   head: () => ({
     meta: [

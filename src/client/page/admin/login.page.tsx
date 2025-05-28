@@ -11,7 +11,7 @@ export const LoginPage = () => {
           description="Login to your admin account"
           forgotPassword={false}
           signup={false}
-          callbackURL="/_admin"
+          callbackURL="/admin"
         />
       </div>
     </div>
@@ -20,7 +20,7 @@ export const LoginPage = () => {
 
 export const loginAdminRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/_admin/login',
+  path: '/admin/login',
   component: LoginPage,
   head: () => ({
     meta: [

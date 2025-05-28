@@ -10,7 +10,7 @@ test('should return a list of connections', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const connections: ConnectionDto[] = await response.json()
+  const { connections }: { connections: ConnectionDto[] } = await response.json()
   expect(connections.length).toBe(1)
   expect(connections[0]?.name).toBe('Calendly')
   expect(connections[0]?.service).toBe('calendly')

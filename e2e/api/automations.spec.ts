@@ -10,7 +10,7 @@ test('should return a list of automations', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const automations: AutomationDto[] = await response.json()
+  const { automations }: { automations: AutomationDto[] } = await response.json()
   expect(automations.length).toBe(1)
   expect(automations[0]?.name).toBe('post')
 })

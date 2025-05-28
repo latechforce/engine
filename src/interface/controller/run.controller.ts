@@ -1,10 +1,10 @@
 import type { Context } from 'hono'
-import type { HonoType } from '@/infrastructure/service/server.service'
+import type { HonoType } from '@/infrastructure/di/server.di'
 
 export class RunController {
   static async list(c: Context<HonoType>) {
     const listRunsUseCase = c.get('listRunsUseCase')
-    const runs = await listRunsUseCase.execute()
-    return c.json(runs)
+    const runsDto = await listRunsUseCase.execute()
+    return c.json({ runs: runsDto })
   }
 }

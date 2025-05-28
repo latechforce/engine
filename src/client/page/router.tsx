@@ -6,9 +6,10 @@ import { automationsAdminRoute } from './admin/automations/automations.page'
 import { runsAdminRoute } from './admin/automations/runs.page'
 import { loginAdminRoute } from './admin/login.page'
 import { openapiAdminRoute } from './admin/openapi.page'
-import { connectionsAdminRoute } from './admin/connections.page'
-import { formsAdminRoute } from './admin/forms.page'
+import { connectionsAdminRoute } from './admin/automations/connections.page'
+import { formsAdminRoute } from './admin/forms/forms.page'
 import { formRoute } from './form.page'
+import { queryClient } from '../lib/query.lib'
 
 const routeTree = rootRoute.addChildren([
   homeRoute,
@@ -22,7 +23,13 @@ const routeTree = rootRoute.addChildren([
   formsAdminRoute,
 ])
 
-export const router = createRouter({ routeTree })
+export const router = createRouter({
+  routeTree,
+  defaultPreload: 'intent',
+  defaultPreloadStaleTime: 0,
+  scrollRestoration: true,
+  context: { queryClient },
+})
 
 declare module '@tanstack/react-router' {
   interface Register {

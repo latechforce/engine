@@ -1,5 +1,5 @@
 import { z } from 'zod/v4'
-import { fieldValidator } from './field'
+import { fieldValidator } from './column'
 
 export const tableValidator = z
   .object({

@@ -2,13 +2,15 @@ import { createRoute } from '@tanstack/react-router'
 import { rootRoute } from '../../layout'
 import Layout from '../layout'
 import { DataTable } from '@/client/component/data-table.component'
-import { useQuery } from '@tanstack/react-query'
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { client } from '@/client/lib/client.lib'
 import type { RunDto } from '@/application/dto/run.dto'
+import { Suspense } from 'react'
+import { TableSkeleton } from '@/client/ui/table.ui'
 
-export const columns: ColumnDef<RunDto>[] = [
+const columns: ColumnDef<RunDto>[] = [
   {
     accessorKey: 'automation_name',
     header: 'Automation',
@@ -33,33 +35,34 @@ export const columns: ColumnDef<RunDto>[] = [
   },
 ]
 
-export const RunsDataTable = () => {
-  const { isPending, error, data } = useQuery<RunDto[]>({
+const runsQueryOptions = () =>
+  queryOptions<{ runs: RunDto[] }>({
     queryKey: ['runsData'],
     queryFn: () => client.runs.$get().then((res) => res.json()),
   })
 
-  if (isPending) return <div>Loading...</div>
-  if (error) return <div>Error: {error.message}</div>
-
+const RunsDataTable = () => {
+  const { data } = useSuspenseQuery(runsQueryOptions())
   return (
     <DataTable
       columns={columns}
-      data={data}
+      data={data.runs}
     />
   )
 }
 
-export const RunsPage = () => {
+const RunsPage = () => {
   return (
     <Layout
       breadcrumbs={[
-        { title: 'Automations', url: '/_admin/automations' },
-        { title: 'History', url: '/_admin/automation/history' },
+        { title: 'Automations', url: '/admin/automations' },
+        { title: 'History', url: '/admin/automation/history' },
       ]}
     >
       <div className="p-6">
-        <RunsDataTable />
+        <Suspense fallback={<TableSkeleton />}>
+          <RunsDataTable />
+        </Suspense>
       </div>
     </Layout>
   )
@@ -67,7 +70,10 @@ export const RunsPage = () => {
 
 export const runsAdminRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/_admin/automations/runs',
+  path: '/admin/runs',
+  loader: async ({ context: { queryClient } }) => {
+    return queryClient.ensureQueryData(runsQueryOptions())
+  },
   component: RunsPage,
   head: () => ({
     meta: [

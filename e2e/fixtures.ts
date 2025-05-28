@@ -141,11 +141,11 @@ export const test = base.extend<StartAppFixture>({
 
       if (loggedOnAdmin) {
         await test.step('Login as admin', async () => {
-          await page?.goto('/_admin/login')
+          await page?.goto('/admin/login')
           await page?.locator('input#email').fill('admin@admin.com')
           await page?.locator('input#password').fill('admin')
           await page?.locator('button[type="submit"]').click()
-          await page?.waitForURL('/_admin')
+          await page?.waitForURL('/admin')
         })
       }
 

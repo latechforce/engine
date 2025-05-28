@@ -1,12 +1,12 @@
 import type { Context } from 'hono'
-import type { HonoType } from '@/infrastructure/service/server.service'
+import type { HonoType } from '@/infrastructure/di/server.di'
 
 export class ConnectionController {
   static async list(c: Context<HonoType>) {
     const app = c.get('app')
     const listConnectionsUseCase = c.get('listConnectionsUseCase')
-    const connections = await listConnectionsUseCase.execute(app)
-    return c.json(connections)
+    const connectionsDto = await listConnectionsUseCase.execute(app)
+    return c.json({ connections: connectionsDto })
   }
 
   static async authenticate(c: Context<HonoType>) {

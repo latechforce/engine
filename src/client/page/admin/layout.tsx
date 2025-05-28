@@ -19,7 +19,7 @@ const items: SidebarGroup[] = [
     items: [
       {
         title: 'Dashboard',
-        url: '/_admin',
+        url: '/admin',
         icon: Gauge,
       },
     ],
@@ -29,7 +29,7 @@ const items: SidebarGroup[] = [
     items: [
       {
         title: 'Forms',
-        url: '/_admin/forms',
+        url: '/admin/forms',
         icon: FileText,
       },
     ],
@@ -39,17 +39,17 @@ const items: SidebarGroup[] = [
     items: [
       {
         title: 'Automations',
-        url: '/_admin/automations',
+        url: '/admin/automations',
         icon: Zap,
       },
       {
         title: 'Runs',
-        url: '/_admin/automations/runs',
+        url: '/admin/automations/runs',
         icon: History,
       },
       {
         title: 'Connections',
-        url: '/_admin/automations/connections',
+        url: '/admin/automations/connections',
         icon: Link,
       },
     ],
@@ -59,7 +59,7 @@ const items: SidebarGroup[] = [
     items: [
       {
         title: 'OpenAPI',
-        url: '/_admin/openapi',
+        url: '/admin/openapi',
         icon: Webhook,
       },
     ],
@@ -79,7 +79,7 @@ export default function Layout({
   breadcrumbs?: Breadcrumb[]
 }) {
   return (
-    <RequireAuth to="/_admin/login">
+    <RequireAuth to="/admin/login">
       <SidebarProvider>
         <Sidebar
           title="Admin"

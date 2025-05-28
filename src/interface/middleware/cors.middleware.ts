@@ -1,6 +1,6 @@
 import { cors } from 'hono/cors'
 import type { Context, MiddlewareHandler } from 'hono'
-import type { HonoType } from '@/infrastructure/service/server.service'
+import type { HonoType } from '@/infrastructure/di/server.di'
 
 export const corsMiddleware: MiddlewareHandler = (c: Context<HonoType>, next) => {
   const env = c.get('env')

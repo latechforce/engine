@@ -16,4 +16,8 @@ export class IntegrationTrigger {
     }
     return `${baseUrl}/api/automation/${path}`
   }
+
+  get path() {
+    return this.schema.path.replace(/^\//, '')
+  }
 }

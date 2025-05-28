@@ -1,41 +1,44 @@
 import { createRoute } from '@tanstack/react-router'
 import { rootRoute } from '../../layout'
 import Layout from '../layout'
-import { useQuery } from '@tanstack/react-query'
 import { DataTable } from '@/client/component/data-table.component'
 import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '@/client/lib/client.lib'
 import type { AutomationDto } from '@/application/dto/automation.dto'
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
+import { Suspense } from 'react'
+import { TableSkeleton } from '@/client/ui/table.ui'
 
-export const columns: ColumnDef<AutomationDto>[] = [
+const columns: ColumnDef<AutomationDto>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
   },
 ]
 
-export const AutomationsDataTable = () => {
-  const { isPending, error, data } = useQuery<AutomationDto[]>({
+const automationsQueryOptions = () =>
+  queryOptions<{ automations: AutomationDto[] }>({
     queryKey: ['automationsData'],
     queryFn: () => client.automations.$get().then((res) => res.json()),
   })
 
-  if (isPending) return <div>Loading...</div>
-  if (error) return <div>Error: {error.message}</div>
-
+const AutomationsDataPage = () => {
+  const { data } = useSuspenseQuery(automationsQueryOptions())
   return (
     <DataTable
       columns={columns}
-      data={data}
+      data={data.automations}
     />
   )
 }
 
-export const AutomationsPage = () => {
+const AutomationsPage = () => {
   return (
-    <Layout breadcrumbs={[{ title: 'Automations', url: '/_admin/automations' }]}>
+    <Layout breadcrumbs={[{ title: 'Automations', url: '/admin/automations' }]}>
       <div className="p-6">
-        <AutomationsDataTable />
+        <Suspense fallback={<TableSkeleton />}>
+          <AutomationsDataPage />
+        </Suspense>
       </div>
     </Layout>
   )
@@ -43,7 +46,10 @@ export const AutomationsPage = () => {
 
 export const automationsAdminRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/_admin/automations',
+  path: '/admin/automations',
+  loader: async ({ context: { queryClient } }) => {
+    return queryClient.ensureQueryData(automationsQueryOptions())
+  },
   component: AutomationsPage,
   head: () => ({
     meta: [

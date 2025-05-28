@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { cn } from '@/client/lib/utils.lib'
+import { Skeleton } from '@/client/ui/skeleton.ui'
 
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (
@@ -96,4 +97,49 @@ function TableCaption({ className, ...props }: React.ComponentProps<'caption'>) 
   )
 }
 
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption }
+function TableSkeleton({
+  rows = 5,
+  columns = 4,
+  className,
+}: {
+  rows?: number
+  columns?: number
+  className?: string
+}) {
+  return (
+    <Table className={className}>
+      <TableHeader>
+        <TableRow>
+          {Array.from({ length: columns }).map((_, i) => (
+            <TableHead key={i}>
+              <Skeleton className="h-4 w-[100px]" />
+            </TableHead>
+          ))}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {Array.from({ length: rows }).map((_, i) => (
+          <TableRow key={i}>
+            {Array.from({ length: columns }).map((_, j) => (
+              <TableCell key={j}>
+                <Skeleton className="h-4 w-[80px]" />
+              </TableCell>
+            ))}
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )
+}
+
+export {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+  TableSkeleton,
+}

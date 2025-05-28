@@ -74,6 +74,6 @@ test('should trigger an automation with a valid body', async ({ startExampleApp 
   })
 
   // THEN
-  const data = await response.json()
+  const { data } = await response.json()
   expect(data.message).toBe('Hello, John Doe!')
 })

@@ -25,7 +25,7 @@ export const record = sqliteTable('record', {
   updated_at: integer({ mode: 'timestamp' }).notNull(),
 })
 
-export const recordField = sqliteTable('record_field', {
+export const recordColumn = sqliteTable('record_field', {
   id: text().primaryKey(),
   record_id: text()
     .notNull()
