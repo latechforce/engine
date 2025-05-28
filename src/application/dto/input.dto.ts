@@ -1,24 +1,73 @@
 import type { Input } from '@/domain/entity/input.entity'
-import type { InputSchema } from '@/domain/validator/input'
 
-export type InputDto = {
+type BaseInputDto = {
   name: string
   label: string
-  type: InputSchema['type']
   description?: string
-  placeholder?: string
   required?: boolean
-  options?: string[]
 }
 
+type TextInputDto = BaseInputDto & {
+  type: 'single-line-text' | 'long-text' | 'phone' | 'email' | 'url'
+  placeholder?: string
+  defaultValue?: string
+}
+
+type CheckboxInputDto = BaseInputDto & {
+  type: 'checkbox'
+  defaultValue?: boolean
+}
+
+type SelectInputDto = BaseInputDto & {
+  type: 'single-select'
+  placeholder?: string
+  defaultValue?: string
+  options: { label: string; value: string }[]
+}
+
+type AttachmentInputDto = BaseInputDto & {
+  type: 'single-attachment'
+}
+
+export type InputDto = TextInputDto | CheckboxInputDto | SelectInputDto | AttachmentInputDto
+
 export function toInputDto(input: Input): InputDto {
-  return {
+  const props = {
     name: input.schema.name,
     label: input.schema.label ?? input.schema.name,
     description: input.schema.description,
-    placeholder: input.schema.placeholder,
     required: input.schema.required,
-    type: input.schema.type,
-    options: input.schema.type === 'single-select' ? input.schema.options : undefined,
+  }
+  switch (input.schema.type) {
+    case 'long-text':
+    case 'phone':
+    case 'email':
+    case 'url':
+    case 'single-line-text':
+      return {
+        ...props,
+        type: input.schema.type,
+        placeholder: input.schema.placeholder,
+        defaultValue: input.schema.defaultValue,
+      }
+    case 'checkbox':
+      return {
+        ...props,
+        type: input.schema.type,
+        defaultValue: input.schema.defaultValue,
+      }
+    case 'single-select':
+      return {
+        ...props,
+        type: input.schema.type,
+        placeholder: input.schema.placeholder,
+        defaultValue: input.schema.defaultValue,
+        options: input.schema.options,
+      }
+    case 'single-attachment':
+      return {
+        ...props,
+        type: input.schema.type,
+      }
   }
 }

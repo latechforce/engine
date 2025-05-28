@@ -6,6 +6,8 @@ import { Button } from '../ui/button.ui'
 import type { InputDto } from '@/application/dto/input.dto'
 import { Textarea } from '../ui/textarea.ui'
 import { Checkbox } from '../ui/checkbox.ui'
+import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select.ui'
+import { Select } from '../ui/select.ui'
 
 function FormInfo({ formField }: { formField: AnyFieldApi }) {
   return (
@@ -18,33 +20,27 @@ function FormInfo({ formField }: { formField: AnyFieldApi }) {
   )
 }
 
-function FormInput({
-  type,
-  formField,
-  required,
-  placeholder,
-}: {
-  formField: AnyFieldApi
-  type: InputDto['type']
-  required?: boolean
-  placeholder?: string
-}) {
+function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
   const props = {
-    id: formField.name,
-    name: formField.name,
-    value: String(formField.state.value ?? ''),
-    onBlur: formField.handleBlur,
+    id: field.name,
+    name: field.name,
+    value: String(field.state.value ?? ''),
+    onBlur: field.handleBlur,
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>) =>
-      formField.handleChange(e.target.value),
-    required,
-    placeholder,
+      field.handleChange(e.target.value),
   }
-  switch (type) {
+  const textProps = {
+    required: input.required,
+    placeholder: 'placeholder' in input ? input.placeholder : undefined,
+    defaultValue: 'defaultValue' in input ? String(input.defaultValue) : undefined,
+  }
+  switch (input.type) {
     case 'single-line-text':
       return (
         <Input
           {...props}
           type="text"
+          {...textProps}
         />
       )
     case 'phone':
@@ -52,6 +48,7 @@ function FormInput({
         <Input
           {...props}
           type="tel"
+          {...textProps}
         />
       )
     case 'email':
@@ -59,6 +56,7 @@ function FormInput({
         <Input
           {...props}
           type="email"
+          {...textProps}
         />
       )
     case 'url':
@@ -66,19 +64,51 @@ function FormInput({
         <Input
           {...props}
           type="url"
+          {...textProps}
         />
       )
     case 'long-text':
-      return <Textarea {...props} />
+      return (
+        <Textarea
+          {...props}
+          {...textProps}
+        />
+      )
     case 'checkbox':
       return (
         <Checkbox
-          id={formField.name}
-          name={formField.name}
-          checked={formField.state.value === true}
-          onCheckedChange={(checked) => formField.handleChange(checked)}
-          required={required}
+          id={field.name}
+          name={field.name}
+          checked={field.state.value === true}
+          onCheckedChange={(checked) => field.handleChange(checked)}
+          required={input.required}
+          defaultChecked={input.defaultValue === true}
+          onBlur={field.handleBlur}
         />
+      )
+    case 'single-select':
+      return (
+        <Select
+          name={field.name}
+          onValueChange={(value) => field.handleChange(value)}
+          defaultValue={input.defaultValue}
+          required={input.required}
+          value={field.state.value}
+        >
+          <SelectTrigger className="w-[240px]">
+            <SelectValue placeholder={input.placeholder} />
+          </SelectTrigger>
+          <SelectContent>
+            {input.options.map((option) => (
+              <SelectItem
+                key={option.value}
+                value={option.value}
+              >
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       )
     default:
       return null
@@ -121,13 +151,11 @@ export function Form({ inputs, onSubmit }: FormProps) {
                           {input.required ? <span className="text-red-500">*</span> : null}
                         </div>
                       </FormLabel>
-                      <FormDescription>{input.description}</FormDescription>
                       <FormInput
-                        formField={field}
-                        type={input.type}
-                        required={input.required}
-                        placeholder={input.placeholder}
+                        field={field}
+                        input={input}
                       />
+                      <FormDescription>{input.description}</FormDescription>
                       <FormMessage>
                         <FormInfo formField={field} />
                       </FormMessage>

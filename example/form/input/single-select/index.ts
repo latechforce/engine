@@ -15,7 +15,12 @@ export default {
           label: 'Select a color',
           name: 'select',
           type: 'single-select',
-          options: ['Red', 'Green', 'Blue'],
+          defaultValue: 'red',
+          options: [
+            { label: 'Red', value: 'red' },
+            { label: 'Green', value: 'green' },
+            { label: 'Blue', value: 'blue' },
+          ],
         },
       ],
     },
