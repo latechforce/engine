@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'bun:test'
 import App from '@/app'
-import metadata from '@/example/metadata'
+import metadata from '@/example/app/api/metadata'
 
 describe('start', () => {
   it('should have the default name', async () => {

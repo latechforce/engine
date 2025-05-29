@@ -10,7 +10,7 @@ export default {
       title: 'Contact us',
       description: 'Please fill in the form below to contact us.',
       path: '/contact-us',
-      action: '/api/automation/post',
+      action: '/api/automations/post',
       inputs: [
         {
           name: 'name',

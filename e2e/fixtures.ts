@@ -44,10 +44,10 @@ async function getExampleFileFilter(
 ): Promise<{ exampleFileFilter?: string; env: Record<string, string> }> {
   const callerFile = getCallerFile()
   let exampleFileFilter = filter
-  if (callerFile.includes('example') && !filter?.includes('/')) {
+  if (!filter?.includes('/')) {
     const baseExampleFile = join(
       process.cwd(),
-      callerFile.replace('e2e/', '').replace('.spec.ts', '')
+      callerFile.replace('e2e/', 'example/').replace('.spec.ts', '')
     )
     exampleFileFilter = join(baseExampleFile, (filter ?? 'index') + '.ts')
     if (!fs.existsSync(exampleFileFilter)) {
@@ -58,7 +58,7 @@ async function getExampleFileFilter(
       exampleFileFilter = exampleFileFilter.replace(process.cwd(), '')
       return { exampleFileFilter, env: file.env }
     } else {
-      throw new Error(`Example file ${exampleFileFilter} not found`)
+      exampleFileFilter = undefined
     }
   }
   return { exampleFileFilter, env: {} }

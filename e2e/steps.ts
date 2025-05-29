@@ -35,7 +35,7 @@ export async function connectTo(
       page.getByRole('menuitem', { name: 'Connect account' }).click(),
     ])
     await popup.waitForURL(loginUrl)
-    await popup.goto(`/api/connection/auth?id=1&code=AUTH_CODE`)
+    await popup.goto(`/api/connections/auth?id=1&code=AUTH_CODE`)
     await popup.close()
     await page.reload()
     await expect(page.getByRole('cell', { name: 'Connected', exact: true })).toBeVisible()

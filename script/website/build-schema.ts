@@ -1,4 +1,4 @@
-import { appValidator } from '@/domain/schema/app.schema'
+import { appValidator } from '@/app/domain/schema/app.schema'
 import fs from 'fs'
 import { join } from 'path'
 import { z } from 'zod/v4'

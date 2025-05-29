@@ -9,7 +9,7 @@ export default {
     {
       title: 'Contact us',
       path: '/contact-us',
-      action: '/api/automation/post',
+      action: '/api/automations/post',
       inputs: [
         {
           label: 'Message',
