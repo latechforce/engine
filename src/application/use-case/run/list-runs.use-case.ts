@@ -1,7 +1,7 @@
-import { toRunDto, type RunDto } from '@/application/dto/run.dto'
 import type { IRunRepository } from '@/domain/repository-interface/run-repository.interface'
 import { inject, injectable } from 'inversify'
 import TYPES from '@/infrastructure/di/types'
+import { toListRunsDto, type ListRunsDto } from '@/application/dto/run/list-runs.dto'
 
 @injectable()
 export class ListRunsUseCase {
@@ -10,8 +10,8 @@ export class ListRunsUseCase {
     private readonly runRepository: IRunRepository
   ) {}
 
-  async execute(): Promise<RunDto[]> {
+  async execute(): Promise<ListRunsDto> {
     const runs = await this.runRepository.list()
-    return runs.map(toRunDto)
+    return toListRunsDto(runs)
   }
 }

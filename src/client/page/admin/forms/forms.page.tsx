@@ -5,7 +5,8 @@ import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { DataTable } from '@/client/component/data-table.component'
 import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '@/client/lib/client.lib'
-import type { FormDto } from '@/application/dto/form.dto'
+import type { ListFormsDto } from '@/application/dto/form/list-forms.dto'
+import type { FormDto } from '@/application/dto/form/form.dto'
 import { Button } from '@/client/ui/button.ui'
 import { Suspense } from 'react'
 import { TableSkeleton } from '@/client/ui/table.ui'
@@ -55,7 +56,7 @@ const FormsPage = () => {
 }
 
 const formsQueryOptions = () =>
-  queryOptions<{ forms: FormDto[] }>({
+  queryOptions<ListFormsDto>({
     queryKey: ['formsData'],
     queryFn: () => client.forms.$get().then((res) => res.json()),
   })

@@ -1,4 +1,4 @@
-import type { AutomationSchema } from '@/domain/validator/automation.validator'
+import type { AutomationSchema } from '@/domain/schema/automation.schema'
 
 export class StoppedRun {
   public readonly status = 'stopped'

@@ -1,4 +1,4 @@
-import type { ConnectionSchema } from '@/domain/validator/connection'
+import type { ConnectionSchema } from '@/domain/schema/connection'
 
 export class Connection {
   constructor(

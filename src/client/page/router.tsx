@@ -10,8 +10,10 @@ import { connectionsAdminRoute } from './admin/automations/connections.page'
 import { formsAdminRoute } from './admin/forms/forms.page'
 import { formRoute } from './form.page'
 import { queryClient } from '../lib/query.lib'
+import { notFoundRoute } from './notFound.page'
 
 const routeTree = rootRoute.addChildren([
+  notFoundRoute,
   homeRoute,
   formRoute,
   loginAdminRoute,

@@ -46,6 +46,7 @@ import { ListFormsUseCase } from '@/application/use-case/form/list-forms.use-cas
 import { ServerDi } from './server.di'
 import { GetFormUseCase } from '@/application/use-case/form/get-form.use-case'
 import { GetAppMetadataUseCase } from '@/application/use-case/app/get-app-metadata.use-case'
+import { GetRunUseCase } from '@/application/use-case/run/get-run.use-case'
 
 export async function registerDependencies(externals: Record<string, unknown> = {}) {
   const container = new Container()
@@ -142,6 +143,7 @@ export async function registerDependencies(externals: Record<string, unknown> = 
     .bind<GetAppMetadataUseCase>(TYPES.UseCase.GetAppMetadata)
     .to(GetAppMetadataUseCase)
     .inSingletonScope()
+  container.bind<GetRunUseCase>(TYPES.UseCase.GetRun).to(GetRunUseCase).inSingletonScope()
 
   // Register DI
   container.bind<ServerDi>(TYPES.Di.Server).to(ServerDi).inSingletonScope()

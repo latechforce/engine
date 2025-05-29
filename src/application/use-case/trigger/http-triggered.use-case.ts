@@ -18,6 +18,7 @@ export class HttpTriggeredUseCase {
     automation: Automation,
     request: Request
   ): Promise<{ data?: object; error?: string }> {
+    console.log('request', request)
     const { schema } = automation.trigger
     let trigger: Record<string, unknown> = {}
     if (schema.service === 'http') {
@@ -25,7 +26,16 @@ export class HttpTriggeredUseCase {
       trigger.method = request.method
       trigger.headers = request.headers
       if (schema.event === 'post') {
-        trigger.body = request.body ? await request.json() : undefined
+        const contentType = request.headers.get('content-type') || ''
+        if (contentType.includes('application/json')) {
+          trigger.body = request.body ? await request.json() : undefined
+        } else if (
+          contentType.includes('application/x-www-form-urlencoded') ||
+          contentType.includes('multipart/form-data')
+        ) {
+          const formData = await request.formData()
+          trigger.body = Object.fromEntries(Array.from(formData.entries()))
+        }
         if (
           schema.requestBody &&
           !this.automationRepository.validateTriggerData(schema.requestBody, trigger.body)
@@ -34,7 +44,16 @@ export class HttpTriggeredUseCase {
         }
       }
     } else if (request.method === 'POST') {
-      trigger = request.body ? await request.json() : {}
+      const contentType = request.headers.get('content-type') || ''
+      if (contentType.includes('application/json')) {
+        trigger = request.body ? await request.json() : {}
+      } else if (
+        contentType.includes('application/x-www-form-urlencoded') ||
+        contentType.includes('multipart/form-data')
+      ) {
+        const formData = await request.formData()
+        trigger = Object.fromEntries(Array.from(formData.entries()))
+      }
     }
     const run = new PlayingRun(automation.schema, { trigger })
     await this.runRepository.create(run)

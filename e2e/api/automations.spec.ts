@@ -1,4 +1,4 @@
-import type { AutomationDto } from '@/application/dto/automation.dto'
+import type { AutomationDto } from '@/application/dto/automation/automation.dto'
 import { expect, test } from '@/e2e/fixtures'
 
 test('should return a list of automations', async ({ startExampleApp }) => {

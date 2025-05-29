@@ -5,8 +5,8 @@ export class AutomationController {
   static async list(c: Context<HonoType>) {
     const app = c.get('app')
     const listAutomationsUseCase = c.get('listAutomationsUseCase')
-    const automationsDto = await listAutomationsUseCase.execute(app)
-    return c.json({ automations: automationsDto })
+    const listAutomationsDto = await listAutomationsUseCase.execute(app)
+    return c.json(listAutomationsDto)
   }
 
   static async trigger(c: Context<HonoType>) {

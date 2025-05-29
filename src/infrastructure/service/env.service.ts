@@ -1,7 +1,7 @@
 import net from 'net'
 import type { Env } from '@/domain/value-object/env.value-object'
 import { injectable } from 'inversify'
-import { envValidator, type EnvSchemaValidated } from '../../domain/validator/env.validator'
+import { envValidator, type EnvSchemaValidated } from '@/domain/schema/env.schema'
 
 @injectable()
 export class EnvService {

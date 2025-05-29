@@ -14,6 +14,7 @@ import { inject, injectable } from 'inversify'
 import type { ServerService } from '../service/server.service'
 import TYPES from './types'
 import type { GetAppMetadataUseCase } from '@/application/use-case/app/get-app-metadata.use-case'
+import type { GetRunUseCase } from '@/application/use-case/run/get-run.use-case'
 
 export type HonoType = {
   Variables: AuthType & {
@@ -29,6 +30,7 @@ export type HonoType = {
     getFormUseCase: GetFormUseCase
     authenticateConnectionUseCase: AuthenticateConnectionUseCase
     getAppMetadataUseCase: GetAppMetadataUseCase
+    getRunUseCase: GetRunUseCase
   }
 }
 
@@ -58,7 +60,9 @@ export class ServerDi {
     @inject(TYPES.UseCase.GetForm)
     private readonly getFormUseCase: GetFormUseCase,
     @inject(TYPES.UseCase.GetAppMetadata)
-    private readonly getAppMetadataUseCase: GetAppMetadataUseCase
+    private readonly getAppMetadataUseCase: GetAppMetadataUseCase,
+    @inject(TYPES.UseCase.GetRun)
+    private readonly getRunUseCase: GetRunUseCase
   ) {}
 
   setup(app: App) {
@@ -75,6 +79,7 @@ export class ServerDi {
       c.set('getAppMetadataUseCase', this.getAppMetadataUseCase)
       c.set('httpTriggeredUseCase', this.httpTriggeredUseCase)
       c.set('authenticateConnectionUseCase', this.authenticateConnectionUseCase)
+      c.set('getRunUseCase', this.getRunUseCase)
       await next()
     })
   }

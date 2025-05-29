@@ -5,7 +5,7 @@ import { DataTable } from '@/client/component/data-table.component'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '@/client/lib/client.lib'
-import type { ConnectionDto } from '@/application/dto/connection.dto'
+import type { ConnectionDto } from '@/application/dto/connection/connection.dto'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +17,7 @@ import { Button } from '@/client/ui/button.ui'
 import { Link, MoreHorizontal, Unlink } from 'lucide-react'
 import { Suspense, useEffect } from 'react'
 import { TableSkeleton } from '@/client/ui/table.ui'
+import type { ListConnectionsDto } from '@/application/dto/connection/list-connections.dto'
 
 const columns: ColumnDef<ConnectionDto>[] = [
   {
@@ -116,7 +117,7 @@ const ConnectionsPage = () => {
 }
 
 const connectionsQueryOptions = () =>
-  queryOptions<{ connections: ConnectionDto[] }>({
+  queryOptions<ListConnectionsDto>({
     queryKey: ['connectionsData'],
     queryFn: () => client.connections.$get().then((res) => res.json()),
   })

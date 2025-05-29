@@ -2,7 +2,7 @@ import TYPES from '@/infrastructure/di/types'
 import { injectable, inject } from 'inversify'
 import type { IAppRepository } from '@/domain/repository-interface/app-repository.interface'
 import type { ValidateResult } from '@/domain/value-object/validate-result.value-object'
-import type { AppSchemaValidated } from '@/domain/validator/app.validator'
+import type { AppSchemaValidated } from '@/domain/schema/app.schema'
 
 @injectable()
 export class ValidateAppUseCase {

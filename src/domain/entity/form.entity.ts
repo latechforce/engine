@@ -1,4 +1,4 @@
-import type { FormSchema } from '@/domain/validator/form.validator'
+import type { FormSchema } from '@/domain/schema/form.schema'
 import { Input } from './input.entity'
 
 export class Form {

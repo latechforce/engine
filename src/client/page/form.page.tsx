@@ -1,10 +1,10 @@
 import { Form } from '@/client/component/form.component'
-import { createRoute } from '@tanstack/react-router'
+import { createRoute, Navigate } from '@tanstack/react-router'
 import { rootRoute } from './layout'
 import { TypographyH1, TypographyP } from '../ui/typography.ui'
 import { client } from '@/client/lib/client.lib'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import type { FormDto } from '@/application/dto/form.dto'
+import type { GetFormDto } from '@/application/dto/form/get-form.dto'
 import { Suspense } from 'react'
 import { FormSkeleton } from '../ui/form.ui'
 
@@ -12,10 +12,33 @@ const FormDataPage = () => {
   const { path } = formRoute.useParams()
   const { data } = useSuspenseQuery(formQueryOptions(path))
 
-  if ('error' in data) return <div>Error: {data.error}</div>
+  if ('error' in data) {
+    if (data.status === 404) {
+      return <Navigate to="/404" />
+    }
+    return <div>Error: {data.error}</div>
+  }
 
   const onSubmit = async (values: unknown) => {
-    console.log(values)
+    const { action } = data.form
+    if (action.startsWith('/api/automation/')) {
+      const path = action.replace('/api/automation/', '')
+      const response = await client.automation[':path'].$post({
+        param: { path },
+        // @ts-expect-error TODO: fix this
+        form: values,
+      })
+      console.log(response.status)
+    } else if (data.form.action.startsWith('http')) {
+      const response = await fetch(action, {
+        method: 'POST',
+        body: JSON.stringify(values),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      console.log(response.status)
+    }
   }
 
   return (
@@ -51,12 +74,12 @@ const FormPage = () => {
 }
 
 const formQueryOptions = (path: string) =>
-  queryOptions<{ form: FormDto } | { error: string }>({
+  queryOptions<GetFormDto | { error: string; status: number }>({
     queryKey: ['formData'],
     queryFn: async () => {
       const response = await client.form[':path'].$get({ param: { path } })
       const data = await response.json()
-      return data
+      return { ...data, status: response.status }
     },
   })
 

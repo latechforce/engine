@@ -1,6 +1,6 @@
 import type { AutomationSchema } from '@/types'
 import type { Connection } from '../connection.entity'
-import type { IntegrationActionSchema } from '@/domain/validator/action/integration'
+import type { IntegrationActionSchema } from '@/domain/schema/action/integration'
 
 export class IntegrationAction {
   constructor(

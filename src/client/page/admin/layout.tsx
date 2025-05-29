@@ -44,12 +44,12 @@ const items: SidebarGroup[] = [
       },
       {
         title: 'Runs',
-        url: '/admin/automations/runs',
+        url: '/admin/runs',
         icon: History,
       },
       {
         title: 'Connections',
-        url: '/admin/automations/connections',
+        url: '/admin/connections',
         icon: Link,
       },
     ],

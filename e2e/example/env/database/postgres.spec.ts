@@ -3,7 +3,7 @@ import { PostgreSqlContainer } from '@testcontainers/postgresql'
 
 test('should start with a custom postgres DATABASE_URL', async ({ startExampleApp }) => {
   // GIVEN
-  const container = await new PostgreSqlContainer().start()
+  const container = await new PostgreSqlContainer('postgres:16.9-alpine').start()
 
   // WHEN
   const call = async () =>

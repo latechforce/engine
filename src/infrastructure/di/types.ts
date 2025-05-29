@@ -45,6 +45,7 @@ const TYPES = {
     ListForms: Symbol.for('ListFormsUseCase'),
     GetForm: Symbol.for('GetFormUseCase'),
     GetAppMetadata: Symbol.for('GetAppMetadataUseCase'),
+    GetRun: Symbol.for('GetRunUseCase'),
   },
 }
 

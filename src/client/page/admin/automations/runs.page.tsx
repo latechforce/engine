@@ -6,9 +6,10 @@ import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { client } from '@/client/lib/client.lib'
-import type { RunDto } from '@/application/dto/run.dto'
+import type { RunDto } from '@/application/dto/run/run.dto'
 import { Suspense } from 'react'
 import { TableSkeleton } from '@/client/ui/table.ui'
+import type { ListRunsDto } from '@/application/dto/run/list-runs.dto'
 
 const columns: ColumnDef<RunDto>[] = [
   {
@@ -36,7 +37,7 @@ const columns: ColumnDef<RunDto>[] = [
 ]
 
 const runsQueryOptions = () =>
-  queryOptions<{ runs: RunDto[] }>({
+  queryOptions<ListRunsDto>({
     queryKey: ['runsData'],
     queryFn: () => client.runs.$get().then((res) => res.json()),
   })

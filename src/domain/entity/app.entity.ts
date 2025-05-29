@@ -1,4 +1,4 @@
-import type { AppSchemaValidated } from '@/domain/validator/app.validator'
+import type { AppSchemaValidated } from '@/domain/schema/app.schema'
 import type { Env } from '../value-object/env.value-object'
 import { Automation } from './automation.entity'
 import { Table } from './table.entity'

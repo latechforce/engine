@@ -1,4 +1,4 @@
-import type { RunDto } from '@/application/dto/run.dto'
+import type { RunDto } from '@/application/dto/run/run.dto'
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
 

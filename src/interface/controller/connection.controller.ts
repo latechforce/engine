@@ -5,8 +5,8 @@ export class ConnectionController {
   static async list(c: Context<HonoType>) {
     const app = c.get('app')
     const listConnectionsUseCase = c.get('listConnectionsUseCase')
-    const connectionsDto = await listConnectionsUseCase.execute(app)
-    return c.json({ connections: connectionsDto })
+    const listConnectionsDto = await listConnectionsUseCase.execute(app)
+    return c.json(listConnectionsDto)
   }
 
   static async authenticate(c: Context<HonoType>) {

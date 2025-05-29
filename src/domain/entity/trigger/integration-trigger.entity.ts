@@ -1,5 +1,5 @@
 import type { Connection } from '../connection.entity'
-import type { IntegrationTriggerSchema } from '@/domain/validator/trigger/integration'
+import type { IntegrationTriggerSchema } from '@/domain/schema/trigger/integration'
 
 export class IntegrationTrigger {
   constructor(

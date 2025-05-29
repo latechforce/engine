@@ -4,10 +4,11 @@ import Layout from '../layout'
 import { DataTable } from '@/client/component/data-table.component'
 import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '@/client/lib/client.lib'
-import type { AutomationDto } from '@/application/dto/automation.dto'
+import type { AutomationDto } from '@/application/dto/automation/automation.dto'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { Suspense } from 'react'
 import { TableSkeleton } from '@/client/ui/table.ui'
+import type { ListAutomationsDto } from '@/application/dto/automation/list-automation.dto'
 
 const columns: ColumnDef<AutomationDto>[] = [
   {
@@ -17,7 +18,7 @@ const columns: ColumnDef<AutomationDto>[] = [
 ]
 
 const automationsQueryOptions = () =>
-  queryOptions<{ automations: AutomationDto[] }>({
+  queryOptions<ListAutomationsDto>({
     queryKey: ['automationsData'],
     queryFn: () => client.automations.$get().then((res) => res.json()),
   })

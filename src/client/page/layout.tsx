@@ -1,7 +1,8 @@
 import type { QueryClient } from '@tanstack/react-query'
-import { createRootRouteWithContext, HeadContent, Link, Outlet } from '@tanstack/react-router'
+import { createRootRouteWithContext, HeadContent, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { NotFoundPage } from './notFound.page'
 
 export const RootLayout = () => {
   return (
@@ -18,12 +19,5 @@ export const rootRoute = createRootRouteWithContext<{
   queryClient: QueryClient
 }>()({
   component: RootLayout,
-  notFoundComponent: () => {
-    return (
-      <div>
-        <p>This is the notFoundComponent configured on root route</p>
-        <Link to="/">Start Over</Link>
-      </div>
-    )
-  },
+  notFoundComponent: NotFoundPage,
 })

@@ -1,4 +1,5 @@
-import type { FormDto } from '@/application/dto/form.dto'
+import type { GetFormDto } from '@/application/dto/form/get-form.dto'
+import type { ListFormsDto } from '@/application/dto/form/list-forms.dto'
 import { expect, test } from '@/e2e/fixtures'
 
 test('should return a list of forms', async ({ startExampleApp }) => {
@@ -10,7 +11,7 @@ test('should return a list of forms', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const { forms }: { forms: FormDto[] } = await response.json()
+  const { forms }: ListFormsDto = await response.json()
   expect(forms.length).toBe(1)
   expect(forms[0]?.title).toBe('Contact us')
 })
@@ -27,7 +28,7 @@ test('should return a form from a path', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const { form }: { form: FormDto } = await response.json()
+  const { form }: GetFormDto = await response.json()
   expect(form.title).toBe('Contact us')
   expect(form.path).toBe('contact-us')
 })

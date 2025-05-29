@@ -1,4 +1,4 @@
-import type { ServiceTriggerSchema } from '@/domain/validator/trigger/service'
+import type { ServiceTriggerSchema } from '@/domain/schema/trigger/service'
 
 export class ServiceTrigger {
   constructor(
