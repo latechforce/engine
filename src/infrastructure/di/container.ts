@@ -24,11 +24,8 @@ import { TemplateService } from '../service/template.service'
 import type { IRunRepository } from '@/domain/repository-interface/run-repository.interface'
 import { RunRepository } from '../repository/run.repository'
 import { SetupTableUseCase } from '@/application/use-case/table/setup-table.use-case'
-import type { IColumnRepository } from '@/domain/repository-interface/column-repository.interface'
-import { ColumnRepository } from '../repository/column.repository'
 import { TableRepository } from '../repository/table.repository'
 import type { ITableRepository } from '@/domain/repository-interface/table-repository.interface'
-import { SetupColumnUseCase } from '@/application/use-case/column/setup-column.use-case'
 import { HttpTriggeredUseCase } from '@/application/use-case/trigger/http-triggered.use-case'
 import { ListRunsUseCase } from '@/application/use-case/run/list-runs.use-case'
 import { ValidateAppUseCase } from '@/application/use-case/app/validate-app.use-case'
@@ -77,7 +74,6 @@ export async function registerDependencies(externals: Record<string, unknown> = 
   container.bind<IActionRepository>(TYPES.Repository.Action).to(ActionRepository).inSingletonScope()
   container.bind<IRunRepository>(TYPES.Repository.Run).to(RunRepository).inSingletonScope()
   container.bind<ITableRepository>(TYPES.Repository.Table).to(TableRepository).inSingletonScope()
-  container.bind<IColumnRepository>(TYPES.Repository.Column).to(ColumnRepository).inSingletonScope()
   container
     .bind<IConnectionRepository>(TYPES.Repository.Connection)
     .to(ConnectionRepository)
@@ -106,10 +102,6 @@ export async function registerDependencies(externals: Record<string, unknown> = 
   container
     .bind<SetupTableUseCase>(TYPES.UseCase.SetupTable)
     .to(SetupTableUseCase)
-    .inSingletonScope()
-  container
-    .bind<SetupColumnUseCase>(TYPES.UseCase.SetupColumn)
-    .to(SetupColumnUseCase)
     .inSingletonScope()
   container
     .bind<HttpTriggeredUseCase>(TYPES.UseCase.TriggerHttp)

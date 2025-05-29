@@ -15,6 +15,6 @@ export function toFormDto(form: Form): FormDto {
     path: form.path,
     action: form.schema.action,
     description: form.schema.description,
-    inputs: form.inputs.map(toInputDto),
+    inputs: form.schema.inputs.map(toInputDto),
   }
 }

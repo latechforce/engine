@@ -1,4 +1,4 @@
-import type { Input } from '@/domain/entity/input.entity'
+import type { InputSchema } from '@/domain/schema/input'
 
 type BaseInputDto = {
   name: string
@@ -32,14 +32,14 @@ type AttachmentInputDto = BaseInputDto & {
 
 export type InputDto = TextInputDto | CheckboxInputDto | SelectInputDto | AttachmentInputDto
 
-export function toInputDto(input: Input): InputDto {
+export function toInputDto(input: InputSchema): InputDto {
   const props = {
-    name: input.schema.name,
-    label: input.schema.label ?? input.schema.name,
-    description: input.schema.description,
-    required: input.schema.required,
+    name: input.name,
+    label: input.label ?? input.name,
+    description: input.description,
+    required: input.required,
   }
-  switch (input.schema.type) {
+  switch (input.type) {
     case 'long-text':
     case 'phone':
     case 'email':
@@ -47,29 +47,29 @@ export function toInputDto(input: Input): InputDto {
     case 'single-line-text':
       return {
         ...props,
-        type: input.schema.type,
-        placeholder: input.schema.placeholder,
-        defaultValue: input.schema.defaultValue,
+        type: input.type,
+        placeholder: input.placeholder,
+        defaultValue: input.defaultValue,
       }
     case 'checkbox':
       return {
         ...props,
-        type: input.schema.type,
-        defaultValue: input.schema.defaultValue,
+        type: input.type,
+        defaultValue: input.defaultValue,
       }
     case 'single-select':
       return {
         ...props,
-        type: input.schema.type,
-        placeholder: input.schema.placeholder,
-        defaultValue: input.schema.defaultValue,
-        options: input.schema.options,
+        type: input.type,
+        placeholder: input.placeholder,
+        defaultValue: input.defaultValue,
+        options: input.options,
       }
     case 'single-attachment':
       return {
         ...props,
-        type: input.schema.type,
-        accept: input.schema.accept,
+        type: input.type,
+        accept: input.accept,
       }
   }
 }
