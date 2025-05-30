@@ -7,6 +7,7 @@ const TYPES = {
     Validate: Symbol.for('ValidateAppUseCase'),
     Mock: Symbol.for('MockAppUseCase'),
   },
+  Controller: Symbol.for('AppController'),
 }
 
 export default TYPES
