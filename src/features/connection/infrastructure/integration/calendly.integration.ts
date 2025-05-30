@@ -1,6 +1,5 @@
 // Third-party imports
 import ky from 'ky'
-import { injectable } from 'inversify'
 
 // Connection domain imports
 import type { Connection } from '@/connection/domain/entity/connection.entity'
@@ -11,7 +10,6 @@ import { OAuthIntegration } from './oauth'
 import type { ConnectionIntegration } from './base'
 
 // Action infrastructure imports
-import type { BaseActionIntegration } from '@/action/infrastructure/integration/base'
 import { CalendlyActionIntegration } from '@/action/infrastructure/integration/calendly'
 
 export class CalendlyConnectionIntegration
