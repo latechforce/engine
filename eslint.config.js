@@ -55,6 +55,7 @@ export default tseslint.config(
         { type: 'application', pattern: 'src/**/application/**', mode: 'full' },
         { type: 'domain', pattern: 'src/**/domain/**', mode: 'full' },
         { type: 'infrastructure', pattern: 'src/**/infrastructure/**', mode: 'full' },
+        { type: 'client', pattern: 'src/**/client/**', mode: 'full' },
       ],
     },
     languageOptions: {
@@ -72,12 +73,16 @@ export default tseslint.config(
           message: '"${file.type}" is not allowed to import "${dependency.type}"',
           rules: [
             {
+              from: 'client',
+              allow: ['application', 'interface', 'client'],
+            },
+            {
               from: 'interface',
               allow: ['domain', 'application', 'infrastructure', 'interface'],
             },
             {
               from: 'infrastructure',
-              allow: ['domain', 'application', 'infrastructure'],
+              allow: ['domain', 'application', 'infrastructure', 'client'],
             },
             {
               from: 'application',

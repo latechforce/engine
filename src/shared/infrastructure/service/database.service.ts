@@ -1,13 +1,18 @@
+// External dependencies
 import { inject } from 'inversify'
-import TYPES from '@/shared/application/di/types'
-import type { EnvService } from './env.service'
 import { drizzle as drizzlePostgres } from 'drizzle-orm/node-postgres'
 import { migrate as migratePostgres } from 'drizzle-orm/node-postgres/migrator'
 import { drizzle as drizzleSqlite } from 'drizzle-orm/bun-sqlite'
 import { migrate as migrateSqlite } from 'drizzle-orm/bun-sqlite/migrator'
+
+// Internal imports
+import TYPES from '@/shared/application/di/types'
+import type { EnvService } from './env.service'
 import type { LoggerService } from './logger.service'
 import * as postgresSchema from '@/shared/infrastructure/db/schema/postgres'
 import * as sqliteSchema from '@/shared/infrastructure/db/schema/sqlite'
+
+// Node.js built-in modules
 import fs from 'fs'
 import path, { join } from 'path'
 

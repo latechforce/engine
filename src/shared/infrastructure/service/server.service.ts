@@ -1,19 +1,24 @@
-import { secureHeaders } from 'hono/secure-headers'
-import TYPES from '../../application/di/types'
-import type { LoggerService } from './logger.service'
+// External packages
 import { Hono, type Handler, type MiddlewareHandler } from 'hono'
+import { prettyJSON } from 'hono/pretty-json'
+import { secureHeaders } from 'hono/secure-headers'
 import { trimTrailingSlash } from 'hono/trailing-slash'
 import { inject, injectable } from 'inversify'
-import index from '@/shared/client/index.html'
-import type { EnvService } from './env.service'
-import type { App } from '@/app/domain/entity/app.entity'
+import { join } from 'path'
 import { Scalar } from '@scalar/hono-api-reference'
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
 import { z } from 'zod'
-import { join } from 'path'
-import { prettyJSON } from 'hono/pretty-json'
+
+// Internal types
 import type { SchemaObject } from 'ajv'
+import type { App } from '@/app/domain/entity/app.entity'
 import type { HonoContextType } from '@/shared/infrastructure/di/context'
+
+// Internal services and constants
+import TYPES from '../../application/di/types'
+import type { EnvService } from './env.service'
+import type { LoggerService } from './logger.service'
+import index from '@/shared/client/index.html'
 
 export type HonoType = { Variables: HonoContextType }
 

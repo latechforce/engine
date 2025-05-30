@@ -1,7 +1,10 @@
+// External dependencies
 import { createLogger, format, transports, type Logger } from 'winston'
-import { EnvService } from './env.service'
-import TYPES from '../../application/di/types'
 import { injectable, inject, unmanaged } from 'inversify'
+
+// Internal dependencies
+import TYPES from '../../application/di/types'
+import { EnvService } from './env.service'
 
 @injectable()
 export class LoggerService {
