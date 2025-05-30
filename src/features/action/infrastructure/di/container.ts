@@ -1,6 +1,6 @@
 import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
 import { CodeService } from '@/action/infrastructure/service/code.service'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import type { Container } from 'inversify'
 import { ActionRepository } from '@/action/infrastructure/repository/action.repository'
 import { SetupActionUseCase } from '@/action/application/use-case/setup-action.use-case'

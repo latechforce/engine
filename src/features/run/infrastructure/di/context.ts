@@ -1,6 +1,6 @@
 import type { ListRunsUseCase } from '@/run/application/use-case/list-runs.use-case'
 import { inject, injectable } from 'inversify'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import type { GetRunUseCase } from '@/run/application/use-case/get-run.use-case'
 import type { Context } from 'hono'
 

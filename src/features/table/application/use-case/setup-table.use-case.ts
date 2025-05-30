@@ -1,4 +1,4 @@
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
 import type { Table } from '@/table/domain/entity/table.entity'
 import type { ITableRepository } from '@/table/domain/repository-interface/table-repository.interface'
@@ -6,7 +6,7 @@ import type { ITableRepository } from '@/table/domain/repository-interface/table
 @injectable()
 export class SetupTableUseCase {
   constructor(
-    @inject(TYPES.Table.Repository)
+    @inject(TYPES.Repository)
     private readonly tableRepository: ITableRepository
   ) {}
 

@@ -49,5 +49,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src", "test", "example", "script", "src/infrastructure/db", "e2e", "config"]
+  "include": ["src", "test", "example", "script", "e2e", "config", "playwright.config.ts"]
 }

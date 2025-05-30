@@ -1,7 +1,7 @@
 import type { ListFormsUseCase } from '@/form/application/use-case/list-forms.use-case'
 import type { GetFormUseCase } from '@/form/application/use-case/get-form.use-case'
 import { inject, injectable } from 'inversify'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import type { Context } from 'hono'
 
 export type FormHonoContextType = {

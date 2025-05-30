@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify'
 import type { ConnectionDatabaseService } from '../service/database.service'
 import type { Token } from '@/connection/domain/value-object/token.value-object'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
 import type { Connection } from '@/connection/domain/entity/connection.entity'
 import { addSeconds, isAfter } from 'date-fns'

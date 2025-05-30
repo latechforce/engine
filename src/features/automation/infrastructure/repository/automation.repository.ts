@@ -1,4 +1,4 @@
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
 import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
 import { inject, injectable } from 'inversify'

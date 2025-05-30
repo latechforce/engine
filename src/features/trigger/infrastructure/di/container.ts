@@ -1,5 +1,5 @@
 import { Container } from 'inversify'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import type { ITriggerRepository } from '@/trigger/domain/repository-interface/trigger-repository.interface'
 import { TriggerRepository } from '../repository/trigger.repository'
 import { SetupTriggerUseCase } from '@/trigger/application/use-case/setup-trigger.use-case'

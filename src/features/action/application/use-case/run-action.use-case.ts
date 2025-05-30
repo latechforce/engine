@@ -1,4 +1,4 @@
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
 import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
 import type { Action } from '@/action/domain/entity'
@@ -9,7 +9,7 @@ import type { ActionResult } from '@/action/domain/value-object/action-result.va
 @injectable()
 export class RunActionUseCase {
   constructor(
-    @inject(TYPES.Action.Repository)
+    @inject(TYPES.Repository)
     private readonly actionRepository: IActionRepository
   ) {}
 

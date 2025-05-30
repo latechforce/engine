@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { IConnectionRepository } from '@/connection/domain/repository-interface/connection-repository.interface'
 import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
 import type { Token } from '@/connection/domain/value-object/token.value-object'

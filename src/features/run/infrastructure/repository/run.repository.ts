@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
 import { EventEmitter } from 'events'
 import { type Run, PlayingRun, SuccessRun, StoppedRun } from '@/run/domain/entity'

@@ -1,5 +1,5 @@
 import { Container } from 'inversify'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import { SetupTableUseCase } from '@/table/application/use-case/setup-table.use-case'
 import { TableHonoContext } from './context'
 import type { ITableRepository } from '@/table/domain/repository-interface/table-repository.interface'

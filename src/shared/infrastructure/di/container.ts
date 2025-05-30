@@ -1,8 +1,8 @@
 import { Container } from 'inversify'
 import { EnvService } from '../service/env.service'
 import { LoggerService } from '../service/logger.service'
-import { ServerService } from '../service/server.service'
-import TYPES from './types'
+import { ServerService, type HonoType } from '../service/server.service'
+import TYPES from '../../application/di/types'
 import { DatabaseService } from '../service/database.service'
 import { ValidatorService } from '../service/validator.service'
 import { TemplateService } from '../service/template.service'
@@ -17,8 +17,12 @@ import { registerRunDependencies } from '@/run/infrastructure/di/container'
 import { registerTableDependencies } from '@/table/infrastructure/di/container'
 import { registerTriggerDependencies } from '@/trigger/infrastructure/di/container'
 import { registerConnectionDependencies } from '@/connection/infrastructure/di/container'
+import type { Hono } from 'node_modules/hono/dist/types/hono'
 
-export async function registerDependencies(externals: Record<string, unknown> = {}) {
+export async function registerDependencies(
+  externals: Record<string, unknown> = {},
+  apiRoutes: Hono<HonoType>
+) {
   const container = new Container()
 
   // Register services
@@ -43,7 +47,8 @@ export async function registerDependencies(externals: Record<string, unknown> = 
   registerTriggerDependencies(container)
   registerConnectionDependencies(container)
 
-  container.bind<HonoContext>(TYPES.HonoContext).to(HonoContext).inSingletonScope()
+  container.bind<Hono<HonoType>>(TYPES.Hono.Routes).toConstantValue(apiRoutes)
+  container.bind<HonoContext>(TYPES.Hono.Context).to(HonoContext).inSingletonScope()
 
   return container
 }

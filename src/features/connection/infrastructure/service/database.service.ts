@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import { eq, inArray } from 'drizzle-orm'
 import { DatabaseService } from '@/shared/infrastructure/service/database.service'
 

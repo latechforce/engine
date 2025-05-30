@@ -1,4 +1,4 @@
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
 import type { Connection } from '@/connection/domain/entity/connection.entity'
 import type { IConnectionRepository } from '@/connection/domain/repository-interface/connection-repository.interface'
@@ -6,7 +6,7 @@ import type { IConnectionRepository } from '@/connection/domain/repository-inter
 @injectable()
 export class SetupConnectionUseCase {
   constructor(
-    @inject(TYPES.Connection.Repository.Connection)
+    @inject(TYPES.Repository.Connection)
     private readonly connectionRepository: IConnectionRepository
   ) {}
 

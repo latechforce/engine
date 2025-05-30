@@ -1,6 +1,6 @@
 import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
 import { toTriggerIntegration } from '../integration'
 import type { IntegrationTrigger } from '@/trigger/domain/entity/integration-trigger.entity'

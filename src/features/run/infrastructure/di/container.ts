@@ -1,5 +1,5 @@
 import { Container } from 'inversify'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import { ListRunsUseCase } from '@/run/application/use-case/list-runs.use-case'
 import { RunHonoContext } from './context'
 import { GetRunUseCase } from '@/run/application/use-case/get-run.use-case'

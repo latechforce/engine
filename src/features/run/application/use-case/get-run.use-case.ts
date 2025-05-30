@@ -1,12 +1,12 @@
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '../di/types'
 import { toGetRunDto, type GetRunDto } from '@/run/application/dto/get-run.dto'
 
 @injectable()
 export class GetRunUseCase {
   constructor(
-    @inject(TYPES.Run.Repository)
+    @inject(TYPES.Repository)
     private readonly runRepository: IRunRepository
   ) {}
 

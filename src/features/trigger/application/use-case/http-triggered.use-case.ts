@@ -2,7 +2,7 @@ import type { Automation } from '@/automation/domain/entity/automation.entity'
 import { PlayingRun } from '@/run/domain/entity/playing-run.entity'
 import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import { inject, injectable } from 'inversify'
 
 @injectable()

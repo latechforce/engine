@@ -1,4 +1,4 @@
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
 import { AutomationRepository } from '../repository/automation.repository'
 import { SetupAutomationUseCase } from '@/automation/application/use-case/setup-automation.use-case'

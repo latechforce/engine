@@ -1,5 +1,5 @@
 import { Container } from 'inversify'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import { ListConnectionsUseCase } from '@/connection/application/use-case/list-connections.use-case'
 import { AuthenticateConnectionUseCase } from '@/connection/application/use-case/authenticate-connection.use-case'
 import { ConnectionRepository } from '../repository/connection.repository'

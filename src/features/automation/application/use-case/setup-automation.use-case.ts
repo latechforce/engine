@@ -1,4 +1,4 @@
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import { injectable, inject } from 'inversify'
 import type { Automation } from '@/automation/domain/entity/automation.entity'
 import type { SetupTriggerUseCase } from '../../../trigger/application/use-case/setup-trigger.use-case'

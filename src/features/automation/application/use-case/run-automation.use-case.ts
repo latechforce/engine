@@ -1,4 +1,4 @@
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import { injectable, inject } from 'inversify'
 import type { RunActionUseCase } from '@/action/application/use-case/run-action.use-case'
 import { type PlayingRun } from '@/run/domain/entity/playing-run.entity'

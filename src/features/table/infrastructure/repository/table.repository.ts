@@ -1,5 +1,5 @@
 import type { Table } from '@/table/domain/entity/table.entity'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { ITableRepository } from '@/table/domain/repository-interface/table-repository.interface'
 import { inject, injectable } from 'inversify'
 import type { LoggerService } from '@/shared/infrastructure/service/logger.service'

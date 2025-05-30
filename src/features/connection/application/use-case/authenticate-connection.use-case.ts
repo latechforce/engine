@@ -1,15 +1,15 @@
 import type { Connection } from '@/connection/domain/entity/connection.entity'
 import type { IConnectionRepository } from '@/connection/domain/repository-interface/connection-repository.interface'
 import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '../di/types'
 import { inject, injectable } from 'inversify'
 
 @injectable()
 export class AuthenticateConnectionUseCase {
   constructor(
-    @inject(TYPES.Connection.Repository.Connection)
+    @inject(TYPES.Repository.Connection)
     private readonly connectionRepository: IConnectionRepository,
-    @inject(TYPES.Connection.Repository.Token)
+    @inject(TYPES.Repository.Token)
     private readonly tokenRepository: ITokenRepository
   ) {}
 

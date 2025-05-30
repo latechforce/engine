@@ -1,7 +1,7 @@
 import { Container } from 'inversify'
 import { AppRepository } from '../repository/app.repository'
 import { StartAppUseCase } from '../../application/use-case/start-app.use-case'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
 import { GetAppMetadataUseCase } from '../../application/use-case/get-app-metadata.use-case'
 import { AppHonoContext } from './context'

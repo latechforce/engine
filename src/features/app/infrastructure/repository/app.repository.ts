@@ -6,7 +6,7 @@ import {
 } from '@/shared/infrastructure/service'
 import { HonoContext } from '@/shared/infrastructure/di/context'
 import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import { injectable, inject } from 'inversify'
 import type { AuthService } from '@/user/infrastructure/service/auth.service'
 import type { App } from '../../domain/entity/app.entity'
@@ -27,7 +27,7 @@ export class AppRepository implements IAppRepository {
     private readonly auth: AuthService,
     @inject(TYPES.Service.Server)
     private readonly serverService: ServerService,
-    @inject(TYPES.HonoContext)
+    @inject(TYPES.Hono.Context)
     private readonly honoContext: HonoContext
   ) {}
 

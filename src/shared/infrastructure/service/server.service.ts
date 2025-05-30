@@ -1,5 +1,5 @@
 import { secureHeaders } from 'hono/secure-headers'
-import TYPES from '../di/types'
+import TYPES from '../../application/di/types'
 import type { LoggerService } from './logger.service'
 import { Hono, type Handler, type MiddlewareHandler } from 'hono'
 import { trimTrailingSlash } from 'hono/trailing-slash'
@@ -12,7 +12,6 @@ import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
 import { z } from 'zod'
 import { join } from 'path'
 import { prettyJSON } from 'hono/pretty-json'
-import { apiRoutes } from '@/shared/interface/routes'
 import type { SchemaObject } from 'ajv'
 import type { HonoContextType } from '@/shared/infrastructure/di/context'
 
@@ -26,7 +25,9 @@ export class ServerService {
     @inject(TYPES.Service.Env)
     private readonly env: EnvService,
     @inject(TYPES.Service.Logger)
-    private readonly logger: LoggerService
+    private readonly logger: LoggerService,
+    @inject(TYPES.Hono.Routes)
+    private readonly apiRoutes: Hono<HonoType>
   ) {
     this.logger = this.logger.child('server-service')
     this.logger.debug('init server')
@@ -122,7 +123,7 @@ export class ServerService {
   }
 
   start() {
-    this.server.route('/api', apiRoutes)
+    this.server.route('/api', this.apiRoutes)
     Bun.serve({
       routes: {
         '/openapi/*': {

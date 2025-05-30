@@ -1,5 +1,5 @@
 import { inject } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { EnvService } from './env.service'
 import { drizzle as drizzlePostgres } from 'drizzle-orm/node-postgres'
 import { migrate as migratePostgres } from 'drizzle-orm/node-postgres/migrator'

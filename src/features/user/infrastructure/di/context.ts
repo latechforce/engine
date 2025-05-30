@@ -1,6 +1,6 @@
 import type { AuthService, AuthType } from '../service/auth.service'
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { Context } from 'hono'
 
 export type UserHonoContextType = AuthType & {

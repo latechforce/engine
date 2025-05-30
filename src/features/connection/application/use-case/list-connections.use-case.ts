@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import type { App } from '@/app/domain/entity/app.entity'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '../di/types'
 import type { IConnectionRepository } from '@/connection/domain/repository-interface/connection-repository.interface'
 import {
   toListConnectionsDto,
@@ -11,7 +11,7 @@ import {
 @injectable()
 export class ListConnectionsUseCase {
   constructor(
-    @inject(TYPES.Connection.Repository.Connection)
+    @inject(TYPES.Repository.Connection)
     private readonly connectionRepository: IConnectionRepository
   ) {}
 

@@ -1,4 +1,4 @@
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import { injectable, inject } from 'inversify'
 import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
 import type { Action } from '@/action/domain/entity'

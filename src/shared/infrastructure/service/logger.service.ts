@@ -1,6 +1,6 @@
 import { createLogger, format, transports, type Logger } from 'winston'
 import { EnvService } from './env.service'
-import TYPES from '../di/types'
+import TYPES from '../../application/di/types'
 import { injectable, inject, unmanaged } from 'inversify'
 
 @injectable()

@@ -1,5 +1,5 @@
 import type { App } from '../../domain/entity/app.entity'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import { inject } from 'inversify'
 import type { ValidateAppUseCase } from '../../application/use-case/validate-app.use-case'
 import type { StartAppUseCase } from '../../application/use-case/start-app.use-case'

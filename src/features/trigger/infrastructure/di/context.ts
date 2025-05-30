@@ -1,6 +1,6 @@
 import type { HttpTriggeredUseCase } from '@/trigger/application/use-case/http-triggered.use-case'
 import { inject, injectable } from 'inversify'
-import TYPES from './types'
+import TYPES from '../../application/di/types'
 import type { Context } from 'hono'
 
 export type TriggerHonoContextType = {

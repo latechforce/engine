@@ -1,6 +1,6 @@
 import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import type { CodeService } from '@/action/infrastructure/service/code.service'
 import type { LoggerService, TemplateService } from '@/shared/infrastructure/service'
 import type { IntegrationAction } from '@/action/domain/entity/integration-action.entity'

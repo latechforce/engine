@@ -1,5 +1,5 @@
 import { Container } from 'inversify'
-import TYPES from '@/shared/infrastructure/di/types'
+import TYPES from '@/shared/application/di/types'
 import { AuthService } from '../service/auth.service'
 import { UserHonoContext } from './context'
 
