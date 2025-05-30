@@ -73,16 +73,12 @@ export default tseslint.config(
           message: '"${file.type}" is not allowed to import "${dependency.type}"',
           rules: [
             {
-              from: 'client',
-              allow: ['application', 'interface', 'client'],
-            },
-            {
               from: 'interface',
               allow: ['domain', 'application', 'infrastructure', 'interface'],
             },
             {
               from: 'infrastructure',
-              allow: ['domain', 'application', 'infrastructure', 'client'],
+              allow: ['domain', 'application', 'infrastructure'],
             },
             {
               from: 'application',

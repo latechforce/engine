@@ -5,7 +5,7 @@ test('should display a form with a single line text input', async ({ startExampl
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
 
   // THEN
   await expect(page.getByLabel('Name')).toBeVisible()
@@ -18,7 +18,7 @@ test('should run an automation when a form with a single line text input is subm
   const { page } = await startExampleApp({ test, filter: 'post-automation' })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
   await page.getByLabel('Name').fill('John Doe')
   await page.getByRole('button', { name: 'Submit' }).click()
 
@@ -34,7 +34,7 @@ test.skip('should create a record with a single line text input', async ({ start
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
   await page.getByLabel('Name').fill('John Doe')
 
   // THEN

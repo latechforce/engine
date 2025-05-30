@@ -41,6 +41,7 @@
       "@/connection/*": ["src/features/connection/*"],
       "@/table/*": ["src/features/table/*"],
       "@/user/*": ["src/features/user/*"],
+      "@/page/*": ["src/features/page/*"],
       "@/shared/*": ["src/shared/*"],
       "@/app": ["src"]
     },

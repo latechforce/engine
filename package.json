@@ -70,6 +70,7 @@
     "@tanstack/react-query-devtools": "^5.79.0",
     "@tanstack/react-router": "^1.120.12",
     "@tanstack/react-router-devtools": "^1.120.12",
+    "@tanstack/react-start": "^1.120.12",
     "@tanstack/react-table": "^8.21.3",
     "@types/json-schema": "^7.0.15",
     "ajv": "^8.17.1",

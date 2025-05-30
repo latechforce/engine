@@ -5,7 +5,7 @@ test('should display a form with a single select input', async ({ startExampleAp
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
 
   // THEN
   await expect(page.getByText('Select a color')).toBeVisible()

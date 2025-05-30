@@ -32,5 +32,5 @@ test('should open a form in a new page', async ({ startExampleApp }) => {
   await newPage.waitForLoadState()
 
   // THEN
-  expect(newPage.url()).toContain('/form/contact-us')
+  expect(newPage.url()).toContain('/forms/contact-us')
 })

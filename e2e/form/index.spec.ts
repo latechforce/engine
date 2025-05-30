@@ -5,7 +5,7 @@ test('should display a form with a title', async ({ startExampleApp }) => {
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
 
   // THEN
   await expect(page.getByRole('heading', { name: 'Contact Us' })).toBeVisible()
@@ -16,7 +16,7 @@ test('should display a form with a description', async ({ startExampleApp }) => 
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
 
   // THEN
   await expect(page.getByText('Please fill in the form below to contact us.')).toBeVisible()
@@ -27,7 +27,7 @@ test('should display a form with inputs', async ({ startExampleApp }) => {
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
 
   // THEN
   await expect(page.getByLabel('Name')).toBeVisible()
@@ -42,7 +42,7 @@ test('should display a form with inputs placeholders', async ({ startExampleApp 
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
 
   // THEN
   await expect(page.getByPlaceholder('Enter your name')).toBeVisible()
@@ -56,7 +56,7 @@ test('should display a form with inputs descriptions', async ({ startExampleApp 
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
 
   // THEN
   await expect(page.getByText('Please enter your name')).toBeVisible()
@@ -70,7 +70,7 @@ test('should display a form with submit button', async ({ startExampleApp }) => 
   const { page } = await startExampleApp({ test })
 
   // WHEN
-  await page.goto('/form/contact-us')
+  await page.goto('/forms/contact-us')
 
   // THEN
   await expect(page.getByRole('button', { name: 'Submit' })).toBeVisible()
