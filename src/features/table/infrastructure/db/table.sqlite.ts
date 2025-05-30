@@ -7,16 +7,20 @@ export const table = sqliteTable('table', {
   updated_at: integer({ mode: 'timestamp' }).notNull(),
 })
 
-export const column = sqliteTable('column', {
+export const field = sqliteTable('table_field', {
   id: integer().primaryKey(),
   table_id: integer()
     .notNull()
     .references(() => table.id, { onDelete: 'cascade' }),
   name: text().notNull(),
-  type: text().notNull(),
+  type: text({
+    enum: ['single-line-text', 'long-text'],
+  }).notNull(),
+  created_at: integer({ mode: 'timestamp' }).notNull(),
+  updated_at: integer({ mode: 'timestamp' }).notNull(),
 })
 
-export const row = sqliteTable('row', {
+export const record = sqliteTable('record', {
   id: text().primaryKey(),
   table_id: integer()
     .notNull()
@@ -25,14 +29,14 @@ export const row = sqliteTable('row', {
   updated_at: integer({ mode: 'timestamp' }).notNull(),
 })
 
-export const rowColumn = sqliteTable('row_column', {
+export const recordField = sqliteTable('record_field', {
   id: text().primaryKey(),
-  row_id: text()
+  record_id: text()
     .notNull()
-    .references(() => row.id, { onDelete: 'cascade' }),
-  column_id: integer()
+    .references(() => record.id, { onDelete: 'cascade' }),
+  field_id: integer()
     .notNull()
-    .references(() => column.id, { onDelete: 'cascade' }),
+    .references(() => field.id, { onDelete: 'cascade' }),
   value: text(),
   created_at: integer({ mode: 'timestamp' }).notNull(),
   updated_at: integer({ mode: 'timestamp' }).notNull(),

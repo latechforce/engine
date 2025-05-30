@@ -8,7 +8,7 @@ import { EnvService } from './env.service'
 
 @injectable()
 export class LoggerService {
-  public logger!: Logger
+  public logger: Logger
 
   constructor(
     @inject(TYPES.Service.Env)

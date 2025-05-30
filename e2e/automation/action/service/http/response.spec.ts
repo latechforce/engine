@@ -9,7 +9,7 @@ test('should run a response http action', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.text()).toBe('OK')
+  expect(await response.json()).toEqual({ success: true })
 })
 
 test('should run a response http action with body from a post request', async ({
@@ -48,7 +48,7 @@ test('should run a response http action with previous error', async ({ startExam
   const response = await page.request.post('/api/automations/response')
 
   // THEN
-  expect(response.status()).toBe(400)
+  expect(response.status()).toBe(500)
   const { error } = await response.json()
   expect(error).toEqual('This is a test error')
 })

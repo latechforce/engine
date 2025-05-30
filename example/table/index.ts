@@ -3,17 +3,17 @@ import type { AppSchema } from '@/types'
 export const inGuides = false
 
 export default {
-  name: 'Configure a table with a long text column',
-  description: 'Table with a long text column',
+  name: 'Configure a table with a single line text field',
+  description: 'Table with a single line text field',
   tables: [
     {
       id: 1,
       name: 'My table',
-      columns: [
+      fields: [
         {
           id: 1,
           name: 'My field',
-          type: 'long-text',
+          type: 'single-line-text',
         },
       ],
     },

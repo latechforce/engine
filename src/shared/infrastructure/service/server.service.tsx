@@ -1,5 +1,5 @@
 // External packages
-import { Hono, type Handler, type MiddlewareHandler } from 'hono'
+import { Hono, type Context, type Handler, type MiddlewareHandler } from 'hono'
 import { prettyJSON } from 'hono/pretty-json'
 import { secureHeaders } from 'hono/secure-headers'
 import { trimTrailingSlash } from 'hono/trailing-slash'
@@ -9,6 +9,8 @@ import { Scalar } from '@scalar/hono-api-reference'
 import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
 import { z } from 'zod'
 import type { SchemaObject } from 'ajv'
+import type { HTTPResponseError } from 'hono/types'
+import { timeout } from 'hono/timeout'
 
 // Internal types
 import type { App } from '@/app/domain/entity/app.entity'
@@ -19,6 +21,8 @@ import TYPES from '../../application/di/types'
 import type { EnvService } from './env.service'
 import type { LoggerService } from './logger.service'
 import index from '../index.html'
+import { HttpError } from '@/shared/domain/entity/http-error.entity'
+import { TriggerError } from '@/trigger/domain/entity/trigger-error.entity'
 
 export type HonoType = { Variables: HonoContextType }
 
@@ -40,6 +44,8 @@ export class ServerService {
     this.server.use(secureHeaders())
     this.server.use(trimTrailingSlash())
     this.server.use(prettyJSON())
+    this.server.use('/api', timeout(30000))
+    this.server.onError((error, c) => this.onError(error, c))
   }
 
   use(middleware: MiddlewareHandler) {
@@ -48,6 +54,16 @@ export class ServerService {
 
   on(methods: string[], path: string, handler: Handler) {
     this.server.on(methods, path, handler)
+  }
+
+  onError(error: Error | HTTPResponseError, c: Context<HonoType>) {
+    this.logger.error(error instanceof Error ? error.message : 'Unknown error')
+    if (error instanceof TriggerError) {
+      return c.json({ error: error.message, success: false }, error.status)
+    } else if (error instanceof HttpError) {
+      return c.json({ error: error.message }, error.status)
+    }
+    return c.json({ error: error.message }, 500)
   }
 
   setupOpenAPI(app: App) {

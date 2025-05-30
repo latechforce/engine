@@ -7,6 +7,7 @@ import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import type { GetFormDto } from '@/form/application/dto/get-form.dto'
 import { Suspense } from 'react'
 import { FormSkeleton } from '@/shared/interface/ui/form.ui'
+import type { ErrorDto } from '@/shared/application/dto/error.dto'
 
 const FormDataPage = () => {
   const { path } = formRoute.useParams()
@@ -74,7 +75,7 @@ const FormPage = () => {
 }
 
 const formQueryOptions = (path: string) =>
-  queryOptions<GetFormDto | { error: string; status: number }>({
+  queryOptions<GetFormDto | ErrorDto>({
     queryKey: ['formData'],
     queryFn: async () => {
       const response = await client.forms[':path'].$get({ param: { path } })

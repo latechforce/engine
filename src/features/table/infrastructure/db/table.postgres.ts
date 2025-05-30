@@ -7,16 +7,20 @@ export const table = pgTable('table', {
   updated_at: timestamp().notNull(),
 })
 
-export const column = pgTable('column', {
+export const field = pgTable('table_field', {
   id: integer().primaryKey(),
   table_id: integer()
     .notNull()
     .references(() => table.id, { onDelete: 'cascade' }),
   name: text().notNull(),
-  type: text().notNull(),
+  type: text({
+    enum: ['single-line-text', 'long-text'],
+  }).notNull(),
+  created_at: timestamp().notNull(),
+  updated_at: timestamp().notNull(),
 })
 
-export const row = pgTable('row', {
+export const record = pgTable('record', {
   id: text().primaryKey(),
   table_id: integer()
     .notNull()
@@ -25,14 +29,14 @@ export const row = pgTable('row', {
   updated_at: timestamp().notNull(),
 })
 
-export const rowColumn = pgTable('row_column', {
+export const recordField = pgTable('record_field', {
   id: text().primaryKey(),
-  row_id: text()
+  record_id: text()
     .notNull()
-    .references(() => row.id, { onDelete: 'cascade' }),
-  column_id: integer()
+    .references(() => record.id, { onDelete: 'cascade' }),
+  field_id: integer()
     .notNull()
-    .references(() => column.id, { onDelete: 'cascade' }),
+    .references(() => field.id, { onDelete: 'cascade' }),
   value: text().notNull(),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),

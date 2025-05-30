@@ -1,0 +1,13 @@
+import type { Context } from 'hono'
+import type { HonoType } from '@/shared/infrastructure/service'
+
+export class TableController {
+  static async createRecord(c: Context<HonoType>) {
+    const app = c.get('app')
+    const tableId = c.req.param('tableId')
+    const body = await c.req.json()
+    const createTableRecordUseCase = c.get('createTableRecordUseCase')
+    const createTableRecordDto = await createTableRecordUseCase.execute(app, tableId, body)
+    return c.json(createTableRecordDto, 201)
+  }
+}

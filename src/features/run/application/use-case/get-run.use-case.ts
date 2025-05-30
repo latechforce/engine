@@ -2,6 +2,7 @@ import type { IRunRepository } from '@/run/domain/repository-interface/run-repos
 import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
 import { toGetRunDto, type GetRunDto } from '@/run/application/dto/get-run.dto'
+import { HttpError } from '@/shared/domain/entity/http-error.entity'
 
 @injectable()
 export class GetRunUseCase {
@@ -10,8 +11,11 @@ export class GetRunUseCase {
     private readonly runRepository: IRunRepository
   ) {}
 
-  async execute(id: string): Promise<GetRunDto | undefined> {
+  async execute(id: string): Promise<GetRunDto> {
     const run = await this.runRepository.get(id)
-    return run ? toGetRunDto(run) : undefined
+    if (!run) {
+      throw new HttpError('Run not found', 404)
+    }
+    return toGetRunDto(run)
   }
 }

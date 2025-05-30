@@ -3,7 +3,7 @@ import { z } from 'zod/v4'
 
 // Trigger domain imports
 import { basehttpTriggerValidator } from './base'
-import { jsonSchemaValidator } from '@/trigger/domain/schema/json-schema.schema'
+import { jsonSchemaValidator } from '@/shared/domain/schema/json-schema.schema'
 
 export const postHttpTriggerValidator = basehttpTriggerValidator
   .extend({

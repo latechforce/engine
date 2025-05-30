@@ -51,7 +51,10 @@ test('should run a post http action with default env headers', async ({ startExa
 
 test('should run a post http action with body', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ filter: 'body', test })
+  const { page } = await startExampleApp({
+    filter: 'body',
+    test,
+  })
 
   // WHEN
   const response = await page.request.post('/api/automations/post')

@@ -2,13 +2,13 @@
 import { z } from 'zod/v4'
 
 // Table domain imports
-import { columnValidator } from './column'
+import { fieldValidator } from './field'
 
 export const tableValidator = z
   .object({
     id: z.number(),
     name: z.string(),
-    columns: z.array(columnValidator).default([]),
+    fields: z.array(fieldValidator).default([]),
   })
   .meta({
     title: 'Table',

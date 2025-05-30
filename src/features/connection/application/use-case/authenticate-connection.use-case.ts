@@ -1,8 +1,9 @@
-import type { Connection } from '@/connection/domain/entity/connection.entity'
 import type { IConnectionRepository } from '@/connection/domain/repository-interface/connection-repository.interface'
 import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
 import TYPES from '../di/types'
 import { inject, injectable } from 'inversify'
+import { HttpError } from '@/shared/domain/entity/http-error.entity'
+import type { App } from '@/app/domain/entity/app.entity'
 
 @injectable()
 export class AuthenticateConnectionUseCase {
@@ -13,22 +14,37 @@ export class AuthenticateConnectionUseCase {
     private readonly tokenRepository: ITokenRepository
   ) {}
 
-  async execute(connection: Connection, code: string) {
-    try {
-      this.connectionRepository.debug(`authenticate "${connection.schema.name}"`)
-      const token = await this.connectionRepository.getAccessTokenFromCode(connection, code)
-      const existingToken = await this.tokenRepository.get(token.id)
-      if (existingToken) {
-        await this.tokenRepository.update(token)
-      } else {
-        await this.tokenRepository.create(token)
-      }
-      await this.connectionRepository.status.update(connection.schema.id, true)
-    } catch (error) {
-      this.connectionRepository.error(
-        `authenticate "${connection.schema.name}": ${error instanceof Error ? error.message : 'Unknown error'}`
-      )
-      throw error
+  async execute(app: App, id?: string, code?: string) {
+    if (!id || !code) {
+      throw new HttpError('Missing id or code', 400)
     }
+    const connection = app.connections.find((connection) => connection.schema.id === Number(id))
+    if (!connection) {
+      throw new HttpError('Connection not found', 404)
+    }
+    this.connectionRepository.debug(`authenticate "${connection.schema.name}"`)
+    const token = await this.connectionRepository.getAccessTokenFromCode(connection, code)
+    const existingToken = await this.tokenRepository.get(token.id)
+    if (existingToken) {
+      await this.tokenRepository.update(token)
+    } else {
+      await this.tokenRepository.create(token)
+    }
+    await this.connectionRepository.status.update(connection.schema.id, true)
+    return `
+      <html>
+        <body>
+          <script>
+            // Notify opener window and close this one
+            if (window.opener) {
+              window.opener.postMessage('oauth:success', '*')
+              window.close()
+            } else {
+              document.body.innerText = 'You can close this window.'
+            }
+          </script>
+        </body>
+      </html>
+    `
   }
 }

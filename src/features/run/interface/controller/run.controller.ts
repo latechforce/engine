@@ -12,9 +12,6 @@ export class RunController {
     const id = c.req.param('id')
     const getRunUseCase = c.get('getRunUseCase')
     const getRunDto = await getRunUseCase.execute(id)
-    if (!getRunDto) {
-      return c.json({ error: 'Run not found' }, 404)
-    }
     return c.json(getRunDto)
   }
 }

@@ -18,7 +18,6 @@ export class RunDatabaseService {
       const schema = this.database.postgresSchema
       const db = this.database.postgres
       return {
-        schema,
         create: async (data: typeof schema.run.$inferInsert) => db.insert(schema.run).values(data),
         update: async (id: string, data: Partial<Omit<typeof schema.run.$inferInsert, 'id'>>) =>
           db.update(schema.run).set(data).where(eq(schema.run.id, id)),
@@ -35,7 +34,6 @@ export class RunDatabaseService {
       const schema = this.database.sqliteSchema
       const db = this.database.sqlite
       return {
-        schema,
         create: async (data: typeof schema.run.$inferInsert) => db.insert(schema.run).values(data),
         update: async (id: string, data: Partial<Omit<typeof schema.run.$inferInsert, 'id'>>) =>
           db.update(schema.run).set(data).where(eq(schema.run.id, id)),

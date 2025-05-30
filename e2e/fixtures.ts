@@ -18,6 +18,7 @@ type StartAppFixture = {
     filter?: string
     loggedOnAdmin?: boolean
     env?: Record<string, string>
+    debug?: boolean
     test: typeof test
   }) => Promise<{ page: Page; env: EnvSchema }>
 }
@@ -76,14 +77,19 @@ export const test = base.extend<StartAppFixture>({
       filter?: string
       loggedOnAdmin?: boolean
       env?: Partial<EnvSchema>
+      debug?: boolean
       test: typeof test
     }): Promise<{ page: Page; env: EnvSchema }> => {
-      const { filter, loggedOnAdmin = false } = options
+      const { filter, loggedOnAdmin = false, debug = false } = options
       env = options.env || {}
 
       const result = await getExampleFileFilter(filter)
       env = { ...result.env, ...env }
       const exampleFileFilter = result.exampleFileFilter
+
+      if (debug && !exampleFileFilter) {
+        console.log('There is no example file found for this test, loading empty app')
+      }
 
       await test.step(`Start example app${exampleFileFilter ? ` at ${exampleFileFilter}` : ' with no config'}`, async () => {
         const command = ['run', 'script/run-example.ts']
@@ -97,6 +103,7 @@ export const test = base.extend<StartAppFixture>({
             PORT: '*',
             DATABASE_PROVIDER: 'sqlite',
             DATABASE_URL: ':memory:',
+            LOG_LEVEL: debug ? 'debug' : process.env.LOG_LEVEL,
             ...env,
           },
           stdio: ['pipe', 'pipe', 'pipe'],
@@ -113,7 +120,7 @@ export const test = base.extend<StartAppFixture>({
 
         url = await new Promise<string>((resolve, reject) => {
           rl.on('line', async (line) => {
-            if (env.LOG_LEVEL) {
+            if (debug) {
               console.log(line)
             }
             const urlMatch = line.match(/http:\/\/localhost:(\d+)/)

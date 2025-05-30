@@ -1,13 +1,14 @@
 import { z } from 'zod/v4'
-import { baseColumnValidator } from './base'
+import { baseFieldValidator } from './base'
 
-export const singleLineTextColumnValidator = baseColumnValidator
+export const singleLineTextFieldValidator = baseFieldValidator
   .extend({
     type: z.literal('single-line-text'),
+    default: z.string().optional(),
   })
   .meta({
     title: 'Single Line Text',
     description: 'The single line text field is a field that can contain a single line of text',
   })
 
-export type SingleLineTextColumnSchema = z.infer<typeof singleLineTextColumnValidator>
+export type SingleLineTextFieldSchema = z.infer<typeof singleLineTextFieldValidator>

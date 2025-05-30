@@ -13,15 +13,17 @@ import { runRoutes } from '@/run/interface/routes'
 import { automationRoutes } from '@/automation/interface/routes'
 import { connectionRoutes } from '@/connection/interface/routes'
 import { formRoutes } from '@/form/interface/routes'
+import { tableRoutes } from '@/table/interface/routes'
 
 export const apiRoutes = new Hono<HonoType>()
   .use(loggerMiddleware)
-  .use(corsMiddleware)
   .use(authMiddleware)
+  .use('*', corsMiddleware)
   .route('/', appRoutes)
   .route('/runs', runRoutes)
   .route('/automations', automationRoutes)
   .route('/connections', connectionRoutes)
   .route('/forms', formRoutes)
+  .route('/tables', tableRoutes)
 
 export type ApiType = typeof apiRoutes

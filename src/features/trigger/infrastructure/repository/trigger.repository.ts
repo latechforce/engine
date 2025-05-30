@@ -1,6 +1,7 @@
 // Third-party imports
 import { inject, injectable } from 'inversify'
 import { HTTPError } from 'ky'
+import type { JSONSchema7 } from 'json-schema'
 
 // Shared imports
 import TYPES from '@/shared/application/di/types'
@@ -15,12 +16,18 @@ import type { IntegrationTrigger } from '@/trigger/domain/entity/integration-tri
 
 // Trigger infrastructure imports
 import { toTriggerIntegration } from '../integration'
+import type { ValidatorService } from '@/shared/infrastructure/service/validator.service'
+import type { TemplateService } from '@/shared/infrastructure/service/template.service'
 
 @injectable()
 export class TriggerRepository implements ITriggerRepository {
   constructor(
     @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
+    @inject(TYPES.Service.Validator)
+    private readonly validator: ValidatorService,
+    @inject(TYPES.Service.Template)
+    private readonly template: TemplateService,
     @inject(TYPES.Connection.Repository.Token)
     private readonly tokenRepository: ITokenRepository
   ) {
@@ -29,6 +36,14 @@ export class TriggerRepository implements ITriggerRepository {
 
   debug(message: string) {
     this.logger.debug(message)
+  }
+
+  validateData(schema: JSONSchema7, data: unknown): boolean {
+    return this.validator.validate(schema, data)
+  }
+
+  fillTemplateObject(template: Record<string, unknown>, data: object): Record<string, unknown> {
+    return this.template.fillObject(template, data)
   }
 
   async setupIntegration(trigger: IntegrationTrigger): Promise<void> {

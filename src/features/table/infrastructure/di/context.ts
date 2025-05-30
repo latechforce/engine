@@ -1,11 +1,20 @@
-import { injectable } from 'inversify'
+import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
+import type { CreateTableRecordUseCase } from '@/table/application/use-case/create-table-record.use-case'
+import TYPES from '@/table/application/di/types'
 
-export type TableHonoContextType = {}
+export type TableHonoContextType = {
+  createTableRecordUseCase: CreateTableRecordUseCase
+}
 
 @injectable()
 export class TableHonoContext {
-  constructor() {}
+  constructor(
+    @inject(TYPES.UseCase.CreateRecord)
+    private readonly createTableRecordUseCase: CreateTableRecordUseCase
+  ) {}
 
-  setVariables(_c: Context) {}
+  setVariables(c: Context) {
+    c.set('createTableRecordUseCase', this.createTableRecordUseCase)
+  }
 }

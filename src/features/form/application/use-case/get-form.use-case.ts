@@ -1,12 +1,17 @@
 import { injectable } from 'inversify'
-import type { Form } from '@/form/domain/entity/form.entity'
 import { toGetFormDto, type GetFormDto } from '@/form/application/dto/get-form.dto'
+import type { App } from '@/app/domain/entity/app.entity'
+import { HttpError } from '@/shared/domain/entity/http-error.entity'
 
 @injectable()
 export class GetFormUseCase {
   constructor() {}
 
-  async execute(form: Form): Promise<GetFormDto> {
+  async execute(app: App, path: string): Promise<GetFormDto> {
+    const form = app.forms.find((form) => form.path === path)
+    if (!form) {
+      throw new HttpError('Form not found', 404)
+    }
     return toGetFormDto(form)
   }
 }

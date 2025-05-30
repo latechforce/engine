@@ -9,7 +9,7 @@ export type { EnvSchema } from '@/shared/domain/schema/env.schema'
 export type { ActionSchema } from '@/action/domain/schema/action.schema'
 export type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
 export type { TriggerSchema } from '@/trigger/domain/schema/trigger.schema'
-export type { ColumnSchema } from '@/table/domain/schema/column'
+export type { FieldSchema } from '@/table/domain/schema/field'
 export type { TableSchema } from '@/table/domain/schema/table.schema'
 export type { ConnectionSchema } from '@/connection/domain/schema/connection.schema'
 

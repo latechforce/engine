@@ -53,7 +53,7 @@ export class AuthService {
   }
 
   async setup() {
-    this.logger.debug('setup auth')
+    this.logger.debug('setting up auth')
     await this.setupAdminUser()
     this.server.on(['POST', 'GET'], '/api/auth/*', (c) => this.auth.handler(c.req.raw))
   }

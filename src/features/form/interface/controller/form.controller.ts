@@ -13,9 +13,7 @@ export class FormController {
     const app = c.get('app')
     const path = c.req.param('path')
     const getFormUseCase = c.get('getFormUseCase')
-    const form = app.forms.find((form) => form.path === path)
-    if (!form) return c.json({ error: 'Form not found' }, 404)
-    const getFormDto = await getFormUseCase.execute(form)
+    const getFormDto = await getFormUseCase.execute(app, path)
     return c.json(getFormDto)
   }
 }
