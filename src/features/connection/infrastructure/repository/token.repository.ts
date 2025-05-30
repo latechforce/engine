@@ -1,10 +1,17 @@
+// Third-party imports
 import { inject, injectable } from 'inversify'
-import type { ConnectionDatabaseService } from '../service/database.service'
-import type { Token } from '@/connection/domain/value-object/token.value-object'
-import TYPES from '@/shared/application/di/types'
-import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
-import type { Connection } from '@/connection/domain/entity/connection.entity'
 import { addSeconds, isAfter } from 'date-fns'
+
+// Shared imports
+import TYPES from '@/shared/application/di/types'
+
+// Connection domain imports
+import type { Connection } from '@/connection/domain/entity/connection.entity'
+import type { Token } from '@/connection/domain/value-object/token.value-object'
+import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
+
+// Connection infrastructure imports
+import type { ConnectionDatabaseService } from '../service/database.service'
 import { toConnectionIntegration } from '../integration'
 
 @injectable()

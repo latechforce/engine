@@ -1,13 +1,18 @@
+// Third-party imports
 import { Container } from 'inversify'
+import type { Hono } from 'hono'
+
+// Shared infrastructure imports
 import { EnvService } from '../service/env.service'
 import { LoggerService } from '../service/logger.service'
 import { ServerService, type HonoType } from '../service/server.service'
-import TYPES from '../../application/di/types'
 import { DatabaseService } from '../service/database.service'
 import { ValidatorService } from '../service/validator.service'
 import { TemplateService } from '../service/template.service'
 import { HonoContext } from './context'
+import TYPES from '../../application/di/types'
 
+// Feature infrastructure imports
 import { registerAppDependencies } from '@/app/infrastructure/di/container'
 import { registerActionDependencies } from '@/action/infrastructure/di/container'
 import { registerUserDependencies } from '@/user/infrastructure/di/container'
@@ -17,7 +22,6 @@ import { registerRunDependencies } from '@/run/infrastructure/di/container'
 import { registerTableDependencies } from '@/table/infrastructure/di/container'
 import { registerTriggerDependencies } from '@/trigger/infrastructure/di/container'
 import { registerConnectionDependencies } from '@/connection/infrastructure/di/container'
-import type { Hono } from 'node_modules/hono/dist/types/hono'
 
 export async function registerDependencies(
   externals: Record<string, unknown> = {},

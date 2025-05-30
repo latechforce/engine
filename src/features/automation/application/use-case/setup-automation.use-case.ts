@@ -1,12 +1,25 @@
-import TYPES from '@/shared/application/di/types'
+// Third-party imports
 import { injectable, inject } from 'inversify'
-import type { Automation } from '@/automation/domain/entity/automation.entity'
-import type { SetupTriggerUseCase } from '../../../trigger/application/use-case/setup-trigger.use-case'
+
+// Shared imports
+import TYPES from '@/shared/application/di/types'
+
+// Action application imports
 import type { SetupActionUseCase } from '@/action/application/use-case/setup-action.use-case'
-import type { RunAutomationUseCase } from './run-automation.use-case'
+
+// Run domain imports
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
-import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
 import { PlayingRun } from '@/run/domain/entity/playing-run.entity'
+
+// Trigger application imports
+import type { SetupTriggerUseCase } from '@/trigger/application/use-case/setup-trigger.use-case'
+
+// Automation domain imports
+import type { Automation } from '@/automation/domain/entity/automation.entity'
+import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
+
+// Automation application imports
+import type { RunAutomationUseCase } from './run-automation.use-case'
 
 @injectable()
 export class SetupAutomationUseCase {

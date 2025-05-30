@@ -1,6 +1,11 @@
+// Third-party imports
 import { Hono } from 'hono'
-import { AutomationController } from '@/automation/interface/controller/automation.controller'
+
+// Shared imports
 import type { HonoType } from '@/shared/infrastructure/service/server.service'
+
+// Automation interface imports
+import { AutomationController } from '@/automation/interface/controller/automation.controller'
 
 export const automationRoutes = new Hono<HonoType>()
   .get('/', AutomationController.list)

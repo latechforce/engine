@@ -1,4 +1,7 @@
+// Third-party imports
 import { z } from 'zod/v4'
+
+// Form domain imports
 import { inputValidator } from '@/form/domain/schema/input'
 
 export const formValidator = z

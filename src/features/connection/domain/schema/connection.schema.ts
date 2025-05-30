@@ -1,4 +1,7 @@
+// Third-party imports
 import { z } from 'zod/v4'
+
+// Connection domain imports
 import { calendlyConnectionValidator } from './integration/calendly.schema'
 import { googleSheetsConnectionValidator } from './integration/google-sheets.schema'
 import { facebookLeadAdsConnectionValidator } from './integration/facebook-lead-ads.schema'

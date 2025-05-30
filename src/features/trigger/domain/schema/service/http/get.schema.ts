@@ -1,4 +1,7 @@
+// Third-party imports
 import { z } from 'zod/v4'
+
+// Trigger domain imports
 import { basehttpTriggerValidator } from './base'
 
 export const getHttpTriggerValidator = basehttpTriggerValidator

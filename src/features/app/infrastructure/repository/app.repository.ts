@@ -1,3 +1,8 @@
+// Third-party imports
+import { injectable, inject } from 'inversify'
+import { z } from 'zod/v4'
+
+// Shared imports
 import {
   ServerService,
   EnvService,
@@ -5,14 +10,16 @@ import {
   DatabaseService,
 } from '@/shared/infrastructure/service'
 import { HonoContext } from '@/shared/infrastructure/di/context'
-import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
 import TYPES from '@/shared/application/di/types'
-import { injectable, inject } from 'inversify'
-import type { AuthService } from '@/user/infrastructure/service/auth.service'
+
+// App domain imports
+import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
 import type { App } from '../../domain/entity/app.entity'
 import { appValidator } from '../../domain/schema/app.schema'
 import type { ValidateResult } from '../../domain/value-object/validate-result.value-object'
-import { z } from 'zod/v4'
+
+// User infrastructure imports
+import type { AuthService } from '@/user/infrastructure/service/auth.service'
 
 @injectable()
 export class AppRepository implements IAppRepository {

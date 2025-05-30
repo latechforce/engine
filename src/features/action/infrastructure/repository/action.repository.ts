@@ -1,14 +1,23 @@
-import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
+// Third-party imports
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/application/di/types'
-import type { CodeService } from '@/action/infrastructure/service/code.service'
-import type { LoggerService, TemplateService } from '@/shared/infrastructure/service'
-import type { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
-import { toActionIntegration } from '@/action/infrastructure/integration/action.integration'
-import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
 import { HTTPError } from 'ky'
+
+// Shared imports
+import TYPES from '@/shared/application/di/types'
+import type { LoggerService, TemplateService } from '@/shared/infrastructure/service'
+
+// Action domain imports
+import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
+import type { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
 import type { ActionResult } from '@/action/domain/value-object/action-result.value-object'
 import type { IntegrationError } from '@/action/domain/value-object/integration-error.value.object'
+
+// Action infrastructure imports
+import type { CodeService } from '@/action/infrastructure/service/code.service'
+import { toActionIntegration } from '@/action/infrastructure/integration/action.integration'
+
+// Connection domain imports
+import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
 
 @injectable()
 export class ActionRepository implements IActionRepository {

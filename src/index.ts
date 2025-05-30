@@ -1,12 +1,15 @@
+// Third-party imports
 import './instrument'
 import 'reflect-metadata'
+
+// Absolute imports
 import { registerDependencies } from '@/shared/infrastructure/di/container'
 import TYPES from '@/shared/application/di/types'
 import type { StartAppUseCase } from '@/app/application/use-case/start-app.use-case'
 import type { ValidateAppUseCase } from '@/app/application/use-case/validate-app.use-case'
 import type { MockAppUseCase } from '@/app/application/use-case/mock-app.use-case'
 import type { Mock } from '@/app/domain/value-object/mock.value-object'
-import { apiRoutes } from './shared/interface/routes'
+import { apiRoutes } from '@/shared/interface/routes'
 
 export * from './types'
 

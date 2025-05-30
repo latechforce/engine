@@ -1,4 +1,7 @@
+// Third-party imports
 import { z } from 'zod/v4'
+
+// Table domain imports
 import { columnValidator } from './column'
 
 export const tableValidator = z

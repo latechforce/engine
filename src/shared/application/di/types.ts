@@ -1,3 +1,4 @@
+// Feature type imports
 import APP_TYPES from '@/app/application/di/types'
 import ACTION_TYPES from '@/action/application/di/types'
 import USER_TYPES from '@/user/application/di/types'

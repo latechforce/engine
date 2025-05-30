@@ -1,9 +1,16 @@
+// Third-party imports
 import { Container } from 'inversify'
-import TYPES from '../../application/di/types'
+
+// Trigger domain imports
 import type { ITriggerRepository } from '@/trigger/domain/repository-interface/trigger-repository.interface'
-import { TriggerRepository } from '../repository/trigger.repository'
+
+// Trigger application imports
+import TYPES from '../../application/di/types'
 import { SetupTriggerUseCase } from '@/trigger/application/use-case/setup-trigger.use-case'
 import { HttpTriggeredUseCase } from '@/trigger/application/use-case/http-triggered.use-case'
+
+// Trigger infrastructure imports
+import { TriggerRepository } from '../repository/trigger.repository'
 import { TriggerHonoContext } from './context'
 
 export function registerTriggerDependencies(container: Container) {

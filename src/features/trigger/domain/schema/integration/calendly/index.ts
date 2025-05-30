@@ -1,4 +1,7 @@
+// Third-party imports
 import { z } from 'zod/v4'
+
+// Trigger domain imports
 import { inviteCreatedCalendlyTriggerValidator } from './invite-created.schema'
 
 export const calendlyTriggerValidator = z.union([inviteCreatedCalendlyTriggerValidator]).meta({

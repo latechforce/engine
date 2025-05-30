@@ -1,4 +1,7 @@
+// Third-party imports
 import type { Context } from 'hono'
+
+// Shared imports
 import type { HonoType } from '@/shared/infrastructure/service/server.service'
 
 export class AutomationController {

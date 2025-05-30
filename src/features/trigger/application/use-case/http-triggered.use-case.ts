@@ -1,9 +1,16 @@
-import type { Automation } from '@/automation/domain/entity/automation.entity'
-import { PlayingRun } from '@/run/domain/entity/playing-run.entity'
-import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
-import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
-import TYPES from '@/shared/application/di/types'
+// Third-party imports
 import { inject, injectable } from 'inversify'
+
+// Shared imports
+import TYPES from '@/shared/application/di/types'
+
+// Automation domain imports
+import type { Automation } from '@/automation/domain/entity/automation.entity'
+import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
+
+// Run domain imports
+import { PlayingRun } from '@/run/domain/entity/playing-run.entity'
+import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
 
 @injectable()
 export class HttpTriggeredUseCase {

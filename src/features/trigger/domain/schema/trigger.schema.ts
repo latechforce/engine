@@ -1,4 +1,7 @@
+// Third-party imports
 import { z } from 'zod/v4'
+
+// Trigger domain imports
 import { httpTriggerValidator } from './service/http'
 import { calendlyTriggerValidator } from './integration/calendly'
 import { facebookLeadAdsTriggerValidator } from './integration/facebook/lead-ads'

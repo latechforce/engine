@@ -1,6 +1,8 @@
+// Third-party imports
 import type { ColumnDef } from '@tanstack/react-table'
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
+// Shared UI imports
 import {
   Table,
   TableBody,

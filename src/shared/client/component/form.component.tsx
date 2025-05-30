@@ -1,13 +1,16 @@
+// Third-party imports
 import { useForm, type AnyFieldApi } from '@tanstack/react-form'
 
+// Feature imports
+import type { InputDto } from '@/form/application/dto/input.dto'
+
+// Shared UI imports
 import { FormDescription, FormItem, FormLabel, FormMessage } from '@/shared/client/ui/form.ui'
 import { Input } from '../ui/input.ui'
 import { Button } from '../ui/button.ui'
-import type { InputDto } from '@/form/application/dto/input.dto'
 import { Textarea } from '../ui/textarea.ui'
 import { Checkbox } from '../ui/checkbox.ui'
-import { SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select.ui'
-import { Select } from '../ui/select.ui'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select.ui'
 
 function FormInfo({ formField }: { formField: AnyFieldApi }) {
   return (

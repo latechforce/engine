@@ -1,6 +1,11 @@
+// Third-party imports
 import { z } from 'zod/v4'
-import { triggerValidator } from '@/trigger/domain/schema/trigger.schema'
+
+// Action domain imports
 import { actionValidator } from '@/action/domain/schema/action.schema'
+
+// Trigger domain imports
+import { triggerValidator } from '@/trigger/domain/schema/trigger.schema'
 
 export const automationValidator = z
   .object({

@@ -1,11 +1,18 @@
-import TYPES from '../../application/di/types'
+// Third-party imports
+import type { Container } from 'inversify'
+
+// Automation domain imports
 import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
-import { AutomationRepository } from '../repository/automation.repository'
+
+// Automation application imports
+import TYPES from '../../application/di/types'
 import { SetupAutomationUseCase } from '@/automation/application/use-case/setup-automation.use-case'
 import { RunAutomationUseCase } from '@/automation/application/use-case/run-automation.use-case'
 import { ListAutomationsUseCase } from '@/automation/application/use-case/list-automations.use-case'
+
+// Automation infrastructure imports
+import { AutomationRepository } from '../repository/automation.repository'
 import { AutomationHonoContext } from './context'
-import type { Container } from 'inversify'
 
 export function registerAutomationDependencies(container: Container) {
   // Register repositories

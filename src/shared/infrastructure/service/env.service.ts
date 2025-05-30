@@ -1,6 +1,9 @@
+// Third-party imports
 import net from 'net'
-import type { Env } from '@/shared/domain/value-object/env.value-object'
 import { injectable } from 'inversify'
+
+// Shared domain imports
+import type { Env } from '@/shared/domain/value-object/env.value-object'
 import { envValidator, type EnvSchemaValidated } from '@/shared/domain/schema/env.schema'
 
 @injectable()

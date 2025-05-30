@@ -1,3 +1,4 @@
+// Form domain imports
 import type { InputSchema } from '@/form/domain/schema/input'
 
 type BaseInputDto = {

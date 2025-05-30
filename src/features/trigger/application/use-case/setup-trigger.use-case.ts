@@ -1,8 +1,15 @@
-import TYPES from '../di/types'
+// Third-party imports
 import { injectable, inject } from 'inversify'
-import type { ITriggerRepository } from '@/trigger/domain/repository-interface/trigger-repository.interface'
+
+// Automation domain imports
 import type { Automation } from '@/automation/domain/entity/automation.entity'
+
+// Trigger domain imports
+import type { ITriggerRepository } from '@/trigger/domain/repository-interface/trigger-repository.interface'
 import { IntegrationTrigger } from '@/trigger/domain/entity/integration-trigger.entity'
+
+// Trigger application imports
+import TYPES from '../di/types'
 
 @injectable()
 export class SetupTriggerUseCase {

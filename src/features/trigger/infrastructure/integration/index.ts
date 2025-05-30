@@ -1,4 +1,7 @@
+// Connection domain imports
 import type { Connection } from '@/connection/domain/entity/connection.entity'
+
+// Trigger infrastructure imports
 import { CalendlyTriggerIntegration } from './calendly'
 
 export type TriggerIntegration = CalendlyTriggerIntegration

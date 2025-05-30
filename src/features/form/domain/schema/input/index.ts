@@ -1,8 +1,11 @@
+// Third-party imports
 import { z } from 'zod/v4'
+
+// Form domain imports
 import { attachmentInputValidator } from './attachement.schema'
 import { checkboxInputValidator } from './checkbox.schema'
-import { textInputValidator } from './text.schema'
 import { selectInputValidator } from './select.schema'
+import { textInputValidator } from './text.schema'
 
 export const inputValidator = z
   .union([

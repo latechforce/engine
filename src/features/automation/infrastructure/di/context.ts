@@ -1,7 +1,12 @@
-import type { ListAutomationsUseCase } from '@/automation/application/use-case/list-automations.use-case'
+// Third-party imports
 import { inject, injectable } from 'inversify'
-import TYPES from '../../application/di/types'
 import type { Context } from 'hono'
+
+// Automation application imports
+import type { ListAutomationsUseCase } from '@/automation/application/use-case/list-automations.use-case'
+
+// Automation infrastructure imports
+import TYPES from '../../application/di/types'
 
 export type AutomationHonoContextType = {
   listAutomationsUseCase: ListAutomationsUseCase

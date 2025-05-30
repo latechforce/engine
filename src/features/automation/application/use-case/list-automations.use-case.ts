@@ -1,5 +1,10 @@
+// Third-party imports
 import { injectable } from 'inversify'
+
+// App domain imports
 import type { App } from '@/app/domain/entity/app.entity'
+
+// Automation application imports
 import {
   toListAutomationsDto,
   type ListAutomationsDto,

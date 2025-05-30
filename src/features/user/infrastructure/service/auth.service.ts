@@ -1,13 +1,16 @@
+// Third-party imports
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/application/di/types'
 import { betterAuth, type Session, type User } from 'better-auth'
 import { admin } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import type { DatabaseService } from '@/shared/infrastructure/service/database.service'
-import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
 import { eq } from 'drizzle-orm'
-import type { ServerService } from '@/shared/infrastructure/service/server.service'
+
+// Shared imports
+import TYPES from '@/shared/application/di/types'
+import type { DatabaseService } from '@/shared/infrastructure/service/database.service'
 import type { EnvService } from '@/shared/infrastructure/service/env.service'
+import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
+import type { ServerService } from '@/shared/infrastructure/service/server.service'
 
 export type AuthType = {
   user: User | null

@@ -1,3 +1,4 @@
+// Connection domain imports
 import type { Token } from '@/connection/domain/value-object/token.value-object'
 
 export type ConnectionIntegration = {

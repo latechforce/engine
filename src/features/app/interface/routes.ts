@@ -1,4 +1,7 @@
+// Third-party imports
 import { Hono } from 'hono'
+
+// App interface imports
 import { AppController } from './controller/app.controller'
 import type { AppHonoContextType } from '../infrastructure/di/context'
 

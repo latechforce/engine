@@ -1,12 +1,16 @@
-import './globals.css'
-import 'tailwindcss'
-
+// Third-party imports
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
+import { QueryClientProvider } from '@tanstack/react-query'
+
+// Shared client imports
 import { router } from './page/router'
 import { queryClient } from './lib/query.lib'
-import { QueryClientProvider } from '@tanstack/react-query'
+
+// Styles
+import './globals.css'
+import 'tailwindcss'
 
 import.meta.hot.accept()
 

@@ -1,8 +1,11 @@
+// Third-party imports
+import { inject, injectable } from 'inversify'
+import type { Context } from 'hono'
+
+// Connection application imports
 import type { ListConnectionsUseCase } from '@/connection/application/use-case/list-connections.use-case'
 import type { AuthenticateConnectionUseCase } from '@/connection/application/use-case/authenticate-connection.use-case'
-import { inject, injectable } from 'inversify'
 import TYPES from '../../application/di/types'
-import type { Context } from 'hono'
 
 export type ConnectionHonoContextType = {
   listConnectionsUseCase: ListConnectionsUseCase

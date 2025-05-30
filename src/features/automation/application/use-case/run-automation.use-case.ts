@@ -1,8 +1,17 @@
-import TYPES from '@/shared/application/di/types'
+// Third-party imports
 import { injectable, inject } from 'inversify'
+
+// Shared imports
+import TYPES from '@/shared/application/di/types'
+
+// Action application imports
 import type { RunActionUseCase } from '@/action/application/use-case/run-action.use-case'
-import { type PlayingRun } from '@/run/domain/entity/playing-run.entity'
+
+// Run domain imports
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
+import { type PlayingRun } from '@/run/domain/entity/playing-run.entity'
+
+// Automation domain imports
 import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
 import type { Automation } from '@/automation/domain/entity/automation.entity'
 

@@ -1,12 +1,19 @@
+// Third-party imports
 import { Container } from 'inversify'
-import { AppRepository } from '../repository/app.repository'
-import { StartAppUseCase } from '../../application/use-case/start-app.use-case'
-import TYPES from '../../application/di/types'
+
+// App domain imports
 import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
+import TYPES from '../../application/di/types'
+
+// App application imports
+import { StartAppUseCase } from '../../application/use-case/start-app.use-case'
 import { GetAppMetadataUseCase } from '../../application/use-case/get-app-metadata.use-case'
-import { AppHonoContext } from './context'
 import { ValidateAppUseCase } from '@/app/application/use-case/validate-app.use-case'
 import { MockAppUseCase } from '@/app/application/use-case/mock-app.use-case'
+
+// App infrastructure imports
+import { AppRepository } from '../repository/app.repository'
+import { AppHonoContext } from './context'
 
 export function registerAppDependencies(container: Container) {
   // Register repositories

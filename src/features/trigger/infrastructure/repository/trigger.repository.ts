@@ -1,11 +1,20 @@
-import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
+// Third-party imports
 import { inject, injectable } from 'inversify'
+import { HTTPError } from 'ky'
+
+// Shared imports
 import TYPES from '@/shared/application/di/types'
 import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
-import { toTriggerIntegration } from '../integration'
-import type { IntegrationTrigger } from '@/trigger/domain/entity/integration-trigger.entity'
+
+// Connection domain imports
 import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
-import { HTTPError } from 'ky'
+
+// Trigger domain imports
+import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
+import type { IntegrationTrigger } from '@/trigger/domain/entity/integration-trigger.entity'
+
+// Trigger infrastructure imports
+import { toTriggerIntegration } from '../integration'
 
 @injectable()
 export class TriggerRepository implements ITriggerRepository {

@@ -1,8 +1,13 @@
+// Third-party imports
 import { Hono } from 'hono'
-import { authMiddleware } from '@/user/interface/middleware/auth.middleware'
+
+// Shared interface imports
 import { loggerMiddleware } from './middleware/logger.middleware'
 import { corsMiddleware } from './middleware/cors.middleware'
 import type { HonoType } from '@/shared/infrastructure/service'
+
+// Feature interface imports
+import { authMiddleware } from '@/user/interface/middleware/auth.middleware'
 import { appRoutes } from '@/app/interface/routes'
 import { runRoutes } from '@/run/interface/routes'
 import { automationRoutes } from '@/automation/interface/routes'
