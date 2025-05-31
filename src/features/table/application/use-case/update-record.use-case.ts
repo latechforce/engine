@@ -2,10 +2,7 @@ import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
 import type { App } from '@/app/domain/entity/app.entity'
 import { HttpError } from '@/shared/domain/entity/http-error.entity'
-import type {
-  IRecordRepository,
-  RecordTransaction,
-} from '@/table/domain/repository-interface/record-repository.interface'
+import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
 import { toGetRecordDto, type GetRecordDto } from '../dto/get-record.dto'
 import type { UpdateRecordBody } from '@/table/domain/object-value/update-record-body.object-value'
 import type { Table } from '@/table/domain/entity/table.entity'
@@ -40,14 +37,7 @@ export class UpdateRecordUseCase {
     if (!this.validateUpdateRecordBody(table, body)) {
       throw new HttpError('Invalid record', 400)
     }
-    await this.recordRepository.transaction(async (tx: RecordTransaction) => {
-      const fields = await tx.field.listByRecordId(recordId)
-      for (const key of Object.keys(body.fields)) {
-        const field = fields.find((field) => field.name === key)
-        if (field) await tx.field.update(field.id, body.fields[key])
-      }
-      await tx.update(recordId)
-    })
+    await this.recordRepository.update(recordId, body.fields)
     const record = await this.recordRepository.read(table, recordId)
     if (!record) {
       throw new HttpError('Record not found', 404)

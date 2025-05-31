@@ -3,10 +3,25 @@ import vm from 'node:vm'
 import ts from 'typescript'
 import { ESLint } from 'eslint'
 import js from '@eslint/js'
+import type { Fields } from '@/table/domain/object-value/fields.object-value'
+import type { Record } from '@/table/domain/entity/record.entity'
+
+export type TableContext = (name: string) => {
+  exists: (id: string) => Promise<boolean>
+  create: (fields: Fields) => Promise<Record>
+  createMany: (records: { fields: Fields }[]) => Promise<Record[]>
+  update: (id: string, fields: Fields) => Promise<Record>
+  updateMany: (records: { id: string; fields: Fields }[]) => Promise<Record[]>
+  delete: (id: string) => Promise<void>
+  deleteMany: (ids: string[]) => Promise<void>
+  read: (id: string) => Promise<Record | undefined>
+  list: () => Promise<Record[]>
+}
 
 export type CodeContext<T = {}, E = {}> = {
   inputData: T
   externals: E
+  table: TableContext
 }
 
 const globals = {
@@ -30,28 +45,33 @@ const globals = {
 
 @injectable()
 export class CodeService {
-  constructor(private readonly externals: Record<string, unknown>) {}
+  constructor(private readonly externals: { [key: string]: unknown }) {}
 
   private buildCode(code: string) {
-    return `(${code})({ externals, inputData })`
+    return `(${code})({ externals, inputData, table })`
   }
 
-  private getContext(inputData: Record<string, unknown>) {
+  private getContext(inputData: { [key: string]: unknown }, table: TableContext) {
     return {
       ...globals,
       externals: this.externals,
       inputData,
+      table,
     }
   }
 
-  async lint(code: string, inputData: Record<string, unknown>): Promise<string | undefined> {
+  async lint(
+    code: string,
+    inputData: { [key: string]: unknown },
+    table: TableContext
+  ): Promise<string | undefined> {
     const eslint = new ESLint({
       overrideConfigFile: true,
       overrideConfig: {
         ...js.configs.recommended,
         languageOptions: {
-          globals: Object.keys(this.getContext(inputData)).reduce(
-            (acc: Record<string, 'readonly'>, key) => {
+          globals: Object.keys(this.getContext(inputData, table)).reduce(
+            (acc: { [key: string]: 'readonly' }, key) => {
               acc[key] = 'readonly'
               return acc
             },
@@ -69,7 +89,7 @@ export class CodeService {
     return message
   }
 
-  runTypescript(tsCode: string, inputData: Record<string, unknown>) {
+  runTypescript(tsCode: string, inputData: { [key: string]: unknown }, table: TableContext) {
     const { outputText: jsCode } = ts.transpileModule(tsCode, {
       compilerOptions: {
         target: ts.ScriptTarget.ESNext,
@@ -77,12 +97,12 @@ export class CodeService {
         importHelpers: false,
       },
     })
-    return this.runJavascript(jsCode, inputData)
+    return this.runJavascript(jsCode, inputData, table)
   }
 
-  runJavascript(jsCode: string, inputData: Record<string, unknown>) {
+  runJavascript(jsCode: string, inputData: { [key: string]: unknown }, table: TableContext) {
     const vmScript = new vm.Script(this.buildCode(jsCode))
-    const vmContext = vm.createContext(this.getContext(inputData))
+    const vmContext = vm.createContext(this.getContext(inputData, table))
     return vmScript.runInContext(vmContext)
   }
 }

@@ -39,7 +39,7 @@ export class StartAppUseCase {
       await this.setupTableUseCase.execute(table)
     }
     for (const automation of app.automations) {
-      await this.setupAutomationUseCase.execute(automation)
+      await this.setupAutomationUseCase.execute(app, automation)
     }
     process.on('SIGINT', () => this.shutdown())
     process.on('SIGTERM', () => this.shutdown())

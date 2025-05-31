@@ -3,6 +3,7 @@ import type { FieldValue } from '../object-value/field-value.object-value'
 import type { Table } from '../entity/table.entity'
 import type { RecordFieldRow } from '../object-value/record-field-row.object-value'
 import type { SchemaObject } from 'ajv'
+import type { Fields } from '../object-value/fields.object-value'
 
 export type RecordTransaction = {
   create(tableId: number, record: Record): Promise<void>
@@ -21,6 +22,12 @@ export type IRecordRepository = {
   validateSchema(schema: SchemaObject, body: unknown): boolean
   transaction(callback: (tx: RecordTransaction) => Promise<void>): Promise<void>
   exists(table: Table, recordId: string): Promise<boolean>
+  create(table: Table, record: Record): Promise<void>
+  createMany(table: Table, records: Record[]): Promise<void>
+  update(recordId: string, fields: Fields): Promise<void>
+  updateMany(records: { id: string; fields: Fields }[]): Promise<void>
+  delete(recordId: string): Promise<void>
+  deleteMany(recordIds: string[]): Promise<void>
   read(table: Table, recordId: string): Promise<Record | undefined>
   list(table: Table): Promise<Record[]>
   listByIds(table: Table, recordIds: string[]): Promise<Record[]>

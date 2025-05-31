@@ -1,3 +1,4 @@
+import type { App } from '@/app/domain/entity/app.entity'
 import type { IntegrationAction } from '../entity/integration-action.entity'
 import type { ActionResult } from '../value-object/action-result.value-object'
 import type { IntegrationError } from '../value-object/integration-error.value.object'
@@ -5,7 +6,10 @@ import type { IntegrationError } from '../value-object/integration-error.value.o
 export type IActionRepository = {
   debug(message: string): void
   error: (message: string) => void
-  code: (inputData?: Record<string, string>) => {
+  code: (
+    app: App,
+    inputData?: Record<string, string>
+  ) => {
     lint: (code: string) => Promise<string | undefined>
     fillInputData: (data: Record<string, unknown>) => Record<string, string>
     runJavascript: (code: string) => Promise<object>

@@ -3,10 +3,7 @@ import TYPES from '../di/types'
 import type { App } from '@/app/domain/entity/app.entity'
 import { HttpError } from '@/shared/domain/entity/http-error.entity'
 import { Record } from '@/table/domain/entity/record.entity'
-import type {
-  IRecordRepository,
-  RecordTransaction,
-} from '@/table/domain/repository-interface/record-repository.interface'
+import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
 import { toGetRecordDto, type GetRecordDto } from '../dto/get-record.dto'
 import type { Table } from '@/table/domain/entity/table.entity'
 import type { CreateRecordBody } from '@/table/domain/object-value/create-record-body.object-value'
@@ -45,23 +42,11 @@ export class CreateRecordUseCase {
     }
     if ('fields' in body) {
       const record = new Record(body.fields)
-      await this.recordRepository.transaction(async (tx: RecordTransaction) => {
-        await tx.create(table.schema.id, record)
-        for (const field of table.schema.fields) {
-          await tx.field.create(field.id, record, record.fields[field.name])
-        }
-      })
+      await this.recordRepository.create(table, record)
       return toGetRecordDto(record)
     } else {
       const records = body.records.map((record) => new Record(record.fields))
-      await this.recordRepository.transaction(async (tx: RecordTransaction) => {
-        for (const record of records) {
-          await tx.create(table.schema.id, record)
-          for (const field of table.schema.fields) {
-            await tx.field.create(field.id, record, record.fields[field.name])
-          }
-        }
-      })
+      await this.recordRepository.createMany(table, records)
       return toListRecordsDto(records)
     }
   }

@@ -14,6 +14,7 @@ import { type PlayingRun } from '@/run/domain/entity/playing-run.entity'
 // Automation domain imports
 import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
 import type { Automation } from '@/automation/domain/entity/automation.entity'
+import type { App } from '@/app/domain/entity/app.entity'
 
 @injectable()
 export class RunAutomationUseCase {
@@ -26,7 +27,7 @@ export class RunAutomationUseCase {
     private readonly runActionUseCase: RunActionUseCase
   ) {}
 
-  async execute(run: PlayingRun, automation: Automation) {
+  async execute(app: App, run: PlayingRun, automation: Automation) {
     this.automationRepository.info(`playing automation "${automation.schema.name}"`)
     if (automation.actions.length === 0) {
       const SuccessRun = run.success()
@@ -36,7 +37,7 @@ export class RunAutomationUseCase {
         if (run.data[action.schema.name]) {
           continue
         }
-        const { data, error } = await this.runActionUseCase.execute(action, run)
+        const { data, error } = await this.runActionUseCase.execute(app, action, run)
         if (error) {
           const stoppedRun = run.stop(action.schema.name, error)
           await this.runRepository.update(stoppedRun)

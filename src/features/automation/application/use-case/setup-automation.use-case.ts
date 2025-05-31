@@ -10,6 +10,7 @@ import type { Automation } from '@/automation/domain/entity/automation.entity'
 import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
 import type { RunAutomationUseCase } from './run-automation.use-case'
 import type { SchemaObject } from 'ajv'
+import type { App } from '@/app/domain/entity/app.entity'
 
 @injectable()
 export class SetupAutomationUseCase {
@@ -26,20 +27,20 @@ export class SetupAutomationUseCase {
     private readonly automationRepository: IAutomationRepository
   ) {}
 
-  async execute(automation: Automation) {
+  async execute(app: App, automation: Automation) {
     this.automationRepository.debug(`setup "${automation.schema.name}"`)
 
     // Setup automation
     for (const action of automation.actions) {
-      await this.setupActionUseCase.execute(action)
+      await this.setupActionUseCase.execute(app, action)
     }
     await this.setupTriggerUseCase.execute(automation)
     this.runRepository.onCreate((run: PlayingRun) =>
-      this.runAutomationUseCase.execute(run, automation)
+      this.runAutomationUseCase.execute(app, run, automation)
     )
     const runs = await this.runRepository.listPlaying()
     for (const run of runs) {
-      await this.runAutomationUseCase.execute(run, automation)
+      await this.runAutomationUseCase.execute(app, run, automation)
     }
 
     // Build OpenAPI routes

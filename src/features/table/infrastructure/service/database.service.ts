@@ -1,4 +1,4 @@
-import { inject } from 'inversify'
+import { inject, injectable } from 'inversify'
 import TYPES from '@/shared/application/di/types'
 import { eq, type SQL } from 'drizzle-orm'
 import type { DatabaseService } from '@/shared/infrastructure/service/database.service'
@@ -28,6 +28,7 @@ type DatabaseRecordField<I, S> = Base<I, S, string> & {
   listByRecordId(recordId: string): Promise<RecordFieldRow[]>
 }
 
+@injectable()
 export class TableDatabaseService {
   private readonly databaseView: Kysely<{
     [key: string]: ViewRow

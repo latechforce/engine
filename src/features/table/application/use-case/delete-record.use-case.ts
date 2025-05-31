@@ -21,13 +21,7 @@ export class DeleteRecordUseCase {
     if (!exist) {
       throw new HttpError('Record not found', 404)
     }
-    await this.recordRepository.transaction(async (tx) => {
-      const fields = await tx.field.listByRecordId(recordId)
-      for (const field of fields) {
-        await tx.field.delete(field.id)
-      }
-      await tx.delete(recordId)
-    })
+    await this.recordRepository.delete(recordId)
     return {
       id: recordId,
       deleted: true,

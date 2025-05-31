@@ -66,3 +66,19 @@ test('should run a TypeScript code with globals variables', async ({ startExampl
   // THEN
   expect(data.date).toEqual('2025-01-01T00:00:00.000Z')
 })
+
+test('should run a TypeScript code with tables', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'tables', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-typescript')
+  const { data } = await response.json()
+
+  // THEN
+  expect(data.record.id).toBeDefined()
+  expect(data.record.fields.name).toEqual('John Doe')
+  expect(data.updatedRecord.fields.name).toEqual('Jane Doe')
+  expect(data.exists).toBe(false)
+  expect(data.list.length).toBe(1)
+})

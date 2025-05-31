@@ -2,10 +2,7 @@ import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
 import type { App } from '@/app/domain/entity/app.entity'
 import { HttpError } from '@/shared/domain/entity/http-error.entity'
-import type {
-  IRecordRepository,
-  RecordTransaction,
-} from '@/table/domain/repository-interface/record-repository.interface'
+import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
 import type { MultipleUpdateRecordBody } from '@/table/domain/object-value/update-record-body.object-value'
 import type { Table } from '@/table/domain/entity/table.entity'
 import { toListRecordsDto, type ListRecordsDto } from '../dto/list-records.dto'
@@ -31,16 +28,7 @@ export class UpdateMultipleRecordsUseCase {
     if (!this.validateUpdateMultipleRecordBody(table, body)) {
       throw new HttpError('Invalid record', 400)
     }
-    await this.recordRepository.transaction(async (tx: RecordTransaction) => {
-      for (const record of body.records) {
-        const fields = await tx.field.listByRecordId(record.id)
-        for (const key of Object.keys(record.fields)) {
-          const field = fields.find((field) => field.name === key)
-          if (field) await tx.field.update(field.id, record.fields[key])
-        }
-        await tx.update(record.id)
-      }
-    })
+    await this.recordRepository.updateMany(body.records)
     const records = await this.recordRepository.listByIds(
       table,
       body.records.map((record) => record.id)

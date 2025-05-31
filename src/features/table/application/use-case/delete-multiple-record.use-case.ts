@@ -24,19 +24,11 @@ export class DeleteMultipleRecordsUseCase {
     if (!table) {
       throw new HttpError('Table not found', 404)
     }
-    await this.recordRepository.transaction(async (tx) => {
-      for (const recordId of recordIds) {
-        const record = await tx.exists(recordId)
-        if (!record) {
-          throw new HttpError('Record not found', 404)
-        }
-        const fields = await tx.field.listByRecordId(recordId)
-        for (const field of fields) {
-          await tx.field.delete(field.id)
-        }
-        await tx.delete(recordId)
-      }
-    })
+    const records = await this.recordRepository.listByIds(table, recordIds)
+    if (records.length !== recordIds.length) {
+      throw new HttpError('Record not found', 404)
+    }
+    await this.recordRepository.deleteMany(recordIds)
     return {
       records: recordIds.map((id) => ({
         id,

@@ -12,6 +12,7 @@ import type { Table } from '@/table/domain/entity/table.entity'
 import type { RecordFieldRow } from '@/table/domain/object-value/record-field-row.object-value'
 import type { SchemaObject } from 'ajv'
 import type { ViewRow } from '@/table/domain/object-value/view-row.object-value'
+import type { Fields } from '@/table/domain/object-value/fields.object-value'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {
@@ -87,6 +88,50 @@ export class RecordRepository implements IRecordRepository {
     return row !== undefined
   }
 
+  async create(table: Table, record: Record) {
+    await this.transaction(async (tx: RecordTransaction) => {
+      await tx.create(table.schema.id, record)
+      for (const field of table.schema.fields) {
+        await tx.field.create(field.id, record, record.fields[field.name])
+      }
+    })
+  }
+
+  async createMany(table: Table, records: Record[]) {
+    await this.transaction(async (tx: RecordTransaction) => {
+      for (const record of records) {
+        await tx.create(table.schema.id, record)
+        for (const field of table.schema.fields) {
+          await tx.field.create(field.id, record, record.fields[field.name])
+        }
+      }
+    })
+  }
+
+  async update(recordId: string, fields: Fields) {
+    await this.transaction(async (tx: RecordTransaction) => {
+      const recordsFields = await tx.field.listByRecordId(recordId)
+      for (const key of Object.keys(fields)) {
+        const recordField = recordsFields.find((recordField) => recordField.name === key)
+        if (recordField) await tx.field.update(recordField.id, fields[key])
+      }
+      await tx.update(recordId)
+    })
+  }
+
+  async updateMany(records: { id: string; fields: Fields }[]) {
+    await this.transaction(async (tx: RecordTransaction) => {
+      for (const record of records) {
+        const recordsFields = await tx.field.listByRecordId(record.id)
+        for (const key of Object.keys(record.fields)) {
+          const recordField = recordsFields.find((field) => field.name === key)
+          if (recordField) await tx.field.update(recordField.id, record.fields[key])
+        }
+        await tx.update(record.id)
+      }
+    })
+  }
+
   async read(table: Table, recordId: string): Promise<Record | undefined> {
     const view = this.database.view(table)
     const row = await view.get(recordId)
@@ -100,6 +145,28 @@ export class RecordRepository implements IRecordRepository {
     const view = this.database.view(table)
     const rows = await view.list()
     return rows.map((row) => this.toRecord(table, row))
+  }
+
+  async delete(recordId: string) {
+    await this.transaction(async (tx) => {
+      const fields = await tx.field.listByRecordId(recordId)
+      for (const field of fields) {
+        await tx.field.delete(field.id)
+      }
+      await tx.delete(recordId)
+    })
+  }
+
+  async deleteMany(recordIds: string[]) {
+    await this.transaction(async (tx) => {
+      for (const recordId of recordIds) {
+        const fields = await tx.field.listByRecordId(recordId)
+        for (const field of fields) {
+          await tx.field.delete(field.id)
+        }
+        await tx.delete(recordId)
+      }
+    })
   }
 
   async listByIds(table: Table, recordIds: string[]): Promise<Record[]> {

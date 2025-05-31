@@ -5,6 +5,7 @@ import type { Action } from '@/action/domain/entity'
 import type { PlayingRun } from '@/run/domain/entity/playing-run.entity'
 import { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
 import type { ActionResult } from '@/action/domain/value-object/action-result.value-object'
+import type { App } from '@/app/domain/entity/app.entity'
 
 @injectable()
 export class RunActionUseCase {
@@ -13,7 +14,7 @@ export class RunActionUseCase {
     private readonly actionRepository: IActionRepository
   ) {}
 
-  async execute(action: Action, run: PlayingRun): Promise<ActionResult> {
+  async execute(app: App, action: Action, run: PlayingRun): Promise<ActionResult> {
     if (action instanceof IntegrationAction) {
       return this.actionRepository.runIntegration(action)
     } else {
@@ -22,13 +23,15 @@ export class RunActionUseCase {
         const { schema } = action
         switch (schema.service) {
           case 'code': {
-            const inputData = this.actionRepository.code(schema.inputData).fillInputData(run.data)
+            const inputData = this.actionRepository
+              .code(app, schema.inputData)
+              .fillInputData(run.data)
             switch (schema.action) {
               case 'run-typescript':
-                data = await this.actionRepository.code(inputData).runTypescript(schema.code)
+                data = await this.actionRepository.code(app, inputData).runTypescript(schema.code)
                 break
               case 'run-javascript':
-                data = await this.actionRepository.code(inputData).runJavascript(schema.code)
+                data = await this.actionRepository.code(app, inputData).runJavascript(schema.code)
                 break
             }
             break
