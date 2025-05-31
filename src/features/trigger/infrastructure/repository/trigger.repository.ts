@@ -1,7 +1,7 @@
 // Third-party imports
 import { inject, injectable } from 'inversify'
 import { HTTPError } from 'ky'
-import type { JSONSchema7 } from 'json-schema'
+import type { SchemaObject } from 'ajv'
 
 // Shared imports
 import TYPES from '@/shared/application/di/types'
@@ -38,7 +38,7 @@ export class TriggerRepository implements ITriggerRepository {
     this.logger.debug(message)
   }
 
-  validateData(schema: JSONSchema7, data: unknown): boolean {
+  validateData(schema: SchemaObject, data: unknown): boolean {
     return this.validator.validate(schema, data)
   }
 

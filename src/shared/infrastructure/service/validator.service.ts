@@ -1,5 +1,5 @@
 import Ajv from 'ajv'
-import type { JSONSchema7 } from 'json-schema'
+import type { SchemaObject } from 'ajv'
 import { injectable } from 'inversify'
 
 @injectable()
@@ -10,7 +10,7 @@ export class SchemaService {
     this.ajv = new Ajv()
   }
 
-  validate(schema: JSONSchema7, data: unknown): boolean {
+  validate(schema: SchemaObject, data: unknown): boolean {
     return this.ajv.validate(schema, data)
   }
 }

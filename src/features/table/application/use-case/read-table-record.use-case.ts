@@ -1,7 +1,7 @@
 import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
 import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
-import { toRecordDto, type RecordDto } from '../dto/record.dto'
+import { toSingleRecordDto, type RecordDto } from '../dto/record.dto'
 import { HttpError } from '@/shared/domain/entity/http-error.entity'
 import type { App } from '@/app/domain/entity/app.entity'
 
@@ -21,6 +21,6 @@ export class ReadTableRecordUseCase {
     if (!record) {
       throw new HttpError('Record not found', 404)
     }
-    return toRecordDto(record)
+    return toSingleRecordDto(record)
   }
 }

@@ -1,7 +1,7 @@
 import type { TableSchema } from '@/table/domain/schema/table.schema'
 import { Field } from './field.entity'
-import type { JSONSchema7 } from 'json-schema'
 import type { Fields } from '../object-value/fields.object-value'
+import type { SchemaObject } from 'ajv'
 
 export class Table {
   public readonly slug: string
@@ -12,10 +12,10 @@ export class Table {
     this.fields = schema.fields.map((field) => new Field(field))
   }
 
-  getRecordFieldsSchema(): JSONSchema7 {
+  getRecordFieldsSchema(): SchemaObject {
     return {
       type: 'object',
-      properties: this.fields.reduce((acc: { [key: string]: JSONSchema7 }, field) => {
+      properties: this.fields.reduce((acc: { [key: string]: SchemaObject }, field) => {
         switch (field.schema.type) {
           case 'single-line-text':
           case 'long-text':
@@ -28,6 +28,102 @@ export class Table {
         .filter((field) => field.schema.required)
         .map((field) => field.schema.name),
       additionalProperties: false,
+    }
+  }
+
+  getSingleCreateRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      properties: {
+        fields: this.getRecordFieldsSchema(),
+      },
+      required: ['fields'],
+      additionalProperties: false,
+    }
+  }
+
+  getMultipleCreateRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      properties: {
+        records: {
+          type: 'array',
+          items: this.getSingleCreateRecordSchema(),
+        },
+      },
+      required: ['records'],
+      additionalProperties: false,
+    }
+  }
+
+  getSingleOrMultipleCreateRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      oneOf: [
+        {
+          title: 'Single record',
+          ...this.getSingleCreateRecordSchema(),
+        },
+        {
+          title: 'Multiple records',
+          ...this.getMultipleCreateRecordSchema(),
+        },
+      ],
+    }
+  }
+
+  getReadRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      properties: {
+        id: { type: 'string' },
+        createdAt: { type: 'string', format: 'date-time' },
+        updatedAt: { type: 'string', format: 'date-time' },
+        fields: this.getRecordFieldsSchema(),
+      },
+      required: ['id', 'createdAt', 'updatedAt', 'fields'],
+      additionalProperties: false,
+    }
+  }
+
+  getSingleReadRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      properties: {
+        record: this.getReadRecordSchema(),
+      },
+      required: ['record'],
+      additionalProperties: false,
+    }
+  }
+
+  getMultipleReadRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      properties: {
+        records: {
+          type: 'array',
+          items: this.getReadRecordSchema(),
+        },
+      },
+      required: ['records'],
+      additionalProperties: false,
+    }
+  }
+
+  getSingleOrMultipleReadRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      oneOf: [
+        {
+          title: 'Single record',
+          ...this.getSingleReadRecordSchema(),
+        },
+        {
+          title: 'Multiple records',
+          ...this.getMultipleReadRecordSchema(),
+        },
+      ],
     }
   }
 

@@ -7,7 +7,7 @@ import type {
   IRecordRepository,
   RecordTransaction,
 } from '@/table/domain/repository-interface/record-repository.interface'
-import { toRecordDto } from '../dto/record.dto'
+import { toMultipleRecordDto, toSingleRecordDto } from '../dto/record.dto'
 import type { RecordDto } from '../dto/record.dto'
 
 @injectable()
@@ -22,17 +22,29 @@ export class CreateTableRecordUseCase {
     if (!table) {
       throw new HttpError('Table not found', 404)
     }
-    const schema = table.getRecordFieldsSchema()
-    if (!this.recordRepository.validateFields(schema, body)) {
+    if (!this.recordRepository.validateRecordBody(table, body)) {
       throw new HttpError('Invalid record', 400)
     }
-    const record = new Record(body)
-    await this.recordRepository.transaction(async (tx: RecordTransaction) => {
-      await tx.create(table.schema.id, record)
-      for (const field of table.schema.fields) {
-        await tx.field.create(field.id, record, record.fields[field.name])
-      }
-    })
-    return toRecordDto(record)
+    if ('fields' in body) {
+      const record = new Record(body.fields)
+      await this.recordRepository.transaction(async (tx: RecordTransaction) => {
+        await tx.create(table.schema.id, record)
+        for (const field of table.schema.fields) {
+          await tx.field.create(field.id, record, record.fields[field.name])
+        }
+      })
+      return toSingleRecordDto(record)
+    } else {
+      const records = body.records.map((record) => new Record(record.fields))
+      await this.recordRepository.transaction(async (tx: RecordTransaction) => {
+        for (const record of records) {
+          await tx.create(table.schema.id, record)
+          for (const field of table.schema.fields) {
+            await tx.field.create(field.id, record, record.fields[field.name])
+          }
+        }
+      })
+      return toMultipleRecordDto(records)
+    }
   }
 }

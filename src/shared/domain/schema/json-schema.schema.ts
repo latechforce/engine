@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
 
-// JSONSchema7 Types
-const JSONSchema7TypeName = z.enum([
+// SchemaObject Types
+const SchemaObjectTypeName = z.enum([
   'string',
   'number',
   'integer',
@@ -11,22 +11,22 @@ const JSONSchema7TypeName = z.enum([
   'null',
 ])
 
-const JSONSchema7Definition: z.ZodTypeAny = z.lazy(() =>
+const SchemaObjectDefinition: z.ZodTypeAny = z.lazy(() =>
   z.union([
-    JSONSchema7Object,
+    SchemaObjectObject,
     z.boolean(), // Schema can also be a simple `true` or `false`
   ])
 )
 
-const JSONSchema7Object: z.ZodTypeAny = z
+const SchemaObjectObject: z.ZodTypeAny = z
   .object({
-    type: z.union([JSONSchema7TypeName, z.array(JSONSchema7TypeName)]).optional(),
+    type: z.union([SchemaObjectTypeName, z.array(SchemaObjectTypeName)]).optional(),
 
     // Validation keywords
-    properties: z.record(z.string(), JSONSchema7Definition).optional(),
+    properties: z.record(z.string(), SchemaObjectDefinition).optional(),
     required: z.array(z.string()).optional(),
-    items: z.union([JSONSchema7Definition, z.array(JSONSchema7Definition)]).optional(),
-    additionalProperties: z.union([JSONSchema7Definition, z.boolean()]).optional(),
+    items: z.union([SchemaObjectDefinition, z.array(SchemaObjectDefinition)]).optional(),
+    additionalProperties: z.union([SchemaObjectDefinition, z.boolean()]).optional(),
     enum: z.array(z.any()).optional(),
     const: z.any().optional(),
 
@@ -51,16 +51,16 @@ const JSONSchema7Object: z.ZodTypeAny = z
     uniqueItems: z.boolean().optional(),
 
     // Combinators
-    allOf: z.array(JSONSchema7Definition).optional(),
-    anyOf: z.array(JSONSchema7Definition).optional(),
-    oneOf: z.array(JSONSchema7Definition).optional(),
-    not: JSONSchema7Definition.optional(),
+    allOf: z.array(SchemaObjectDefinition).optional(),
+    anyOf: z.array(SchemaObjectDefinition).optional(),
+    oneOf: z.array(SchemaObjectDefinition).optional(),
+    not: SchemaObjectDefinition.optional(),
   })
   .meta({
     title: 'JSON Schema',
     description: 'The JSON Schema is a schema that describes the structure of the data',
   })
 
-export const jsonSchemaSchema = JSONSchema7Object
+export const jsonSchemaSchema = SchemaObjectObject
 
-export type JSONSchema7 = z.infer<typeof JSONSchema7Object>
+export type JSONSchemaSchema = z.infer<typeof SchemaObjectObject>

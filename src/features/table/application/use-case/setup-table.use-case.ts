@@ -6,7 +6,7 @@ import type {
   TableTransaction,
 } from '@/table/domain/repository-interface/table-repository.interface'
 import { join } from 'path'
-import type { SchemaObject } from 'ajv'
+import { z } from 'zod'
 
 @injectable()
 export class SetupTableUseCase {
@@ -42,31 +42,71 @@ export class SetupTableUseCase {
 
     this.tableRepository.addOpenAPIRoute({
       method: 'post',
-      path: '/' + join('tables', table.slug),
+      path: '/' + join('tables', table.schema.name),
       description: `Create a new record in the table "${table.schema.name}"`,
       tags: ['Tables'],
       requestBody: {
         content: {
           'application/json': {
-            schema: table.getRecordFieldsSchema() as SchemaObject,
+            schema: table.getSingleOrMultipleCreateRecordSchema(),
           },
         },
       },
       responses: {
-        200: {
+        201: {
           description: 'The record was created successfully',
+          content: {
+            'application/json': {
+              schema: table.getSingleOrMultipleReadRecordSchema(),
+            },
+          },
+        },
+        400: {
+          description: 'The request body is invalid',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.literal('Invalid record'),
+              }),
+            },
+          },
+        },
+        404: {
+          description: 'The table was not found',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.literal('Table not found'),
+              }),
+            },
+          },
         },
       },
     })
 
     this.tableRepository.addOpenAPIRoute({
       method: 'get',
-      path: '/' + join('tables', table.slug, '{recordId}'),
+      path: '/' + join('tables', table.schema.name, '{recordId}'),
       description: `Get a record from the table "${table.schema.name}"`,
       tags: ['Tables'],
       responses: {
         200: {
           description: 'The record was retrieved successfully',
+          content: {
+            'application/json': {
+              schema: table.getSingleReadRecordSchema(),
+            },
+          },
+        },
+        404: {
+          description: 'The table or record was not found',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.enum(['Table not found', 'Record not found']),
+              }),
+            },
+          },
         },
       },
     })

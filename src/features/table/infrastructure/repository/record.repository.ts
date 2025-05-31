@@ -1,4 +1,3 @@
-import type { JSONSchema7 } from 'json-schema'
 import TYPES from '@/shared/application/di/types'
 import { inject, injectable } from 'inversify'
 import type { SchemaService } from '@/shared/infrastructure/service/validator.service'
@@ -7,10 +6,10 @@ import type {
   RecordTransaction,
 } from '@/table/domain/repository-interface/record-repository.interface'
 import { Record } from '@/table/domain/entity/record.entity'
-import type { Fields } from '@/table/domain/object-value/fields.object-value'
 import type { FieldValue } from '@/table/domain/object-value/field-value.object-value'
 import type { TableDatabaseService } from '../service/database.service'
 import type { Table } from '@/table/domain/entity/table.entity'
+import type { RecordBody } from '@/table/domain/object-value/record-body.object-value'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {
@@ -21,7 +20,8 @@ export class RecordRepository implements IRecordRepository {
     private readonly database: TableDatabaseService
   ) {}
 
-  validateFields(schema: JSONSchema7, body: unknown): body is Fields {
+  validateRecordBody(table: Table, body: unknown): body is RecordBody {
+    const schema = table.getSingleOrMultipleCreateRecordSchema()
     return this.validator.validate(schema, body)
   }
 
