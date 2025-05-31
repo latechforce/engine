@@ -9,7 +9,7 @@ export default {
     {
       title: 'Contact us',
       path: '/contact-us',
-      action: '/api/tables/1',
+      action: '/api/tables/Contacts',
       inputs: [
         {
           label: 'Name',

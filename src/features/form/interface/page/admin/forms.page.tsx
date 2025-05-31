@@ -17,6 +17,21 @@ export const columns: ColumnDef<FormDto>[] = [
     header: 'Title',
   },
   {
+    accessorKey: 'action',
+    header: 'Action',
+    cell: ({ row }) => {
+      if (row.original.action.startsWith('/api/tables/')) {
+        const tableId = row.original.action.replace('/api/tables/', '')
+        return <div>Create a record in table "{tableId}"</div>
+      } else if (row.original.action.startsWith('/api/automations/')) {
+        const path = row.original.action.replace('/api/automations/', '')
+        return <div>Trigger automation "{path}"</div>
+      } else {
+        return <div>POST to {row.original.action}</div>
+      }
+    },
+  },
+  {
     id: 'actions-column',
     cell: ({ row }) => {
       return (

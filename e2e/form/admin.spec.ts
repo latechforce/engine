@@ -13,6 +13,7 @@ test('should list forms', async ({ startExampleApp }) => {
 
   // THEN
   await expect(page.getByText('Contact Us')).toBeVisible()
+  await expect(page.getByText('Create a record in table "Contacts"')).toBeVisible()
 })
 
 test('should open a form in a new page', async ({ startExampleApp }) => {
