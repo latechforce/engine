@@ -56,7 +56,7 @@ export class SetupAutomationUseCase {
       this.automationRepository.addOpenAPIRoute({
         summary: `Trigger "${automation.schema.name}"`,
         method: schema.event === 'get' ? 'get' : 'post',
-        path: '/' + join('automation', schema.path),
+        path: '/' + join('automations', schema.path),
         description: `Run the automation "${automation.schema.name}" from a ${schema.event.toUpperCase()} request`,
         tags: [`Automation`],
         requestBody:
