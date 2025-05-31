@@ -1,9 +1,9 @@
 import { z } from 'zod/v4'
-import { baseInputValidator } from './base'
+import { baseInputSchema } from './base'
 
-export const checkboxInputValidator = baseInputValidator.extend({
+export const checkboxInputSchema = baseInputSchema.extend({
   defaultValue: z.boolean().optional(),
   type: z.literal('checkbox'),
 })
 
-export type CheckboxInputSchema = z.infer<typeof checkboxInputValidator>
+export type CheckboxInputSchema = z.infer<typeof checkboxInputSchema>

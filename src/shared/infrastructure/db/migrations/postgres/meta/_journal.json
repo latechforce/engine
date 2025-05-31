@@ -15,6 +15,27 @@
       "when": 1748618403379,
       "tag": "0001_small_sleeper",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1748682698028,
+      "tag": "0002_even_mystique",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1748684998980,
+      "tag": "0003_slimy_tempest",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1748690660070,
+      "tag": "0004_thin_true_believers",
+      "breakpoints": true
     }
   ]
 }

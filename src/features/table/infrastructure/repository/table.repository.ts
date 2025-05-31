@@ -7,7 +7,8 @@ import { inject, injectable } from 'inversify'
 import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
 import type { TableDatabaseService } from '../service/database.service'
 import type { Table } from '@/table/domain/entity/table.entity'
-import type { FieldSchema } from '@/table/domain/schema/field'
+import type { Field } from '@/table/domain/entity/field.entity'
+import { sql } from 'drizzle-orm'
 
 @injectable()
 export class TableRepository implements ITableRepository {
@@ -25,13 +26,38 @@ export class TableRepository implements ITableRepository {
   async transaction(callback: (tx: TableTransaction) => Promise<void>) {
     await this.database.transaction(async (tx) => {
       await callback({
+        createView: async (table: Table) => {
+          const viewName = table.slug
+          const columnsSql = table.fields
+            .map((f) => {
+              return `MAX(CASE WHEN f.slug = '${f.slug}' THEN rf.value END) AS "${f.slug}"`
+            })
+            .join(',\n  ')
+          const query = `
+            CREATE VIEW "${viewName}" AS
+            SELECT
+              r.id AS _id,
+              r.created_at AS _created_at,
+              r.updated_at AS _updated_at,
+              ${columnsSql}
+            FROM record r
+            JOIN record_field rf ON r.id = rf.record_id
+            JOIN table_field f ON rf.table_field_id = f.id
+            WHERE r.table_id = ${table.schema.id}
+            GROUP BY r.id, r.created_at, r.updated_at;
+          `
+          await tx.execute(sql.raw(`DROP VIEW IF EXISTS "${viewName}"`))
+          await tx.execute(sql.raw(query))
+        },
         exists: async (id: number) => {
-          return tx.table.get(id) !== undefined
+          const table = await tx.table.get(id)
+          return table !== undefined
         },
         create: async (table: Table) => {
           await tx.table.create({
             id: table.schema.id,
             name: table.schema.name,
+            slug: table.slug,
             created_at: new Date(),
             updated_at: new Date(),
           })
@@ -39,29 +65,46 @@ export class TableRepository implements ITableRepository {
         update: async (table: Table) => {
           await tx.table.update(table.schema.id, {
             name: table.schema.name,
+            slug: table.slug,
             updated_at: new Date(),
           })
         },
+        get: async (id: number) => {
+          const table = await tx.table.get(id)
+          return table
+        },
+        list: async () => {
+          const tables = await tx.table.list()
+          return tables
+        },
         field: {
           exists: async (id: number) => {
-            return tx.table_field.get(id) !== undefined
+            const field = await tx.table_field.get(id)
+            return field !== undefined
           },
-          create: async (tableId: number, field: FieldSchema) => {
+          create: async (tableId: number, field: Field) => {
             await tx.table_field.create({
-              id: field.id,
+              id: field.schema.id,
               table_id: tableId,
-              name: field.name,
-              type: field.type,
+              name: field.schema.name,
+              slug: field.slug,
+              type: field.schema.type,
+              required: field.schema.required ?? false,
               created_at: new Date(),
               updated_at: new Date(),
             })
           },
-          update: async (field: FieldSchema) => {
-            await tx.table_field.update(field.id, {
-              name: field.name,
-              type: field.type,
+          update: async (field: Field) => {
+            await tx.table_field.update(field.schema.id, {
+              name: field.schema.name,
+              slug: field.slug,
+              type: field.schema.type,
               updated_at: new Date(),
             })
+          },
+          listByTableId: async (tableId: number) => {
+            const fields = await tx.table_field.listByTableId(tableId)
+            return fields
           },
         },
       })

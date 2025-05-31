@@ -125,6 +125,43 @@ export class ServerService {
         })
       }
     }
+    for (const table of app.tables) {
+      const postRoute = createRoute({
+        method: 'post',
+        path: '/' + join('tables', table.slug),
+        description: `Create a new record in the table "${table.schema.name}"`,
+        tags: ['Tables'],
+        requestBody: {
+          content: {
+            'application/json': {
+              schema: table.getRecordFieldsSchema() as SchemaObject,
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: 'The record was created successfully',
+          },
+        },
+      })
+      openapiServer.openapi(postRoute, (c) => {
+        return c.json({}, 200)
+      })
+      const getRoute = createRoute({
+        method: 'get',
+        path: '/' + join('tables', table.slug, '{recordId}'),
+        description: `Get a record from the table "${table.schema.name}"`,
+        tags: ['Tables'],
+        responses: {
+          200: {
+            description: 'The record was retrieved successfully',
+          },
+        },
+      })
+      openapiServer.openapi(getRoute, (c) => {
+        return c.json({}, 200)
+      })
+    }
     openapiServer.doc('/schema', {
       openapi: '3.0.0',
       info: {

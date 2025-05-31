@@ -4,7 +4,7 @@ import { injectable } from 'inversify'
 
 // Shared domain imports
 import type { Env } from '@/shared/domain/value-object/env.value-object'
-import { envValidator, type EnvSchemaValidated } from '@/shared/domain/schema/env.schema'
+import { envSchema, type EnvSchemaValidated } from '@/shared/domain/schema/env.schema'
 
 @injectable()
 export class EnvService {
@@ -12,7 +12,7 @@ export class EnvService {
   private parsedEnv: EnvSchemaValidated
 
   constructor() {
-    this.parsedEnv = envValidator.parse(Bun.env)
+    this.parsedEnv = envSchema.parse(Bun.env)
   }
 
   async load(): Promise<Env> {

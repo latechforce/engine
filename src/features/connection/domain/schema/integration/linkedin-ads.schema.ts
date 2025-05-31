@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseConnectionValidator } from '../base'
+import { baseConnectionSchema } from '../base'
 
-export const linkedinAdsConnectionValidator = baseConnectionValidator
+export const linkedinAdsConnectionSchema = baseConnectionSchema
   .extend({
     service: z.literal('linkedin-ads'),
   })
@@ -10,4 +10,4 @@ export const linkedinAdsConnectionValidator = baseConnectionValidator
     description: 'The LinkedIn Ads connection is a connection to the LinkedIn Ads API',
   })
 
-export type LinkedInAdsConnectionSchema = z.infer<typeof linkedinAdsConnectionValidator>
+export type LinkedInAdsConnectionSchema = z.infer<typeof linkedinAdsConnectionSchema>

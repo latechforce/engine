@@ -1,19 +1,51 @@
 import { inject } from 'inversify'
 import TYPES from '@/shared/application/di/types'
-import { eq } from 'drizzle-orm'
+import { eq, type SQL } from 'drizzle-orm'
 import type { DatabaseService } from '@/shared/infrastructure/service/database.service'
+import { Kysely, PostgresDialect } from 'kysely'
+import { BunWorkerDialect } from 'kysely-bun-worker'
+import type { Table } from '@/table/domain/entity/table.entity'
+import type { ViewRow } from '@/table/domain/object-value/view-row.object-value'
 
-export type DatabaseTable<I, S, D> = {
+type Base<I, S, D> = {
   create(data: I): Promise<void>
   update(id: D, data: Partial<Omit<I, 'id'>>): Promise<void>
   get(id: D): Promise<S | undefined>
 }
 
+type DatabaseTable<I, S> = Base<I, S, number> & {
+  list(): Promise<S[]>
+}
+
+type DatabaseTableField<I, S> = Base<I, S, number> & {
+  listByTableId(tableId: number): Promise<S[]>
+}
+
+type DatabaseRecord<I, S> = Base<I, S, string>
+
+type DatabaseRecordField<I, S> = Base<I, S, string>
+
 export class TableDatabaseService {
+  private readonly databaseView: Kysely<{
+    [key: string]: ViewRow
+  }>
+
   constructor(
     @inject(TYPES.Service.Database)
     private readonly database: DatabaseService
-  ) {}
+  ) {
+    if (database.provider === 'postgres') {
+      const dialect = new PostgresDialect({
+        pool: database.postgresPool,
+      })
+      this.databaseView = new Kysely({ dialect })
+    } else {
+      const dialect = new BunWorkerDialect({
+        url: database.url,
+      })
+      this.databaseView = new Kysely({ dialect })
+    }
+  }
 
   get schema() {
     return this.database.schema
@@ -25,30 +57,27 @@ export class TableDatabaseService {
       const db = this.database.postgres
       return async (
         callback: (tx: {
-          table: DatabaseTable<
-            typeof schema.table.$inferInsert,
-            typeof schema.table.$inferSelect,
-            number
-          >
-          table_field: DatabaseTable<
+          execute: (query: SQL) => Promise<void>
+          table: DatabaseTable<typeof schema.table.$inferInsert, typeof schema.table.$inferSelect>
+          table_field: DatabaseTableField<
             typeof schema.field.$inferInsert,
-            typeof schema.field.$inferSelect,
-            number
+            typeof schema.field.$inferSelect
           >
-          record: DatabaseTable<
+          record: DatabaseRecord<
             typeof schema.record.$inferInsert,
-            typeof schema.record.$inferSelect,
-            string
+            typeof schema.record.$inferSelect
           >
-          recordField: DatabaseTable<
+          recordField: DatabaseRecordField<
             typeof schema.recordField.$inferInsert,
-            typeof schema.recordField.$inferSelect,
-            string
+            typeof schema.recordField.$inferSelect
           >
         }) => Promise<void>
       ) =>
         db.transaction(async (tx) => {
           await callback({
+            execute: async (query) => {
+              await tx.execute(query)
+            },
             table: {
               create: async (data) => {
                 await tx.insert(schema.table).values(data)
@@ -57,6 +86,7 @@ export class TableDatabaseService {
                 await tx.update(schema.table).set(data).where(eq(schema.table.id, id))
               },
               get: async (id) => tx.query.table.findFirst({ where: eq(schema.table.id, id) }),
+              list: async () => tx.select().from(schema.table),
             },
             table_field: {
               create: async (data) => {
@@ -66,6 +96,8 @@ export class TableDatabaseService {
                 await tx.update(schema.field).set(data).where(eq(schema.field.id, id))
               },
               get: async (id) => tx.query.field.findFirst({ where: eq(schema.field.id, id) }),
+              listByTableId: async (tableId) =>
+                tx.select().from(schema.field).where(eq(schema.field.table_id, tableId)),
             },
             record: {
               create: async (data) => {
@@ -93,41 +125,41 @@ export class TableDatabaseService {
       const db = this.database.sqlite
       return (
         callback: (tx: {
-          table: DatabaseTable<
-            typeof schema.table.$inferInsert,
-            typeof schema.table.$inferSelect,
-            number
-          >
-          table_field: DatabaseTable<
+          execute: (query: SQL) => Promise<void>
+          table: DatabaseTable<typeof schema.table.$inferInsert, typeof schema.table.$inferSelect>
+          table_field: DatabaseTableField<
             typeof schema.field.$inferInsert,
-            typeof schema.field.$inferSelect,
-            number
+            typeof schema.field.$inferSelect
           >
-          record: DatabaseTable<
+          record: DatabaseRecord<
             typeof schema.record.$inferInsert,
-            typeof schema.record.$inferSelect,
-            string
+            typeof schema.record.$inferSelect
           >
-          recordField: DatabaseTable<
+          recordField: DatabaseRecordField<
             typeof schema.recordField.$inferInsert,
-            typeof schema.recordField.$inferSelect,
-            string
+            typeof schema.recordField.$inferSelect
           >
         }) => Promise<void>
       ) =>
         db.transaction(async (tx) => {
           await callback({
+            execute: async (query) => {
+              tx.run(query)
+            },
             table: {
               create: async (data) => tx.insert(schema.table).values(data),
               update: async (id, data) =>
                 tx.update(schema.table).set(data).where(eq(schema.table.id, id)),
               get: async (id) => tx.query.table.findFirst({ where: eq(schema.table.id, id) }),
+              list: async () => tx.select().from(schema.table),
             },
             table_field: {
               create: async (data) => tx.insert(schema.field).values(data),
               update: async (id, data) =>
                 tx.update(schema.field).set(data).where(eq(schema.field.id, id)),
               get: async (id) => tx.query.field.findFirst({ where: eq(schema.field.id, id) }),
+              listByTableId: async (tableId) =>
+                tx.select().from(schema.field).where(eq(schema.field.table_id, tableId)),
             },
             record: {
               create: async (data) => tx.insert(schema.record).values(data),
@@ -144,6 +176,17 @@ export class TableDatabaseService {
             },
           })
         })
+    }
+  }
+
+  view(table: Table) {
+    const view = this.databaseView.selectFrom(table.slug)
+    return {
+      get: async (id: string): Promise<ViewRow | undefined> => {
+        return view.selectAll().where('_id', '=', id).executeTakeFirst() as Promise<
+          ViewRow | undefined
+        >
+      },
     }
   }
 }

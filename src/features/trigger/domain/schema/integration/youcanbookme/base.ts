@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
-import { baseIntegrationTriggerValidator } from '../base'
+import { baseIntegrationTriggerSchema } from '../base'
 
-export const baseYoucanbookmeTriggerValidator = baseIntegrationTriggerValidator.extend({
+export const baseYoucanbookmeTriggerSchema = baseIntegrationTriggerSchema.extend({
   service: z.literal('youcanbookme'),
 })

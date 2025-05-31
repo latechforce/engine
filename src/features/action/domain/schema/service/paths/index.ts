@@ -1,9 +1,9 @@
 import { z } from 'zod/v4'
-import { splitIntoPathsPathsActionValidator } from './split-into-paths.schema'
+import { splitIntoPathsPathsActionSchema } from './split-into-paths.schema'
 
-export const pathsActionValidator = z.union([splitIntoPathsPathsActionValidator]).meta({
+export const pathsActionSchema = z.union([splitIntoPathsPathsActionSchema]).meta({
   title: 'Paths',
   description: 'The Paths action is an action that is performed by the automation',
 })
 
-export type PathsActionSchema = z.infer<typeof pathsActionValidator>
+export type PathsActionSchema = z.infer<typeof pathsActionSchema>

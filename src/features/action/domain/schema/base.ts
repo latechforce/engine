@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
 
-export const baseActionValidator = z
+export const baseActionSchema = z
   .object({
     name: z.string(),
   })

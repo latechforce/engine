@@ -16,7 +16,7 @@ import type { IntegrationTrigger } from '@/trigger/domain/entity/integration-tri
 
 // Trigger infrastructure imports
 import { toTriggerIntegration } from '../integration'
-import type { ValidatorService } from '@/shared/infrastructure/service/validator.service'
+import type { SchemaService } from '@/shared/infrastructure/service/validator.service'
 import type { TemplateService } from '@/shared/infrastructure/service/template.service'
 
 @injectable()
@@ -24,8 +24,8 @@ export class TriggerRepository implements ITriggerRepository {
   constructor(
     @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Service.Validator)
-    private readonly validator: ValidatorService,
+    @inject(TYPES.Service.Schema)
+    private readonly validator: SchemaService,
     @inject(TYPES.Service.Template)
     private readonly template: TemplateService,
     @inject(TYPES.Connection.Repository.Token)

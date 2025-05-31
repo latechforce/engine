@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseActionValidator } from '../base'
+import { baseActionSchema } from '../base'
 
-export const baseIntegrationActionValidator = baseActionValidator
+export const baseIntegrationActionSchema = baseActionSchema
   .extend({
     account: z.union([z.number(), z.string()]),
   })

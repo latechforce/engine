@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseCodeActionValidator } from './base'
+import { baseCodeActionSchema } from './base'
 
-export const runTypescriptCodeActionValidator = baseCodeActionValidator
+export const runTypescriptCodeActionSchema = baseCodeActionSchema
   .extend({
     action: z.literal('run-typescript'),
     inputData: z.record(z.string(), z.string()).default({}).optional(),
@@ -13,4 +13,4 @@ export const runTypescriptCodeActionValidator = baseCodeActionValidator
       'The run typescript code action is a code action that is performed by the automation',
   })
 
-export type RunTypescriptCodeActionSchema = z.infer<typeof runTypescriptCodeActionValidator>
+export type RunTypescriptCodeActionSchema = z.infer<typeof runTypescriptCodeActionSchema>

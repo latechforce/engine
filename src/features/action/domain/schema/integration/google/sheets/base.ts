@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
-import { baseIntegrationActionValidator } from '../../base'
+import { baseIntegrationActionSchema } from '../../base'
 
-export const baseGoogleSheetsActionValidator = baseIntegrationActionValidator.extend({
+export const baseGoogleSheetsActionSchema = baseIntegrationActionSchema.extend({
   service: z.literal('google-sheets'),
 })

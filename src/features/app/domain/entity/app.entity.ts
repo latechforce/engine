@@ -28,4 +28,13 @@ export class App {
   url(path = ''): string {
     return `${this.env.BASE_URL}${path}`
   }
+
+  findTable(nameOrId: string | number): Table | undefined {
+    return this.tables.find(
+      (table) =>
+        table.schema.id === Number(nameOrId) ||
+        table.schema.name === String(nameOrId) ||
+        table.slug === String(nameOrId)
+    )
+  }
 }

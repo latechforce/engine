@@ -12,7 +12,7 @@ import { Label } from '@/shared/interface/ui/label.ui'
 import { useState } from 'react'
 import { authClient } from '../lib/auth.lib'
 import { Checkbox } from '@/shared/interface/ui/checkbox.ui'
-import { AlertDestructive } from './alert.component'
+import { AlertDestructive } from '../../../../shared/interface/component/alert.component'
 
 export type LoginFormProps = React.ComponentPropsWithoutRef<'div'> & {
   title?: string

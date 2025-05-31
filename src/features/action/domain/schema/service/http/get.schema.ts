@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseHttpActionValidator } from './base'
+import { baseHttpActionSchema } from './base'
 
-export const getHttpActionValidator = baseHttpActionValidator
+export const getHttpActionSchema = baseHttpActionSchema
   .extend({
     action: z.literal('get'),
     url: z.string(),
@@ -12,4 +12,4 @@ export const getHttpActionValidator = baseHttpActionValidator
     description: 'The GET HTTP action is an action that is performed by the automation',
   })
 
-export type GetHttpActionSchema = z.infer<typeof getHttpActionValidator>
+export type GetHttpActionSchema = z.infer<typeof getHttpActionSchema>

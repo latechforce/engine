@@ -1,26 +1,27 @@
 import type { JSONSchema7 } from 'json-schema'
 import TYPES from '@/shared/application/di/types'
 import { inject, injectable } from 'inversify'
-import type { ValidatorService } from '@/shared/infrastructure/service/validator.service'
+import type { SchemaService } from '@/shared/infrastructure/service/validator.service'
 import type {
   IRecordRepository,
   RecordTransaction,
 } from '@/table/domain/repository-interface/record-repository.interface'
-import type { Record } from '@/table/domain/entity/record.entity'
+import { Record } from '@/table/domain/entity/record.entity'
 import type { Fields } from '@/table/domain/object-value/fields.object-value'
 import type { FieldValue } from '@/table/domain/object-value/field-value.object-value'
 import type { TableDatabaseService } from '../service/database.service'
+import type { Table } from '@/table/domain/entity/table.entity'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {
   constructor(
-    @inject(TYPES.Service.Validator)
-    private readonly validator: ValidatorService,
+    @inject(TYPES.Service.Schema)
+    private readonly validator: SchemaService,
     @inject(TYPES.Table.Service.Database)
     private readonly database: TableDatabaseService
   ) {}
 
-  validate(schema: JSONSchema7, body: unknown): body is Fields {
+  validateFields(schema: JSONSchema7, body: unknown): body is Fields {
     return this.validator.validate(schema, body)
   }
 
@@ -40,7 +41,7 @@ export class RecordRepository implements IRecordRepository {
             await tx.recordField.create({
               id: `${record.id}-${fieldId}`,
               record_id: record.id,
-              field_id: fieldId,
+              table_field_id: fieldId,
               value: value?.toString(),
               created_at: record.createdAt,
               updated_at: record.updatedAt,
@@ -49,5 +50,17 @@ export class RecordRepository implements IRecordRepository {
         },
       })
     })
+  }
+
+  async read(table: Table, recordId: string): Promise<Record | undefined> {
+    const view = this.database.view(table)
+    const row = await view.get(recordId)
+    if (!row) {
+      return undefined
+    }
+    const { _id, _created_at, _updated_at, ...slugs } = row
+    const fields = table.convertFieldsSlugToName(slugs)
+    const record = new Record(fields, _id, new Date(_created_at), new Date(_updated_at))
+    return record
   }
 }

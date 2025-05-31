@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseFieldValidator } from './base'
+import { baseFieldSchema } from './base'
 
-export const longTextFieldValidator = baseFieldValidator
+export const longTextFieldSchema = baseFieldSchema
   .extend({
     type: z.literal('long-text'),
     default: z.string().optional(),
@@ -11,4 +11,4 @@ export const longTextFieldValidator = baseFieldValidator
     description: 'The long text field is a field that can contain a long text',
   })
 
-export type LongTextFieldSchema = z.infer<typeof longTextFieldValidator>
+export type LongTextFieldSchema = z.infer<typeof longTextFieldSchema>

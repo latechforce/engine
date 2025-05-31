@@ -2,8 +2,8 @@
 import { z } from 'zod/v4'
 
 // Trigger domain imports
-import { baseIntegrationTriggerValidator } from '../base'
+import { baseIntegrationTriggerSchema } from '../base'
 
-export const baseCalendlyTriggerValidator = baseIntegrationTriggerValidator.extend({
+export const baseCalendlyTriggerSchema = baseIntegrationTriggerSchema.extend({
   service: z.literal('calendly'),
 })

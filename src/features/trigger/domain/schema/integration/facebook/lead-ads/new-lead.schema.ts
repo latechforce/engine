@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseFacebookLeadAdsTriggerValidator } from './base'
+import { baseFacebookLeadAdsTriggerSchema } from './base'
 
-export const newLeadFacebookLeadAdsTriggerValidator = baseFacebookLeadAdsTriggerValidator
+export const newLeadFacebookLeadAdsTriggerSchema = baseFacebookLeadAdsTriggerSchema
   .extend({
     event: z.literal('new-lead'),
     path: z.string(),
@@ -12,6 +12,6 @@ export const newLeadFacebookLeadAdsTriggerValidator = baseFacebookLeadAdsTrigger
       'The Facebook Lead Ads new lead trigger is a trigger that is used to trigger an automation when a new lead is created',
   })
 
-export type NewLeadFacebookLeadAdsTriggerValidator = z.infer<
-  typeof newLeadFacebookLeadAdsTriggerValidator
+export type NewLeadFacebookLeadAdsTriggerSchema = z.infer<
+  typeof newLeadFacebookLeadAdsTriggerSchema
 >

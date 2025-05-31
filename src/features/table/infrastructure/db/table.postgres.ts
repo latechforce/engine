@@ -1,8 +1,9 @@
-import { integer, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
+import { integer, pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core'
 
 export const table = pgTable('table', {
   id: integer().primaryKey(),
   name: text().notNull(),
+  slug: text().notNull().unique(),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),
 })
@@ -13,9 +14,11 @@ export const field = pgTable('table_field', {
     .notNull()
     .references(() => table.id, { onDelete: 'cascade' }),
   name: text().notNull(),
+  slug: text().notNull().unique(),
   type: text({
     enum: ['single-line-text', 'long-text'],
   }).notNull(),
+  required: boolean().notNull(),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),
 })
@@ -34,10 +37,10 @@ export const recordField = pgTable('record_field', {
   record_id: text()
     .notNull()
     .references(() => record.id, { onDelete: 'cascade' }),
-  field_id: integer()
+  table_field_id: integer()
     .notNull()
     .references(() => field.id, { onDelete: 'cascade' }),
-  value: text().notNull(),
+  value: text(),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),
 })

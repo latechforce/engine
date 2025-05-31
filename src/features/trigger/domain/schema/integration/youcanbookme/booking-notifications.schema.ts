@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseYoucanbookmeTriggerValidator } from './base'
+import { baseYoucanbookmeTriggerSchema } from './base'
 
-export const bookingNotificationsYoucanbookmeTriggerValidator = baseYoucanbookmeTriggerValidator
+export const bookingNotificationsYoucanbookmeTriggerSchema = baseYoucanbookmeTriggerSchema
   .extend({
     event: z.literal('booking-notifications'),
     path: z.string(),
@@ -13,5 +13,5 @@ export const bookingNotificationsYoucanbookmeTriggerValidator = baseYoucanbookme
   })
 
 export type BookingNotificationsYoucanbookmeTriggerSchema = z.infer<
-  typeof bookingNotificationsYoucanbookmeTriggerValidator
+  typeof bookingNotificationsYoucanbookmeTriggerSchema
 >

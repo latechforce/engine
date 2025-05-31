@@ -1,4 +1,4 @@
-import { authClient } from '@/shared/interface/lib/auth.lib'
+import { authClient } from '@/user/interface/lib/auth.lib'
 import { Navigate } from '@tanstack/react-router'
 
 export const RequireAuth = ({ children, to }: { children: React.ReactNode; to: string }) => {

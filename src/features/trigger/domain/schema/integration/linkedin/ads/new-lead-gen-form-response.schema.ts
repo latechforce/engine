@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseLinkedinAdsTriggerValidator } from './base'
+import { baseLinkedinAdsTriggerSchema } from './base'
 
-export const newLeadGenFormResponseLinkedinAdsTriggerValidator = baseLinkedinAdsTriggerValidator
+export const newLeadGenFormResponseLinkedinAdsTriggerSchema = baseLinkedinAdsTriggerSchema
   .extend({
     event: z.literal('new-lead-gen-form-response'),
     path: z.string(),
@@ -12,6 +12,6 @@ export const newLeadGenFormResponseLinkedinAdsTriggerValidator = baseLinkedinAds
       'The LinkedIn Ads new lead gen form response trigger is a trigger that is used to trigger an automation when a new lead gen form response is created',
   })
 
-export type NewLeadGenFormResponseLinkedinAdsTriggerValidator = z.infer<
-  typeof newLeadGenFormResponseLinkedinAdsTriggerValidator
+export type NewLeadGenFormResponseLinkedinAdsTriggerSchema = z.infer<
+  typeof newLeadGenFormResponseLinkedinAdsTriggerSchema
 >

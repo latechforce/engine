@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseConnectionValidator } from '../base'
+import { baseConnectionSchema } from '../base'
 
-export const facebookLeadAdsConnectionValidator = baseConnectionValidator
+export const facebookLeadAdsConnectionSchema = baseConnectionSchema
   .extend({
     service: z.literal('facebook-lead-ads'),
   })
@@ -10,4 +10,4 @@ export const facebookLeadAdsConnectionValidator = baseConnectionValidator
     description: 'The Facebook Lead Ads connection is a connection to the Facebook Lead Ads API',
   })
 
-export type FacebookLeadAdsConnectionSchema = z.infer<typeof facebookLeadAdsConnectionValidator>
+export type FacebookLeadAdsConnectionSchema = z.infer<typeof facebookLeadAdsConnectionSchema>

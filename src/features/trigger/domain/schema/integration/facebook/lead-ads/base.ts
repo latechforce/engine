@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
-import { baseIntegrationTriggerValidator } from '../../base'
+import { baseIntegrationTriggerSchema } from '../../base'
 
-export const baseFacebookLeadAdsTriggerValidator = baseIntegrationTriggerValidator.extend({
+export const baseFacebookLeadAdsTriggerSchema = baseIntegrationTriggerSchema.extend({
   service: z.literal('facebook-lead-ads'),
 })

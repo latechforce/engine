@@ -1,12 +1,12 @@
 import { z } from 'zod/v4'
-import { createSpreadsheetRowGoogleSheetsActionValidator } from './create-spreadsheet-row.schema'
+import { createSpreadsheetRowGoogleSheetsActionSchema } from './create-spreadsheet-row.schema'
 
-export const googleSheetsActionValidator = z
-  .union([createSpreadsheetRowGoogleSheetsActionValidator])
+export const googleSheetsActionSchema = z
+  .union([createSpreadsheetRowGoogleSheetsActionSchema])
   .meta({
     title: 'Google Sheets',
     description:
       'The Google Sheets action is a action that is used to interact with the Google Sheets API',
   })
 
-export type GoogleSheetsActionSchema = z.infer<typeof googleSheetsActionValidator>
+export type GoogleSheetsActionSchema = z.infer<typeof googleSheetsActionSchema>

@@ -41,8 +41,27 @@ export class StartAppUseCase {
     for (const automation of app.automations) {
       await this.setupAutomationUseCase.execute(automation)
     }
+    process.on('SIGINT', () => this.shutdown())
+    process.on('SIGTERM', () => this.shutdown())
+    process.on('SIGQUIT', () => this.shutdown())
+    process.on('uncaughtException', (err) => {
+      console.error('Uncaught Exception:', err)
+      process.exit(1)
+    })
+
+    process.on('unhandledRejection', (reason, promise) => {
+      console.error('Unhandled Rejection at:', promise, 'reason:', reason)
+      process.exit(1)
+    })
     await this.appRepository.start()
     this.appRepository.info(`App "${app.schema.name}" is running at ${app.url()}`)
     return app
+  }
+
+  async shutdown() {
+    this.appRepository.info('Shutting down app...')
+    await this.appRepository.stop()
+    this.appRepository.info('App shut down')
+    process.exit(0)
   }
 }

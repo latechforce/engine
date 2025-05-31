@@ -5,6 +5,7 @@ import { createInterface } from 'readline'
 import { Readable } from 'stream'
 import fs from 'fs'
 import { join } from 'path'
+import { randomBytes } from 'crypto'
 
 // Function to strip ANSI color codes
 function stripAnsiCodes(str: string): string {
@@ -73,6 +74,9 @@ export const test = base.extend<StartAppFixture>({
     let env: EnvSchema = {}
     let url: string | undefined
 
+    const id = randomBytes(10).toString('base64url').slice(0, 10)
+    env.DATABASE_URL = join(process.cwd(), 'tmp', `sqlite-${id}.db`)
+
     const startExampleApp = async (options: {
       filter?: string
       loggedOnAdmin?: boolean
@@ -81,7 +85,7 @@ export const test = base.extend<StartAppFixture>({
       test: typeof test
     }): Promise<{ page: Page; env: EnvSchema }> => {
       const { filter, loggedOnAdmin = false, debug = false } = options
-      env = options.env || {}
+      env = { ...env, ...options.env }
 
       const result = await getExampleFileFilter(filter)
       env = { ...result.env, ...env }
@@ -101,8 +105,6 @@ export const test = base.extend<StartAppFixture>({
             NODE_ENV: 'production',
             MOCK: '*',
             PORT: '*',
-            DATABASE_PROVIDER: 'sqlite',
-            DATABASE_URL: ':memory:',
             LOG_LEVEL: debug ? 'debug' : process.env.LOG_LEVEL,
             ...env,
           },
@@ -171,7 +173,7 @@ export const test = base.extend<StartAppFixture>({
       await page.close()
     }
 
-    if (env?.DATABASE_URL) {
+    if (env.DATABASE_URL) {
       if (fs.existsSync(env.DATABASE_URL)) {
         fs.unlinkSync(env.DATABASE_URL)
       }

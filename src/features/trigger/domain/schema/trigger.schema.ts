@@ -2,23 +2,23 @@
 import { z } from 'zod/v4'
 
 // Trigger domain imports
-import { httpTriggerValidator } from './service/http'
-import { calendlyTriggerValidator } from './integration/calendly'
-import { facebookLeadAdsTriggerValidator } from './integration/facebook/lead-ads'
-import { linkedinAdsTriggerValidator } from './integration/linkedin/ads'
-import { youcanbookmeTriggerValidator } from './integration/youcanbookme'
+import { httpTriggerSchema } from './service/http'
+import { calendlyTriggerSchema } from './integration/calendly'
+import { facebookLeadAdsTriggerSchema } from './integration/facebook/lead-ads'
+import { linkedinAdsTriggerSchema } from './integration/linkedin/ads'
+import { youcanbookmeTriggerSchema } from './integration/youcanbookme'
 
-export const triggerValidator = z
+export const triggerSchema = z
   .union([
-    httpTriggerValidator,
-    calendlyTriggerValidator,
-    facebookLeadAdsTriggerValidator,
-    linkedinAdsTriggerValidator,
-    youcanbookmeTriggerValidator,
+    httpTriggerSchema,
+    calendlyTriggerSchema,
+    facebookLeadAdsTriggerSchema,
+    linkedinAdsTriggerSchema,
+    youcanbookmeTriggerSchema,
   ])
   .meta({
     title: 'Trigger',
     description: 'The trigger is the event that triggers the automation',
   })
 
-export type TriggerSchema = z.infer<typeof triggerValidator>
+export type TriggerSchema = z.infer<typeof triggerSchema>

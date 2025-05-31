@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseConnectionValidator } from '../base'
+import { baseConnectionSchema } from '../base'
 
-export const youcanbookmeConnectionValidator = baseConnectionValidator
+export const youcanbookmeConnectionSchema = baseConnectionSchema
   .extend({
     service: z.literal('youcanbookme'),
   })
@@ -10,4 +10,4 @@ export const youcanbookmeConnectionValidator = baseConnectionValidator
     description: 'The YouCanBookMe connection is a connection to the YouCanBookMe API',
   })
 
-export type YouCanBookMeConnectionSchema = z.infer<typeof youcanbookmeConnectionValidator>
+export type YouCanBookMeConnectionSchema = z.infer<typeof youcanbookmeConnectionSchema>

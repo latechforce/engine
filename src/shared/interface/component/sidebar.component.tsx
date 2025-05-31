@@ -8,9 +8,17 @@ import {
   SidebarMenuItem,
   SidebarHeader,
   SidebarGroupLabel,
+  SidebarFooter,
 } from '@/shared/interface/ui/sidebar.ui'
 import { TypographyH3 } from '../ui/typography.ui'
+import { User2 } from 'lucide-react'
+import { ChevronUp } from 'lucide-react'
+import { DropdownMenuTrigger } from '../ui/dropdown-menu.ui'
+import { DropdownMenuItem } from '../ui/dropdown-menu.ui'
+import { DropdownMenuContent } from '../ui/dropdown-menu.ui'
+import { DropdownMenu } from '../ui/dropdown-menu.ui'
 import { Link } from '@tanstack/react-router'
+import { authClient } from '@/user/interface/lib/auth.lib'
 
 export type SidebarItem = {
   title: string
@@ -29,6 +37,7 @@ export type SidebarProps = React.ComponentPropsWithoutRef<'div'> & {
 }
 
 export function Sidebar({ title, groups, ...props }: SidebarProps) {
+  const { data: session } = authClient.useSession()
   return (
     <SidebarUI {...props}>
       <SidebarHeader>
@@ -60,6 +69,28 @@ export function Sidebar({ title, groups, ...props }: SidebarProps) {
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton>
+                  <User2 /> {session?.user?.email}
+                  <ChevronUp className="ml-auto" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="top"
+                className="w-[--radix-popper-anchor-width]"
+              >
+                <DropdownMenuItem onClick={() => authClient.signOut()}>
+                  <span>Sign out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </SidebarUI>
   )
 }

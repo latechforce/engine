@@ -61,6 +61,6 @@ const JSONSchema7Object: z.ZodTypeAny = z
     description: 'The JSON Schema is a schema that describes the structure of the data',
   })
 
-export const jsonSchemaValidator = JSONSchema7Object
+export const jsonSchemaSchema = JSONSchema7Object
 
 export type JSONSchema7 = z.infer<typeof JSONSchema7Object>

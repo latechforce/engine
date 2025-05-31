@@ -3,7 +3,7 @@ import type { JSONSchema7 } from 'json-schema'
 import { injectable } from 'inversify'
 
 @injectable()
-export class ValidatorService {
+export class SchemaService {
   private ajv: Ajv
 
   constructor() {

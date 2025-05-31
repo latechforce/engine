@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
 
-export const basehttpTriggerValidator = z
+export const basehttpTriggerSchema = z
   .object({
     service: z.literal('http'),
   })

@@ -1,4 +1,4 @@
-import { LoginForm } from '@/shared/interface/component/login-form.component'
+import { LoginForm } from '@/user/interface/component/login-form.component'
 import { createRoute } from '@tanstack/react-router'
 import { adminRoute } from '../router'
 

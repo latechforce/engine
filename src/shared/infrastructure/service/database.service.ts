@@ -15,12 +15,14 @@ import * as sqliteSchema from '@/shared/infrastructure/db/schema/sqlite'
 // Node.js built-in modules
 import fs from 'fs'
 import path, { join } from 'path'
+import { Pool } from 'pg'
 
 export class DatabaseService {
-  private postgresDb?
-  private sqliteDb?
-  provider: 'postgres' | 'sqlite'
-  url: string
+  private readonly postgresDb?
+  private readonly sqliteDb?
+  private readonly pgPool?: Pool
+  public readonly provider: 'postgres' | 'sqlite'
+  public readonly url: string
 
   constructor(
     @inject(TYPES.Service.Env)
@@ -33,7 +35,10 @@ export class DatabaseService {
     this.url = this.env.get('DATABASE_URL')
     this.logger.debug(`init database with "${this.provider}" provider`)
     if (this.provider === 'postgres') {
-      this.postgresDb = drizzlePostgres(this.url, {
+      this.pgPool = new Pool({
+        connectionString: this.url,
+      })
+      this.postgresDb = drizzlePostgres(this.pgPool, {
         schema: postgresSchema,
       })
     } else {
@@ -59,6 +64,12 @@ export class DatabaseService {
     }
   }
 
+  async stop() {
+    if (this.provider === 'postgres') {
+      await this.postgresPool.end()
+    }
+  }
+
   get postgres() {
     if (!this.postgresDb) {
       throw new Error('Postgres database not initialized')
@@ -68,6 +79,13 @@ export class DatabaseService {
 
   get postgresSchema() {
     return postgresSchema
+  }
+
+  get postgresPool() {
+    if (!this.pgPool) {
+      throw new Error('Postgres pool not initialized')
+    }
+    return this.pgPool
   }
 
   get sqlite() {

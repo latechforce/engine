@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
-import { isNotEmptyConditionValidator } from './is-not-empty.schema'
+import { isNotEmptyConditionSchema } from './is-not-empty.schema'
 
-export const conditionValidator = z.union([isNotEmptyConditionValidator])
+export const conditionSchema = z.union([isNotEmptyConditionSchema])
 
-export type ConditionSchema = z.infer<typeof conditionValidator>
+export type ConditionSchema = z.infer<typeof conditionSchema>

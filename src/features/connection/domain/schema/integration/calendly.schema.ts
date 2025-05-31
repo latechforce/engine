@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseConnectionValidator } from '../base'
+import { baseConnectionSchema } from '../base'
 
-export const calendlyConnectionValidator = baseConnectionValidator
+export const calendlyConnectionSchema = baseConnectionSchema
   .extend({
     service: z.literal('calendly'),
     clientId: z.string(),
@@ -12,4 +12,4 @@ export const calendlyConnectionValidator = baseConnectionValidator
     description: 'The Calendly connection is a connection to the Calendly API',
   })
 
-export type CalendlyConnectionSchema = z.infer<typeof calendlyConnectionValidator>
+export type CalendlyConnectionSchema = z.infer<typeof calendlyConnectionSchema>

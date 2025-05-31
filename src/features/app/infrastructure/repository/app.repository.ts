@@ -15,7 +15,7 @@ import TYPES from '@/shared/application/di/types'
 // App domain imports
 import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
 import type { App } from '../../domain/entity/app.entity'
-import { appValidator } from '../../domain/schema/app.schema'
+import { appSchema } from '../../domain/schema/app.schema'
 import type { ValidateResult } from '../../domain/value-object/validate-result.value-object'
 
 // User infrastructure imports
@@ -51,7 +51,7 @@ export class AppRepository implements IAppRepository {
   }
 
   validate(unknownSchema: unknown): ValidateResult {
-    const { success, error, data } = appValidator.safeParse(unknownSchema)
+    const { success, error, data } = appSchema.safeParse(unknownSchema)
     if (!success) {
       return { error: z.prettifyError(error) }
     }
@@ -67,5 +67,9 @@ export class AppRepository implements IAppRepository {
 
   async start() {
     this.serverService.start()
+  }
+
+  async stop() {
+    await this.database.stop()
   }
 }

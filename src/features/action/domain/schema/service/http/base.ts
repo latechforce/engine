@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
-import { baseActionValidator } from '../../base'
+import { baseActionSchema } from '../../base'
 
-export const baseHttpActionValidator = baseActionValidator.extend({
+export const baseHttpActionSchema = baseActionSchema.extend({
   service: z.literal('http'),
 })

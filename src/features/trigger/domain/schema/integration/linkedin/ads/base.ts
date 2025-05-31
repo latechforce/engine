@@ -2,8 +2,8 @@
 import { z } from 'zod/v4'
 
 // Trigger domain imports
-import { baseIntegrationTriggerValidator } from '../../base'
+import { baseIntegrationTriggerSchema } from '../../base'
 
-export const baseLinkedinAdsTriggerValidator = baseIntegrationTriggerValidator.extend({
+export const baseLinkedinAdsTriggerSchema = baseIntegrationTriggerSchema.extend({
   service: z.literal('linkedin-ads'),
 })

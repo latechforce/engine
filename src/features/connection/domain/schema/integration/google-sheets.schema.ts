@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseConnectionValidator } from '../base'
+import { baseConnectionSchema } from '../base'
 
-export const googleSheetsConnectionValidator = baseConnectionValidator
+export const googleSheetsConnectionSchema = baseConnectionSchema
   .extend({
     service: z.literal('google-sheets'),
   })
@@ -10,4 +10,4 @@ export const googleSheetsConnectionValidator = baseConnectionValidator
     description: 'The Google Sheets connection is a connection to the Google Sheets API',
   })
 
-export type GoogleConnectionSchema = z.infer<typeof googleSheetsConnectionValidator>
+export type GoogleConnectionSchema = z.infer<typeof googleSheetsConnectionSchema>

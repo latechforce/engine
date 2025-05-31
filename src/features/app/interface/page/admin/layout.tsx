@@ -1,7 +1,7 @@
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/shared/interface/ui/sidebar.ui'
 import { Sidebar, type SidebarGroup } from '@/shared/interface/component/sidebar.component'
 import { History, Zap, Gauge, Webhook, Link, FileText } from 'lucide-react'
-import { RequireAuth } from '@/shared/interface/context/require-auth.context'
+import { RequireAuth } from '@/user/interface/context/require-auth.context'
 import { Separator } from '@/shared/interface/ui/separator.ui'
 import {
   Breadcrumb,

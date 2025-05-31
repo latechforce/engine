@@ -1,14 +1,14 @@
 import { z } from 'zod/v4'
-import { codeActionValidator } from './code'
-import { httpActionValidator } from './http'
-import { filterActionValidator } from './filter'
-import { pathsActionValidator } from './paths'
+import { codeActionSchema } from './code'
+import { httpActionSchema } from './http'
+import { filterActionSchema } from './filter'
+import { pathsActionSchema } from './paths'
 
-export const serviceActionValidator = z.union([
-  codeActionValidator,
-  httpActionValidator,
-  filterActionValidator,
-  pathsActionValidator,
+export const serviceActionSchema = z.union([
+  codeActionSchema,
+  httpActionSchema,
+  filterActionSchema,
+  pathsActionSchema,
 ])
 
-export type ServiceActionSchema = z.infer<typeof serviceActionValidator>
+export type ServiceActionSchema = z.infer<typeof serviceActionSchema>

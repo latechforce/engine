@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseHttpActionValidator } from './base'
+import { baseHttpActionSchema } from './base'
 
-export const postHttpActionValidator = baseHttpActionValidator
+export const postHttpActionSchema = baseHttpActionSchema
   .extend({
     action: z.literal('post'),
     url: z.string(),
@@ -13,4 +13,4 @@ export const postHttpActionValidator = baseHttpActionValidator
     description: 'The POST HTTP action is an action that is performed by the automation',
   })
 
-export type PostHttpActionSchema = z.infer<typeof postHttpActionValidator>
+export type PostHttpActionSchema = z.infer<typeof postHttpActionSchema>

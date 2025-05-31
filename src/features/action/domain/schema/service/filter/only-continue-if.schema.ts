@@ -1,11 +1,11 @@
 import { z } from 'zod/v4'
-import { baseFilterActionValidator } from './base'
-import { conditionValidator } from '../../condition'
+import { baseFilterActionSchema } from './base'
+import { conditionSchema } from '../../condition'
 
-export const onlyContinueIfFilterActionValidator = baseFilterActionValidator
+export const onlyContinueIfFilterActionSchema = baseFilterActionSchema
   .extend({
     action: z.literal('only-continue-if'),
-    conditions: z.array(conditionValidator),
+    conditions: z.array(conditionSchema),
   })
   .meta({
     title: 'Only continue if',
@@ -13,4 +13,4 @@ export const onlyContinueIfFilterActionValidator = baseFilterActionValidator
       'The Only continue if filter action is an action that is performed by the automation',
   })
 
-export type OnlyContinueIfFilterActionSchema = z.infer<typeof onlyContinueIfFilterActionValidator>
+export type OnlyContinueIfFilterActionSchema = z.infer<typeof onlyContinueIfFilterActionSchema>

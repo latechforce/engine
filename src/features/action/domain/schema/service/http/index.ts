@@ -1,13 +1,13 @@
 import { z } from 'zod/v4'
-import { getHttpActionValidator } from './get.schema'
-import { responseHttpActionValidator } from './response.schema'
-import { postHttpActionValidator } from './post.schema'
+import { getHttpActionSchema } from './get.schema'
+import { responseHttpActionSchema } from './response.schema'
+import { postHttpActionSchema } from './post.schema'
 
-export const httpActionValidator = z
-  .union([getHttpActionValidator, postHttpActionValidator, responseHttpActionValidator])
+export const httpActionSchema = z
+  .union([getHttpActionSchema, postHttpActionSchema, responseHttpActionSchema])
   .meta({
     title: 'HTTP',
     description: 'The HTTP action is an action that is performed by the automation',
   })
 
-export type HttpActionSchema = z.infer<typeof httpActionValidator>
+export type HttpActionSchema = z.infer<typeof httpActionSchema>

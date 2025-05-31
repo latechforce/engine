@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
 
-export const envValidator = z.object({
+export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.string().default('3000'),
   BASE_URL: z.string().optional(),
@@ -13,5 +13,5 @@ export const envValidator = z.object({
   AUTH_SECRET: z.string().default('secret'),
 })
 
-export type EnvSchemaValidated = z.infer<typeof envValidator>
+export type EnvSchemaValidated = z.infer<typeof envSchema>
 export type EnvSchema = Partial<EnvSchemaValidated>

@@ -7,7 +7,7 @@ import { EnvService } from '../service/env.service'
 import { LoggerService } from '../service/logger.service'
 import { ServerService, type HonoType } from '../service/server.service'
 import { DatabaseService } from '../service/database.service'
-import { ValidatorService } from '../service/validator.service'
+import { SchemaService } from '../service/validator.service'
 import { TemplateService } from '../service/template.service'
 import { HonoContext } from './context'
 import TYPES from '../../application/di/types'
@@ -37,7 +37,7 @@ export async function registerDependencies(
   container.bind<LoggerService>(TYPES.Service.Logger).to(LoggerService).inSingletonScope()
   container.bind<ServerService>(TYPES.Service.Server).to(ServerService).inSingletonScope()
   container.bind<DatabaseService>(TYPES.Service.Database).to(DatabaseService).inSingletonScope()
-  container.bind<ValidatorService>(TYPES.Service.Validator).to(ValidatorService).inSingletonScope()
+  container.bind<SchemaService>(TYPES.Service.Schema).to(SchemaService).inSingletonScope()
   container.bind<TemplateService>(TYPES.Service.Template).to(TemplateService).inSingletonScope()
 
   // Register dependencies

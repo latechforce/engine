@@ -2,9 +2,9 @@
 import { z } from 'zod/v4'
 
 // Trigger domain imports
-import { basehttpTriggerValidator } from './base'
+import { basehttpTriggerSchema } from './base'
 
-export const getHttpTriggerValidator = basehttpTriggerValidator
+export const getHttpTriggerSchema = basehttpTriggerSchema
   .extend({
     event: z.literal('get'),
     path: z.string(),
@@ -15,4 +15,4 @@ export const getHttpTriggerValidator = basehttpTriggerValidator
     description: 'The GET HTTP trigger is a trigger that is triggered by a GET request',
   })
 
-export type GetHttpTriggerSchema = z.infer<typeof getHttpTriggerValidator>
+export type GetHttpTriggerSchema = z.infer<typeof getHttpTriggerSchema>

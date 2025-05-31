@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseCalendlyActionValidator } from './base'
+import { baseCalendlyActionSchema } from './base'
 
-export const listWebhookSubscriptionsCalendlyActionValidator = baseCalendlyActionValidator
+export const listWebhookSubscriptionsCalendlyActionSchema = baseCalendlyActionSchema
   .extend({
     action: z.literal('list-webhook-subscriptions'),
     organization: z.string().optional().meta({
@@ -20,6 +20,6 @@ export const listWebhookSubscriptionsCalendlyActionValidator = baseCalendlyActio
       'The Calendly list webhook subscriptions action is a action that lists the webhook subscriptions for a given organization',
   })
 
-export type ListWebhookSubscriptionsCalendlyActionValidator = z.infer<
-  typeof listWebhookSubscriptionsCalendlyActionValidator
+export type ListWebhookSubscriptionsCalendlyActionSchema = z.infer<
+  typeof listWebhookSubscriptionsCalendlyActionSchema
 >

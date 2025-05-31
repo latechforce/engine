@@ -15,6 +15,20 @@
       "when": 1748618404989,
       "tag": "0001_shallow_random",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1748682698353,
+      "tag": "0002_faithful_veda",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1748690662451,
+      "tag": "0003_legal_raider",
+      "breakpoints": true
     }
   ]
 }

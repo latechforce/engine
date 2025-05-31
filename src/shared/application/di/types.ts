@@ -24,7 +24,7 @@ const TYPES = {
     Logger: Symbol.for('LoggerService'),
     Server: Symbol.for('ServerService'),
     Database: Symbol.for('DatabaseService'),
-    Validator: Symbol.for('ValidatorService'),
+    Schema: Symbol.for('SchemaService'),
     Template: Symbol.for('TemplateService'),
   },
   Hono: {

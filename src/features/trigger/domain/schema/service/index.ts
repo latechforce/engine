@@ -1,6 +1,6 @@
 import { z } from 'zod/v4'
-import { httpTriggerValidator } from './http'
+import { httpTriggerSchema } from './http'
 
-export const serviceTriggerValidator = z.union([httpTriggerValidator])
+export const serviceTriggerSchema = z.union([httpTriggerSchema])
 
-export type ServiceTriggerSchema = z.infer<typeof serviceTriggerValidator>
+export type ServiceTriggerSchema = z.infer<typeof serviceTriggerSchema>

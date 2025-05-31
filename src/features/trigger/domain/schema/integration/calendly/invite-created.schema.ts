@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseCalendlyTriggerValidator } from './base'
+import { baseCalendlyTriggerSchema } from './base'
 
-export const inviteCreatedCalendlyTriggerValidator = baseCalendlyTriggerValidator
+export const inviteCreatedCalendlyTriggerSchema = baseCalendlyTriggerSchema
   .extend({
     event: z.literal('invite-created'),
     path: z.string(),
@@ -20,6 +20,4 @@ export const inviteCreatedCalendlyTriggerValidator = baseCalendlyTriggerValidato
       'The Calendly invite created trigger is a trigger that is triggered by a invite created event',
   })
 
-export type InviteCreatedCalendlyTriggerSchema = z.infer<
-  typeof inviteCreatedCalendlyTriggerValidator
->
+export type InviteCreatedCalendlyTriggerSchema = z.infer<typeof inviteCreatedCalendlyTriggerSchema>

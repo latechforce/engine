@@ -10,4 +10,13 @@ export class TableController {
     const createTableRecordDto = await createTableRecordUseCase.execute(app, tableId, body)
     return c.json(createTableRecordDto, 201)
   }
+
+  static async readRecord(c: Context<HonoType>) {
+    const app = c.get('app')
+    const tableId = c.req.param('tableId')
+    const recordId = c.req.param('recordId')
+    const readTableRecordUseCase = c.get('readTableRecordUseCase')
+    const readTableRecordDto = await readTableRecordUseCase.execute(app, tableId, recordId)
+    return c.json(readTableRecordDto)
+  }
 }

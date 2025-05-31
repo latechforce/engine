@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { basePathsActionValidator } from './base'
-import { actionValidator, type ActionSchema } from '../../action.schema'
-import { conditionValidator, type ConditionSchema } from '../../condition'
+import { basePathsActionSchema } from './base'
+import { actionSchema, type ActionSchema } from '../../action.schema'
+import { conditionSchema, type ConditionSchema } from '../../condition'
 
 type SplitIntoPathsPathsAction = {
   name: string
@@ -14,15 +14,15 @@ type SplitIntoPathsPathsAction = {
   }[]
 }
 
-export const splitIntoPathsPathsActionValidator: z.ZodType<SplitIntoPathsPathsAction> = z.lazy(() =>
-  basePathsActionValidator
+export const splitIntoPathsPathsActionSchema: z.ZodType<SplitIntoPathsPathsAction> = z.lazy(() =>
+  basePathsActionSchema
     .extend({
       action: z.literal('split-into-paths'),
       paths: z.array(
         z.object({
           name: z.string(),
-          conditions: z.array(conditionValidator),
-          actions: z.array(actionValidator),
+          conditions: z.array(conditionSchema),
+          actions: z.array(actionSchema),
         })
       ),
     })
@@ -33,4 +33,4 @@ export const splitIntoPathsPathsActionValidator: z.ZodType<SplitIntoPathsPathsAc
     })
 )
 
-export type SplitIntoPathsPathsActionSchema = z.infer<typeof splitIntoPathsPathsActionValidator>
+export type SplitIntoPathsPathsActionSchema = z.infer<typeof splitIntoPathsPathsActionSchema>
