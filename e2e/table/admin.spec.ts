@@ -45,15 +45,25 @@ test('should list table records', async ({ startExampleApp }) => {
   await expect(page.getByText('Dae')).toBeVisible()
 })
 
-// TODO: [@thomas-jeanneau] - should search table records
-test.skip('should search table records', async ({ startExampleApp }) => {
+test('should search table records', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  await page.request.post('/api/tables/Users', {
+    data: {
+      records: [
+        { fields: { 'First name': 'John', 'Last name': 'Doe' } },
+        { fields: { 'First name': 'Jane', 'Last name': 'Dae' } },
+      ],
+    },
+  })
 
   // WHEN
   await page.goto('/admin/tables')
+  await page.getByPlaceholder('Search...').fill('John')
 
   // THEN
+  await expect(page.getByText('John')).toBeVisible()
+  await expect(page.getByText('Jane')).not.toBeVisible()
 })
 
 // TODO: [@thomas-jeanneau] - should open and display a table record
