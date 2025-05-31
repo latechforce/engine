@@ -1,17 +1,18 @@
 import { Form } from '@/shared/interface/component/form.component'
 import { createRoute, Navigate } from '@tanstack/react-router'
 import { rootRoute } from '@/shared/interface/page/root.layout'
-import { TypographyH1, TypographyP } from '@/shared/interface/ui/typography.ui'
+import { TypographyH1, TypographyH3, TypographyP } from '@/shared/interface/ui/typography.ui'
 import { client } from '@/shared/interface/lib/client.lib'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import type { GetFormDto } from '@/form/application/dto/get-form.dto'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { FormSkeleton } from '@/shared/interface/ui/form.ui'
 import type { ErrorDto } from '@/shared/application/dto/error.dto'
 
 const FormDataPage = () => {
   const { path } = formRoute.useParams()
   const { data } = useSuspenseQuery(formQueryOptions(path))
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   if ('error' in data) {
     if (data.status === 404) {
@@ -20,17 +21,31 @@ const FormDataPage = () => {
     return <div>Error: {data.error}</div>
   }
 
+  const { form } = data
+
   const onSubmit = async (values: unknown) => {
-    const { action } = data.form
-    if (action.startsWith('/api/automations/')) {
+    const { action } = form
+    if (action.startsWith('/api/tables/')) {
+      const tableId = action.replace('/api/tables/', '')
+      const response = await client.tables[':tableId'].$post({
+        param: { tableId },
+        // @ts-expect-error TODO: fix this
+        form: values,
+      })
+      if (response.status === 201) {
+        setIsSubmitted(true)
+      }
+    } else if (action.startsWith('/api/automations/')) {
       const path = action.replace('/api/automations/', '')
       const response = await client.automations[':path'].$post({
         param: { path },
         // @ts-expect-error TODO: fix this
         form: values,
       })
-      console.log(response.status)
-    } else if (data.form.action.startsWith('http')) {
+      if (response.status === 200) {
+        setIsSubmitted(true)
+      }
+    } else if (action.startsWith('http')) {
       const response = await fetch(action, {
         method: 'POST',
         body: JSON.stringify(values),
@@ -38,8 +53,18 @@ const FormDataPage = () => {
           'Content-Type': 'application/json',
         },
       })
-      console.log(response.status)
+      if (response.status === 200) {
+        setIsSubmitted(true)
+      }
     }
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="p-8 text-center">
+        <TypographyH3>{form.successMessage ?? 'Thank you for your submission'}</TypographyH3>
+      </div>
+    )
   }
 
   return (

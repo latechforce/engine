@@ -32,8 +32,8 @@ export class CreateRecordUseCase {
     if (request.headers.get('content-type') === 'application/json') {
       body = request.body ? await request.json() : {}
     } else if (
-      request.headers.get('content-type') === 'application/x-www-form-urlencoded' ||
-      request.headers.get('content-type') === 'multipart/form-data'
+      request.headers.get('content-type')?.includes('application/x-www-form-urlencoded') ||
+      request.headers.get('content-type')?.includes('multipart/form-data')
     ) {
       const formData = await request.formData()
       body = { fields: Object.fromEntries(Array.from(formData.entries())) }

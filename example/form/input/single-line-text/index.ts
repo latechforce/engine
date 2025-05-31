@@ -9,10 +9,23 @@ export default {
     {
       title: 'Contact us',
       path: '/contact-us',
-      action: '/api/automations/post',
+      action: '/api/tables/1',
       inputs: [
         {
           label: 'Name',
+          name: 'name',
+          type: 'single-line-text',
+        },
+      ],
+    },
+  ],
+  tables: [
+    {
+      id: 1,
+      name: 'Contacts',
+      fields: [
+        {
+          id: 1,
           name: 'name',
           type: 'single-line-text',
         },

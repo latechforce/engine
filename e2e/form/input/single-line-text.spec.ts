@@ -29,14 +29,17 @@ test('should run an automation when a form with a single line text input is subm
   expect(data.trigger?.body?.name).toBe('John Doe')
 })
 
-test.skip('should create a record with a single line text input', async ({ startExampleApp }) => {
+test('should create a record with a single line text input', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })
 
   // WHEN
   await page.goto('/forms/contact-us')
   await page.getByLabel('Name').fill('John Doe')
+  await page.getByRole('button', { name: 'Submit' }).click()
 
   // THEN
-  await expect(page.getByLabel('Name')).toBeVisible()
+  const { records } = await page.request.get('/api/tables/1').then((res) => res.json())
+  expect(records.length).toBe(1)
+  expect(records[0].fields.name).toBe('John Doe')
 })

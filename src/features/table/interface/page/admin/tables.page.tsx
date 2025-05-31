@@ -37,12 +37,10 @@ const RecordsDataTable = () => {
   }
   return (
     <DataTable
-      columns={table.fields
-        .filter((field) => field.name != null)
-        .map((field) => ({
-          accessorKey: field.name,
-          header: field.name,
-        }))}
+      columns={table.fields.map((field) => ({
+        accessorKey: field.name,
+        header: field.name,
+      }))}
       data={records.map((record) => record.fields)}
     />
   )

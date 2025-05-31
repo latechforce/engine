@@ -11,6 +11,7 @@ export const formSchema = z
     path: z.string(),
     action: z.string(),
     inputs: z.array(inputSchema).default([]),
+    successMessage: z.string().optional(),
   })
   .meta({
     title: 'Form',
