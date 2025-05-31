@@ -9,6 +9,7 @@ import type { IRecordRepository } from '@/table/domain/repository-interface/reco
 import { RecordRepository } from '../repository/record.repository'
 import { TableDatabaseService } from '../service/database.service'
 import { ReadTableRecordUseCase } from '@/table/application/use-case/read-table-record.use-case'
+import { ListTableRecordsUseCase } from '@/table/application/use-case/list-table-records.use-case'
 
 export function registerTableDependencies(container: Container) {
   // Register repositories
@@ -24,6 +25,10 @@ export function registerTableDependencies(container: Container) {
   container
     .bind<ReadTableRecordUseCase>(TYPES.UseCase.ReadRecord)
     .to(ReadTableRecordUseCase)
+    .inSingletonScope()
+  container
+    .bind<ListTableRecordsUseCase>(TYPES.UseCase.ListRecords)
+    .to(ListTableRecordsUseCase)
     .inSingletonScope()
 
   // Register services

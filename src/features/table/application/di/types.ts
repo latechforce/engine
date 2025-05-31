@@ -8,6 +8,7 @@ const TYPES = {
     Setup: Symbol.for('SetupTableUseCase'),
     CreateRecord: Symbol.for('CreateTableRecordUseCase'),
     ReadRecord: Symbol.for('ReadTableRecordUseCase'),
+    ListRecords: Symbol.for('ListTableRecordsUseCase'),
   },
   Service: {
     Database: Symbol.for('TableDatabaseService'),

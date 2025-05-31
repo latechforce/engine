@@ -14,4 +14,5 @@ export type IRecordRepository = {
   validateRecordBody(table: Table, body: unknown): body is RecordBody
   transaction(callback: (tx: RecordTransaction) => Promise<void>): Promise<void>
   read(table: Table, recordId: string): Promise<Record | undefined>
+  list(table: Table): Promise<Record[]>
 }

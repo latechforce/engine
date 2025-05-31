@@ -187,6 +187,9 @@ export class TableDatabaseService {
           ViewRow | undefined
         >
       },
+      list: async (): Promise<ViewRow[]> => {
+        return view.selectAll().execute() as Promise<ViewRow[]>
+      },
     }
   }
 }

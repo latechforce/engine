@@ -41,10 +41,11 @@ export class SetupTableUseCase {
     })
 
     this.tableRepository.addOpenAPIRoute({
+      summary: 'Create record(s)',
       method: 'post',
       path: '/' + join('tables', table.schema.name),
       description: `Create a new record in the table "${table.schema.name}"`,
-      tags: ['Tables'],
+      tags: [`Table "${table.schema.name}"`],
       requestBody: {
         content: {
           'application/json': {
@@ -85,10 +86,11 @@ export class SetupTableUseCase {
     })
 
     this.tableRepository.addOpenAPIRoute({
+      summary: 'Get record',
       method: 'get',
       path: '/' + join('tables', table.schema.name, '{recordId}'),
       description: `Get a record from the table "${table.schema.name}"`,
-      tags: ['Tables'],
+      tags: [`Table "${table.schema.name}"`],
       responses: {
         200: {
           description: 'The record was retrieved successfully',
@@ -104,6 +106,34 @@ export class SetupTableUseCase {
             'application/json': {
               schema: z.object({
                 error: z.enum(['Table not found', 'Record not found']),
+              }),
+            },
+          },
+        },
+      },
+    })
+
+    this.tableRepository.addOpenAPIRoute({
+      summary: 'List records',
+      method: 'get',
+      path: '/' + join('tables', table.schema.name),
+      description: `List records from the table "${table.schema.name}"`,
+      tags: [`Table "${table.schema.name}"`],
+      responses: {
+        200: {
+          description: 'The record was retrieved successfully',
+          content: {
+            'application/json': {
+              schema: table.getMultipleReadRecordSchema(),
+            },
+          },
+        },
+        404: {
+          description: 'The table was not found',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.enum(['Table not found']),
               }),
             },
           },

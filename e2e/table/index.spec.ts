@@ -85,3 +85,40 @@ test('should read a record from a GET request', async ({ startExampleApp }) => {
     'My field': text,
   })
 })
+
+test('should list records from a GET request', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test })
+  await page.request.post('/api/tables/My table', {
+    data: {
+      records: [
+        {
+          fields: { 'My field': 'Hello, world!' },
+        },
+        {
+          fields: { 'My field': 'Hello, world!' },
+        },
+      ],
+    },
+  })
+
+  // WHEN
+  const response = await page.request.get(`/api/tables/My table`)
+
+  // THEN
+  expect(response.status()).toBe(200)
+  const { records } = await response.json()
+  expect(records.length).toBe(2)
+  expect(records[0].id).toBeDefined()
+  expect(records[0].createdAt).toBeDefined()
+  expect(records[0].updatedAt).toBeDefined()
+  expect(records[0].fields).toEqual({
+    'My field': 'Hello, world!',
+  })
+  expect(records[1].id).toBeDefined()
+  expect(records[1].createdAt).toBeDefined()
+  expect(records[1].updatedAt).toBeDefined()
+  expect(records[1].fields).toEqual({
+    'My field': 'Hello, world!',
+  })
+})

@@ -63,4 +63,14 @@ export class RecordRepository implements IRecordRepository {
     const record = new Record(fields, _id, new Date(_created_at), new Date(_updated_at))
     return record
   }
+
+  async list(table: Table): Promise<Record[]> {
+    const view = this.database.view(table)
+    const rows = await view.list()
+    return rows.map((row) => {
+      const { _id, _created_at, _updated_at, ...slugs } = row
+      const fields = table.convertFieldsSlugToName(slugs)
+      return new Record(fields, _id, new Date(_created_at), new Date(_updated_at))
+    })
+  }
 }
