@@ -11,6 +11,8 @@ const TYPES = {
     ListRecords: Symbol.for('ListTableRecordsUseCase'),
     UpdateRecord: Symbol.for('UpdateTableRecordUseCase'),
     UpdateMultipleRecords: Symbol.for('UpdateMultipleTableRecordsUseCase'),
+    DeleteRecord: Symbol.for('DeleteTableRecordUseCase'),
+    DeleteMultipleRecords: Symbol.for('DeleteMultipleTableRecordsUseCase'),
   },
   Service: {
     Database: Symbol.for('TableDatabaseService'),

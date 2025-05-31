@@ -53,11 +53,11 @@ export class SetupAutomationUseCase {
           ? this.generateJsonSchema(responseAction.schema.body)
           : undefined
       this.automationRepository.addOpenAPIRoute({
-        summary: `Trigger automation`,
+        summary: `Trigger "${automation.schema.name}"`,
         method: schema.event === 'get' ? 'get' : 'post',
         path: '/' + join('automation', schema.path),
         description: `Run the automation "${automation.schema.name}" from a ${schema.event.toUpperCase()} request`,
-        tags: [`Automation "${automation.schema.name}"`],
+        tags: [`Automation`],
         requestBody:
           schema.event === 'post' && schema.requestBody
             ? {

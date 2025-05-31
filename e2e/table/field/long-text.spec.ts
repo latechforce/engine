@@ -8,7 +8,9 @@ test('should create a record with a long text field', async ({ startExampleApp }
   // WHEN
   const response = await page.request.post('/api/tables/My table', {
     data: {
-      'My field': longText,
+      fields: {
+        'My field': longText,
+      },
     },
   })
 

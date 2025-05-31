@@ -7,10 +7,13 @@ import type { SchemaObject } from 'ajv'
 export type RecordTransaction = {
   create(tableId: number, record: Record): Promise<void>
   update(recordId: string): Promise<void>
+  delete(recordId: string): Promise<void>
+  exists(recordId: string): Promise<boolean>
   field: {
     create(fieldId: number, record: Record, value: FieldValue): Promise<void>
     listByRecordId(recordId: string): Promise<RecordFieldRow[]>
     update(recordFieldId: string, value: FieldValue): Promise<void>
+    delete(recordFieldId: string): Promise<void>
   }
 }
 

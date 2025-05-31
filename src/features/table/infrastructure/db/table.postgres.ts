@@ -21,6 +21,7 @@ export const field = pgTable('table_field', {
   required: boolean().notNull(),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),
+  archived_at: timestamp(),
 })
 
 export const record = pgTable('record', {
@@ -43,4 +44,5 @@ export const recordField = pgTable('record_field', {
   value: text(),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),
+  archived_at: timestamp(),
 })

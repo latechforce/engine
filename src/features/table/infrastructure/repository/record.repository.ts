@@ -42,6 +42,15 @@ export class RecordRepository implements IRecordRepository {
             updated_at: new Date(),
           })
         },
+        delete: async (recordId: string) => {
+          await tx.record.update(recordId, {
+            archived_at: new Date(),
+          })
+        },
+        exists: async (recordId: string) => {
+          const row = await tx.record.get(recordId)
+          return row !== undefined
+        },
         field: {
           create: async (fieldId: number, record: Record, value: FieldValue) => {
             await tx.recordField.create({
@@ -60,6 +69,11 @@ export class RecordRepository implements IRecordRepository {
             await tx.recordField.update(fieldId, {
               value: value?.toString(),
               updated_at: new Date(),
+            })
+          },
+          delete: async (fieldId: string) => {
+            await tx.recordField.update(fieldId, {
+              archived_at: new Date(),
             })
           },
         },
@@ -95,8 +109,14 @@ export class RecordRepository implements IRecordRepository {
   }
 
   private toRecord(table: Table, row: ViewRow): Record {
-    const { _id, _created_at, _updated_at, ...slugs } = row
+    const { _id, _created_at, _updated_at, _archived_at, ...slugs } = row
     const fields = table.convertFieldsSlugToName(slugs)
-    return new Record(fields, _id, new Date(_created_at), new Date(_updated_at))
+    return new Record(
+      fields,
+      _id,
+      new Date(_created_at),
+      new Date(_updated_at),
+      _archived_at ? new Date(_archived_at) : null
+    )
   }
 }

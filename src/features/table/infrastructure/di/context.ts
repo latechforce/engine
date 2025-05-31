@@ -6,6 +6,8 @@ import type { ReadTableRecordUseCase } from '@/table/application/use-case/read-t
 import type { ListTableRecordsUseCase } from '@/table/application/use-case/list-table-records.use-case'
 import type { UpdateTableRecordUseCase } from '@/table/application/use-case/update-table-record.use-case'
 import type { UpdateMultipleTableRecordsUseCase } from '@/table/application/use-case/update-multiple-table-records.use-case'
+import type { DeleteTableRecordUseCase } from '@/table/application/use-case/delete-table-record.use-case'
+import type { DeleteMultipleTableRecordsUseCase } from '@/table/application/use-case/delete-multiple-table-record.use-case'
 
 export type TableHonoContextType = {
   createTableRecordUseCase: CreateTableRecordUseCase
@@ -13,6 +15,8 @@ export type TableHonoContextType = {
   listTableRecordsUseCase: ListTableRecordsUseCase
   updateTableRecordUseCase: UpdateTableRecordUseCase
   updateMultipleTableRecordsUseCase: UpdateMultipleTableRecordsUseCase
+  deleteTableRecordUseCase: DeleteTableRecordUseCase
+  deleteMultipleTableRecordsUseCase: DeleteMultipleTableRecordsUseCase
 }
 
 @injectable()
@@ -27,7 +31,11 @@ export class TableHonoContext {
     @inject(TYPES.UseCase.UpdateRecord)
     private readonly updateTableRecordUseCase: UpdateTableRecordUseCase,
     @inject(TYPES.UseCase.UpdateMultipleRecords)
-    private readonly updateMultipleTableRecordsUseCase: UpdateMultipleTableRecordsUseCase
+    private readonly updateMultipleTableRecordsUseCase: UpdateMultipleTableRecordsUseCase,
+    @inject(TYPES.UseCase.DeleteRecord)
+    private readonly deleteTableRecordUseCase: DeleteTableRecordUseCase,
+    @inject(TYPES.UseCase.DeleteMultipleRecords)
+    private readonly deleteMultipleTableRecordsUseCase: DeleteMultipleTableRecordsUseCase
   ) {}
 
   setVariables(c: Context) {
@@ -36,5 +44,7 @@ export class TableHonoContext {
     c.set('listTableRecordsUseCase', this.listTableRecordsUseCase)
     c.set('updateTableRecordUseCase', this.updateTableRecordUseCase)
     c.set('updateMultipleTableRecordsUseCase', this.updateMultipleTableRecordsUseCase)
+    c.set('deleteTableRecordUseCase', this.deleteTableRecordUseCase)
+    c.set('deleteMultipleTableRecordsUseCase', this.deleteMultipleTableRecordsUseCase)
   }
 }

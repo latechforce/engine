@@ -12,6 +12,8 @@ import { ReadTableRecordUseCase } from '@/table/application/use-case/read-table-
 import { ListTableRecordsUseCase } from '@/table/application/use-case/list-table-records.use-case'
 import { UpdateTableRecordUseCase } from '@/table/application/use-case/update-table-record.use-case'
 import { UpdateMultipleTableRecordsUseCase } from '@/table/application/use-case/update-multiple-table-records.use-case'
+import { DeleteMultipleTableRecordsUseCase } from '@/table/application/use-case/delete-multiple-table-record.use-case'
+import { DeleteTableRecordUseCase } from '@/table/application/use-case/delete-table-record.use-case'
 
 export function registerTableDependencies(container: Container) {
   // Register repositories
@@ -39,6 +41,14 @@ export function registerTableDependencies(container: Container) {
   container
     .bind<UpdateMultipleTableRecordsUseCase>(TYPES.UseCase.UpdateMultipleRecords)
     .to(UpdateMultipleTableRecordsUseCase)
+    .inSingletonScope()
+  container
+    .bind<DeleteMultipleTableRecordsUseCase>(TYPES.UseCase.DeleteMultipleRecords)
+    .to(DeleteMultipleTableRecordsUseCase)
+    .inSingletonScope()
+  container
+    .bind<DeleteTableRecordUseCase>(TYPES.UseCase.DeleteRecord)
+    .to(DeleteTableRecordUseCase)
     .inSingletonScope()
 
   // Register services

@@ -47,6 +47,7 @@ export class TableRepository implements ITableRepository {
               r.id AS _id,
               r.created_at AS _created_at,
               r.updated_at AS _updated_at,
+              r.archived_at AS _archived_at,
               ${columnsSql}
             FROM record r
             JOIN record_field rf ON r.id = rf.record_id

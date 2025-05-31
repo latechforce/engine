@@ -8,7 +8,9 @@ test('should create a record with a single line text field', async ({ startExamp
   // WHEN
   const response = await page.request.post('/api/tables/My table', {
     data: {
-      'My field': text,
+      fields: {
+        'My field': text,
+      },
     },
   })
 

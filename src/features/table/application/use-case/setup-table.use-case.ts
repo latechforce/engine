@@ -230,5 +230,81 @@ export class SetupTableUseCase {
         },
       },
     })
+
+    this.tableRepository.addOpenAPIRoute({
+      summary: 'Delete record',
+      method: 'delete',
+      path: '/' + join('tables', table.schema.name, '{recordId}'),
+      description: `Delete a record from the table "${table.schema.name}"`,
+      tags: [`Table "${table.schema.name}"`],
+      responses: {
+        200: {
+          description: 'The record was deleted successfully',
+          content: {
+            'application/json': {
+              schema: z.object({
+                id: z.string(),
+                deleted: z.boolean(),
+              }),
+            },
+          },
+        },
+        404: {
+          description: 'The table or record was not found',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.enum(['Table not found', 'Record not found']),
+              }),
+            },
+          },
+        },
+      },
+    })
+
+    this.tableRepository.addOpenAPIRoute({
+      summary: 'Delete multiple records',
+      method: 'delete',
+      path: '/' + join('tables', table.schema.name),
+      description: `Delete multiple records from the table "${table.schema.name}"`,
+      tags: [`Table "${table.schema.name}"`],
+      responses: {
+        200: {
+          description: 'The record was deleted successfully',
+          content: {
+            'application/json': {
+              schema: z.object({
+                records: z.array(
+                  z.object({
+                    id: z.string(),
+                    deleted: z.boolean(),
+                  })
+                ),
+              }),
+            },
+          },
+        },
+        400: {
+          description: 'The request query is invalid',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.enum(['Record IDs are required']),
+              }),
+            },
+          },
+        },
+        404: {
+          description: 'The table or record was not found',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.enum(['Table not found', 'Record not found']),
+              }),
+            },
+          },
+        },
+      },
+    })
   }
 }

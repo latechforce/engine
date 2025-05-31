@@ -30,6 +30,7 @@ export const record = sqliteTable('record', {
     .references(() => table.id, { onDelete: 'cascade' }),
   created_at: integer({ mode: 'timestamp' }).notNull(),
   updated_at: integer({ mode: 'timestamp' }).notNull(),
+  archived_at: integer({ mode: 'timestamp' }),
 })
 
 export const recordField = sqliteTable('record_field', {
@@ -43,4 +44,5 @@ export const recordField = sqliteTable('record_field', {
   value: text(),
   created_at: integer({ mode: 'timestamp' }).notNull(),
   updated_at: integer({ mode: 'timestamp' }).notNull(),
+  archived_at: integer({ mode: 'timestamp' }),
 })

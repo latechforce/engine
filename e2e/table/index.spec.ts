@@ -206,3 +206,58 @@ test('should update multiple records from a PATCH request', async ({ startExampl
     'My field': 'Hello, world! Updated',
   })
 })
+
+test('should delete a record from a DELETE request', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test })
+  const text = 'Hello, world!'
+  const postResponse = await page.request.post('/api/tables/My table', {
+    data: {
+      fields: { 'My field': text },
+    },
+  })
+  const {
+    record: { id },
+  } = await postResponse.json()
+
+  // WHEN
+  const response = await page.request.delete(`/api/tables/My table/${id}`)
+
+  // THEN
+  expect(response.status()).toBe(200)
+  const result = await response.json()
+  expect(result.id).toBe(id)
+  expect(result.deleted).toBe(true)
+})
+
+test('should delete multiple records from a DELETE request', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test })
+  const postResponse = await page.request.post('/api/tables/My table', {
+    data: {
+      records: [
+        {
+          fields: { 'My field': 'Hello, world!' },
+        },
+        {
+          fields: { 'My field': 'Hello, world!' },
+        },
+      ],
+    },
+  })
+  const {
+    records: [{ id: id1 }, { id: id2 }],
+  } = await postResponse.json()
+
+  // WHEN
+  const response = await page.request.delete(`/api/tables/My table?ids=${id1}&ids=${id2}`)
+
+  // THEN
+  expect(response.status()).toBe(200)
+  const { records } = await response.json()
+  expect(records.length).toBe(2)
+  expect(records[0].id).toBe(id1)
+  expect(records[0].deleted).toBe(true)
+  expect(records[1].id).toBe(id2)
+  expect(records[1].deleted).toBe(true)
+})

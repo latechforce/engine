@@ -206,15 +206,21 @@ export class TableDatabaseService {
     const view = this.databaseView.selectFrom(table.slug)
     return {
       get: async (id: string): Promise<ViewRow | undefined> => {
-        return view.selectAll().where('_id', '=', id).executeTakeFirst() as Promise<
-          ViewRow | undefined
-        >
+        return view
+          .selectAll()
+          .where('_archived_at', 'is', null)
+          .where('_id', '=', id)
+          .executeTakeFirst() as Promise<ViewRow | undefined>
       },
       list: async (): Promise<ViewRow[]> => {
-        return view.selectAll().execute() as Promise<ViewRow[]>
+        return view.selectAll().where('_archived_at', 'is', null).execute() as Promise<ViewRow[]>
       },
       listByIds: async (ids: string[]): Promise<ViewRow[]> => {
-        return view.selectAll().where('_id', 'in', ids).execute() as Promise<ViewRow[]>
+        return view
+          .selectAll()
+          .where('_archived_at', 'is', null)
+          .where('_id', 'in', ids)
+          .execute() as Promise<ViewRow[]>
       },
     }
   }

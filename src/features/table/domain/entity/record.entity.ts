@@ -5,6 +5,7 @@ export class Record {
     public readonly fields: Fields,
     public readonly id: string = crypto.randomUUID(),
     public readonly createdAt: Date = new Date(),
-    public readonly updatedAt: Date = new Date()
+    public readonly updatedAt: Date = new Date(),
+    public readonly archivedAt: Date | null = null
   ) {}
 }

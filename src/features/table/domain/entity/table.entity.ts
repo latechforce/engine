@@ -2,6 +2,7 @@ import type { TableSchema } from '@/table/domain/schema/table.schema'
 import { Field } from './field.entity'
 import type { Fields } from '../object-value/fields.object-value'
 import type { SchemaObject } from 'ajv'
+import type { FieldValue } from '../object-value/field-value.object-value'
 
 export class Table {
   public readonly slug: string
@@ -160,7 +161,7 @@ export class Table {
     }
   }
 
-  convertFieldsSlugToName(slugs: { [key: string]: string }): Fields {
+  convertFieldsSlugToName(slugs: { [key: string]: FieldValue }): Fields {
     return Object.fromEntries(
       Object.entries(slugs).map(([key, value]) => [
         this.fields.find((f) => f.slug === key)?.schema.name ?? key,

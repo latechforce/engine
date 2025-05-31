@@ -52,4 +52,26 @@ export class TableController {
     )
     return c.json(updateMultipleTableRecordsDto)
   }
+
+  static async deleteRecord(c: Context<HonoType>) {
+    const app = c.get('app')
+    const tableId = c.req.param('tableId')
+    const recordId = c.req.param('recordId')
+    const deleteTableRecordUseCase = c.get('deleteTableRecordUseCase')
+    const deleteTableRecordDto = await deleteTableRecordUseCase.execute(app, tableId, recordId)
+    return c.json(deleteTableRecordDto)
+  }
+
+  static async deleteMultipleRecords(c: Context<HonoType>) {
+    const app = c.get('app')
+    const tableId = c.req.param('tableId')
+    const ids = c.req.queries('ids')
+    const deleteMultipleTableRecordsUseCase = c.get('deleteMultipleTableRecordsUseCase')
+    const deleteMultipleTableRecordsDto = await deleteMultipleTableRecordsUseCase.execute(
+      app,
+      tableId,
+      ids
+    )
+    return c.json(deleteMultipleTableRecordsDto)
+  }
 }

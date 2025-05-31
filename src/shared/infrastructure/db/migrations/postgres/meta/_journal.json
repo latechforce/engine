@@ -36,6 +36,13 @@
       "when": 1748690660070,
       "tag": "0004_thin_true_believers",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1748714355365,
+      "tag": "0005_equal_boomer",
+      "breakpoints": true
     }
   ]
 }

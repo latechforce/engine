@@ -8,5 +8,7 @@ export const tableRoutes = new Hono<HonoType>()
   .get('/:tableId', TableController.listRecords)
   .patch('/:tableId/:recordId', TableController.updateRecord)
   .patch('/:tableId', TableController.updateMultipleRecords)
+  .delete('/:tableId/:recordId', TableController.deleteRecord)
+  .delete('/:tableId', TableController.deleteMultipleRecords)
 
 export type TableType = typeof tableRoutes
