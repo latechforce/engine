@@ -2,6 +2,7 @@ import type { Table } from '@/table/domain/entity/table.entity'
 import type { TableRow } from '../object-value/table-row.object-value'
 import type { TableFieldRow } from '../object-value/table-field-row.object-value'
 import type { Field } from '../entity/field.entity'
+import type { RouteConfig } from '@hono/zod-openapi'
 
 export type TableTransaction = {
   createView(table: Table): Promise<void>
@@ -21,4 +22,5 @@ export type TableTransaction = {
 export type ITableRepository = {
   debug(message: string): void
   transaction(callback: (tx: TableTransaction) => Promise<void>): Promise<void>
+  addOpenAPIRoute(routeConfig: RouteConfig): void
 }

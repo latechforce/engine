@@ -53,7 +53,7 @@ export class StartAppUseCase {
       console.error('Unhandled Rejection at:', promise, 'reason:', reason)
       process.exit(1)
     })
-    await this.appRepository.start()
+    await this.appRepository.start(app)
     this.appRepository.info(`App "${app.schema.name}" is running at ${app.url()}`)
     return app
   }

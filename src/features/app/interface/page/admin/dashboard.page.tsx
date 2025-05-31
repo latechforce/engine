@@ -10,7 +10,7 @@ export const DashboardPage = () => {
     <Layout breadcrumbs={[{ title: 'Dashboard', url: '/admin' }]}>
       <div className="p-6">
         <TypographyBlockquote>
-          Welcome to the Admin Dashboard "{session?.user?.name}"!
+          Welcome to the Admin Dashboard, "{session?.user?.name}"!
         </TypographyBlockquote>
       </div>
     </Layout>

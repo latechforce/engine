@@ -62,7 +62,7 @@ export class AppRepository implements IAppRepository {
     await this.database.migrate()
     await this.auth.setup()
     this.honoContext.setVariables(app)
-    this.serverService.setupOpenAPI(app)
+    this.serverService.addOpenAPIDoc(app)
   }
 
   async start() {

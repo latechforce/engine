@@ -4,7 +4,7 @@ import { expect, test } from '@/e2e/fixtures'
 
 test('should return a list of runs', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'trigger/service/http/post'})
+  const { page } = await startExampleApp({ test, filter: 'trigger/service/http/post' })
   await page.request.post('/api/automations/post')
 
   // WHEN

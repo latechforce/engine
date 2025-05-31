@@ -9,18 +9,26 @@ import type { TableDatabaseService } from '../service/database.service'
 import type { Table } from '@/table/domain/entity/table.entity'
 import type { Field } from '@/table/domain/entity/field.entity'
 import { sql } from 'drizzle-orm'
+import type { RouteConfig } from '@hono/zod-openapi'
+import type { ServerService } from '@/shared/infrastructure/service/server.service'
 
 @injectable()
 export class TableRepository implements ITableRepository {
   constructor(
     @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
+    @inject(TYPES.Service.Server)
+    private readonly server: ServerService,
     @inject(TYPES.Table.Service.Database)
     private readonly database: TableDatabaseService
   ) {}
 
   debug(message: string) {
     this.logger.child('table-repository').debug(message)
+  }
+
+  addOpenAPIRoute(routeConfig: RouteConfig) {
+    this.server.addOpenAPIRoute(routeConfig)
   }
 
   async transaction(callback: (tx: TableTransaction) => Promise<void>) {
