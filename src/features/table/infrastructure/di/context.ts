@@ -5,12 +5,14 @@ import TYPES from '@/table/application/di/types'
 import type { ReadTableRecordUseCase } from '@/table/application/use-case/read-table-record.use-case'
 import type { ListTableRecordsUseCase } from '@/table/application/use-case/list-table-records.use-case'
 import type { UpdateTableRecordUseCase } from '@/table/application/use-case/update-table-record.use-case'
+import type { UpdateMultipleTableRecordsUseCase } from '@/table/application/use-case/update-multiple-table-records.use-case'
 
 export type TableHonoContextType = {
   createTableRecordUseCase: CreateTableRecordUseCase
   readTableRecordUseCase: ReadTableRecordUseCase
   listTableRecordsUseCase: ListTableRecordsUseCase
   updateTableRecordUseCase: UpdateTableRecordUseCase
+  updateMultipleTableRecordsUseCase: UpdateMultipleTableRecordsUseCase
 }
 
 @injectable()
@@ -23,7 +25,9 @@ export class TableHonoContext {
     @inject(TYPES.UseCase.ListRecords)
     private readonly listTableRecordsUseCase: ListTableRecordsUseCase,
     @inject(TYPES.UseCase.UpdateRecord)
-    private readonly updateTableRecordUseCase: UpdateTableRecordUseCase
+    private readonly updateTableRecordUseCase: UpdateTableRecordUseCase,
+    @inject(TYPES.UseCase.UpdateMultipleRecords)
+    private readonly updateMultipleTableRecordsUseCase: UpdateMultipleTableRecordsUseCase
   ) {}
 
   setVariables(c: Context) {
@@ -31,5 +35,6 @@ export class TableHonoContext {
     c.set('readTableRecordUseCase', this.readTableRecordUseCase)
     c.set('listTableRecordsUseCase', this.listTableRecordsUseCase)
     c.set('updateTableRecordUseCase', this.updateTableRecordUseCase)
+    c.set('updateMultipleTableRecordsUseCase', this.updateMultipleTableRecordsUseCase)
   }
 }

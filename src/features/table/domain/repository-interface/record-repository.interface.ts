@@ -6,6 +6,7 @@ import type { SchemaObject } from 'ajv'
 
 export type RecordTransaction = {
   create(tableId: number, record: Record): Promise<void>
+  update(recordId: string): Promise<void>
   field: {
     create(fieldId: number, record: Record, value: FieldValue): Promise<void>
     listByRecordId(recordId: string): Promise<RecordFieldRow[]>
@@ -19,4 +20,5 @@ export type IRecordRepository = {
   exists(table: Table, recordId: string): Promise<boolean>
   read(table: Table, recordId: string): Promise<Record | undefined>
   list(table: Table): Promise<Record[]>
+  listByIds(table: Table, recordIds: string[]): Promise<Record[]>
 }

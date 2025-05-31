@@ -11,6 +11,7 @@ import type { TableDatabaseService } from '../service/database.service'
 import type { Table } from '@/table/domain/entity/table.entity'
 import type { RecordFieldRow } from '@/table/domain/object-value/record-field-row.object-value'
 import type { SchemaObject } from 'ajv'
+import type { ViewRow } from '@/table/domain/object-value/view-row.object-value'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {
@@ -36,6 +37,11 @@ export class RecordRepository implements IRecordRepository {
             updated_at: record.updatedAt,
           })
         },
+        update: async (recordId: string) => {
+          await tx.record.update(recordId, {
+            updated_at: new Date(),
+          })
+        },
         field: {
           create: async (fieldId: number, record: Record, value: FieldValue) => {
             await tx.recordField.create({
@@ -53,6 +59,7 @@ export class RecordRepository implements IRecordRepository {
           update: async (fieldId: string, value: FieldValue) => {
             await tx.recordField.update(fieldId, {
               value: value?.toString(),
+              updated_at: new Date(),
             })
           },
         },
@@ -72,19 +79,24 @@ export class RecordRepository implements IRecordRepository {
     if (!row) {
       return undefined
     }
-    const { _id, _created_at, _updated_at, ...slugs } = row
-    const fields = table.convertFieldsSlugToName(slugs)
-    const record = new Record(fields, _id, new Date(_created_at), new Date(_updated_at))
-    return record
+    return this.toRecord(table, row)
   }
 
   async list(table: Table): Promise<Record[]> {
     const view = this.database.view(table)
     const rows = await view.list()
-    return rows.map((row) => {
-      const { _id, _created_at, _updated_at, ...slugs } = row
-      const fields = table.convertFieldsSlugToName(slugs)
-      return new Record(fields, _id, new Date(_created_at), new Date(_updated_at))
-    })
+    return rows.map((row) => this.toRecord(table, row))
+  }
+
+  async listByIds(table: Table, recordIds: string[]): Promise<Record[]> {
+    const view = this.database.view(table)
+    const rows = await view.listByIds(recordIds)
+    return rows.map((row) => this.toRecord(table, row))
+  }
+
+  private toRecord(table: Table, row: ViewRow): Record {
+    const { _id, _created_at, _updated_at, ...slugs } = row
+    const fields = table.convertFieldsSlugToName(slugs)
+    return new Record(fields, _id, new Date(_created_at), new Date(_updated_at))
   }
 }

@@ -213,6 +213,9 @@ export class TableDatabaseService {
       list: async (): Promise<ViewRow[]> => {
         return view.selectAll().execute() as Promise<ViewRow[]>
       },
+      listByIds: async (ids: string[]): Promise<ViewRow[]> => {
+        return view.selectAll().where('_id', 'in', ids).execute() as Promise<ViewRow[]>
+      },
     }
   }
 }

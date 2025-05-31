@@ -6,26 +6,22 @@ import type {
   IRecordRepository,
   RecordTransaction,
 } from '@/table/domain/repository-interface/record-repository.interface'
-import { toSingleRecordDto } from '../dto/record.dto'
+import { toMultipleRecordDto } from '../dto/record.dto'
 import type { RecordDto } from '../dto/record.dto'
-import type { UpdateRecordBody } from '@/table/domain/object-value/update-record-body.object-value'
+import type { MultipleUpdateRecordBody } from '@/table/domain/object-value/update-record-body.object-value'
 import type { Table } from '@/table/domain/entity/table.entity'
 
 @injectable()
-export class UpdateTableRecordUseCase {
+export class UpdateMultipleTableRecordsUseCase {
   constructor(
     @inject(TYPES.Repository.Record)
     private readonly recordRepository: IRecordRepository
   ) {}
 
-  async execute(app: App, tableId: string, recordId: string, request: Request): Promise<RecordDto> {
+  async execute(app: App, tableId: string, request: Request): Promise<RecordDto> {
     const table = app.findTable(tableId)
     if (!table) {
       throw new HttpError('Table not found', 404)
-    }
-    const exist = await this.recordRepository.exists(table, recordId)
-    if (!exist) {
-      throw new HttpError('Record not found', 404)
     }
     let body: unknown
     if (request.headers.get('content-type') === 'application/json') {
@@ -33,26 +29,28 @@ export class UpdateTableRecordUseCase {
     } else {
       throw new HttpError('Invalid content type', 400)
     }
-    if (!this.validateUpdateRecordBody(table, body)) {
+    if (!this.validateUpdateMultipleRecordBody(table, body)) {
       throw new HttpError('Invalid record', 400)
     }
     await this.recordRepository.transaction(async (tx: RecordTransaction) => {
-      const fields = await tx.field.listByRecordId(recordId)
-      for (const key of Object.keys(body.fields)) {
-        const field = fields.find((field) => field.name === key)
-        if (field) await tx.field.update(field.id, body.fields[key])
+      for (const record of body.records) {
+        const fields = await tx.field.listByRecordId(record.id)
+        for (const key of Object.keys(record.fields)) {
+          const field = fields.find((field) => field.name === key)
+          if (field) await tx.field.update(field.id, record.fields[key])
+        }
+        await tx.update(record.id)
       }
-      await tx.update(recordId)
     })
-    const record = await this.recordRepository.read(table, recordId)
-    if (!record) {
-      throw new HttpError('Record not found', 404)
-    }
-    return toSingleRecordDto(record)
+    const records = await this.recordRepository.listByIds(
+      table,
+      body.records.map((record) => record.id)
+    )
+    return toMultipleRecordDto(records)
   }
 
-  validateUpdateRecordBody(table: Table, body: unknown): body is UpdateRecordBody {
-    const schema = table.getSingleUpdateRecordSchema()
+  validateUpdateMultipleRecordBody(table: Table, body: unknown): body is MultipleUpdateRecordBody {
+    const schema = table.getMultipleUpdateRecordSchema()
     return this.recordRepository.validateSchema(schema, body)
   }
 }

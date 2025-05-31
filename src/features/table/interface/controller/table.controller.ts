@@ -31,7 +31,6 @@ export class TableController {
     const app = c.get('app')
     const tableId = c.req.param('tableId')
     const recordId = c.req.param('recordId')
-    console.log(tableId, recordId)
     const updateTableRecordUseCase = c.get('updateTableRecordUseCase')
     const updateTableRecordDto = await updateTableRecordUseCase.execute(
       app,
@@ -42,11 +41,15 @@ export class TableController {
     return c.json(updateTableRecordDto)
   }
 
-  /*static async updateMultipleRecords(c: Context<HonoType>) {
+  static async updateMultipleRecords(c: Context<HonoType>) {
     const app = c.get('app')
     const tableId = c.req.param('tableId')
     const updateMultipleTableRecordsUseCase = c.get('updateMultipleTableRecordsUseCase')
-    const updateMultipleTableRecordsDto = await updateMultipleTableRecordsUseCase.execute(app, tableId, c.req.raw)
-    return c.json(updateMultipleTableRecordsDto, 201)
-  }*/
+    const updateMultipleTableRecordsDto = await updateMultipleTableRecordsUseCase.execute(
+      app,
+      tableId,
+      c.req.raw
+    )
+    return c.json(updateMultipleTableRecordsDto)
+  }
 }

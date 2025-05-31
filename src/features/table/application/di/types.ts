@@ -10,6 +10,7 @@ const TYPES = {
     ReadRecord: Symbol.for('ReadTableRecordUseCase'),
     ListRecords: Symbol.for('ListTableRecordsUseCase'),
     UpdateRecord: Symbol.for('UpdateTableRecordUseCase'),
+    UpdateMultipleRecords: Symbol.for('UpdateMultipleTableRecordsUseCase'),
   },
   Service: {
     Database: Symbol.for('TableDatabaseService'),
