@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1748608727862,
-      "tag": "0000_gigantic_eddie_brock",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1748618404989,
-      "tag": "0001_shallow_random",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1748682698353,
-      "tag": "0002_faithful_veda",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1748690662451,
-      "tag": "0003_legal_raider",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1748714355683,
-      "tag": "0004_early_dakota_north",
+      "when": 1748725314995,
+      "tag": "0000_solid_overlord",
       "breakpoints": true
     }
   ]

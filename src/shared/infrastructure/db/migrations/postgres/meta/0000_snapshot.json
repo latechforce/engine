@@ -1,5 +1,5 @@
 {
-  "id": "33b886ff-9a0c-4b69-98b2-607df0edb5fb",
+  "id": "f45c6b90-a1a5-4a3a-9ac9-35f282df3f1f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -487,8 +487,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.field": {
-      "name": "field",
+    "public.table_field": {
+      "name": "table_field",
       "schema": "",
       "columns": {
         "id": {
@@ -509,18 +509,48 @@
           "primaryKey": false,
           "notNull": true
         },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "type": {
           "name": "type",
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "required": {
+          "name": "required",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "archived_at": {
+          "name": "archived_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
       "foreignKeys": {
-        "field_table_id_table_id_fk": {
-          "name": "field_table_id_table_id_fk",
-          "tableFrom": "field",
+        "table_field_table_id_table_id_fk": {
+          "name": "table_field_table_id_table_id_fk",
+          "tableFrom": "table_field",
           "tableTo": "table",
           "columnsFrom": [
             "table_id"
@@ -533,7 +563,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "table_field_slug_unique": {
+          "name": "table_field_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -605,8 +643,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "field_id": {
-          "name": "field_id",
+        "table_field_id": {
+          "name": "table_field_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
@@ -615,7 +653,7 @@
           "name": "value",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -628,6 +666,12 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
+        },
+        "archived_at": {
+          "name": "archived_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -645,12 +689,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "record_field_field_id_field_id_fk": {
-          "name": "record_field_field_id_field_id_fk",
+        "record_field_table_field_id_table_field_id_fk": {
+          "name": "record_field_table_field_id_table_field_id_fk",
           "tableFrom": "record_field",
-          "tableTo": "field",
+          "tableTo": "table_field",
           "columnsFrom": [
-            "field_id"
+            "table_field_id"
           ],
           "columnsTo": [
             "id"
@@ -681,6 +725,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -697,7 +747,15 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "table_slug_unique": {
+          "name": "table_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

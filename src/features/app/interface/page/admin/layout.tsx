@@ -1,6 +1,6 @@
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/shared/interface/ui/sidebar.ui'
 import { Sidebar, type SidebarGroup } from '@/shared/interface/component/sidebar.component'
-import { History, Zap, Gauge, Webhook, Link, FileText } from 'lucide-react'
+import { History, Zap, Gauge, Webhook, Link, FileText, Table } from 'lucide-react'
 import { RequireAuth } from '@/user/interface/context/require-auth.context'
 import { Separator } from '@/shared/interface/ui/separator.ui'
 import {
@@ -55,7 +55,17 @@ const items: SidebarGroup[] = [
     ],
   },
   {
-    title: 'Admin',
+    title: 'Tables',
+    items: [
+      {
+        title: 'Tables',
+        url: '/admin/tables',
+        icon: Table,
+      },
+    ],
+  },
+  {
+    title: 'Resources',
     items: [
       {
         title: 'OpenAPI',

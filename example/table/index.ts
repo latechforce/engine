@@ -3,17 +3,38 @@ import type { AppSchema } from '@/types'
 export const inGuides = false
 
 export default {
-  name: 'Configure a table with a single line text field',
-  description: 'Table with a single line text field',
+  name: 'Configure multiple tables',
+  description: 'Configure multiple tables',
   tables: [
     {
       id: 1,
-      name: 'My table',
+      name: 'Users',
       fields: [
         {
           id: 1,
-          name: 'My field',
+          name: 'First name',
           type: 'single-line-text',
+        },
+        {
+          id: 2,
+          name: 'Last name',
+          type: 'single-line-text',
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Posts',
+      fields: [
+        {
+          id: 3,
+          name: 'Title',
+          type: 'single-line-text',
+        },
+        {
+          id: 4,
+          name: 'Content',
+          type: 'long-text',
         },
       ],
     },

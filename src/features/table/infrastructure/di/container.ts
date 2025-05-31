@@ -4,16 +4,17 @@ import { SetupTableUseCase } from '@/table/application/use-case/setup-table.use-
 import { TableHonoContext } from './context'
 import type { ITableRepository } from '@/table/domain/repository-interface/table-repository.interface'
 import { TableRepository } from '../repository/table.repository'
-import { CreateTableRecordUseCase } from '@/table/application/use-case/create-table-record.use-case'
+import { CreateRecordUseCase } from '@/table/application/use-case/create-record.use-case'
 import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
 import { RecordRepository } from '../repository/record.repository'
 import { TableDatabaseService } from '../service/database.service'
-import { ReadTableRecordUseCase } from '@/table/application/use-case/read-table-record.use-case'
-import { ListTableRecordsUseCase } from '@/table/application/use-case/list-table-records.use-case'
-import { UpdateTableRecordUseCase } from '@/table/application/use-case/update-table-record.use-case'
-import { UpdateMultipleTableRecordsUseCase } from '@/table/application/use-case/update-multiple-table-records.use-case'
-import { DeleteMultipleTableRecordsUseCase } from '@/table/application/use-case/delete-multiple-table-record.use-case'
-import { DeleteTableRecordUseCase } from '@/table/application/use-case/delete-table-record.use-case'
+import { ReadRecordUseCase } from '@/table/application/use-case/read-record.use-case'
+import { ListRecordsUseCase } from '@/table/application/use-case/list-records.use-case'
+import { UpdateRecordUseCase } from '@/table/application/use-case/update-record.use-case'
+import { UpdateMultipleRecordsUseCase } from '@/table/application/use-case/update-multiple-records.use-case'
+import { DeleteMultipleRecordsUseCase } from '@/table/application/use-case/delete-multiple-record.use-case'
+import { DeleteRecordUseCase } from '@/table/application/use-case/delete-record.use-case'
+import { ListTablesUseCase } from '@/table/application/use-case/list-tables.use-case'
 
 export function registerTableDependencies(container: Container) {
   // Register repositories
@@ -23,33 +24,34 @@ export function registerTableDependencies(container: Container) {
   // Register use cases
   container.bind<SetupTableUseCase>(TYPES.UseCase.Setup).to(SetupTableUseCase).inSingletonScope()
   container
-    .bind<CreateTableRecordUseCase>(TYPES.UseCase.CreateRecord)
-    .to(CreateTableRecordUseCase)
+    .bind<CreateRecordUseCase>(TYPES.UseCase.CreateRecord)
+    .to(CreateRecordUseCase)
     .inSingletonScope()
   container
-    .bind<ReadTableRecordUseCase>(TYPES.UseCase.ReadRecord)
-    .to(ReadTableRecordUseCase)
+    .bind<ReadRecordUseCase>(TYPES.UseCase.ReadRecord)
+    .to(ReadRecordUseCase)
     .inSingletonScope()
   container
-    .bind<ListTableRecordsUseCase>(TYPES.UseCase.ListRecords)
-    .to(ListTableRecordsUseCase)
+    .bind<ListRecordsUseCase>(TYPES.UseCase.ListRecords)
+    .to(ListRecordsUseCase)
     .inSingletonScope()
   container
-    .bind<UpdateTableRecordUseCase>(TYPES.UseCase.UpdateRecord)
-    .to(UpdateTableRecordUseCase)
+    .bind<UpdateRecordUseCase>(TYPES.UseCase.UpdateRecord)
+    .to(UpdateRecordUseCase)
     .inSingletonScope()
   container
-    .bind<UpdateMultipleTableRecordsUseCase>(TYPES.UseCase.UpdateMultipleRecords)
-    .to(UpdateMultipleTableRecordsUseCase)
+    .bind<UpdateMultipleRecordsUseCase>(TYPES.UseCase.UpdateMultipleRecords)
+    .to(UpdateMultipleRecordsUseCase)
     .inSingletonScope()
   container
-    .bind<DeleteMultipleTableRecordsUseCase>(TYPES.UseCase.DeleteMultipleRecords)
-    .to(DeleteMultipleTableRecordsUseCase)
+    .bind<DeleteMultipleRecordsUseCase>(TYPES.UseCase.DeleteMultipleRecords)
+    .to(DeleteMultipleRecordsUseCase)
     .inSingletonScope()
   container
-    .bind<DeleteTableRecordUseCase>(TYPES.UseCase.DeleteRecord)
-    .to(DeleteTableRecordUseCase)
+    .bind<DeleteRecordUseCase>(TYPES.UseCase.DeleteRecord)
+    .to(DeleteRecordUseCase)
     .inSingletonScope()
+  container.bind<ListTablesUseCase>(TYPES.UseCase.List).to(ListTablesUseCase).inSingletonScope()
 
   // Register services
   container

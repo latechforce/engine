@@ -1,50 +1,55 @@
 import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
-import type { CreateTableRecordUseCase } from '@/table/application/use-case/create-table-record.use-case'
+import type { CreateRecordUseCase } from '@/table/application/use-case/create-record.use-case'
 import TYPES from '@/table/application/di/types'
-import type { ReadTableRecordUseCase } from '@/table/application/use-case/read-table-record.use-case'
-import type { ListTableRecordsUseCase } from '@/table/application/use-case/list-table-records.use-case'
-import type { UpdateTableRecordUseCase } from '@/table/application/use-case/update-table-record.use-case'
-import type { UpdateMultipleTableRecordsUseCase } from '@/table/application/use-case/update-multiple-table-records.use-case'
-import type { DeleteTableRecordUseCase } from '@/table/application/use-case/delete-table-record.use-case'
-import type { DeleteMultipleTableRecordsUseCase } from '@/table/application/use-case/delete-multiple-table-record.use-case'
+import type { ReadRecordUseCase } from '@/table/application/use-case/read-record.use-case'
+import type { ListRecordsUseCase } from '@/table/application/use-case/list-records.use-case'
+import type { UpdateRecordUseCase } from '@/table/application/use-case/update-record.use-case'
+import type { UpdateMultipleRecordsUseCase } from '@/table/application/use-case/update-multiple-records.use-case'
+import type { DeleteRecordUseCase } from '@/table/application/use-case/delete-record.use-case'
+import type { DeleteMultipleRecordsUseCase } from '@/table/application/use-case/delete-multiple-record.use-case'
+import type { ListTablesUseCase } from '@/table/application/use-case/list-tables.use-case'
 
 export type TableHonoContextType = {
-  createTableRecordUseCase: CreateTableRecordUseCase
-  readTableRecordUseCase: ReadTableRecordUseCase
-  listTableRecordsUseCase: ListTableRecordsUseCase
-  updateTableRecordUseCase: UpdateTableRecordUseCase
-  updateMultipleTableRecordsUseCase: UpdateMultipleTableRecordsUseCase
-  deleteTableRecordUseCase: DeleteTableRecordUseCase
-  deleteMultipleTableRecordsUseCase: DeleteMultipleTableRecordsUseCase
+  createRecordUseCase: CreateRecordUseCase
+  readRecordUseCase: ReadRecordUseCase
+  listRecordsUseCase: ListRecordsUseCase
+  updateRecordUseCase: UpdateRecordUseCase
+  updateMultipleRecordsUseCase: UpdateMultipleRecordsUseCase
+  deleteRecordUseCase: DeleteRecordUseCase
+  deleteMultipleRecordsUseCase: DeleteMultipleRecordsUseCase
+  listTablesUseCase: ListTablesUseCase
 }
 
 @injectable()
 export class TableHonoContext {
   constructor(
     @inject(TYPES.UseCase.CreateRecord)
-    private readonly createTableRecordUseCase: CreateTableRecordUseCase,
+    private readonly createRecordUseCase: CreateRecordUseCase,
     @inject(TYPES.UseCase.ReadRecord)
-    private readonly readTableRecordUseCase: ReadTableRecordUseCase,
+    private readonly readRecordUseCase: ReadRecordUseCase,
     @inject(TYPES.UseCase.ListRecords)
-    private readonly listTableRecordsUseCase: ListTableRecordsUseCase,
+    private readonly listRecordsUseCase: ListRecordsUseCase,
     @inject(TYPES.UseCase.UpdateRecord)
-    private readonly updateTableRecordUseCase: UpdateTableRecordUseCase,
+    private readonly updateRecordUseCase: UpdateRecordUseCase,
     @inject(TYPES.UseCase.UpdateMultipleRecords)
-    private readonly updateMultipleTableRecordsUseCase: UpdateMultipleTableRecordsUseCase,
+    private readonly updateMultipleRecordsUseCase: UpdateMultipleRecordsUseCase,
     @inject(TYPES.UseCase.DeleteRecord)
-    private readonly deleteTableRecordUseCase: DeleteTableRecordUseCase,
+    private readonly deleteRecordUseCase: DeleteRecordUseCase,
     @inject(TYPES.UseCase.DeleteMultipleRecords)
-    private readonly deleteMultipleTableRecordsUseCase: DeleteMultipleTableRecordsUseCase
+    private readonly deleteMultipleRecordsUseCase: DeleteMultipleRecordsUseCase,
+    @inject(TYPES.UseCase.List)
+    private readonly listTablesUseCase: ListTablesUseCase
   ) {}
 
   setVariables(c: Context) {
-    c.set('createTableRecordUseCase', this.createTableRecordUseCase)
-    c.set('readTableRecordUseCase', this.readTableRecordUseCase)
-    c.set('listTableRecordsUseCase', this.listTableRecordsUseCase)
-    c.set('updateTableRecordUseCase', this.updateTableRecordUseCase)
-    c.set('updateMultipleTableRecordsUseCase', this.updateMultipleTableRecordsUseCase)
-    c.set('deleteTableRecordUseCase', this.deleteTableRecordUseCase)
-    c.set('deleteMultipleTableRecordsUseCase', this.deleteMultipleTableRecordsUseCase)
+    c.set('createRecordUseCase', this.createRecordUseCase)
+    c.set('readRecordUseCase', this.readRecordUseCase)
+    c.set('listRecordsUseCase', this.listRecordsUseCase)
+    c.set('updateRecordUseCase', this.updateRecordUseCase)
+    c.set('updateMultipleRecordsUseCase', this.updateMultipleRecordsUseCase)
+    c.set('deleteRecordUseCase', this.deleteRecordUseCase)
+    c.set('deleteMultipleRecordsUseCase', this.deleteMultipleRecordsUseCase)
+    c.set('listTablesUseCase', this.listTablesUseCase)
   }
 }
