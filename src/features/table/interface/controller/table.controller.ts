@@ -5,9 +5,8 @@ export class TableController {
   static async createRecord(c: Context<HonoType>) {
     const app = c.get('app')
     const tableId = c.req.param('tableId')
-    const body = await c.req.json()
     const createTableRecordUseCase = c.get('createTableRecordUseCase')
-    const createTableRecordDto = await createTableRecordUseCase.execute(app, tableId, body)
+    const createTableRecordDto = await createTableRecordUseCase.execute(app, tableId, c.req.raw)
     return c.json(createTableRecordDto, 201)
   }
 
@@ -27,4 +26,27 @@ export class TableController {
     const listTableRecordsDto = await listTableRecordsUseCase.execute(app, tableId)
     return c.json(listTableRecordsDto)
   }
+
+  static async updateRecord(c: Context<HonoType>) {
+    const app = c.get('app')
+    const tableId = c.req.param('tableId')
+    const recordId = c.req.param('recordId')
+    console.log(tableId, recordId)
+    const updateTableRecordUseCase = c.get('updateTableRecordUseCase')
+    const updateTableRecordDto = await updateTableRecordUseCase.execute(
+      app,
+      tableId,
+      recordId,
+      c.req.raw
+    )
+    return c.json(updateTableRecordDto)
+  }
+
+  /*static async updateMultipleRecords(c: Context<HonoType>) {
+    const app = c.get('app')
+    const tableId = c.req.param('tableId')
+    const updateMultipleTableRecordsUseCase = c.get('updateMultipleTableRecordsUseCase')
+    const updateMultipleTableRecordsDto = await updateMultipleTableRecordsUseCase.execute(app, tableId, c.req.raw)
+    return c.json(updateMultipleTableRecordsDto, 201)
+  }*/
 }

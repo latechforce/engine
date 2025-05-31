@@ -6,5 +6,7 @@ export const tableRoutes = new Hono<HonoType>()
   .post('/:tableId', TableController.createRecord)
   .get('/:tableId/:recordId', TableController.readRecord)
   .get('/:tableId', TableController.listRecords)
+  .patch('/:tableId/:recordId', TableController.updateRecord)
+//.patch('/:tableId', TableController.updateMultipleRecords)
 
 export type TableType = typeof tableRoutes

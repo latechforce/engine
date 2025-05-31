@@ -10,6 +10,7 @@ import { RecordRepository } from '../repository/record.repository'
 import { TableDatabaseService } from '../service/database.service'
 import { ReadTableRecordUseCase } from '@/table/application/use-case/read-table-record.use-case'
 import { ListTableRecordsUseCase } from '@/table/application/use-case/list-table-records.use-case'
+import { UpdateTableRecordUseCase } from '@/table/application/use-case/update-table-record.use-case'
 
 export function registerTableDependencies(container: Container) {
   // Register repositories
@@ -29,6 +30,10 @@ export function registerTableDependencies(container: Container) {
   container
     .bind<ListTableRecordsUseCase>(TYPES.UseCase.ListRecords)
     .to(ListTableRecordsUseCase)
+    .inSingletonScope()
+  container
+    .bind<UpdateTableRecordUseCase>(TYPES.UseCase.UpdateRecord)
+    .to(UpdateTableRecordUseCase)
     .inSingletonScope()
 
   // Register services

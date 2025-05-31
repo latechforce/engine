@@ -122,3 +122,87 @@ test('should list records from a GET request', async ({ startExampleApp }) => {
     'My field': 'Hello, world!',
   })
 })
+
+test('should update a record from a PATCH request', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test })
+  const text = 'Hello, world!'
+  const postResponse = await page.request.post('/api/tables/My table', {
+    data: {
+      fields: { 'My field': text },
+    },
+  })
+  const {
+    record: { id },
+  } = await postResponse.json()
+
+  // WHEN
+  const patchResponse = await page.request.patch(`/api/tables/My table/${id}`, {
+    data: {
+      fields: { 'My field': 'Hello, world! Updated' },
+    },
+  })
+
+  // THEN
+  expect(patchResponse.status()).toBe(200)
+  const { record } = await patchResponse.json()
+  expect(record.id).toBeDefined()
+  expect(record.createdAt).toBeDefined()
+  expect(record.updatedAt).toBeDefined()
+  expect(record.fields).toEqual({
+    'My field': 'Hello, world! Updated',
+  })
+})
+
+test('should update multiple records from a PATCH request', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test })
+  const postResponse = await page.request.post('/api/tables/My table', {
+    data: {
+      records: [
+        {
+          fields: { 'My field': 'Hello, world!' },
+        },
+        {
+          fields: { 'My field': 'Hello, world!' },
+        },
+      ],
+    },
+  })
+  const {
+    records: [{ id: id1 }, { id: id2 }],
+  } = await postResponse.json()
+
+  // WHEN
+  const patchResponse = await page.request.patch(`/api/tables/My table`, {
+    data: {
+      records: [
+        {
+          id: id1,
+          fields: { 'My field': 'Hello, world! Updated' },
+        },
+        {
+          id: id2,
+          fields: { 'My field': 'Hello, world! Updated' },
+        },
+      ],
+    },
+  })
+
+  // THEN
+  expect(patchResponse.status()).toBe(200)
+  const { records } = await patchResponse.json()
+  expect(records.length).toBe(2)
+  expect(records[0].id).toBeDefined()
+  expect(records[0].createdAt).toBeDefined()
+  expect(records[0].updatedAt).toBeDefined()
+  expect(records[0].fields).toEqual({
+    'My field': 'Hello, world! Updated',
+  })
+  expect(records[1].id).toBeDefined()
+  expect(records[1].createdAt).toBeDefined()
+  expect(records[1].updatedAt).toBeDefined()
+  expect(records[1].fields).toEqual({
+    'My field': 'Hello, world! Updated',
+  })
+})

@@ -1,18 +1,22 @@
 import type { Record } from '../entity/record.entity'
 import type { FieldValue } from '../object-value/field-value.object-value'
 import type { Table } from '../entity/table.entity'
-import type { RecordBody } from '../object-value/record-body.object-value'
+import type { RecordFieldRow } from '../object-value/record-field-row.object-value'
+import type { SchemaObject } from 'ajv'
 
 export type RecordTransaction = {
   create(tableId: number, record: Record): Promise<void>
   field: {
     create(fieldId: number, record: Record, value: FieldValue): Promise<void>
+    listByRecordId(recordId: string): Promise<RecordFieldRow[]>
+    update(recordFieldId: string, value: FieldValue): Promise<void>
   }
 }
 
 export type IRecordRepository = {
-  validateRecordBody(table: Table, body: unknown): body is RecordBody
+  validateSchema(schema: SchemaObject, body: unknown): boolean
   transaction(callback: (tx: RecordTransaction) => Promise<void>): Promise<void>
+  exists(table: Table, recordId: string): Promise<boolean>
   read(table: Table, recordId: string): Promise<Record | undefined>
   list(table: Table): Promise<Record[]>
 }

@@ -101,6 +101,9 @@ export class ServerService {
         '/api/*': {
           GET: this.server.fetch,
           POST: this.server.fetch,
+          PATCH: this.server.fetch,
+          PUT: this.server.fetch,
+          DELETE: this.server.fetch,
         },
         '/*': {
           GET: index,

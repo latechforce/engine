@@ -71,23 +71,25 @@ export class SetupAutomationUseCase {
         responses: {
           200: {
             description: 'The automation successfully run',
-            content: response
-              ? {
-                  'application/json': {
-                    schema: this.convertJsonSchemaToOpenApi(response),
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    success: { type: 'boolean' },
+                    data: response ? this.convertJsonSchemaToOpenApi(response) : { type: 'null' },
                   },
-                }
-              : {
-                  'text/plain': {
-                    schema: z.string(),
-                  },
+                  required: ['success', 'data'],
                 },
+              },
+            },
           },
           400: {
             content: {
               'application/json': {
                 schema: z.object({
                   error: z.string(),
+                  success: z.boolean().default(false),
                 }),
               },
             },

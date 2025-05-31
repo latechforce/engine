@@ -6,6 +6,7 @@ import { Kysely, PostgresDialect } from 'kysely'
 import { BunWorkerDialect } from 'kysely-bun-worker'
 import type { Table } from '@/table/domain/entity/table.entity'
 import type { ViewRow } from '@/table/domain/object-value/view-row.object-value'
+import type { RecordFieldRow } from '@/table/domain/object-value/record-field-row.object-value'
 
 type Base<I, S, D> = {
   create(data: I): Promise<void>
@@ -23,7 +24,9 @@ type DatabaseTableField<I, S> = Base<I, S, number> & {
 
 type DatabaseRecord<I, S> = Base<I, S, string>
 
-type DatabaseRecordField<I, S> = Base<I, S, string>
+type DatabaseRecordField<I, S> = Base<I, S, string> & {
+  listByRecordId(recordId: string): Promise<RecordFieldRow[]>
+}
 
 export class TableDatabaseService {
   private readonly databaseView: Kysely<{
@@ -117,6 +120,16 @@ export class TableDatabaseService {
               },
               get: async (id) =>
                 tx.query.recordField.findFirst({ where: eq(schema.recordField.id, id) }),
+              listByRecordId: async (recordId) =>
+                tx
+                  .select({
+                    id: schema.recordField.id,
+                    name: schema.field.name,
+                    value: schema.recordField.value,
+                  })
+                  .from(schema.recordField)
+                  .innerJoin(schema.field, eq(schema.recordField.table_field_id, schema.field.id))
+                  .where(eq(schema.recordField.record_id, recordId)),
             },
           })
         })
@@ -173,6 +186,16 @@ export class TableDatabaseService {
                 tx.update(schema.recordField).set(data).where(eq(schema.recordField.id, id)),
               get: async (id) =>
                 tx.query.recordField.findFirst({ where: eq(schema.recordField.id, id) }),
+              listByRecordId: async (recordId) =>
+                tx
+                  .select({
+                    id: schema.recordField.id,
+                    name: schema.field.name,
+                    value: schema.recordField.value,
+                  })
+                  .from(schema.recordField)
+                  .innerJoin(schema.field, eq(schema.recordField.table_field_id, schema.field.id))
+                  .where(eq(schema.recordField.record_id, recordId)),
             },
           })
         })

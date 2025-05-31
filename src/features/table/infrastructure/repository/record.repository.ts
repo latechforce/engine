@@ -9,7 +9,8 @@ import { Record } from '@/table/domain/entity/record.entity'
 import type { FieldValue } from '@/table/domain/object-value/field-value.object-value'
 import type { TableDatabaseService } from '../service/database.service'
 import type { Table } from '@/table/domain/entity/table.entity'
-import type { RecordBody } from '@/table/domain/object-value/record-body.object-value'
+import type { RecordFieldRow } from '@/table/domain/object-value/record-field-row.object-value'
+import type { SchemaObject } from 'ajv'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {
@@ -20,8 +21,7 @@ export class RecordRepository implements IRecordRepository {
     private readonly database: TableDatabaseService
   ) {}
 
-  validateRecordBody(table: Table, body: unknown): body is RecordBody {
-    const schema = table.getSingleOrMultipleCreateRecordSchema()
+  validateSchema(schema: SchemaObject, body: unknown): boolean {
     return this.validator.validate(schema, body)
   }
 
@@ -47,9 +47,23 @@ export class RecordRepository implements IRecordRepository {
               updated_at: record.updatedAt,
             })
           },
+          listByRecordId: async (recordId: string): Promise<RecordFieldRow[]> => {
+            return await tx.recordField.listByRecordId(recordId)
+          },
+          update: async (fieldId: string, value: FieldValue) => {
+            await tx.recordField.update(fieldId, {
+              value: value?.toString(),
+            })
+          },
         },
       })
     })
+  }
+
+  async exists(table: Table, recordId: string): Promise<boolean> {
+    const view = this.database.view(table)
+    const row = await view.get(recordId)
+    return row !== undefined
   }
 
   async read(table: Table, recordId: string): Promise<Record | undefined> {

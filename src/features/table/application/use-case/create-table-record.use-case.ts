@@ -9,6 +9,8 @@ import type {
 } from '@/table/domain/repository-interface/record-repository.interface'
 import { toMultipleRecordDto, toSingleRecordDto } from '../dto/record.dto'
 import type { RecordDto } from '../dto/record.dto'
+import type { Table } from '@/table/domain/entity/table.entity'
+import type { CreateRecordBody } from '@/table/domain/object-value/create-record-body.object-value'
 
 @injectable()
 export class CreateTableRecordUseCase {
@@ -17,12 +19,24 @@ export class CreateTableRecordUseCase {
     private readonly recordRepository: IRecordRepository
   ) {}
 
-  async execute(app: App, tableId: string, body: unknown): Promise<RecordDto> {
+  async execute(app: App, tableId: string, request: Request): Promise<RecordDto> {
     const table = app.findTable(tableId)
     if (!table) {
       throw new HttpError('Table not found', 404)
     }
-    if (!this.recordRepository.validateRecordBody(table, body)) {
+    let body: unknown
+    if (request.headers.get('content-type') === 'application/json') {
+      body = request.body ? await request.json() : {}
+    } else if (
+      request.headers.get('content-type') === 'application/x-www-form-urlencoded' ||
+      request.headers.get('content-type') === 'multipart/form-data'
+    ) {
+      const formData = await request.formData()
+      body = { fields: Object.fromEntries(Array.from(formData.entries())) }
+    } else {
+      throw new HttpError('Invalid content type', 400)
+    }
+    if (!this.validateCreateRecordBody(table, body)) {
       throw new HttpError('Invalid record', 400)
     }
     if ('fields' in body) {
@@ -46,5 +60,10 @@ export class CreateTableRecordUseCase {
       })
       return toMultipleRecordDto(records)
     }
+  }
+
+  validateCreateRecordBody(table: Table, body: unknown): body is CreateRecordBody {
+    const schema = table.getSingleOrMultipleCreateRecordSchema()
+    return this.recordRepository.validateSchema(schema, body)
   }
 }

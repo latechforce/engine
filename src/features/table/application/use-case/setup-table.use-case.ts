@@ -67,7 +67,7 @@ export class SetupTableUseCase {
           content: {
             'application/json': {
               schema: z.object({
-                error: z.literal('Invalid record'),
+                error: z.enum(['Invalid record', 'Invalid content type']),
               }),
             },
           },
@@ -134,6 +134,51 @@ export class SetupTableUseCase {
             'application/json': {
               schema: z.object({
                 error: z.enum(['Table not found']),
+              }),
+            },
+          },
+        },
+      },
+    })
+
+    this.tableRepository.addOpenAPIRoute({
+      summary: 'Update record',
+      method: 'patch',
+      path: '/' + join('tables', table.schema.name, '{recordId}'),
+      description: `Update a record in the table "${table.schema.name}"`,
+      tags: [`Table "${table.schema.name}"`],
+      requestBody: {
+        content: {
+          'application/json': {
+            schema: table.getSingleUpdateRecordSchema(),
+          },
+        },
+      },
+      responses: {
+        201: {
+          description: 'The record was created successfully',
+          content: {
+            'application/json': {
+              schema: table.getSingleReadRecordSchema(),
+            },
+          },
+        },
+        400: {
+          description: 'The request body is invalid',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.enum(['Invalid record', 'Invalid content type']),
+              }),
+            },
+          },
+        },
+        404: {
+          description: 'The table or record was not found',
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.enum(['Table not found', 'Record not found']),
               }),
             },
           },

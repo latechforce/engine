@@ -127,6 +127,39 @@ export class Table {
     }
   }
 
+  getSingleUpdateRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      properties: {
+        fields: this.getRecordFieldsSchema(),
+      },
+      required: ['fields'],
+      additionalProperties: false,
+    }
+  }
+
+  getMultipleUpdateRecordSchema(): SchemaObject {
+    return {
+      type: 'object',
+      properties: {
+        records: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: { type: 'string' },
+              fields: this.getRecordFieldsSchema(),
+            },
+            required: ['id', 'fields'],
+            additionalProperties: false,
+          },
+        },
+      },
+      required: ['records'],
+      additionalProperties: false,
+    }
+  }
+
   convertFieldsSlugToName(slugs: { [key: string]: string }): Fields {
     return Object.fromEntries(
       Object.entries(slugs).map(([key, value]) => [
