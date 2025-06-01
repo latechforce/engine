@@ -7,6 +7,7 @@ export default {
   description: 'Trigger an automation when a form with a phone number input is submitted',
   forms: [
     {
+      name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',
       action: '/api/automations/post',

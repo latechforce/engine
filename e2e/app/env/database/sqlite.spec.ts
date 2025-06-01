@@ -1,7 +1,9 @@
 import { expect, test } from '@/e2e/fixtures'
 import fs from 'fs'
 
-test('should start with a custom sqlite DATABASE_URL', async ({ startExampleApp }) => {
+test('should start with a custom sqlite DATABASE_URL', async ({ startExampleApp }, testInfo) => {
+  if (!testInfo.project.name.includes('sqlite')) return
+
   // WHEN
   const { env } = await startExampleApp({ test })
 

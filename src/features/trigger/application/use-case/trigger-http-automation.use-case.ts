@@ -11,9 +11,10 @@ import type { ITriggerRepository } from '@/trigger/domain/repository-interface/t
 import type { App } from '@/app/domain/entity/app.entity'
 import type { ResponseDto } from '../dto/response.dto'
 import { TriggerError } from '@/trigger/domain/entity/trigger-error.entity'
+import type { Fields } from '@/table/domain/object-value/fields.object-value'
 
 @injectable()
-export class HttpTriggeredUseCase {
+export class TriggerHttpAutomationUseCase {
   constructor(
     @inject(TYPES.Trigger.Repository)
     private readonly triggerRepository: ITriggerRepository,
@@ -41,14 +42,26 @@ export class HttpTriggeredUseCase {
       if (schema.event === 'post') {
         const contentType = request.headers.get('content-type') || ''
         if (contentType.includes('application/json')) {
-          console.log(request.body)
           trigger.body = request.body ? await request.json() : undefined
         } else if (
           contentType.includes('application/x-www-form-urlencoded') ||
           contentType.includes('multipart/form-data')
         ) {
           const formData = await request.formData()
-          trigger.body = Object.fromEntries(Array.from(formData.entries()))
+          const body: Fields = {}
+          const formName = request.headers.get('x-form-name') || ''
+          const form = app.findForm(formName)
+          for (const [key, value] of formData.entries()) {
+            const input = form?.findInput(key)
+            switch (input?.type) {
+              case 'checkbox':
+                body[key] = value === 'true'
+                break
+              default:
+                body[key] = value
+            }
+          }
+          trigger.body = body
         }
         if (
           schema.requestBody &&

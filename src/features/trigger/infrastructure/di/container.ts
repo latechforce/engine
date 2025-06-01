@@ -7,7 +7,7 @@ import type { ITriggerRepository } from '@/trigger/domain/repository-interface/t
 // Trigger application imports
 import TYPES from '../../application/di/types'
 import { SetupTriggerUseCase } from '@/trigger/application/use-case/setup-trigger.use-case'
-import { HttpTriggeredUseCase } from '@/trigger/application/use-case/http-triggered.use-case'
+import { TriggerHttpAutomationUseCase } from '@/trigger/application/use-case/trigger-http-automation.use-case'
 
 // Trigger infrastructure imports
 import { TriggerRepository } from '../repository/trigger.repository'
@@ -23,8 +23,8 @@ export function registerTriggerDependencies(container: Container) {
     .to(SetupTriggerUseCase)
     .inSingletonScope()
   container
-    .bind<HttpTriggeredUseCase>(TYPES.UseCase.Http)
-    .to(HttpTriggeredUseCase)
+    .bind<TriggerHttpAutomationUseCase>(TYPES.UseCase.Http)
+    .to(TriggerHttpAutomationUseCase)
     .inSingletonScope()
 
   // Register context

@@ -3,21 +3,21 @@ import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
 
 // Trigger application imports
-import type { HttpTriggeredUseCase } from '@/trigger/application/use-case/http-triggered.use-case'
+import type { TriggerHttpAutomationUseCase } from '@/trigger/application/use-case/trigger-http-automation.use-case'
 import TYPES from '../../application/di/types'
 
 export type TriggerHonoContextType = {
-  httpTriggeredUseCase: HttpTriggeredUseCase
+  triggerHttpAutomationUseCase: TriggerHttpAutomationUseCase
 }
 
 @injectable()
 export class TriggerHonoContext {
   constructor(
     @inject(TYPES.UseCase.Http)
-    private readonly httpTriggeredUseCase: HttpTriggeredUseCase
+    private readonly triggerHttpAutomationUseCase: TriggerHttpAutomationUseCase
   ) {}
 
   setVariables(c: Context) {
-    c.set('httpTriggeredUseCase', this.httpTriggeredUseCase)
+    c.set('triggerHttpAutomationUseCase', this.triggerHttpAutomationUseCase)
   }
 }

@@ -8,6 +8,7 @@ import { toGetRecordDto, type GetRecordDto } from '../dto/get-record.dto'
 import type { Table } from '@/table/domain/entity/table.entity'
 import type { CreateRecordBody } from '@/table/domain/object-value/create-record-body.object-value'
 import { toListRecordsDto, type ListRecordsDto } from '../dto/list-records.dto'
+import type { Fields } from '@/table/domain/object-value/fields.object-value'
 
 @injectable()
 export class CreateRecordUseCase {
@@ -33,7 +34,18 @@ export class CreateRecordUseCase {
       request.headers.get('content-type')?.includes('multipart/form-data')
     ) {
       const formData = await request.formData()
-      body = { fields: Object.fromEntries(Array.from(formData.entries())) }
+      const fields: Fields = {}
+      for (const [key, value] of formData.entries()) {
+        const field = table.findField(key)
+        switch (field?.schema.type) {
+          case 'checkbox':
+            fields[key] = value === 'true'
+            break
+          default:
+            fields[key] = value
+        }
+      }
+      body = { fields }
     } else {
       throw new HttpError('Invalid content type', 400)
     }

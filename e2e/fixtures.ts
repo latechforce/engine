@@ -5,7 +5,8 @@ import { createInterface } from 'readline'
 import { Readable } from 'stream'
 import fs from 'fs'
 import { join } from 'path'
-import { randomBytes } from 'crypto'
+import { randomBytes, randomUUID } from 'crypto'
+import { Client } from 'pg'
 
 // Function to strip ANSI color codes
 function stripAnsiCodes(str: string): string {
@@ -66,16 +67,31 @@ async function getExampleFileFilter(
   return { exampleFileFilter, env: {} }
 }
 
+async function createDatabase() {
+  const dbName = `testdb_${randomUUID().replace(/-/g, '')}`
+
+  const client = new Client({
+    host: process.env.POSTGRES_HOST,
+    port: Number(process.env.POSTGRES_PORT),
+    user: process.env.POSTGRES_USERNAME,
+    password: process.env.POSTGRES_PASSWORD,
+    database: 'postgres', // connect to default db to create a new one
+  })
+
+  await client.connect()
+  await client.query(`CREATE DATABASE "${dbName}"`)
+  await client.end()
+
+  return dbName
+}
+
 // Extend the base test type
 export const test = base.extend<StartAppFixture>({
-  startExampleApp: async ({ browser }, use) => {
+  startExampleApp: async ({ browser }, use, testInfo) => {
     let proc: ChildProcess | undefined
     let page: Page | undefined
     let env: EnvSchema = {}
     let url: string | undefined
-
-    const id = randomBytes(10).toString('base64url').slice(0, 10)
-    env.DATABASE_URL = join(process.cwd(), 'tmp', `sqlite-${id}.db`)
 
     const startExampleApp = async (options: {
       filter?: string
@@ -84,7 +100,7 @@ export const test = base.extend<StartAppFixture>({
       debug?: boolean
       test: typeof test
     }): Promise<{ page: Page; env: EnvSchema }> => {
-      const { filter, loggedOnAdmin = false, debug = false } = options
+      const { filter, loggedOnAdmin = false, debug = process.env.LOG_LEVEL === 'debug' } = options
       env = { ...env, ...options.env }
 
       const result = await getExampleFileFilter(filter)
@@ -93,6 +109,16 @@ export const test = base.extend<StartAppFixture>({
 
       if (debug && !exampleFileFilter) {
         console.log('There is no example file found for this test, loading empty app')
+      }
+
+      if (testInfo.project.name.includes('postgres') || env.DATABASE_PROVIDER === 'postgres') {
+        const dbName = await createDatabase()
+        env.DATABASE_URL = `postgres://${process.env.POSTGRES_USERNAME}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${dbName}`
+        env.DATABASE_PROVIDER = 'postgres'
+      } else {
+        const id = randomBytes(10).toString('base64url').slice(0, 10)
+        env.DATABASE_URL = join(process.cwd(), 'tmp', `sqlite-${id}.db`)
+        env.DATABASE_PROVIDER = 'sqlite'
       }
 
       await test.step(`Start example app${exampleFileFilter ? ` at ${exampleFileFilter}` : ' with no config'}`, async () => {
@@ -173,7 +199,7 @@ export const test = base.extend<StartAppFixture>({
       await page.close()
     }
 
-    if (env.DATABASE_URL) {
+    if (env.DATABASE_URL && env.DATABASE_PROVIDER === 'sqlite') {
       if (fs.existsSync(env.DATABASE_URL)) {
         fs.unlinkSync(env.DATABASE_URL)
       }

@@ -7,9 +7,10 @@ export default {
   description: 'Form with a checkbox field',
   forms: [
     {
+      name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',
-      action: '/api/automations/post',
+      action: '/api/tables/1',
       inputs: [
         {
           label: 'I agree to the terms and conditions',
@@ -17,6 +18,13 @@ export default {
           type: 'checkbox',
         },
       ],
+    },
+  ],
+  tables: [
+    {
+      id: 1,
+      name: 'contacts',
+      fields: [{ id: 1, name: 'checkbox', type: 'checkbox' }],
     },
   ],
 } satisfies AppSchema

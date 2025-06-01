@@ -6,10 +6,11 @@ import { inputSchema } from '@/form/domain/schema/input'
 
 export const formSchema = z
   .object({
-    title: z.string(),
-    description: z.string().optional(),
     path: z.string(),
     action: z.string(),
+    name: z.string(),
+    title: z.string().optional(),
+    description: z.string().optional(),
     inputs: z.array(inputSchema).default([]),
     successMessage: z.string().optional(),
   })

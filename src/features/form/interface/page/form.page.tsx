@@ -37,11 +37,18 @@ const FormDataPage = () => {
       }
     } else if (action.startsWith('/api/automations/')) {
       const path = action.replace('/api/automations/', '')
-      const response = await client.automations[':path'].$post({
-        param: { path },
-        // @ts-expect-error TODO: fix this
-        form: values,
-      })
+      const response = await client.automations[':path'].$post(
+        {
+          param: { path },
+          // @ts-expect-error TODO: fix this
+          form: values,
+        },
+        {
+          headers: {
+            'x-form-name': form.name,
+          },
+        }
+      )
       if (response.status === 200) {
         setIsSubmitted(true)
       }

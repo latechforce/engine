@@ -36,8 +36,16 @@ export class TableRepository implements ITableRepository {
       await callback({
         createView: async (table: Table) => {
           const viewName = table.slug
+          const provider = this.database.provider
           const columnsSql = table.fields
             .map((f) => {
+              if (f.schema.type === 'checkbox') {
+                if (provider === 'postgres') {
+                  return `BOOL_OR(CASE WHEN f.slug = '${f.slug}' THEN rf.value = 'true' ELSE false END) AS "${f.slug}"`
+                }
+                // SQLite doesn't have a direct boolean type, so we'll use 1/0
+                return `MAX(CASE WHEN f.slug = '${f.slug}' THEN CASE WHEN rf.value = 'true' THEN 1 ELSE 0 END END) AS "${f.slug}"`
+              }
               return `MAX(CASE WHEN f.slug = '${f.slug}' THEN rf.value END) AS "${f.slug}"`
             })
             .join(',\n  ')

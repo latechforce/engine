@@ -3,8 +3,8 @@ import type { AppSchema } from '@/types'
 export const inGuides = false
 
 export default {
-  name: 'Trigger an automation when a form with a single line text input is submitted',
-  description: 'Trigger an automation when a form with a single line text input is submitted',
+  name: 'Trigger an automation when a form with a checkbox input is submitted',
+  description: 'Trigger an automation when a form with a checkbox input is submitted',
   forms: [
     {
       name: 'contact-us',
@@ -13,9 +13,9 @@ export default {
       action: '/api/automations/post',
       inputs: [
         {
-          label: 'Name',
-          name: 'name',
-          type: 'single-line-text',
+          label: 'I agree to the terms and conditions',
+          name: 'checkbox',
+          type: 'checkbox',
         },
       ],
     },

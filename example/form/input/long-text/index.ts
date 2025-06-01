@@ -7,6 +7,7 @@ export default {
   description: 'Form with a long text field',
   forms: [
     {
+      name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',
       action: '/api/tables/1',

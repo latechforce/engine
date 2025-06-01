@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify'
 import TYPES from '@/shared/application/di/types'
 import { eq, type SQL } from 'drizzle-orm'
 import type { DatabaseService } from '@/shared/infrastructure/service/database.service'
-import { Kysely, PostgresDialect } from 'kysely'
+import { Kysely, PostgresDialect, type Dialect } from 'kysely'
 import { BunWorkerDialect } from 'kysely-bun-worker'
 import type { Table } from '@/table/domain/entity/table.entity'
 import type { ViewRow } from '@/table/domain/object-value/view-row.object-value'
@@ -38,17 +38,23 @@ export class TableDatabaseService {
     @inject(TYPES.Service.Database)
     private readonly database: DatabaseService
   ) {
+    let dialect: Dialect
     if (database.provider === 'postgres') {
-      const dialect = new PostgresDialect({
+      dialect = new PostgresDialect({
         pool: database.postgresPool,
       })
-      this.databaseView = new Kysely({ dialect })
     } else {
-      const dialect = new BunWorkerDialect({
+      dialect = new BunWorkerDialect({
         url: database.url,
       })
-      this.databaseView = new Kysely({ dialect })
     }
+    this.databaseView = new Kysely({
+      dialect,
+    })
+  }
+
+  get provider() {
+    return this.database.provider
   }
 
   get schema() {
@@ -207,22 +213,65 @@ export class TableDatabaseService {
     const view = this.databaseView.selectFrom(table.slug)
     return {
       get: async (id: string): Promise<ViewRow | undefined> => {
-        return view
+        const record = await view
           .selectAll()
           .where('_archived_at', 'is', null)
           .where('_id', '=', id)
-          .executeTakeFirst() as Promise<ViewRow | undefined>
+          .executeTakeFirst()
+        return record ? this.postProcessViewRecord(table, record) : undefined
       },
       list: async (): Promise<ViewRow[]> => {
-        return view.selectAll().where('_archived_at', 'is', null).execute() as Promise<ViewRow[]>
+        const records = await view.selectAll().where('_archived_at', 'is', null).execute()
+        return this.postProcessViewRecords(table, records)
       },
       listByIds: async (ids: string[]): Promise<ViewRow[]> => {
-        return view
+        const records = await view
           .selectAll()
           .where('_archived_at', 'is', null)
           .where('_id', 'in', ids)
-          .execute() as Promise<ViewRow[]>
+          .execute()
+        return this.postProcessViewRecords(table, records)
       },
     }
+  }
+
+  isViewRow(record: unknown): record is ViewRow {
+    return (
+      typeof record === 'object' &&
+      record !== null &&
+      '_id' in record &&
+      '_created_at' in record &&
+      '_updated_at' in record &&
+      '_archived_at' in record
+    )
+  }
+
+  postProcessViewRecord(
+    table: Table,
+    record: {
+      [key: string]: unknown
+    }
+  ): ViewRow {
+    if (!this.isViewRow(record)) {
+      throw new Error('Invalid view row')
+    }
+    if (this.provider === 'sqlite') {
+      for (const field of table.fields) {
+        if (field.schema.type === 'checkbox') {
+          record[field.slug] = record[field.slug] === 1
+        }
+      }
+      return record
+    }
+    return record
+  }
+
+  postProcessViewRecords(
+    table: Table,
+    records: {
+      [key: string]: unknown
+    }[]
+  ): ViewRow[] {
+    return records.map((record) => this.postProcessViewRecord(table, record))
   }
 }

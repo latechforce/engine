@@ -7,6 +7,7 @@ export default {
   description: 'Form with a single attachment field',
   forms: [
     {
+      name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',
       action: '/api/automations/post',

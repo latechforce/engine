@@ -16,12 +16,11 @@ export const field = pgTable('table_field', {
   name: text().notNull(),
   slug: text().notNull().unique(),
   type: text({
-    enum: ['single-line-text', 'long-text', 'url', 'email', 'phone-number'],
+    enum: ['single-line-text', 'long-text', 'url', 'email', 'phone-number', 'checkbox'],
   }).notNull(),
   required: boolean().notNull(),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),
-  archived_at: timestamp(),
 })
 
 export const record = pgTable('record', {
@@ -31,6 +30,7 @@ export const record = pgTable('record', {
     .references(() => table.id, { onDelete: 'cascade' }),
   created_at: timestamp().notNull(),
   updated_at: timestamp().notNull(),
+  archived_at: timestamp(),
 })
 
 export const recordField = pgTable('record_field', {

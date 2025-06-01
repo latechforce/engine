@@ -37,4 +37,8 @@ export class App {
         table.slug === String(nameOrId)
     )
   }
+
+  findForm(name: string): Form | undefined {
+    return this.forms.find((form) => form.schema.name === name)
+  }
 }

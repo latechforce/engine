@@ -13,18 +13,33 @@ export class Table {
     this.fields = schema.fields.map((field) => new Field(field))
   }
 
+  findField(nameOrId: string | number): Field | undefined {
+    return this.fields.find(
+      (field) =>
+        field.slug === String(nameOrId) ||
+        field.schema.name === String(nameOrId) ||
+        field.schema.id === Number(nameOrId)
+    )
+  }
+
   getRecordFieldsSchema(): SchemaObject {
     return {
       type: 'object',
       properties: this.fields.reduce((acc: { [key: string]: SchemaObject }, field) => {
-        switch (field.schema.type) {
+        const { type, name } = field.schema
+        switch (type) {
           case 'single-line-text':
           case 'long-text':
           case 'url':
           case 'email':
           case 'phone-number':
-            acc[field.schema.name] = { type: 'string' }
+            acc[name] = { type: 'string' }
             break
+          case 'checkbox':
+            acc[name] = { type: 'boolean' }
+            break
+          default:
+            throw new Error(`Unknown field type: ${type}`)
         }
         return acc
       }, {}),
