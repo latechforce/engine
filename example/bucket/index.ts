@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const inGuides = false
+export const inGuides = true
 
 export default {
   name: 'Configure multiple buckets',

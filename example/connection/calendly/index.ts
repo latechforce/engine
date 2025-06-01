@@ -1,6 +1,6 @@
 import type { AppSchema, Mock } from '@/types'
 
-export const inGuides = false
+export const inGuides = true
 
 export const mock: Mock = {
   '/oauth/token': {

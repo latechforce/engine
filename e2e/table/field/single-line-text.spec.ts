@@ -6,10 +6,10 @@ test('should create a record with a single line text field', async ({ startExamp
   const text = 'Hello, world!'
 
   // WHEN
-  const response = await page.request.post('/api/tables/My table', {
+  const response = await page.request.post('/api/tables/Contacts', {
     data: {
       fields: {
-        'My field': text,
+        Name: text,
       },
     },
   })
@@ -17,6 +17,6 @@ test('should create a record with a single line text field', async ({ startExamp
   // THEN
   const { record } = await response.json()
   expect(record.fields).toEqual({
-    'My field': text,
+    Name: text,
   })
 })

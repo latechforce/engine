@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const inGuides = false
+export const inGuides = true
 
 export default {
   name: 'Trigger an automation when a form with a single line text input is submitted',

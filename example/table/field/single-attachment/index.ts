@@ -1,10 +1,10 @@
 import type { AppSchema } from '@/types'
 
-export const inGuides = true
+export const inGuides = false
 
 export default {
-  name: 'Configure a table with a single line text field',
-  description: 'Table with a single line text field',
+  name: 'Configure a table with a single attachment field',
+  description: 'Table with a single attachment field',
   tables: [
     {
       id: 1,
@@ -12,8 +12,8 @@ export default {
       fields: [
         {
           id: 1,
-          name: 'Name',
-          type: 'single-line-text',
+          name: 'Picture',
+          type: 'single-attachment',
         },
       ],
     },

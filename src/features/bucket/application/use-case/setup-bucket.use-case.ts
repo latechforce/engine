@@ -19,6 +19,10 @@ export class SetupBucketUseCase {
       await this.bucketRepository.create(bucket)
     }
 
+    if (bucket.schema.name === 'default' || bucket.schema.id === 0) {
+      return
+    }
+
     this.bucketRepository.addOpenAPIRoute({
       summary: 'Upload object',
       method: 'put',

@@ -3,8 +3,8 @@ import type { AppSchema } from '@/types'
 export const inGuides = true
 
 export default {
-  name: 'Configure a table with a single line text field',
-  description: 'Table with a single line text field',
+  name: 'Configure a table with a email field',
+  description: 'Table with a email field',
   tables: [
     {
       id: 1,
@@ -12,8 +12,8 @@ export default {
       fields: [
         {
           id: 1,
-          name: 'Name',
-          type: 'single-line-text',
+          name: 'Email',
+          type: 'email',
         },
       ],
     },
