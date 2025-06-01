@@ -45,6 +45,7 @@ export class RecordRepository implements IRecordRepository {
         },
         delete: async (recordId: string) => {
           await tx.record.update(recordId, {
+            updated_at: new Date(),
             archived_at: new Date(),
           })
         },
@@ -74,6 +75,7 @@ export class RecordRepository implements IRecordRepository {
           },
           delete: async (fieldId: string) => {
             await tx.recordField.update(fieldId, {
+              updated_at: new Date(),
               archived_at: new Date(),
             })
           },

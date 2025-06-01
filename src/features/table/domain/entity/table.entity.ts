@@ -20,6 +20,7 @@ export class Table {
         switch (field.schema.type) {
           case 'single-line-text':
           case 'long-text':
+          case 'url':
             acc[field.schema.name] = { type: 'string' }
             break
         }
