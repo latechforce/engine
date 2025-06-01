@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "App",
   "type": "object",
   "properties": {
@@ -8,7 +9,7 @@
       "minLength": 3
     },
     "version": {
-      "default": "0.0.1",
+      "default": "1.0.0",
       "type": "string",
       "minLength": 1
     },
@@ -103,7 +104,7 @@
                     "description": "The Calendly invite created trigger is a trigger that is triggered by a invite created event",
                     "type": "object",
                     "properties": {
-                      "connection": {
+                      "account": {
                         "anyOf": [
                           {
                             "type": "number"
@@ -138,7 +139,124 @@
                       }
                     },
                     "required": [
-                      "connection",
+                      "account",
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              {
+                "title": "Facebook Lead Ads",
+                "description": "The Facebook Lead Ads trigger is a trigger that is used to interact with the Facebook Lead Ads API",
+                "anyOf": [
+                  {
+                    "title": "New Lead",
+                    "description": "The Facebook Lead Ads new lead trigger is a trigger that is used to trigger an automation when a new lead is created",
+                    "type": "object",
+                    "properties": {
+                      "account": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "service": {
+                        "const": "facebook-lead-ads"
+                      },
+                      "event": {
+                        "const": "new-lead"
+                      },
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "account",
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              {
+                "title": "LinkedIn Ads",
+                "description": "The LinkedIn Ads trigger is a trigger that is used to interact with the LinkedIn Ads API",
+                "anyOf": [
+                  {
+                    "title": "New Lead Gen Form Response",
+                    "description": "The LinkedIn Ads new lead gen form response trigger is a trigger that is used to trigger an automation when a new lead gen form response is created",
+                    "type": "object",
+                    "properties": {
+                      "account": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "service": {
+                        "const": "linkedin-ads"
+                      },
+                      "event": {
+                        "const": "new-lead-gen-form-response"
+                      },
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "account",
+                      "service",
+                      "event",
+                      "path"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              {
+                "title": "YouCanBookMe",
+                "description": "The YouCanBookMe trigger is a trigger that is triggered by a YouCanBookMe event",
+                "anyOf": [
+                  {
+                    "title": "Booking Notifications",
+                    "description": "The YouCanBookMe booking notifications trigger is a trigger that is triggered by a booking notifications event",
+                    "type": "object",
+                    "properties": {
+                      "account": {
+                        "anyOf": [
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "string"
+                          }
+                        ]
+                      },
+                      "service": {
+                        "const": "youcanbookme"
+                      },
+                      "event": {
+                        "const": "booking-notifications"
+                      },
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "account",
                       "service",
                       "event",
                       "path"
@@ -153,257 +271,7 @@
             "default": [],
             "type": "array",
             "items": {
-              "title": "Action",
-              "description": "The action is an action that is performed by the automation",
-              "anyOf": [
-                {
-                  "title": "Code",
-                  "description": "The code action is a code action that is performed by the automation",
-                  "anyOf": [
-                    {
-                      "title": "Run Typescript",
-                      "description": "The run typescript code action is a code action that is performed by the automation",
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "service": {
-                          "const": "code"
-                        },
-                        "action": {
-                          "const": "run-typescript"
-                        },
-                        "inputData": {
-                          "default": {},
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
-                          }
-                        },
-                        "code": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "name",
-                        "service",
-                        "action",
-                        "code"
-                      ],
-                      "additionalProperties": false
-                    },
-                    {
-                      "title": "Run Javascript",
-                      "description": "The run javascript code action is a code action that is performed by the automation",
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "service": {
-                          "const": "code"
-                        },
-                        "action": {
-                          "const": "run-javascript"
-                        },
-                        "inputData": {
-                          "default": {},
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
-                          }
-                        },
-                        "code": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "name",
-                        "service",
-                        "action",
-                        "code"
-                      ],
-                      "additionalProperties": false
-                    }
-                  ]
-                },
-                {
-                  "title": "HTTP",
-                  "description": "The HTTP action is an action that is performed by the automation",
-                  "anyOf": [
-                    {
-                      "title": "GET",
-                      "description": "The GET HTTP action is an action that is performed by the automation",
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "service": {
-                          "const": "http"
-                        },
-                        "action": {
-                          "const": "get"
-                        },
-                        "url": {
-                          "type": "string"
-                        },
-                        "headers": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "required": [
-                        "name",
-                        "service",
-                        "action",
-                        "url"
-                      ],
-                      "additionalProperties": false
-                    },
-                    {
-                      "title": "POST",
-                      "description": "The POST HTTP action is an action that is performed by the automation",
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "service": {
-                          "const": "http"
-                        },
-                        "action": {
-                          "const": "post"
-                        },
-                        "url": {
-                          "type": "string"
-                        },
-                        "headers": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
-                          }
-                        },
-                        "body": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {}
-                        }
-                      },
-                      "required": [
-                        "name",
-                        "service",
-                        "action",
-                        "url"
-                      ],
-                      "additionalProperties": false
-                    },
-                    {
-                      "title": "Response",
-                      "description": "The response HTTP action is an action that is performed by the automation",
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "service": {
-                          "const": "http"
-                        },
-                        "action": {
-                          "const": "response"
-                        },
-                        "body": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {}
-                        }
-                      },
-                      "required": [
-                        "name",
-                        "service",
-                        "action"
-                      ],
-                      "additionalProperties": false
-                    }
-                  ]
-                },
-                {
-                  "title": "Calendly",
-                  "description": "The Calendly action is a action that is used to interact with the Calendly API",
-                  "anyOf": [
-                    {
-                      "title": "List Webhook Subscriptions",
-                      "description": "The Calendly list webhook subscriptions action is a action that lists the webhook subscriptions for a given organization",
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "connection": {
-                          "anyOf": [
-                            {
-                              "type": "number"
-                            },
-                            {
-                              "type": "string"
-                            }
-                          ]
-                        },
-                        "service": {
-                          "const": "calendly"
-                        },
-                        "action": {
-                          "const": "list-webhook-subscriptions"
-                        },
-                        "organization": {
-                          "default": "Current user organisation",
-                          "type": "string"
-                        },
-                        "scope": {
-                          "default": "user",
-                          "enum": [
-                            "user",
-                            "organization",
-                            "group"
-                          ]
-                        },
-                        "count": {
-                          "default": 20,
-                          "type": "number",
-                          "minimum": 1,
-                          "maximum": 100
-                        }
-                      },
-                      "required": [
-                        "name",
-                        "connection",
-                        "service",
-                        "action"
-                      ],
-                      "additionalProperties": false
-                    }
-                  ]
-                }
-              ]
+              "$ref": "#/$defs/__schema1"
             }
           }
         },
@@ -437,8 +305,8 @@
               "description": "The field is a field of a table",
               "anyOf": [
                 {
-                  "title": "Single Line Text",
-                  "description": "The single line text field is a field that can contain a single line of text",
+                  "title": "Text Field",
+                  "description": "The text field is a field that can contain a text",
                   "type": "object",
                   "properties": {
                     "id": {
@@ -447,8 +315,20 @@
                     "name": {
                       "type": "string"
                     },
+                    "required": {
+                      "type": "boolean"
+                    },
                     "type": {
-                      "const": "single-line-text"
+                      "enum": [
+                        "single-line-text",
+                        "long-text",
+                        "phone-number",
+                        "email",
+                        "url"
+                      ]
+                    },
+                    "default": {
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -459,8 +339,8 @@
                   "additionalProperties": false
                 },
                 {
-                  "title": "Long Text",
-                  "description": "The long text field is a field that can contain a long text",
+                  "title": "Checkbox Field",
+                  "description": "The checkbox field is a field that can contain a checkbox",
                   "type": "object",
                   "properties": {
                     "id": {
@@ -469,8 +349,75 @@
                     "name": {
                       "type": "string"
                     },
+                    "required": {
+                      "type": "boolean"
+                    },
                     "type": {
-                      "const": "long-text"
+                      "const": "checkbox"
+                    },
+                    "default": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "title": "Single Select Field",
+                  "description": "The single select field is a field that can contain a single select",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "const": "single-select"
+                    },
+                    "default": {
+                      "type": "boolean"
+                    },
+                    "options": {
+                      "default": [],
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "type",
+                    "options"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "title": "Single Attachment Field",
+                  "description": "The single attachment field is a field that can contain a single attachment",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "const": "single-attachment"
                     }
                   },
                   "required": [
@@ -488,6 +435,206 @@
           "id",
           "name",
           "fields"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "forms": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "title": "Form",
+        "description": "The form is a collection of inputs",
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "inputs": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "title": "Input",
+              "description": "The input is a input of a form",
+              "anyOf": [
+                {
+                  "title": "Text Input",
+                  "description": "The text input is a input that can contain a text",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "defaultValue": {
+                      "type": "string"
+                    },
+                    "placeholder": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "enum": [
+                        "single-line-text",
+                        "long-text",
+                        "phone-number",
+                        "email",
+                        "url"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "title": "Checkbox Input",
+                  "description": "The checkbox input is a input that can contain a checkbox",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "defaultValue": {
+                      "type": "boolean"
+                    },
+                    "type": {
+                      "const": "checkbox"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "title": "Select Input",
+                  "description": "The select input is a input that can contain a select",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "defaultValue": {
+                      "type": "string"
+                    },
+                    "placeholder": {
+                      "type": "string"
+                    },
+                    "options": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "label": {
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "label",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "type": {
+                      "enum": [
+                        "single-select"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "options",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "title": "Attachment Input",
+                  "description": "The attachment input is a input that can contain a attachment",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "label": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "accept": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "const": "single-attachment"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "type"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "successMessage": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "action",
+          "name",
+          "inputs"
         ],
         "additionalProperties": false
       }
@@ -528,8 +675,116 @@
               "clientSecret"
             ],
             "additionalProperties": false
+          },
+          {
+            "title": "Google Sheets",
+            "description": "The Google Sheets connection is a connection to the Google Sheets API",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "service": {
+                "const": "google-sheets"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "service"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "title": "Facebook Lead Ads",
+            "description": "The Facebook Lead Ads connection is a connection to the Facebook Lead Ads API",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "service": {
+                "const": "facebook-lead-ads"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "service"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "title": "LinkedIn Ads",
+            "description": "The LinkedIn Ads connection is a connection to the LinkedIn Ads API",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "service": {
+                "const": "linkedin-ads"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "service"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "title": "YouCanBookMe",
+            "description": "The YouCanBookMe connection is a connection to the YouCanBookMe API",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "number"
+              },
+              "name": {
+                "type": "string"
+              },
+              "service": {
+                "const": "youcanbookme"
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "service"
+            ],
+            "additionalProperties": false
           }
         ]
+      }
+    },
+    "buckets": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "additionalProperties": false
       }
     }
   },
@@ -539,7 +794,9 @@
     "description",
     "automations",
     "tables",
-    "connections"
+    "forms",
+    "connections",
+    "buckets"
   ],
   "additionalProperties": false,
   "$defs": {
@@ -732,9 +989,426 @@
           ]
         }
       },
-      "required": [],
       "additionalProperties": false
+    },
+    "__schema1": {
+      "title": "Action",
+      "description": "The action is an action that is performed by the automation",
+      "anyOf": [
+        {
+          "title": "Code",
+          "description": "The code action is a code action that is performed by the automation",
+          "anyOf": [
+            {
+              "title": "Run Typescript",
+              "description": "The run typescript code action is a code action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "const": "code"
+                },
+                "action": {
+                  "const": "run-typescript"
+                },
+                "inputData": {
+                  "default": {},
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "code": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "code"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "title": "Run Javascript",
+              "description": "The run javascript code action is a code action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "const": "code"
+                },
+                "action": {
+                  "const": "run-javascript"
+                },
+                "inputData": {
+                  "default": {},
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "code": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "code"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "title": "HTTP",
+          "description": "The HTTP action is an action that is performed by the automation",
+          "anyOf": [
+            {
+              "title": "GET",
+              "description": "The GET HTTP action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "const": "http"
+                },
+                "action": {
+                  "const": "get"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "headers": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "url"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "title": "POST",
+              "description": "The POST HTTP action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "const": "http"
+                },
+                "action": {
+                  "const": "post"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "headers": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "body": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "url"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "title": "Response",
+              "description": "The response HTTP action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "const": "http"
+                },
+                "action": {
+                  "const": "response"
+                },
+                "body": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "title": "Filter",
+          "description": "The Filter action is an action that is performed by the automation",
+          "anyOf": [
+            {
+              "title": "Only continue if",
+              "description": "The Only continue if filter action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "const": "filter"
+                },
+                "action": {
+                  "const": "only-continue-if"
+                },
+                "conditions": {
+                  "type": "array",
+                  "items": {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "input": {
+                            "type": "string"
+                          },
+                          "operator": {
+                            "const": "is-not-empty"
+                          }
+                        },
+                        "required": [
+                          "input",
+                          "operator"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "conditions"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "title": "Calendly",
+          "description": "The Calendly action is a action that is used to interact with the Calendly API",
+          "anyOf": [
+            {
+              "title": "List Webhook Subscriptions",
+              "description": "The Calendly list webhook subscriptions action is a action that lists the webhook subscriptions for a given organization",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "account": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "service": {
+                  "const": "calendly"
+                },
+                "action": {
+                  "const": "list-webhook-subscriptions"
+                },
+                "organization": {
+                  "default": "Current user organisation",
+                  "type": "string"
+                },
+                "scope": {
+                  "default": "user",
+                  "enum": [
+                    "user",
+                    "organization",
+                    "group"
+                  ]
+                },
+                "count": {
+                  "default": 20,
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "name",
+                "account",
+                "service",
+                "action"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "title": "Google Sheets",
+          "description": "The Google Sheets action is a action that is used to interact with the Google Sheets API",
+          "anyOf": [
+            {
+              "title": "Create a Google Sheets row",
+              "description": "The Google Sheets create row action is a action that creates a row in a Google Sheets spreadsheet",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "account": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "service": {
+                  "const": "google-sheets"
+                },
+                "action": {
+                  "const": "create-spreadsheet-row"
+                }
+              },
+              "required": [
+                "name",
+                "account",
+                "service",
+                "action"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "title": "Paths",
+          "description": "The Paths action is an action that is performed by the automation",
+          "anyOf": [
+            {
+              "title": "Split into paths",
+              "description": "The Split into paths paths action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "const": "paths"
+                },
+                "action": {
+                  "const": "split-into-paths"
+                },
+                "paths": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "conditions": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "input": {
+                                  "type": "string"
+                                },
+                                "operator": {
+                                  "const": "is-not-empty"
+                                }
+                              },
+                              "required": [
+                                "input",
+                                "operator"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      },
+                      "actions": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/__schema1"
+                        }
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "conditions",
+                      "actions"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "paths"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      ]
     }
-  },
-  "$schema": "https://json-schema.org/draft/2020-12/schema"
+  }
 }
