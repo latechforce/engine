@@ -33,6 +33,7 @@ export class Table {
           case 'url':
           case 'email':
           case 'phone-number':
+          case 'single-attachment':
             acc[name] = { type: 'string' }
             break
           case 'checkbox':
@@ -42,12 +43,6 @@ export class Table {
             acc[name] = {
               type: 'string',
               enum: field.schema.options,
-            }
-            break
-          case 'single-attachment':
-            acc[name] = {
-              type: 'object',
-              fileType: true,
             }
             break
           default:

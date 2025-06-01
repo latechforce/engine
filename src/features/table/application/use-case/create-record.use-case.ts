@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify'
-import TYPES from '../di/types'
+import TYPES from '@/shared/application/di/types'
 import type { App } from '@/app/domain/entity/app.entity'
 import { HttpError } from '@/shared/domain/entity/http-error.entity'
 import { Record } from '@/table/domain/entity/record.entity'
@@ -9,12 +9,16 @@ import type { Table } from '@/table/domain/entity/table.entity'
 import type { CreateRecordBody } from '@/table/domain/object-value/create-record-body.object-value'
 import { toListRecordsDto, type ListRecordsDto } from '../dto/list-records.dto'
 import type { Fields } from '@/table/domain/object-value/fields.object-value'
+import { Object } from '@/bucket/domain/entity/object.entity'
+import type { IObjectRepository } from '@/bucket/domain/repository-interface/object-repository.interface'
 
 @injectable()
 export class CreateRecordUseCase {
   constructor(
-    @inject(TYPES.Repository.Record)
-    private readonly recordRepository: IRecordRepository
+    @inject(TYPES.Table.Repository.Record)
+    private readonly recordRepository: IRecordRepository,
+    @inject(TYPES.Bucket.Repository.Object)
+    private readonly objectRepository: IObjectRepository
   ) {}
 
   async execute(
@@ -27,6 +31,7 @@ export class CreateRecordUseCase {
       throw new HttpError('Table not found', 404)
     }
     let body: unknown
+    const objects: Object[] = []
     if (request.headers.get('content-type') === 'application/json') {
       body = request.body ? await request.json() : {}
     } else if (
@@ -35,13 +40,33 @@ export class CreateRecordUseCase {
     ) {
       const formData = await request.formData()
       const fields: Fields = {}
-      for (const [key, value] of formData.entries()) {
+      for (const key of formData.keys()) {
         const field = table.findField(key)
+        const value = formData.get(key)
         switch (field?.schema.type) {
           case 'checkbox':
             fields[key] = value === 'true'
             break
+          case 'single-attachment':
+            if (value instanceof File) {
+              const data = await value.arrayBuffer()
+              const object = new Object(
+                value.name,
+                0,
+                new Uint8Array(data),
+                value.type,
+                data.byteLength
+              )
+              objects.push(object)
+              fields[key] = object.key
+            } else {
+              throw new HttpError('Invalid attachment', 400)
+            }
+            break
           default:
+            if (value instanceof File) {
+              throw new HttpError('Invalid attachment', 400)
+            }
             fields[key] = value
         }
       }
@@ -52,6 +77,7 @@ export class CreateRecordUseCase {
     if (!this.validateCreateRecordBody(table, body)) {
       throw new HttpError('Invalid record', 400)
     }
+    await Promise.all(objects.map((object) => this.objectRepository.create(object)))
     if ('fields' in body) {
       const record = new Record(body.fields)
       await this.recordRepository.create(table, record)

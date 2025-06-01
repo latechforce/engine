@@ -12,6 +12,9 @@ import type { App } from '@/app/domain/entity/app.entity'
 import type { ResponseDto } from '../dto/response.dto'
 import { TriggerError } from '@/trigger/domain/entity/trigger-error.entity'
 import type { Fields } from '@/table/domain/object-value/fields.object-value'
+import { Object } from '@/bucket/domain/entity/object.entity'
+import { HttpError } from '@/shared/domain/entity/http-error.entity'
+import type { IObjectRepository } from '@/bucket/domain/repository-interface/object-repository.interface'
 
 @injectable()
 export class TriggerHttpAutomationUseCase {
@@ -19,7 +22,9 @@ export class TriggerHttpAutomationUseCase {
     @inject(TYPES.Trigger.Repository)
     private readonly triggerRepository: ITriggerRepository,
     @inject(TYPES.Run.Repository)
-    private readonly runRepository: IRunRepository
+    private readonly runRepository: IRunRepository,
+    @inject(TYPES.Bucket.Repository.Object)
+    private readonly objectRepository: IObjectRepository
   ) {}
 
   async execute(app: App, paramPath: string, request: Request): Promise<ResponseDto> {
@@ -34,6 +39,7 @@ export class TriggerHttpAutomationUseCase {
     })
     if (!automation) throw new TriggerError('Automation not found', 404)
     const { schema } = automation.trigger
+    const objects: Object[] = []
     let trigger: Record<string, unknown> = {}
     if (schema.service === 'http') {
       trigger.url = request.url
@@ -47,21 +53,40 @@ export class TriggerHttpAutomationUseCase {
           contentType.includes('application/x-www-form-urlencoded') ||
           contentType.includes('multipart/form-data')
         ) {
-          const formData = await request.formData()
-          const body: Fields = {}
           const formName = request.headers.get('x-form-name') || ''
           const form = app.findForm(formName)
-          for (const [key, value] of formData.entries()) {
-            const input = form?.findInput(key)
-            switch (input?.type) {
+          const formData = await request.formData()
+          const fields: Fields = {}
+          for (const key of formData.keys()) {
+            const value = formData.get(key)
+            switch (form?.findInput(key)?.type) {
               case 'checkbox':
-                body[key] = value === 'true'
+                fields[key] = value === 'true'
+                break
+              case 'single-attachment':
+                if (value instanceof File) {
+                  const data = await value.arrayBuffer()
+                  const object = new Object(
+                    value.name,
+                    0,
+                    new Uint8Array(data),
+                    value.type,
+                    data.byteLength
+                  )
+                  objects.push(object)
+                  fields[key] = object.key
+                } else {
+                  throw new HttpError('Invalid attachment', 400)
+                }
                 break
               default:
-                body[key] = value
+                if (value instanceof File) {
+                  throw new HttpError('Invalid attachment', 400)
+                }
+                fields[key] = value
             }
           }
-          trigger.body = body
+          trigger.body = fields
         }
         if (
           schema.requestBody &&
@@ -79,8 +104,19 @@ export class TriggerHttpAutomationUseCase {
         contentType.includes('multipart/form-data')
       ) {
         const formData = await request.formData()
-        trigger = Object.fromEntries(Array.from(formData.entries()))
+        const fields: Fields = {}
+        for (const key of formData.keys()) {
+          const value = formData.get(key)
+          if (value instanceof File) {
+            throw new HttpError('Invalid attachment', 400)
+          }
+          fields[key] = value
+        }
+        trigger = fields
       }
+    }
+    for (const object of objects) {
+      await this.objectRepository.create(object)
     }
     const run = new PlayingRun(automation.schema, { trigger })
     await this.runRepository.create(run)

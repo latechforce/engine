@@ -27,7 +27,7 @@ test('should run an automation when a form with a single attachment input is sub
   const { runs } = await page.request.get('/api/runs').then((res) => res.json())
   expect(runs.length).toBe(1)
   const { data } = await page.request.get(`/api/runs/${runs[0].id}`).then((res) => res.json())
-  expect(data.trigger?.body?.attachment).toBe('test.png')
+  expect(data.trigger?.body?.attachment).toBe('screenshot.png')
 })
 
 test('should create a record with a single attachment input', async ({ startExampleApp }) => {
@@ -43,5 +43,5 @@ test('should create a record with a single attachment input', async ({ startExam
   // THEN
   const { records } = await page.request.get('/api/tables/1').then((res) => res.json())
   expect(records.length).toBe(1)
-  expect(records[0].fields.attachment).toBe('test.png')
+  expect(records[0].fields.attachment).toBe('screenshot.png')
 })
