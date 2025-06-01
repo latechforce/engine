@@ -38,6 +38,12 @@ export class Table {
           case 'checkbox':
             acc[name] = { type: 'boolean' }
             break
+          case 'single-select':
+            acc[name] = {
+              type: 'string',
+              enum: field.schema.options,
+            }
+            break
           default:
             throw new Error(`Unknown field type: ${type}`)
         }

@@ -16,7 +16,15 @@ export const field = sqliteTable('table_field', {
   name: text().notNull(),
   slug: text().notNull().unique(),
   type: text({
-    enum: ['single-line-text', 'long-text', 'url', 'email', 'phone-number', 'checkbox'],
+    enum: [
+      'single-line-text',
+      'long-text',
+      'url',
+      'email',
+      'phone-number',
+      'checkbox',
+      'single-select',
+    ],
   }).notNull(),
   required: integer({ mode: 'boolean' }).notNull(),
   created_at: integer({ mode: 'timestamp' }).notNull(),

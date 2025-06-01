@@ -3,14 +3,14 @@ import type { AppSchema } from '@/types'
 export const inGuides = false
 
 export default {
-  name: 'Display a form with a single select field',
-  description: 'Form with a single select field',
+  name: 'Trigger an automation when a form with a single select input is submitted',
+  description: 'Trigger an automation when a form with a single select input is submitted',
   forms: [
     {
       name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',
-      action: '/api/tables/1',
+      action: '/api/automations/post',
       inputs: [
         {
           label: 'Select a color',
@@ -26,18 +26,15 @@ export default {
       ],
     },
   ],
-  tables: [
+  automations: [
     {
-      id: 1,
-      name: 'contact-us',
-      fields: [
-        {
-          id: 1,
-          name: 'select',
-          type: 'single-select',
-          options: ['red', 'green', 'blue'],
-        },
-      ],
+      name: 'Post',
+      trigger: {
+        service: 'http',
+        event: 'post',
+        path: '/post',
+      },
+      actions: [],
     },
   ],
 } satisfies AppSchema
