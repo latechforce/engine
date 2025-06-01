@@ -22,6 +22,7 @@ import { registerRunDependencies } from '@/run/infrastructure/di/container'
 import { registerTableDependencies } from '@/table/infrastructure/di/container'
 import { registerTriggerDependencies } from '@/trigger/infrastructure/di/container'
 import { registerConnectionDependencies } from '@/connection/infrastructure/di/container'
+import { registerBucketDependencies } from '@/bucket/infrastructure/di/container'
 
 export async function registerDependencies(
   externals: Record<string, unknown> = {},
@@ -50,6 +51,7 @@ export async function registerDependencies(
   registerTableDependencies(container)
   registerTriggerDependencies(container)
   registerConnectionDependencies(container)
+  registerBucketDependencies(container)
 
   container.bind<Hono<HonoType>>(TYPES.Hono.Routes).toConstantValue(apiRoutes)
   container.bind<HonoContext>(TYPES.Hono.Context).to(HonoContext).inSingletonScope()

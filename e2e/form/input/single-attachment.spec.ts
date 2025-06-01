@@ -11,7 +11,7 @@ test('should display a form with a single attachment input', async ({ startExamp
   await expect(page.getByLabel('Attachment')).toBeVisible()
 })
 
-test.skip('should run an automation when a form with a single attachment input is submitted', async ({
+test('should run an automation when a form with a single attachment input is submitted', async ({
   startExampleApp,
 }) => {
   // GIVEN
@@ -19,7 +19,7 @@ test.skip('should run an automation when a form with a single attachment input i
 
   // WHEN
   await page.goto('/forms/contact-us')
-  await page.getByLabel('Attachment').setInputFiles('e2e/assets/test.png')
+  await page.getByLabel('Attachment').setInputFiles('e2e/__assets__/screenshot.png')
   await page.getByRole('button', { name: 'Submit' }).click()
   await page.waitForSelector('text="Thank you for your submission"')
 
@@ -30,13 +30,13 @@ test.skip('should run an automation when a form with a single attachment input i
   expect(data.trigger?.body?.attachment).toBe('test.png')
 })
 
-test.skip('should create a record with a single attachment input', async ({ startExampleApp }) => {
+test('should create a record with a single attachment input', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })
 
   // WHEN
   await page.goto('/forms/contact-us')
-  await page.getByLabel('Attachment').setInputFiles('e2e/assets/test.png')
+  await page.getByLabel('Attachment').setInputFiles('e2e/__assets__/screenshot.png')
   await page.getByRole('button', { name: 'Submit' }).click()
   await page.waitForSelector('text="Thank you for your submission"')
 

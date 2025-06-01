@@ -4,12 +4,14 @@ import { Automation } from '@/automation/domain/entity/automation.entity'
 import { Table } from '@/table/domain/entity/table.entity'
 import { Connection } from '@/connection/domain/entity/connection.entity'
 import { Form } from '@/form/domain/entity/form.entity'
+import { Bucket } from '@/bucket/domain/entity/bucket.entity'
 
 export class App {
   public readonly automations: Automation[]
   public readonly tables: Table[]
   public readonly connections: Connection[]
   public readonly forms: Form[]
+  public readonly buckets: Bucket[]
 
   constructor(
     public readonly schema: AppSchemaValidated,
@@ -23,6 +25,7 @@ export class App {
     )
     this.tables = this.schema.tables.map((table) => new Table(table))
     this.forms = this.schema.forms.map((form) => new Form(form))
+    this.buckets = this.schema.buckets.map((bucket) => new Bucket(bucket))
   }
 
   url(path = ''): string {
@@ -40,5 +43,11 @@ export class App {
 
   findForm(name: string): Form | undefined {
     return this.forms.find((form) => form.schema.name === name)
+  }
+
+  findBucket(nameOrId: string | number): Bucket | undefined {
+    return this.buckets.find(
+      (bucket) => bucket.schema.id === Number(nameOrId) || bucket.schema.name === String(nameOrId)
+    )
   }
 }

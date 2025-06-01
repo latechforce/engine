@@ -6,6 +6,7 @@ import type { SetupAutomationUseCase } from '@/automation/application/use-case/s
 import type { SetupTableUseCase } from '@/table/application/use-case/setup-table.use-case'
 import type { ValidateAppUseCase } from './validate-app.use-case'
 import type { SetupConnectionUseCase } from '@/connection/application/use-case/setup-connection.use-case'
+import type { SetupBucketUseCase } from '@/bucket/application/use-case/setup-bucket.use-case'
 
 @injectable()
 export class StartAppUseCase {
@@ -19,7 +20,9 @@ export class StartAppUseCase {
     @inject(TYPES.Connection.UseCase.Setup)
     private readonly setupConnectionUseCase: SetupConnectionUseCase,
     @inject(TYPES.App.UseCase.Validate)
-    private readonly validateAppUseCase: ValidateAppUseCase
+    private readonly validateAppUseCase: ValidateAppUseCase,
+    @inject(TYPES.Bucket.UseCase.Setup)
+    private readonly setupBucketUseCase: SetupBucketUseCase
   ) {}
 
   async execute(unknownSchema: unknown): Promise<App> {
@@ -40,6 +43,9 @@ export class StartAppUseCase {
     }
     for (const automation of app.automations) {
       await this.setupAutomationUseCase.execute(app, automation)
+    }
+    for (const bucket of app.buckets) {
+      await this.setupBucketUseCase.execute(bucket)
     }
     process.on('SIGINT', () => this.shutdown())
     process.on('SIGTERM', () => this.shutdown())

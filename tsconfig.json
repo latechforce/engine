@@ -42,6 +42,7 @@
       "@/table/*": ["src/features/table/*"],
       "@/user/*": ["src/features/user/*"],
       "@/page/*": ["src/features/page/*"],
+      "@/bucket/*": ["src/features/bucket/*"],
       "@/shared/*": ["src/shared/*"],
       "@/app": ["src"]
     },

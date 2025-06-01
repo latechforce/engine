@@ -115,10 +115,12 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
     case 'single-attachment':
       return (
         <Input
-          {...props}
+          id={field.name}
+          name={field.name}
           type="file"
           required={input.required}
           accept={input.accept}
+          onBlur={field.handleBlur}
           onChange={(e) => {
             field.handleChange(e.target.files?.[0])
           }}

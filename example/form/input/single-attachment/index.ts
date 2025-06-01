@@ -10,7 +10,7 @@ export default {
       name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',
-      action: '/api/automations/post',
+      action: '/api/tables/1',
       inputs: [
         {
           label: 'Attachment',
@@ -19,6 +19,13 @@ export default {
           accept: 'image/*',
         },
       ],
+    },
+  ],
+  tables: [
+    {
+      id: 1,
+      name: 'contact-us',
+      fields: [{ id: 1, name: 'attachment', type: 'single-attachment' }],
     },
   ],
 } satisfies AppSchema

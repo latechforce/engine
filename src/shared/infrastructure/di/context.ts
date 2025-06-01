@@ -21,6 +21,7 @@ import type {
   TriggerHonoContext,
   TriggerHonoContextType,
 } from '@/trigger/infrastructure/di/context'
+import type { BucketHonoContext, BucketHonoContextType } from '@/bucket/infrastructure/di/context'
 
 export type HonoContextType = {
   env: EnvService
@@ -32,7 +33,8 @@ export type HonoContextType = {
   FormHonoContextType &
   RunHonoContextType &
   TableHonoContextType &
-  TriggerHonoContextType
+  TriggerHonoContextType &
+  BucketHonoContextType
 
 @injectable()
 export class HonoContext {
@@ -58,7 +60,9 @@ export class HonoContext {
     @inject(TYPES.Table.HonoContext)
     private readonly tableContext: TableHonoContext,
     @inject(TYPES.Trigger.HonoContext)
-    private readonly triggerContext: TriggerHonoContext
+    private readonly triggerContext: TriggerHonoContext,
+    @inject(TYPES.Bucket.HonoContext)
+    private readonly bucketContext: BucketHonoContext
   ) {}
 
   setVariables(app: App) {
@@ -73,6 +77,7 @@ export class HonoContext {
       this.runContext.setVariables(c)
       this.tableContext.setVariables(c)
       this.triggerContext.setVariables(c)
+      this.bucketContext.setVariables(c)
       await next()
     })
   }

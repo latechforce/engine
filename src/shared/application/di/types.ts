@@ -8,6 +8,7 @@ import FORM_TYPES from '@/form/application/di/types'
 import RUN_TYPES from '@/run/application/di/types'
 import TABLE_TYPES from '@/table/application/di/types'
 import TRIGGER_TYPES from '@/trigger/application/di/types'
+import BUCKET_TYPES from '@/bucket/application/di/types'
 
 const TYPES = {
   App: APP_TYPES,
@@ -19,6 +20,7 @@ const TYPES = {
   Run: RUN_TYPES,
   Table: TABLE_TYPES,
   Trigger: TRIGGER_TYPES,
+  Bucket: BUCKET_TYPES,
   Service: {
     Env: Symbol.for('EnvService'),
     Logger: Symbol.for('LoggerService'),

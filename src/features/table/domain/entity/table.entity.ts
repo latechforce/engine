@@ -44,6 +44,12 @@ export class Table {
               enum: field.schema.options,
             }
             break
+          case 'single-attachment':
+            acc[name] = {
+              type: 'object',
+              fileType: true,
+            }
+            break
           default:
             throw new Error(`Unknown field type: ${type}`)
         }

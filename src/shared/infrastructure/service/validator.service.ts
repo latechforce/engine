@@ -8,6 +8,24 @@ export class SchemaService {
 
   constructor() {
     this.ajv = new Ajv()
+    this.ajv.addKeyword({
+      keyword: 'fileType',
+      type: 'object',
+      errors: true,
+      validate: function fileTypeValidator(_schema: boolean, data: unknown) {
+        if (typeof File !== 'undefined' && data instanceof File) {
+          return true
+        } else {
+          ;(fileTypeValidator as unknown as { errors: unknown[] }).errors = [
+            {
+              keyword: 'fileType',
+              message: 'should be a File object',
+            },
+          ]
+          return false
+        }
+      },
+    })
   }
 
   validate(schema: SchemaObject, data: unknown): boolean {

@@ -14,6 +14,7 @@ import { automationRoutes } from '@/automation/interface/routes'
 import { connectionRoutes } from '@/connection/interface/routes'
 import { formRoutes } from '@/form/interface/routes'
 import { tableRoutes } from '@/table/interface/routes'
+import { bucketRoutes } from '@/bucket/interface/routes'
 
 export const apiRoutes = new Hono<HonoType>()
   .use(loggerMiddleware)
@@ -25,5 +26,6 @@ export const apiRoutes = new Hono<HonoType>()
   .route('/connections', connectionRoutes)
   .route('/forms', formRoutes)
   .route('/tables', tableRoutes)
+  .route('/buckets', bucketRoutes)
 
 export type ApiType = typeof apiRoutes

@@ -24,6 +24,7 @@ export const field = pgTable('table_field', {
       'phone-number',
       'checkbox',
       'single-select',
+      'single-attachment',
     ],
   }).notNull(),
   required: boolean().notNull(),

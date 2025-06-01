@@ -1,4 +1,5 @@
 import type { Fields } from '../object-value/fields.object-value'
+import crypto from 'crypto'
 
 export class Record {
   constructor(

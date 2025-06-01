@@ -24,6 +24,7 @@ export const field = sqliteTable('table_field', {
       'phone-number',
       'checkbox',
       'single-select',
+      'single-attachment',
     ],
   }).notNull(),
   required: integer({ mode: 'boolean' }).notNull(),
