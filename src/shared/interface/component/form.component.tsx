@@ -46,7 +46,7 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
           {...textProps}
         />
       )
-    case 'phone':
+    case 'phone-number':
       return (
         <Input
           {...props}

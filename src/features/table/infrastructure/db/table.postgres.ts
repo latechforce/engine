@@ -16,7 +16,7 @@ export const field = pgTable('table_field', {
   name: text().notNull(),
   slug: text().notNull().unique(),
   type: text({
-    enum: ['single-line-text', 'long-text', 'url', 'email'],
+    enum: ['single-line-text', 'long-text', 'url', 'email', 'phone-number'],
   }).notNull(),
   required: boolean().notNull(),
   created_at: timestamp().notNull(),

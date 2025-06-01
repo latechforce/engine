@@ -29,12 +29,12 @@ export default {
           type: 'email',
         },
         {
-          name: 'phone',
-          label: 'Phone',
+          name: 'phone-number',
+          label: 'Phone number',
           description: 'Please enter your phone number',
           placeholder: 'Enter your phone number',
           required: true,
-          type: 'phone',
+          type: 'phone-number',
         },
         {
           name: 'message',

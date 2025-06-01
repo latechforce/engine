@@ -9,7 +9,7 @@ type BaseInputDto = {
 }
 
 type TextInputDto = BaseInputDto & {
-  type: 'single-line-text' | 'long-text' | 'phone' | 'email' | 'url'
+  type: 'single-line-text' | 'long-text' | 'phone-number' | 'email' | 'url'
   placeholder?: string
   defaultValue?: string
 }
@@ -42,7 +42,7 @@ export function toInputDto(input: InputSchema): InputDto {
   }
   switch (input.type) {
     case 'long-text':
-    case 'phone':
+    case 'phone-number':
     case 'email':
     case 'url':
     case 'single-line-text':

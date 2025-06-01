@@ -1,0 +1,33 @@
+import type { AppSchema } from '@/types'
+
+export const inGuides = false
+
+export default {
+  name: 'Trigger an automation when a form with a phone number input is submitted',
+  description: 'Trigger an automation when a form with a phone number input is submitted',
+  forms: [
+    {
+      title: 'Contact us',
+      path: '/contact-us',
+      action: '/api/automations/post',
+      inputs: [
+        {
+          label: 'Phone number',
+          name: 'phone-number',
+          type: 'phone-number',
+        },
+      ],
+    },
+  ],
+  automations: [
+    {
+      name: 'Post',
+      trigger: {
+        service: 'http',
+        event: 'post',
+        path: '/post',
+      },
+      actions: [],
+    },
+  ],
+} satisfies AppSchema
