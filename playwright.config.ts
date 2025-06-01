@@ -50,10 +50,18 @@ export default defineConfig({
     },
   },
 
+  globalSetup: './e2e/setup.ts',
+  globalTeardown: './e2e/teardown.ts',
+
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
+      name: 'sqlite',
+      use: { ...devices['Desktop Chrome'] },
+    },
+
+    {
+      name: 'postgres',
       use: { ...devices['Desktop Chrome'] },
     },
 

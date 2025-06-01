@@ -8,11 +8,11 @@ We aim to follow a [Test-Driven Development (TDD)](https://en.wikipedia.org/wiki
 
 ## Philosophy
 
-We use our end-to-end tests to document the features of the project. 
+We use our end-to-end tests to document the features of the project.
 
-Each test is based on a example configuration. 
+Each test is based on a example configuration.
 
-Example configurations and end-to-end tests are following the same folder structure. 
+Example configurations and end-to-end tests are following the same folder structure.
 
 There are used in the documentation as guides, so they should be as complete as possible.
 

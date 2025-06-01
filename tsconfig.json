@@ -28,16 +28,28 @@
     // Paths
     "baseUrl": ".",
     "paths": {
+      "@/types": ["src/types"],
       "@/example": ["example"],
       "@/example/*": ["example/*"],
       "@/e2e/*": ["e2e/*"],
-      "@/app": ["src"],
-      "@/*": ["src/*"]
+      "@/app/*": ["src/features/app/*"],
+      "@/action/*": ["src/features/action/*"],
+      "@/automation/*": ["src/features/automation/*"],
+      "@/run/*": ["src/features/run/*"],
+      "@/trigger/*": ["src/features/trigger/*"],
+      "@/form/*": ["src/features/form/*"],
+      "@/connection/*": ["src/features/connection/*"],
+      "@/table/*": ["src/features/table/*"],
+      "@/user/*": ["src/features/user/*"],
+      "@/page/*": ["src/features/page/*"],
+      "@/bucket/*": ["src/features/bucket/*"],
+      "@/shared/*": ["src/shared/*"],
+      "@/app": ["src"]
     },
 
     // inversify
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src", "test", "example", "script", "src/infrastructure/db", "e2e", "config"]
+  "include": ["src", "test", "example", "script", "e2e", "config", "playwright.config.ts"]
 }

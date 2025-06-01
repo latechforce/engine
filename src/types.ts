@@ -1,10 +1,17 @@
-export type { AppSchema } from '@/domain/validator/app.validator'
-export type { EnvSchema } from '@/domain/validator/env.validator'
-export type { ActionSchema } from '@/domain/validator/action'
-export type { AutomationSchema } from '@/domain/validator/automation.validator'
-export type { TriggerSchema } from '@/domain/validator/trigger'
-export type { CodeContext } from '@/infrastructure/service/code.service'
-export type { FieldSchema } from '@/domain/validator/field'
-export type { TableSchema } from '@/domain/validator/table.validator'
-export type { ConnectionSchema } from '@/domain/validator/connection'
-export type { Mock } from '@/domain/value-object/mock.value-object'
+// App domain types
+export type { AppSchema } from '@/app/domain/schema/app.schema'
+export type { Mock } from '@/app/domain/value-object/mock.value-object'
+
+// Shared domain types
+export type { EnvSchema } from '@/shared/domain/schema/env.schema'
+
+// Feature domain types
+export type { ActionSchema } from '@/action/domain/schema/action.schema'
+export type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
+export type { TriggerSchema } from '@/trigger/domain/schema/trigger.schema'
+export type { FieldSchema } from '@/table/domain/schema/field'
+export type { TableSchema } from '@/table/domain/schema/table.schema'
+export type { ConnectionSchema } from '@/connection/domain/schema/connection.schema'
+
+// Infrastructure types
+export type { CodeContext } from '@/action/infrastructure/service/code.service'

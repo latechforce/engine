@@ -1,11 +1,13 @@
+// Third-party imports
 import './instrument'
 import 'reflect-metadata'
-import { registerDependencies } from '@/infrastructure/di/container'
-import TYPES from '@/infrastructure/di/types'
-import type { StartAppUseCase } from '@/application/use-case/app/start-app.use-case'
-import type { ValidateAppUseCase } from './application/use-case/app/validate-app.use-case'
-import type { MockAppUseCase } from './application/use-case/app/mock-app.use-case'
-import type { Mock } from './domain/value-object/mock.value-object'
+
+// Absolute imports
+import { registerDependencies } from '@/shared/infrastructure/di/container'
+import TYPES from '@/shared/application/di/types'
+import type { Mock } from '@/app/domain/value-object/mock.value-object'
+import { apiRoutes } from '@/shared/interface/routes'
+import { AppController } from '@/app/interface/controller/app.controller'
 
 export * from './types'
 
@@ -17,17 +19,22 @@ type Options = {
 export default class App {
   constructor(private readonly options: Options = {}) {}
 
-  async validate(unknownSchema: unknown) {
-    const container = await registerDependencies(this.options.externals)
-    const validateAppUseCase = container.get<ValidateAppUseCase>(TYPES.UseCase.ValidateApp)
-    return validateAppUseCase.execute(unknownSchema)
+  private async getAppController(externals: Record<string, unknown> = {}) {
+    const container = await registerDependencies(externals, apiRoutes)
+    container.bind<AppController>(TYPES.App.Controller).to(AppController).inSingletonScope()
+    return container.get<AppController>(TYPES.App.Controller)
+  }
+
+  async validate(unknownSchema: unknown = {}) {
+    const { externals } = this.options
+    const appController = await this.getAppController(externals)
+    return appController.validate(unknownSchema)
   }
 
   async start(unknownSchema: unknown = {}) {
     const { mock, externals } = this.options
-    const container = await registerDependencies(externals)
-    if (mock) container.get<MockAppUseCase>(TYPES.UseCase.MockApp).execute(mock)
-    const startAppUseCase = container.get<StartAppUseCase>(TYPES.UseCase.StartApp)
-    return startAppUseCase.execute(unknownSchema)
+    const appController = await this.getAppController(externals)
+    if (mock) appController.mock(mock)
+    return appController.start(unknownSchema)
   }
 }

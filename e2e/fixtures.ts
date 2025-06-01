@@ -5,6 +5,8 @@ import { createInterface } from 'readline'
 import { Readable } from 'stream'
 import fs from 'fs'
 import { join } from 'path'
+import { randomBytes, randomUUID } from 'crypto'
+import { Client } from 'pg'
 
 // Function to strip ANSI color codes
 function stripAnsiCodes(str: string): string {
@@ -18,6 +20,7 @@ type StartAppFixture = {
     filter?: string
     loggedOnAdmin?: boolean
     env?: Record<string, string>
+    debug?: boolean
     test: typeof test
   }) => Promise<{ page: Page; env: EnvSchema }>
 }
@@ -44,10 +47,10 @@ async function getExampleFileFilter(
 ): Promise<{ exampleFileFilter?: string; env: Record<string, string> }> {
   const callerFile = getCallerFile()
   let exampleFileFilter = filter
-  if (callerFile.includes('example') && !filter?.includes('/')) {
+  if (!filter?.includes('/')) {
     const baseExampleFile = join(
       process.cwd(),
-      callerFile.replace('e2e/', '').replace('.spec.ts', '')
+      callerFile.replace('e2e/', 'example/').replace('.spec.ts', '')
     )
     exampleFileFilter = join(baseExampleFile, (filter ?? 'index') + '.ts')
     if (!fs.existsSync(exampleFileFilter)) {
@@ -58,15 +61,33 @@ async function getExampleFileFilter(
       exampleFileFilter = exampleFileFilter.replace(process.cwd(), '')
       return { exampleFileFilter, env: file.env }
     } else {
-      throw new Error(`Example file ${exampleFileFilter} not found`)
+      exampleFileFilter = undefined
     }
   }
   return { exampleFileFilter, env: {} }
 }
 
+async function createDatabase() {
+  const dbName = `testdb_${randomUUID().replace(/-/g, '')}`
+
+  const client = new Client({
+    host: process.env.POSTGRES_HOST,
+    port: Number(process.env.POSTGRES_PORT),
+    user: process.env.POSTGRES_USERNAME,
+    password: process.env.POSTGRES_PASSWORD,
+    database: 'postgres', // connect to default db to create a new one
+  })
+
+  await client.connect()
+  await client.query(`CREATE DATABASE "${dbName}"`)
+  await client.end()
+
+  return dbName
+}
+
 // Extend the base test type
 export const test = base.extend<StartAppFixture>({
-  startExampleApp: async ({ browser }, use) => {
+  startExampleApp: async ({ browser }, use, testInfo) => {
     let proc: ChildProcess | undefined
     let page: Page | undefined
     let env: EnvSchema = {}
@@ -76,14 +97,29 @@ export const test = base.extend<StartAppFixture>({
       filter?: string
       loggedOnAdmin?: boolean
       env?: Partial<EnvSchema>
+      debug?: boolean
       test: typeof test
     }): Promise<{ page: Page; env: EnvSchema }> => {
-      const { filter, loggedOnAdmin = false } = options
-      env = options.env || {}
+      const { filter, loggedOnAdmin = false, debug = process.env.LOG_LEVEL === 'debug' } = options
+      env = { ...env, ...options.env }
 
       const result = await getExampleFileFilter(filter)
       env = { ...result.env, ...env }
       const exampleFileFilter = result.exampleFileFilter
+
+      if (debug && !exampleFileFilter) {
+        console.log('There is no example file found for this test, loading empty app')
+      }
+
+      if (testInfo.project.name.includes('postgres') || env.DATABASE_PROVIDER === 'postgres') {
+        const dbName = await createDatabase()
+        env.DATABASE_URL = `postgres://${process.env.POSTGRES_USERNAME}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${dbName}`
+        env.DATABASE_PROVIDER = 'postgres'
+      } else {
+        const id = randomBytes(10).toString('base64url').slice(0, 10)
+        env.DATABASE_URL = join(process.cwd(), 'tmp', `sqlite-${id}.db`)
+        env.DATABASE_PROVIDER = 'sqlite'
+      }
 
       await test.step(`Start example app${exampleFileFilter ? ` at ${exampleFileFilter}` : ' with no config'}`, async () => {
         const command = ['run', 'script/run-example.ts']
@@ -95,8 +131,7 @@ export const test = base.extend<StartAppFixture>({
             NODE_ENV: 'production',
             MOCK: '*',
             PORT: '*',
-            DATABASE_PROVIDER: 'sqlite',
-            DATABASE_URL: ':memory:',
+            LOG_LEVEL: debug ? 'debug' : process.env.LOG_LEVEL,
             ...env,
           },
           stdio: ['pipe', 'pipe', 'pipe'],
@@ -113,7 +148,7 @@ export const test = base.extend<StartAppFixture>({
 
         url = await new Promise<string>((resolve, reject) => {
           rl.on('line', async (line) => {
-            if (env.LOG_LEVEL) {
+            if (debug) {
               console.log(line)
             }
             const urlMatch = line.match(/http:\/\/localhost:(\d+)/)
@@ -141,11 +176,11 @@ export const test = base.extend<StartAppFixture>({
 
       if (loggedOnAdmin) {
         await test.step('Login as admin', async () => {
-          await page?.goto('/_admin/login')
+          await page?.goto('/admin/login')
           await page?.locator('input#email').fill('admin@admin.com')
           await page?.locator('input#password').fill('admin')
           await page?.locator('button[type="submit"]').click()
-          await page?.waitForURL('/_admin')
+          await page?.waitForURL('/admin')
         })
       }
 
@@ -164,7 +199,7 @@ export const test = base.extend<StartAppFixture>({
       await page.close()
     }
 
-    if (env?.DATABASE_URL) {
+    if (env.DATABASE_URL && env.DATABASE_PROVIDER === 'sqlite') {
       if (fs.existsSync(env.DATABASE_URL)) {
         fs.unlinkSync(env.DATABASE_URL)
       }

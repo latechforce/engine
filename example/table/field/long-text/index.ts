@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const inGuides = false
+export const inGuides = true
 
 export default {
   name: 'Configure a table with a long text field',
@@ -8,11 +8,11 @@ export default {
   tables: [
     {
       id: 1,
-      name: 'My table',
+      name: 'Contacts',
       fields: [
         {
           id: 1,
-          name: 'My field',
+          name: 'Message',
           type: 'long-text',
         },
       ],

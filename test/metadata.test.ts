@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'bun:test'
 import App from '@/app'
-import metadata from '@/example/metadata'
+import metadata from '@/example/app/api/metadata'
 
 describe('start', () => {
   it('should have the default name', async () => {
@@ -16,7 +16,7 @@ describe('start', () => {
     const app = await new App().start()
 
     // THEN
-    expect(app.schema.version).toBe('0.0.1')
+    expect(app.schema.version).toBe('1.0.0')
   })
 
   it('should have the default description', async () => {

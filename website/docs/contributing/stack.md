@@ -10,7 +10,9 @@ All the project is written in [TypeScript](https://www.typescriptlang.org/) and 
 
 - [React](https://react.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
+- [Lucide](https://lucide.dev/)
 - [Shadcn UI](https://ui.shadcn.com/)
+- [Shadcn Ui Blocks](https://www.shadcnui-blocks.com)
 - [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/react-native)
 - [Tanstack Router](https://tanstack.com/router/latest/docs)
 - [Tanstack Table](https://tanstack.com/table/latest/docs)

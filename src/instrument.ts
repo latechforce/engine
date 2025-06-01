@@ -1,3 +1,4 @@
+// Third-party imports
 import * as Sentry from '@sentry/bun'
 
 Sentry.init({

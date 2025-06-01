@@ -39,4 +39,4 @@ bun run index.ts
 
 And your app will be available at `http://localhost:3000`.
 
-All you have to do then is to configure your application following the [app schema](/schema-explorer). 
+All you have to do then is to configure your application following the [app schema](/schema-explorer).
