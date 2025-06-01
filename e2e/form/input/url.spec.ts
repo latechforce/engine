@@ -21,6 +21,7 @@ test('should run an automation when a form with a url input is submitted', async
   await page.goto('/forms/contact-us')
   await page.getByLabel('URL').fill('https://www.google.com')
   await page.getByRole('button', { name: 'Submit' }).click()
+  await page.waitForSelector('text="Thank you for your submission"')
 
   // THEN
   const { runs } = await page.request.get('/api/runs').then((res) => res.json())

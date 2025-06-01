@@ -9,7 +9,7 @@ export default {
     {
       title: 'Contact us',
       path: '/contact-us',
-      action: '/api/automations/post',
+      action: '/api/tables/1',
       inputs: [
         {
           label: 'Email',
@@ -18,6 +18,13 @@ export default {
           required: true,
         },
       ],
+    },
+  ],
+  tables: [
+    {
+      id: 1,
+      name: 'contacts',
+      fields: [{ id: 1, name: 'email', type: 'email' }],
     },
   ],
 } satisfies AppSchema

@@ -21,6 +21,7 @@ test.skip('should run an automation when a form with a single select input is su
   await page.goto('/forms/contact-us')
   await page.getByLabel('Select a color').selectOption('red')
   await page.getByRole('button', { name: 'Submit' }).click()
+  await page.waitForSelector('text="Thank you for your submission"')
 
   // THEN
   const { runs } = await page.request.get('/api/runs').then((res) => res.json())
@@ -37,6 +38,7 @@ test.skip('should create a record with a single select input', async ({ startExa
   await page.goto('/forms/contact-us')
   await page.getByLabel('Select a color').selectOption('red')
   await page.getByRole('button', { name: 'Submit' }).click()
+  await page.waitForSelector('text="Thank you for your submission"')
 
   // THEN
   const { records } = await page.request.get('/api/tables/1').then((res) => res.json())

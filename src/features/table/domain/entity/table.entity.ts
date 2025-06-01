@@ -21,6 +21,7 @@ export class Table {
           case 'single-line-text':
           case 'long-text':
           case 'url':
+          case 'email':
             acc[field.schema.name] = { type: 'string' }
             break
         }

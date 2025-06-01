@@ -21,6 +21,7 @@ test('should run an automation when a form with a long text input is submitted',
   await page.goto('/forms/contact-us')
   await page.getByLabel('Message').fill('Hello, world!')
   await page.getByRole('button', { name: 'Submit' }).click()
+  await page.waitForSelector('text="Thank you for your submission"')
 
   // THEN
   const { runs } = await page.request.get('/api/runs').then((res) => res.json())
@@ -37,6 +38,7 @@ test('should create a record with a long text input', async ({ startExampleApp }
   await page.goto('/forms/contact-us')
   await page.getByLabel('Message').fill('Hello, world!')
   await page.getByRole('button', { name: 'Submit' }).click()
+  await page.waitForSelector('text="Thank you for your submission"')
 
   // THEN
   const { records } = await page.request.get('/api/tables/1').then((res) => res.json())
