@@ -128,7 +128,7 @@ const config: Config = {
             },
             {
               label: 'Join us',
-              href: 'https://discord.gg/NgdRhz76',
+              href: 'https://discord.gg/WzzUZ4XB',
             },
           ],
         },
@@ -140,7 +140,7 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://discord.gg/NgdRhz76',
+          href: 'https://discord.gg/WzzUZ4XB',
           label: 'Discord',
           position: 'right',
         },
@@ -188,7 +188,7 @@ const config: Config = {
             },
             {
               label: 'Join us',
-              href: 'https://discord.gg/NgdRhz76',
+              href: 'https://discord.gg/WzzUZ4XB',
             },
           ],
         },
@@ -205,7 +205,7 @@ const config: Config = {
             },
             {
               label: 'Discord',
-              href: 'https://discord.gg/NgdRhz76',
+              href: 'https://discord.gg/WzzUZ4XB',
             },
             {
               label: 'GitHub',
