@@ -4,6 +4,9 @@ import { baseConnectionSchema } from '../base'
 export const youcanbookmeConnectionSchema = baseConnectionSchema
   .extend({
     service: z.literal('youcanbookme'),
+    baseUrl: z.string(),
+    username: z.string(),
+    password: z.string(),
   })
   .meta({
     title: 'YouCanBookMe',

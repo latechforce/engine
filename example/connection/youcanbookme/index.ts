@@ -18,6 +18,9 @@ export default {
       id: 1,
       name: 'YouCanBookMe',
       service: 'youcanbookme',
+      baseUrl: '{{env.YOUCANBOOKME_BASE_URL "https://api.youcanbook.me"}}',
+      username: '{{env.YOUCANBOOKME_USERNAME "mock-username"}}',
+      password: '{{env.YOUCANBOOKME_PASSWORD "mock-password"}}',
     },
   ],
 } satisfies AppSchema
