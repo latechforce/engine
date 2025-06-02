@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseConnectionSchema } from '../base'
+import { oauthConnectionSchema } from '../oauth'
 
-export const googleSheetsConnectionSchema = baseConnectionSchema
+export const googleSheetsConnectionSchema = oauthConnectionSchema
   .extend({
     service: z.literal('google-sheets'),
   })
