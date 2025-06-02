@@ -2,7 +2,6 @@
 import ky from 'ky'
 
 // Connection domain imports
-import type { Connection } from '@/connection/domain/entity/connection.entity'
 import type { Token } from '@/connection/domain/value-object/token.value-object'
 
 // Connection infrastructure imports
@@ -11,18 +10,22 @@ import type { ConnectionIntegration } from './base'
 
 // Action infrastructure imports
 import { CalendlyActionIntegration } from '@/action/infrastructure/integration/calendly'
+import type { CalendlyConnectionSchema } from '@/connection/domain/schema/integration/calendly.schema'
 
 export class CalendlyConnectionIntegration
   extends OAuthIntegration
   implements ConnectionIntegration
 {
-  constructor(connection: Connection) {
-    super(connection, 'https://auth.calendly.com')
+  constructor(
+    private readonly connection: CalendlyConnectionSchema,
+    appBaseUrl: string
+  ) {
+    super(connection.id, connection.clientId, appBaseUrl, 'https://auth.calendly.com')
   }
 
   async getAccessToken(body: Record<string, string>): Promise<Token> {
-    const { id } = this.connection.schema
-    const credentials = `${this.clientId}:${this.clientSecret}`
+    const { id, clientSecret } = this.connection
+    const credentials = `${this.clientId}:${clientSecret}`
     const base64Credentials = Buffer.from(credentials).toString('base64')
     const response = await ky
       .post(`${this.authBaseUrl}/oauth/token`, {

@@ -1,11 +1,9 @@
 import { z } from 'zod/v4'
-import { baseConnectionSchema } from '../base'
+import { oauthConnectionSchema } from '../oauth'
 
-export const calendlyConnectionSchema = baseConnectionSchema
+export const calendlyConnectionSchema = oauthConnectionSchema
   .extend({
     service: z.literal('calendly'),
-    clientId: z.string(),
-    clientSecret: z.string(),
   })
   .meta({
     title: 'Calendly',
