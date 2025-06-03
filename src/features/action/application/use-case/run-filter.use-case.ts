@@ -26,6 +26,16 @@ export class RunFilterUseCase {
           return false
         }
       }
+      return true
+    } else if ('or' in conditions) {
+      const { or } = conditions
+      for (const condition of or) {
+        const canContinue = await this.executeCondition(condition, run)
+        if (canContinue) {
+          return true
+        }
+      }
+      return false
     } else {
       switch (conditions.operator) {
         case 'exists':
@@ -47,6 +57,5 @@ export class RunFilterUseCase {
         }
       }
     }
-    return true
   }
 }
