@@ -73,7 +73,6 @@ export class RunAutomationUseCase {
             continue
           }
           const { data, error } = await this.runActionUseCase.execute(app, action, run)
-          console.log('data', data, error)
           if (error) {
             run.stop(action.schema.name, error)
             await this.runRepository.update(run)

@@ -4,11 +4,10 @@ import type { IntegrationError } from '@/action/domain/value-object/integration-
 import type { ServiceError } from '@/action/domain/value-object/service-error.value-object'
 
 export class Run {
-  private _status: 'playing' | 'success' | 'stopped' | 'filtered' = 'playing'
-
   constructor(
     public readonly automation_schema: AutomationSchema,
     public readonly data: Record<string, Record<string, unknown>> = {},
+    private _status: 'playing' | 'success' | 'stopped' | 'filtered' = 'playing',
     public readonly id: string = crypto.randomUUID(),
     public readonly createdAt: Date = new Date(),
     private _updatedAt: Date = new Date(),

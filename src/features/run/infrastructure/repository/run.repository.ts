@@ -70,6 +70,7 @@ export class RunRepository implements IRunRepository {
     return new Run(
       run.automation_schema,
       run.data,
+      run.status,
       run.id,
       run.created_at,
       run.updated_at,
