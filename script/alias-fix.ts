@@ -34,8 +34,20 @@ async function fixAliases(dir: string) {
         // Get the directory of the current file
         const currentDir = path.dirname(currentFilePath)
 
+        // Find the feature directory (if we're in a feature)
+        const parts = currentFilePath.split(path.sep)
+        const featureIndex = parts.findIndex((part) => part === 'features')
+        let baseDir = './src'
+
+        if (featureIndex !== -1 && parts.length > featureIndex + 1) {
+          const featureName = parts[featureIndex + 1]
+          if (featureName) {
+            baseDir = path.join('./src/features', featureName)
+          }
+        }
+
         // Construct the absolute path of the imported file
-        const absoluteImportPath = path.resolve('./src', cleanPath)
+        const absoluteImportPath = path.resolve(baseDir, cleanPath)
 
         // Get the relative path from current file to imported file
         const relativePath = path.relative(currentDir, absoluteImportPath)
