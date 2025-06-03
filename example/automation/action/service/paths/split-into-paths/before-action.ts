@@ -25,16 +25,7 @@ export default {
                 input: '{{ trigger.body.name }}',
                 operator: 'exists',
               },
-              actions: [
-                {
-                  name: 'runTypescript1',
-                  service: 'code',
-                  action: 'run-typescript',
-                  code: String(function () {
-                    return { success: true }
-                  }),
-                },
-              ],
+              actions: [],
             },
             {
               name: 'path2',
@@ -42,18 +33,17 @@ export default {
                 input: '{{ trigger.body.name }}',
                 operator: 'does-not-exist',
               },
-              actions: [
-                {
-                  name: 'runTypescript2',
-                  service: 'code',
-                  action: 'run-typescript',
-                  code: String(function () {
-                    return { success: true }
-                  }),
-                },
-              ],
+              actions: [],
             },
           ],
+        },
+        {
+          name: 'runTypescript3',
+          service: 'code',
+          action: 'run-typescript',
+          code: String(function () {
+            return { success: true }
+          }),
         },
       ],
     },

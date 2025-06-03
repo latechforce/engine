@@ -54,7 +54,7 @@ export class Run {
       current = current[key] as Record<string, Record<string, unknown>>
     }
     const finalKey = pathSegments[pathSegments.length - 1]
-    current[finalKey!] = result
+    current[finalKey!] = { ...current[finalKey!], ...result }
     this._updatedAt = new Date()
     this._lastActionName = pathSegments[0]!
   }

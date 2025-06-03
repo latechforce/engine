@@ -59,19 +59,19 @@ export class Automation {
           `Account "${action.account}" not found for action "${action.service}/${action.action}"`
         )
       }
-      return new IntegrationAction(action, this.schema, connection)
+      return new IntegrationAction(action, this.schema.name, connection)
     } else {
-      return new ServiceAction(action, this.schema)
+      return new ServiceAction(action, this.schema.name)
     }
   }
 
   findPath(pathName: string) {
     const keys = pathName.split('.')
-    if (keys.length === 0) {
+    if (keys.length < 2) {
       throw new Error('Path name is required')
     }
-    const lastPathName = keys[keys.length - 1]!
-    const path = this.findPathFromName(lastPathName, this.schema.actions)
+    const actionPathName = keys.slice(-2).join('.')
+    const path = this.findPathFromName(actionPathName, this.schema.actions)
     if (path) {
       return path
     } else {
@@ -80,7 +80,7 @@ export class Automation {
   }
 
   private findPathFromName(
-    pathName: string,
+    actionPathName: string,
     actions: ActionSchema[]
   ):
     | {
@@ -89,8 +89,9 @@ export class Automation {
         actions: Action[]
       }
     | undefined {
+    const [actionName, pathName] = actionPathName.split('.')
     for (const action of actions) {
-      if (action.service === 'paths') {
+      if (action.name === actionName && action.service === 'paths') {
         const path = action.paths.find((path) => path.name === pathName)
         if (path) {
           return {
@@ -100,7 +101,7 @@ export class Automation {
           }
         }
         for (const { actions } of action.paths) {
-          return this.findPathFromName(pathName, actions)
+          return this.findPathFromName(actionPathName, actions)
         }
       }
     }

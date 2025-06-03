@@ -5,7 +5,7 @@ import type { IntegrationActionSchema } from '@/action/domain/schema/integration
 export class IntegrationAction {
   constructor(
     public readonly schema: IntegrationActionSchema,
-    public readonly automation: AutomationSchema,
+    public readonly automationName: string,
     public readonly connection: Connection
   ) {}
 }

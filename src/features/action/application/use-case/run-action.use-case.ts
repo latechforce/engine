@@ -83,7 +83,7 @@ export class RunActionUseCase {
                 const paths: { [key: string]: object } = {}
                 for (const path of schema.paths) {
                   const result = await this.runFilterUseCase.execute(path.conditions, run)
-                  paths[path.name] = [result]
+                  paths[path.name] = result
                 }
                 data = paths
                 break

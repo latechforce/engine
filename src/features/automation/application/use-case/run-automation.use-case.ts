@@ -28,86 +28,112 @@ export class RunAutomationUseCase {
   ) {}
 
   async execute(app: App, run: Run, automation: Automation, pathName?: string) {
-    this.automationRepository.info(
-      pathName ? `playing path "${pathName}"` : `playing automation "${automation.schema.name}"`
-    )
-    if (pathName) {
-      const path = automation.findPath(pathName)
-      if (path.actions.length > 0) {
-        for (const action of automation.actions) {
-          const { data, error } = await this.runActionUseCase.execute(app, action, run)
-          if (error) {
-            run.stop(action.schema.name, error)
+    try {
+      this.automationRepository.info(
+        pathName ? `playing path "${pathName}"` : `playing automation "${automation.schema.name}"`
+      )
+      if (pathName) {
+        const path = automation.findPath(pathName)
+        if (path.actions.length > 0) {
+          for (const action of path.actions) {
+            const { data, error } = await this.runActionUseCase.execute(app, action, run)
+            if (error) {
+              run.stop(action.schema.name, error)
+              await this.runRepository.update(run)
+              this.automationRepository.info(
+                `action "${action.schema.name}" stopped with error: ${error.message}`
+              )
+              return
+            }
+            if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
+              run.filter(action.schema.name, data)
+              await this.runRepository.update(run)
+              this.automationRepository.info(`action "${action.schema.name}" filtered`)
+              return
+            }
+            run.actionPathSuccess(pathName, data)
             await this.runRepository.update(run)
-            this.automationRepository.info(
-              `action "${action.schema.name}" stopped with error: ${error.message}`
-            )
-            return
+            if (action.schema.service === 'paths') {
+              await Promise.all(
+                action.schema.paths.map(async (path) => {
+                  const nextPathName = pathName + '.' + action.schema.name + '.' + path.name
+                  const result = data[path.name]
+                  if (
+                    Array.isArray(result) &&
+                    result.length > 0 &&
+                    result[0].canContinue === true
+                  ) {
+                    await this.execute(app, run, automation, nextPathName)
+                  }
+                })
+              )
+            }
+            this.automationRepository.info(`action "${action.schema.name}" succeeded`)
           }
-          if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
-            run.filter(action.schema.name, data)
-            await this.runRepository.update(run)
-            this.automationRepository.info(`action "${action.schema.name}" filtered`)
-            return
-          }
-          run.actionPathSuccess(pathName, data)
+        }
+      } else {
+        if (automation.actions.length === 0) {
+          run.success()
           await this.runRepository.update(run)
-          if (action.schema.service === 'paths') {
-            await Promise.all(
-              action.schema.paths.map(async (path) => {
-                const nextPathName = pathName + '.' + action.schema.name + '.' + path.name
-                await this.execute(app, run, automation, nextPathName)
-              })
-            )
+        } else {
+          for (const action of automation.actions) {
+            if (run.data[action.schema.name]) {
+              continue
+            }
+            const { data, error } = await this.runActionUseCase.execute(app, action, run)
+            if (error) {
+              run.stop(action.schema.name, error)
+              await this.runRepository.update(run)
+              this.automationRepository.info(
+                `action "${action.schema.name}" stopped with error: ${error.message}`
+              )
+              return
+            }
+            if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
+              run.filter(action.schema.name, data)
+              await this.runRepository.update(run)
+              this.automationRepository.info(`action "${action.schema.name}" filtered`)
+              return
+            }
+            run.actionSuccess(action.schema.name, data)
+            await this.runRepository.update(run)
+            if (action.schema.service === 'paths') {
+              await Promise.all(
+                action.schema.paths.map(async (path) => {
+                  const pathName = action.schema.name + '.' + path.name
+                  const result = data[path.name]
+                  if (
+                    result &&
+                    typeof result === 'object' &&
+                    'canContinue' in result &&
+                    result.canContinue === true
+                  ) {
+                    await this.execute(app, run, automation, pathName)
+                  }
+                })
+              )
+            }
+            this.automationRepository.info(`action "${action.schema.name}" succeeded`)
           }
-          this.automationRepository.info(`action "${action.schema.name}" succeeded`)
+          run.success()
+          await this.runRepository.update(run)
         }
       }
-    } else {
-      if (automation.actions.length === 0) {
-        run.success()
+      this.automationRepository.info(
+        pathName ? `path "${pathName}" finished` : `automation "${automation.schema.name}" finished`
+      )
+    } catch (error) {
+      if (error instanceof Error) {
+        this.automationRepository.error(
+          pathName
+            ? `path "${pathName}" failed: ${error.message}`
+            : `automation "${automation.schema.name}" failed: ${error.message}`
+        )
+        run.stop('execution', error)
         await this.runRepository.update(run)
       } else {
-        for (const action of automation.actions) {
-          if (run.data[action.schema.name]) {
-            continue
-          }
-          const { data, error } = await this.runActionUseCase.execute(app, action, run)
-          if (error) {
-            run.stop(action.schema.name, error)
-            await this.runRepository.update(run)
-            this.automationRepository.info(
-              `action "${action.schema.name}" stopped with error: ${error.message}`
-            )
-            return
-          }
-          if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
-            run.filter(action.schema.name, data)
-            await this.runRepository.update(run)
-            this.automationRepository.info(`action "${action.schema.name}" filtered`)
-            return
-          }
-          run.actionSuccess(action.schema.name, data)
-          await this.runRepository.update(run)
-          if (action.schema.service === 'paths') {
-            await Promise.all(
-              action.schema.paths.map(async (path) => {
-                const pathName = action.schema.name + '.' + path.name
-                const result = data[path.name]
-                if (Array.isArray(result) && result.length > 0 && result[0].canContinue === true) {
-                  await this.execute(app, run, automation, pathName)
-                }
-              })
-            )
-          }
-          this.automationRepository.info(`action "${action.schema.name}" succeeded`)
-        }
-        run.success()
-        await this.runRepository.update(run)
+        throw error
       }
     }
-    this.automationRepository.info(
-      pathName ? `path "${pathName}" finished` : `automation "${automation.schema.name}" finished`
-    )
   }
 }

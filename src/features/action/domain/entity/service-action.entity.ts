@@ -4,6 +4,6 @@ import type { AutomationSchema } from '@/automation/domain/schema/automation.sch
 export class ServiceAction {
   constructor(
     public readonly schema: ServiceActionSchema,
-    public readonly automation: AutomationSchema
+    public readonly automationName: string
   ) {}
 }

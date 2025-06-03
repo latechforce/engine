@@ -18,6 +18,10 @@ export class AutomationRepository implements IAutomationRepository {
     this.logger.child('automation-repository').debug(message)
   }
 
+  error(message: string) {
+    this.logger.child('automation-repository').error(message)
+  }
+
   info(message: string) {
     this.logger.info(message)
   }
