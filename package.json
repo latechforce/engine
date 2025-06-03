@@ -2,15 +2,22 @@
   "name": "@latechforce/engine",
   "description": "Web application generator from a configuration file as a Fair Use NPM package.",
   "version": "0.49.0",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "type": "module",
   "author": "Thomas JEANNEAU",
   "license": "Fair Use License",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
-    "src/**/*",
-    "tsconfig.json"
+    "dist/**/*",
+    "src/**/*"
   ],
   "repository": {
     "type": "git",
@@ -28,6 +35,8 @@
     "format": "prettier --write .",
     "example": "bun --watch run script/run-example.ts",
     "website": "cd website && bun start",
+    "build:module": "bun run script/build-module.ts",
+    "build:types": "bun run script/build-types.ts",
     "build:schema": "bun run script/website/build-schema.ts",
     "build:test-report": "bun run script/website/build-test-report.ts",
     "build:blog": "bun run script/website/build-blog.ts",

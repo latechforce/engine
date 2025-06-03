@@ -43,7 +43,7 @@ export default tseslint.config(
 
   // Ignore output + cache dirs
   {
-    ignores: ['node_modules', 'website'],
+    ignores: ['node_modules', 'website', 'dist'],
   },
 
   // ✅ Boundaries rules and settings in one block

@@ -9,8 +9,6 @@ import type { Mock } from '@/app/domain/value-object/mock.value-object'
 import { apiRoutes } from '@/shared/interface/routes'
 import { AppController } from '@/app/interface/controller/app.controller'
 
-export * from './types'
-
 type Options = {
   externals?: Record<string, unknown>
   mock?: Mock

@@ -12,11 +12,11 @@
     "**/.git": true,
     "**/.DS_Store": true,
     "**/node_modules": true,
-    "**/dist": true
+    //"**/dist": true
   },
   "search.exclude": {
     "**/node_modules": true,
-    "**/dist": true
+   "**/dist": true
   },
   "files.associations": {
     "*.ts": "typescript"
