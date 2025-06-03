@@ -36,6 +36,16 @@ export class RunFilterUseCase {
         case 'contains': {
           return conditions.input.includes(conditions.value)
         }
+        case 'does-not-exist':
+          return (
+            conditions.input === '' || conditions.input === undefined || conditions.input === null
+          )
+        case 'does-not-contain':
+          return !conditions.input.includes(conditions.value)
+        default: {
+          const _exhaustiveCheck: never = conditions
+          throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+        }
       }
     }
     return true

@@ -12,6 +12,38 @@ test('should not run an action if the filter returns false', async ({ startExamp
   expect(data.canContinue).toBe(false)
 })
 
+test('should run an and filter action that returns true', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'and' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(true)
+})
+
+test('should run an and filter action that returns false', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'and' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'Jane Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(false)
+})
+
 test('should run an action if the filter returns true', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })
@@ -54,4 +86,104 @@ test('should run an exists filter action that returns false', async ({ startExam
   // THEN
   const { data } = await response.json()
   expect(data.canContinue).toBe(false)
+})
+
+test('should run an does-not-exist filter action that returns true', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'does-not-exist' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(false)
+})
+
+test('should run an does-not-exist filter action that returns false', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'does-not-exist' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter')
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(true)
+})
+
+test('should run an contains filter action that returns true', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'contains' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(true)
+})
+
+test('should run an contains filter action that returns false', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'contains' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'Jane Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(false)
+})
+
+test('should run an does-not-contain filter action that returns true', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'does-not-contain' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(false)
+})
+
+test('should run an does-not-contain filter action that returns false', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'does-not-contain' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'Jane Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(true)
 })

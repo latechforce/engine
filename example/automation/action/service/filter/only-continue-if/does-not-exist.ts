@@ -20,8 +20,7 @@ export default {
           action: 'only-continue-if',
           conditions: {
             input: '{{ trigger.body.name }}',
-            operator: 'contains',
-            value: 'John',
+            operator: 'does-not-exist',
           },
         },
       ],

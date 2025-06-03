@@ -70,6 +70,10 @@ export class RunActionUseCase {
                 data = await this.runFilterUseCase.execute(schema, run)
                 break
               }
+              default: {
+                const _exhaustiveCheck: never = schema
+                throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+              }
             }
             break
           }
@@ -77,6 +81,10 @@ export class RunActionUseCase {
             switch (schema.action) {
               case 'split-into-paths':
                 break
+              default: {
+                const _exhaustiveCheck: never = schema
+                throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+              }
             }
             break
           }
