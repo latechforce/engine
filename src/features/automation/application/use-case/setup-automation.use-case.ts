@@ -4,7 +4,7 @@ import { z } from 'zod'
 import TYPES from '@/shared/application/di/types'
 import type { SetupActionUseCase } from '@/action/application/use-case/setup-action.use-case'
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
-import { PlayingRun } from '@/run/domain/entity/playing-run.entity'
+import { type Run } from '@/run/domain/entity/run.entity'
 import type { SetupTriggerUseCase } from '@/trigger/application/use-case/setup-trigger.use-case'
 import type { Automation } from '@/automation/domain/entity/automation.entity'
 import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
@@ -35,7 +35,7 @@ export class SetupAutomationUseCase {
       await this.setupActionUseCase.execute(app, action)
     }
     await this.setupTriggerUseCase.execute(automation)
-    this.runRepository.onCreate((run: PlayingRun) =>
+    this.runRepository.onCreate((run: Run) =>
       this.runAutomationUseCase.execute(app, run, automation)
     )
     const runs = await this.runRepository.listPlaying()

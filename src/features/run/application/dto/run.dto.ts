@@ -1,4 +1,4 @@
-import { type Run } from '@/run/domain/entity'
+import type { Run } from '@/run/domain/entity/run.entity'
 
 export type RunDto = {
   id: string

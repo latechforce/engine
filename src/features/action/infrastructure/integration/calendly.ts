@@ -5,7 +5,7 @@ import { CalendlyIntegration } from '@/shared/infrastructure/integration/calendl
 export class CalendlyActionIntegration {
   constructor(private readonly schema: CalendlyActionSchema) {}
 
-  async runAction(token: Token): Promise<object> {
+  async runAction(token: Token): Promise<Record<string, unknown>> {
     const calendly = new CalendlyIntegration(token.access_token)
     switch (this.schema.action) {
       case 'list-webhook-subscriptions': {

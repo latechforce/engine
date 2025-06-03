@@ -3,8 +3,8 @@ import type { AppSchema } from '@/types'
 export const inGuides = false
 
 export default {
-  name: 'Run Filter action',
-  description: 'Automation with run Filter action',
+  name: 'Run Exists Filter action',
+  description: 'Automation with run Exists Filter action',
   automations: [
     {
       name: 'run-filter',

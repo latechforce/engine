@@ -2,7 +2,7 @@ import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
 import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
 import type { Action } from '@/action/domain/entity'
-import type { PlayingRun } from '@/run/domain/entity/playing-run.entity'
+import type { Run } from '@/run/domain/entity/run.entity'
 import { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
 import type { ActionResult } from '@/action/domain/value-object/action-result.value-object'
 import type { App } from '@/app/domain/entity/app.entity'
@@ -17,12 +17,12 @@ export class RunActionUseCase {
     private readonly runFilterUseCase: RunFilterUseCase
   ) {}
 
-  async execute(app: App, action: Action, run: PlayingRun): Promise<ActionResult> {
+  async execute(app: App, action: Action, run: Run): Promise<ActionResult> {
     if (action instanceof IntegrationAction) {
       return this.actionRepository.runIntegration(action)
     } else {
       try {
-        let data: object = {}
+        let data: Record<string, unknown> = {}
         const { schema } = action
         switch (schema.service) {
           case 'code': {
@@ -67,7 +67,7 @@ export class RunActionUseCase {
           case 'filter': {
             switch (schema.action) {
               case 'only-continue-if': {
-                data = await this.runFilterUseCase.execute(schema, run)
+                data = await this.runFilterUseCase.execute(schema.conditions, run)
                 break
               }
               default: {
@@ -79,8 +79,15 @@ export class RunActionUseCase {
           }
           case 'paths': {
             switch (schema.action) {
-              case 'split-into-paths':
+              case 'split-into-paths': {
+                const paths: { [key: string]: object } = {}
+                for (const path of schema.paths) {
+                  const result = await this.runFilterUseCase.execute(path.conditions, run)
+                  paths[path.name] = [result]
+                }
+                data = paths
                 break
+              }
               default: {
                 const _exhaustiveCheck: never = schema
                 throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

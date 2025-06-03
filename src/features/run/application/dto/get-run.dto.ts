@@ -1,4 +1,4 @@
-import { type Run } from '@/run/domain/entity'
+import type { Run } from '@/run/domain/entity/run.entity'
 import { toRunDto, type RunDto } from './run.dto'
 import type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
 

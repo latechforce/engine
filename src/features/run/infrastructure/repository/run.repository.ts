@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify'
 import TYPES from '@/shared/application/di/types'
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
 import { EventEmitter } from 'events'
-import { type Run, PlayingRun, SuccessRun, StoppedRun, FilteredRun } from '@/run/domain/entity'
+import { Run } from '@/run/domain/entity/run.entity'
 import type { RunDatabaseService } from '../service/database.service'
 
 @injectable()
@@ -14,7 +14,7 @@ export class RunRepository implements IRunRepository {
     private readonly database: RunDatabaseService
   ) {}
 
-  async create(run: PlayingRun) {
+  async create(run: Run) {
     await this.database.run.create({
       id: run.id,
       automation_schema: run.automation_schema,
@@ -27,7 +27,7 @@ export class RunRepository implements IRunRepository {
     this.eventEmitter.emit('create', run)
   }
 
-  onCreate(handler: (run: PlayingRun) => Promise<void>) {
+  onCreate(handler: (run: Run) => Promise<void>) {
     this.eventEmitter.on('create', handler)
   }
 
@@ -37,7 +37,7 @@ export class RunRepository implements IRunRepository {
       data: run.data,
       updated_at: run.updatedAt,
       last_action_name: run.lastActionName,
-      error_message: run instanceof StoppedRun ? run.errorMessage : undefined,
+      error_message: run.errorMessage,
     })
     this.eventEmitter.emit('update', run)
   }
@@ -51,9 +51,9 @@ export class RunRepository implements IRunRepository {
     return runs.map((run) => this.toEntity(run))
   }
 
-  async listPlaying(): Promise<PlayingRun[]> {
+  async listPlaying(): Promise<Run[]> {
     const runs = await this.database.run.listPlaying()
-    return runs.map((run) => this.toEntityPlaying(run))
+    return runs.map((run) => this.toEntity(run))
   }
 
   async get(id: string): Promise<Run | undefined> {
@@ -67,64 +67,14 @@ export class RunRepository implements IRunRepository {
   }
 
   private toEntity(run: typeof this.database.schema.run.$inferSelect): Run {
-    switch (run.status) {
-      case 'playing':
-        return this.toEntityPlaying(run)
-      case 'success':
-        return this.toEntitySuccess(run)
-      case 'stopped':
-        return this.toEntityStopped(run)
-      case 'filtered':
-        return this.toEntityFiltered(run)
-      default: {
-        const _exhaustiveCheck: never = run.status
-        throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-      }
-    }
-  }
-
-  private toEntityPlaying(run: typeof this.database.schema.run.$inferSelect): PlayingRun {
-    return new PlayingRun(
+    return new Run(
       run.automation_schema,
       run.data,
       run.id,
       run.created_at,
       run.updated_at,
-      run.last_action_name
-    )
-  }
-
-  private toEntitySuccess(run: typeof this.database.schema.run.$inferSelect): SuccessRun {
-    return new SuccessRun(
-      run.automation_schema,
-      run.id,
-      run.created_at,
-      run.updated_at,
-      run.data,
-      run.last_action_name
-    )
-  }
-
-  private toEntityStopped(run: typeof this.database.schema.run.$inferSelect): StoppedRun {
-    return new StoppedRun(
-      run.automation_schema,
-      run.id,
-      run.created_at,
-      run.updated_at,
-      run.data,
       run.last_action_name,
-      run.error_message ?? ''
-    )
-  }
-
-  private toEntityFiltered(run: typeof this.database.schema.run.$inferSelect): FilteredRun {
-    return new FilteredRun(
-      run.automation_schema,
-      run.id,
-      run.created_at,
-      run.updated_at,
-      run.data,
-      run.last_action_name
+      run.error_message
     )
   }
 }

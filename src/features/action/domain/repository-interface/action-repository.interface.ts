@@ -16,15 +16,15 @@ export type IActionRepository = {
   ) => {
     lint: (code: string) => Promise<string | undefined>
     fillInputData: (data: Record<string, unknown>) => Record<string, string>
-    runJavascript: (code: string) => Promise<object>
-    runTypescript: (code: string) => Promise<object>
+    runJavascript: (code: string) => Promise<Record<string, unknown>>
+    runTypescript: (code: string) => Promise<Record<string, unknown>>
   }
   http: (
     url: string,
     options?: RequestInit
   ) => {
-    get: () => Promise<object>
-    post: (body?: Record<string, unknown>) => Promise<object>
+    get: () => Promise<Record<string, unknown>>
+    post: (body?: Record<string, unknown>) => Promise<Record<string, unknown>>
   }
   runIntegration: (action: IntegrationAction) => Promise<ActionResult<IntegrationError>>
 }

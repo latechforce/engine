@@ -3,15 +3,17 @@ import { basePathsActionSchema } from './base'
 import { actionSchema, type ActionSchema } from '../../action.schema'
 import { conditionsSchema, type ConditionsSchema } from '../../condition'
 
+type PathSchema = {
+  name: string
+  conditions: ConditionsSchema
+  actions: ActionSchema[]
+}
+
 type SplitIntoPathsPathsAction = {
   name: string
   service: 'paths'
   action: 'split-into-paths'
-  paths: {
-    name: string
-    conditions: ConditionsSchema
-    actions: ActionSchema[]
-  }[]
+  paths: PathSchema[]
 }
 
 export const splitIntoPathsPathsActionSchema: z.ZodType<SplitIntoPathsPathsAction> = z.lazy(() =>

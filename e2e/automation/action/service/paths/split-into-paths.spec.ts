@@ -2,12 +2,17 @@ import { expect, test } from '@/e2e/fixtures'
 
 test('should run a split into paths paths action', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, debug: true })
 
   // WHEN
-  const response = await page.request.post('/api/automations/run-paths')
+  const response = await page.request.post('/api/automations/run-paths', {
+    data: {
+      name: 'John Doe',
+    },
+  })
 
   // THEN
   const { data } = await response.json()
   expect(data.path1[0].canContinue).toBe(true)
+  expect(data.path2[0].canContinue).toBe(false)
 })

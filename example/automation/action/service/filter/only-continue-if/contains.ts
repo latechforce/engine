@@ -3,8 +3,8 @@ import type { AppSchema } from '@/types'
 export const inGuides = false
 
 export default {
-  name: 'Run Does Not Exist Filter action',
-  description: 'Automation with run Does Not Exist Filter action',
+  name: 'Run Does Not Contain Filter action',
+  description: 'Automation with run Does Not Contain Filter action',
   automations: [
     {
       name: 'run-filter',
@@ -20,7 +20,8 @@ export default {
           action: 'only-continue-if',
           conditions: {
             input: '{{ trigger.body.name }}',
-            operator: 'does-not-exist',
+            operator: 'contains',
+            value: 'John',
           },
         },
       ],

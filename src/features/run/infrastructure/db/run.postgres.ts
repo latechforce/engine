@@ -5,7 +5,7 @@ export const run = pgTable('run', {
   id: text().primaryKey(),
   automation_schema: json().$type<AutomationSchema>().notNull(),
   status: text({ enum: ['playing', 'success', 'stopped', 'filtered'] }).notNull(),
-  data: json().$type<Record<string, object>>().notNull(),
+  data: json().$type<Record<string, Record<string, unknown>>>().notNull(),
   last_action_name: text(),
   error_message: text(),
   created_at: timestamp().notNull(),

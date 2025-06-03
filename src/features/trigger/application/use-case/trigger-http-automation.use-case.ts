@@ -5,7 +5,7 @@ import { inject, injectable } from 'inversify'
 import TYPES from '@/shared/application/di/types'
 
 // Run domain imports
-import { PlayingRun } from '@/run/domain/entity/playing-run.entity'
+import { Run } from '@/run/domain/entity/run.entity'
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
 import type { ITriggerRepository } from '@/trigger/domain/repository-interface/trigger-repository.interface'
 import type { App } from '@/app/domain/entity/app.entity'
@@ -118,7 +118,7 @@ export class TriggerHttpAutomationUseCase {
     for (const object of objects) {
       await this.objectRepository.create(object)
     }
-    const run = new PlayingRun(automation.schema, { trigger })
+    const run = new Run(automation.schema, { trigger })
     await this.runRepository.create(run)
     if ((schema.service === 'http' && schema.respondImmediately) || schema.service !== 'http') {
       return { success: true }
@@ -143,7 +143,7 @@ export class TriggerHttpAutomationUseCase {
             }
             break
           case 'stopped':
-            reject(new TriggerError(run.errorMessage, 500))
+            reject(new TriggerError(run.errorMessage || 'Unknown error', 500))
             break
           case 'success':
             if (run.lastActionName) {
@@ -156,7 +156,7 @@ export class TriggerHttpAutomationUseCase {
             resolve({ data: { canContinue: false }, success: true })
             break
           default: {
-            const _exhaustiveCheck: never = run
+            const _exhaustiveCheck: never = run.status
             throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
           }
         }

@@ -1,13 +1,12 @@
-import type { Run } from '../entity'
-import type { PlayingRun } from '../entity/playing-run.entity'
+import type { Run } from '../entity/run.entity'
 
 export type IRunRepository = {
-  create: (run: PlayingRun) => Promise<void>
-  onCreate: (handler: (run: PlayingRun) => Promise<void>) => void
+  create: (run: Run) => Promise<void>
+  onCreate: (handler: (run: Run) => Promise<void>) => void
   update: (run: Run) => Promise<void>
   onUpdate: (handler: (run: Run) => Promise<void>) => void
   list: () => Promise<Run[]>
-  listPlaying: () => Promise<PlayingRun[]>
+  listPlaying: () => Promise<Run[]>
   get: (id: string) => Promise<Run | undefined>
   delete: (id: string) => Promise<void>
 }

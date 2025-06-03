@@ -1,7 +1,6 @@
 import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
 import type { ConditionsSchema } from '@/action/domain/schema/condition'
-import type { FilterActionSchema } from '@/action/domain/schema/service/filter'
-import type { PlayingRun } from '@/run/domain/entity/playing-run.entity'
+import type { Run } from '@/run/domain/entity/run.entity'
 import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
 
@@ -12,13 +11,13 @@ export class RunFilterUseCase {
     private readonly actionRepository: IActionRepository
   ) {}
 
-  async execute(schema: FilterActionSchema, run: PlayingRun): Promise<{ canContinue: boolean }> {
-    const filledConditions = this.actionRepository.fillInputData(schema.conditions, run.data)
+  async execute(schema: ConditionsSchema, run: Run): Promise<{ canContinue: boolean }> {
+    const filledConditions = this.actionRepository.fillInputData(schema, run.data)
     const canContinue = await this.executeCondition(filledConditions, run)
     return { canContinue }
   }
 
-  private async executeCondition(conditions: ConditionsSchema, run: PlayingRun) {
+  private async executeCondition(conditions: ConditionsSchema, run: Run) {
     if ('and' in conditions) {
       const { and } = conditions
       for (const condition of and) {
