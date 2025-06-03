@@ -8,7 +8,7 @@ export class TemplateService {
     return compiled(data)
   }
 
-  fillObject(object: Record<string, unknown>, data: object): Record<string, unknown> {
+  fillObject<T extends Record<string, unknown>>(object: T, data: object): T {
     return Object.entries(object).reduce((acc: Record<string, unknown>, [key, value]) => {
       if (typeof value === 'string') {
         acc[key] = this.fill(value, data)
@@ -22,6 +22,6 @@ export class TemplateService {
         acc[key] = value
       }
       return acc
-    }, {})
+    }, {}) as T
   }
 }

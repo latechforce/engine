@@ -1,6 +1,12 @@
 import { z } from 'zod/v4'
-import { isNotEmptyConditionSchema } from './is-not-empty.schema'
+import { containsConditionSchema } from './contains.schema'
+import { existsConditionSchema } from './exists.schema'
+import { andConditionSchema } from './and.schema'
 
-export const conditionSchema = z.union([isNotEmptyConditionSchema])
+export const conditionsSchema = z.union([
+  existsConditionSchema,
+  containsConditionSchema,
+  andConditionSchema,
+])
 
-export type ConditionSchema = z.infer<typeof conditionSchema>
+export type ConditionsSchema = z.infer<typeof conditionsSchema>

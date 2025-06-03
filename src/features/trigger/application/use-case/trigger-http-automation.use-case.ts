@@ -152,6 +152,13 @@ export class TriggerHttpAutomationUseCase {
               resolve({ success: true })
             }
             break
+          case 'filtered':
+            resolve({ data: { canContinue: false }, success: true })
+            break
+          default: {
+            const _exhaustiveCheck: never = run
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+          }
         }
       })
     })

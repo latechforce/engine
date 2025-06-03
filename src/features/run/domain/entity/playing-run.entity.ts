@@ -4,6 +4,7 @@ import { SuccessRun } from './success-run.entity'
 import { StoppedRun } from './stopped-run.entity'
 import type { IntegrationError } from '@/action/domain/value-object/integration-error.value.object'
 import type { ServiceError } from '@/action/domain/value-object/service-error.value-object'
+import { FilteredRun } from './filtered-run.entity'
 
 export class PlayingRun {
   public readonly status = 'playing'
@@ -34,10 +35,22 @@ export class PlayingRun {
     )
   }
 
+  filter(actionName: string, result: object) {
+    this.data[actionName] = result
+    this.updatedAt = new Date()
+    return new FilteredRun(
+      this.automation_schema,
+      this.id,
+      this.createdAt,
+      this.updatedAt,
+      this.data,
+      actionName
+    )
+  }
+
   stop(actionName: string, error: IntegrationError | ServiceError) {
     this.data[actionName] = error
     this.updatedAt = new Date()
-    this.lastActionName = actionName
     return new StoppedRun(
       this.automation_schema,
       this.id,

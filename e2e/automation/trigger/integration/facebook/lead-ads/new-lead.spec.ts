@@ -2,7 +2,7 @@ import type { RunDto } from '@/run/application/dto/run.dto'
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
 
-// TODO: [@kermitsxb] - should trigger an automation when a facebook lead ads new lead is created
+// TODO: [@thomas-jeanneau] - should trigger an automation when a facebook lead ads new lead is created
 test.skip('should trigger an automation when a facebook lead ads new lead is created', async ({
   startExampleApp,
 }) => {

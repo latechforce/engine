@@ -34,7 +34,59 @@ export class SetupActionUseCase {
             }
             break
           }
+          default: {
+            const _exhaustiveCheck: never = schema
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+          }
         }
+        break
+      }
+      case 'http': {
+        switch (schema.action) {
+          case 'get':
+            break
+          case 'post':
+            break
+          case 'response':
+            break
+          default: {
+            const _exhaustiveCheck: never = schema
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+          }
+        }
+        break
+      }
+      case 'filter': {
+        switch (schema.action) {
+          case 'only-continue-if':
+            break
+        }
+        break
+      }
+      case 'paths': {
+        switch (schema.action) {
+          case 'split-into-paths':
+            break
+        }
+        break
+      }
+      case 'calendly': {
+        switch (schema.action) {
+          case 'list-webhook-subscriptions':
+            break
+        }
+        break
+      }
+      case 'google-sheets': {
+        switch (schema.action) {
+          case 'create-spreadsheet-row':
+            break
+        }
+        break
+      }
+      default: {
+        const _exhaustiveCheck: never = schema
+        throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
       }
     }
   }

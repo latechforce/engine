@@ -23,14 +23,6 @@ export default {
             operator: 'exists',
           },
         },
-        {
-          name: 'actionNotFiltered',
-          service: 'code',
-          action: 'run-typescript',
-          code: String(function () {
-            return { continue: true }
-          }),
-        },
       ],
     },
   ],

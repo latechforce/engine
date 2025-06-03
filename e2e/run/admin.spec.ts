@@ -1,6 +1,6 @@
 import { test } from '@/e2e/fixtures'
 
-// TODO: [@kermitsxb] - should search and display an automation run
+// TODO: [@thomas-jeanneau] - should search and display an automation run
 test.skip('should search and display automation runs', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })
@@ -11,7 +11,7 @@ test.skip('should search and display automation runs', async ({ startExampleApp 
   // THEN
 })
 
-// TODO: [@kermitsxb] - should select and replay failed automation runs
+// TODO: [@thomas-jeanneau] - should select and replay failed automation runs
 test.skip('should select and replay failed automation runs', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })
@@ -22,7 +22,7 @@ test.skip('should select and replay failed automation runs', async ({ startExamp
   // THEN
 })
 
-// TODO: [@kermitsxb] - should display the details of an automation run
+// TODO: [@thomas-jeanneau] - should display the details of an automation run
 test.skip('should open and display an automation run', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })

@@ -48,9 +48,9 @@ export class TriggerRepository implements ITriggerRepository {
 
   async setupIntegration(trigger: IntegrationTrigger): Promise<void> {
     try {
-      const integration = toTriggerIntegration(trigger.connection)
+      const integration = toTriggerIntegration(trigger)
       const token = await this.tokenRepository.getAccessToken(trigger.connection)
-      if (token) await integration.setupTrigger(trigger, token)
+      if (token) await integration.setupTrigger(token, trigger.url)
     } catch (error) {
       if (error instanceof HTTPError) {
         const result = {

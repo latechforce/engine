@@ -1,11 +1,11 @@
 import { z } from 'zod/v4'
 import { baseFilterActionSchema } from './base'
-import { conditionSchema } from '../../condition'
+import { conditionsSchema } from '../../condition'
 
 export const onlyContinueIfFilterActionSchema = baseFilterActionSchema
   .extend({
     action: z.literal('only-continue-if'),
-    conditions: z.array(conditionSchema),
+    conditions: conditionsSchema,
   })
   .meta({
     title: 'Only continue if',

@@ -72,5 +72,9 @@ export function toInputDto(input: InputSchema): InputDto {
         type: input.type,
         accept: input.accept,
       }
+    default: {
+      const _exhaustiveCheck: never = input
+      throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+    }
   }
 }

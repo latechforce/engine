@@ -6,6 +6,10 @@ import type { IntegrationError } from '../value-object/integration-error.value.o
 export type IActionRepository = {
   debug(message: string): void
   error: (message: string) => void
+  fillInputData: <T extends { [key: string]: object | string }>(
+    inputData: T,
+    data: { [key: string]: object }
+  ) => T
   code: (
     app: App,
     inputData?: Record<string, string>

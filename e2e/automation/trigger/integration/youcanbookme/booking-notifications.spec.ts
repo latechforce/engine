@@ -2,7 +2,7 @@ import type { RunDto } from '@/run/application/dto/run.dto'
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
 
-// TODO: [@kermitsxb] - should trigger an automation when a youcanbookme booking notifications is created
+// TODO: [@thomas-jeanneau] - should trigger an automation when a youcanbookme booking notifications is created
 test.skip('should trigger an automation when a youcanbookme booking notifications is created', async ({
   startExampleApp,
 }) => {

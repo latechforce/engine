@@ -20,16 +20,9 @@ export default {
           action: 'only-continue-if',
           conditions: {
             input: '{{ trigger.body.name }}',
-            operator: 'exists',
+            operator: 'contains',
+            value: 'John',
           },
-        },
-        {
-          name: 'actionNotFiltered',
-          service: 'code',
-          action: 'run-typescript',
-          code: String(function () {
-            return { continue: true }
-          }),
         },
       ],
     },

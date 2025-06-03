@@ -1,7 +1,6 @@
 import { expect, test } from '@/e2e/fixtures'
 
-// TODO: [@thomas-jeanneau] - should run a only continue if filter action
-test.skip('should run a only continue if filter action', async ({ startExampleApp }) => {
+test('should not run an action if the filter returns false', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })
 
@@ -9,6 +8,50 @@ test.skip('should run a only continue if filter action', async ({ startExampleAp
   const response = await page.request.post('/api/automations/run-filter')
 
   // THEN
-  const data = await response.json()
-  expect(data).toBe(true)
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(false)
+})
+
+test('should run an action if the filter returns true', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.continue).toBe(true)
+})
+
+test('should run an exists filter action that returns true', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'exists' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(true)
+})
+
+test('should run an exists filter action that returns false', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'exists' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter')
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(false)
 })

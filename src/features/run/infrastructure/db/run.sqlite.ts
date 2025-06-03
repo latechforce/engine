@@ -4,7 +4,7 @@ import type { AutomationSchema } from '@/automation/domain/schema/automation.sch
 export const run = sqliteTable('run', {
   id: text().primaryKey(),
   automation_schema: text({ mode: 'json' }).$type<AutomationSchema>().notNull(),
-  status: text({ enum: ['playing', 'success', 'stopped'] }).notNull(),
+  status: text({ enum: ['playing', 'success', 'stopped', 'filtered'] }).notNull(),
   data: text({ mode: 'json' }).$type<Record<string, object>>().notNull(),
   last_action_name: text(),
   error_message: text(),

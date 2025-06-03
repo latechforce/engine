@@ -46,6 +46,12 @@ export class RunAutomationUseCase {
           )
           return
         }
+        if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
+          const filteredRun = run.filter(action.schema.name, data)
+          await this.runRepository.update(filteredRun)
+          this.automationRepository.info(`action "${action.schema.name}" filtered`)
+          return
+        }
         run.actionSuccess(action.schema.name, data)
         await this.runRepository.update(run)
         this.automationRepository.info(`action "${action.schema.name}" succeeded`)

@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
 import { basePathsActionSchema } from './base'
 import { actionSchema, type ActionSchema } from '../../action.schema'
-import { conditionSchema, type ConditionSchema } from '../../condition'
+import { conditionsSchema, type ConditionsSchema } from '../../condition'
 
 type SplitIntoPathsPathsAction = {
   name: string
@@ -9,7 +9,7 @@ type SplitIntoPathsPathsAction = {
   action: 'split-into-paths'
   paths: {
     name: string
-    conditions: ConditionSchema[]
+    conditions: ConditionsSchema
     actions: ActionSchema[]
   }[]
 }
@@ -21,7 +21,7 @@ export const splitIntoPathsPathsActionSchema: z.ZodType<SplitIntoPathsPathsActio
       paths: z.array(
         z.object({
           name: z.string(),
-          conditions: z.array(conditionSchema),
+          conditions: conditionsSchema,
           actions: z.array(actionSchema),
         })
       ),

@@ -45,8 +45,10 @@ export class Table {
               enum: field.schema.options,
             }
             break
-          default:
-            throw new Error(`Unknown field type: ${type}`)
+          default: {
+            const _exhaustiveCheck: never = type
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+          }
         }
         return acc
       }, {}),

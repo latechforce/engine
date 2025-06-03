@@ -21,12 +21,10 @@ export default {
           paths: [
             {
               name: 'path1',
-              conditions: [
-                {
-                  input: '{{ trigger.body.name }}',
-                  operator: 'is-not-empty',
-                },
-              ],
+              conditions: {
+                input: '{{ trigger.body.name }}',
+                operator: 'exists',
+              },
               actions: [],
             },
           ],

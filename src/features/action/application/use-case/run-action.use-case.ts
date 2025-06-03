@@ -6,12 +6,15 @@ import type { PlayingRun } from '@/run/domain/entity/playing-run.entity'
 import { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
 import type { ActionResult } from '@/action/domain/value-object/action-result.value-object'
 import type { App } from '@/app/domain/entity/app.entity'
+import type { RunFilterUseCase } from './run-filter.use-case'
 
 @injectable()
 export class RunActionUseCase {
   constructor(
     @inject(TYPES.Repository)
-    private readonly actionRepository: IActionRepository
+    private readonly actionRepository: IActionRepository,
+    @inject(TYPES.UseCase.RunFilter)
+    private readonly runFilterUseCase: RunFilterUseCase
   ) {}
 
   async execute(app: App, action: Action, run: PlayingRun): Promise<ActionResult> {
@@ -33,6 +36,10 @@ export class RunActionUseCase {
               case 'run-javascript':
                 data = await this.actionRepository.code(app, inputData).runJavascript(schema.code)
                 break
+              default: {
+                const _exhaustiveCheck: never = schema
+                throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+              }
             }
             break
           }
@@ -48,8 +55,34 @@ export class RunActionUseCase {
                   .http(schema.url, { headers: schema.headers })
                   .post(schema.body)
                 break
+              case 'response':
+                break
+              default: {
+                const _exhaustiveCheck: never = schema
+                throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+              }
             }
             break
+          }
+          case 'filter': {
+            switch (schema.action) {
+              case 'only-continue-if': {
+                data = await this.runFilterUseCase.execute(schema, run)
+                break
+              }
+            }
+            break
+          }
+          case 'paths': {
+            switch (schema.action) {
+              case 'split-into-paths':
+                break
+            }
+            break
+          }
+          default: {
+            const _exhaustiveCheck: never = schema
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
           }
         }
         return { data }

@@ -1,31 +1,23 @@
-// Third-party imports
 import ky from 'ky'
-
-// Connection domain imports
 import type { Token } from '@/connection/domain/value-object/token.value-object'
-
-// Connection infrastructure imports
-import { OAuthIntegration } from './oauth'
-import type { ConnectionIntegration } from './base'
-
-// Action infrastructure imports
-import { CalendlyActionIntegration } from '@/action/infrastructure/integration/calendly'
 import type { CalendlyConnectionSchema } from '@/connection/domain/schema/integration/calendly.schema'
 
-export class CalendlyConnectionIntegration
-  extends OAuthIntegration
-  implements ConnectionIntegration
-{
+export class CalendlyConnectionIntegration {
+  private readonly baseUrl = 'https://api.calendly.com'
+  private readonly authBaseUrl = 'https://auth.calendly.com'
+
   constructor(
-    private readonly connection: CalendlyConnectionSchema,
-    appBaseUrl: string
-  ) {
-    super(connection.id, connection.clientId, appBaseUrl, 'https://auth.calendly.com')
+    private readonly schema: CalendlyConnectionSchema,
+    private readonly redirectUri: string
+  ) {}
+
+  getAuthorizationUrl() {
+    return `${this.authBaseUrl}/oauth/authorize?client_id=${this.schema.clientId}&response_type=code&redirect_uri=${this.redirectUri}`
   }
 
   async getAccessToken(body: Record<string, string>): Promise<Token> {
-    const { id, clientSecret } = this.connection
-    const credentials = `${this.clientId}:${clientSecret}`
+    const { id, clientId, clientSecret } = this.schema
+    const credentials = `${clientId}:${clientSecret}`
     const base64Credentials = Buffer.from(credentials).toString('base64')
     const response = await ky
       .post(`${this.authBaseUrl}/oauth/token`, {
@@ -67,7 +59,11 @@ export class CalendlyConnectionIntegration
   async checkConnection(token?: Token): Promise<boolean> {
     if (!token) return false
     try {
-      await new CalendlyActionIntegration().getCurrentUser(token)
+      await ky.get(this.baseUrl + '/users/me', {
+        headers: {
+          Authorization: `Bearer ${token.access_token}`,
+        },
+      })
       return true
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {

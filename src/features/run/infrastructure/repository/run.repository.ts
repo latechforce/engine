@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify'
 import TYPES from '@/shared/application/di/types'
 import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
 import { EventEmitter } from 'events'
-import { type Run, PlayingRun, SuccessRun, StoppedRun } from '@/run/domain/entity'
+import { type Run, PlayingRun, SuccessRun, StoppedRun, FilteredRun } from '@/run/domain/entity'
 import type { RunDatabaseService } from '../service/database.service'
 
 @injectable()
@@ -74,6 +74,12 @@ export class RunRepository implements IRunRepository {
         return this.toEntitySuccess(run)
       case 'stopped':
         return this.toEntityStopped(run)
+      case 'filtered':
+        return this.toEntityFiltered(run)
+      default: {
+        const _exhaustiveCheck: never = run.status
+        throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+      }
     }
   }
 
@@ -108,6 +114,17 @@ export class RunRepository implements IRunRepository {
       run.data,
       run.last_action_name,
       run.error_message ?? ''
+    )
+  }
+
+  private toEntityFiltered(run: typeof this.database.schema.run.$inferSelect): FilteredRun {
+    return new FilteredRun(
+      run.automation_schema,
+      run.id,
+      run.created_at,
+      run.updated_at,
+      run.data,
+      run.last_action_name
     )
   }
 }

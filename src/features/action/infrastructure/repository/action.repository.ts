@@ -14,7 +14,7 @@ import type { IntegrationError } from '@/action/domain/value-object/integration-
 
 // Action infrastructure imports
 import type { CodeService, TableContext } from '@/action/infrastructure/service/code.service'
-import { toActionIntegration } from '@/action/infrastructure/integration/action.integration'
+import { toActionIntegration } from '@/action/infrastructure/integration'
 
 // Connection domain imports
 import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
@@ -46,6 +46,13 @@ export class ActionRepository implements IActionRepository {
 
   error(message: string) {
     this.logger.error(message)
+  }
+
+  fillInputData<T extends { [key: string]: object | string }>(
+    inputData: T,
+    data: { [key: string]: object }
+  ): T {
+    return this.templateService.fillObject<T>(inputData, data)
   }
 
   code(app: App, inputData: { [key: string]: string } = {}) {
@@ -109,10 +116,10 @@ export class ActionRepository implements IActionRepository {
 
   async runIntegration(action: IntegrationAction): Promise<ActionResult<IntegrationError>> {
     try {
-      const integration = toActionIntegration(action.connection)
+      const integration = toActionIntegration(action)
       const token = await this.tokenRepository.getAccessToken(action.connection)
       if (!token) throw new Error(`Token not found for connection ${action.connection.schema.id}`)
-      const data = await integration.runAction(action, token)
+      const data = await integration.runAction(token)
       return { data }
     } catch (error) {
       if (error instanceof HTTPError) {

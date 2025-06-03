@@ -19,17 +19,18 @@ export default {
           service: 'filter',
           action: 'only-continue-if',
           conditions: {
-            input: '{{ trigger.body.name }}',
-            operator: 'exists',
+            and: [
+              {
+                input: '{{ trigger.body.name }}',
+                operator: 'exists',
+              },
+              {
+                input: '{{ trigger.body.name }}',
+                operator: 'contains',
+                value: 'John',
+              },
+            ],
           },
-        },
-        {
-          name: 'actionNotFiltered',
-          service: 'code',
-          action: 'run-typescript',
-          code: String(function () {
-            return { continue: true }
-          }),
         },
       ],
     },

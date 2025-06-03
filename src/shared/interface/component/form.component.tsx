@@ -126,8 +126,10 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
           }}
         />
       )
-    default:
-      return null
+    default: {
+      const _exhaustiveCheck: never = input
+      throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+    }
   }
 }
 
