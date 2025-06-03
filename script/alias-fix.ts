@@ -11,8 +11,23 @@ async function fixAliases(dir: string) {
     } else if (entry.name.endsWith('.ts')) {
       let content = await fs.readFile(fullPath, 'utf8')
 
+      // Function to check if import is from external package
+      const isExternalPackage = (importPath: string) => {
+        // Skip if path starts with . or @
+        if (importPath.startsWith('.') || importPath.startsWith('@')) {
+          return false
+        }
+        // Check if it's a node module (no / in the first part of the path)
+        return !importPath.includes('/') || importPath.startsWith('@')
+      }
+
       // Function to convert import path to relative path
       const convertToRelativePath = (importPath: string, currentFilePath: string) => {
+        // Skip external packages
+        if (isExternalPackage(importPath)) {
+          return importPath
+        }
+
         // Remove @/ prefix if present
         const cleanPath = importPath.replace('@/', '')
 
