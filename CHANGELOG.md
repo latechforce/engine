@@ -1,3 +1,10 @@
+## [0.50.1](https://github.com/latechforce/engine/compare/v0.50.0...v0.50.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* export types from src/index.ts file ([f8167bd](https://github.com/latechforce/engine/commit/f8167bdf543f889d078f5c1edb6e9c38bde7004a)) — Thomas JEANNEAU
+
 # [0.50.0](https://github.com/latechforce/engine/compare/v0.49.0...v0.50.0) (2025-06-04)
 
 
