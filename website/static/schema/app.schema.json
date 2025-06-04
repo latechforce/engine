@@ -44,9 +44,11 @@
                     "type": "object",
                     "properties": {
                       "service": {
+                        "type": "string",
                         "const": "http"
                       },
                       "event": {
+                        "type": "string",
                         "const": "post"
                       },
                       "path": {
@@ -73,9 +75,11 @@
                     "type": "object",
                     "properties": {
                       "service": {
+                        "type": "string",
                         "const": "http"
                       },
                       "event": {
+                        "type": "string",
                         "const": "get"
                       },
                       "path": {
@@ -115,9 +119,11 @@
                         ]
                       },
                       "service": {
+                        "type": "string",
                         "const": "calendly"
                       },
                       "event": {
+                        "type": "string",
                         "const": "invite-created"
                       },
                       "path": {
@@ -131,6 +137,7 @@
                       "scope": {
                         "description": "The scope of the trigger",
                         "default": "user",
+                        "type": "string",
                         "enum": [
                           "user",
                           "organization",
@@ -168,9 +175,11 @@
                         ]
                       },
                       "service": {
+                        "type": "string",
                         "const": "facebook-lead-ads"
                       },
                       "event": {
+                        "type": "string",
                         "const": "new-lead"
                       },
                       "path": {
@@ -207,9 +216,11 @@
                         ]
                       },
                       "service": {
+                        "type": "string",
                         "const": "linkedin-ads"
                       },
                       "event": {
+                        "type": "string",
                         "const": "new-lead-gen-form-response"
                       },
                       "path": {
@@ -246,9 +257,11 @@
                         ]
                       },
                       "service": {
+                        "type": "string",
                         "const": "youcanbookme"
                       },
                       "event": {
+                        "type": "string",
                         "const": "booking-notifications"
                       },
                       "path": {
@@ -319,6 +332,7 @@
                       "type": "boolean"
                     },
                     "type": {
+                      "type": "string",
                       "enum": [
                         "single-line-text",
                         "long-text",
@@ -353,6 +367,7 @@
                       "type": "boolean"
                     },
                     "type": {
+                      "type": "string",
                       "const": "checkbox"
                     },
                     "default": {
@@ -381,6 +396,7 @@
                       "type": "boolean"
                     },
                     "type": {
+                      "type": "string",
                       "const": "single-select"
                     },
                     "default": {
@@ -417,6 +433,7 @@
                       "type": "boolean"
                     },
                     "type": {
+                      "type": "string",
                       "const": "single-attachment"
                     }
                   },
@@ -493,6 +510,7 @@
                       "type": "string"
                     },
                     "type": {
+                      "type": "string",
                       "enum": [
                         "single-line-text",
                         "long-text",
@@ -529,6 +547,7 @@
                       "type": "boolean"
                     },
                     "type": {
+                      "type": "string",
                       "const": "checkbox"
                     }
                   },
@@ -581,6 +600,7 @@
                       }
                     },
                     "type": {
+                      "type": "string",
                       "enum": [
                         "single-select"
                       ]
@@ -614,6 +634,7 @@
                       "type": "string"
                     },
                     "type": {
+                      "type": "string",
                       "const": "single-attachment"
                     }
                   },
@@ -657,22 +678,23 @@
               "name": {
                 "type": "string"
               },
-              "service": {
-                "const": "calendly"
-              },
               "clientId": {
                 "type": "string"
               },
               "clientSecret": {
                 "type": "string"
+              },
+              "service": {
+                "type": "string",
+                "const": "calendly"
               }
             },
             "required": [
               "id",
               "name",
-              "service",
               "clientId",
-              "clientSecret"
+              "clientSecret",
+              "service"
             ],
             "additionalProperties": false
           },
@@ -688,6 +710,7 @@
                 "type": "string"
               },
               "service": {
+                "type": "string",
                 "const": "google-sheets"
               }
             },
@@ -710,6 +733,7 @@
                 "type": "string"
               },
               "service": {
+                "type": "string",
                 "const": "facebook-lead-ads"
               }
             },
@@ -732,6 +756,7 @@
                 "type": "string"
               },
               "service": {
+                "type": "string",
                 "const": "linkedin-ads"
               }
             },
@@ -754,6 +779,7 @@
                 "type": "string"
               },
               "service": {
+                "type": "string",
                 "const": "youcanbookme"
               }
             },
@@ -808,6 +834,7 @@
         "type": {
           "anyOf": [
             {
+              "type": "string",
               "enum": [
                 "string",
                 "number",
@@ -821,6 +848,7 @@
             {
               "type": "array",
               "items": {
+                "type": "string",
                 "enum": [
                   "string",
                   "number",
@@ -1008,9 +1036,11 @@
                   "type": "string"
                 },
                 "service": {
+                  "type": "string",
                   "const": "code"
                 },
                 "action": {
+                  "type": "string",
                   "const": "run-typescript"
                 },
                 "inputData": {
@@ -1044,9 +1074,11 @@
                   "type": "string"
                 },
                 "service": {
+                  "type": "string",
                   "const": "code"
                 },
                 "action": {
+                  "type": "string",
                   "const": "run-javascript"
                 },
                 "inputData": {
@@ -1086,9 +1118,11 @@
                   "type": "string"
                 },
                 "service": {
+                  "type": "string",
                   "const": "http"
                 },
                 "action": {
+                  "type": "string",
                   "const": "get"
                 },
                 "url": {
@@ -1121,9 +1155,11 @@
                   "type": "string"
                 },
                 "service": {
+                  "type": "string",
                   "const": "http"
                 },
                 "action": {
+                  "type": "string",
                   "const": "post"
                 },
                 "url": {
@@ -1163,9 +1199,11 @@
                   "type": "string"
                 },
                 "service": {
+                  "type": "string",
                   "const": "http"
                 },
                 "action": {
+                  "type": "string",
                   "const": "response"
                 },
                 "body": {
@@ -1198,33 +1236,15 @@
                   "type": "string"
                 },
                 "service": {
+                  "type": "string",
                   "const": "filter"
                 },
                 "action": {
+                  "type": "string",
                   "const": "only-continue-if"
                 },
                 "conditions": {
-                  "type": "array",
-                  "items": {
-                    "anyOf": [
-                      {
-                        "type": "object",
-                        "properties": {
-                          "input": {
-                            "type": "string"
-                          },
-                          "operator": {
-                            "const": "is-not-empty"
-                          }
-                        },
-                        "required": [
-                          "input",
-                          "operator"
-                        ],
-                        "additionalProperties": false
-                      }
-                    ]
-                  }
+                  "$ref": "#/$defs/__schema2"
                 }
               },
               "required": [
@@ -1260,9 +1280,11 @@
                   ]
                 },
                 "service": {
+                  "type": "string",
                   "const": "calendly"
                 },
                 "action": {
+                  "type": "string",
                   "const": "list-webhook-subscriptions"
                 },
                 "organization": {
@@ -1271,6 +1293,7 @@
                 },
                 "scope": {
                   "default": "user",
+                  "type": "string",
                   "enum": [
                     "user",
                     "organization",
@@ -1317,9 +1340,11 @@
                   ]
                 },
                 "service": {
+                  "type": "string",
                   "const": "google-sheets"
                 },
                 "action": {
+                  "type": "string",
                   "const": "create-spreadsheet-row"
                 }
               },
@@ -1346,9 +1371,11 @@
                   "type": "string"
                 },
                 "service": {
+                  "type": "string",
                   "const": "paths"
                 },
                 "action": {
+                  "type": "string",
                   "const": "split-into-paths"
                 },
                 "paths": {
@@ -1360,27 +1387,7 @@
                         "type": "string"
                       },
                       "conditions": {
-                        "type": "array",
-                        "items": {
-                          "anyOf": [
-                            {
-                              "type": "object",
-                              "properties": {
-                                "input": {
-                                  "type": "string"
-                                },
-                                "operator": {
-                                  "const": "is-not-empty"
-                                }
-                              },
-                              "required": [
-                                "input",
-                                "operator"
-                              ],
-                              "additionalProperties": false
-                            }
-                          ]
-                        }
+                        "$ref": "#/$defs/__schema2"
                       },
                       "actions": {
                         "type": "array",
@@ -1407,6 +1414,84 @@
               "additionalProperties": false
             }
           ]
+        }
+      ]
+    },
+    "__schema2": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string"
+            },
+            "operator": {
+              "type": "string",
+              "enum": [
+                "contains",
+                "does-not-contain"
+              ]
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "input",
+            "operator",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string"
+            },
+            "operator": {
+              "type": "string",
+              "enum": [
+                "exists",
+                "does-not-exist"
+              ]
+            }
+          },
+          "required": [
+            "input",
+            "operator"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "and": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/__schema2"
+              }
+            }
+          },
+          "required": [
+            "and"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "or": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/__schema2"
+              }
+            }
+          },
+          "required": [
+            "or"
+          ],
+          "additionalProperties": false
         }
       ]
     }
