@@ -1,3 +1,12 @@
+# [0.51.0](https://github.com/latechforce/engine/compare/v0.50.1...v0.51.0) (2025-06-04)
+
+
+### Features
+
+* **action:** should run action with env variables in inputData ([77cae6e](https://github.com/latechforce/engine/commit/77cae6e6c0f02719d9eb557a90518978dab87968)) — Thomas JEANNEAU
+* **action:** should run action with inputData parsed in JSON ([70e53ed](https://github.com/latechforce/engine/commit/70e53ed66591e509b541a77db98056289c6b5b22)) — Thomas JEANNEAU
+* **mocks:** export mocks for app testing ([969e33e](https://github.com/latechforce/engine/commit/969e33ec7b4c5460ac7dead3d8250eca07ed9270)) — Thomas JEANNEAU
+
 ## [0.50.1](https://github.com/latechforce/engine/compare/v0.50.0...v0.50.1) (2025-06-04)
 
 
