@@ -9,19 +9,26 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Fix 0.50.1]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-50-1</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-50-1</guid>
+            <title><![CDATA[Release 0.51.0]]></title>
+            <link>https://engine.latechforce.com/blog/release-0-51-0</link>
+            <guid>https://engine.latechforce.com/blog/release-0-51-0</guid>
             <pubDate>Wed, 04 Jun 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.50.1]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-50-1"><p class="before-truncate"> 0.50.1   Bug Fixes  * export types from src/index.ts file (f8167bd) — Thomas JEANNEAU   0.50.0   Features  * action: should run a split into paths paths action (e3958a8) — Thomas JEANNEAU * action: should run a split into paths paths action with multiple paths (4cfc080) — Thomas JEANNEAU * action: ...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0501"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-50-1">0.50.1</a><a href="https://engine.latechforce.com/blog/fix-0-50-1#0501" class="hash-link" aria-label="Direct link to 0.50.1" title="Direct link to 0.50.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-50-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+            <description><![CDATA[Changelog for version 0.51.0]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-51-0"><p class="before-truncate"> 0.51.0   Features  * action: should run action with env variables in inputData (77cae6e) — Thomas JEANNEAU * action: should run action with inputData parsed in JSON (70e53ed) — Thomas JEANNEAU * mocks: export mocks for app testing (969e33e) — Thomas JEANNEAU   0.50.1   Bug Fixes  * export types fro...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0510"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-51-0">0.51.0</a><a href="https://engine.latechforce.com/blog/release-0-51-0#0510" class="hash-link" aria-label="Direct link to 0.51.0" title="Direct link to 0.51.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-51-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li><strong>action:</strong> should run action with env variables in inputData (<a href="https://github.com/latechforce/engine/commit/77cae6e6c0f02719d9eb557a90518978dab87968" target="_blank" rel="noopener noreferrer">77cae6e</a>) — Thomas JEANNEAU</li>
+<li><strong>action:</strong> should run action with inputData parsed in JSON (<a href="https://github.com/latechforce/engine/commit/70e53ed66591e509b541a77db98056289c6b5b22" target="_blank" rel="noopener noreferrer">70e53ed</a>) — Thomas JEANNEAU</li>
+<li><strong>mocks:</strong> export mocks for app testing (<a href="https://github.com/latechforce/engine/commit/969e33ec7b4c5460ac7dead3d8250eca07ed9270" target="_blank" rel="noopener noreferrer">969e33e</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0501">0.50.1<a href="https://engine.latechforce.com/blog/release-0-51-0#0501" class="hash-link" aria-label="Direct link to 0.50.1" title="Direct link to 0.50.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-51-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>export types from src/index.ts file (<a href="https://github.com/latechforce/engine/commit/f8167bdf543f889d078f5c1edb6e9c38bde7004a" target="_blank" rel="noopener noreferrer">f8167bd</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0500">0.50.0<a href="https://engine.latechforce.com/blog/fix-0-50-1#0500" class="hash-link" aria-label="Direct link to 0.50.0" title="Direct link to 0.50.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-50-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0500">0.50.0<a href="https://engine.latechforce.com/blog/release-0-51-0#0500" class="hash-link" aria-label="Direct link to 0.50.0" title="Direct link to 0.50.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features-1">Features<a href="https://engine.latechforce.com/blog/release-0-51-0#features-1" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li><strong>action:</strong> should run a split into paths paths action (<a href="https://github.com/latechforce/engine/commit/e3958a8bad8e000eed0b74b98d6198f9a8a6714d" target="_blank" rel="noopener noreferrer">e3958a8</a>) — Thomas JEANNEAU</li>
 <li><strong>action:</strong> should run a split into paths paths action with multiple paths (<a href="https://github.com/latechforce/engine/commit/4cfc0804351e9234821d31333d705cb081b3d4ca" target="_blank" rel="noopener noreferrer">4cfc080</a>) — Thomas JEANNEAU</li>
@@ -29,7 +36,7 @@
 <li><strong>action:</strong> should run an exists filter action that returns true (<a href="https://github.com/latechforce/engine/commit/9b9996d25d23ea5d5ebed874e174afc63fa90f7d" target="_blank" rel="noopener noreferrer">9b9996d</a>) — Thomas JEANNEAU</li>
 <li><strong>action:</strong> should run an or filter action that returns false (<a href="https://github.com/latechforce/engine/commit/b87a945b63967a296debeb5dd23bc7371fedf009" target="_blank" rel="noopener noreferrer">b87a945</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
-            <category>Fix</category>
+            <category>Release</category>
         </item>
         <item>
             <title><![CDATA[Release 0.49.0]]></title>

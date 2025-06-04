@@ -766,29 +766,6 @@
               "service"
             ],
             "additionalProperties": false
-          },
-          {
-            "title": "YouCanBookMe",
-            "description": "The YouCanBookMe connection is a connection to the YouCanBookMe API",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number"
-              },
-              "name": {
-                "type": "string"
-              },
-              "service": {
-                "type": "string",
-                "const": "youcanbookme"
-              }
-            },
-            "required": [
-              "id",
-              "name",
-              "service"
-            ],
-            "additionalProperties": false
           }
         ]
       }
