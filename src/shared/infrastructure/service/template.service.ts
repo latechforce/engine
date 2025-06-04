@@ -36,8 +36,7 @@ export class TemplateService {
       const compiled = Handlebars.compile(jsonTemplate)
       try {
         return JSON.parse(compiled(data)) as Record<string, unknown>
-      } catch (error) {
-        this.logger.error(error instanceof Error ? error.message : 'Unknown error')
+      } catch {
         return null
       }
     } else if (template.startsWith('{{number') && template.endsWith('}}')) {

@@ -17,6 +17,69 @@ export class App {
     public readonly schema: AppSchemaValidated,
     public readonly env: Env
   ) {
+    const automationNames = new Set<string>()
+    for (const automation of this.schema.automations) {
+      if (automationNames.has(automation.name)) {
+        throw new Error(`Duplicate automation name: ${automation.name}`)
+      }
+      automationNames.add(automation.name)
+    }
+    const connectionNames = new Set<string>()
+    for (const connection of this.schema.connections) {
+      if (connectionNames.has(connection.name)) {
+        throw new Error(`Duplicate connection name: ${connection.name}`)
+      }
+      connectionNames.add(connection.name)
+    }
+    const connectionIds = new Set<number>()
+    for (const connection of this.schema.connections) {
+      if (connectionIds.has(connection.id)) {
+        throw new Error(`Duplicate connection id: ${connection.id}`)
+      }
+      connectionIds.add(connection.id)
+    }
+    const tableNames = new Set<string>()
+    for (const table of this.schema.tables) {
+      if (tableNames.has(table.name)) {
+        throw new Error(`Duplicate table name: ${table.name}`)
+      }
+      tableNames.add(table.name)
+    }
+    const tableIds = new Set<number>()
+    for (const table of this.schema.tables) {
+      if (tableIds.has(table.id)) {
+        throw new Error(`Duplicate table id: ${table.id}`)
+      }
+      tableIds.add(table.id)
+    }
+    const formNames = new Set<string>()
+    for (const form of this.schema.forms) {
+      if (formNames.has(form.name)) {
+        throw new Error(`Duplicate form name: ${form.name}`)
+      }
+      formNames.add(form.name)
+    }
+    const bucketNames = new Set<string>()
+    for (const bucket of this.schema.buckets) {
+      if (bucketNames.has(bucket.name)) {
+        throw new Error(`Duplicate bucket name: ${bucket.name}`)
+      }
+      bucketNames.add(bucket.name)
+    }
+    const bucketIds = new Set<number>()
+    for (const bucket of this.schema.buckets) {
+      if (bucketIds.has(bucket.id)) {
+        throw new Error(`Duplicate bucket id: ${bucket.id}`)
+      }
+      bucketIds.add(bucket.id)
+    }
+    const triggerPaths = new Set<string>()
+    for (const automation of this.schema.automations) {
+      if (triggerPaths.has(automation.trigger.path)) {
+        throw new Error(`Duplicate trigger path: ${automation.trigger.path}`)
+      }
+      triggerPaths.add(automation.trigger.path)
+    }
     this.connections = this.schema.connections.map(
       (connection) => new Connection(connection, this.env.BASE_URL)
     )

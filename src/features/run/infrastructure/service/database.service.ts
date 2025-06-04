@@ -24,10 +24,6 @@ export class RunDatabaseService {
         get: async (id: string) => db.query.run.findFirst({ where: eq(schema.run.id, id) }),
         list: async (options?: Parameters<typeof db.query.run.findMany>[0]) =>
           db.query.run.findMany(options),
-        listPlaying: async () =>
-          db.query.run.findMany({
-            where: eq(schema.run.status, 'playing'),
-          }),
         delete: async (id: string) => db.delete(schema.run).where(eq(schema.run.id, id)),
       }
     } else {
@@ -40,7 +36,6 @@ export class RunDatabaseService {
         get: async (id: string) => db.query.run.findFirst({ where: eq(schema.run.id, id) }),
         list: async (options?: Parameters<typeof db.query.run.findMany>[0]) =>
           db.query.run.findMany(options),
-        listPlaying: async () => db.query.run.findMany({ where: eq(schema.run.status, 'playing') }),
         delete: async (id: string) => db.delete(schema.run).where(eq(schema.run.id, id)),
       }
     }

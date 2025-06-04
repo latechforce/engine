@@ -35,13 +35,11 @@ export class SetupAutomationUseCase {
       await this.setupActionUseCase.execute(app, action)
     }
     await this.setupTriggerUseCase.execute(automation)
-    this.runRepository.onCreate((run: Run) =>
-      this.runAutomationUseCase.execute(app, run, automation)
-    )
-    const runs = await this.runRepository.listPlaying()
-    for (const run of runs) {
-      await this.runAutomationUseCase.execute(app, run, automation)
-    }
+    this.runRepository.onCreate(async (run: Run) => {
+      if (run.automation_schema.name === automation.schema.name) {
+        await this.runAutomationUseCase.execute(app, run, automation)
+      }
+    })
 
     // Build OpenAPI routes
     const { schema } = automation.trigger
@@ -53,11 +51,12 @@ export class SetupAutomationUseCase {
         responseAction && 'body' in responseAction.schema && responseAction.schema.body
           ? this.generateJsonSchema(responseAction.schema.body)
           : undefined
+      const method = schema.event === 'get' ? 'get' : 'post'
       this.automationRepository.addOpenAPIRoute({
         summary: `Trigger "${automation.schema.name}"`,
-        method: schema.event === 'get' ? 'get' : 'post',
+        method,
         path: '/' + join('automations', schema.path),
-        description: `Run the automation "${automation.schema.name}" from a ${schema.event.toUpperCase()} request`,
+        description: `Run the automation "${automation.schema.name}" from a ${method.toUpperCase()} request`,
         tags: [`Automation`],
         requestBody:
           schema.event === 'post' && schema.requestBody

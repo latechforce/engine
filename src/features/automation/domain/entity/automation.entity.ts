@@ -25,6 +25,13 @@ export class Automation {
     public readonly connections: Connection[]
   ) {
     const { trigger } = schema
+    const actionNames = new Set<string>()
+    for (const action of schema.actions) {
+      if (actionNames.has(action.name)) {
+        throw new Error(`Duplicate action name: ${action.name}`)
+      }
+      actionNames.add(action.name)
+    }
     this.trigger = this.mapTrigger(trigger)
     this.actions = schema.actions.map((action) => this.mapAction(action))
   }

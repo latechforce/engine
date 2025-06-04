@@ -51,11 +51,6 @@ export class RunRepository implements IRunRepository {
     return runs.map((run) => this.toEntity(run))
   }
 
-  async listPlaying(): Promise<Run[]> {
-    const runs = await this.database.run.listPlaying()
-    return runs.map((run) => this.toEntity(run))
-  }
-
   async get(id: string): Promise<Run | undefined> {
     const run = await this.database.run.get(id)
     if (!run) return undefined

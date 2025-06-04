@@ -10,6 +10,20 @@ export class Table {
 
   constructor(public readonly schema: TableSchema) {
     this.slug = this.slugify(schema.name)
+    const fieldNames = new Set<string>()
+    for (const field of schema.fields) {
+      if (fieldNames.has(field.name)) {
+        throw new Error(`Duplicate field name: ${field.name}`)
+      }
+      fieldNames.add(field.name)
+    }
+    const fieldIds = new Set<number>()
+    for (const field of schema.fields) {
+      if (fieldIds.has(field.id)) {
+        throw new Error(`Duplicate field id: ${field.id}`)
+      }
+      fieldIds.add(field.id)
+    }
     this.fields = schema.fields.map((field) => new Field(field))
   }
 
