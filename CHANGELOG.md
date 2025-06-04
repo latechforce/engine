@@ -1,3 +1,14 @@
+# [0.50.0](https://github.com/latechforce/engine/compare/v0.49.0...v0.50.0) (2025-06-04)
+
+
+### Features
+
+* **action:** should run a split into paths paths action ([e3958a8](https://github.com/latechforce/engine/commit/e3958a8bad8e000eed0b74b98d6198f9a8a6714d)) — Thomas JEANNEAU
+* **action:** should run a split into paths paths action with multiple paths ([4cfc080](https://github.com/latechforce/engine/commit/4cfc0804351e9234821d31333d705cb081b3d4ca)) — Thomas JEANNEAU
+* **action:** should run an does-not-exist filter action that returns true ([1b9570a](https://github.com/latechforce/engine/commit/1b9570a6af18ea67780f26f08ad13e1ed95f0905)) — Thomas JEANNEAU
+* **action:** should run an exists filter action that returns true ([9b9996d](https://github.com/latechforce/engine/commit/9b9996d25d23ea5d5ebed874e174afc63fa90f7d)) — Thomas JEANNEAU
+* **action:** should run an or filter action that returns false ([b87a945](https://github.com/latechforce/engine/commit/b87a945b63967a296debeb5dd23bc7371fedf009)) — Thomas JEANNEAU
+
 # [0.49.0](https://github.com/latechforce/engine/compare/v0.48.0...v0.49.0) (2025-06-01)
 
 
