@@ -4,10 +4,28 @@
         <title>LTF Engine Blog</title>
         <link>https://engine.latechforce.com/blog</link>
         <description>LTF Engine Blog</description>
-        <lastBuildDate>Sun, 01 Jun 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 04 Jun 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Release 0.50.0]]></title>
+            <link>https://engine.latechforce.com/blog/release-0-50-0</link>
+            <guid>https://engine.latechforce.com/blog/release-0-50-0</guid>
+            <pubDate>Wed, 04 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Changelog for version 0.50.0]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-50-0"><p class="before-truncate"> 0.50.0   Features  * action: should run a split into paths paths action (e3958a8) — Thomas JEANNEAU * action: should run a split into paths paths action with multiple paths (4cfc080) — Thomas JEANNEAU * action: should run an does-not-exist filter action that returns true (1b9570a) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0500"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-50-0">0.50.0</a><a href="https://engine.latechforce.com/blog/release-0-50-0#0500" class="hash-link" aria-label="Direct link to 0.50.0" title="Direct link to 0.50.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-50-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li><strong>action:</strong> should run a split into paths paths action (<a href="https://github.com/latechforce/engine/commit/e3958a8bad8e000eed0b74b98d6198f9a8a6714d" target="_blank" rel="noopener noreferrer">e3958a8</a>) — Thomas JEANNEAU</li>
+<li><strong>action:</strong> should run a split into paths paths action with multiple paths (<a href="https://github.com/latechforce/engine/commit/4cfc0804351e9234821d31333d705cb081b3d4ca" target="_blank" rel="noopener noreferrer">4cfc080</a>) — Thomas JEANNEAU</li>
+<li><strong>action:</strong> should run an does-not-exist filter action that returns true (<a href="https://github.com/latechforce/engine/commit/1b9570a6af18ea67780f26f08ad13e1ed95f0905" target="_blank" rel="noopener noreferrer">1b9570a</a>) — Thomas JEANNEAU</li>
+<li><strong>action:</strong> should run an exists filter action that returns true (<a href="https://github.com/latechforce/engine/commit/9b9996d25d23ea5d5ebed874e174afc63fa90f7d" target="_blank" rel="noopener noreferrer">9b9996d</a>) — Thomas JEANNEAU</li>
+<li><strong>action:</strong> should run an or filter action that returns false (<a href="https://github.com/latechforce/engine/commit/b87a945b63967a296debeb5dd23bc7371fedf009" target="_blank" rel="noopener noreferrer">b87a945</a>) — Thomas JEANNEAU</li>
+</ul>]]></content:encoded>
+            <category>Release</category>
+        </item>
         <item>
             <title><![CDATA[Release 0.49.0]]></title>
             <link>https://engine.latechforce.com/blog/release-0-49-0</link>
