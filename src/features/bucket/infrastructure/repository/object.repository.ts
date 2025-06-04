@@ -3,6 +3,7 @@ import TYPES from '../../application/di/types'
 import type { BucketDatabaseService } from '../service/database.service'
 import type { IObjectRepository } from '../../domain/repository-interface/object-repository.interface'
 import { Object } from '../../domain/entity/object.entity'
+import mime from 'mime-types'
 
 @injectable()
 export class ObjectRepository implements IObjectRepository {
@@ -10,6 +11,11 @@ export class ObjectRepository implements IObjectRepository {
     @inject(TYPES.Service.Database)
     private readonly database: BucketDatabaseService
   ) {}
+
+  getMimeType(fileName: string): string {
+    const mimeType = mime.lookup(fileName)
+    return mimeType === false ? 'application/octet-stream' : mimeType
+  }
 
   async exists(bucketId: number, key: string): Promise<boolean> {
     const result = await this.database.object.get(bucketId, key)

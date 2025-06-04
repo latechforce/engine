@@ -23,7 +23,7 @@ export class UploadObjectUseCase {
       key,
       bucket.schema.id,
       new Uint8Array(data),
-      req.headers.get('content-type') || 'application/octet-stream',
+      req.headers.get('content-type') || this.objectRepository.getMimeType(key),
       data.byteLength
     )
     const exists = await this.objectRepository.exists(bucket.schema.id, key)

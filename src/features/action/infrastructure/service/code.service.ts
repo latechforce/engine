@@ -18,10 +18,26 @@ export type TableContext = (name: string) => {
   list: () => Promise<Record[]>
 }
 
+export type BucketContext = (name: string) => {
+  upload: (key: string, data: Uint8Array) => Promise<void>
+  download: (key: string) => Promise<Uint8Array>
+  delete: (key: string) => Promise<void>
+  list: () => Promise<
+    {
+      key: string
+      size: number | null
+      contentType: string | null
+      createdAt: string
+      updatedAt: string
+    }[]
+  >
+}
+
 export type CodeContext<T = {}, E = {}> = {
   inputData: T
   externals: E
   table: TableContext
+  bucket: BucketContext
 }
 
 const globals = {
@@ -48,29 +64,35 @@ export class CodeService {
   constructor(private readonly externals: { [key: string]: unknown }) {}
 
   private buildCode(code: string) {
-    return `(${code})({ externals, inputData, table })`
+    return `(${code})({ externals, inputData, table, bucket })`
   }
 
-  private getContext(inputData: { [key: string]: unknown }, table: TableContext) {
+  private getContext(
+    inputData: { [key: string]: unknown },
+    table: TableContext,
+    bucket: BucketContext
+  ) {
     return {
       ...globals,
       externals: this.externals,
       inputData,
       table,
+      bucket,
     }
   }
 
   async lint(
     code: string,
     inputData: { [key: string]: unknown },
-    table: TableContext
+    table: TableContext,
+    bucket: BucketContext
   ): Promise<string | undefined> {
     const eslint = new ESLint({
       overrideConfigFile: true,
       overrideConfig: {
         ...js.configs.recommended,
         languageOptions: {
-          globals: Object.keys(this.getContext(inputData, table)).reduce(
+          globals: Object.keys(this.getContext(inputData, table, bucket)).reduce(
             (acc: { [key: string]: 'readonly' }, key) => {
               acc[key] = 'readonly'
               return acc
@@ -89,7 +111,12 @@ export class CodeService {
     return message
   }
 
-  runTypescript(tsCode: string, inputData: { [key: string]: unknown }, table: TableContext) {
+  runTypescript(
+    tsCode: string,
+    inputData: { [key: string]: unknown },
+    table: TableContext,
+    bucket: BucketContext
+  ) {
     const { outputText: jsCode } = ts.transpileModule(tsCode, {
       compilerOptions: {
         target: ts.ScriptTarget.ESNext,
@@ -97,12 +124,17 @@ export class CodeService {
         importHelpers: false,
       },
     })
-    return this.runJavascript(jsCode, inputData, table)
+    return this.runJavascript(jsCode, inputData, table, bucket)
   }
 
-  runJavascript(jsCode: string, inputData: { [key: string]: unknown }, table: TableContext) {
+  runJavascript(
+    jsCode: string,
+    inputData: { [key: string]: unknown },
+    table: TableContext,
+    bucket: BucketContext
+  ) {
     const vmScript = new vm.Script(this.buildCode(jsCode))
-    const vmContext = vm.createContext(this.getContext(inputData, table))
+    const vmContext = vm.createContext(this.getContext(inputData, table, bucket))
     return vmScript.runInContext(vmContext)
   }
 }

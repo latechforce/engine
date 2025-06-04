@@ -1,16 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const externals = {
-  customFunction: () => {
-    return 'Hello, world!'
-  },
-}
-
-export const inGuides = true
-
 export default {
-  name: 'Run JavaScript code action with externals',
-  description: 'Automation with run JavaScript code action and externals',
   automations: [
     {
       name: 'run-javascript',
@@ -25,13 +15,25 @@ export default {
           action: 'run-javascript',
           name: 'runJavascriptCode',
           // @ts-expect-error - CodeContext is not defined in JavaScript
-          code: String(function (context) {
-            const { customFunction } = context.externals
-            const message = customFunction()
-            return { message }
+          code: String(async function (context) {
+            const pictures = context.bucket('pictures')
+            await pictures.upload('picture.jpg', new Uint8Array([1, 2, 3]))
+            const data = await pictures.download('picture.jpg')
+            const list = await pictures.list()
+            await pictures.delete('picture.jpg')
+            return {
+              data,
+              list,
+            }
           }),
         },
       ],
+    },
+  ],
+  buckets: [
+    {
+      id: 1,
+      name: 'pictures',
     },
   ],
 } satisfies AppSchema

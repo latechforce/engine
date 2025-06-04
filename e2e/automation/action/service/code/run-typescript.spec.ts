@@ -82,3 +82,21 @@ test('should run a TypeScript code with tables', async ({ startExampleApp }) => 
   expect(data.exists).toBe(false)
   expect(data.list.length).toBe(1)
 })
+
+test('should run a TypeScript code with buckets', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'buckets', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-typescript')
+  const { data } = await response.json()
+
+  // THEN
+  expect(data.data).toBeDefined()
+  expect(data.list.length).toBe(1)
+  expect(data.list[0].key).toBe('picture.jpg')
+  expect(data.list[0].size).toBe(3)
+  expect(data.list[0].contentType).toBe('image/jpeg')
+  expect(data.list[0].createdAt).toBeDefined()
+  expect(data.list[0].updatedAt).toBeDefined()
+})

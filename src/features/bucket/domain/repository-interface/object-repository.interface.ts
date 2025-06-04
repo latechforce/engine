@@ -1,6 +1,7 @@
 import type { Object } from '../entity/object.entity'
 
 export interface IObjectRepository {
+  getMimeType(fileName: string): string
   exists(bucketId: number, key: string): Promise<boolean>
   create(object: Object): Promise<void>
   update(object: Object): Promise<void>

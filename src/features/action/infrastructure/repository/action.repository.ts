@@ -12,7 +12,7 @@ import type { ActionResult } from '../../domain/value-object/action-result.value
 import type { IntegrationError } from '../../domain/value-object/integration-error.value.object'
 
 // Action infrastructure imports
-import type { CodeService, TableContext } from '../service/code.service'
+import type { BucketContext, CodeService, TableContext } from '../service/code.service'
 import { toActionIntegration } from '../integration'
 
 // Connection domain imports
@@ -22,7 +22,9 @@ import type { IRecordRepository } from '../../../table/domain/repository-interfa
 import type { App } from '../../../app/domain/entity/app.entity'
 import { Record } from '../../../table/domain/entity/record.entity'
 import type { IntegrationActionSchema } from '../../domain/schema/integration'
-import type { Connection } from 'src/features/connection/domain/entity/connection.entity'
+import type { Connection } from '../../../connection/domain/entity/connection.entity'
+import type { IObjectRepository } from '../../../bucket/domain/repository-interface/object-repository.interface'
+import { Object } from '../../../bucket/domain/entity/object.entity'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -36,7 +38,9 @@ export class ActionRepository implements IActionRepository {
     @inject(TYPES.Connection.Repository.Token)
     private readonly tokenRepository: ITokenRepository,
     @inject(TYPES.Table.Repository.Record)
-    private readonly recordRepository: IRecordRepository
+    private readonly recordRepository: IRecordRepository,
+    @inject(TYPES.Bucket.Repository.Object)
+    private readonly objectRepository: IObjectRepository
   ) {
     this.logger = this.logger.child('action-repository')
   }
@@ -96,10 +100,51 @@ export class ActionRepository implements IActionRepository {
         },
       }
     }
+    const bucket: BucketContext = (name: string) => {
+      const bucket = app.findBucket(name)
+      if (!bucket) throw new Error(`Bucket "${name}" not found`)
+      return {
+        upload: async (key: string, data: Uint8Array) => {
+          const object = new Object(
+            key,
+            bucket.schema.id,
+            data,
+            this.objectRepository.getMimeType(key),
+            data.byteLength
+          )
+          const exists = await this.objectRepository.exists(bucket.schema.id, object.key)
+          if (exists) {
+            await this.objectRepository.update(object)
+          } else {
+            await this.objectRepository.create(object)
+          }
+        },
+        download: async (key: string) => {
+          const object = await this.objectRepository.get(bucket.schema.id, key)
+          if (!object) throw new Error(`Object "${key}" not found`)
+          return object.data
+        },
+        delete: async (key: string) => {
+          await this.objectRepository.delete(bucket.schema.id, key)
+        },
+        list: async () => {
+          const objects = await this.objectRepository.listByBucketId(bucket.schema.id)
+          return objects.map((object) => ({
+            key: object.key,
+            size: object.size,
+            contentType: object.contentType,
+            createdAt: object.createdAt.toISOString(),
+            updatedAt: object.updatedAt.toISOString(),
+          }))
+        },
+      }
+    }
     return {
-      lint: (code: string) => this.codeService.lint(code, inputData, table),
-      runJavascript: (code: string) => this.codeService.runJavascript(code, inputData, table),
-      runTypescript: (code: string) => this.codeService.runTypescript(code, inputData, table),
+      lint: (code: string) => this.codeService.lint(code, inputData, table, bucket),
+      runJavascript: (code: string) =>
+        this.codeService.runJavascript(code, inputData, table, bucket),
+      runTypescript: (code: string) =>
+        this.codeService.runTypescript(code, inputData, table, bucket),
     }
   }
 
