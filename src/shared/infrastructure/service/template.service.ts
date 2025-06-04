@@ -1,11 +1,49 @@
 import Handlebars from 'handlebars'
-import { injectable } from 'inversify'
+import { inject, injectable } from 'inversify'
+import TYPES from '../../application/di/types'
+import { LoggerService } from './logger.service'
+
+Handlebars.registerHelper('json', function (context) {
+  return JSON.stringify(context)
+})
+
+Handlebars.registerHelper('number', function (context) {
+  return String(context)
+})
+
+Handlebars.registerHelper('boolean', function (context) {
+  return String(context)
+})
 
 @injectable()
 export class TemplateService {
-  fill(template: string, data: object) {
+  constructor(
+    @inject(TYPES.Service.Logger)
+    private readonly logger: LoggerService
+  ) {
+    this.logger = this.logger.child('template-service')
+  }
+
+  fill(template: string, data: object): string | Record<string, unknown> | number | boolean | null {
+    if (template.startsWith('{{json') && template.endsWith('}}')) {
+      const jsonTemplate = template.replace('{{json', '{{{json').replace('}}', '}}}')
+      const compiled = Handlebars.compile(jsonTemplate)
+      try {
+        return JSON.parse(compiled(data)) as Record<string, unknown>
+      } catch (error) {
+        this.logger.error(error instanceof Error ? error.message : 'Unknown error')
+        return null
+      }
+    } else if (template.startsWith('{{number') && template.endsWith('}}')) {
+      const compiled = Handlebars.compile(template)
+      return Number(compiled(data))
+    } else if (template.startsWith('{{boolean') && template.endsWith('}}')) {
+      const compiled = Handlebars.compile(template)
+      return Boolean(compiled(data))
+    }
     const compiled = Handlebars.compile(template)
-    return compiled(data)
+    const value = compiled(data)
+    return value
   }
 
   fillObject<T extends Record<string, unknown>>(object: T, data: object): T {

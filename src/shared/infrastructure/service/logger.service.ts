@@ -14,7 +14,7 @@ export class LoggerService {
     @inject(TYPES.Service.Env)
     private readonly env: EnvService,
     @unmanaged()
-    private readonly childLogger: Logger
+    private readonly childLogger?: Logger
   ) {
     if (this.childLogger) {
       this.logger = this.childLogger
@@ -27,7 +27,7 @@ export class LoggerService {
           format.timestamp(),
           format.printf(({ timestamp, level, message, name }) => {
             if (this.env.get('NODE_ENV') === 'production') {
-              return `[${level}]: ${message}`
+              return `[${level}${name ? `: ${name}` : ''}]: ${message}`
             }
             return `${timestamp} [${level}${name ? `: ${name}` : ''}] ${message}`
           })

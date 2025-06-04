@@ -16,10 +16,9 @@ export class SetupActionUseCase {
     const { schema } = action
     switch (schema.service) {
       case 'code': {
-        const inputData = this.actionRepository.code(app, schema.inputData).fillInputData({})
         switch (schema.action) {
           case 'run-typescript': {
-            const error = await this.actionRepository.code(app, inputData).lint(schema.code)
+            const error = await this.actionRepository.code(app, {}).lint(schema.code)
             if (error) {
               this.actionRepository.error(error)
               throw new Error('Invalid Typescript code')
@@ -27,7 +26,7 @@ export class SetupActionUseCase {
             break
           }
           case 'run-javascript': {
-            const error = await this.actionRepository.code(app, inputData).lint(schema.code)
+            const error = await this.actionRepository.code(app, {}).lint(schema.code)
             if (error) {
               this.actionRepository.error(error)
               throw new Error('Invalid Javascript code')
