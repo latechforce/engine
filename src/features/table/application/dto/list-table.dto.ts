@@ -1,4 +1,4 @@
-import type { Table } from '@/table/domain/entity/table.entity'
+import type { Table } from '../../domain/entity/table.entity'
 
 export type ListTablesDto = {
   tables: {

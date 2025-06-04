@@ -1,20 +1,20 @@
 // Action domain imports
-import type { Action } from '@/action/domain/entity'
-import { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
-import { ServiceAction } from '@/action/domain/entity/service-action.entity'
+import type { Action } from '../../../action/domain/entity'
+import { IntegrationAction } from '../../../action/domain/entity/integration-action.entity'
+import { ServiceAction } from '../../../action/domain/entity/service-action.entity'
 
 // Connection domain imports
-import type { Connection } from '@/connection/domain/entity/connection.entity'
+import type { Connection } from '../../../connection/domain/entity/connection.entity'
 
 // Trigger domain imports
-import type { Trigger } from '@/trigger/domain/entity/trigger.entity'
-import { IntegrationTrigger } from '@/trigger/domain/entity/integration-trigger.entity'
-import { ServiceTrigger } from '@/trigger/domain/entity/service-trigger.entity'
+import type { Trigger } from '../../../trigger/domain/entity/trigger.entity'
+import { IntegrationTrigger } from '../../../trigger/domain/entity/integration-trigger.entity'
+import { ServiceTrigger } from '../../../trigger/domain/entity/service-trigger.entity'
 
 // Automation domain imports
-import type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
-import type { ActionSchema } from '@/action/domain/schema/action.schema'
-import type { TriggerSchema } from '@/trigger/domain/schema/trigger.schema'
+import type { AutomationSchema } from '../schema/automation.schema'
+import type { ActionSchema } from '../../../action/domain/schema/action.schema'
+import type { TriggerSchema } from '../../../trigger/domain/schema/trigger.schema'
 
 export class Automation {
   public readonly trigger: Trigger

@@ -1,4 +1,4 @@
-import type { App } from '@/app/domain/entity/app.entity'
+import type { App } from '../../../app/domain/entity/app.entity'
 import type { IntegrationAction } from '../entity/integration-action.entity'
 import type { ActionResult } from '../value-object/action-result.value-object'
 import type { IntegrationError } from '../value-object/integration-error.value.object'

@@ -1,18 +1,18 @@
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 import { inject, injectable } from 'inversify'
-import type { SchemaService } from '@/shared/infrastructure/service/validator.service'
+import type { SchemaService } from '../../../../shared/infrastructure/service/validator.service'
 import type {
   IRecordRepository,
   RecordTransaction,
-} from '@/table/domain/repository-interface/record-repository.interface'
-import { Record } from '@/table/domain/entity/record.entity'
-import type { FieldValue } from '@/table/domain/object-value/field-value.object-value'
+} from '../../domain/repository-interface/record-repository.interface'
+import { Record } from '../../domain/entity/record.entity'
+import type { FieldValue } from '../../domain/object-value/field-value.object-value'
 import type { TableDatabaseService } from '../service/database.service'
-import type { Table } from '@/table/domain/entity/table.entity'
-import type { RecordFieldRow } from '@/table/domain/object-value/record-field-row.object-value'
+import type { Table } from '../../domain/entity/table.entity'
+import type { RecordFieldRow } from '../../domain/object-value/record-field-row.object-value'
 import type { SchemaObject } from 'ajv'
-import type { ViewRow } from '@/table/domain/object-value/view-row.object-value'
-import type { Fields } from '@/table/domain/object-value/fields.object-value'
+import type { ViewRow } from '../../domain/object-value/view-row.object-value'
+import type { Fields } from '../../domain/object-value/fields.object-value'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {

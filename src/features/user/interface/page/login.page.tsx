@@ -1,6 +1,6 @@
-import { LoginForm } from '@/user/interface/component/login-form.component'
 import { createRoute } from '@tanstack/react-router'
-import { adminRoute } from '@/app/interface/page/router'
+import { adminRoute } from '../../../app/interface/page/router'
+import { LoginForm } from '../component/login-form.component'
 
 export const LoginPage = () => {
   return (

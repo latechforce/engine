@@ -1,23 +1,23 @@
 import { createRoute } from '@tanstack/react-router'
-import Layout from '@/app/interface/page/admin/layout'
-import { DataTable } from '@/shared/interface/component/data-table.component'
+import Layout from '../../../../app/interface/page/admin/layout'
+import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
-import { client } from '@/shared/interface/lib/client.lib'
-import type { ConnectionDto } from '@/connection/application/dto/connection.dto'
+import { client } from '../../../../../shared/interface/lib/client.lib'
+import type { ConnectionDto } from '../../../application/dto/connection.dto'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from '@/shared/interface/ui/dropdown-menu.ui'
-import { Button } from '@/shared/interface/ui/button.ui'
+} from '../../../../../shared/interface/ui/dropdown-menu.ui'
+import { Button } from '../../../../../shared/interface/ui/button.ui'
 import { Link, MoreHorizontal, Unlink } from 'lucide-react'
 import { Suspense, useEffect } from 'react'
-import { TableSkeleton } from '@/shared/interface/ui/table.ui'
-import type { ListConnectionsDto } from '@/connection/application/dto/list-connections.dto'
-import { adminRoute } from '@/app/interface/page/router'
+import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
+import type { ListConnectionsDto } from '../../../application/dto/list-connections.dto'
+import { adminRoute } from '../../../../app/interface/page/router'
 
 const columns: ColumnDef<ConnectionDto>[] = [
   {

@@ -3,8 +3,8 @@ import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
 
 // Connection application imports
-import type { ListConnectionsUseCase } from '@/connection/application/use-case/list-connections.use-case'
-import type { AuthenticateConnectionUseCase } from '@/connection/application/use-case/authenticate-connection.use-case'
+import type { ListConnectionsUseCase } from '../../application/use-case/list-connections.use-case'
+import type { AuthenticateConnectionUseCase } from '../../application/use-case/authenticate-connection.use-case'
 import TYPES from '../../application/di/types'
 
 export type ConnectionHonoContextType = {

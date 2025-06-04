@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify'
-import type { IBucketRepository } from '@/bucket/domain/repository-interface/bucket-repository.interface'
-import TYPES from '@/shared/application/di/types'
-import type { Bucket } from '@/bucket/domain/entity/bucket.entity'
+import type { IBucketRepository } from '../../domain/repository-interface/bucket-repository.interface'
+import TYPES from '../../../../shared/application/di/types'
+import type { Bucket } from '../../domain/entity/bucket.entity'
 import type { BucketDatabaseService } from '../service/database.service'
-import type { ServerService } from '@/shared/infrastructure/service'
+import type { ServerService } from '../../../../shared/infrastructure/service'
 import type { RouteConfig } from '@hono/zod-openapi'
 
 @injectable()

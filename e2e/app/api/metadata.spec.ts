@@ -1,4 +1,4 @@
-import type { GetAppMetadataDto } from '@/app/application/dto/get-app-metadata.dto'
+import type { GetAppMetadataDto } from '../../../src/features/app/application/dto/get-app-metadata.dto'
 import { expect, test } from '@/e2e/fixtures'
 
 test('should return metadata', async ({ startExampleApp }) => {

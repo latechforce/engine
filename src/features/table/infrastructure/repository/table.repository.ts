@@ -1,16 +1,16 @@
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 import type {
   ITableRepository,
   TableTransaction,
-} from '@/table/domain/repository-interface/table-repository.interface'
+} from '../../domain/repository-interface/table-repository.interface'
 import { inject, injectable } from 'inversify'
-import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
+import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 import type { TableDatabaseService } from '../service/database.service'
-import type { Table } from '@/table/domain/entity/table.entity'
-import type { Field } from '@/table/domain/entity/field.entity'
+import type { Table } from '../../domain/entity/table.entity'
+import type { Field } from '../../domain/entity/field.entity'
 import { sql } from 'drizzle-orm'
 import type { RouteConfig } from '@hono/zod-openapi'
-import type { ServerService } from '@/shared/infrastructure/service/server.service'
+import type { ServerService } from '../../../../shared/infrastructure/service/server.service'
 
 @injectable()
 export class TableRepository implements ITableRepository {

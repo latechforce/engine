@@ -8,9 +8,9 @@ import {
   EnvService,
   LoggerService,
   DatabaseService,
-} from '@/shared/infrastructure/service'
-import { HonoContext } from '@/shared/infrastructure/di/context'
-import TYPES from '@/shared/application/di/types'
+} from '../../../../shared/infrastructure/service'
+import { HonoContext } from '../../../../shared/infrastructure/di/context'
+import TYPES from '../../../../shared/application/di/types'
 
 // App domain imports
 import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
@@ -19,7 +19,7 @@ import { appSchema } from '../../domain/schema/app.schema'
 import type { ValidateResult } from '../../domain/value-object/validate-result.value-object'
 
 // User infrastructure imports
-import type { AuthService } from '@/user/infrastructure/service/auth.service'
+import type { AuthService } from '../../../user/infrastructure/service/auth.service'
 
 @injectable()
 export class AppRepository implements IAppRepository {

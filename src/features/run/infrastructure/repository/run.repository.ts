@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/application/di/types'
-import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
+import TYPES from '../../../../shared/application/di/types'
+import type { IRunRepository } from '../../domain/repository-interface/run-repository.interface'
 import { EventEmitter } from 'events'
-import { Run } from '@/run/domain/entity/run.entity'
+import { Run } from '../../domain/entity/run.entity'
 import type { RunDatabaseService } from '../service/database.service'
 
 @injectable()

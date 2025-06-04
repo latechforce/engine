@@ -1,7 +1,7 @@
-import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
+import type { IRunRepository } from '../../domain/repository-interface/run-repository.interface'
 import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
-import { toListRunsDto, type ListRunsDto } from '@/run/application/dto/list-runs.dto'
+import { toListRunsDto, type ListRunsDto } from '../dto/list-runs.dto'
 
 @injectable()
 export class ListRunsUseCase {

@@ -1,16 +1,16 @@
 import { Container } from 'inversify'
 import TYPES from '../../application/di/types'
-import type { IBucketRepository } from '@/bucket/domain/repository-interface/bucket-repository.interface'
+import type { IBucketRepository } from '../../domain/repository-interface/bucket-repository.interface'
 import { BucketRepository } from '../repository/bucket.repository'
 import { BucketHonoContext } from './context'
-import { DeleteObjectUseCase } from '@/bucket/application/use-case/delete-object.use-case'
-import { UploadObjectUseCase } from '@/bucket/application/use-case/upload-object.use-case'
-import { DownloadObjectUseCase } from '@/bucket/application/use-case/download-object.use-case'
+import { DeleteObjectUseCase } from '../../application/use-case/delete-object.use-case'
+import { UploadObjectUseCase } from '../../application/use-case/upload-object.use-case'
+import { DownloadObjectUseCase } from '../../application/use-case/download-object.use-case'
 import { BucketDatabaseService } from '../service/database.service'
-import type { IObjectRepository } from '@/bucket/domain/repository-interface/object-repository.interface'
+import type { IObjectRepository } from '../../domain/repository-interface/object-repository.interface'
 import { ObjectRepository } from '../repository/object.repository'
-import { SetupBucketUseCase } from '@/bucket/application/use-case/setup-bucket.use-case'
-import { ListObjectsUseCase } from '@/bucket/application/use-case/list-objects.use-case'
+import { SetupBucketUseCase } from '../../application/use-case/setup-bucket.use-case'
+import { ListObjectsUseCase } from '../../application/use-case/list-objects.use-case'
 
 export function registerBucketDependencies(container: Container) {
   // Register repositories

@@ -8,8 +8,8 @@ import TYPES from '../../application/di/types'
 // App application imports
 import { StartAppUseCase } from '../../application/use-case/start-app.use-case'
 import { GetAppMetadataUseCase } from '../../application/use-case/get-app-metadata.use-case'
-import { ValidateAppUseCase } from '@/app/application/use-case/validate-app.use-case'
-import { MockAppUseCase } from '@/app/application/use-case/mock-app.use-case'
+import { ValidateAppUseCase } from '../../application/use-case/validate-app.use-case'
+import { MockAppUseCase } from '../../application/use-case/mock-app.use-case'
 
 // App infrastructure imports
 import { AppRepository } from '../repository/app.repository'

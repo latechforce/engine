@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
-import type { HonoType } from '@/shared/infrastructure/service'
-import { FormController } from '@/form/interface/controller/form.controller'
+import type { HonoType } from '../../../shared/infrastructure/service'
+import { FormController } from './controller/form.controller'
 
 export const formRoutes = new Hono<HonoType>()
   .get('/', FormController.list)

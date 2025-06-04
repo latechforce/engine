@@ -1,17 +1,17 @@
 // App domain types
-export type { AppSchema } from '@/app/domain/schema/app.schema'
-export type { Mock } from '@/app/domain/value-object/mock.value-object'
+export type { AppSchema } from './features/app/domain/schema/app.schema'
+export type { Mock } from './features/app/domain/value-object/mock.value-object'
 
 // Shared domain types
-export type { EnvSchema } from '@/shared/domain/schema/env.schema'
+export type { EnvSchema } from './shared/domain/schema/env.schema'
 
 // Feature domain types
-export type { ActionSchema } from '@/action/domain/schema/action.schema'
-export type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
-export type { TriggerSchema } from '@/trigger/domain/schema/trigger.schema'
-export type { FieldSchema } from '@/table/domain/schema/field'
-export type { TableSchema } from '@/table/domain/schema/table.schema'
-export type { ConnectionSchema } from '@/connection/domain/schema/connection.schema'
+export type { ActionSchema } from './features/action/domain/schema/action.schema'
+export type { AutomationSchema } from './features/automation/domain/schema/automation.schema'
+export type { TriggerSchema } from './features/trigger/domain/schema/trigger.schema'
+export type { FieldSchema } from './features/table/domain/schema/field'
+export type { TableSchema } from './features/table/domain/schema/table.schema'
+export type { ConnectionSchema } from './features/connection/domain/schema/connection.schema'
 
 // Infrastructure types
-export type { CodeContext } from '@/action/infrastructure/service/code.service'
+export type { CodeContext } from './features/action/infrastructure/service/code.service'

@@ -1,9 +1,9 @@
-import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
+import type { IRecordRepository } from '../../domain/repository-interface/record-repository.interface'
 import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
 import { toGetRecordDto, type GetRecordDto } from '../dto/get-record.dto'
-import { HttpError } from '@/shared/domain/entity/http-error.entity'
-import type { App } from '@/app/domain/entity/app.entity'
+import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
+import type { App } from '../../../app/domain/entity/app.entity'
 
 @injectable()
 export class ReadRecordUseCase {

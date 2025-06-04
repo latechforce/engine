@@ -3,25 +3,25 @@ import { inject, injectable } from 'inversify'
 import { HTTPError } from 'ky'
 
 // Shared imports
-import TYPES from '@/shared/application/di/types'
-import type { LoggerService, TemplateService } from '@/shared/infrastructure/service'
+import TYPES from '../../../../shared/application/di/types'
+import type { LoggerService, TemplateService } from '../../../../shared/infrastructure/service'
 
 // Action domain imports
-import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
-import type { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
-import type { ActionResult } from '@/action/domain/value-object/action-result.value-object'
-import type { IntegrationError } from '@/action/domain/value-object/integration-error.value.object'
+import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
+import type { IntegrationAction } from '../../domain/entity/integration-action.entity'
+import type { ActionResult } from '../../domain/value-object/action-result.value-object'
+import type { IntegrationError } from '../../domain/value-object/integration-error.value.object'
 
 // Action infrastructure imports
-import type { CodeService, TableContext } from '@/action/infrastructure/service/code.service'
-import { toActionIntegration } from '@/action/infrastructure/integration'
+import type { CodeService, TableContext } from '../service/code.service'
+import { toActionIntegration } from '../integration'
 
 // Connection domain imports
-import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
-import type { Fields } from '@/table/domain/object-value/fields.object-value'
-import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
-import type { App } from '@/app/domain/entity/app.entity'
-import { Record } from '@/table/domain/entity/record.entity'
+import type { ITokenRepository } from '../../../connection/domain/repository-interface/token-repository.interface'
+import type { Fields } from '../../../table/domain/object-value/fields.object-value'
+import type { IRecordRepository } from '../../../table/domain/repository-interface/record-repository.interface'
+import type { App } from '../../../app/domain/entity/app.entity'
+import { Record } from '../../../table/domain/entity/record.entity'
 
 @injectable()
 export class ActionRepository implements IActionRepository {

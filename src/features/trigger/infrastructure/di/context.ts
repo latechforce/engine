@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
 
 // Trigger application imports
-import type { TriggerHttpAutomationUseCase } from '@/trigger/application/use-case/trigger-http-automation.use-case'
+import type { TriggerHttpAutomationUseCase } from '../../application/use-case/trigger-http-automation.use-case'
 import TYPES from '../../application/di/types'
 
 export type TriggerHonoContextType = {

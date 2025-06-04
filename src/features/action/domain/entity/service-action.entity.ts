@@ -1,5 +1,4 @@
-import type { ServiceActionSchema } from '@/action/domain/schema/service'
-import type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
+import type { ServiceActionSchema } from '../schema/service'
 
 export class ServiceAction {
   constructor(

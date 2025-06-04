@@ -1,5 +1,5 @@
-import type { Connection } from '@/connection/domain/entity/connection.entity'
-import type { ConnectionStatus } from '@/connection/domain/value-object/connection-status.value-object'
+import type { Connection } from '../../domain/entity/connection.entity'
+import type { ConnectionStatus } from '../../domain/value-object/connection-status.value-object'
 
 export type ConnectionDto = {
   name: string

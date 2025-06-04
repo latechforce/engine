@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 
-import { cn } from '@/shared/interface/lib/utils.lib'
-import { Skeleton } from '@/shared/interface/ui/skeleton.ui'
+import { cn } from '../lib/utils.lib'
+import { Skeleton } from './skeleton.ui'
 
 function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {
   return (

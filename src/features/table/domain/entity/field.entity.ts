@@ -1,4 +1,4 @@
-import type { FieldSchema } from '@/types'
+import type { FieldSchema } from '../schema/field'
 
 export class Field {
   public readonly slug: string

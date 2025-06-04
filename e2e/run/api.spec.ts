@@ -1,6 +1,6 @@
-import type { GetRunDto } from '@/run/application/dto/get-run.dto'
-import type { ListRunsDto } from '@/run/application/dto/list-runs.dto'
-import { expect, test } from '@/e2e/fixtures'
+import type { GetRunDto } from '../../src/features/run/application/dto/get-run.dto'
+import type { ListRunsDto } from '../../src/features/run/application/dto/list-runs.dto'
+import { expect, test } from '../fixtures'
 
 test('should return a list of runs', async ({ startExampleApp }) => {
   // GIVEN

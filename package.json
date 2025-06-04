@@ -4,21 +4,20 @@
   "version": "0.49.0",
   "main": "./src/index.ts",
   "module": "./src/index.ts",
-  "types": "./dist/index.d.ts",
+  "types": "./src/types.ts",
   "type": "module",
   "author": "Thomas JEANNEAU",
   "license": "Fair Use License",
+  "files": [
+    "src/**/*"
+  ],
   "exports": {
     ".": {
       "import": "./src/index.ts",
       "require": "./src/index.ts",
-      "types": "./dist/index.d.ts"
+      "types": "./src/types.ts"
     }
   },
-  "files": [
-    "dist/**/*",
-    "src/**/*"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/latechforce/engine.git"

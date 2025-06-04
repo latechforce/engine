@@ -1,6 +1,6 @@
-import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
-import type { ConditionsSchema } from '@/action/domain/schema/condition'
-import type { Run } from '@/run/domain/entity/run.entity'
+import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
+import type { ConditionsSchema } from '../../domain/schema/condition'
+import type { Run } from '../../../run/domain/entity/run.entity'
 import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
 

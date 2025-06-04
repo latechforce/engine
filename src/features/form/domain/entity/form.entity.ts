@@ -1,4 +1,4 @@
-import type { FormSchema } from '@/form/domain/schema/form.schema'
+import type { FormSchema } from '../schema/form.schema'
 import type { InputSchema } from '../schema/input'
 
 export class Form {

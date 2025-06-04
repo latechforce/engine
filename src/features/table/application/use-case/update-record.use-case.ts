@@ -1,11 +1,11 @@
 import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
-import type { App } from '@/app/domain/entity/app.entity'
-import { HttpError } from '@/shared/domain/entity/http-error.entity'
-import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
+import type { App } from '../../../app/domain/entity/app.entity'
+import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
+import type { IRecordRepository } from '../../domain/repository-interface/record-repository.interface'
 import { toGetRecordDto, type GetRecordDto } from '../dto/get-record.dto'
-import type { UpdateRecordBody } from '@/table/domain/object-value/update-record-body.object-value'
-import type { Table } from '@/table/domain/entity/table.entity'
+import type { UpdateRecordBody } from '../../domain/object-value/update-record-body.object-value'
+import type { Table } from '../../domain/entity/table.entity'
 
 @injectable()
 export class UpdateRecordUseCase {

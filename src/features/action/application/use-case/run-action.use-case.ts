@@ -1,11 +1,11 @@
 import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
-import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
-import type { Action } from '@/action/domain/entity'
-import type { Run } from '@/run/domain/entity/run.entity'
-import { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
-import type { ActionResult } from '@/action/domain/value-object/action-result.value-object'
-import type { App } from '@/app/domain/entity/app.entity'
+import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
+import type { Action } from '../../domain/entity'
+import type { Run } from '../../../run/domain/entity/run.entity'
+import { IntegrationAction } from '../../domain/entity/integration-action.entity'
+import type { ActionResult } from '../../domain/value-object/action-result.value-object'
+import type { App } from '../../../app/domain/entity/app.entity'
 import type { RunFilterUseCase } from './run-filter.use-case'
 
 @injectable()

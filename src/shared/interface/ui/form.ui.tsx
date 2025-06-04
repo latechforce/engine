@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as LabelPrimitive from '@radix-ui/react-label'
 
-import { cn } from '@/shared/interface/lib/utils.lib'
-import { Label } from '@/shared/interface/ui/label.ui'
+import { cn } from '../lib/utils.lib'
+import { Label } from './label.ui'
 import { Skeleton } from './skeleton.ui'
 
 function FormItem({ className, ...props }: React.ComponentProps<'div'>) {

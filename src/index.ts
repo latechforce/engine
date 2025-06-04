@@ -2,12 +2,12 @@
 import './instrument'
 import 'reflect-metadata'
 
-// Absolute imports
-import { registerDependencies } from '@/shared/infrastructure/di/container'
-import TYPES from '@/shared/application/di/types'
-import type { Mock } from '@/app/domain/value-object/mock.value-object'
-import { apiRoutes } from '@/shared/interface/routes'
-import { AppController } from '@/app/interface/controller/app.controller'
+// Relative imports
+import { registerDependencies } from './shared/infrastructure/di/container'
+import TYPES from './shared/application/di/types'
+import type { Mock } from './features/app/domain/value-object/mock.value-object'
+import { apiRoutes } from './shared/interface/routes'
+import { AppController } from './features/app/interface/controller/app.controller'
 
 type Options = {
   externals?: Record<string, unknown>

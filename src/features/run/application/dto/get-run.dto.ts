@@ -1,6 +1,6 @@
-import type { Run } from '@/run/domain/entity/run.entity'
+import type { Run } from '../../domain/entity/run.entity'
 import { toRunDto, type RunDto } from './run.dto'
-import type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
+import type { AutomationSchema } from '../../../../features/automation/domain/schema/automation.schema'
 
 export type GetRunDto = {
   run: RunDto

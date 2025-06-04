@@ -1,13 +1,17 @@
-import { Form } from '@/shared/interface/component/form.component'
+import { Form } from '../../../../shared/interface/component/form.component'
 import { createRoute, Navigate } from '@tanstack/react-router'
-import { rootRoute } from '@/shared/interface/page/root.layout'
-import { TypographyH1, TypographyH3, TypographyP } from '@/shared/interface/ui/typography.ui'
-import { client } from '@/shared/interface/lib/client.lib'
+import { rootRoute } from '../../../../shared/interface/page/root.layout'
+import {
+  TypographyH1,
+  TypographyH3,
+  TypographyP,
+} from '../../../../shared/interface/ui/typography.ui'
+import { client } from '../../../../shared/interface/lib/client.lib'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import type { GetFormDto } from '@/form/application/dto/get-form.dto'
+import type { GetFormDto } from '../../application/dto/get-form.dto'
 import { Suspense, useState } from 'react'
-import { FormSkeleton } from '@/shared/interface/ui/form.ui'
-import type { ErrorDto } from '@/shared/application/dto/error.dto'
+import { FormSkeleton } from '../../../../shared/interface/ui/form.ui'
+import type { ErrorDto } from '../../../../shared/application/dto/error.dto'
 
 const FormDataPage = () => {
   const { path } = formRoute.useParams()

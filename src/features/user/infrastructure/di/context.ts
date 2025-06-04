@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
 
 // Shared imports
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 
 // User infrastructure imports
 import type { AuthService, AuthType } from '../service/auth.service'

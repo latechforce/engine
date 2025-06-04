@@ -1,14 +1,14 @@
 import { createRoute } from '@tanstack/react-router'
-import Layout from '@/app/interface/page/admin/layout'
-import { DataTable } from '@/shared/interface/component/data-table.component'
+import Layout from '../../../../app/interface/page/admin/layout'
+import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import type { ColumnDef } from '@tanstack/react-table'
-import { client } from '@/shared/interface/lib/client.lib'
-import type { AutomationDto } from '@/automation/application/dto/automation.dto'
+import { client } from '../../../../../shared/interface/lib/client.lib'
+import type { AutomationDto } from '../../../application/dto/automation.dto'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { Suspense } from 'react'
-import { TableSkeleton } from '@/shared/interface/ui/table.ui'
-import type { ListAutomationsDto } from '@/automation/application/dto/list-automations.dto'
-import { adminRoute } from '@/app/interface/page/router'
+import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
+import type { ListAutomationsDto } from '../../../application/dto/list-automations.dto'
+import { adminRoute } from '../../../../app/interface/page/router'
 
 const columns: ColumnDef<AutomationDto>[] = [
   {

@@ -1,8 +1,15 @@
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/shared/interface/ui/sidebar.ui'
-import { Sidebar, type SidebarGroup } from '@/shared/interface/component/sidebar.component'
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '../../../../../shared/interface/ui/sidebar.ui'
+import {
+  Sidebar,
+  type SidebarGroup,
+} from '../../../../../shared/interface/component/sidebar.component'
 import { History, Zap, Gauge, Webhook, Link, FileText, Table } from 'lucide-react'
-import { RequireAuth } from '@/user/interface/context/require-auth.context'
-import { Separator } from '@/shared/interface/ui/separator.ui'
+import { RequireAuth } from '../../../../user/interface/context/require-auth.context'
+import { Separator } from '../../../../../shared/interface/ui/separator.ui'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,7 +17,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/shared/interface/ui/breadcrumb.ui'
+} from '../../../../../shared/interface/ui/breadcrumb.ui'
 
 // Menu items.
 const items: SidebarGroup[] = [

@@ -1,5 +1,5 @@
 import { CalendlyConnectionIntegration } from './calendly.integration'
-import type { Connection } from '@/connection/domain/entity/connection.entity'
+import type { Connection } from '../../domain/entity/connection.entity'
 
 export type ConnectionIntegration = CalendlyConnectionIntegration
 

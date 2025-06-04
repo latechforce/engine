@@ -2,12 +2,12 @@
 import { Container } from 'inversify'
 
 // Trigger domain imports
-import type { ITriggerRepository } from '@/trigger/domain/repository-interface/trigger-repository.interface'
+import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
 
 // Trigger application imports
 import TYPES from '../../application/di/types'
-import { SetupTriggerUseCase } from '@/trigger/application/use-case/setup-trigger.use-case'
-import { TriggerHttpAutomationUseCase } from '@/trigger/application/use-case/trigger-http-automation.use-case'
+import { SetupTriggerUseCase } from '../../application/use-case/setup-trigger.use-case'
+import { TriggerHttpAutomationUseCase } from '../../application/use-case/trigger-http-automation.use-case'
 
 // Trigger infrastructure imports
 import { TriggerRepository } from '../repository/trigger.repository'

@@ -1,5 +1,5 @@
 import { pgTable, text, timestamp, json } from 'drizzle-orm/pg-core'
-import type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
+import type { AutomationSchema } from '../../../../features/automation/domain/schema/automation.schema'
 
 export const run = pgTable('run', {
   id: text().primaryKey(),

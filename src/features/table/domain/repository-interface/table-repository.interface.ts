@@ -1,4 +1,4 @@
-import type { Table } from '@/table/domain/entity/table.entity'
+import type { Table } from '../entity/table.entity'
 import type { TableRow } from '../object-value/table-row.object-value'
 import type { TableFieldRow } from '../object-value/table-field-row.object-value'
 import type { Field } from '../entity/field.entity'

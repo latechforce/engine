@@ -1,15 +1,15 @@
 import { createRoute } from '@tanstack/react-router'
-import Layout from '@/app/interface/page/admin/layout'
-import { DataTable } from '@/shared/interface/component/data-table.component'
+import Layout from '../../../../app/interface/page/admin/layout'
+import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
-import { client } from '@/shared/interface/lib/client.lib'
-import type { RunDto } from '@/run/application/dto/run.dto'
+import { client } from '../../../../../shared/interface/lib/client.lib'
+import type { RunDto } from '../../../application/dto/run.dto'
 import { Suspense } from 'react'
-import { TableSkeleton } from '@/shared/interface/ui/table.ui'
-import type { ListRunsDto } from '@/run/application/dto/list-runs.dto'
-import { adminRoute } from '@/app/interface/page/router'
+import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
+import type { ListRunsDto } from '../../../application/dto/list-runs.dto'
+import { adminRoute } from '../../../../app/interface/page/router'
 
 const columns: ColumnDef<RunDto>[] = [
   {

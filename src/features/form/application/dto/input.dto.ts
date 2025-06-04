@@ -1,5 +1,5 @@
 // Form domain imports
-import type { InputSchema } from '@/form/domain/schema/input'
+import type { InputSchema } from '../../domain/schema/input'
 
 type BaseInputDto = {
   name: string

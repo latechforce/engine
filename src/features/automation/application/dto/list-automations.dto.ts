@@ -1,4 +1,4 @@
-import type { Automation } from '@/automation/domain/entity/automation.entity'
+import type { Automation } from '../../domain/entity/automation.entity'
 import { toAutomationDto, type AutomationDto } from './automation.dto'
 
 export type ListAutomationsDto = {

@@ -1,8 +1,8 @@
-import { authClient } from '@/user/interface/lib/auth.lib'
+import { authClient } from '../../../../user/interface/lib/auth.lib'
 import { createRoute } from '@tanstack/react-router'
 import Layout from './layout'
 import { adminRoute } from '../router'
-import { TypographyBlockquote } from '@/shared/interface/ui/typography.ui'
+import { TypographyBlockquote } from '../../../../../shared/interface/ui/typography.ui'
 
 export const DashboardPage = () => {
   const { data: session } = authClient.useSession()

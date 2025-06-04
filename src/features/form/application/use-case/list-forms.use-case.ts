@@ -1,6 +1,6 @@
 import { injectable } from 'inversify'
-import type { App } from '@/app/domain/entity/app.entity'
-import { toListFormsDto, type ListFormsDto } from '@/form/application/dto/list-forms.dto'
+import type { App } from '../../../../features/app/domain/entity/app.entity'
+import { toListFormsDto, type ListFormsDto } from '../dto/list-forms.dto'
 
 @injectable()
 export class ListFormsUseCase {

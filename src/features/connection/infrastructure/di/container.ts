@@ -2,14 +2,14 @@
 import { Container } from 'inversify'
 
 // Connection domain imports
-import type { IConnectionRepository } from '@/connection/domain/repository-interface/connection-repository.interface'
-import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
+import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
+import type { ITokenRepository } from '../../domain/repository-interface/token-repository.interface'
 
 // Connection application imports
 import TYPES from '../../application/di/types'
-import { ListConnectionsUseCase } from '@/connection/application/use-case/list-connections.use-case'
-import { AuthenticateConnectionUseCase } from '@/connection/application/use-case/authenticate-connection.use-case'
-import { SetupConnectionUseCase } from '@/connection/application/use-case/setup-connection.use-case'
+import { ListConnectionsUseCase } from '../../application/use-case/list-connections.use-case'
+import { AuthenticateConnectionUseCase } from '../../application/use-case/authenticate-connection.use-case'
+import { SetupConnectionUseCase } from '../../application/use-case/setup-connection.use-case'
 
 // Connection infrastructure imports
 import { ConnectionRepository } from '../repository/connection.repository'

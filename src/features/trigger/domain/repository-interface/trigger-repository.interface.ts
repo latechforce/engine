@@ -1,5 +1,5 @@
-import type { JSONSchemaSchema } from '@/shared/domain/schema/json-schema.schema'
-import type { IntegrationTrigger } from '@/trigger/domain/entity/integration-trigger.entity'
+import type { JSONSchemaSchema } from '../../../../shared/domain/schema/json-schema.schema'
+import type { IntegrationTrigger } from '../entity/integration-trigger.entity'
 
 export type ITriggerRepository = {
   debug(message: string): void

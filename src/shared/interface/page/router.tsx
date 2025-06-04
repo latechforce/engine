@@ -1,21 +1,21 @@
 import { createRouter } from '@tanstack/react-router'
 import { rootRoute } from './root.layout'
-import { formRoute } from '@/form/interface/page/form.page'
+import { formRoute } from '../../../features/form/interface/page/form.page'
 import { queryClient } from '../lib/query.lib'
 import { notFoundRoute } from './notFound.page'
-import { adminRoute } from '@/app/interface/page/router'
-import { homeRoute } from '@/page/interface/page/home.page'
-import { loginAdminRoute } from '@/user/interface/page/login.page'
-import { automationsAdminRoute } from '@/automation/interface/page/admin/automations.page'
-import { dashboardAdminRoute } from '@/app/interface/page/admin/dashboard.page'
-import { runsAdminRoute } from '@/run/interface/page/admin/runs.page'
-import { openapiAdminRoute } from '@/app/interface/page/admin/openapi.page'
-import { connectionsAdminRoute } from '@/connection/interface/page/admin/connections.page'
-import { formsAdminRoute } from '@/form/interface/page/admin/forms.page'
+import { adminRoute } from '../../../features/app/interface/page/router'
+import { homeRoute } from '../../../features/page/interface/page/home.page'
+import { loginAdminRoute } from '../../../features/user/interface/page/login.page'
+import { automationsAdminRoute } from '../../../features/automation/interface/page/admin/automations.page'
+import { dashboardAdminRoute } from '../../../features/app/interface/page/admin/dashboard.page'
+import { runsAdminRoute } from '../../../features/run/interface/page/admin/runs.page'
+import { openapiAdminRoute } from '../../../features/app/interface/page/admin/openapi.page'
+import { connectionsAdminRoute } from '../../../features/connection/interface/page/admin/connections.page'
+import { formsAdminRoute } from '../../../features/form/interface/page/admin/forms.page'
 import {
   tablesAdminRoute,
   tablesRedirectAdminRoute,
-} from '@/table/interface/page/admin/tables.page'
+} from '../../../features/table/interface/page/admin/tables.page'
 
 const routeTree = rootRoute.addChildren([
   notFoundRoute,

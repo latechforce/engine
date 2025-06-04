@@ -4,17 +4,17 @@ import { Hono } from 'hono'
 // Shared interface imports
 import { loggerMiddleware } from './middleware/logger.middleware'
 import { corsMiddleware } from './middleware/cors.middleware'
-import type { HonoType } from '@/shared/infrastructure/service'
+import type { HonoType } from '../infrastructure/service'
 
 // Feature interface imports
-import { authMiddleware } from '@/user/interface/middleware/auth.middleware'
-import { appRoutes } from '@/app/interface/routes'
-import { runRoutes } from '@/run/interface/routes'
-import { automationRoutes } from '@/automation/interface/routes'
-import { connectionRoutes } from '@/connection/interface/routes'
-import { formRoutes } from '@/form/interface/routes'
-import { tableRoutes } from '@/table/interface/routes'
-import { bucketRoutes } from '@/bucket/interface/routes'
+import { authMiddleware } from '../../features/user/interface/middleware/auth.middleware'
+import { appRoutes } from '../../features/app/interface/routes'
+import { runRoutes } from '../../features/run/interface/routes'
+import { automationRoutes } from '../../features/automation/interface/routes'
+import { connectionRoutes } from '../../features/connection/interface/routes'
+import { formRoutes } from '../../features/form/interface/routes'
+import { tableRoutes } from '../../features/table/interface/routes'
+import { bucketRoutes } from '../../features/bucket/interface/routes'
 
 export const apiRoutes = new Hono<HonoType>()
   .use(loggerMiddleware)

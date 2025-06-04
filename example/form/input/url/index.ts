@@ -1,4 +1,4 @@
-import type { AppSchema } from '@/types'
+import type { AppSchema } from '../../../../src/types'
 
 export const inGuides = true
 

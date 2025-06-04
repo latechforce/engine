@@ -1,7 +1,7 @@
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 import { and, eq } from 'drizzle-orm'
-import { DatabaseService } from '@/shared/infrastructure/service/database.service'
+import { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 
 @injectable()
 export class BucketDatabaseService {

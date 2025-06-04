@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import type { HonoType } from '@/shared/infrastructure/service'
+import type { HonoType } from '../../../shared/infrastructure/service'
 import { BucketController } from './controller/bucket.controller'
 
 export const bucketRoutes = new Hono<HonoType>()

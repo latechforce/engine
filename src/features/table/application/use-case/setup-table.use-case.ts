@@ -1,10 +1,10 @@
 import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
-import type { Table } from '@/table/domain/entity/table.entity'
+import type { Table } from '../../domain/entity/table.entity'
 import type {
   ITableRepository,
   TableTransaction,
-} from '@/table/domain/repository-interface/table-repository.interface'
+} from '../../domain/repository-interface/table-repository.interface'
 import { join } from 'path'
 import { z } from 'zod'
 

@@ -1,5 +1,5 @@
 import type { Context } from 'hono'
-import type { HonoType } from '@/shared/infrastructure/service'
+import type { HonoType } from '../../../../shared/infrastructure/service'
 
 export class ConnectionController {
   static async list(c: Context<HonoType>) {

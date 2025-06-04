@@ -1,12 +1,12 @@
 import { inject, injectable } from 'inversify'
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 import { eq, type SQL } from 'drizzle-orm'
-import type { DatabaseService } from '@/shared/infrastructure/service/database.service'
+import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 import { Kysely, PostgresDialect, type Dialect } from 'kysely'
 import { BunWorkerDialect } from 'kysely-bun-worker'
-import type { Table } from '@/table/domain/entity/table.entity'
-import type { ViewRow } from '@/table/domain/object-value/view-row.object-value'
-import type { RecordFieldRow } from '@/table/domain/object-value/record-field-row.object-value'
+import type { Table } from '../../domain/entity/table.entity'
+import type { ViewRow } from '../../domain/object-value/view-row.object-value'
+import type { RecordFieldRow } from '../../domain/object-value/record-field-row.object-value'
 
 type Base<I, S, D> = {
   create(data: I): Promise<void>

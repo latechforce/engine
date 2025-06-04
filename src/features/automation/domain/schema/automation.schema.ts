@@ -2,10 +2,10 @@
 import { z } from 'zod/v4'
 
 // Action domain imports
-import { actionSchema } from '@/action/domain/schema/action.schema'
+import { actionSchema } from '../../../action/domain/schema/action.schema'
 
 // Trigger domain imports
-import { triggerSchema } from '@/trigger/domain/schema/trigger.schema'
+import { triggerSchema } from '../../../trigger/domain/schema/trigger.schema'
 
 export const automationSchema = z
   .object({

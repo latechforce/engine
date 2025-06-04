@@ -1,5 +1,5 @@
 import { CalendlyActionIntegration } from './calendly'
-import type { IntegrationAction } from '@/action/domain/entity/integration-action.entity'
+import type { IntegrationAction } from '../../domain/entity/integration-action.entity'
 
 export type ActionIntegration = CalendlyActionIntegration
 

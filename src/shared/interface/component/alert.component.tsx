@@ -1,6 +1,6 @@
 import { AlertCircle } from 'lucide-react'
 
-import { Alert, AlertDescription, AlertTitle } from '@/shared/interface/ui/alert.ui'
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert.ui'
 
 export type AlertDestructiveProps = React.ComponentPropsWithoutRef<'div'> & {
   title?: string

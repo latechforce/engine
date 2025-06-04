@@ -1,5 +1,5 @@
-import type { Fields } from '@/table/domain/object-value/fields.object-value'
-import type { Record } from '@/table/domain/entity/record.entity'
+import type { Fields } from '../../domain/object-value/fields.object-value'
+import type { Record } from '../../domain/entity/record.entity'
 
 export type GetRecordDto = {
   record: {

@@ -1,9 +1,9 @@
-import TYPES from '@/shared/application/di/types'
-import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
-import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
+import TYPES from '../../../../shared/application/di/types'
+import type { LoggerService } from '../../../../shared/infrastructure/service'
+import type { IAutomationRepository } from '../../domain/repository-interface/automation-repository.interface'
 import { inject, injectable } from 'inversify'
 import type { RouteConfig } from '@hono/zod-openapi'
-import type { ServerService } from '@/shared/infrastructure/service/server.service'
+import type { ServerService } from '../../../../shared/infrastructure/service'
 
 @injectable()
 export class AutomationRepository implements IAutomationRepository {

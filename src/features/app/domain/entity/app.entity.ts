@@ -1,10 +1,10 @@
 import type { AppSchemaValidated } from '../schema/app.schema'
-import type { Env } from '@/shared/domain/value-object/env.value-object'
-import { Automation } from '@/automation/domain/entity/automation.entity'
-import { Table } from '@/table/domain/entity/table.entity'
-import { Connection } from '@/connection/domain/entity/connection.entity'
-import { Form } from '@/form/domain/entity/form.entity'
-import { Bucket } from '@/bucket/domain/entity/bucket.entity'
+import type { Env } from '../../../../shared/domain/value-object/env.value-object'
+import { Automation } from '../../../automation/domain/entity/automation.entity'
+import { Table } from '../../../table/domain/entity/table.entity'
+import { Connection } from '../../../connection/domain/entity/connection.entity'
+import { Form } from '../../../form/domain/entity/form.entity'
+import { Bucket } from '../../../bucket/domain/entity/bucket.entity'
 
 export class App {
   public readonly automations: Automation[]

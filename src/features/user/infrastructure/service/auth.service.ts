@@ -6,11 +6,11 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { eq } from 'drizzle-orm'
 
 // Shared imports
-import TYPES from '@/shared/application/di/types'
-import type { DatabaseService } from '@/shared/infrastructure/service/database.service'
-import type { EnvService } from '@/shared/infrastructure/service/env.service'
-import type { LoggerService } from '@/shared/infrastructure/service/logger.service'
-import type { ServerService } from '@/shared/infrastructure/service/server.service'
+import TYPES from '../../../../shared/application/di/types'
+import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
+import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
+import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
+import type { ServerService } from '../../../../shared/infrastructure/service/server.service'
 
 export type AuthType = {
   user: User | null

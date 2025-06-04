@@ -1,7 +1,7 @@
 import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
-import type { Connection } from '@/connection/domain/entity/connection.entity'
-import type { IConnectionRepository } from '@/connection/domain/repository-interface/connection-repository.interface'
+import type { Connection } from '../../domain/entity/connection.entity'
+import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 
 @injectable()
 export class SetupConnectionUseCase {

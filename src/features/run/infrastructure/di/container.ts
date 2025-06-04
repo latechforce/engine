@@ -1,11 +1,11 @@
 import { Container } from 'inversify'
 import TYPES from '../../application/di/types'
-import { ListRunsUseCase } from '@/run/application/use-case/list-runs.use-case'
+import { ListRunsUseCase } from '../../application/use-case/list-runs.use-case'
 import { RunHonoContext } from './context'
-import { GetRunUseCase } from '@/run/application/use-case/get-run.use-case'
+import { GetRunUseCase } from '../../application/use-case/get-run.use-case'
 import { RunDatabaseService } from '../service/database.service'
 import { RunRepository } from '../repository/run.repository'
-import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
+import type { IRunRepository } from '../../domain/repository-interface/run-repository.interface'
 
 export function registerRunDependencies(container: Container) {
   // Register repositories

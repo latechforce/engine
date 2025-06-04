@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { cn } from '@/shared/interface/lib/utils.lib'
+import { cn } from '../lib/utils.lib'
 
 function Textarea({ className, ...props }: React.ComponentProps<'textarea'>) {
   const textareaRef = React.useRef<HTMLTextAreaElement>(null)

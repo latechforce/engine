@@ -1,5 +1,5 @@
 import type { Context, MiddlewareHandler } from 'hono'
-import type { HonoType } from '@/shared/infrastructure/service'
+import type { HonoType } from '../../infrastructure/service'
 
 export const loggerMiddleware: MiddlewareHandler = async (c: Context<HonoType>, next) => {
   const logger = c.get('logger')

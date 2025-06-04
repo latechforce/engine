@@ -6,11 +6,11 @@ import { drizzle as drizzleSqlite } from 'drizzle-orm/bun-sqlite'
 import { migrate as migrateSqlite } from 'drizzle-orm/bun-sqlite/migrator'
 
 // Internal imports
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../application/di/types'
 import type { EnvService } from './env.service'
 import type { LoggerService } from './logger.service'
-import * as postgresSchema from '@/shared/infrastructure/db/schema/postgres'
-import * as sqliteSchema from '@/shared/infrastructure/db/schema/sqlite'
+import * as postgresSchema from '../db/schema/postgres'
+import * as sqliteSchema from '../db/schema/sqlite'
 
 // Node.js built-in modules
 import fs from 'fs'

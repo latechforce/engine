@@ -1,6 +1,5 @@
-import type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
-import type { Connection } from '@/connection/domain/entity/connection.entity'
-import type { IntegrationActionSchema } from '@/action/domain/schema/integration'
+import type { Connection } from '../../../connection/domain/entity/connection.entity'
+import type { IntegrationActionSchema } from '../schema/integration'
 
 export class IntegrationAction {
   constructor(

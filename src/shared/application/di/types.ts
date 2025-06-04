@@ -1,14 +1,14 @@
 // Feature type imports
-import APP_TYPES from '@/app/application/di/types'
-import ACTION_TYPES from '@/action/application/di/types'
-import USER_TYPES from '@/user/application/di/types'
-import AUTOMATION_TYPES from '@/automation/application/di/types'
-import CONNECTION_TYPES from '@/connection/application/di/types'
-import FORM_TYPES from '@/form/application/di/types'
-import RUN_TYPES from '@/run/application/di/types'
-import TABLE_TYPES from '@/table/application/di/types'
-import TRIGGER_TYPES from '@/trigger/application/di/types'
-import BUCKET_TYPES from '@/bucket/application/di/types'
+import APP_TYPES from '../../../features/app/application/di/types'
+import ACTION_TYPES from '../../../features/action/application/di/types'
+import USER_TYPES from '../../../features/user/application/di/types'
+import AUTOMATION_TYPES from '../../../features/automation/application/di/types'
+import CONNECTION_TYPES from '../../../features/connection/application/di/types'
+import FORM_TYPES from '../../../features/form/application/di/types'
+import RUN_TYPES from '../../../features/run/application/di/types'
+import TABLE_TYPES from '../../../features/table/application/di/types'
+import TRIGGER_TYPES from '../../../features/trigger/application/di/types'
+import BUCKET_TYPES from '../../../features/bucket/application/di/types'
 
 const TYPES = {
   App: APP_TYPES,

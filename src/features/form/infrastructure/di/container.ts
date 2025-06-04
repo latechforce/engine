@@ -1,8 +1,8 @@
 import { Container } from 'inversify'
 import TYPES from '../../application/di/types'
-import { ListFormsUseCase } from '@/form/application/use-case/list-forms.use-case'
+import { ListFormsUseCase } from '../../application/use-case/list-forms.use-case'
 import { FormHonoContext } from './context'
-import { GetFormUseCase } from '@/form/application/use-case/get-form.use-case'
+import { GetFormUseCase } from '../../application/use-case/get-form.use-case'
 
 export function registerFormDependencies(container: Container) {
   // Register use cases

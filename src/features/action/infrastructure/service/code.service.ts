@@ -3,8 +3,8 @@ import vm from 'node:vm'
 import ts from 'typescript'
 import { ESLint } from 'eslint'
 import js from '@eslint/js'
-import type { Fields } from '@/table/domain/object-value/fields.object-value'
-import type { Record } from '@/table/domain/entity/record.entity'
+import type { Fields } from '../../../table/domain/object-value/fields.object-value'
+import type { Record } from '../../../table/domain/entity/record.entity'
 
 export type TableContext = (name: string) => {
   exists: (id: string) => Promise<boolean>

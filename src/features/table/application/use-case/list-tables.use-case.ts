@@ -1,5 +1,5 @@
 import { injectable } from 'inversify'
-import type { App } from '@/app/domain/entity/app.entity'
+import type { App } from '../../../app/domain/entity/app.entity'
 import { toListTableDto, type ListTablesDto } from '../dto/list-table.dto'
 
 @injectable()

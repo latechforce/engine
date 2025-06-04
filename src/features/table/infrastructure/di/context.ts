@@ -1,14 +1,14 @@
 import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
-import type { CreateRecordUseCase } from '@/table/application/use-case/create-record.use-case'
-import TYPES from '@/table/application/di/types'
-import type { ReadRecordUseCase } from '@/table/application/use-case/read-record.use-case'
-import type { ListRecordsUseCase } from '@/table/application/use-case/list-records.use-case'
-import type { UpdateRecordUseCase } from '@/table/application/use-case/update-record.use-case'
-import type { UpdateMultipleRecordsUseCase } from '@/table/application/use-case/update-multiple-records.use-case'
-import type { DeleteRecordUseCase } from '@/table/application/use-case/delete-record.use-case'
-import type { DeleteMultipleRecordsUseCase } from '@/table/application/use-case/delete-multiple-record.use-case'
-import type { ListTablesUseCase } from '@/table/application/use-case/list-tables.use-case'
+import type { CreateRecordUseCase } from '../../application/use-case/create-record.use-case'
+import TYPES from '../../application/di/types'
+import type { ReadRecordUseCase } from '../../application/use-case/read-record.use-case'
+import type { ListRecordsUseCase } from '../../application/use-case/list-records.use-case'
+import type { UpdateRecordUseCase } from '../../application/use-case/update-record.use-case'
+import type { UpdateMultipleRecordsUseCase } from '../../application/use-case/update-multiple-records.use-case'
+import type { DeleteRecordUseCase } from '../../application/use-case/delete-record.use-case'
+import type { DeleteMultipleRecordsUseCase } from '../../application/use-case/delete-multiple-record.use-case'
+import type { ListTablesUseCase } from '../../application/use-case/list-tables.use-case'
 
 export type TableHonoContextType = {
   createRecordUseCase: CreateRecordUseCase

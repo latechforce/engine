@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import { cn } from '@/shared/interface/lib/utils.lib'
-import { Skeleton } from '@/shared/interface/ui/skeleton.ui'
+import { cn } from '../lib/utils.lib'
+import { Skeleton } from './skeleton.ui'
 
 function Table({ className, ...props }: React.ComponentProps<'table'>) {
   return (

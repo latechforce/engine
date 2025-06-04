@@ -1,5 +1,5 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
-import type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
+import type { AutomationSchema } from '../../../../features/automation/domain/schema/automation.schema'
 
 export const run = sqliteTable('run', {
   id: text().primaryKey(),

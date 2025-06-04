@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify'
 import TYPES from '../../application/di/types'
 import type { BucketDatabaseService } from '../service/database.service'
-import type { IObjectRepository } from '@/bucket/domain/repository-interface/object-repository.interface'
-import { Object } from '@/bucket/domain/entity/object.entity'
+import type { IObjectRepository } from '../../domain/repository-interface/object-repository.interface'
+import { Object } from '../../domain/entity/object.entity'
 
 @injectable()
 export class ObjectRepository implements IObjectRepository {

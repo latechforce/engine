@@ -2,7 +2,7 @@
 import type { Context } from 'hono'
 
 // Shared imports
-import type { HonoType } from '@/shared/infrastructure/service/server.service'
+import type { HonoType } from '../../../../shared/infrastructure/service'
 
 export class AutomationController {
   static async list(c: Context<HonoType>) {

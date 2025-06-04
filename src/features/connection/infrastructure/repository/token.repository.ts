@@ -3,12 +3,12 @@ import { inject, injectable } from 'inversify'
 import { addSeconds, isAfter } from 'date-fns'
 
 // Shared imports
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 
 // Connection domain imports
-import type { Connection } from '@/connection/domain/entity/connection.entity'
-import type { Token } from '@/connection/domain/value-object/token.value-object'
-import type { ITokenRepository } from '@/connection/domain/repository-interface/token-repository.interface'
+import type { Connection } from '../../domain/entity/connection.entity'
+import type { Token } from '../../domain/value-object/token.value-object'
+import type { ITokenRepository } from '../../domain/repository-interface/token-repository.interface'
 
 // Connection infrastructure imports
 import type { ConnectionDatabaseService } from '../service/database.service'

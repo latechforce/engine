@@ -1,7 +1,7 @@
 import crypto from 'crypto'
-import type { AutomationSchema } from '@/automation/domain/schema/automation.schema'
-import type { IntegrationError } from '@/action/domain/value-object/integration-error.value.object'
-import type { ServiceError } from '@/action/domain/value-object/service-error.value-object'
+import type { AutomationSchema } from '../../../../features/automation/domain/schema/automation.schema'
+import type { IntegrationError } from '../../../../features/action/domain/value-object/integration-error.value.object'
+import type { ServiceError } from '../../../../features/action/domain/value-object/service-error.value-object'
 
 export class Run {
   constructor(

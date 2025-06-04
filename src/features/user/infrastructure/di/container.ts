@@ -2,7 +2,7 @@
 import { Container } from 'inversify'
 
 // Shared imports
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 
 // User infrastructure imports
 import { AuthService } from '../service/auth.service'

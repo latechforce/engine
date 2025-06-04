@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify'
 import TYPES from '../di/types'
-import type { App } from '@/app/domain/entity/app.entity'
-import { HttpError } from '@/shared/domain/entity/http-error.entity'
-import type { IRecordRepository } from '@/table/domain/repository-interface/record-repository.interface'
+import type { App } from '../../../app/domain/entity/app.entity'
+import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
+import type { IRecordRepository } from '../../domain/repository-interface/record-repository.interface'
 import type { DeleteRecordDto } from '../dto/delete-record.dto'
 
 @injectable()

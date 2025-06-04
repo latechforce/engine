@@ -9,7 +9,7 @@ import {
   SidebarHeader,
   SidebarGroupLabel,
   SidebarFooter,
-} from '@/shared/interface/ui/sidebar.ui'
+} from '../ui/sidebar.ui'
 import { TypographyH3 } from '../ui/typography.ui'
 import { User2 } from 'lucide-react'
 import { ChevronUp } from 'lucide-react'
@@ -18,7 +18,7 @@ import { DropdownMenuItem } from '../ui/dropdown-menu.ui'
 import { DropdownMenuContent } from '../ui/dropdown-menu.ui'
 import { DropdownMenu } from '../ui/dropdown-menu.ui'
 import { Link } from '@tanstack/react-router'
-import { authClient } from '@/user/interface/lib/auth.lib'
+import { authClient } from '../../../features/user/interface/lib/auth.lib'
 
 export type SidebarItem = {
   title: string

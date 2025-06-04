@@ -3,25 +3,43 @@ import type { LoggerService } from '../service/logger.service'
 import { inject, injectable } from 'inversify'
 import type { ServerService } from '../service/server.service'
 import TYPES from '../../application/di/types'
-import type { AppHonoContext, AppHonoContextType } from '@/app/infrastructure/di/context'
-import type { App } from '@/app/domain/entity/app.entity'
-import type { UserHonoContext, UserHonoContextType } from '@/user/infrastructure/di/context'
+import type {
+  AppHonoContext,
+  AppHonoContextType,
+} from '../../../features/app/infrastructure/di/context'
+import type { App } from '../../../features/app/domain/entity/app.entity'
+import type {
+  UserHonoContext,
+  UserHonoContextType,
+} from '../../../features/user/infrastructure/di/context'
 import type {
   AutomationHonoContext,
   AutomationHonoContextType,
-} from '@/automation/infrastructure/di/context'
+} from '../../../features/automation/infrastructure/di/context'
 import type {
   ConnectionHonoContext,
   ConnectionHonoContextType,
-} from '@/connection/infrastructure/di/context'
-import type { FormHonoContext, FormHonoContextType } from '@/form/infrastructure/di/context'
-import type { RunHonoContext, RunHonoContextType } from '@/run/infrastructure/di/context'
-import type { TableHonoContext, TableHonoContextType } from '@/table/infrastructure/di/context'
+} from '../../../features/connection/infrastructure/di/context'
+import type {
+  FormHonoContext,
+  FormHonoContextType,
+} from '../../../features/form/infrastructure/di/context'
+import type {
+  RunHonoContext,
+  RunHonoContextType,
+} from '../../../features/run/infrastructure/di/context'
+import type {
+  TableHonoContext,
+  TableHonoContextType,
+} from '../../../features/table/infrastructure/di/context'
 import type {
   TriggerHonoContext,
   TriggerHonoContextType,
-} from '@/trigger/infrastructure/di/context'
-import type { BucketHonoContext, BucketHonoContextType } from '@/bucket/infrastructure/di/context'
+} from '../../../features/trigger/infrastructure/di/context'
+import type {
+  BucketHonoContext,
+  BucketHonoContextType,
+} from '../../../features/bucket/infrastructure/di/context'
 
 export type HonoContextType = {
   env: EnvService

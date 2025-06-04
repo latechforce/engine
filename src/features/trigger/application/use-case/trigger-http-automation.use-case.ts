@@ -2,19 +2,19 @@
 import { inject, injectable } from 'inversify'
 
 // Shared imports
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 
 // Run domain imports
-import { Run } from '@/run/domain/entity/run.entity'
-import type { IRunRepository } from '@/run/domain/repository-interface/run-repository.interface'
-import type { ITriggerRepository } from '@/trigger/domain/repository-interface/trigger-repository.interface'
-import type { App } from '@/app/domain/entity/app.entity'
+import { Run } from '../../../../features/run/domain/entity/run.entity'
+import type { IRunRepository } from '../../../../features/run/domain/repository-interface/run-repository.interface'
+import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
+import type { App } from '../../../../features/app/domain/entity/app.entity'
 import type { ResponseDto } from '../dto/response.dto'
-import { TriggerError } from '@/trigger/domain/entity/trigger-error.entity'
-import type { Fields } from '@/table/domain/object-value/fields.object-value'
-import { Object } from '@/bucket/domain/entity/object.entity'
-import { HttpError } from '@/shared/domain/entity/http-error.entity'
-import type { IObjectRepository } from '@/bucket/domain/repository-interface/object-repository.interface'
+import { TriggerError } from '../../domain/entity/trigger-error.entity'
+import type { Fields } from '../../../../features/table/domain/object-value/fields.object-value'
+import { Object } from '../../../../features/bucket/domain/entity/object.entity'
+import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
+import type { IObjectRepository } from '../../../../features/bucket/domain/repository-interface/object-repository.interface'
 
 @injectable()
 export class TriggerHttpAutomationUseCase {

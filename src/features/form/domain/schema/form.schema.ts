@@ -2,7 +2,7 @@
 import { z } from 'zod/v4'
 
 // Form domain imports
-import { inputSchema } from '@/form/domain/schema/input'
+import { inputSchema } from './input'
 
 export const formSchema = z
   .object({

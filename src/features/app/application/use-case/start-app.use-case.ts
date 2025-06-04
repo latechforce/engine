@@ -1,13 +1,13 @@
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 import { injectable, inject } from 'inversify'
 import { App } from '../../domain/entity/app.entity'
 import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
-import type { SetupAutomationUseCase } from '@/automation/application/use-case/setup-automation.use-case'
-import type { SetupTableUseCase } from '@/table/application/use-case/setup-table.use-case'
+import type { SetupAutomationUseCase } from '../../../automation/application/use-case/setup-automation.use-case'
+import type { SetupTableUseCase } from '../../../table/application/use-case/setup-table.use-case'
 import type { ValidateAppUseCase } from './validate-app.use-case'
-import type { SetupConnectionUseCase } from '@/connection/application/use-case/setup-connection.use-case'
-import type { SetupBucketUseCase } from '@/bucket/application/use-case/setup-bucket.use-case'
-import { Bucket } from '@/bucket/domain/entity/bucket.entity'
+import type { SetupConnectionUseCase } from '../../../connection/application/use-case/setup-connection.use-case'
+import type { SetupBucketUseCase } from '../../../bucket/application/use-case/setup-bucket.use-case'
+import { Bucket } from '../../../bucket/domain/entity/bucket.entity'
 
 @injectable()
 export class StartAppUseCase {

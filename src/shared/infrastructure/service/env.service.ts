@@ -3,8 +3,8 @@ import net from 'net'
 import { injectable } from 'inversify'
 
 // Shared domain imports
-import type { Env } from '@/shared/domain/value-object/env.value-object'
-import { envSchema, type EnvSchemaValidated } from '@/shared/domain/schema/env.schema'
+import type { Env } from '../../domain/value-object/env.value-object'
+import { envSchema, type EnvSchemaValidated } from '../../domain/schema/env.schema'
 
 @injectable()
 export class EnvService {

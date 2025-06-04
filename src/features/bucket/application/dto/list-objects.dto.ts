@@ -1,4 +1,4 @@
-import type { Object } from '@/bucket/domain/entity/object.entity'
+import type { Object } from '../../domain/entity/object.entity'
 import { z } from 'zod'
 
 export const listObjectsDto = z.object({

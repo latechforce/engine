@@ -2,10 +2,10 @@
 import { useForm, type AnyFieldApi } from '@tanstack/react-form'
 
 // Feature imports
-import type { InputDto } from '@/form/application/dto/input.dto'
+import type { InputDto } from '../../../features/form/application/dto/input.dto'
 
 // Shared UI imports
-import { FormDescription, FormItem, FormLabel, FormMessage } from '@/shared/interface/ui/form.ui'
+import { FormDescription, FormItem, FormLabel, FormMessage } from '../ui/form.ui'
 import { Input } from '../ui/input.ui'
 import { Button } from '../ui/button.ui'
 import { Textarea } from '../ui/textarea.ui'

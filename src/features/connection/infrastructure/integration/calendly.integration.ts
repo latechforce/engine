@@ -1,6 +1,6 @@
 import ky from 'ky'
-import type { Token } from '@/connection/domain/value-object/token.value-object'
-import type { CalendlyConnectionSchema } from '@/connection/domain/schema/integration/calendly.schema'
+import type { Token } from '../../domain/value-object/token.value-object'
+import type { CalendlyConnectionSchema } from '../../domain/schema/integration/calendly.schema'
 
 export class CalendlyConnectionIntegration {
   private readonly baseUrl = 'https://api.calendly.com'

@@ -1,9 +1,9 @@
 import { createRoute } from '@tanstack/react-router'
-import { rootRoute } from '@/shared/interface/page/root.layout'
+import { rootRoute } from '../../../../shared/interface/page/root.layout'
 import Hero01 from '../component/hero/hero-01'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import { client } from '@/shared/interface/lib/client.lib'
-import type { GetAppMetadataDto } from '@/app/application/dto/get-app-metadata.dto'
+import { client } from '../../../../shared/interface/lib/client.lib'
+import type { GetAppMetadataDto } from '../../../app/application/dto/get-app-metadata.dto'
 
 const HomePage = () => {
   const { data } = useSuspenseQuery(metadataQueryOptions())

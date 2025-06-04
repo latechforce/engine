@@ -1,5 +1,5 @@
-import type { ConnectionDto } from '@/connection/application/dto/connection.dto'
-import { expect, test } from '@/e2e/fixtures'
+import type { ConnectionDto } from '../../src/features/connection/application/dto/connection.dto'
+import { expect, test } from '../fixtures'
 
 test('should return a list of connections', async ({ startExampleApp }) => {
   // GIVEN

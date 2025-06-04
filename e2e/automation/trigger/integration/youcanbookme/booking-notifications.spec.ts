@@ -1,5 +1,5 @@
-import type { RunDto } from '@/run/application/dto/run.dto'
-import { expect, test } from '@/e2e/fixtures'
+import type { RunDto } from '../../../../../src/features/run/application/dto/run.dto'
+import { expect, test } from '@/e2e//fixtures'
 import { connectTo } from '@/e2e/steps'
 
 // TODO: [@thomas-jeanneau] - should trigger an automation when a youcanbookme booking notifications is created

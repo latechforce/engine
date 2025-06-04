@@ -3,7 +3,7 @@ import { z } from 'zod/v4'
 
 // Trigger domain imports
 import { basehttpTriggerSchema } from './base'
-import { jsonSchemaSchema } from '@/shared/domain/schema/json-schema.schema'
+import { jsonSchemaSchema } from '../../../../../../shared/domain/schema/json-schema.schema'
 
 export const postHttpTriggerSchema = basehttpTriggerSchema
   .extend({

@@ -10,16 +10,16 @@ import type { HTTPResponseError } from 'hono/types'
 import { timeout } from 'hono/timeout'
 
 // Internal types
-import type { App } from '@/app/domain/entity/app.entity'
-import type { HonoContextType } from '@/shared/infrastructure/di/context'
+import type { App } from '../../../features/app/domain/entity/app.entity'
+import type { HonoContextType } from '../di/context'
 
 // Internal services and constants
 import TYPES from '../../application/di/types'
 import type { EnvService } from './env.service'
 import type { LoggerService } from './logger.service'
 import index from '../index.html'
-import { HttpError } from '@/shared/domain/entity/http-error.entity'
-import { TriggerError } from '@/trigger/domain/entity/trigger-error.entity'
+import { HttpError } from '../../domain/entity/http-error.entity'
+import { TriggerError } from '../../../features/trigger/domain/entity/trigger-error.entity'
 
 export type HonoType = { Variables: HonoContextType }
 

@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
-import TYPES from '@/bucket/application/di/types'
-import type { UploadObjectUseCase } from '@/bucket/application/use-case/upload-object.use-case'
-import type { DownloadObjectUseCase } from '@/bucket/application/use-case/download-object.use-case'
-import type { DeleteObjectUseCase } from '@/bucket/application/use-case/delete-object.use-case'
-import type { ListObjectsUseCase } from '@/bucket/application/use-case/list-objects.use-case'
+import TYPES from '../../application/di/types'
+import type { UploadObjectUseCase } from '../../application/use-case/upload-object.use-case'
+import type { DownloadObjectUseCase } from '../../application/use-case/download-object.use-case'
+import type { DeleteObjectUseCase } from '../../application/use-case/delete-object.use-case'
+import type { ListObjectsUseCase } from '../../application/use-case/list-objects.use-case'
 
 export type BucketHonoContextType = {
   uploadObjectUseCase: UploadObjectUseCase

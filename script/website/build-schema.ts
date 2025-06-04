@@ -1,4 +1,4 @@
-import { appSchema } from '@/app/domain/schema/app.schema'
+import { appSchema } from '../../src/features/app/domain/schema/app.schema'
 import fs from 'fs'
 import { join } from 'path'
 import { z } from 'zod/v4'

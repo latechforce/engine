@@ -1,6 +1,6 @@
-import type { Token } from '@/connection/domain/value-object/token.value-object'
-import { CalendlyIntegration } from '@/shared/infrastructure/integration/calendly'
-import type { CalendlyTriggerSchema } from '@/trigger/domain/schema/integration/calendly'
+import type { Token } from '../../../../features/connection/domain/value-object/token.value-object'
+import { CalendlyIntegration } from '../../../../shared/infrastructure/integration/calendly'
+import type { CalendlyTriggerSchema } from '../../domain/schema/integration/calendly'
 
 export class CalendlyTriggerIntegration {
   constructor(private readonly schema: CalendlyTriggerSchema) {}

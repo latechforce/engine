@@ -1,4 +1,4 @@
-import type { Form } from '@/form/domain/entity/form.entity'
+import type { Form } from '../../domain/entity/form.entity'
 import { toFormDto, type FormDto } from './form.dto'
 
 export type GetFormDto = {

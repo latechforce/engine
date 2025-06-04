@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
 
 // Automation application imports
-import type { ListAutomationsUseCase } from '@/automation/application/use-case/list-automations.use-case'
+import type { ListAutomationsUseCase } from '../../application/use-case/list-automations.use-case'
 
 // Automation infrastructure imports
 import TYPES from '../../application/di/types'

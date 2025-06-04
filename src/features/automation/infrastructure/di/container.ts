@@ -2,13 +2,13 @@
 import type { Container } from 'inversify'
 
 // Automation domain imports
-import type { IAutomationRepository } from '@/automation/domain/repository-interface/automation-repository.interface'
+import type { IAutomationRepository } from '../../domain/repository-interface/automation-repository.interface'
 
 // Automation application imports
 import TYPES from '../../application/di/types'
-import { SetupAutomationUseCase } from '@/automation/application/use-case/setup-automation.use-case'
-import { RunAutomationUseCase } from '@/automation/application/use-case/run-automation.use-case'
-import { ListAutomationsUseCase } from '@/automation/application/use-case/list-automations.use-case'
+import { SetupAutomationUseCase } from '../../application/use-case/setup-automation.use-case'
+import { RunAutomationUseCase } from '../../application/use-case/run-automation.use-case'
+import { ListAutomationsUseCase } from '../../application/use-case/list-automations.use-case'
 
 // Automation infrastructure imports
 import { AutomationRepository } from '../repository/automation.repository'

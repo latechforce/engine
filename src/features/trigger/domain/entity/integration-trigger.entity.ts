@@ -1,5 +1,5 @@
-import type { Connection } from '@/connection/domain/entity/connection.entity'
-import type { IntegrationTriggerSchema } from '@/trigger/domain/schema/integration'
+import type { Connection } from '../../../../features/connection/domain/entity/connection.entity'
+import type { IntegrationTriggerSchema } from '../schema/integration'
 
 export class IntegrationTrigger {
   constructor(

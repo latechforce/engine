@@ -1,4 +1,4 @@
-import type { TableSchema } from '@/table/domain/schema/table.schema'
+import type { TableSchema } from '../schema/table.schema'
 import { Field } from './field.entity'
 import type { Fields } from '../object-value/fields.object-value'
 import type { SchemaObject } from 'ajv'

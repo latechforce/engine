@@ -1,9 +1,9 @@
 import { z } from 'zod/v4'
-import { automationSchema } from '@/automation/domain/schema/automation.schema'
-import { tableSchema } from '@/table/domain/schema/table.schema'
-import { connectionSchema } from '@/connection/domain/schema/connection.schema'
-import { formSchema } from '@/form/domain/schema/form.schema'
-import { bucketSchema } from '@/bucket/domain/schema/bucket.schema'
+import { automationSchema } from '../../../automation/domain/schema/automation.schema'
+import { tableSchema } from '../../../table/domain/schema/table.schema'
+import { connectionSchema } from '../../../connection/domain/schema/connection.schema'
+import { formSchema } from '../../../form/domain/schema/form.schema'
+import { bucketSchema } from '../../../bucket/domain/schema/bucket.schema'
 
 export const appSchema = z
   .object({

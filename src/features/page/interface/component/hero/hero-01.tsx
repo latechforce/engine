@@ -1,8 +1,8 @@
-import { Badge } from '@/shared/interface/ui/badge.ui'
-import { Button } from '@/shared/interface/ui/button.ui'
+import { Badge } from '../../../../../shared/interface/ui/badge.ui'
+import { Button } from '../../../../../shared/interface/ui/button.ui'
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
-import { TypographyH1, TypographyLead } from '@/shared/interface/ui/typography.ui'
+import { TypographyH1, TypographyLead } from '../../../../../shared/interface/ui/typography.ui'
 
 type Hero01Props = {
   title: string

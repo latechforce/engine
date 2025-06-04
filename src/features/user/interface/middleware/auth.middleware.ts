@@ -1,4 +1,4 @@
-import type { HonoType } from '@/shared/infrastructure/service'
+import type { HonoType } from '../../../../shared/infrastructure/service'
 import type { Context, MiddlewareHandler } from 'hono'
 
 export const authMiddleware: MiddlewareHandler = async (c: Context<HonoType>, next) => {

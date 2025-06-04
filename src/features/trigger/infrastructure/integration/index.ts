@@ -1,5 +1,5 @@
 import { CalendlyTriggerIntegration } from './calendly'
-import type { Trigger } from '@/trigger/domain/entity/trigger.entity'
+import type { Trigger } from '../../domain/entity/trigger.entity'
 
 export type TriggerIntegration = CalendlyTriggerIntegration
 

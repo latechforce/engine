@@ -2,15 +2,15 @@
 import type { App } from '../../domain/entity/app.entity'
 import type { Context } from 'hono'
 import type { HonoType } from '../routes'
-import type { Mock } from '@/app/domain/value-object/mock.value-object'
+import type { Mock } from '../../domain/value-object/mock.value-object'
 import type { ValidateResult } from '../../domain/value-object/validate-result.value-object'
 
 // Dependencies
 import { inject } from 'inversify'
 
 // Local imports
-import TYPES from '@/shared/application/di/types'
-import type { MockAppUseCase } from '@/app/application/use-case/mock-app.use-case'
+import TYPES from '../../../../shared/application/di/types'
+import type { MockAppUseCase } from '../../application/use-case/mock-app.use-case'
 import type { StartAppUseCase } from '../../application/use-case/start-app.use-case'
 import type { ValidateAppUseCase } from '../../application/use-case/validate-app.use-case'
 

@@ -1,11 +1,11 @@
-import type { IActionRepository } from '@/action/domain/repository-interface/action-repository.interface'
-import { CodeService } from '@/action/infrastructure/service/code.service'
+import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
+import { CodeService } from '../service/code.service'
 import TYPES from '../../application/di/types'
 import type { Container } from 'inversify'
-import { ActionRepository } from '@/action/infrastructure/repository/action.repository'
-import { SetupActionUseCase } from '@/action/application/use-case/setup-action.use-case'
-import { RunActionUseCase } from '@/action/application/use-case/run-action.use-case'
-import { RunFilterUseCase } from '@/action/application/use-case/run-filter.use-case'
+import { ActionRepository } from '../repository/action.repository'
+import { SetupActionUseCase } from '../../application/use-case/setup-action.use-case'
+import { RunActionUseCase } from '../../application/use-case/run-action.use-case'
+import { RunFilterUseCase } from '../../application/use-case/run-filter.use-case'
 
 export function registerActionDependencies(
   container: Container,

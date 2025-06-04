@@ -1,4 +1,4 @@
-import type { ApiType } from '@/shared/interface/routes'
+import type { ApiType } from '../routes'
 import { hc } from 'hono/client'
 
 export const client = hc<ApiType>('/api', {

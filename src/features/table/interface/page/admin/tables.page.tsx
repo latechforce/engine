@@ -1,15 +1,20 @@
 import { createRoute, Navigate, useNavigate, useParams } from '@tanstack/react-router'
-import Layout from '@/app/interface/page/admin/layout'
-import { DataTable } from '@/shared/interface/component/data-table.component'
-import { client } from '@/shared/interface/lib/client.lib'
+import Layout from '../../../../app/interface/page/admin/layout'
+import { DataTable } from '../../../../../shared/interface/component/data-table.component'
+import { client } from '../../../../../shared/interface/lib/client.lib'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { Suspense } from 'react'
-import { TableSkeleton } from '@/shared/interface/ui/table.ui'
-import { adminRoute } from '@/app/interface/page/router'
-import type { ListTablesDto } from '@/table/application/dto/list-table.dto'
-import type { ListRecordsDto } from '@/table/application/dto/list-records.dto'
-import { Tabs, TabsList, TabsSkeleton, TabsTrigger } from '@/shared/interface/ui/tabs.ui'
-import { TypographyP } from '@/shared/interface/ui/typography.ui'
+import { adminRoute } from '../../../../app/interface/page/router'
+import type { ListTablesDto } from '../../../application/dto/list-table.dto'
+import type { ListRecordsDto } from '../../../application/dto/list-records.dto'
+import {
+  Tabs,
+  TabsList,
+  TabsSkeleton,
+  TabsTrigger,
+} from '../../../../../shared/interface/ui/tabs.ui'
+import { TypographyP } from '../../../../../shared/interface/ui/typography.ui'
+import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 
 const tableRecordsQueryOptions = (tableId: string) =>
   queryOptions<ListRecordsDto>({

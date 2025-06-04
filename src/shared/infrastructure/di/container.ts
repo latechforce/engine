@@ -13,16 +13,16 @@ import { HonoContext } from './context'
 import TYPES from '../../application/di/types'
 
 // Feature infrastructure imports
-import { registerAppDependencies } from '@/app/infrastructure/di/container'
-import { registerActionDependencies } from '@/action/infrastructure/di/container'
-import { registerUserDependencies } from '@/user/infrastructure/di/container'
-import { registerAutomationDependencies } from '@/automation/infrastructure/di/container'
-import { registerFormDependencies } from '@/form/infrastructure/di/container'
-import { registerRunDependencies } from '@/run/infrastructure/di/container'
-import { registerTableDependencies } from '@/table/infrastructure/di/container'
-import { registerTriggerDependencies } from '@/trigger/infrastructure/di/container'
-import { registerConnectionDependencies } from '@/connection/infrastructure/di/container'
-import { registerBucketDependencies } from '@/bucket/infrastructure/di/container'
+import { registerAppDependencies } from '../../../features/app/infrastructure/di/container'
+import { registerActionDependencies } from '../../../features/action/infrastructure/di/container'
+import { registerUserDependencies } from '../../../features/user/infrastructure/di/container'
+import { registerAutomationDependencies } from '../../../features/automation/infrastructure/di/container'
+import { registerFormDependencies } from '../../../features/form/infrastructure/di/container'
+import { registerRunDependencies } from '../../../features/run/infrastructure/di/container'
+import { registerTableDependencies } from '../../../features/table/infrastructure/di/container'
+import { registerTriggerDependencies } from '../../../features/trigger/infrastructure/di/container'
+import { registerConnectionDependencies } from '../../../features/connection/infrastructure/di/container'
+import { registerBucketDependencies } from '../../../features/bucket/infrastructure/di/container'
 
 export async function registerDependencies(
   externals: Record<string, unknown> = {},

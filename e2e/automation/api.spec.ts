@@ -1,5 +1,5 @@
-import type { AutomationDto } from '@/automation/application/dto/automation.dto'
-import { expect, test } from '@/e2e/fixtures'
+import type { AutomationDto } from '../../src/features/automation/application/dto/automation.dto'
+import { expect, test } from '../fixtures'
 
 test('should return a list of automations', async ({ startExampleApp }) => {
   // GIVEN

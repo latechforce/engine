@@ -1,15 +1,15 @@
 import { createRoute } from '@tanstack/react-router'
-import Layout from '@/app/interface/page/admin/layout'
+import Layout from '../../../../app/interface/page/admin/layout'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
-import { DataTable } from '@/shared/interface/component/data-table.component'
+import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import type { ColumnDef } from '@tanstack/react-table'
-import { client } from '@/shared/interface/lib/client.lib'
-import type { ListFormsDto } from '@/form/application/dto/list-forms.dto'
-import type { FormDto } from '@/form/application/dto/form.dto'
-import { Button } from '@/shared/interface/ui/button.ui'
+import { client } from '../../../../../shared/interface/lib/client.lib'
+import type { ListFormsDto } from '../../../application/dto/list-forms.dto'
+import type { FormDto } from '../../../application/dto/form.dto'
+import { Button } from '../../../../../shared/interface/ui/button.ui'
 import { Suspense } from 'react'
-import { TableSkeleton } from '@/shared/interface/ui/table.ui'
-import { adminRoute } from '@/app/interface/page/router'
+import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
+import { adminRoute } from '../../../../app/interface/page/router'
 
 export const columns: ColumnDef<FormDto>[] = [
   {

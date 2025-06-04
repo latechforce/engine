@@ -1,17 +1,17 @@
-import { cn } from '@/shared/interface/lib/utils.lib'
-import { Button } from '@/shared/interface/ui/button.ui'
+import { cn } from '../../../../shared/interface/lib/utils.lib'
+import { Button } from '../../../../shared/interface/ui/button.ui'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/shared/interface/ui/card.ui'
-import { Input } from '@/shared/interface/ui/input.ui'
-import { Label } from '@/shared/interface/ui/label.ui'
+} from '../../../../shared/interface/ui/card.ui'
+import { Input } from '../../../../shared/interface/ui/input.ui'
+import { Label } from '../../../../shared/interface/ui/label.ui'
 import { useState } from 'react'
 import { authClient } from '../lib/auth.lib'
-import { Checkbox } from '@/shared/interface/ui/checkbox.ui'
+import { Checkbox } from '../../../../shared/interface/ui/checkbox.ui'
 import { AlertDestructive } from '../../../../shared/interface/component/alert.component'
 
 export type LoginFormProps = React.ComponentPropsWithoutRef<'div'> & {

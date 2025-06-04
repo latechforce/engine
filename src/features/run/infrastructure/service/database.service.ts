@@ -1,7 +1,7 @@
 import { inject } from 'inversify'
-import TYPES from '@/shared/application/di/types'
+import TYPES from '../../../../shared/application/di/types'
 import { eq } from 'drizzle-orm'
-import type { DatabaseService } from '@/shared/infrastructure/service/database.service'
+import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 
 export class RunDatabaseService {
   constructor(

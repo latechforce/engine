@@ -8,14 +8,7 @@ import {
 } from '@tanstack/react-table'
 
 // Shared UI imports
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/shared/interface/ui/table.ui'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table.ui'
 import { Input } from '../ui/input.ui'
 
 type DataTableProps<TData, TValue> = {

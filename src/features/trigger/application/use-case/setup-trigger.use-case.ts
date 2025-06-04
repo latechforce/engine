@@ -2,11 +2,11 @@
 import { injectable, inject } from 'inversify'
 
 // Automation domain imports
-import type { Automation } from '@/automation/domain/entity/automation.entity'
+import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 
 // Trigger domain imports
-import type { ITriggerRepository } from '@/trigger/domain/repository-interface/trigger-repository.interface'
-import { IntegrationTrigger } from '@/trigger/domain/entity/integration-trigger.entity'
+import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
+import { IntegrationTrigger } from '../../domain/entity/integration-trigger.entity'
 
 // Trigger application imports
 import TYPES from '../di/types'

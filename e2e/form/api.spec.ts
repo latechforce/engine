@@ -1,6 +1,6 @@
-import type { GetFormDto } from '@/form/application/dto/get-form.dto'
-import type { ListFormsDto } from '@/form/application/dto/list-forms.dto'
-import { expect, test } from '@/e2e/fixtures'
+import type { GetFormDto } from '../../src/features/form/application/dto/get-form.dto'
+import type { ListFormsDto } from '../../src/features/form/application/dto/list-forms.dto'
+import { expect, test } from '../fixtures'
 
 test('should return a list of forms', async ({ startExampleApp }) => {
   // GIVEN

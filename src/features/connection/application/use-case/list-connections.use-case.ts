@@ -1,12 +1,12 @@
 import { inject, injectable } from 'inversify'
-import type { App } from '@/app/domain/entity/app.entity'
+import type { App } from '../../../../features/app/domain/entity/app.entity'
 import TYPES from '../di/types'
-import type { IConnectionRepository } from '@/connection/domain/repository-interface/connection-repository.interface'
+import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 import {
   toListConnectionsDto,
   type ListConnectionsDto,
   type ListConnectionsDtoItem,
-} from '@/connection/application/dto/list-connections.dto'
+} from '../dto/list-connections.dto'
 
 @injectable()
 export class ListConnectionsUseCase {
