@@ -19,9 +19,11 @@ export class RunActionUseCase {
 
   async execute(app: App, action: Action, run: Run): Promise<ActionResult> {
     if (action instanceof IntegrationAction) {
+      this.actionRepository.debug(`running integration action "${action.schema.name}"`)
       const schema = this.actionRepository.fillSchema(action.schema, run.data)
       return this.actionRepository.runIntegration(schema, action.connection)
     } else {
+      this.actionRepository.debug(`running service action "${action.schema.name}"`)
       try {
         let data: Record<string, unknown> = {}
         const schema = this.actionRepository.fillSchema(action.schema, run.data)

@@ -100,3 +100,40 @@ test('should run a JavaScript code with buckets', async ({ startExampleApp }) =>
   expect(data.list[0].createdAt).toBeDefined()
   expect(data.list[0].updatedAt).toBeDefined()
 })
+
+test('should run a JavaScript code that return an array', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'array', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-javascript')
+  const { data } = await response.json()
+
+  // THEN
+  expect(data).toEqual({
+    message: 'Hello, John Doe!',
+  })
+  const runsResponse = await page.request.get('/api/runs')
+  const { runs } = await runsResponse.json()
+  for (let i = 0; i < runs.length; i++) {
+    const run = runs[i]!
+    const runResponse = await page.request.get(`/api/runs/${run.id}`)
+    const { data } = await runResponse.json()
+    if (data.runJavaScriptCode.index === 0) {
+      expect(data.runJavaScriptCode.name).toEqual('John Doe')
+      expect(data.buildMessage).toEqual({
+        message: 'Hello, John Doe!',
+      })
+    } else if (data.runJavaScriptCode.index === 1) {
+      expect(data.runJavaScriptCode.name).toEqual('Jane Doe')
+      expect(data.buildMessage).toEqual({
+        message: 'Hello, Jane Doe!',
+      })
+    } else if (data.runJavaScriptCode.index === 2) {
+      expect(data.runJavaScriptCode.name).toEqual('Jacob Doe')
+      expect(data.buildMessage).toEqual({
+        message: 'Hello, Jacob Doe!',
+      })
+    }
+  }
+})

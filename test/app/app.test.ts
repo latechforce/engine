@@ -10,6 +10,26 @@ describe('start', () => {
     expect(call).toThrow('Invalid app schema')
   })
 
+  it('should throw an error if there is no env variable for connection', async () => {
+    const schema: AppSchema = {
+      connections: [
+        {
+          id: 1,
+          name: 'connection',
+          service: 'calendly',
+          clientId: '{{env "CLIENT_ID"}}',
+          clientSecret: '{{env "CLIENT_SECRET"}}',
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Environment variable "CLIENT_ID" is not set')
+  })
+
   it('should throw an error if there are duplicate automation names', async () => {
     const schema: AppSchema = {
       automations: [
@@ -288,5 +308,49 @@ describe('start', () => {
 
     // THEN
     expect(call).toThrow('Duplicate action name: action')
+  })
+
+  it('should throw an error if there are duplicate path names', async () => {
+    const schema: AppSchema = {
+      automations: [
+        {
+          name: 'automation',
+          trigger: {
+            service: 'http',
+            event: 'post',
+            path: '/automation',
+          },
+          actions: [
+            {
+              name: 'action',
+              service: 'paths',
+              action: 'split-into-paths',
+              paths: [
+                {
+                  name: 'path',
+                  conditions: {
+                    or: [],
+                  },
+                  actions: [],
+                },
+                {
+                  name: 'path',
+                  conditions: {
+                    or: [],
+                  },
+                  actions: [],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Duplicate path name: path')
   })
 })

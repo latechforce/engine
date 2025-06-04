@@ -100,3 +100,40 @@ test('should run a TypeScript code with buckets', async ({ startExampleApp }) =>
   expect(data.list[0].createdAt).toBeDefined()
   expect(data.list[0].updatedAt).toBeDefined()
 })
+
+test('should run a TypeScript code that return an array', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'array', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-typescript')
+  const { data } = await response.json()
+
+  // THEN
+  expect(data).toEqual({
+    message: 'Hello, John Doe!',
+  })
+  const runsResponse = await page.request.get('/api/runs')
+  const { runs } = await runsResponse.json()
+  for (let i = 0; i < runs.length; i++) {
+    const run = runs[i]!
+    const runResponse = await page.request.get(`/api/runs/${run.id}`)
+    const { data } = await runResponse.json()
+    if (data.runTypeScriptCode.index === 0) {
+      expect(data.runTypeScriptCode.name).toEqual('John Doe')
+      expect(data.buildMessage).toEqual({
+        message: 'Hello, John Doe!',
+      })
+    } else if (data.runTypeScriptCode.index === 1) {
+      expect(data.runTypeScriptCode.name).toEqual('Jane Doe')
+      expect(data.buildMessage).toEqual({
+        message: 'Hello, Jane Doe!',
+      })
+    } else if (data.runTypeScriptCode.index === 2) {
+      expect(data.runTypeScriptCode.name).toEqual('Jacob Doe')
+      expect(data.buildMessage).toEqual({
+        message: 'Hello, Jacob Doe!',
+      })
+    }
+  }
+})

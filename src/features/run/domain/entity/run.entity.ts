@@ -31,6 +31,19 @@ export class Run {
     return this._updatedAt
   }
 
+  clone(): Run {
+    return new Run(
+      this.automation_schema,
+      { ...this.data },
+      this._status,
+      crypto.randomUUID(),
+      this.createdAt,
+      this._updatedAt,
+      this._lastActionName,
+      this._errorMessage
+    )
+  }
+
   actionSuccess(actionName: string, result: Record<string, unknown>) {
     this.data[actionName] = result
     this._updatedAt = new Date()
@@ -82,6 +95,30 @@ export class Run {
       this._errorMessage = error.message
       this._status = 'stopped'
     }
+  }
+
+  isActionSuccess(actionName: string) {
+    return this.data[actionName] !== undefined
+  }
+
+  isActionPathSuccess(actionPath: string) {
+    const pathSegments = actionPath.split('.')
+    if (pathSegments.length < 3) {
+      throw new Error('Invalid action path')
+    }
+    let current = this.data
+    for (let i = 0; i < pathSegments.length - 1; i++) {
+      const key = pathSegments[i]
+      if (!key) {
+        throw new Error('Invalid action path')
+      }
+      if (!(key in current) || typeof current[key] !== 'object' || current[key] === null) {
+        return false
+      }
+      current = current[key] as Record<string, Record<string, unknown>>
+    }
+    const finalKey = pathSegments[pathSegments.length - 1]
+    return finalKey && finalKey in current && current[finalKey] !== undefined
   }
 
   getLastActionData() {

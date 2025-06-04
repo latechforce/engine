@@ -25,15 +25,29 @@ export class Automation {
     public readonly connections: Connection[]
   ) {
     const { trigger } = schema
+    this.validateActionsSchema(schema.actions)
+    this.trigger = this.mapTrigger(trigger)
+    this.actions = schema.actions.map((action) => this.mapAction(action))
+  }
+
+  validateActionsSchema(actions: ActionSchema[]) {
     const actionNames = new Set<string>()
-    for (const action of schema.actions) {
+    const pathNames = new Set<string>()
+    for (const action of actions) {
       if (actionNames.has(action.name)) {
         throw new Error(`Duplicate action name: ${action.name}`)
       }
       actionNames.add(action.name)
+      if (action.service === 'paths') {
+        for (const path of action.paths) {
+          if (pathNames.has(path.name)) {
+            throw new Error(`Duplicate path name: ${path.name}`)
+          }
+          pathNames.add(path.name)
+          this.validateActionsSchema(path.actions)
+        }
+      }
     }
-    this.trigger = this.mapTrigger(trigger)
-    this.actions = schema.actions.map((action) => this.mapAction(action))
   }
 
   private getAccount(nameOrId: string | number, service: string) {

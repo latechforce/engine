@@ -122,8 +122,8 @@ export class TriggerHttpAutomationUseCase {
     for (const object of objects) {
       await this.objectRepository.create(object)
     }
-    const run = new Run(automation.schema, { trigger })
-    await this.runRepository.create(run)
+    const initRun = new Run(automation.schema, { trigger })
+    await this.runRepository.create(initRun)
     if ((schema.service === 'http' && schema.respondImmediately) || schema.service !== 'http') {
       return { success: true }
     }
@@ -132,36 +132,38 @@ export class TriggerHttpAutomationUseCase {
     )
     return await new Promise((resolve, reject) => {
       this.runRepository.onUpdate(async (run) => {
-        switch (run.status) {
-          case 'playing':
-            if (run.lastActionName === responseActionSchema?.name) {
-              if (responseActionSchema.body) {
-                const response = this.triggerRepository.fillTemplateObject(
-                  responseActionSchema.body,
-                  run.data
-                )
-                resolve({ data: response, success: true })
+        if (run.id === initRun.id) {
+          switch (run.status) {
+            case 'playing':
+              if (run.lastActionName === responseActionSchema?.name) {
+                if (responseActionSchema.body) {
+                  const response = this.triggerRepository.fillTemplateObject(
+                    responseActionSchema.body,
+                    run.data
+                  )
+                  resolve({ data: response, success: true })
+                } else {
+                  resolve({ success: true })
+                }
+              }
+              break
+            case 'stopped':
+              reject(new TriggerError(run.errorMessage || 'Unknown error', 500))
+              break
+            case 'success':
+              if (run.lastActionName) {
+                resolve({ data: run.getLastActionData(), success: true })
               } else {
                 resolve({ success: true })
               }
+              break
+            case 'filtered':
+              resolve({ data: { canContinue: false }, success: true })
+              break
+            default: {
+              const _exhaustiveCheck: never = run.status
+              throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
             }
-            break
-          case 'stopped':
-            reject(new TriggerError(run.errorMessage || 'Unknown error', 500))
-            break
-          case 'success':
-            if (run.lastActionName) {
-              resolve({ data: run.getLastActionData(), success: true })
-            } else {
-              resolve({ success: true })
-            }
-            break
-          case 'filtered':
-            resolve({ data: { canContinue: false }, success: true })
-            break
-          default: {
-            const _exhaustiveCheck: never = run.status
-            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
           }
         }
       })

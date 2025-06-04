@@ -9,15 +9,22 @@ import type { RunActionUseCase } from '../../../action/application/use-case/run-
 
 // Run domain imports
 import type { IRunRepository } from '../../../run/domain/repository-interface/run-repository.interface'
-import { type Run } from '../../../run/domain/entity/run.entity'
+import { Run } from '../../../run/domain/entity/run.entity'
 
 // Automation domain imports
 import type { IAutomationRepository } from '../../domain/repository-interface/automation-repository.interface'
 import type { Automation } from '../../domain/entity/automation.entity'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
+import type { Action } from 'src/features/action/domain/entity'
+import type { IntegrationError, ServiceError } from 'src/features/action/domain/value-object'
+import type { PathsActionSchema } from 'src/features/action/domain/schema/service/paths'
 
 @injectable()
 export class RunAutomationUseCase {
+  debug: (message: string) => void
+  info: (message: string) => void
+  error: (message: string) => void
+
   constructor(
     @inject(TYPES.Automation.Repository)
     private readonly automationRepository: IAutomationRepository,
@@ -25,115 +32,160 @@ export class RunAutomationUseCase {
     private readonly runRepository: IRunRepository,
     @inject(TYPES.Action.UseCase.Run)
     private readonly runActionUseCase: RunActionUseCase
-  ) {}
+  ) {
+    this.debug = (message: string) => this.automationRepository.debug(message)
+    this.info = (message: string) => this.automationRepository.info(message)
+    this.error = (message: string) => this.automationRepository.error(message)
+  }
 
   async execute(app: App, run: Run, automation: Automation, pathName?: string) {
     try {
-      this.automationRepository.info(
-        pathName ? `playing path "${pathName}"` : `playing automation "${automation.schema.name}"`
-      )
       if (pathName) {
+        this.info(`playing path "${pathName}"`)
         const path = automation.findPath(pathName)
+
         if (path.actions.length > 0) {
           for (const action of path.actions) {
-            const { data, error } = await this.runActionUseCase.execute(app, action, run)
-            if (error) {
-              run.stop(action.schema.name, error)
-              await this.runRepository.update(run)
-              this.automationRepository.info(
-                `action "${action.schema.name}" stopped with error: ${error.message}`
-              )
-              return
+            if (run.isActionPathSuccess(pathName + '.' + action.schema.name)) {
+              this.debug(`path "${pathName}" has already been run`)
+              continue
             }
-            if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
-              run.filter(action.schema.name, data)
-              await this.runRepository.update(run)
-              this.automationRepository.info(`action "${action.schema.name}" filtered`)
-              return
-            }
-            run.actionPathSuccess(pathName, data)
-            await this.runRepository.update(run)
-            if (action.schema.service === 'paths') {
-              await Promise.all(
-                action.schema.paths.map(async (path) => {
-                  const nextPathName = pathName + '.' + action.schema.name + '.' + path.name
-                  const result = data[path.name]
-                  if (
-                    Array.isArray(result) &&
-                    result.length > 0 &&
-                    result[0].canContinue === true
-                  ) {
-                    await this.execute(app, run, automation, nextPathName)
-                  }
-                })
-              )
-            }
-            this.automationRepository.info(`action "${action.schema.name}" succeeded`)
+            const shouldContinue = await this.runAction(app, run, automation, action, pathName)
+            if (!shouldContinue) break
           }
+        } else {
+          this.debug(`path "${pathName}" has no actions`)
         }
+        this.info(`path "${pathName}" finished`)
       } else {
+        this.info(`playing automation "${automation.schema.name}"`)
         if (automation.actions.length === 0) {
+          this.debug(`automation "${automation.schema.name}" has no actions`)
           run.success()
           await this.runRepository.update(run)
         } else {
           for (const action of automation.actions) {
-            if (run.data[action.schema.name]) {
+            if (run.isActionSuccess(action.schema.name)) {
+              this.debug(`action "${action.schema.name}" has already been run`)
               continue
             }
-            const { data, error } = await this.runActionUseCase.execute(app, action, run)
-            if (error) {
-              run.stop(action.schema.name, error)
-              await this.runRepository.update(run)
-              this.automationRepository.info(
-                `action "${action.schema.name}" stopped with error: ${error.message}`
-              )
-              return
-            }
-            if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
-              run.filter(action.schema.name, data)
-              await this.runRepository.update(run)
-              this.automationRepository.info(`action "${action.schema.name}" filtered`)
-              return
-            }
-            run.actionSuccess(action.schema.name, data)
-            await this.runRepository.update(run)
-            if (action.schema.service === 'paths') {
-              await Promise.all(
-                action.schema.paths.map(async (path) => {
-                  const pathName = action.schema.name + '.' + path.name
-                  const result = data[path.name]
-                  if (
-                    result &&
-                    typeof result === 'object' &&
-                    'canContinue' in result &&
-                    result.canContinue === true
-                  ) {
-                    await this.execute(app, run, automation, pathName)
-                  }
-                })
-              )
-            }
-            this.automationRepository.info(`action "${action.schema.name}" succeeded`)
+            const shouldContinue = await this.runAction(app, run, automation, action)
+            if (!shouldContinue) break
           }
           run.success()
           await this.runRepository.update(run)
         }
+        this.info(`automation "${automation.schema.name}" finished`)
       }
-      this.automationRepository.info(
-        pathName ? `path "${pathName}" finished` : `automation "${automation.schema.name}" finished`
-      )
     } catch (error) {
       if (error instanceof Error) {
-        this.automationRepository.error(
-          pathName
-            ? `path "${pathName}" failed: ${error.message}`
-            : `automation "${automation.schema.name}" failed: ${error.message}`
-        )
+        let message = error.message
+        if (pathName) {
+          message = `path "${pathName}" failed: ${error.message}`
+        } else {
+          message = `automation "${automation.schema.name}" failed: ${error.message}`
+        }
+        this.error(message)
         run.stop('execution', error)
         await this.runRepository.update(run)
       } else {
         throw error
       }
     }
+  }
+
+  private async runAction(
+    app: App,
+    run: Run,
+    automation: Automation,
+    action: Action,
+    pathName?: string
+  ): Promise<boolean> {
+    const { data, error } = await this.runActionUseCase.execute(app, action, run)
+
+    if (error) {
+      await this.stop(run, action, error)
+      return false
+    }
+
+    if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
+      await this.filter(run, action, data)
+      return false
+    }
+
+    if (Array.isArray(data)) {
+      for (let i = 0; i < data.length; i++) {
+        const item = { ...data[i], index: i }
+        if (i === 0) {
+          await this.success(run, action, item, pathName)
+          await this.runRepository.update(run)
+          this.info(`action "${action.schema.name}" succeeded`)
+        } else {
+          const newRun = run.clone()
+          await this.success(newRun, action, item, pathName)
+          await this.runRepository.create(newRun)
+          this.debug(`create new run for action "${action.schema.name}"`)
+        }
+      }
+      return true
+    } else {
+      await this.success(run, action, data, pathName)
+      await this.runRepository.update(run)
+      if (action.schema.service === 'paths') {
+        await this.executePaths(app, run, automation, action.schema, data, pathName)
+      }
+      this.info(`action "${action.schema.name}" succeeded`)
+    }
+
+    return true
+  }
+
+  private async success(
+    run: Run,
+    action: Action,
+    data: Record<string, unknown>,
+    pathName?: string
+  ) {
+    if (pathName) {
+      run.actionPathSuccess(pathName, data)
+    } else {
+      run.actionSuccess(action.schema.name, data)
+    }
+  }
+
+  private async stop(run: Run, action: Action, error: IntegrationError | ServiceError) {
+    run.stop(action.schema.name, error)
+    await this.runRepository.update(run)
+    this.info(`action "${action.schema.name}" stopped with error: ${error.message}`)
+  }
+
+  private async filter(run: Run, action: Action, data: Record<string, unknown>) {
+    run.filter(action.schema.name, data)
+    await this.runRepository.update(run)
+    this.info(`action "${action.schema.name}" filtered`)
+  }
+
+  private async executePaths(
+    app: App,
+    run: Run,
+    automation: Automation,
+    schema: PathsActionSchema,
+    data: Record<string, unknown>,
+    pathName?: string
+  ) {
+    await Promise.all(
+      schema.paths.map(async (path) => {
+        const nextPathName = (pathName ? pathName + '.' : '') + schema.name + '.' + path.name
+        const result = data[path.name]
+        if (
+          result &&
+          typeof result === 'object' &&
+          'canContinue' in result &&
+          result.canContinue === true
+        ) {
+          await this.execute(app, run, automation, nextPathName)
+        }
+      })
+    )
   }
 }
