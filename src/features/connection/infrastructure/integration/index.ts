@@ -13,8 +13,6 @@ export const toConnectionIntegration = (connection: Connection): ConnectionInteg
       throw new Error('Facebook Lead Ads is not supported yet')
     case 'linkedin-ads':
       throw new Error('LinkedIn Ads is not supported yet')
-    case 'youcanbookme':
-      throw new Error('YouCanBookMe is not supported yet')
     default: {
       const _exhaustiveCheck: never = connection.schema
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

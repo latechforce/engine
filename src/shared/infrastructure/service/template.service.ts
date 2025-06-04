@@ -2,29 +2,35 @@ import Handlebars from 'handlebars'
 import { inject, injectable } from 'inversify'
 import TYPES from '../../application/di/types'
 import { LoggerService } from './logger.service'
-
-Handlebars.registerHelper('json', function (context) {
-  return JSON.stringify(context)
-})
-
-Handlebars.registerHelper('number', function (context) {
-  return String(context)
-})
-
-Handlebars.registerHelper('boolean', function (context) {
-  return String(context)
-})
+import type { EnvService } from './env.service'
 
 @injectable()
 export class TemplateService {
   constructor(
     @inject(TYPES.Service.Logger)
-    private readonly logger: LoggerService
+    private readonly logger: LoggerService,
+    @inject(TYPES.Service.Env)
+    env: EnvService
   ) {
     this.logger = this.logger.child('template-service')
+    Handlebars.registerHelper('json', function (context) {
+      return JSON.stringify(context)
+    })
+    Handlebars.registerHelper('number', function (context) {
+      return String(context)
+    })
+    Handlebars.registerHelper('boolean', function (context) {
+      return String(context)
+    })
+    Handlebars.registerHelper('env', function (key: string, defaultValue?: string) {
+      const value = env.getAny(key)
+      if (value) return value
+      if (typeof defaultValue === 'string') return defaultValue
+      throw new Error(`Environment variable "${key}" is not set`)
+    })
   }
 
-  fill(template: string, data: object): string | Record<string, unknown> | number | boolean | null {
+  fill(template: string, data = {}): string | Record<string, unknown> | number | boolean | null {
     if (template.startsWith('{{json') && template.endsWith('}}')) {
       const jsonTemplate = template.replace('{{json', '{{{json').replace('}}', '}}}')
       const compiled = Handlebars.compile(jsonTemplate)
@@ -42,8 +48,7 @@ export class TemplateService {
       return Boolean(compiled(data))
     }
     const compiled = Handlebars.compile(template)
-    const value = compiled(data)
-    return value
+    return compiled(data)
   }
 
   fillObject<T extends Record<string, unknown>>(object: T, data: object): T {

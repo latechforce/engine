@@ -33,6 +33,14 @@ export class EnvService {
     return this.env[key]
   }
 
+  getAny(key: string): string | undefined {
+    const all: Record<string, string> = {
+      ...Bun.env,
+      ...this.env,
+    }
+    return all[key]
+  }
+
   private async findAvailablePort(): Promise<string> {
     return new Promise((resolve, reject) => {
       const server = net.createServer()

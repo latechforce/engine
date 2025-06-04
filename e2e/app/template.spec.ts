@@ -47,3 +47,27 @@ test('should run action with inputData parsed in number', async ({ startExampleA
   expect(response.status()).toBe(200)
   expect(await response.json()).toEqual({ data: { amount: 100 }, success: true })
 })
+
+test('should run action with env variables in inputData', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'env' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-typescript')
+
+  // THEN
+  expect(response.status()).toBe(200)
+  expect(await response.json()).toEqual({ data: { apiKey: '1234567890' }, success: true })
+})
+
+test('should run action with default env variables in inputData', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'default-env' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-typescript')
+
+  // THEN
+  expect(response.status()).toBe(200)
+  expect(await response.json()).toEqual({ data: { apiKey: '9876543210' }, success: true })
+})

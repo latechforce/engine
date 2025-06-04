@@ -6,7 +6,6 @@ import { calendlyConnectionSchema } from './integration/calendly.schema'
 import { googleSheetsConnectionSchema } from './integration/google-sheets.schema'
 import { facebookLeadAdsConnectionSchema } from './integration/facebook-lead-ads.schema'
 import { linkedinAdsConnectionSchema } from './integration/linkedin-ads.schema'
-import { youcanbookmeConnectionSchema } from './integration/youcanbookme.schema'
 
 export const connectionSchema = z
   .union([
@@ -14,7 +13,6 @@ export const connectionSchema = z
     googleSheetsConnectionSchema,
     facebookLeadAdsConnectionSchema,
     linkedinAdsConnectionSchema,
-    youcanbookmeConnectionSchema,
   ])
   .meta({
     title: 'Connection',
