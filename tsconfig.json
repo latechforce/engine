@@ -29,6 +29,7 @@
     "baseUrl": ".",
     "paths": {
       "@/types": ["src/types"],
+      "@/mocks/*": ["src/mocks/*"],
       "@/example": ["example"],
       "@/example/*": ["example/*"],
       "@/e2e/*": ["e2e/*"],

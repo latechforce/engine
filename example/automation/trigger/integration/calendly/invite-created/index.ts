@@ -3,7 +3,7 @@ import calendlyConnection, { mock as calendlyMock } from '@/example/connection/c
 import {
   createWebhookSubscriptionResponse,
   listWebhookSubscriptionsResponse,
-} from '../../../../../../src/shared/infrastructure/integration/calendly/__mock__'
+} from '../../../../../../src/mocks/calendly'
 
 export const inGuides = false
 
