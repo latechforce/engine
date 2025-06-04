@@ -10,7 +10,7 @@ test('should run a get http action', async ({ startExampleApp }) => {
   // THEN
   expect(response.status()).toBe(200)
   const { data } = await response.json()
-  expect(data.url).toBe('https://httpbin.org/get')
+  expect(data.url).toBe('/api/automations/get-response')
 })
 
 test('should run a get http action with headers', async ({ startExampleApp }) => {
@@ -22,5 +22,5 @@ test('should run a get http action with headers', async ({ startExampleApp }) =>
 
   // THEN
   const { data } = await response.json()
-  expect(data.headers['X-Custom-Header']).toBe('test')
+  expect(data.headers['x-custom-header']).toBe('test')
 })

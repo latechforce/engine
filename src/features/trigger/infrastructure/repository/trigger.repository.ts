@@ -30,12 +30,14 @@ export class TriggerRepository implements ITriggerRepository {
     private readonly template: TemplateService,
     @inject(TYPES.Connection.Repository.Token)
     private readonly tokenRepository: ITokenRepository
-  ) {
-    this.logger = this.logger.child('trigger-repository')
-  }
+  ) {}
 
   debug(message: string) {
-    this.logger.debug(message)
+    this.logger.child('trigger-repository').debug(message)
+  }
+
+  http(type: 'body' | 'formData', data: unknown) {
+    this.logger.http(`${type}: ${JSON.stringify(data)}`)
   }
 
   validateData(schema: SchemaObject, data: unknown): boolean {

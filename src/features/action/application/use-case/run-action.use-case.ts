@@ -19,22 +19,24 @@ export class RunActionUseCase {
 
   async execute(app: App, action: Action, run: Run): Promise<ActionResult> {
     if (action instanceof IntegrationAction) {
-      return this.actionRepository.runIntegration(action)
+      const schema = this.actionRepository.fillSchema(action.schema, run.data)
+      return this.actionRepository.runIntegration(schema, action.connection)
     } else {
       try {
         let data: Record<string, unknown> = {}
-        const { schema } = action
+        const schema = this.actionRepository.fillSchema(action.schema, run.data)
         switch (schema.service) {
           case 'code': {
-            const inputData = this.actionRepository
-              .code(app, schema.inputData)
-              .fillInputData(run.data)
             switch (schema.action) {
               case 'run-typescript':
-                data = await this.actionRepository.code(app, inputData).runTypescript(schema.code)
+                data = await this.actionRepository
+                  .code(app, schema.inputData)
+                  .runTypescript(schema.code)
                 break
               case 'run-javascript':
-                data = await this.actionRepository.code(app, inputData).runJavascript(schema.code)
+                data = await this.actionRepository
+                  .code(app, schema.inputData)
+                  .runJavascript(schema.code)
                 break
               default: {
                 const _exhaustiveCheck: never = schema

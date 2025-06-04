@@ -8,7 +8,6 @@ import type { LoggerService, TemplateService } from '../../../../shared/infrastr
 
 // Action domain imports
 import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
-import type { IntegrationAction } from '../../domain/entity/integration-action.entity'
 import type { ActionResult } from '../../domain/value-object/action-result.value-object'
 import type { IntegrationError } from '../../domain/value-object/integration-error.value.object'
 
@@ -22,6 +21,8 @@ import type { Fields } from '../../../table/domain/object-value/fields.object-va
 import type { IRecordRepository } from '../../../table/domain/repository-interface/record-repository.interface'
 import type { App } from '../../../app/domain/entity/app.entity'
 import { Record } from '../../../table/domain/entity/record.entity'
+import type { IntegrationActionSchema } from '../../domain/schema/integration'
+import type { Connection } from 'src/features/connection/domain/entity/connection.entity'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -48,11 +49,11 @@ export class ActionRepository implements IActionRepository {
     this.logger.error(message)
   }
 
-  fillInputData<T extends { [key: string]: object | string }>(
-    inputData: T,
-    data: { [key: string]: object }
+  fillSchema<T extends { [key: string]: unknown }>(
+    schema: T,
+    data: { [key: string]: unknown } = {}
   ): T {
-    return this.templateService.fillObject<T>(inputData, data)
+    return this.templateService.fillObject<T>(schema, data)
   }
 
   code(app: App, inputData: { [key: string]: string } = {}) {
@@ -97,8 +98,6 @@ export class ActionRepository implements IActionRepository {
     }
     return {
       lint: (code: string) => this.codeService.lint(code, inputData, table),
-      fillInputData: (data: { [key: string]: unknown }) =>
-        this.templateService.fillObject(inputData, data) as { [key: string]: string },
       runJavascript: (code: string) => this.codeService.runJavascript(code, inputData, table),
       runTypescript: (code: string) => this.codeService.runTypescript(code, inputData, table),
     }
@@ -114,11 +113,14 @@ export class ActionRepository implements IActionRepository {
     }
   }
 
-  async runIntegration(action: IntegrationAction): Promise<ActionResult<IntegrationError>> {
+  async runIntegration(
+    schema: IntegrationActionSchema,
+    connection: Connection
+  ): Promise<ActionResult<IntegrationError>> {
     try {
-      const integration = toActionIntegration(action)
-      const token = await this.tokenRepository.getAccessToken(action.connection)
-      if (!token) throw new Error(`Token not found for connection ${action.connection.schema.id}`)
+      const integration = toActionIntegration(schema)
+      const token = await this.tokenRepository.getAccessToken(connection)
+      if (!token) throw new Error(`Token not found for connection ${connection.schema.id}`)
       const data = await integration.runAction(token)
       return { data }
     } catch (error) {

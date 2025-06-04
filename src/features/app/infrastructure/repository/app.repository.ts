@@ -8,6 +8,7 @@ import {
   EnvService,
   LoggerService,
   DatabaseService,
+  type TemplateService,
 } from '../../../../shared/infrastructure/service'
 import { HonoContext } from '../../../../shared/infrastructure/di/context'
 import TYPES from '../../../../shared/application/di/types'
@@ -35,7 +36,9 @@ export class AppRepository implements IAppRepository {
     @inject(TYPES.Service.Server)
     private readonly serverService: ServerService,
     @inject(TYPES.Hono.Context)
-    private readonly honoContext: HonoContext
+    private readonly honoContext: HonoContext,
+    @inject(TYPES.Service.Template)
+    private readonly templateService: TemplateService
   ) {}
 
   info(message: string) {
@@ -48,6 +51,10 @@ export class AppRepository implements IAppRepository {
 
   async loadEnv() {
     return this.env.load()
+  }
+
+  fillSchemaEnvVariables<T extends { [key: string]: unknown }>(schema: T): T {
+    return this.templateService.fillObject(schema)
   }
 
   validate(unknownSchema: unknown): ValidateResult {

@@ -49,6 +49,7 @@ export class TriggerHttpAutomationUseCase {
         const contentType = request.headers.get('content-type') || ''
         if (contentType.includes('application/json')) {
           trigger.body = request.body ? await request.json() : undefined
+          this.triggerRepository.http('body', trigger.body)
         } else if (
           contentType.includes('application/x-www-form-urlencoded') ||
           contentType.includes('multipart/form-data')
@@ -56,6 +57,7 @@ export class TriggerHttpAutomationUseCase {
           const formName = request.headers.get('x-form-name') || ''
           const form = app.findForm(formName)
           const formData = await request.formData()
+          this.triggerRepository.http('formData', formData)
           const fields: Fields = {}
           for (const key of formData.keys()) {
             const value = formData.get(key)
@@ -99,11 +101,13 @@ export class TriggerHttpAutomationUseCase {
       const contentType = request.headers.get('content-type') || ''
       if (contentType.includes('application/json')) {
         trigger = request.body ? await request.json() : {}
+        this.triggerRepository.http('body', trigger)
       } else if (
         contentType.includes('application/x-www-form-urlencoded') ||
         contentType.includes('multipart/form-data')
       ) {
         const formData = await request.formData()
+        this.triggerRepository.http('formData', formData)
         const fields: Fields = {}
         for (const key of formData.keys()) {
           const value = formData.get(key)

@@ -14,6 +14,7 @@ export class SetupActionUseCase {
   async execute(app: App, action: Action) {
     this.actionRepository.debug(`setup "${action.schema.name}"`)
     const { schema } = action
+    this.actionRepository.fillSchema(schema)
     switch (schema.service) {
       case 'code': {
         switch (schema.action) {

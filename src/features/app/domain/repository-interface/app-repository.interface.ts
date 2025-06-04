@@ -4,6 +4,7 @@ import type { Env } from '../../../../shared/domain/value-object/env.value-objec
 
 export type IAppRepository = {
   loadEnv: () => Promise<Env>
+  fillSchemaEnvVariables: <T extends { [key: string]: unknown }>(schema: T) => T
   setup: (app: App) => Promise<void>
   start: (app: App) => Promise<void>
   stop: () => Promise<void>

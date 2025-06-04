@@ -1,5 +1,9 @@
 import type { AppSchema } from '@/types'
 
+export const env = {
+  API_PORT: 6000,
+}
+
 export default {
   name: 'HTTP POST action with headers',
   description: 'Automation with HTTP POST action and headers',
@@ -16,9 +20,9 @@ export default {
           name: 'request',
           service: 'http',
           action: 'post',
-          url: 'https://httpbin.org/post',
+          url: 'http://localhost:{{env "API_PORT"}}/api/automations/post-response',
           headers: {
-            'X-Custom-Header': '{{env.TEST_HEADER "test"}}',
+            'X-Custom-Header': '{{env "TEST_HEADER" "test"}}',
           },
         },
       ],

@@ -51,7 +51,7 @@ export class TemplateService {
     return compiled(data)
   }
 
-  fillObject<T extends Record<string, unknown>>(object: T, data: object): T {
+  fillObject<T extends Record<string, unknown>>(object: T, data = {}): T {
     return Object.entries(object).reduce((acc: Record<string, unknown>, [key, value]) => {
       if (typeof value === 'string') {
         acc[key] = this.fill(value, data)

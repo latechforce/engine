@@ -28,8 +28,8 @@ export default {
       id: 1,
       name: 'Calendly',
       service: 'calendly',
-      clientId: '{{env.CALENDLY_CLIENT_ID "client_id"}}',
-      clientSecret: '{{env.CALENDLY_CLIENT_SECRET "client_secret"}}',
+      clientId: '{{env "CALENDLY_CLIENT_ID" "client_id"}}',
+      clientSecret: '{{env "CALENDLY_CLIENT_SECRET" "client_secret"}}',
     },
   ],
 } satisfies AppSchema

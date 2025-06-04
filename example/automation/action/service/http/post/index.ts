@@ -2,6 +2,10 @@ import type { AppSchema } from '@/types'
 
 export const inGuides = true
 
+export const env = {
+  API_PORT: 6000,
+}
+
 export default {
   name: 'Make an HTTP POST request',
   description: 'Automation with HTTP POST action and body',
@@ -18,25 +22,7 @@ export default {
           name: 'request',
           service: 'http',
           action: 'post',
-          url: '{{env "BASE_URL"}}/api/automations/post-response',
-        },
-      ],
-    },
-    {
-      name: 'post-response',
-      trigger: {
-        service: 'http',
-        event: 'post',
-        path: 'post-response',
-      },
-      actions: [
-        {
-          name: 'response',
-          service: 'http',
-          action: 'response',
-          body: {
-            url: '{{ trigger.url }}',
-          },
+          url: 'http://localhost:{{env "API_PORT"}}/api/automations/post-response',
         },
       ],
     },

@@ -12,8 +12,7 @@ export class RunFilterUseCase {
   ) {}
 
   async execute(schema: ConditionsSchema, run: Run): Promise<{ canContinue: boolean }> {
-    const filledConditions = this.actionRepository.fillInputData(schema, run.data)
-    const canContinue = await this.executeCondition(filledConditions, run)
+    const canContinue = await this.executeCondition(schema, run)
     return { canContinue }
   }
 

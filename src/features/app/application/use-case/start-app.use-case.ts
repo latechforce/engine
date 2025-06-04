@@ -8,6 +8,7 @@ import type { ValidateAppUseCase } from './validate-app.use-case'
 import type { SetupConnectionUseCase } from '../../../connection/application/use-case/setup-connection.use-case'
 import type { SetupBucketUseCase } from '../../../bucket/application/use-case/setup-bucket.use-case'
 import { Bucket } from '../../../bucket/domain/entity/bucket.entity'
+import type { ConnectionSchema } from '../../../connection/domain/schema/connection.schema'
 
 @injectable()
 export class StartAppUseCase {
@@ -34,6 +35,9 @@ export class StartAppUseCase {
       this.appRepository.error(error)
       throw new Error('Invalid app schema')
     }
+    schema.connections = schema.connections.map((connection) => {
+      return this.appRepository.fillSchemaEnvVariables<ConnectionSchema>(connection)
+    })
     const app = new App(schema, env)
     await this.appRepository.setup(app)
     for (const connection of app.connections) {
