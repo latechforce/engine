@@ -1,3 +1,11 @@
+# [0.52.0](https://github.com/latechforce/engine/compare/v0.51.0...v0.52.0) (2025-06-04)
+
+
+### Features
+
+* **action:** should run a TypeScript code that return an array ([56475d8](https://github.com/latechforce/engine/commit/56475d86b2c1b0fb9cdb9a4703f933a8eb7dcd50)) — Thomas JEANNEAU
+* **action:** should run a TypeScript code with buckets ([5f35dc9](https://github.com/latechforce/engine/commit/5f35dc9363481a221f184b84e06ccfad0572ac29)) — Thomas JEANNEAU
+
 # [0.51.0](https://github.com/latechforce/engine/compare/v0.50.1...v0.51.0) (2025-06-04)
 
 
