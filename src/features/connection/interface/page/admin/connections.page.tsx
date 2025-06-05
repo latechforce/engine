@@ -9,11 +9,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '../../../../../shared/interface/ui/dropdown-menu.ui'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
-import { Link, MoreHorizontal, Unlink } from 'lucide-react'
+import { Link, MoreVertical, Unlink } from 'lucide-react'
 import { Suspense, useEffect } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListConnectionsDto } from '../../../application/dto/list-connections.dto'
@@ -61,11 +60,10 @@ const columns: ColumnDef<ConnectionDto>[] = [
               className="h-8 w-8 p-0"
             >
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreVertical className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
             {row.original.authorizationUrl ? (
               <DropdownMenuItem
                 onClick={() =>

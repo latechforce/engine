@@ -11,6 +11,7 @@ export const automationSchema = z
   .object({
     id: z.number().int().positive(),
     name: z.string().trim().min(3),
+    editUrl: z.url().optional(),
     trigger: triggerSchema,
     actions: z.array(actionSchema).default([]),
   })

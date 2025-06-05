@@ -5,6 +5,7 @@ export type AutomationDto = {
   id: number
   name: string
   active: boolean
+  editUrl?: string
   updatedAt: string
 }
 
@@ -13,6 +14,7 @@ export function toAutomationDto(automation: Automation, status: AutomationStatus
     id: automation.schema.id,
     name: automation.schema.name,
     active: status.active,
+    editUrl: automation.schema.editUrl,
     updatedAt: status.updatedAt.toISOString(),
   }
 }

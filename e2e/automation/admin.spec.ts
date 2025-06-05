@@ -55,12 +55,22 @@ test('should enable an automation', async ({ startExampleApp }) => {
   expect(success).toBe(true)
 })
 
-test('should open on github', async ({ startExampleApp }) => {
+test('should open the edit url', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test, filter: 'typescript', loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/admin/automations')
+  await page.getByRole('button', { name: 'Open menu' }).click()
+  const [popup] = await Promise.all([
+    page.waitForEvent('popup'),
+    page.getByRole('menuitem', { name: 'Edit this automation' }).click(),
+  ])
+
+  await popup.waitForLoadState()
 
   // THEN
+  await expect(popup).toHaveURL(
+    'https://github.com/latechforce/engine/blob/main/example/automation/admin.ts'
+  )
 })

@@ -18,6 +18,14 @@ import { formatDistance } from 'date-fns'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 import { queryClient } from '../../../../../shared/interface/lib/query.lib'
 import { toast } from 'sonner'
+import { Button } from 'src/shared/interface/ui/button.ui'
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from 'src/shared/interface/ui/dropdown-menu.ui'
+import { MoreVertical } from 'lucide-react'
 
 const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto, unknown>) =>
   [
@@ -49,6 +57,35 @@ const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto
               disabled={mutation.isPending}
             />
           </div>
+        )
+      },
+    },
+    {
+      id: 'actions',
+      size: 50,
+      cell: ({ row }) => {
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0"
+              >
+                <span className="sr-only">Open menu</span>
+                <MoreVertical className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                disabled={!row.original.editUrl}
+                onClick={() => {
+                  window.open(row.original.editUrl, '_blank')
+                }}
+              >
+                Edit this automation
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         )
       },
     },
