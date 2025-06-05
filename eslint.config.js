@@ -30,6 +30,12 @@ export default tseslint.config(
         { argsIgnorePattern: '^_', ignoreRestSiblings: true },
       ],
       '@typescript-eslint/no-empty-object-type': 'off',
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: ['src/*'],
+        },
+      ],
     },
   },
 

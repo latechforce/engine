@@ -1,5 +1,5 @@
 import { expect, test } from '@/e2e/fixtures'
-import type { GetAppMetadataDto } from 'src/features/app/application/dto/get-app-metadata.dto'
+import type { GetAppMetadataDto } from '../../src/features/app/application/dto/get-app-metadata.dto'
 
 test('should return 200 OK', async ({ startExampleApp }) => {
   // GIVEN

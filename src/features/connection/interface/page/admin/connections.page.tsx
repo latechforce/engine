@@ -17,7 +17,7 @@ import { Suspense, useEffect } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListConnectionsDto } from '../../../application/dto/list-connections.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
-import { TypographyH3 } from 'src/shared/interface/ui/typography.ui'
+import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
 
 const columns: ColumnDef<ConnectionDto>[] = [
   {

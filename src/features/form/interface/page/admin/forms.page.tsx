@@ -10,7 +10,7 @@ import { Button } from '../../../../../shared/interface/ui/button.ui'
 import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { adminRoute } from '../../../../app/interface/page/router'
-import { TypographyH3 } from 'src/shared/interface/ui/typography.ui'
+import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
 
 export const columns: ColumnDef<FormDto>[] = [
   {

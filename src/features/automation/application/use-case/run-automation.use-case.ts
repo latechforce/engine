@@ -15,9 +15,9 @@ import { Run } from '../../../run/domain/entity/run.entity'
 import type { IAutomationRepository } from '../../domain/repository-interface/automation-repository.interface'
 import type { Automation } from '../../domain/entity/automation.entity'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
-import type { Action } from 'src/features/action/domain/entity'
-import type { IntegrationError, ServiceError } from 'src/features/action/domain/value-object'
-import type { PathsActionSchema } from 'src/features/action/domain/schema/service/paths'
+import type { Action } from '../../../action/domain/entity'
+import type { IntegrationError, ServiceError } from '../../../action/domain/value-object'
+import type { PathsActionSchema } from '../../../action/domain/schema/service/paths'
 
 @injectable()
 export class RunAutomationUseCase {

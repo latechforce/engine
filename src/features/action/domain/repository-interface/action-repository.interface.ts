@@ -1,4 +1,4 @@
-import type { Connection } from 'src/features/connection/domain/entity/connection.entity'
+import type { Connection } from '../../../connection/domain/entity/connection.entity'
 import type { App } from '../../../app/domain/entity/app.entity'
 import type { IntegrationActionSchema } from '../schema/integration'
 import type { ActionResult } from '../value-object/action-result.value-object'

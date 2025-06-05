@@ -10,7 +10,7 @@ import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListRunsDto } from '../../../application/dto/list-runs.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
-import { TypographyH3 } from 'src/shared/interface/ui/typography.ui'
+import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
 import { CheckCircle, Filter, Play, XCircle } from 'lucide-react'
 
 const columns: ColumnDef<RunDto>[] = [

@@ -18,15 +18,15 @@ import { formatDistance } from 'date-fns'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 import { queryClient } from '../../../../../shared/interface/lib/query.lib'
 import { toast } from 'sonner'
-import { Button } from 'src/shared/interface/ui/button.ui'
+import { Button } from '../../../../../shared/interface/ui/button.ui'
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from 'src/shared/interface/ui/dropdown-menu.ui'
+} from '../../../../../shared/interface/ui/dropdown-menu.ui'
 import { MoreVertical } from 'lucide-react'
-import { TypographyH3 } from 'src/shared/interface/ui/typography.ui'
+import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
 
 const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto, unknown>) =>
   [

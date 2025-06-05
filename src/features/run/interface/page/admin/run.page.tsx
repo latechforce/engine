@@ -4,7 +4,7 @@ import { client } from '../../../../../shared/interface/lib/client.lib'
 import Layout from '../../../../app/interface/page/admin/layout'
 import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
 import { createRoute, useParams } from '@tanstack/react-router'
-import { TableSkeleton } from 'src/shared/interface/ui/table.ui'
+import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { Suspense } from 'react'
 import { adminRoute } from '../../../../app/interface/page/router'
 
