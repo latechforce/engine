@@ -692,6 +692,12 @@
               "name": {
                 "type": "string"
               },
+              "clientId": {
+                "type": "string"
+              },
+              "clientSecret": {
+                "type": "string"
+              },
               "service": {
                 "type": "string",
                 "const": "google-sheets"
@@ -700,6 +706,8 @@
             "required": [
               "id",
               "name",
+              "clientId",
+              "clientSecret",
               "service"
             ],
             "additionalProperties": false
@@ -717,6 +725,12 @@
               "name": {
                 "type": "string"
               },
+              "clientId": {
+                "type": "string"
+              },
+              "clientSecret": {
+                "type": "string"
+              },
               "service": {
                 "type": "string",
                 "const": "facebook-lead-ads"
@@ -725,6 +739,8 @@
             "required": [
               "id",
               "name",
+              "clientId",
+              "clientSecret",
               "service"
             ],
             "additionalProperties": false
@@ -742,6 +758,12 @@
               "name": {
                 "type": "string"
               },
+              "clientId": {
+                "type": "string"
+              },
+              "clientSecret": {
+                "type": "string"
+              },
               "service": {
                 "type": "string",
                 "const": "linkedin-ads"
@@ -750,6 +772,8 @@
             "required": [
               "id",
               "name",
+              "clientId",
+              "clientSecret",
               "service"
             ],
             "additionalProperties": false
