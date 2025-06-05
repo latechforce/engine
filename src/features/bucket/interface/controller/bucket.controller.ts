@@ -2,29 +2,24 @@ import type { Context } from 'hono'
 import type { HonoType } from '../../../../shared/infrastructure/service'
 
 export class BucketController {
-  static async listObjects(c: Context<HonoType>) {
+  static async listObjects(c: Context<HonoType>, data: { bucketId: string }) {
     const app = c.get('app')
-    const bucketId = c.req.param('bucketId')
     const listObjectsUseCase = c.get('listObjectsUseCase')
-    const listObjectsDto = await listObjectsUseCase.execute(app, bucketId)
+    const listObjectsDto = await listObjectsUseCase.execute(app, data.bucketId)
     return c.json(listObjectsDto, 200)
   }
 
-  static async uploadObject(c: Context<HonoType>) {
+  static async uploadObject(c: Context<HonoType>, data: { bucketId: string; key: string }) {
     const app = c.get('app')
-    const bucketId = c.req.param('bucketId')
-    const key = c.req.param('key')
     const uploadObjectUseCase = c.get('uploadObjectUseCase')
-    const result = await uploadObjectUseCase.execute(app, bucketId, key, c.req.raw)
+    const result = await uploadObjectUseCase.execute(app, data.bucketId, data.key, c.req.raw)
     return c.text(result, 201)
   }
 
-  static async downloadObject(c: Context<HonoType>) {
+  static async downloadObject(c: Context<HonoType>, data: { bucketId: string; key: string }) {
     const app = c.get('app')
-    const bucketId = c.req.param('bucketId')
-    const key = c.req.param('key')
     const downloadObjectUseCase = c.get('downloadObjectUseCase')
-    const object = await downloadObjectUseCase.execute(app, bucketId, key)
+    const object = await downloadObjectUseCase.execute(app, data.bucketId, data.key)
     return new Response(object.data, {
       status: 200,
       headers: {
@@ -34,12 +29,10 @@ export class BucketController {
     })
   }
 
-  static async deleteObject(c: Context<HonoType>) {
+  static async deleteObject(c: Context<HonoType>, data: { bucketId: string; key: string }) {
     const app = c.get('app')
-    const bucketId = c.req.param('bucketId')
-    const key = c.req.param('key')
     const deleteObjectUseCase = c.get('deleteObjectUseCase')
-    const result = await deleteObjectUseCase.execute(app, bucketId, key)
+    const result = await deleteObjectUseCase.execute(app, data.bucketId, data.key)
     return c.text(result, 200)
   }
 }

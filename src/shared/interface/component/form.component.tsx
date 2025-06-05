@@ -135,12 +135,12 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
 
 type FormProps = {
   inputs: InputDto[]
-  onSubmit: (values: unknown) => Promise<void>
+  onSubmit: (values: Record<string, string | File>) => Promise<void>
 }
 
 export function Form({ inputs, onSubmit }: FormProps) {
   const form = useForm({
-    onSubmit: async ({ value }) => {
+    onSubmit: async ({ value }: { value: Record<string, string | File> }) => {
       await onSubmit(value)
     },
   })

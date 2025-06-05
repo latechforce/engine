@@ -123,4 +123,11 @@ export class App {
       (bucket) => bucket.schema.id === Number(nameOrId) || bucket.schema.name === String(nameOrId)
     )
   }
+
+  findAutomation(nameOrId: string | number): Automation | undefined {
+    return this.automations.find(
+      (automation) =>
+        automation.schema.id === Number(nameOrId) || automation.schema.name === String(nameOrId)
+    )
+  }
 }

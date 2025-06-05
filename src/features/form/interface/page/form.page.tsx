@@ -27,13 +27,12 @@ const FormDataPage = () => {
 
   const { form } = data
 
-  const onSubmit = async (values: unknown) => {
+  const onSubmit = async (values: Record<string, string | File>) => {
     const { action } = form
     if (action.startsWith('/api/tables/')) {
       const tableId = action.replace('/api/tables/', '')
-      const response = await client.tables[':tableId'].$post({
+      const response = await client.tables[':tableId'].form.$post({
         param: { tableId },
-        // @ts-expect-error TODO: fix this
         form: values,
       })
       if (response.status === 201) {
@@ -41,10 +40,9 @@ const FormDataPage = () => {
       }
     } else if (action.startsWith('/api/automations/')) {
       const path = action.replace('/api/automations/', '')
-      const response = await client.automations[':path'].$post(
+      const response = await client.automations[':path'].form.$post(
         {
           param: { path },
-          // @ts-expect-error TODO: fix this
           form: values,
         },
         {

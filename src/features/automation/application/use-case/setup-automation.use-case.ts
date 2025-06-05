@@ -49,7 +49,7 @@ export class SetupAutomationUseCase {
     }
     await this.setupTriggerUseCase.execute(automation)
     this.runRepository.onCreate(async (run: Run) => {
-      if (run.automation_schema.name === automation.schema.name) {
+      if (run.automation_schema.id === automation.schema.id) {
         await this.runAutomationUseCase.execute(app, run, automation)
       }
     })

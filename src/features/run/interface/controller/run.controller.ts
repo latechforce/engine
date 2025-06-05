@@ -8,10 +8,9 @@ export class RunController {
     return c.json(listRunsDto)
   }
 
-  static async get(c: Context<HonoType>) {
-    const id = c.req.param('id')
+  static async get(c: Context<HonoType>, data: { runId: string }) {
     const getRunUseCase = c.get('getRunUseCase')
-    const getRunDto = await getRunUseCase.execute(id)
+    const getRunDto = await getRunUseCase.execute(data.runId)
     return c.json(getRunDto)
   }
 }

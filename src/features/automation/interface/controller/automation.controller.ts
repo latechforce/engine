@@ -9,15 +9,26 @@ export class AutomationController {
     return c.json(listAutomationsDto)
   }
 
-  static async trigger(c: Context<HonoType>) {
+  static async trigger(
+    c: Context<HonoType>,
+    data: { path: string; body: Record<string, unknown> }
+  ) {
     const app = c.get('app')
     const paramPath = c.req.param('path')
     const triggerHttpAutomationUseCase = c.get('triggerHttpAutomationUseCase')
     const triggerHttpAutomationDto = await triggerHttpAutomationUseCase.execute(
       app,
       paramPath,
-      c.req.raw
+      c.req.raw,
+      data.body
     )
     return c.json(triggerHttpAutomationDto)
+  }
+
+  static async setStatus(c: Context<HonoType>, data: { automationId: string; active: boolean }) {
+    const app = c.get('app')
+    const setStatusUseCase = c.get('setStatusUseCase')
+    await setStatusUseCase.execute(app, data.automationId, data.active)
+    return c.text('OK')
   }
 }

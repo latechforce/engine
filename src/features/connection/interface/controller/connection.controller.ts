@@ -9,12 +9,10 @@ export class ConnectionController {
     return c.json(listConnectionsDto)
   }
 
-  static async authenticate(c: Context<HonoType>) {
-    const id = c.req.query('id')
-    const code = c.req.query('code')
+  static async authenticate(c: Context<HonoType>, data: { id?: string; code?: string }) {
     const app = c.get('app')
     const authenticateConnectionUseCase = c.get('authenticateConnectionUseCase')
-    const html = await authenticateConnectionUseCase.execute(app, id, code)
+    const html = await authenticateConnectionUseCase.execute(app, data.id, data.code)
     return c.html(html)
   }
 }

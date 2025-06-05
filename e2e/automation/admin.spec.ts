@@ -12,26 +12,47 @@ test('should list automations', async ({ startExampleApp }) => {
   await expect(page.getByText('less than a minute ago')).toBeVisible()
 })
 
-// TODO: [@thomas-jeanneau] - should disable an automation
 test('should disable an automation', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test, filter: 'typescript', loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/admin/automations')
+  await page.getByRole('switch').click()
+  await page.waitForSelector('text=Automation "run-typescript" is now inactive.')
 
   // THEN
+  const statusResponse = await page.request.get('/api/automations')
+  const { automations } = await statusResponse.json()
+  expect(automations.length).toBe(1)
+  expect(automations[0].active).toBe(false)
+  const runResponse = await page.request.post('/api/automations/run-typescript')
+  expect(runResponse.status()).toBe(403)
+  const { error, success } = await runResponse.json()
+  expect(error).toBe('Automation is not active')
+  expect(success).toBe(false)
 })
 
-// TODO: [@thomas-jeanneau] - should enable an automation
 test('should enable an automation', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test, filter: 'typescript', loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/admin/automations')
+  await page.getByRole('switch').click()
+  await page.waitForSelector('text=Automation "run-typescript" is now inactive.')
+  await page.getByRole('switch').click()
+  await page.waitForSelector('text=Automation "run-typescript" is now active.')
 
   // THEN
+  const statusResponse = await page.request.get('/api/automations')
+  const { automations } = await statusResponse.json()
+  expect(automations.length).toBe(1)
+  expect(automations[0].active).toBe(true)
+  const runResponse = await page.request.post('/api/automations/run-typescript')
+  const { error, success } = await runResponse.json()
+  expect(error).toBeUndefined()
+  expect(success).toBe(true)
 })
 
 test('should open on github', async ({ startExampleApp }) => {

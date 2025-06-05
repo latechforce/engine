@@ -9,11 +9,10 @@ export class FormController {
     return c.json(listFormsDto)
   }
 
-  static async get(c: Context<HonoType>) {
+  static async get(c: Context<HonoType>, data: { path: string }) {
     const app = c.get('app')
-    const path = c.req.param('path')
     const getFormUseCase = c.get('getFormUseCase')
-    const getFormDto = await getFormUseCase.execute(app, path)
+    const getFormDto = await getFormUseCase.execute(app, data.path)
     return c.json(getFormDto)
   }
 }

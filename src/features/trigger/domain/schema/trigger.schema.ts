@@ -6,7 +6,6 @@ import { httpTriggerSchema } from './service/http'
 import { calendlyTriggerSchema } from './integration/calendly'
 import { facebookLeadAdsTriggerSchema } from './integration/facebook/lead-ads'
 import { linkedinAdsTriggerSchema } from './integration/linkedin/ads'
-import { youcanbookmeTriggerSchema } from './integration/youcanbookme'
 
 export const triggerSchema = z
   .union([
@@ -14,7 +13,6 @@ export const triggerSchema = z
     calendlyTriggerSchema,
     facebookLeadAdsTriggerSchema,
     linkedinAdsTriggerSchema,
-    youcanbookmeTriggerSchema,
   ])
   .meta({
     title: 'Trigger',

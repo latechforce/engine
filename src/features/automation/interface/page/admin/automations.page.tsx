@@ -4,40 +4,55 @@ import { DataTable } from '../../../../../shared/interface/component/data-table.
 import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '../../../../../shared/interface/lib/client.lib'
 import type { AutomationDto } from '../../../application/dto/automation.dto'
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
+import {
+  queryOptions,
+  useSuspenseQuery,
+  useMutation,
+  type UseMutationResult,
+} from '@tanstack/react-query'
 import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListAutomationsDto } from '../../../application/dto/list-automations.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
 import { formatDistance } from 'date-fns'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
+import { queryClient } from '../../../../../shared/interface/lib/query.lib'
+import { toast } from 'sonner'
 
-const columns: ColumnDef<AutomationDto>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Name',
-  },
-  {
-    accessorKey: 'updatedAt',
-    header: 'Last modified',
-    cell: ({ row }) => {
-      const date = new Date(row.original.updatedAt)
-      const now = new Date()
-      return <div>{formatDistance(date, now, { addSuffix: true })}</div>
+const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto, unknown>) =>
+  [
+    {
+      accessorKey: 'name',
+      header: 'Name',
+      size: 200,
     },
-  },
-  {
-    accessorKey: 'active',
-    header: 'Status',
-    cell: ({ row }) => {
-      return (
-        <div className="flex items-center">
-          <Switch checked={row.original.active} />
-        </div>
-      )
+    {
+      accessorKey: 'updatedAt',
+      header: 'Last modified',
+      size: 50,
+      cell: ({ row }) => {
+        const date = new Date(row.original.updatedAt)
+        const now = new Date()
+        return <div>{formatDistance(date, now, { addSuffix: true })}</div>
+      },
     },
-  },
-]
+    {
+      accessorKey: 'active',
+      header: 'Status',
+      size: 50,
+      cell: ({ row }) => {
+        return (
+          <div className="flex items-center">
+            <Switch
+              checked={row.original.active}
+              onCheckedChange={() => mutation.mutate(row.original)}
+              disabled={mutation.isPending}
+            />
+          </div>
+        )
+      },
+    },
+  ] satisfies ColumnDef<AutomationDto>[]
 
 const automationsQueryOptions = () =>
   queryOptions<ListAutomationsDto>({
@@ -47,9 +62,24 @@ const automationsQueryOptions = () =>
 
 const AutomationsDataTable = () => {
   const { data } = useSuspenseQuery(automationsQueryOptions())
+
+  const mutation = useMutation({
+    mutationFn: async (automation: AutomationDto) => {
+      await client.automations[':automationId'].status.$patch({
+        param: { automationId: automation.id.toString() },
+        json: { active: !automation.active },
+      })
+      return automation
+    },
+    onSuccess: (automation) => {
+      queryClient.invalidateQueries({ queryKey: ['automationsData'] })
+      toast(`Automation "${automation.name}" is now ${!automation.active ? 'active' : 'inactive'}.`)
+    },
+  })
+
   return (
     <DataTable
-      columns={columns}
+      columns={columns(mutation)}
       data={data.automations}
     />
   )

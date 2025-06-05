@@ -4,6 +4,6 @@ import { RunController } from './controller/run.controller'
 
 export const runRoutes = new Hono<HonoType>()
   .get('/', RunController.list)
-  .get('/:id', RunController.get)
+  .get('/:runId', (c) => RunController.get(c, { runId: c.req.param('runId') }))
 
 export type RunType = typeof runRoutes

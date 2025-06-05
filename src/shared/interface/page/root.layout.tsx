@@ -3,12 +3,14 @@ import { createRootRouteWithContext, HeadContent, Outlet } from '@tanstack/react
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { NotFoundPage } from './notFound.page'
+import { Toaster } from '../ui/sonner.ui'
 
 export const RootLayout = () => {
   return (
     <>
       <HeadContent />
       <Outlet />
+      <Toaster position="top-center" />
       <ReactQueryDevtools />
       <TanStackRouterDevtools />
     </>

@@ -9,6 +9,11 @@ import { ConnectionController } from './controller/connection.controller'
 
 export const connectionRoutes = new Hono<HonoType>()
   .get('/', ConnectionController.list)
-  .get('/auth', ConnectionController.authenticate)
+  .get('/auth', (c) =>
+    ConnectionController.authenticate(c, {
+      id: c.req.query('id'),
+      code: c.req.query('code'),
+    })
+  )
 
 export type ConnectionType = typeof connectionRoutes

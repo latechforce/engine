@@ -14,6 +14,7 @@ import { ListAutomationsUseCase } from '../../application/use-case/list-automati
 import { AutomationRepository } from '../repository/automation.repository'
 import { AutomationHonoContext } from './context'
 import { AutomationDatabaseService } from '../service/database.service'
+import { SetStatusUseCase } from '../../application/use-case/set-status.use-case'
 
 export function registerAutomationDependencies(container: Container) {
   // Register repositories
@@ -35,6 +36,7 @@ export function registerAutomationDependencies(container: Container) {
     .bind<ListAutomationsUseCase>(TYPES.UseCase.List)
     .to(ListAutomationsUseCase)
     .inSingletonScope()
+  container.bind<SetStatusUseCase>(TYPES.UseCase.SetStatus).to(SetStatusUseCase).inSingletonScope()
 
   // Register context
   container

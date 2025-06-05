@@ -1,5 +1,6 @@
 // Third-party imports
-import type { ColumnDef } from '@tanstack/react-table'
+import * as React from 'react'
+import type { ColumnDef, ColumnResizeMode } from '@tanstack/react-table'
 import {
   flexRender,
   getCoreRowModel,
@@ -17,11 +18,15 @@ type DataTableProps<TData, TValue> = {
 }
 
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+  const [columnResizeMode] = React.useState<ColumnResizeMode>('onChange')
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    columnResizeMode,
+    enableColumnResizing: true,
     initialState: {
       columnPinning: {
         left: ['expand-column'],
@@ -47,10 +52,18 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      style={{ width: header.getSize() }}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
+                      <div
+                        onMouseDown={header.getResizeHandler()}
+                        onTouchStart={header.getResizeHandler()}
+                        className={`resizer ${header.column.getIsResizing() ? 'isResizing' : ''}`}
+                      />
                     </TableHead>
                   )
                 })}
@@ -65,7 +78,16 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                   data-state={row.getIsSelected() && 'selected'}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      style={{
+                        width: cell.column.getSize(),
+                        maxWidth: cell.column.getSize(),
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
