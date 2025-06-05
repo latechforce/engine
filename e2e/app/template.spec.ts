@@ -13,7 +13,8 @@ test('should run action with inputData parsed in JSON', async ({ startExampleApp
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.json()).toEqual({ data: { message: 'Hello, world!' }, success: true })
+  const { data } = await response.json()
+  expect(data).toEqual({ message: 'Hello, world!' })
 })
 
 test('should run action with inputData parsed in boolean', async ({ startExampleApp }) => {
@@ -29,7 +30,8 @@ test('should run action with inputData parsed in boolean', async ({ startExample
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.json()).toEqual({ data: { success: true }, success: true })
+  const { data } = await response.json()
+  expect(data).toEqual({ success: true })
 })
 
 test('should run action with inputData parsed in number', async ({ startExampleApp }) => {
@@ -45,7 +47,8 @@ test('should run action with inputData parsed in number', async ({ startExampleA
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.json()).toEqual({ data: { amount: 100 }, success: true })
+  const { data } = await response.json()
+  expect(data).toEqual({ amount: 100 })
 })
 
 test('should run action with env variables in inputData', async ({ startExampleApp }) => {
@@ -57,7 +60,8 @@ test('should run action with env variables in inputData', async ({ startExampleA
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.json()).toEqual({ data: { apiKey: '1234567890' }, success: true })
+  const { data } = await response.json()
+  expect(data).toEqual({ apiKey: '1234567890' })
 })
 
 test('should run action with default env variables in inputData', async ({ startExampleApp }) => {
@@ -69,5 +73,6 @@ test('should run action with default env variables in inputData', async ({ start
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.json()).toEqual({ data: { apiKey: '9876543210' }, success: true })
+  const { data } = await response.json()
+  expect(data).toEqual({ apiKey: '9876543210' })
 })

@@ -9,7 +9,9 @@ test('should run a response http action', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.json()).toEqual({ success: true })
+  const { success, runId } = await response.json()
+  expect(success).toBe(true)
+  expect(runId).toBeDefined()
 })
 
 test('should run a response http action with body from a post request', async ({

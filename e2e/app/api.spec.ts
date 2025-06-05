@@ -3,7 +3,7 @@ import type { GetAppMetadataDto } from 'src/features/app/application/dto/get-app
 
 test('should return 200 OK', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'health' })
+  const { page } = await startExampleApp({ test })
 
   // WHEN
   const response = await page.request.get('/api/health')

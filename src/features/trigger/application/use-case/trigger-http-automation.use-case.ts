@@ -112,21 +112,20 @@ export class TriggerHttpAutomationUseCase {
       } else if (request.method === 'POST') {
         const contentType = request.headers.get('content-type') || ''
         if (contentType.includes('application/json')) {
-          trigger = request.body ? await request.json() : {}
+          trigger = body
           this.triggerRepository.http('body', trigger)
         } else if (
           contentType.includes('application/x-www-form-urlencoded') ||
           contentType.includes('multipart/form-data')
         ) {
-          const formData = await request.formData()
-          this.triggerRepository.http('formData', formData)
+          this.triggerRepository.http('formData', body)
           const fields: Fields = {}
-          for (const key of formData.keys()) {
-            const value = formData.get(key)
+          for (const key of Object.keys(body)) {
+            const value = body[key]
             if (value instanceof File) {
               throw new HttpError('Invalid attachment', 400)
             }
-            fields[key] = value
+            fields[key] = String(value)
           }
           trigger = fields
         }

@@ -31,7 +31,8 @@ test('should trigger an automation', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.json()).toEqual({ success: true })
+  const { success } = await response.json()
+  expect(success).toBe(true)
 })
 
 test('should trigger an automation with immediate response', async ({ startExampleApp }) => {
@@ -43,7 +44,8 @@ test('should trigger an automation with immediate response', async ({ startExamp
 
   // THEN
   expect(response.status()).toBe(200)
-  expect(await response.json()).toEqual({ success: true })
+  const { success } = await response.json()
+  expect(success).toBe(true)
 })
 
 test('should not trigger an automation with a invalid body', async ({ startExampleApp }) => {
@@ -59,7 +61,9 @@ test('should not trigger an automation with a invalid body', async ({ startExamp
 
   // THEN
   expect(response.status()).toBe(400)
-  expect(await response.json()).toEqual({ error: 'Invalid body', success: false })
+  const { error, success } = await response.json()
+  expect(error).toBe('Invalid body')
+  expect(success).toBe(false)
 })
 
 test('should trigger an automation with a valid body', async ({ startExampleApp }) => {
