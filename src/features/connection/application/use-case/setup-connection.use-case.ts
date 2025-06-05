@@ -17,12 +17,12 @@ export class SetupConnectionUseCase {
       status = {
         id: connection.schema.id,
         connected: false,
-        created_at: new Date(),
-        updated_at: new Date(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       }
       await this.connectionRepository.status.create(status)
     }
     const connected = await this.connectionRepository.check(connection)
-    await this.connectionRepository.status.update(status.id, connected)
+    await this.connectionRepository.status.setConnected(status.id, connected)
   }
 }

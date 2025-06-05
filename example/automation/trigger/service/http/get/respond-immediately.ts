@@ -7,6 +7,7 @@ export default {
   description: 'Automation with HTTP GET trigger and respond immediately',
   automations: [
     {
+      id: 1,
       name: 'get',
       trigger: {
         service: 'http',

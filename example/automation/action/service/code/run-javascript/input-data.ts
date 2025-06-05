@@ -7,6 +7,7 @@ export default {
   description: 'Automation with run JavaScript code action and input data',
   automations: [
     {
+      id: 1,
       name: 'run-javascript',
       trigger: {
         service: 'http',

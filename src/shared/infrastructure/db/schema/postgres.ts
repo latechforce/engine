@@ -3,3 +3,4 @@ export * from '../../../../features/connection/infrastructure/db/connection.post
 export * from '../../../../features/run/infrastructure/db/run.postgres'
 export * from '../../../../features/table/infrastructure/db/table.postgres'
 export * from '../../../../features/bucket/infrastructure/db/bucket.postgres'
+export * from '../../../../features/automation/infrastructure/db/automation.postgres'

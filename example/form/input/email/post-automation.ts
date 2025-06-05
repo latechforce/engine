@@ -22,6 +22,7 @@ export default {
   ],
   automations: [
     {
+      id: 1,
       name: 'Post',
       trigger: {
         service: 'http',

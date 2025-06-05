@@ -6,6 +6,9 @@ const TYPES = {
     Run: Symbol.for('RunAutomationUseCase'),
     List: Symbol.for('ListAutomationsUseCase'),
   },
+  Service: {
+    Database: Symbol.for('AutomationDatabaseService'),
+  },
 }
 
 export default TYPES

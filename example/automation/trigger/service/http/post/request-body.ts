@@ -7,6 +7,7 @@ export default {
   description: 'Automation with HTTP POST trigger and request body',
   automations: [
     {
+      id: 1,
       name: 'post',
       trigger: {
         service: 'http',

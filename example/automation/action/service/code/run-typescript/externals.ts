@@ -14,6 +14,7 @@ export default {
     'Automation with run TypeScript code action and externals. You can use any NPM package in the code by adding it to the `externals` object.',
   automations: [
     {
+      id: 1,
       name: 'run-typescript',
       trigger: {
         service: 'http',

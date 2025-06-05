@@ -34,6 +34,7 @@ describe('start', () => {
     const schema: AppSchema = {
       automations: [
         {
+          id: 1,
           name: 'automation',
           trigger: {
             service: 'http',
@@ -43,6 +44,7 @@ describe('start', () => {
           actions: [],
         },
         {
+          id: 2,
           name: 'automation',
           trigger: {
             service: 'http',
@@ -190,6 +192,7 @@ describe('start', () => {
     const schema: AppSchema = {
       automations: [
         {
+          id: 1,
           name: 'automation-1',
           trigger: {
             service: 'http',
@@ -199,6 +202,7 @@ describe('start', () => {
           actions: [],
         },
         {
+          id: 2,
           name: 'automation-2',
           trigger: {
             service: 'http',
@@ -279,6 +283,7 @@ describe('start', () => {
     const schema: AppSchema = {
       automations: [
         {
+          id: 1,
           name: 'automation',
           trigger: {
             service: 'http',
@@ -314,6 +319,7 @@ describe('start', () => {
     const schema: AppSchema = {
       automations: [
         {
+          id: 1,
           name: 'automation',
           trigger: {
             service: 'http',
@@ -352,5 +358,55 @@ describe('start', () => {
 
     // THEN
     expect(call).toThrow('Duplicate path name: path')
+  })
+
+  it('should throw an error if there are duplicate automation ids', async () => {
+    const schema: AppSchema = {
+      automations: [
+        {
+          id: 1,
+          name: 'automation-1',
+          trigger: {
+            service: 'http',
+            event: 'post',
+            path: '/automation',
+          },
+          actions: [],
+        },
+        {
+          id: 1,
+          name: 'automation-2',
+          trigger: {
+            service: 'http',
+            event: 'post',
+            path: '/automation',
+          },
+          actions: [],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Duplicate automation id: 1')
+  })
+
+  it('should throw an error if there is a table id of 0', async () => {
+    const schema: AppSchema = {
+      buckets: [
+        {
+          id: 0,
+          name: 'table',
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Bucket id cannot be 0, it is reserved for the tables bucket.')
   })
 })

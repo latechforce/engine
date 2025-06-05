@@ -18,6 +18,7 @@ export default {
   description: 'Automation with a Calendly list webhook subscriptions action',
   automations: [
     {
+      id: 1,
       name: 'list-webhook-subscriptions',
       trigger: {
         service: 'http',

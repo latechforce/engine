@@ -9,6 +9,7 @@ import { triggerSchema } from '../../../trigger/domain/schema/trigger.schema'
 
 export const automationSchema = z
   .object({
+    id: z.number().int().positive(),
     name: z.string().trim().min(3),
     trigger: triggerSchema,
     actions: z.array(actionSchema).default([]),

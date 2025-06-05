@@ -3,7 +3,7 @@ import { z } from 'zod/v4'
 
 export const baseConnectionSchema = z
   .object({
-    id: z.number(),
+    id: z.number().int().positive(),
     name: z.string(),
   })
   .strict()

@@ -11,6 +11,7 @@ export default {
   description: 'Automation with HTTP POST action and environment variables',
   automations: [
     {
+      id: 1,
       name: 'post',
       trigger: {
         service: 'http',

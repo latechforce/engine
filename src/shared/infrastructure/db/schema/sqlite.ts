@@ -3,3 +3,4 @@ export * from '../../../../features/connection/infrastructure/db/connection.sqli
 export * from '../../../../features/run/infrastructure/db/run.sqlite'
 export * from '../../../../features/table/infrastructure/db/table.sqlite'
 export * from '../../../../features/bucket/infrastructure/db/bucket.sqlite'
+export * from '../../../../features/automation/infrastructure/db/automation.sqlite'

@@ -14,6 +14,7 @@ export default {
   description: 'Automation with a Google Sheets create row action',
   automations: [
     {
+      id: 1,
       name: 'create-spreadsheet-row',
       trigger: {
         service: 'http',

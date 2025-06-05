@@ -11,6 +11,7 @@ export default {
   description: 'Automation with HTTP GET action and headers',
   automations: [
     {
+      id: 1,
       name: 'get',
       trigger: {
         service: 'http',

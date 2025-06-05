@@ -6,7 +6,7 @@ import { fieldSchema } from './field'
 
 export const tableSchema = z
   .object({
-    id: z.number(),
+    id: z.number().int().positive(),
     name: z.string(),
     fields: z.array(fieldSchema).default([]),
   })

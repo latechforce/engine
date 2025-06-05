@@ -7,6 +7,7 @@ export default {
   description: 'Automation with run Paths action with split into paths',
   automations: [
     {
+      id: 1,
       name: 'run-paths',
       trigger: {
         service: 'http',

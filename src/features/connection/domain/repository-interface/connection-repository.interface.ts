@@ -10,7 +10,7 @@ export type IConnectionRepository = {
   check: (connection: Connection) => Promise<boolean>
   status: {
     create: (status: ConnectionStatus) => Promise<void>
-    update: (id: number, connected: boolean) => Promise<void>
+    setConnected: (id: number, connected: boolean) => Promise<void>
     get: (id: number) => Promise<ConnectionStatus | undefined>
     listByIds: (ids: number[]) => Promise<ConnectionStatus[]>
   }

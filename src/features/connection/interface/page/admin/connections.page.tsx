@@ -107,7 +107,7 @@ const ConnectionsPage = () => {
 
   return (
     <Layout breadcrumbs={[{ title: 'Connections', url: '/admin/connections' }]}>
-      <div className="p-6">
+      <div className="container mx-auto max-w-4xl p-6">
         <Suspense fallback={<TableSkeleton />}>
           <ConnectionsDataTable />
         </Suspense>

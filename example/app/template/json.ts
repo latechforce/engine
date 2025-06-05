@@ -13,6 +13,7 @@ export default {
   description: 'Automation with run action with inputData parsed in JSON',
   automations: [
     {
+      id: 1,
       name: 'run-typescript',
       trigger: {
         service: 'http',

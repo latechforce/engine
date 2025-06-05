@@ -13,6 +13,7 @@ import { ListAutomationsUseCase } from '../../application/use-case/list-automati
 // Automation infrastructure imports
 import { AutomationRepository } from '../repository/automation.repository'
 import { AutomationHonoContext } from './context'
+import { AutomationDatabaseService } from '../service/database.service'
 
 export function registerAutomationDependencies(container: Container) {
   // Register repositories
@@ -39,6 +40,12 @@ export function registerAutomationDependencies(container: Container) {
   container
     .bind<AutomationHonoContext>(TYPES.HonoContext)
     .to(AutomationHonoContext)
+    .inSingletonScope()
+
+  // Register services
+  container
+    .bind<AutomationDatabaseService>(TYPES.Service.Database)
+    .to(AutomationDatabaseService)
     .inSingletonScope()
 
   return container

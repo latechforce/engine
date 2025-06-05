@@ -24,13 +24,6 @@ const columns: ColumnDef<RunDto>[] = [
     },
   },
   {
-    accessorKey: 'updated_at',
-    header: 'Updated At',
-    cell: ({ row }) => {
-      return format(new Date(row.getValue('updated_at')), 'dd/MM/yyyy HH:mm:ss')
-    },
-  },
-  {
     accessorKey: 'status',
     header: 'Status',
   },
@@ -60,7 +53,7 @@ const RunsPage = () => {
         { title: 'History', url: '/admin/automation/history' },
       ]}
     >
-      <div className="p-6">
+      <div className="container mx-auto max-w-4xl p-6">
         <Suspense fallback={<TableSkeleton />}>
           <RunsDataTable />
         </Suspense>

@@ -7,6 +7,7 @@ export default {
   description: 'Automation with HTTP response action, previous action and dynamic body',
   automations: [
     {
+      id: 1,
       name: 'response',
       trigger: {
         service: 'http',

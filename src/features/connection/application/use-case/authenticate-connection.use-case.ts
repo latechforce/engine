@@ -30,7 +30,7 @@ export class AuthenticateConnectionUseCase {
     } else {
       await this.tokenRepository.create(token)
     }
-    await this.connectionRepository.status.update(connection.schema.id, true)
+    await this.connectionRepository.status.setConnected(connection.schema.id, true)
     return `
       <html>
         <body>

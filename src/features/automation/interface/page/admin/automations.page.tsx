@@ -9,11 +9,33 @@ import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListAutomationsDto } from '../../../application/dto/list-automations.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
+import { formatDistance } from 'date-fns'
+import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 
 const columns: ColumnDef<AutomationDto>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: 'Last modified',
+    cell: ({ row }) => {
+      const date = new Date(row.original.updatedAt)
+      const now = new Date()
+      return <div>{formatDistance(date, now, { addSuffix: true })}</div>
+    },
+  },
+  {
+    accessorKey: 'active',
+    header: 'Status',
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center">
+          <Switch checked={row.original.active} />
+        </div>
+      )
+    },
   },
 ]
 
@@ -36,7 +58,7 @@ const AutomationsDataTable = () => {
 const AutomationsPage = () => {
   return (
     <Layout breadcrumbs={[{ title: 'Automations', url: '/admin/automations' }]}>
-      <div className="p-6">
+      <div className="container mx-auto max-w-4xl p-6">
         <Suspense fallback={<TableSkeleton />}>
           <AutomationsDataTable />
         </Suspense>

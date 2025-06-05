@@ -47,19 +47,39 @@ export class ConnectionRepository implements IConnectionRepository {
   get status() {
     return {
       create: async (status: ConnectionStatus) => {
-        await this.database.connection_status.create(status)
+        await this.database.connection_status.create({
+          id: status.id,
+          connected: status.connected,
+          created_at: status.createdAt,
+          updated_at: status.updatedAt,
+        })
       },
-      update: async (id: number, connected: boolean) => {
+      setConnected: async (id: number, connected: boolean) => {
         await this.database.connection_status.update(id, {
           connected,
           updated_at: new Date(),
         })
       },
       get: async (id: number) => {
-        return await this.database.connection_status.get(id)
+        const status = await this.database.connection_status.get(id)
+        if (!status) {
+          return undefined
+        }
+        return {
+          id: status.id,
+          connected: status.connected,
+          createdAt: status.created_at,
+          updatedAt: status.updated_at,
+        }
       },
       listByIds: async (ids: number[]) => {
-        return await this.database.connection_status.listByIds(ids)
+        const statuses = await this.database.connection_status.listByIds(ids)
+        return statuses.map((status) => ({
+          id: status.id,
+          connected: status.connected,
+          createdAt: status.created_at,
+          updatedAt: status.updated_at,
+        }))
       },
     }
   }

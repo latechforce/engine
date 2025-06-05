@@ -7,6 +7,7 @@ export default {
   description: 'Automation with run Exists Filter action',
   automations: [
     {
+      id: 1,
       name: 'run-filter',
       trigger: {
         service: 'http',

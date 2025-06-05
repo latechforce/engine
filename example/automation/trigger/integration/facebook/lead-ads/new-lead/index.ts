@@ -14,6 +14,7 @@ export default {
   description: 'Automation with Facebook Lead Ads new lead trigger',
   automations: [
     {
+      id: 1,
       name: 'facebook-lead-ads',
       trigger: {
         service: 'facebook-lead-ads',

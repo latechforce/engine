@@ -12,6 +12,7 @@ export default {
   description: 'Automation with LinkedIn Ads new lead gen form response trigger',
   automations: [
     {
+      id: 1,
       name: 'linkedin-ads',
       trigger: {
         service: 'linkedin-ads',

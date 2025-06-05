@@ -30,6 +30,19 @@ export class SetupAutomationUseCase {
   async execute(app: App, automation: Automation) {
     this.automationRepository.debug(`setup "${automation.schema.name}"`)
 
+    const exists = await this.automationRepository.status.get(automation.schema.id)
+    if (!exists) {
+      await this.automationRepository.status.create({
+        id: automation.schema.id,
+        active: true,
+        schema: automation.schema,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+    } else if (JSON.stringify(exists.schema) !== JSON.stringify(automation.schema)) {
+      await this.automationRepository.status.updateSchema(automation.schema.id, automation.schema)
+    }
+
     // Setup automation
     for (const action of automation.actions) {
       await this.setupActionUseCase.execute(app, action)

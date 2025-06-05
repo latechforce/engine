@@ -8,6 +8,7 @@ export default {
     'Automation with run TypeScript code action and input data. You can enforce the body type of the request by adding a `requestBody` object to the trigger.',
   automations: [
     {
+      id: 1,
       name: 'run-typescript',
       trigger: {
         service: 'http',

@@ -45,6 +45,13 @@ export class App {
       }
       tableNames.add(table.name)
     }
+    const automationIds = new Set<number>()
+    for (const automation of this.schema.automations) {
+      if (automationIds.has(automation.id)) {
+        throw new Error(`Duplicate automation id: ${automation.id}`)
+      }
+      automationIds.add(automation.id)
+    }
     const tableIds = new Set<number>()
     for (const table of this.schema.tables) {
       if (tableIds.has(table.id)) {
@@ -68,6 +75,9 @@ export class App {
     }
     const bucketIds = new Set<number>()
     for (const bucket of this.schema.buckets) {
+      if (bucket.id === 0) {
+        throw new Error(`Bucket id cannot be 0, it is reserved for the tables bucket.`)
+      }
       if (bucketIds.has(bucket.id)) {
         throw new Error(`Duplicate bucket id: ${bucket.id}`)
       }

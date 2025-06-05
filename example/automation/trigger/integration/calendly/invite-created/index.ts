@@ -24,6 +24,7 @@ export default {
   description: 'Automation with Calendly invite created trigger',
   automations: [
     {
+      id: 1,
       name: 'calendly',
       trigger: {
         service: 'calendly',

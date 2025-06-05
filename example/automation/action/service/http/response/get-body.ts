@@ -3,6 +3,7 @@ import type { AppSchema } from '@/types'
 export default {
   automations: [
     {
+      id: 1,
       name: 'response',
       trigger: {
         service: 'http',

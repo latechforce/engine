@@ -5,6 +5,7 @@ import type { AppSchema } from '@/types'
 export default {
   automations: [
     {
+      id: 1,
       name: 'run-javascript',
       trigger: {
         service: 'http',

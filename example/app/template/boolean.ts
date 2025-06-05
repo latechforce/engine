@@ -11,6 +11,7 @@ export default {
   description: 'Automation with run action with inputData parsed in boolean',
   automations: [
     {
+      id: 1,
       name: 'run-typescript',
       trigger: {
         service: 'http',
