@@ -26,9 +26,18 @@
         "description": "The automation is a set of actions that are triggered by a trigger",
         "type": "object",
         "properties": {
+          "id": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
           "name": {
             "type": "string",
             "minLength": 3
+          },
+          "editUrl": {
+            "type": "string",
+            "format": "uri"
           },
           "trigger": {
             "title": "Trigger",
@@ -236,47 +245,6 @@
                     "additionalProperties": false
                   }
                 ]
-              },
-              {
-                "title": "YouCanBookMe",
-                "description": "The YouCanBookMe trigger is a trigger that is triggered by a YouCanBookMe event",
-                "anyOf": [
-                  {
-                    "title": "Booking Notifications",
-                    "description": "The YouCanBookMe booking notifications trigger is a trigger that is triggered by a booking notifications event",
-                    "type": "object",
-                    "properties": {
-                      "account": {
-                        "anyOf": [
-                          {
-                            "type": "number"
-                          },
-                          {
-                            "type": "string"
-                          }
-                        ]
-                      },
-                      "service": {
-                        "type": "string",
-                        "const": "youcanbookme"
-                      },
-                      "event": {
-                        "type": "string",
-                        "const": "booking-notifications"
-                      },
-                      "path": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "account",
-                      "service",
-                      "event",
-                      "path"
-                    ],
-                    "additionalProperties": false
-                  }
-                ]
               }
             ]
           },
@@ -289,6 +257,7 @@
           }
         },
         "required": [
+          "id",
           "name",
           "trigger",
           "actions"
@@ -305,7 +274,9 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
           },
           "name": {
             "type": "string"
@@ -323,7 +294,9 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "number"
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
                     },
                     "name": {
                       "type": "string"
@@ -358,7 +331,9 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "number"
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
                     },
                     "name": {
                       "type": "string"
@@ -387,7 +362,9 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "number"
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
                     },
                     "name": {
                       "type": "string"
@@ -424,7 +401,9 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "number"
+                      "type": "integer",
+                      "exclusiveMinimum": 0,
+                      "maximum": 9007199254740991
                     },
                     "name": {
                       "type": "string"
@@ -673,7 +652,9 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
               },
               "name": {
                 "type": "string"
@@ -704,7 +685,9 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
               },
               "name": {
                 "type": "string"
@@ -727,7 +710,9 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
               },
               "name": {
                 "type": "string"
@@ -750,7 +735,9 @@
             "type": "object",
             "properties": {
               "id": {
-                "type": "number"
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
               },
               "name": {
                 "type": "string"
@@ -777,7 +764,9 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
           },
           "name": {
             "type": "string"
