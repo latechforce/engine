@@ -13,12 +13,15 @@ import type { ITokenRepository } from '../../domain/repository-interface/token-r
 // Connection infrastructure imports
 import type { ConnectionDatabaseService } from '../service/database.service'
 import { toConnectionIntegration } from '../integration'
+import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 
 @injectable()
 export class TokenRepository implements ITokenRepository {
   constructor(
     @inject(TYPES.Connection.Service.Database)
-    private readonly database: ConnectionDatabaseService
+    private readonly database: ConnectionDatabaseService,
+    @inject(TYPES.Connection.Repository.Connection)
+    private readonly connectionRepository: IConnectionRepository
   ) {}
 
   async getAccessToken(connection: Connection): Promise<Token | undefined> {
@@ -26,12 +29,21 @@ export class TokenRepository implements ITokenRepository {
     if (!token) return undefined
     if (!this.isTokenValid(token)) {
       const integration = toConnectionIntegration(connection)
-      if (!token.refresh_token) return undefined
+      if (!token.refresh_token || !('getAccessTokenFromRefreshToken' in integration)) {
+        await this.connectionRepository.status.setConnected(connection.schema.id, false)
+        return undefined
+      }
       const newToken = await integration.getAccessTokenFromRefreshToken(token.refresh_token)
       await this.update(newToken)
       return newToken
     }
     return token
+  }
+
+  async check(connection: Connection): Promise<boolean> {
+    const integration = toConnectionIntegration(connection)
+    const token = await this.getAccessToken(connection)
+    return integration.checkConnection(token)
   }
 
   async create(token: Token) {

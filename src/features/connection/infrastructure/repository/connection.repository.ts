@@ -6,7 +6,6 @@ import type { Token } from '../../domain/value-object/token.value-object'
 import { toConnectionIntegration } from '../integration'
 import { Connection } from '../../domain/entity/connection.entity'
 import type { ConnectionStatus } from '../../domain/value-object/connection-status.value-object'
-import type { ITokenRepository } from '../../domain/repository-interface/token-repository.interface'
 import type { ConnectionDatabaseService } from '../service/database.service'
 
 @injectable()
@@ -15,9 +14,7 @@ export class ConnectionRepository implements IConnectionRepository {
     @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
     @inject(TYPES.Connection.Service.Database)
-    private readonly database: ConnectionDatabaseService,
-    @inject(TYPES.Connection.Repository.Token)
-    private readonly tokenRepository: ITokenRepository
+    private readonly database: ConnectionDatabaseService
   ) {}
 
   debug(message: string) {
@@ -36,12 +33,6 @@ export class ConnectionRepository implements IConnectionRepository {
   async getAccessTokenFromCode(connection: Connection, code: string): Promise<Token> {
     const integration = toConnectionIntegration(connection)
     return integration.getAccessTokenFromCode(code)
-  }
-
-  async check(connection: Connection): Promise<boolean> {
-    const integration = toConnectionIntegration(connection)
-    const token = await this.tokenRepository.getAccessToken(connection)
-    return integration.checkConnection(token)
   }
 
   get status() {

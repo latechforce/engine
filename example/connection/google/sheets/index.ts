@@ -18,6 +18,8 @@ export default {
       id: 1,
       name: 'Google Sheets',
       service: 'google-sheets',
+      clientId: '{{env "GOOGLE_SHEETS_CLIENT_ID"}}',
+      clientSecret: '{{env "GOOGLE_SHEETS_CLIENT_SECRET"}}',
     },
   ],
 } satisfies AppSchema

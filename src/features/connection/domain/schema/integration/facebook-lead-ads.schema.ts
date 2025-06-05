@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseConnectionSchema } from '../base'
+import { oauthConnectionSchema } from '../oauth'
 
-export const facebookLeadAdsConnectionSchema = baseConnectionSchema
+export const facebookLeadAdsConnectionSchema = oauthConnectionSchema
   .extend({
     service: z.literal('facebook-lead-ads'),
   })

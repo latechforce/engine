@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
-import { baseConnectionSchema } from '../base'
+import { oauthConnectionSchema } from '../oauth'
 
-export const linkedinAdsConnectionSchema = baseConnectionSchema
+export const linkedinAdsConnectionSchema = oauthConnectionSchema
   .extend({
     service: z.literal('linkedin-ads'),
   })

@@ -7,7 +7,6 @@ export type IConnectionRepository = {
   error: (message: string) => void
   getAuthorizationUrl: (connection: Connection) => string
   getAccessTokenFromCode: (connection: Connection, code: string) => Promise<Token>
-  check: (connection: Connection) => Promise<boolean>
   status: {
     create: (status: ConnectionStatus) => Promise<void>
     setConnected: (id: number, connected: boolean) => Promise<void>

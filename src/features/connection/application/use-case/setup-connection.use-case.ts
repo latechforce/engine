@@ -2,12 +2,15 @@ import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
 import type { Connection } from '../../domain/entity/connection.entity'
 import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
+import type { ITokenRepository } from '../../domain/repository-interface/token-repository.interface'
 
 @injectable()
 export class SetupConnectionUseCase {
   constructor(
     @inject(TYPES.Repository.Connection)
-    private readonly connectionRepository: IConnectionRepository
+    private readonly connectionRepository: IConnectionRepository,
+    @inject(TYPES.Repository.Token)
+    private readonly tokenRepository: ITokenRepository
   ) {}
 
   async execute(connection: Connection) {
@@ -22,7 +25,7 @@ export class SetupConnectionUseCase {
       }
       await this.connectionRepository.status.create(status)
     }
-    const connected = await this.connectionRepository.check(connection)
+    const connected = await this.tokenRepository.check(connection)
     await this.connectionRepository.status.setConnected(status.id, connected)
   }
 }

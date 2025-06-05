@@ -65,8 +65,7 @@ export class CalendlyConnectionIntegration {
         },
       })
       return true
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (error) {
+    } catch {
       return false
     }
   }
