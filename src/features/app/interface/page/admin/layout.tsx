@@ -9,7 +9,6 @@ import {
 } from '../../../../../shared/interface/component/sidebar.component'
 import { History, Zap, Gauge, Webhook, Link, FileText, Table } from 'lucide-react'
 import { RequireAuth } from '../../../../user/interface/context/require-auth.context'
-import { Separator } from '../../../../../shared/interface/ui/separator.ui'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -104,11 +103,7 @@ export default function Layout({
         />
         <SidebarInset>
           <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator
-              orientation="vertical"
-              className="mr-2 h-4"
-            />
+            <SidebarTrigger className="mr-2 -ml-1" />
             <Breadcrumb>
               <BreadcrumbList>
                 {breadcrumbs.map((breadcrumb, index) => [

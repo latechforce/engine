@@ -10,6 +10,7 @@ import { Button } from '../../../../../shared/interface/ui/button.ui'
 import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { adminRoute } from '../../../../app/interface/page/router'
+import { TypographyH3 } from 'src/shared/interface/ui/typography.ui'
 
 export const columns: ColumnDef<FormDto>[] = [
   {
@@ -62,6 +63,7 @@ const FormsPage = () => {
   return (
     <Layout breadcrumbs={[{ title: 'Forms', url: '/admin/forms' }]}>
       <div className="container mx-auto max-w-4xl p-6">
+        <TypographyH3 className="mb-4">Forms</TypographyH3>
         <Suspense fallback={<TableSkeleton />}>
           <FormsDataTable />
         </Suspense>

@@ -13,7 +13,7 @@ import {
   TabsSkeleton,
   TabsTrigger,
 } from '../../../../../shared/interface/ui/tabs.ui'
-import { TypographyP } from '../../../../../shared/interface/ui/typography.ui'
+import { TypographyH3, TypographyP } from '../../../../../shared/interface/ui/typography.ui'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 
 const tableRecordsQueryOptions = (tableId: string) =>
@@ -83,6 +83,7 @@ const TablesPage = () => {
   return (
     <Layout breadcrumbs={[{ title: 'Tables', url: '/admin/tables' }]}>
       <div className="flex flex-col gap-4 p-6">
+        <TypographyH3 className="mb-4">Tables</TypographyH3>
         <Suspense fallback={<TabsSkeleton />}>
           <TablesTabs />
         </Suspense>

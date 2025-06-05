@@ -11,9 +11,13 @@ import {
   SidebarFooter,
 } from '../ui/sidebar.ui'
 import { TypographyH3 } from '../ui/typography.ui'
-import { User2 } from 'lucide-react'
+import { Bug, LogOut, User2, Sparkles } from 'lucide-react'
 import { ChevronUp } from 'lucide-react'
-import { DropdownMenuTrigger } from '../ui/dropdown-menu.ui'
+import {
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu.ui'
 import { DropdownMenuItem } from '../ui/dropdown-menu.ui'
 import { DropdownMenuContent } from '../ui/dropdown-menu.ui'
 import { DropdownMenu } from '../ui/dropdown-menu.ui'
@@ -81,10 +85,34 @@ export function Sidebar({ title, groups, ...props }: SidebarProps) {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 side="top"
-                className="w-[--radix-popper-anchor-width]"
+                className="w-60"
+                align="start"
               >
+                <DropdownMenuLabel>Feedback</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() => {
+                    window.open(
+                      'https://github.com/latechforce/engine/issues/new?template=bug_report.md',
+                      '_blank'
+                    )
+                  }}
+                >
+                  <Bug /> Report a bug
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    window.open(
+                      'https://github.com/latechforce/engine/issues/new?template=feature_request.md',
+                      '_blank'
+                    )
+                  }}
+                >
+                  <Sparkles /> Ask a feature
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>Account</DropdownMenuLabel>
                 <DropdownMenuItem onClick={() => authClient.signOut()}>
-                  <span>Sign out</span>
+                  <LogOut /> Sign out
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

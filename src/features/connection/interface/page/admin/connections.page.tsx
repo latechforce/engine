@@ -17,6 +17,7 @@ import { Suspense, useEffect } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListConnectionsDto } from '../../../application/dto/list-connections.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
+import { TypographyH3 } from 'src/shared/interface/ui/typography.ui'
 
 const columns: ColumnDef<ConnectionDto>[] = [
   {
@@ -104,8 +105,14 @@ const ConnectionsPage = () => {
   }, [])
 
   return (
-    <Layout breadcrumbs={[{ title: 'Connections', url: '/admin/connections' }]}>
+    <Layout
+      breadcrumbs={[
+        { title: 'Automations', url: '/admin/automations' },
+        { title: 'Connections', url: '/admin/connections' },
+      ]}
+    >
       <div className="container mx-auto max-w-4xl p-6">
+        <TypographyH3 className="mb-4">Connections</TypographyH3>
         <Suspense fallback={<TableSkeleton />}>
           <ConnectionsDataTable />
         </Suspense>

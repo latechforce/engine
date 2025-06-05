@@ -10,6 +10,7 @@ import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListRunsDto } from '../../../application/dto/list-runs.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
+import { TypographyH3 } from 'src/shared/interface/ui/typography.ui'
 
 const columns: ColumnDef<RunDto>[] = [
   {
@@ -50,10 +51,11 @@ const RunsPage = () => {
     <Layout
       breadcrumbs={[
         { title: 'Automations', url: '/admin/automations' },
-        { title: 'History', url: '/admin/automation/history' },
+        { title: 'Runs', url: '/admin/runs' },
       ]}
     >
       <div className="container mx-auto max-w-4xl p-6">
+        <TypographyH3 className="mb-4">Runs</TypographyH3>
         <Suspense fallback={<TableSkeleton />}>
           <RunsDataTable />
         </Suspense>

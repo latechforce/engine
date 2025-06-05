@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from 'src/shared/interface/ui/dropdown-menu.ui'
 import { MoreVertical } from 'lucide-react'
+import { TypographyH3 } from 'src/shared/interface/ui/typography.ui'
 
 const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto, unknown>) =>
   [
@@ -126,6 +127,7 @@ const AutomationsPage = () => {
   return (
     <Layout breadcrumbs={[{ title: 'Automations', url: '/admin/automations' }]}>
       <div className="container mx-auto max-w-4xl p-6">
+        <TypographyH3 className="mb-4">Automations</TypographyH3>
         <Suspense fallback={<TableSkeleton />}>
           <AutomationsDataTable />
         </Suspense>
