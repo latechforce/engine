@@ -1,3 +1,14 @@
+# [0.53.0](https://github.com/latechforce/engine/compare/v0.52.0...v0.53.0) (2025-06-05)
+
+
+### Features
+
+* **automation:** should disable an automation ([cadaca4](https://github.com/latechforce/engine/commit/cadaca4fd9c1205570861218f633c95632c7a4c3)) — Thomas JEANNEAU
+* **automation:** should list automations on admin page ([253c870](https://github.com/latechforce/engine/commit/253c870042d9ee2007d580b1d2533381e40a4fef)) — Thomas JEANNEAU
+* **automation:** should open and display an automation run ([fa44771](https://github.com/latechforce/engine/commit/fa44771d8b1e238035b8a43e96b9346bd07e4c91)) — Thomas JEANNEAU
+* **automation:** should open the edit url ([b613295](https://github.com/latechforce/engine/commit/b61329576376bde7153bdb27c0c8ef95d3cad4c7)) — Thomas JEANNEAU
+* **automation:** should search and filter automation runs ([7aaecc4](https://github.com/latechforce/engine/commit/7aaecc45618e59edc1d4d391da407a76a96204d4)) — Thomas JEANNEAU
+
 # [0.52.0](https://github.com/latechforce/engine/compare/v0.51.0...v0.52.0) (2025-06-04)
 
 
