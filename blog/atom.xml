@@ -8,14 +8,19 @@
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Release 0.53.0]]></title>
-        <id>https://engine.latechforce.com/blog/release-0-53-0</id>
-        <link href="https://engine.latechforce.com/blog/release-0-53-0"/>
+        <title type="html"><![CDATA[Fix 0.53.1]]></title>
+        <id>https://engine.latechforce.com/blog/fix-0-53-1</id>
+        <link href="https://engine.latechforce.com/blog/fix-0-53-1"/>
         <updated>2025-06-05T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.53.0]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-53-0"><p class="before-truncate"> 0.53.0   Features  * automation: should disable an automation (cadaca4) — Thomas JEANNEAU * automation: should list automations on admin page (253c870) — Thomas JEANNEAU * automation: should open and display an automation run (fa44771) — Thomas JEANNEAU * automation: should open the edit url (b6132...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0530"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-53-0">0.53.0</a><a href="https://engine.latechforce.com/blog/release-0-53-0#0530" class="hash-link" aria-label="Direct link to 0.53.0" title="Direct link to 0.53.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-53-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+        <summary type="html"><![CDATA[Changelog for version 0.53.1]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-53-1"><p class="before-truncate"> 0.53.1   Bug Fixes  * remove broken import (701a971) — Thomas JEANNEAU   0.53.0   Features  * automation: should disable an automation (cadaca4) — Thomas JEANNEAU * automation: should list automations on admin page (253c870) — Thomas JEANNEAU * automation: should open and display an automation run ...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0531"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-53-1">0.53.1</a><a href="https://engine.latechforce.com/blog/fix-0-53-1#0531" class="hash-link" aria-label="Direct link to 0.53.1" title="Direct link to 0.53.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-53-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>remove broken import (<a href="https://github.com/latechforce/engine/commit/701a971aa26ecf239545db5832f18186842a6665" target="_blank" rel="noopener noreferrer">701a971</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0530">0.53.0<a href="https://engine.latechforce.com/blog/fix-0-53-1#0530" class="hash-link" aria-label="Direct link to 0.53.0" title="Direct link to 0.53.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-53-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li><strong>automation:</strong> should disable an automation (<a href="https://github.com/latechforce/engine/commit/cadaca4fd9c1205570861218f633c95632c7a4c3" target="_blank" rel="noopener noreferrer">cadaca4</a>) — Thomas JEANNEAU</li>
 <li><strong>automation:</strong> should list automations on admin page (<a href="https://github.com/latechforce/engine/commit/253c870042d9ee2007d580b1d2533381e40a4fef" target="_blank" rel="noopener noreferrer">253c870</a>) — Thomas JEANNEAU</li>
@@ -23,7 +28,7 @@
 <li><strong>automation:</strong> should open the edit url (<a href="https://github.com/latechforce/engine/commit/b61329576376bde7153bdb27c0c8ef95d3cad4c7" target="_blank" rel="noopener noreferrer">b613295</a>) — Thomas JEANNEAU</li>
 <li><strong>automation:</strong> should search and filter automation runs (<a href="https://github.com/latechforce/engine/commit/7aaecc45618e59edc1d4d391da407a76a96204d4" target="_blank" rel="noopener noreferrer">7aaecc4</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
-        <category label="Release" term="Release"/>
+        <category label="Fix" term="Fix"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Release 0.52.0]]></title>
