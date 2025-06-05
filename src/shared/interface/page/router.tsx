@@ -16,6 +16,7 @@ import {
   tablesAdminRoute,
   tablesRedirectAdminRoute,
 } from '../../../features/table/interface/page/admin/tables.page'
+import { runAdminRoute } from '../../../features/run/interface/page/admin/run.page'
 
 const routeTree = rootRoute.addChildren([
   notFoundRoute,
@@ -26,6 +27,7 @@ const routeTree = rootRoute.addChildren([
     dashboardAdminRoute,
     automationsAdminRoute,
     runsAdminRoute,
+    runAdminRoute,
     openapiAdminRoute,
     connectionsAdminRoute,
     formsAdminRoute,

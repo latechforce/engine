@@ -9,8 +9,9 @@ test('should run a JavaScript code', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const { data } = await response.json()
+  const { data, runId } = await response.json()
   expect(data).toEqual({ message: 'Hello, world!' })
+  expect(runId).toBeDefined()
 })
 
 test('should run a JavaScript code with input data', async ({ startExampleApp }) => {

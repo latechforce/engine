@@ -105,7 +105,7 @@ export const test = base.extend<StartAppFixture>({
 
       const result = await getExampleFileFilter(filter)
       env = { ...result.env, ...env }
-      const exampleFileFilter = result.exampleFileFilter
+      const exampleFileFilter = result.exampleFileFilter ?? filter
 
       if (debug && !exampleFileFilter) {
         console.log('There is no example file found for this test, loading empty app')

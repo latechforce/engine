@@ -1,4 +1,5 @@
 export type ResponseDto = {
-  data?: object
   success: boolean
+  data?: object
+  runId?: string
 }

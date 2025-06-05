@@ -9,8 +9,9 @@ test('should run a TypeScript code', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const { data } = await response.json()
+  const { data, runId } = await response.json()
   expect(data).toEqual({ message: 'Hello, world!' })
+  expect(runId).toBeDefined()
 })
 
 test('should run a TypeScript code with input data', async ({ startExampleApp }) => {

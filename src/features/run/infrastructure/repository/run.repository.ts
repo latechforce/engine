@@ -4,6 +4,7 @@ import type { IRunRepository } from '../../domain/repository-interface/run-repos
 import { EventEmitter } from 'events'
 import { Run } from '../../domain/entity/run.entity'
 import type { RunDatabaseService } from '../service/database.service'
+import { desc } from 'drizzle-orm'
 
 @injectable()
 export class RunRepository implements IRunRepository {
@@ -47,7 +48,9 @@ export class RunRepository implements IRunRepository {
   }
 
   async list(): Promise<Run[]> {
-    const runs = await this.database.run.list()
+    const runs = await this.database.run.list({
+      orderBy: desc(this.database.schema.run.created_at),
+    })
     return runs.map((run) => this.toEntity(run))
   }
 

@@ -7,6 +7,7 @@ import {
   getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { useNavigate } from '@tanstack/react-router'
 
 // Shared UI imports
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table.ui'
@@ -15,10 +16,18 @@ import { Input } from '../ui/input.ui'
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  onRowClick?: (row: TData) => void
+  getRowLink?: (row: TData) => string
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+  onRowClick,
+  getRowLink,
+}: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = React.useState<ColumnResizeMode>('onChange')
+  const navigate = useNavigate()
 
   const table = useReactTable({
     data,
@@ -34,6 +43,15 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
       },
     },
   })
+
+  const handleRowClick = (row: TData) => {
+    if (onRowClick) {
+      onRowClick(row)
+    }
+    if (getRowLink) {
+      navigate({ to: getRowLink(row) })
+    }
+  }
 
   return (
     <div>
@@ -76,6 +94,8 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
+                  onClick={() => handleRowClick(row.original)}
+                  className={onRowClick || getRowLink ? 'hover:bg-muted/50 cursor-pointer' : ''}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell

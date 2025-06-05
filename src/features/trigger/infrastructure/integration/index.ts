@@ -11,8 +11,6 @@ export const toTriggerIntegration = (trigger: Trigger): TriggerIntegration => {
       throw new Error('Facebook Lead Ads is not supported yet')
     case 'linkedin-ads':
       throw new Error('LinkedIn Ads is not supported yet')
-    case 'youcanbookme':
-      throw new Error('YouCanBookMe is not supported yet')
     case 'http':
       throw new Error('HTTP is not supported yet')
     default: {

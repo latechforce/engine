@@ -138,7 +138,7 @@ export class TriggerHttpAutomationUseCase {
       await this.runRepository.create(initRun)
     }
     if ((schema.service === 'http' && schema.respondImmediately) || schema.service !== 'http') {
-      return { success: true }
+      return { success: true, runId: initRun?.id }
     }
     if (!initRun) {
       throw new TriggerError('Automation is not active', 403)
@@ -149,6 +149,7 @@ export class TriggerHttpAutomationUseCase {
     return await new Promise((resolve, reject) => {
       this.runRepository.onUpdate(async (run) => {
         if (run.id === initRun.id) {
+          const successResponse = { success: true, runId: run.id }
           switch (run.status) {
             case 'playing':
               if (run.lastActionName === responseActionSchema?.name) {
@@ -157,9 +158,9 @@ export class TriggerHttpAutomationUseCase {
                     responseActionSchema.body,
                     run.data
                   )
-                  resolve({ data: response, success: true })
+                  resolve({ data: response, ...successResponse })
                 } else {
-                  resolve({ success: true })
+                  resolve(successResponse)
                 }
               }
               break
@@ -168,13 +169,13 @@ export class TriggerHttpAutomationUseCase {
               break
             case 'success':
               if (run.lastActionName) {
-                resolve({ data: run.getLastActionData(), success: true })
+                resolve({ data: run.getLastActionData(), ...successResponse })
               } else {
-                resolve({ success: true })
+                resolve(successResponse)
               }
               break
             case 'filtered':
-              resolve({ data: { canContinue: false }, success: true })
+              resolve({ data: { canContinue: false }, ...successResponse })
               break
             default: {
               const _exhaustiveCheck: never = run.status

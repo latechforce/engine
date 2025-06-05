@@ -2,7 +2,7 @@ import type { Run } from '../../domain/entity/run.entity'
 
 export type RunDto = {
   id: string
-  status: string
+  status: 'playing' | 'success' | 'stopped' | 'filtered'
   created_at: string
   updated_at: string
   automation_name: string
