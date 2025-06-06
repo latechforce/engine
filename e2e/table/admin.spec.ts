@@ -87,26 +87,38 @@ test('should open and display a table record', async ({ startExampleApp }) => {
   expect(lastName).toBe('Doe')
 })
 
-// TODO: [@thomas-jeanneau] - should create a table record
-test.skip('should create a table record', async ({ startExampleApp }) => {
+test('should create a table record', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
 
   // WHEN
   await page.goto('/admin/tables')
+  await page.getByRole('button', { name: 'Create' }).click()
+  await page.waitForSelector('text=Record without name')
 
   // THEN
+  await expect(page.getByRole('heading', { name: 'Record without name' })).toBeVisible()
 })
 
-// TODO: [@thomas-jeanneau] - should update a table record
-test.skip('should update a table record', async ({ startExampleApp }) => {
+test('should update a table record', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
 
   // WHEN
   await page.goto('/admin/tables')
+  await page.getByRole('button', { name: 'Create' }).click()
+  await page.waitForSelector('text=Record without name')
+  await page.getByRole('textbox', { name: 'First name' }).fill('John')
+  await page.getByRole('textbox', { name: 'Last name' }).fill('Doe')
+  await page.getByRole('button', { name: 'Update' }).click()
 
   // THEN
+  await expect(page.getByRole('heading', { name: 'John' })).toBeVisible()
+  const lastName = await page.getByRole('textbox', { name: 'Last name' }).inputValue()
+  expect(lastName).toBe('Doe')
+  await page.goto('/admin/tables')
+  await expect(page.getByText('John')).toBeVisible()
+  await expect(page.getByText('Doe')).toBeVisible()
 })
 
 // TODO: [@thomas-jeanneau] - should delete a table record

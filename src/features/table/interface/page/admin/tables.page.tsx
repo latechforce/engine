@@ -2,7 +2,7 @@ import { createRoute, Navigate, useNavigate, useParams } from '@tanstack/react-r
 import Layout from '../../../../app/interface/page/admin/layout'
 import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import { client } from '../../../../../shared/interface/lib/client.lib'
-import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { queryOptions, useQuery, useSuspenseQuery, useMutation } from '@tanstack/react-query'
 import { Suspense } from 'react'
 import { adminRoute } from '../../../../app/interface/page/router'
 import type { ListTablesDto } from '../../../application/dto/list-table.dto'
@@ -15,6 +15,17 @@ import {
 } from '../../../../../shared/interface/ui/tabs.ui'
 import { TypographyH3, TypographyP } from '../../../../../shared/interface/ui/typography.ui'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
+import { queryClient } from '../../../../../shared/interface/lib/query.lib'
+import {
+  CircleChevronDown,
+  File,
+  LetterText,
+  Link,
+  Mail,
+  Phone,
+  SquareCheck,
+  Text,
+} from 'lucide-react'
 
 const tableRecordsQueryOptions = (tableId: string) =>
   queryOptions<ListRecordsDto>({
@@ -29,6 +40,7 @@ export const tablesQueryOptions = () =>
   })
 
 const RecordsDataTable = () => {
+  const navigate = useNavigate()
   const { tableId } = useParams({ from: '/admin/tables/$tableId' })
   const {
     data: { tables },
@@ -40,14 +52,99 @@ const RecordsDataTable = () => {
   if (!table) {
     return <Navigate to="/404" />
   }
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const response = await client.tables[`:tableId`].$post({
+        param: { tableId },
+        json: { fields: {} },
+      })
+      return await response.json()
+    },
+    onSuccess: (data) => {
+      if ('record' in data) {
+        queryClient.invalidateQueries({ queryKey: ['tableRecordsData', tableId] })
+        navigate({ to: `/admin/tables/${tableId}/${data.record.id}` })
+      }
+    },
+  })
+
   return (
     <DataTable
-      columns={table.fields.map((field) => ({
-        accessorKey: field.name,
-        header: field.name,
-      }))}
+      columns={[
+        ...table.fields.map((field) => ({
+          accessorKey: field.name,
+          header: () => {
+            switch (field.type) {
+              case 'single-line-text':
+                return (
+                  <div className="flex items-center gap-2">
+                    <Text className="size-4" />
+                    <span>{field.name}</span>
+                  </div>
+                )
+              case 'long-text':
+                return (
+                  <div className="flex items-center gap-2">
+                    <LetterText className="size-4" />
+                    <span>{field.name}</span>
+                  </div>
+                )
+              case 'checkbox':
+                return (
+                  <div className="flex items-center gap-2">
+                    <SquareCheck className="size-4" />
+                    <span>{field.name}</span>
+                  </div>
+                )
+              case 'single-select':
+                return (
+                  <div className="flex items-center gap-2">
+                    <CircleChevronDown className="size-4" />
+                    <span>{field.name}</span>
+                  </div>
+                )
+              case 'single-attachment':
+                return (
+                  <div className="flex items-center gap-2">
+                    <File className="size-4" />
+                    <span>{field.name}</span>
+                  </div>
+                )
+              case 'email':
+                return (
+                  <div className="flex items-center gap-2">
+                    <Mail className="size-4" />
+                    <span>{field.name}</span>
+                  </div>
+                )
+              case 'phone-number':
+                return (
+                  <div className="flex items-center gap-2">
+                    <Phone className="size-4" />
+                    <span>{field.name}</span>
+                  </div>
+                )
+              case 'url':
+                return (
+                  <div className="flex items-center gap-2">
+                    <Link className="size-4" />
+                    <span>{field.name}</span>
+                  </div>
+                )
+              default: {
+                const _exhaustiveCheck: never = field.type
+                throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+              }
+            }
+          },
+        })),
+      ]}
       data={records.map((record) => ({ ...record.fields, _id: record.id }))}
       getRowLink={(row) => `/admin/tables/${tableId}/${row._id}`}
+      onCreateClick={() => {
+        mutation.mutate()
+      }}
     />
   )
 }

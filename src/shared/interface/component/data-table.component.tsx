@@ -12,12 +12,15 @@ import { useNavigate } from '@tanstack/react-router'
 // Shared UI imports
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table.ui'
 import { Input } from '../ui/input.ui'
+import { Button } from '../ui/button.ui'
+import { Plus } from 'lucide-react'
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   onRowClick?: (row: TData) => void
   getRowLink?: (row: TData) => string
+  onCreateClick?: () => void
 }
 
 export function DataTable<TData, TValue>({
@@ -25,8 +28,10 @@ export function DataTable<TData, TValue>({
   data,
   onRowClick,
   getRowLink,
+  onCreateClick,
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = React.useState<ColumnResizeMode>('onChange')
+  const [rowSelection, setRowSelection] = React.useState({})
   const navigate = useNavigate()
 
   const table = useReactTable({
@@ -36,11 +41,20 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     columnResizeMode,
     enableColumnResizing: true,
+    onRowSelectionChange: setRowSelection,
     initialState: {
       columnPinning: {
         left: ['expand-column'],
         right: ['actions-column'],
       },
+    },
+    state: {
+      rowSelection,
+    },
+    defaultColumn: {
+      size: 200, //starting column size
+      minSize: 50, //enforced during column resizing
+      maxSize: 500, //enforced during column resizing
     },
   })
 
@@ -60,8 +74,17 @@ export function DataTable<TData, TValue>({
           placeholder="Search..."
           value={table.getState().globalFilter ?? ''}
           onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-          className="max-w-sm"
+          className="mr-4 max-w-sm"
         />
+        {onCreateClick && (
+          <Button
+            className="ml-auto"
+            onClick={onCreateClick}
+          >
+            <Plus />
+            Create
+          </Button>
+        )}
       </div>
       <div className="rounded-md border">
         <Table>
@@ -102,7 +125,6 @@ export function DataTable<TData, TValue>({
                       key={cell.id}
                       style={{
                         width: cell.column.getSize(),
-                        maxWidth: cell.column.getSize(),
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
                         whiteSpace: 'nowrap',
