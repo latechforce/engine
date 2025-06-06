@@ -47,7 +47,7 @@ export class SetupAutomationUseCase {
     for (const action of automation.actions) {
       await this.setupActionUseCase.execute(app, action)
     }
-    await this.setupTriggerUseCase.execute(automation)
+    await this.setupTriggerUseCase.execute(app, automation)
     this.runRepository.onCreate(async (run: Run) => {
       if (run.automation_schema.id === automation.schema.id) {
         await this.runAutomationUseCase.execute(app, run, automation)
@@ -56,7 +56,7 @@ export class SetupAutomationUseCase {
 
     // Build OpenAPI routes
     const { schema } = automation.trigger
-    if (schema.path) {
+    if ('path' in schema) {
       const responseAction = automation.actions.find(
         (action) => action.schema.service === 'http' && action.schema.action === 'response'
       )

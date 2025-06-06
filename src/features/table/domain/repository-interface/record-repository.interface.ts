@@ -4,6 +4,7 @@ import type { Table } from '../entity/table.entity'
 import type { RecordFieldRow } from '../object-value/record-field-row.object-value'
 import type { SchemaObject } from 'ajv'
 import type { Fields } from '../object-value/fields.object-value'
+import type { RecordRow } from '../object-value/record-row.object-value'
 
 export type RecordTransaction = {
   create(tableId: number, record: Record): Promise<void>
@@ -31,4 +32,6 @@ export type IRecordRepository = {
   read(table: Table, recordId: string): Promise<Record | undefined>
   list(table: Table): Promise<Record[]>
   listByIds(table: Table, recordIds: string[]): Promise<Record[]>
+  onRecordCreated(callback: (record: RecordRow) => void): void
+  onRecordUpdated(callback: (record: RecordRow) => void): void
 }

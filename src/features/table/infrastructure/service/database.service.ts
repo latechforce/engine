@@ -61,6 +61,22 @@ export class TableDatabaseService {
     return this.database.schema
   }
 
+  get record() {
+    if (this.database.provider === 'postgres') {
+      const schema = this.database.postgresSchema
+      const db = this.database.postgres
+      return {
+        get: async (id: string) => db.query.record.findFirst({ where: eq(schema.record.id, id) }),
+      }
+    } else {
+      const schema = this.database.sqliteSchema
+      const db = this.database.sqlite
+      return {
+        get: async (id: string) => db.query.record.findFirst({ where: eq(schema.record.id, id) }),
+      }
+    }
+  }
+
   get transaction() {
     if (this.database.provider === 'postgres') {
       const schema = this.database.postgresSchema

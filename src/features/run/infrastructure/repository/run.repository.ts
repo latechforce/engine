@@ -25,11 +25,11 @@ export class RunRepository implements IRunRepository {
       updated_at: run.updatedAt,
       last_action_name: run.lastActionName,
     })
-    this.eventEmitter.emit('create', run)
+    this.eventEmitter.emit<Run>('create', run)
   }
 
   onCreate(handler: (run: Run) => Promise<void>) {
-    this.eventEmitter.on('create', handler)
+    this.eventEmitter.on<Run>('create', handler)
   }
 
   async update(run: Run) {
@@ -40,11 +40,11 @@ export class RunRepository implements IRunRepository {
       last_action_name: run.lastActionName,
       error_message: run.errorMessage,
     })
-    this.eventEmitter.emit('update', run)
+    this.eventEmitter.emit<Run>('update', run)
   }
 
   onUpdate(handler: (run: Run) => Promise<void>) {
-    this.eventEmitter.on('update', handler)
+    this.eventEmitter.on<Run>('update', handler)
   }
 
   async list(): Promise<Run[]> {

@@ -85,10 +85,12 @@ export class App {
     }
     const triggerPaths = new Set<string>()
     for (const automation of this.schema.automations) {
-      if (triggerPaths.has(automation.trigger.path)) {
-        throw new Error(`Duplicate trigger path: ${automation.trigger.path}`)
+      if ('path' in automation.trigger) {
+        if (triggerPaths.has(automation.trigger.path)) {
+          throw new Error(`Duplicate trigger path: ${automation.trigger.path}`)
+        }
+        triggerPaths.add(automation.trigger.path)
       }
-      triggerPaths.add(automation.trigger.path)
     }
     this.connections = this.schema.connections.map(
       (connection) => new Connection(connection, this.env.BASE_URL)

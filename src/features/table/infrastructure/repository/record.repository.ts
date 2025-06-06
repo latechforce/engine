@@ -13,9 +13,13 @@ import type { RecordFieldRow } from '../../domain/object-value/record-field-row.
 import type { SchemaObject } from 'ajv'
 import type { ViewRow } from '../../domain/object-value/view-row.object-value'
 import type { Fields } from '../../domain/object-value/fields.object-value'
+import { EventEmitter } from 'events'
+import type { RecordRow } from '../../domain/object-value/record-row.object-value'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {
+  private eventEmitter = new EventEmitter()
+
   constructor(
     @inject(TYPES.Service.Schema)
     private readonly validator: SchemaService,
@@ -97,6 +101,13 @@ export class RecordRepository implements IRecordRepository {
         await tx.field.create(field.id, record, record.fields[field.name])
       }
     })
+    this.eventEmitter.emit<RecordRow>('create', {
+      id: record.id,
+      tableId: table.schema.id,
+      createdAt: record.createdAt,
+      updatedAt: record.updatedAt,
+      archivedAt: null,
+    })
   }
 
   async createMany(table: Table, records: Record[]) {
@@ -108,6 +119,19 @@ export class RecordRepository implements IRecordRepository {
         }
       }
     })
+    for (const record of records) {
+      this.eventEmitter.emit<RecordRow>('create', {
+        id: record.id,
+        tableId: table.schema.id,
+        createdAt: record.createdAt,
+        updatedAt: record.updatedAt,
+        archivedAt: null,
+      })
+    }
+  }
+
+  onRecordCreated(callback: (record: RecordRow) => void): void {
+    this.eventEmitter.on<RecordRow>('create', callback)
   }
 
   async update(recordId: string, fields: Fields) {
@@ -118,6 +142,17 @@ export class RecordRepository implements IRecordRepository {
         if (recordField) await tx.field.update(recordField.id, fields[key])
       }
       await tx.update(recordId)
+    })
+    const recordRow = await this.database.record.get(recordId)
+    if (!recordRow) {
+      return
+    }
+    this.eventEmitter.emit<RecordRow>('update', {
+      id: recordRow.id,
+      tableId: recordRow.table_id,
+      createdAt: recordRow.created_at,
+      updatedAt: recordRow.updated_at,
+      archivedAt: recordRow.archived_at,
     })
   }
 
@@ -132,6 +167,23 @@ export class RecordRepository implements IRecordRepository {
         await tx.update(record.id)
       }
     })
+    for (const record of records) {
+      const recordRow = await this.database.record.get(record.id)
+      if (!recordRow) {
+        return
+      }
+      this.eventEmitter.emit<RecordRow>('update', {
+        id: recordRow.id,
+        tableId: recordRow.table_id,
+        createdAt: recordRow.created_at,
+        updatedAt: recordRow.updated_at,
+        archivedAt: recordRow.archived_at,
+      })
+    }
+  }
+
+  onRecordUpdated(callback: (record: RecordRow) => void): void {
+    this.eventEmitter.on<RecordRow>('update', callback)
   }
 
   async read(table: Table, recordId: string): Promise<Record | undefined> {
