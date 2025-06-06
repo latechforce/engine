@@ -1,3 +1,10 @@
+## [0.54.1](https://github.com/latechforce/engine/compare/v0.54.0...v0.54.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* **automation:** add log function in code action ([0e610ac](https://github.com/latechforce/engine/commit/0e610ac51641aa9714e504666da94b7a77917043)) — Thomas JEANNEAU
+
 # [0.54.0](https://github.com/latechforce/engine/compare/v0.53.1...v0.54.0) (2025-06-06)
 
 
