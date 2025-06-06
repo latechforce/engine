@@ -5,7 +5,7 @@ export const env: EnvSchema = {
   DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/postgres',
 }
 
-export const inGuides = true
+export const inGuides = false
 
 export default {
   name: 'Start with a PostgreSQL database',

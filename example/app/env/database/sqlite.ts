@@ -5,7 +5,7 @@ export const env: EnvSchema = {
   DATABASE_URL: './tmp/test.db',
 }
 
-export const inGuides = true
+export const inGuides = false
 
 export default {
   name: 'Start with a SQLite database',

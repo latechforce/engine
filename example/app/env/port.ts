@@ -4,7 +4,7 @@ export const env: EnvSchema = {
   PORT: '4567',
 }
 
-export const inGuides = true
+export const inGuides = false
 
 export default {
   name: 'Start with a custom PORT',

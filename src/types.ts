@@ -12,6 +12,7 @@ export type { TriggerSchema } from './features/trigger/domain/schema/trigger.sch
 export type { FieldSchema } from './features/table/domain/schema/field'
 export type { TableSchema } from './features/table/domain/schema/table.schema'
 export type { ConnectionSchema } from './features/connection/domain/schema/connection.schema'
+export type { FormSchema } from './features/form/domain/schema/form.schema'
 
 // Infrastructure types
 export type { CodeContext } from './features/action/infrastructure/service/code.service'

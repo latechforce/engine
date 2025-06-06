@@ -261,9 +261,9 @@ import Link from '@docusaurus/Link'
 A collection of code samples and walkthroughs for configuring and using LTF Engine.
 
 <div style={{ display: 'flex', flexDirection: 'row', gap: '2rem', marginBottom: '2rem' }}>
-  ${generateGuideCard(guides.find((g) => g.path.includes('database/postgres'))!)}
-  ${generateGuideCard(guides.find((g) => g.path.includes('trigger/service/http/post/request-body'))!)}
-  ${generateGuideCard(guides.find((g) => g.path.includes('typescript/externals'))!)}
+  ${generateGuideCard(guides.find((g) => g.pathWithIndex.includes('form/index'))!)}
+  ${generateGuideCard(guides.find((g) => g.pathWithIndex.includes('trigger/service/http/post/request-body'))!)}
+  ${generateGuideCard(guides.find((g) => g.pathWithIndex.includes('table/index'))!)}
 </div>
 
 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>

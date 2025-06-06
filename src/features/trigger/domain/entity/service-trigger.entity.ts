@@ -6,7 +6,10 @@ export class ServiceTrigger {
     public readonly automationName: string
   ) {}
 
-  get path() {
-    return this.schema.path.replace(/^\//, '')
+  get path(): string | undefined {
+    if ('path' in this.schema) {
+      return this.schema.path.replace(/^\//, '')
+    }
+    return undefined
   }
 }
