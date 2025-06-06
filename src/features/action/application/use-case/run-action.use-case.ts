@@ -104,6 +104,7 @@ export class RunActionUseCase {
             throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
           }
         }
+        if (!data) data = {}
         return { data }
       } catch (error) {
         if (error instanceof Error) {

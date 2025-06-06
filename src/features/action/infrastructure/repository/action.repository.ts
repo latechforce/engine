@@ -12,7 +12,13 @@ import type { ActionResult } from '../../domain/value-object/action-result.value
 import type { IntegrationError } from '../../domain/value-object/integration-error.value.object'
 
 // Action infrastructure imports
-import type { BucketContext, CodeService, TableContext } from '../service/code.service'
+import type {
+  BucketContext,
+  CodeService,
+  LogContext,
+  ServiceContext,
+  TableContext,
+} from '../service/code.service'
 import { toActionIntegration } from '../integration'
 
 // Connection domain imports
@@ -41,16 +47,14 @@ export class ActionRepository implements IActionRepository {
     private readonly recordRepository: IRecordRepository,
     @inject(TYPES.Bucket.Repository.Object)
     private readonly objectRepository: IObjectRepository
-  ) {
-    this.logger = this.logger.child('action-repository')
-  }
+  ) {}
 
   debug(message: string) {
-    this.logger.debug(message)
+    this.logger.child('action-repository').debug(message)
   }
 
   error(message: string) {
-    this.logger.error(message)
+    this.logger.child('action-repository').error(message)
   }
 
   fillSchema<T extends { [key: string]: unknown }>(
@@ -139,12 +143,20 @@ export class ActionRepository implements IActionRepository {
         },
       }
     }
+    const log: LogContext = {
+      info: (message: string) => this.logger.info(message),
+      debug: (message: string) => this.logger.child('code-action').debug(message),
+      error: (message: string) => this.logger.child('code-action').error(message),
+    }
+    const service: ServiceContext = {
+      log,
+      table,
+      bucket,
+    }
     return {
-      lint: (code: string) => this.codeService.lint(code, inputData, table, bucket),
-      runJavascript: (code: string) =>
-        this.codeService.runJavascript(code, inputData, table, bucket),
-      runTypescript: (code: string) =>
-        this.codeService.runTypescript(code, inputData, table, bucket),
+      lint: (code: string) => this.codeService.lint(code, inputData, service),
+      runJavascript: (code: string) => this.codeService.runJavascript(code, inputData, service),
+      runTypescript: (code: string) => this.codeService.runTypescript(code, inputData, service),
     }
   }
 
