@@ -4,10 +4,24 @@
         <title>LTF Engine Blog</title>
         <link>https://engine.latechforce.com/blog</link>
         <description>LTF Engine Blog</description>
-        <lastBuildDate>Thu, 05 Jun 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 06 Jun 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Release 0.54.0]]></title>
+            <link>https://engine.latechforce.com/blog/release-0-54-0</link>
+            <guid>https://engine.latechforce.com/blog/release-0-54-0</guid>
+            <pubDate>Fri, 06 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Changelog for version 0.54.0]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-54-0"><p class="before-truncate"> 0.54.0   Features  * automation: should run an automation when a record is created (91a7f0f) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0540"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-54-0">0.54.0</a><a href="https://engine.latechforce.com/blog/release-0-54-0#0540" class="hash-link" aria-label="Direct link to 0.54.0" title="Direct link to 0.54.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-54-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li><strong>automation:</strong> should run an automation when a record is created (<a href="https://github.com/latechforce/engine/commit/91a7f0f0a939d3661e17144eddc1d5fdbc67eb70" target="_blank" rel="noopener noreferrer">91a7f0f</a>) — Thomas JEANNEAU</li>
+</ul>]]></content:encoded>
+            <category>Release</category>
+        </item>
         <item>
             <title><![CDATA[Fix 0.53.1]]></title>
             <link>https://engine.latechforce.com/blog/fix-0-53-1</link>
