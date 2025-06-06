@@ -14,6 +14,7 @@ test('should run an automation when a record is created', async ({ startExampleA
   })
 
   // THEN
+  await page.waitForTimeout(1000)
   const responseRuns = await page.request.get('/api/runs')
   const { runs } = await responseRuns.json()
   expect(runs.length).toBe(1)
