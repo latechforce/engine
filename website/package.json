@@ -16,25 +16,25 @@
   },
   "dependencies": {
     "@docusaurus/core": "3.7.0",
-    "@docusaurus/plugin-google-gtag": "^3.7.0",
+    "@docusaurus/plugin-google-gtag": "^3.8.0",
     "@docusaurus/preset-classic": "3.7.0",
-    "@docusaurus/theme-search-algolia": "^3.7.0",
+    "@docusaurus/theme-search-algolia": "^3.8.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mdx-js/react": "^3.0.0",
-    "clsx": "^2.0.0",
+    "@mdx-js/react": "^3.1.0",
+    "clsx": "^2.1.1",
     "docusaurus-json-schema-plugin": "^1.14.0",
     "docusaurus-plugin-hotjar": "^0.0.2",
-    "prism-react-renderer": "^2.3.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "zod": "^3.25.13"
+    "prism-react-renderer": "^2.4.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.25.55"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.7.0",
     "@docusaurus/tsconfig": "3.7.0",
     "@docusaurus/types": "3.7.0",
-    "typescript": "~5.6.2"
+    "typescript": "~5.6.3"
   },
   "browserslist": {
     "production": [

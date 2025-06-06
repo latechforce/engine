@@ -1,6 +1,6 @@
 import type { AppSchema } from '@/types'
 
-export const inGuides = true
+export const inGuides = false
 
 export const env = {
   API_PORT: 6000,

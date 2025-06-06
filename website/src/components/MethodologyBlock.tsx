@@ -2,13 +2,13 @@ import React from 'react'
 import styled from '@emotion/styled'
 
 const Block = styled.section`
-  background: #fafaf9;
+  background: var(--ifm-color-emphasis-0);
   border-radius: 14px;
   padding: 2rem 2.2rem 1.5rem 2.2rem;
   display: flex;
   align-items: flex-start;
   gap: 1.2rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  margin-bottom: 1.5rem;
 `
 
 const Emoji = styled.span`

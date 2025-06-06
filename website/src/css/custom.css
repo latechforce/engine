@@ -38,3 +38,17 @@ h1 {
 #__blog-post-container .before-truncate {
   display: none;
 }
+
+:root {
+  --card-bg: white;
+  --text-color: #333;
+  --secondary-text-color: #666;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+  --card-bg: #1a1a1a;
+  --text-color: #e0e0e0;
+  --secondary-text-color: #a0a0a0;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+}

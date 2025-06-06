@@ -1,6 +1,6 @@
 import type { AppSchema, CodeContext } from '@/types'
 
-export const inGuides = true
+export const inGuides = false
 
 export default {
   name: 'Run TypeScript code action with array',

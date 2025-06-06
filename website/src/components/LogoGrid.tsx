@@ -17,13 +17,6 @@ const LogoItem = styled.div`
   padding: 1.5rem;
   background: white;
   border-radius: 8px;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
 
   img {
     max-width: 100%;
@@ -37,6 +30,25 @@ const LogoItem = styled.div`
     &:hover {
       filter: grayscale(0%);
       opacity: 1;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: #1a1a1a;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    img {
+      filter: grayscale(100%) brightness(1.2);
+      opacity: 0.6;
+
+      &:hover {
+        filter: grayscale(0%) brightness(1.2);
+        opacity: 0.9;
+      }
     }
   }
 `

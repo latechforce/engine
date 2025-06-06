@@ -11,22 +11,15 @@ const TestimonialGridContainer = styled.div`
 `
 
 const TestimonialCard = styled.div`
-  background: white;
+  background: var(--card-bg, white);
   padding: 2rem;
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-  }
 `
 
 const Quote = styled.blockquote`
   font-size: 1.1rem;
   line-height: 1.6;
-  color: #333;
+  color: var(--text-color, #333);
   margin: 0 0 1.5rem 0;
   font-style: italic;
   position: relative;
@@ -38,7 +31,7 @@ const Quote = styled.blockquote`
     left: 0;
     top: -0.5rem;
     font-size: 2rem;
-    color: #666;
+    color: var(--secondary-text-color, #666);
   }
 `
 
@@ -50,12 +43,12 @@ const Author = styled.div`
 
 const AuthorName = styled.strong`
   font-size: 1rem;
-  color: #222;
+  color: var(--text-color, #222);
 `
 
 const AuthorTitle = styled.span`
   font-size: 0.9rem;
-  color: #666;
+  color: var(--secondary-text-color, #666);
 `
 
 interface Testimonial {
