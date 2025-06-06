@@ -1,3 +1,10 @@
+# [0.54.0](https://github.com/latechforce/engine/compare/v0.53.1...v0.54.0) (2025-06-06)
+
+
+### Features
+
+* **automation:** should run an automation when a record is created ([91a7f0f](https://github.com/latechforce/engine/commit/91a7f0f0a939d3661e17144eddc1d5fdbc67eb70)) — Thomas JEANNEAU
+
 ## [0.53.1](https://github.com/latechforce/engine/compare/v0.53.0...v0.53.1) (2025-06-05)
 
 
