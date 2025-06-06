@@ -109,6 +109,60 @@
                 ]
               },
               {
+                "title": "Database",
+                "description": "The database trigger is a trigger that is triggered by a database event",
+                "anyOf": [
+                  {
+                    "title": "Record Created",
+                    "description": "The Record Created trigger is a trigger that is triggered by a record being created",
+                    "type": "object",
+                    "properties": {
+                      "service": {
+                        "type": "string",
+                        "const": "database"
+                      },
+                      "event": {
+                        "type": "string",
+                        "const": "record-created"
+                      },
+                      "table": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "service",
+                      "event",
+                      "table"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "title": "Record Updated",
+                    "description": "The Record Updated trigger is a trigger that is triggered by a record being updated",
+                    "type": "object",
+                    "properties": {
+                      "service": {
+                        "type": "string",
+                        "const": "database"
+                      },
+                      "event": {
+                        "type": "string",
+                        "const": "record-updated"
+                      },
+                      "table": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "service",
+                      "event",
+                      "table"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              {
                 "title": "Calendly",
                 "description": "The Calendly trigger is a trigger that is triggered by a Calendly event",
                 "anyOf": [
