@@ -100,6 +100,11 @@ test('should run a JavaScript code with buckets', async ({ startExampleApp }) =>
   expect(data.list[0].contentType).toBe('image/jpeg')
   expect(data.list[0].createdAt).toBeDefined()
   expect(data.list[0].updatedAt).toBeDefined()
+  expect(data.object.key).toBe('picture.jpg')
+  expect(data.object.size).toBe(3)
+  expect(data.object.contentType).toBe('image/jpeg')
+  expect(data.object.createdAt).toBeDefined()
+  expect(data.object.updatedAt).toBeDefined()
 })
 
 test('should run a JavaScript code that return an array', async ({ startExampleApp }) => {

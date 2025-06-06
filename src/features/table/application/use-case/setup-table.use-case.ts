@@ -21,12 +21,13 @@ export class SetupTableUseCase {
 
     // Setup table
     await this.tableRepository.transaction(async (tx: TableTransaction) => {
-      const exists = await tx.exists(schema.id)
-      if (exists) {
+      const tableExists = await tx.exists(schema.id)
+      if (tableExists) {
         await tx.update(table)
         for (const field of fields) {
-          if (await tx.field.exists(field.schema.id)) {
-            await tx.field.update(field)
+          const fieldExists = await tx.field.exists(field.schema.id, table.schema.id)
+          if (fieldExists) {
+            await tx.field.update(table.schema.id, field)
           } else {
             await tx.field.create(schema.id, field)
           }

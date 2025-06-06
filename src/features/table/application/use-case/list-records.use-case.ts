@@ -18,6 +18,6 @@ export class ListRecordsUseCase {
       throw new HttpError('Table not found', 404)
     }
     const records = await this.recordRepository.list(table)
-    return toListRecordsDto(records)
+    return toListRecordsDto(records, table)
   }
 }

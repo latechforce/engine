@@ -31,6 +31,7 @@ import type { IntegrationActionSchema } from '../../domain/schema/integration'
 import type { Connection } from '../../../connection/domain/entity/connection.entity'
 import type { IObjectRepository } from '../../../bucket/domain/repository-interface/object-repository.interface'
 import { Object } from '../../../bucket/domain/entity/object.entity'
+import { toObjectDto } from '../../../bucket/application/dto/object.dto'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -65,37 +66,37 @@ export class ActionRepository implements IActionRepository {
   }
 
   code(app: App, inputData: { [key: string]: string } = {}) {
-    const table: TableContext = (name: string) => {
+    const table: TableContext = <T extends Fields>(name: string) => {
       const table = app.findTable(name)
       if (!table) throw new Error(`Table "${name}" not found`)
       return {
         exists: async (id: string) => await this.recordRepository.exists(table, id),
-        create: async (fields: Fields) => {
-          const record = new Record(fields)
+        create: async (fields: T) => {
+          const record = new Record<T>(fields)
           await this.recordRepository.create(table, record)
           return record
         },
-        createMany: async (recordsFields: { fields: Fields }[]) => {
-          const records = recordsFields.map((recordField) => new Record(recordField.fields))
+        createMany: async (recordsFields: { fields: T }[]) => {
+          const records = recordsFields.map((recordField) => new Record<T>(recordField.fields))
           await this.recordRepository.createMany(table, records)
           return records
         },
-        update: async (id: string, fields: Fields) => {
-          await this.recordRepository.update(id, fields)
-          const record = await this.recordRepository.read(table, id)
+        update: async (id: string, fields: Partial<T>) => {
+          await this.recordRepository.update(table, id, fields)
+          const record = await this.recordRepository.read<T>(table, id)
           if (!record) throw new Error(`Record "${id}" not found`)
           return record
         },
-        updateMany: async (recordsFields: { id: string; fields: Fields }[]) => {
-          await this.recordRepository.updateMany(recordsFields)
-          const records = await this.recordRepository.listByIds(
+        updateMany: async (recordsFields: { id: string; fields: Partial<T> }[]) => {
+          await this.recordRepository.updateMany(table, recordsFields)
+          const records = await this.recordRepository.listByIds<T>(
             table,
             recordsFields.map((recordField) => recordField.id)
           )
           return records
         },
-        read: async (id: string) => await this.recordRepository.read(table, id),
-        list: async () => await this.recordRepository.list(table),
+        read: async (id: string) => await this.recordRepository.read<T>(table, id),
+        list: async () => await this.recordRepository.list<T>(table),
         delete: async (id: string) => {
           await this.recordRepository.delete(id)
         },
@@ -131,15 +132,14 @@ export class ActionRepository implements IActionRepository {
         delete: async (key: string) => {
           await this.objectRepository.delete(bucket.schema.id, key)
         },
+        get: async (key: string) => {
+          const object = await this.objectRepository.get(bucket.schema.id, key)
+          if (!object) throw new Error(`Object "${key}" not found`)
+          return toObjectDto(object)
+        },
         list: async () => {
           const objects = await this.objectRepository.listByBucketId(bucket.schema.id)
-          return objects.map((object) => ({
-            key: object.key,
-            size: object.size,
-            contentType: object.contentType,
-            createdAt: object.createdAt.toISOString(),
-            updatedAt: object.updatedAt.toISOString(),
-          }))
+          return objects.map(toObjectDto)
         },
       }
     }

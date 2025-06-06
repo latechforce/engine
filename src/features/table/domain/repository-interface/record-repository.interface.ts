@@ -12,7 +12,7 @@ export type RecordTransaction = {
   delete(recordId: string): Promise<void>
   exists(recordId: string): Promise<boolean>
   field: {
-    create(fieldId: number, record: Record, value: FieldValue): Promise<void>
+    create(tableId: number, fieldId: number, recordId: string, value: FieldValue): Promise<void>
     listByRecordId(recordId: string): Promise<RecordFieldRow[]>
     update(recordFieldId: string, value: FieldValue): Promise<void>
     delete(recordFieldId: string): Promise<void>
@@ -25,13 +25,13 @@ export type IRecordRepository = {
   exists(table: Table, recordId: string): Promise<boolean>
   create(table: Table, record: Record): Promise<void>
   createMany(table: Table, records: Record[]): Promise<void>
-  update(recordId: string, fields: Fields): Promise<void>
-  updateMany(records: { id: string; fields: Fields }[]): Promise<void>
+  update(table: Table, recordId: string, fields: Fields): Promise<void>
+  updateMany(table: Table, records: { id: string; fields: Fields }[]): Promise<void>
   delete(recordId: string): Promise<void>
   deleteMany(recordIds: string[]): Promise<void>
-  read(table: Table, recordId: string): Promise<Record | undefined>
-  list(table: Table): Promise<Record[]>
-  listByIds(table: Table, recordIds: string[]): Promise<Record[]>
+  read<T extends Fields>(table: Table, recordId: string): Promise<Record<T> | undefined>
+  list<T extends Fields>(table: Table): Promise<Record<T>[]>
+  listByIds<T extends Fields>(table: Table, recordIds: string[]): Promise<Record<T>[]>
   onRecordCreated(callback: (record: RecordRow) => void): void
   onRecordUpdated(callback: (record: RecordRow) => void): void
 }

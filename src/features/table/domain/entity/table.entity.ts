@@ -10,6 +10,18 @@ export class Table {
 
   constructor(public readonly schema: TableSchema) {
     this.slug = this.slugify(schema.name)
+    if (schema.fields.length === 0) {
+      throw new Error('Table must have at least one field')
+    }
+    if (
+      !['single-line-text', 'long-text', 'url', 'email', 'phone-number'].includes(
+        schema.fields[0]!.type
+      )
+    ) {
+      throw new Error(
+        'Table must have a single-line-text, long-text, url, email or phone-number field as primary field'
+      )
+    }
     const fieldNames = new Set<string>()
     for (const field of schema.fields) {
       if (fieldNames.has(field.name)) {

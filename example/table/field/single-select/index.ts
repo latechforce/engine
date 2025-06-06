@@ -12,6 +12,11 @@ export default {
       fields: [
         {
           id: 1,
+          name: 'First name',
+          type: 'single-line-text',
+        },
+        {
+          id: 2,
           name: 'Country',
           type: 'single-select',
           options: ['France', 'United States', 'United Kingdom'],

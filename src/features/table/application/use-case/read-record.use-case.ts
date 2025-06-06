@@ -21,6 +21,6 @@ export class ReadRecordUseCase {
     if (!record) {
       throw new HttpError('Record not found', 404)
     }
-    return toGetRecordDto(record)
+    return toGetRecordDto(record, table)
   }
 }

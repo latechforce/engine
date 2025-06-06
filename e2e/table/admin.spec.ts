@@ -19,8 +19,8 @@ test('should list tables', async ({ startExampleApp }) => {
   await page.goto('/admin/tables')
 
   // THEN
-  await expect(page.getByText('Users')).toBeVisible()
-  await expect(page.getByText('Posts')).toBeVisible()
+  await expect(page.getByRole('tab', { name: 'Users' })).toBeVisible()
+  await expect(page.getByRole('tab', { name: 'Posts' })).toBeVisible()
 })
 
 test('should list table records', async ({ startExampleApp }) => {
@@ -66,15 +66,25 @@ test('should search table records', async ({ startExampleApp }) => {
   await expect(page.getByText('Jane')).not.toBeVisible()
 })
 
-// TODO: [@thomas-jeanneau] - should open and display a table record
-test.skip('should open and display a table record', async ({ startExampleApp }) => {
+test('should open and display a table record', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const response = await page.request.post('/api/tables/1', {
+    data: {
+      records: [{ fields: { 'First name': 'John', 'Last name': 'Doe' } }],
+    },
+  })
+  const recordId = (await response.json()).records[0].id
 
   // WHEN
   await page.goto('/admin/tables')
+  await page.getByText('John').click()
+  await page.waitForURL(`/admin/tables/1/${recordId}`)
 
   // THEN
+  await expect(page.getByRole('heading', { name: 'John' })).toBeVisible()
+  const lastName = await page.getByRole('textbox', { name: 'Last name' }).inputValue()
+  expect(lastName).toBe('Doe')
 })
 
 // TODO: [@thomas-jeanneau] - should create a table record

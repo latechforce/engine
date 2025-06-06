@@ -20,11 +20,13 @@ export default {
             const pictures = context.bucket('pictures')
             await pictures.upload('picture.jpg', new Uint8Array([1, 2, 3]))
             const data = await pictures.download('picture.jpg')
+            const object = await pictures.get('picture.jpg')
             const list = await pictures.list()
             await pictures.delete('picture.jpg')
             return {
               data,
               list,
+              object,
             }
           }),
         },

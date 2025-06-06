@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify'
 import TYPES from '../../../../shared/application/di/types'
-import { eq, type SQL } from 'drizzle-orm'
+import { and, eq, type SQL } from 'drizzle-orm'
 import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 import { Kysely, PostgresDialect, type Dialect } from 'kysely'
 import { BunWorkerDialect } from 'kysely-bun-worker'
@@ -8,24 +8,28 @@ import type { Table } from '../../domain/entity/table.entity'
 import type { ViewRow } from '../../domain/object-value/view-row.object-value'
 import type { RecordFieldRow } from '../../domain/object-value/record-field-row.object-value'
 
-type Base<I, S, D> = {
+type Base<I, D> = {
   create(data: I): Promise<void>
   update(id: D, data: Partial<Omit<I, 'id'>>): Promise<void>
-  get(id: D): Promise<S | undefined>
 }
 
-type DatabaseTable<I, S> = Base<I, S, number> & {
+type DatabaseTable<I, S> = Base<I, number> & {
   list(): Promise<S[]>
+  get(id: number): Promise<S | undefined>
 }
 
-type DatabaseTableField<I, S> = Base<I, S, number> & {
+type DatabaseTableField<I, S> = Base<I, number> & {
   listByTableId(tableId: number): Promise<S[]>
+  get(fieldId: number, tableId: number): Promise<S | undefined>
 }
 
-type DatabaseRecord<I, S> = Base<I, S, string>
+type DatabaseRecord<I, S> = Base<I, string> & {
+  get(id: string): Promise<S | undefined>
+}
 
-type DatabaseRecordField<I, S> = Base<I, S, string> & {
+type DatabaseRecordField<I, S> = Base<I, string> & {
   listByRecordId(recordId: string): Promise<RecordFieldRow[]>
+  get(id: string): Promise<S | undefined>
 }
 
 @injectable()
@@ -121,7 +125,10 @@ export class TableDatabaseService {
               update: async (id, data) => {
                 await tx.update(schema.field).set(data).where(eq(schema.field.id, id))
               },
-              get: async (id) => tx.query.field.findFirst({ where: eq(schema.field.id, id) }),
+              get: async (fieldId, tableId) =>
+                tx.query.field.findFirst({
+                  where: and(eq(schema.field.id, fieldId), eq(schema.field.table_id, tableId)),
+                }),
               listByTableId: async (tableId) =>
                 tx.select().from(schema.field).where(eq(schema.field.table_id, tableId)),
             },
@@ -193,7 +200,10 @@ export class TableDatabaseService {
               create: async (data) => tx.insert(schema.field).values(data),
               update: async (id, data) =>
                 tx.update(schema.field).set(data).where(eq(schema.field.id, id)),
-              get: async (id) => tx.query.field.findFirst({ where: eq(schema.field.id, id) }),
+              get: async (fieldId, tableId) =>
+                tx.query.field.findFirst({
+                  where: and(eq(schema.field.id, fieldId), eq(schema.field.table_id, tableId)),
+                }),
               listByTableId: async (tableId) =>
                 tx.select().from(schema.field).where(eq(schema.field.table_id, tableId)),
             },

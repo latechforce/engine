@@ -1,26 +1,18 @@
 import type { Fields } from '../../domain/object-value/fields.object-value'
 import type { Record } from '../../domain/entity/record.entity'
+import { toRecordDto, type RecordDto } from './record.dto'
+import type { Table } from '../../domain/entity/table.entity'
 
 export type GetRecordDto = {
-  record: {
-    id: string
-    createdAt: string
-    updatedAt: string
-    fields: Fields
-  }
+  record: RecordDto
 }
 
 export function filterNullFields(fields: Fields): Fields {
   return Object.fromEntries(Object.entries(fields).filter(([_, value]) => !!value))
 }
 
-export const toGetRecordDto = (record: Record): GetRecordDto => {
+export const toGetRecordDto = (record: Record, table: Table): GetRecordDto => {
   return {
-    record: {
-      id: record.id,
-      createdAt: record.createdAt.toISOString(),
-      updatedAt: record.updatedAt.toISOString(),
-      fields: filterNullFields(record.fields),
-    },
+    record: toRecordDto(record, table),
   }
 }

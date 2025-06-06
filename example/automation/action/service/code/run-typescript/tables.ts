@@ -16,7 +16,7 @@ export default {
           action: 'run-typescript',
           name: 'runTypescriptCode',
           code: String(async function (context: CodeContext) {
-            const contacts = context.table('Contacts')
+            const contacts = context.table<{ name: string }>('Contacts')
             const record = await contacts.create({
               name: 'John Doe',
             })

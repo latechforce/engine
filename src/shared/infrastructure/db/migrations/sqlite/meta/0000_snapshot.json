@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "56547fbe-098b-4010-b896-5d97169b11c7",
+  "id": "40aa4d5f-23f6-4b28-8f3a-ba4dfc226089",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -530,7 +530,7 @@
         "id": {
           "name": "id",
           "type": "integer",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
@@ -585,6 +585,13 @@
         }
       },
       "indexes": {
+        "table_field_name_unique": {
+          "name": "table_field_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        },
         "table_field_slug_unique": {
           "name": "table_field_slug_unique",
           "columns": [
@@ -608,7 +615,15 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "table_field_id_table_id_pk": {
+          "columns": [
+            "id",
+            "table_id"
+          ],
+          "name": "table_field_id_table_id_pk"
+        }
+      },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
@@ -688,6 +703,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "table_id": {
+          "name": "table_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "table_field_id": {
           "name": "table_field_id",
           "type": "integer",
@@ -739,17 +761,19 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "record_field_table_field_id_table_field_id_fk": {
-          "name": "record_field_table_field_id_table_field_id_fk",
+        "record_field_table_field_fk": {
+          "name": "record_field_table_field_fk",
           "tableFrom": "record_field",
           "tableTo": "table_field",
           "columnsFrom": [
-            "table_field_id"
+            "table_field_id",
+            "table_id"
           ],
           "columnsTo": [
-            "id"
+            "id",
+            "table_id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -797,6 +821,13 @@
         }
       },
       "indexes": {
+        "table_name_unique": {
+          "name": "table_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        },
         "table_slug_unique": {
           "name": "table_slug_unique",
           "columns": [
@@ -805,6 +836,170 @@
           "isUnique": true
         }
       },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "bucket": {
+      "name": "bucket",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "bucket_name_unique": {
+          "name": "bucket_name_unique",
+          "columns": [
+            "name"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "object": {
+      "name": "object",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "bucket_id": {
+          "name": "bucket_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "size": {
+          "name": "size",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "content_type": {
+          "name": "content_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "data": {
+          "name": "data",
+          "type": "blob",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "object_bucket_id_bucket_id_fk": {
+          "name": "object_bucket_id_bucket_id_fk",
+          "tableFrom": "object",
+          "tableTo": "bucket",
+          "columnsFrom": [
+            "bucket_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "automation_status": {
+      "name": "automation_status",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "active": {
+          "name": "active",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "schema": {
+          "name": "schema",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},

@@ -5,32 +5,28 @@ import { ESLint } from 'eslint'
 import js from '@eslint/js'
 import type { Fields } from '../../../table/domain/object-value/fields.object-value'
 import type { Record } from '../../../table/domain/entity/record.entity'
+import type { ObjectDto } from '../../../bucket/application/dto/object.dto'
 
-export type TableContext = (name: string) => {
+export type TableContext = <T extends Fields>(
+  name: string
+) => {
   exists: (id: string) => Promise<boolean>
-  create: (fields: Fields) => Promise<Record>
-  createMany: (records: { fields: Fields }[]) => Promise<Record[]>
-  update: (id: string, fields: Fields) => Promise<Record>
-  updateMany: (records: { id: string; fields: Fields }[]) => Promise<Record[]>
+  create: (fields: T) => Promise<Record<T>>
+  createMany: (records: { fields: T }[]) => Promise<Record<T>[]>
+  update: (id: string, fields: Partial<T>) => Promise<Record<T>>
+  updateMany: (records: { id: string; fields: Partial<T> }[]) => Promise<Record<T>[]>
   delete: (id: string) => Promise<void>
   deleteMany: (ids: string[]) => Promise<void>
-  read: (id: string) => Promise<Record | undefined>
-  list: () => Promise<Record[]>
+  read: (id: string) => Promise<Record<T> | undefined>
+  list: () => Promise<Record<T>[]>
 }
 
 export type BucketContext = (name: string) => {
   upload: (key: string, data: Uint8Array) => Promise<void>
   download: (key: string) => Promise<Uint8Array>
   delete: (key: string) => Promise<void>
-  list: () => Promise<
-    {
-      key: string
-      size: number | null
-      contentType: string | null
-      createdAt: string
-      updatedAt: string
-    }[]
-  >
+  get: (key: string) => Promise<ObjectDto>
+  list: () => Promise<ObjectDto[]>
 }
 
 export type LogContext = {

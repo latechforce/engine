@@ -11,6 +11,7 @@ import type { Field } from '../../domain/entity/field.entity'
 import { sql } from 'drizzle-orm'
 import type { RouteConfig } from '@hono/zod-openapi'
 import type { ServerService } from '../../../../shared/infrastructure/service/server.service'
+import type { TableFieldRow } from '../../domain/object-value/table-field-row.object-value'
 
 @injectable()
 export class TableRepository implements ITableRepository {
@@ -95,9 +96,12 @@ export class TableRepository implements ITableRepository {
           return tables
         },
         field: {
-          exists: async (id: number) => {
-            const field = await tx.table_field.get(id)
+          exists: async (fieldId: number, tableId: number) => {
+            const field = await tx.table_field.get(fieldId, tableId)
             return field !== undefined
+          },
+          get: async (fieldId: number, tableId: number) => {
+            return await tx.table_field.get(fieldId, tableId)
           },
           create: async (tableId: number, field: Field) => {
             await tx.table_field.create({
@@ -111,13 +115,27 @@ export class TableRepository implements ITableRepository {
               updated_at: new Date(),
             })
           },
-          update: async (field: Field) => {
-            await tx.table_field.update(field.schema.id, {
-              name: field.schema.name,
-              slug: field.slug,
-              type: field.schema.type,
-              updated_at: new Date(),
-            })
+          update: async (tableId: number, field: Field) => {
+            const tableField = await tx.table_field.get(field.schema.id, tableId)
+            if (!tableField) {
+              throw new Error(`Field ${field.schema.id} not found`)
+            }
+            const updates: Partial<TableFieldRow> = {}
+            if (tableField.name !== field.schema.name) {
+              updates.name = field.schema.name
+            }
+            if (tableField.slug !== field.slug) {
+              updates.slug = field.slug
+            }
+            if (tableField.type !== field.schema.type) {
+              updates.type = field.schema.type
+            }
+            if (Object.keys(updates).length > 0) {
+              await tx.table_field.update(field.schema.id, {
+                ...updates,
+                updated_at: new Date(),
+              })
+            }
           },
           listByTableId: async (tableId: number) => {
             const fields = await tx.table_field.listByTableId(tableId)

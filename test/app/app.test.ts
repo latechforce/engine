@@ -409,4 +409,48 @@ describe('start', () => {
     // THEN
     expect(call).toThrow('Bucket id cannot be 0, it is reserved for the tables bucket.')
   })
+
+  it('should throw an error if there is no primary field', async () => {
+    const schema: AppSchema = {
+      tables: [
+        {
+          id: 1,
+          name: 'table',
+          fields: [],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Table must have at least one field')
+  })
+
+  it('should throw an error if the primary field is not a single-line-text, long-text, url, email or phone-number field', async () => {
+    const schema: AppSchema = {
+      tables: [
+        {
+          id: 1,
+          name: 'table',
+          fields: [
+            {
+              id: 1,
+              name: 'field',
+              type: 'checkbox',
+            },
+          ],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow(
+      'Table must have a single-line-text, long-text, url, email or phone-number field as primary field'
+    )
+  })
 })

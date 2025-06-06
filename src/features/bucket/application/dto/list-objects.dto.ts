@@ -1,5 +1,6 @@
 import type { Object } from '../../domain/entity/object.entity'
 import { z } from 'zod'
+import { toObjectDto } from './object.dto'
 
 export const listObjectsDto = z.object({
   objects: z.array(
@@ -17,12 +18,6 @@ export type ListObjectsDto = z.infer<typeof listObjectsDto>
 
 export function toListObjectsDto(objects: Object[]): ListObjectsDto {
   return {
-    objects: objects.map((object) => ({
-      key: object.key,
-      contentType: object.contentType,
-      size: object.size,
-      createdAt: object.createdAt.toISOString(),
-      updatedAt: object.updatedAt.toISOString(),
-    })),
+    objects: objects.map(toObjectDto),
   }
 }

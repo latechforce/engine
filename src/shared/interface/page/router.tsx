@@ -17,6 +17,7 @@ import {
   tablesRedirectAdminRoute,
 } from '../../../features/table/interface/page/admin/tables.page'
 import { runAdminRoute } from '../../../features/run/interface/page/admin/run.page'
+import { recordAdminRoute } from '../../../features/table/interface/page/admin/record.page'
 
 const routeTree = rootRoute.addChildren([
   notFoundRoute,
@@ -33,6 +34,7 @@ const routeTree = rootRoute.addChildren([
     formsAdminRoute,
     tablesAdminRoute,
     tablesRedirectAdminRoute,
+    recordAdminRoute,
   ]),
 ])
 

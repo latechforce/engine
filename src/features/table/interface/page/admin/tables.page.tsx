@@ -2,7 +2,7 @@ import { createRoute, Navigate, useNavigate, useParams } from '@tanstack/react-r
 import Layout from '../../../../app/interface/page/admin/layout'
 import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import { client } from '../../../../../shared/interface/lib/client.lib'
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
+import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { Suspense } from 'react'
 import { adminRoute } from '../../../../app/interface/page/router'
 import type { ListTablesDto } from '../../../application/dto/list-table.dto'
@@ -22,7 +22,7 @@ const tableRecordsQueryOptions = (tableId: string) =>
     queryFn: () => client.tables[`:tableId`].$get({ param: { tableId } }).then((res) => res.json()),
   })
 
-const tablesQueryOptions = () =>
+export const tablesQueryOptions = () =>
   queryOptions<ListTablesDto>({
     queryKey: ['tablesData'],
     queryFn: () => client.tables.$get().then((res) => res.json()),
@@ -46,7 +46,8 @@ const RecordsDataTable = () => {
         accessorKey: field.name,
         header: field.name,
       }))}
-      data={records.map((record) => record.fields)}
+      data={records.map((record) => ({ ...record.fields, _id: record.id }))}
+      getRowLink={(row) => `/admin/tables/${tableId}/${row._id}`}
     />
   )
 }
@@ -61,11 +62,12 @@ const TablesTabs = () => {
   return (
     <Tabs
       defaultValue={tableId}
-      className="w-[400px]"
+      className="overflow-x-auto"
     >
       <TabsList>
         {data.tables.map((table) => (
           <TabsTrigger
+            key={table.id}
             value={table.id}
             onClick={() => {
               navigate({ to: '/admin/tables/$tableId', params: { tableId: table.id } })
@@ -80,10 +82,18 @@ const TablesTabs = () => {
 }
 
 const TablesPage = () => {
+  const { data } = useQuery(tablesQueryOptions())
+  const { tableId } = useParams({ from: '/admin/tables/$tableId' })
+  const table = data?.tables.find((table) => table.id === tableId)
   return (
-    <Layout breadcrumbs={[{ title: 'Tables', url: '/admin/tables' }]}>
+    <Layout
+      breadcrumbs={[
+        { title: 'Tables', url: '/admin/tables' },
+        { title: table?.name ?? '', url: '/admin/tables/$tableId' },
+      ]}
+    >
       <div className="flex flex-col gap-4 p-6">
-        <TypographyH3 className="mb-4">Tables</TypographyH3>
+        <TypographyH3>Tables</TypographyH3>
         <Suspense fallback={<TabsSkeleton />}>
           <TablesTabs />
         </Suspense>

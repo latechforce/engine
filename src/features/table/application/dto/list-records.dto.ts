@@ -1,23 +1,13 @@
-import type { Fields } from '../../domain/object-value/fields.object-value'
 import type { Record } from '../../domain/entity/record.entity'
-import { filterNullFields } from './get-record.dto'
+import { toRecordDto, type RecordDto } from './record.dto'
+import type { Table } from '../../domain/entity/table.entity'
 
 export type ListRecordsDto = {
-  records: {
-    id: string
-    createdAt: string
-    updatedAt: string
-    fields: Fields
-  }[]
+  records: RecordDto[]
 }
 
-export const toListRecordsDto = (records: Record[]): ListRecordsDto => {
+export const toListRecordsDto = (records: Record[], table: Table): ListRecordsDto => {
   return {
-    records: records.map((record) => ({
-      id: record.id,
-      createdAt: record.createdAt.toISOString(),
-      updatedAt: record.updatedAt.toISOString(),
-      fields: filterNullFields(record.fields),
-    })),
+    records: records.map((record) => toRecordDto(record, table)),
   }
 }

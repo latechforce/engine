@@ -38,14 +38,18 @@ export class TableController {
     return c.json(listRecordsDto)
   }
 
-  static async updateRecord(c: Context<HonoType>, data: { tableId: string; recordId: string }) {
+  static async updateRecord(
+    c: Context<HonoType>,
+    data: { tableId: string; recordId: string; body: Record<string, unknown> }
+  ) {
     const app = c.get('app')
     const updateRecordUseCase = c.get('updateRecordUseCase')
     const updateRecordDto = await updateRecordUseCase.execute(
       app,
       data.tableId,
       data.recordId,
-      c.req.raw
+      c.req.raw,
+      data.body
     )
     return c.json(updateRecordDto)
   }

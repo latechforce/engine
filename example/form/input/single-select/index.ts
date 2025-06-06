@@ -31,8 +31,9 @@ export default {
       id: 1,
       name: 'contact-us',
       fields: [
+        { id: 1, name: 'first_name', type: 'single-line-text' },
         {
-          id: 1,
+          id: 2,
           name: 'select',
           type: 'single-select',
           options: ['red', 'green', 'blue'],

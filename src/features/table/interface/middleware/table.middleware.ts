@@ -19,3 +19,13 @@ export const createRecordJsonValidator = zValidator('json', createRecordJsonSche
 const createRecordFormSchema = z.record(z.string(), z.string().or(z.instanceof(File)))
 
 export const createRecordFormValidator = zValidator('form', createRecordFormSchema)
+
+const updateRecordJsonSchema = z.object({
+  fields: z.record(z.string(), z.unknown()),
+})
+
+export const updateRecordJsonValidator = zValidator('json', updateRecordJsonSchema)
+
+const updateRecordFormSchema = z.record(z.string(), z.string().or(z.instanceof(File)))
+
+export const updateRecordFormValidator = zValidator('form', updateRecordFormSchema)

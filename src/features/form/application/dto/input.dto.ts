@@ -1,5 +1,6 @@
 // Form domain imports
 import type { InputSchema } from '../../domain/schema/input'
+import type { FieldSchema } from '../../../table/domain/schema/field'
 
 type BaseInputDto = {
   name: string
@@ -74,6 +75,51 @@ export function toInputDto(input: InputSchema): InputDto {
       }
     default: {
       const _exhaustiveCheck: never = input
+      throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+    }
+  }
+}
+
+export function toInputDtoFromFieldSchema(field: FieldSchema): InputDto {
+  const props = {
+    name: field.name,
+    label: field.name,
+    required: field.required ?? false,
+  }
+  switch (field.type) {
+    case 'single-line-text':
+    case 'long-text':
+    case 'phone-number':
+    case 'email':
+    case 'url':
+      return {
+        ...props,
+        type: field.type,
+        defaultValue: field.default,
+      }
+    case 'checkbox':
+      return {
+        ...props,
+        type: field.type,
+        defaultValue: field.default,
+      }
+    case 'single-select':
+      return {
+        ...props,
+        type: field.type,
+        defaultValue: field.default,
+        options: field.options.map((option) => ({
+          label: option,
+          value: option,
+        })),
+      }
+    case 'single-attachment':
+      return {
+        ...props,
+        type: field.type,
+      }
+    default: {
+      const _exhaustiveCheck: never = field
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
     }
   }

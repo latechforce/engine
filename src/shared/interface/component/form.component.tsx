@@ -35,7 +35,6 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
   const textProps = {
     required: input.required,
     placeholder: 'placeholder' in input ? input.placeholder : undefined,
-    defaultValue: 'defaultValue' in input ? String(input.defaultValue) : undefined,
   }
   switch (input.type) {
     case 'single-line-text':
@@ -85,7 +84,6 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
           checked={field.state.value === true}
           onCheckedChange={(checked) => field.handleChange(checked)}
           required={input.required}
-          defaultChecked={input.defaultValue === true}
           onBlur={field.handleBlur}
         />
       )
@@ -136,10 +134,17 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
 type FormProps = {
   inputs: InputDto[]
   onSubmit: (values: Record<string, string | File>) => Promise<void>
+  submitLabel?: string
 }
 
-export function Form({ inputs, onSubmit }: FormProps) {
+export function Form({ inputs, onSubmit, submitLabel = 'Submit' }: FormProps) {
   const form = useForm({
+    defaultValues: inputs.reduce((acc: Record<string, string | File>, input) => {
+      if ('defaultValue' in input) {
+        acc[input.name] = String(input.defaultValue)
+      }
+      return acc
+    }, {}),
     onSubmit: async ({ value }: { value: Record<string, string | File> }) => {
       await onSubmit(value)
     },
@@ -192,7 +197,7 @@ export function Form({ inputs, onSubmit }: FormProps) {
                 type="submit"
                 disabled={!canSubmit}
               >
-                {isSubmitting ? '...' : 'Submit'}
+                {isSubmitting ? '...' : submitLabel}
               </Button>
             </div>
           )}

@@ -10,20 +10,20 @@ const bytea = customType<{
 })
 
 export const bucket = pgTable('bucket', {
-  id: integer().primaryKey(),
-  name: text().notNull().unique(),
-  created_at: timestamp().notNull(),
+  id: integer('id').primaryKey(),
+  name: text('name').notNull().unique(),
+  created_at: timestamp('created_at').notNull(),
 })
 
 export const object = pgTable('object', {
-  id: text().primaryKey(),
-  bucket_id: integer()
+  id: text('id').primaryKey(),
+  bucket_id: integer('bucket_id')
     .notNull()
     .references(() => bucket.id, { onDelete: 'cascade' }),
-  key: text().notNull(),
-  size: integer(),
-  content_type: text(),
-  created_at: timestamp().notNull(),
-  updated_at: timestamp().notNull(),
-  data: bytea().notNull(),
+  key: text('key').notNull(),
+  size: integer('size'),
+  content_type: text('content_type'),
+  created_at: timestamp('created_at').notNull(),
+  updated_at: timestamp('updated_at').notNull(),
+  data: bytea('data').notNull(),
 })

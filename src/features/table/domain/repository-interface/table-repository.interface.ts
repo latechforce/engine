@@ -12,9 +12,10 @@ export type TableTransaction = {
   get(id: number): Promise<TableRow | undefined>
   list(): Promise<TableRow[]>
   field: {
-    exists(id: number): Promise<boolean>
+    exists(fieldId: number, tableId: number): Promise<boolean>
+    get(fieldId: number, tableId: number): Promise<TableFieldRow | undefined>
     create(tableId: number, field: Field): Promise<void>
-    update(field: Field): Promise<void>
+    update(tableId: number, field: Field): Promise<void>
     listByTableId(tableId: number): Promise<TableFieldRow[]>
   }
 }

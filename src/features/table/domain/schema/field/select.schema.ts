@@ -4,7 +4,7 @@ import { baseFieldSchema } from './base'
 export const selectFieldSchema = baseFieldSchema
   .extend({
     type: z.literal('single-select'),
-    default: z.boolean().optional(),
+    default: z.string().optional(),
     options: z.array(z.string()).default([]),
   })
   .meta({

@@ -38,9 +38,10 @@ export type SidebarGroup = {
 export type SidebarProps = React.ComponentPropsWithoutRef<'div'> & {
   title?: string
   groups?: SidebarGroup[]
+  startPath?: string
 }
 
-export function Sidebar({ title, groups, ...props }: SidebarProps) {
+export function Sidebar({ title, groups, startPath, ...props }: SidebarProps) {
   const { data: session } = authClient.useSession()
   return (
     <SidebarUI {...props}>
@@ -59,7 +60,11 @@ export function Sidebar({ title, groups, ...props }: SidebarProps) {
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                       asChild
-                      isActive={window.location.pathname === item.url}
+                      isActive={
+                        item.url === startPath
+                          ? window.location.pathname === startPath
+                          : window.location.pathname.startsWith(item.url)
+                      }
                     >
                       <Link to={item.url}>
                         <item.icon />

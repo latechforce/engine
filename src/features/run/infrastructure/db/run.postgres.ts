@@ -2,12 +2,12 @@ import { pgTable, text, timestamp, json } from 'drizzle-orm/pg-core'
 import type { AutomationSchema } from '../../../../features/automation/domain/schema/automation.schema'
 
 export const run = pgTable('run', {
-  id: text().primaryKey(),
-  automation_schema: json().$type<AutomationSchema>().notNull(),
-  status: text({ enum: ['playing', 'success', 'stopped', 'filtered'] }).notNull(),
-  data: json().$type<Record<string, Record<string, unknown>>>().notNull(),
-  last_action_name: text(),
-  error_message: text(),
-  created_at: timestamp().notNull(),
-  updated_at: timestamp().notNull(),
+  id: text('id').primaryKey(),
+  automation_schema: json('automation_schema').$type<AutomationSchema>().notNull(),
+  status: text('status', { enum: ['playing', 'success', 'stopped', 'filtered'] }).notNull(),
+  data: json('data').$type<Record<string, Record<string, unknown>>>().notNull(),
+  last_action_name: text('last_action_name'),
+  error_message: text('error_message'),
+  created_at: timestamp('created_at').notNull(),
+  updated_at: timestamp('updated_at').notNull(),
 })

@@ -1,20 +1,20 @@
 import { blob, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 export const bucket = sqliteTable('bucket', {
-  id: integer().primaryKey(),
+  id: integer('id').primaryKey(),
   name: text('name').notNull().unique(),
-  created_at: integer({ mode: 'timestamp' }).notNull(),
+  created_at: integer('created_at', { mode: 'timestamp' }).notNull(),
 })
 
 export const object = sqliteTable('object', {
-  id: text().primaryKey(),
-  bucket_id: integer()
+  id: text('id').primaryKey(),
+  bucket_id: integer('bucket_id')
     .notNull()
     .references(() => bucket.id, { onDelete: 'cascade' }),
-  key: text().notNull(),
-  size: integer(),
-  content_type: text(),
-  created_at: integer({ mode: 'timestamp' }).notNull(),
-  updated_at: integer({ mode: 'timestamp' }).notNull(),
-  data: blob({ mode: 'buffer' }).notNull(),
+  key: text('key').notNull(),
+  size: integer('size'),
+  content_type: text('content_type'),
+  created_at: integer('created_at', { mode: 'timestamp' }).notNull(),
+  updated_at: integer('updated_at', { mode: 'timestamp' }).notNull(),
+  data: blob('data', { mode: 'buffer' }).notNull(),
 })

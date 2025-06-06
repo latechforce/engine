@@ -1,7 +1,12 @@
 import { Hono } from 'hono'
 import type { HonoType } from '../../../shared/infrastructure/service'
 import { TableController } from './controller/table.controller'
-import { createRecordFormValidator, createRecordJsonValidator } from './middleware/table.middleware'
+import {
+  createRecordFormValidator,
+  createRecordJsonValidator,
+  updateRecordFormValidator,
+  updateRecordJsonValidator,
+} from './middleware/table.middleware'
 
 export const tableRoutes = new Hono<HonoType>()
   .get('/', TableController.list)
@@ -24,10 +29,18 @@ export const tableRoutes = new Hono<HonoType>()
     })
   )
   .get('/:tableId', (c) => TableController.listRecords(c, { tableId: c.req.param('tableId') }))
-  .patch('/:tableId/:recordId', (c) =>
+  .patch('/:tableId/:recordId', updateRecordJsonValidator, (c) =>
     TableController.updateRecord(c, {
       tableId: c.req.param('tableId'),
       recordId: c.req.param('recordId'),
+      body: c.req.valid('json'),
+    })
+  )
+  .patch('/:tableId/:recordId/form', updateRecordFormValidator, (c) =>
+    TableController.updateRecord(c, {
+      tableId: c.req.param('tableId'),
+      recordId: c.req.param('recordId'),
+      body: c.req.valid('form'),
     })
   )
   .patch('/:tableId', (c) =>

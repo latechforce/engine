@@ -24,7 +24,10 @@ export default {
     {
       id: 1,
       name: 'contacts',
-      fields: [{ id: 1, name: 'checkbox', type: 'checkbox' }],
+      fields: [
+        { id: 1, name: 'first_name', type: 'single-line-text' },
+        { id: 2, name: 'checkbox', type: 'checkbox' },
+      ],
     },
   ],
 } satisfies AppSchema

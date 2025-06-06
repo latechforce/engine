@@ -42,7 +42,7 @@ export class SetupTriggerUseCase {
                   if (!record) {
                     throw new Error(`Record "${recordRow.id}" not found`)
                   }
-                  const run = new Run(automation.schema, { trigger: toRecordDto(record) })
+                  const run = new Run(automation.schema, { trigger: toRecordDto(record, table) })
                   await this.runRepository.create(run)
                 }
               })
@@ -55,7 +55,7 @@ export class SetupTriggerUseCase {
                   if (!record) {
                     throw new Error(`Record "${recordRow.id}" not found`)
                   }
-                  const run = new Run(automation.schema, { trigger: toRecordDto(record) })
+                  const run = new Run(automation.schema, { trigger: toRecordDto(record, table) })
                   await this.runRepository.create(run)
                 }
               })

@@ -1,5 +1,5 @@
 {
-  "id": "f45c6b90-a1a5-4a3a-9ac9-35f282df3f1f",
+  "id": "a9ebdaa0-e0e2-4238-a1f5-8d079cc15f52",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -494,7 +494,7 @@
         "id": {
           "name": "id",
           "type": "integer",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "table_id": {
@@ -538,12 +538,6 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
-        },
-        "archived_at": {
-          "name": "archived_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
@@ -562,16 +556,16 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "table_field_slug_unique": {
-          "name": "table_field_slug_unique",
-          "nullsNotDistinct": false,
+      "compositePrimaryKeys": {
+        "table_field_id_table_id_pk": {
+          "name": "table_field_id_table_id_pk",
           "columns": [
-            "slug"
+            "id",
+            "table_id"
           ]
         }
       },
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -603,6 +597,12 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
+        },
+        "archived_at": {
+          "name": "archived_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -640,6 +640,12 @@
         "record_id": {
           "name": "record_id",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "table_id": {
+          "name": "table_id",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -689,17 +695,19 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "record_field_table_field_id_table_field_id_fk": {
-          "name": "record_field_table_field_id_table_field_id_fk",
+        "record_field_table_field_fk": {
+          "name": "record_field_table_field_fk",
           "tableFrom": "record_field",
           "tableTo": "table_field",
           "columnsFrom": [
-            "table_field_id"
+            "table_field_id",
+            "table_id"
           ],
           "columnsTo": [
-            "id"
+            "id",
+            "table_id"
           ],
-          "onDelete": "cascade",
+          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -747,15 +755,164 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.bucket": {
+      "name": "bucket",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "table_slug_unique": {
-          "name": "table_slug_unique",
+        "bucket_name_unique": {
+          "name": "bucket_name_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "slug"
+            "name"
           ]
         }
       },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.object": {
+      "name": "object",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "bucket_id": {
+          "name": "bucket_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "size": {
+          "name": "size",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "content_type": {
+          "name": "content_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "bytea",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "object_bucket_id_bucket_id_fk": {
+          "name": "object_bucket_id_bucket_id_fk",
+          "tableFrom": "object",
+          "tableTo": "bucket",
+          "columnsFrom": [
+            "bucket_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.automation_status": {
+      "name": "automation_status",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "schema": {
+          "name": "schema",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

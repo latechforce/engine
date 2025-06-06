@@ -25,7 +25,10 @@ export default {
     {
       id: 1,
       name: 'contact-us',
-      fields: [{ id: 1, name: 'attachment', type: 'single-attachment' }],
+      fields: [
+        { id: 1, name: 'first_name', type: 'single-line-text' },
+        { id: 2, name: 'attachment', type: 'single-attachment' },
+      ],
     },
   ],
 } satisfies AppSchema

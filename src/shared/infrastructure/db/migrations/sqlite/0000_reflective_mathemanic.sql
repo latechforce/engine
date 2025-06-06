@@ -82,7 +82,7 @@ CREATE TABLE `run` (
 );
 --> statement-breakpoint
 CREATE TABLE `table_field` (
-	`id` integer PRIMARY KEY NOT NULL,
+	`id` integer NOT NULL,
 	`table_id` integer NOT NULL,
 	`name` text NOT NULL,
 	`slug` text NOT NULL,
@@ -90,9 +90,11 @@ CREATE TABLE `table_field` (
 	`required` integer NOT NULL,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
+	PRIMARY KEY(`id`, `table_id`),
 	FOREIGN KEY (`table_id`) REFERENCES `table`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
+CREATE UNIQUE INDEX `table_field_name_unique` ON `table_field` (`name`);--> statement-breakpoint
 CREATE UNIQUE INDEX `table_field_slug_unique` ON `table_field` (`slug`);--> statement-breakpoint
 CREATE TABLE `record` (
 	`id` text PRIMARY KEY NOT NULL,
@@ -106,13 +108,14 @@ CREATE TABLE `record` (
 CREATE TABLE `record_field` (
 	`id` text PRIMARY KEY NOT NULL,
 	`record_id` text NOT NULL,
+	`table_id` integer NOT NULL,
 	`table_field_id` integer NOT NULL,
 	`value` text,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL,
 	`archived_at` integer,
 	FOREIGN KEY (`record_id`) REFERENCES `record`(`id`) ON UPDATE no action ON DELETE cascade,
-	FOREIGN KEY (`table_field_id`) REFERENCES `table_field`(`id`) ON UPDATE no action ON DELETE cascade
+	FOREIGN KEY (`table_field_id`,`table_id`) REFERENCES `table_field`(`id`,`table_id`) ON UPDATE no action ON DELETE no action
 );
 --> statement-breakpoint
 CREATE TABLE `table` (
@@ -123,4 +126,31 @@ CREATE TABLE `table` (
 	`updated_at` integer NOT NULL
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `table_slug_unique` ON `table` (`slug`);
+CREATE UNIQUE INDEX `table_name_unique` ON `table` (`name`);--> statement-breakpoint
+CREATE UNIQUE INDEX `table_slug_unique` ON `table` (`slug`);--> statement-breakpoint
+CREATE TABLE `bucket` (
+	`id` integer PRIMARY KEY NOT NULL,
+	`name` text NOT NULL,
+	`created_at` integer NOT NULL
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `bucket_name_unique` ON `bucket` (`name`);--> statement-breakpoint
+CREATE TABLE `object` (
+	`id` text PRIMARY KEY NOT NULL,
+	`bucket_id` integer NOT NULL,
+	`key` text NOT NULL,
+	`size` integer,
+	`content_type` text,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL,
+	`data` blob NOT NULL,
+	FOREIGN KEY (`bucket_id`) REFERENCES `bucket`(`id`) ON UPDATE no action ON DELETE cascade
+);
+--> statement-breakpoint
+CREATE TABLE `automation_status` (
+	`id` integer PRIMARY KEY NOT NULL,
+	`active` integer NOT NULL,
+	`schema` text NOT NULL,
+	`created_at` integer NOT NULL,
+	`updated_at` integer NOT NULL
+);

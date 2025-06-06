@@ -58,14 +58,15 @@ export class RecordRepository implements IRecordRepository {
           return row !== undefined
         },
         field: {
-          create: async (fieldId: number, record: Record, value: FieldValue) => {
+          create: async (tableId: number, fieldId: number, recordId: string, value: FieldValue) => {
             await tx.recordField.create({
-              id: `${record.id}-${fieldId}`,
-              record_id: record.id,
+              id: `${recordId}-${fieldId}`,
+              record_id: recordId,
               table_field_id: fieldId,
+              table_id: tableId,
               value: value?.toString(),
-              created_at: record.createdAt,
-              updated_at: record.updatedAt,
+              created_at: new Date(),
+              updated_at: new Date(),
             })
           },
           listByRecordId: async (recordId: string): Promise<RecordFieldRow[]> => {
@@ -98,7 +99,7 @@ export class RecordRepository implements IRecordRepository {
     await this.transaction(async (tx: RecordTransaction) => {
       await tx.create(table.schema.id, record)
       for (const field of table.schema.fields) {
-        await tx.field.create(field.id, record, record.fields[field.name])
+        await tx.field.create(table.schema.id, field.id, record.id, record.fields[field.name])
       }
     })
     this.eventEmitter.emit<RecordRow>('create', {
@@ -115,7 +116,7 @@ export class RecordRepository implements IRecordRepository {
       for (const record of records) {
         await tx.create(table.schema.id, record)
         for (const field of table.schema.fields) {
-          await tx.field.create(field.id, record, record.fields[field.name])
+          await tx.field.create(table.schema.id, field.id, record.id, record.fields[field.name])
         }
       }
     })
@@ -134,7 +135,7 @@ export class RecordRepository implements IRecordRepository {
     this.eventEmitter.on<RecordRow>('create', callback)
   }
 
-  async update(recordId: string, fields: Fields) {
+  async update(table: Table, recordId: string, fields: Fields) {
     await this.transaction(async (tx: RecordTransaction) => {
       const recordsFields = await tx.field.listByRecordId(recordId)
       for (const key of Object.keys(fields)) {
@@ -156,7 +157,7 @@ export class RecordRepository implements IRecordRepository {
     })
   }
 
-  async updateMany(records: { id: string; fields: Fields }[]) {
+  async updateMany(table: Table, records: { id: string; fields: Fields }[]) {
     await this.transaction(async (tx: RecordTransaction) => {
       for (const record of records) {
         const recordsFields = await tx.field.listByRecordId(record.id)
@@ -186,19 +187,19 @@ export class RecordRepository implements IRecordRepository {
     this.eventEmitter.on<RecordRow>('update', callback)
   }
 
-  async read(table: Table, recordId: string): Promise<Record | undefined> {
+  async read<T extends Fields>(table: Table, recordId: string): Promise<Record<T> | undefined> {
     const view = this.database.view(table)
     const row = await view.get(recordId)
     if (!row) {
       return undefined
     }
-    return this.toRecord(table, row)
+    return this.toRecord<T>(table, row)
   }
 
-  async list(table: Table): Promise<Record[]> {
+  async list<T extends Fields>(table: Table): Promise<Record<T>[]> {
     const view = this.database.view(table)
     const rows = await view.list()
-    return rows.map((row) => this.toRecord(table, row))
+    return rows.map((row) => this.toRecord<T>(table, row))
   }
 
   async delete(recordId: string) {
@@ -223,16 +224,16 @@ export class RecordRepository implements IRecordRepository {
     })
   }
 
-  async listByIds(table: Table, recordIds: string[]): Promise<Record[]> {
+  async listByIds<T extends Fields>(table: Table, recordIds: string[]): Promise<Record<T>[]> {
     const view = this.database.view(table)
     const rows = await view.listByIds(recordIds)
-    return rows.map((row) => this.toRecord(table, row))
+    return rows.map((row) => this.toRecord<T>(table, row))
   }
 
-  private toRecord(table: Table, row: ViewRow): Record {
+  private toRecord<T extends Fields>(table: Table, row: ViewRow): Record<T> {
     const { _id, _created_at, _updated_at, _archived_at, ...slugs } = row
-    const fields = table.convertFieldsSlugToName(slugs)
-    return new Record(
+    const fields = table.convertFieldsSlugToName(slugs) as T
+    return new Record<T>(
       fields,
       _id,
       new Date(_created_at),

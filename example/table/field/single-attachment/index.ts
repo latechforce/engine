@@ -12,6 +12,11 @@ export default {
       fields: [
         {
           id: 1,
+          name: 'First name',
+          type: 'single-line-text',
+        },
+        {
+          id: 2,
           name: 'Picture',
           type: 'single-attachment',
         },
