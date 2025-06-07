@@ -1,4 +1,4 @@
-import { createRoute, useNavigate } from '@tanstack/react-router'
+import { createRoute } from '@tanstack/react-router'
 import Layout from '../../../../app/interface/page/admin/layout'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { DataTable } from '../../../../../shared/interface/component/data-table.component'
@@ -36,14 +36,13 @@ export const columns: ColumnDef<FormDto>[] = [
 ]
 
 export const FormsDataTable = () => {
-  const navigate = useNavigate()
   const { data } = useSuspenseQuery(formsQueryOptions())
   return (
     <DataTable
       columns={columns}
       data={data.forms}
       onRowClick={(row) => {
-        navigate({ to: `/forms/$path`, params: { path: row.path } })
+        window.open(`/forms/${row.path}`, '_blank')
       }}
     />
   )

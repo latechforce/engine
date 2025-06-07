@@ -28,7 +28,7 @@ test('should open a form in a new page', async ({ startExampleApp }) => {
   await page.goto('/admin/forms')
   const [newPage] = await Promise.all([
     page.context().waitForEvent('page'),
-    page.getByRole('button', { name: 'Open', exact: true }).click(),
+    page.getByText('Contact Us').click(),
   ])
   await newPage.waitForLoadState()
 

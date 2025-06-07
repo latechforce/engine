@@ -78,7 +78,7 @@ test('should open and display a table record', async ({ startExampleApp }) => {
 
   // WHEN
   await page.goto('/admin/tables')
-  await page.getByText('John').click()
+  await page.getByRole('row', { name: 'Select row John Doe' }).getByRole('link').click()
   await page.waitForURL(`/admin/tables/1/${recordId}`)
 
   // THEN
