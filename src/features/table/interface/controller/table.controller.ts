@@ -74,14 +74,14 @@ export class TableController {
 
   static async deleteMultipleRecords(
     c: Context<HonoType>,
-    data: { tableId: string; ids: string[] }
+    data: { tableId: string; ids: string | string[] }
   ) {
     const app = c.get('app')
     const deleteMultipleRecordsUseCase = c.get('deleteMultipleRecordsUseCase')
     const deleteMultipleRecordsDto = await deleteMultipleRecordsUseCase.execute(
       app,
       data.tableId,
-      data.ids
+      Array.isArray(data.ids) ? data.ids : [data.ids]
     )
     return c.json(deleteMultipleRecordsDto)
   }

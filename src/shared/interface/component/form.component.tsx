@@ -81,8 +81,8 @@ function FormInput({ field, input }: { field: AnyFieldApi; input: InputDto }) {
         <Checkbox
           id={field.name}
           name={field.name}
-          checked={field.state.value === true}
-          onCheckedChange={(checked) => field.handleChange(checked)}
+          checked={field.state.value === 'true'}
+          onCheckedChange={(checked) => field.handleChange(checked ? 'true' : 'false')}
           required={input.required}
           onBlur={field.handleBlur}
         />

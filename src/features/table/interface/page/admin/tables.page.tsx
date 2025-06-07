@@ -1,4 +1,10 @@
-import { createRoute, Navigate, useNavigate, useParams } from '@tanstack/react-router'
+import {
+  createRoute,
+  Navigate,
+  useNavigate,
+  useParams,
+  Link as RouterLink,
+} from '@tanstack/react-router'
 import Layout from '../../../../app/interface/page/admin/layout'
 import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import { client } from '../../../../../shared/interface/lib/client.lib'
@@ -22,10 +28,18 @@ import {
   LetterText,
   Link,
   Mail,
+  Maximize2,
   Phone,
+  Plus,
   SquareCheck,
   Text,
+  Trash,
+  ChevronDown,
 } from 'lucide-react'
+import type { ColumnDef } from '@tanstack/react-table'
+import { Checkbox } from '../../../../../shared/interface/ui/checkbox.ui'
+import { toast } from 'sonner'
+import type { DeleteMultipleRecordsDto } from '../../../application/dto/delete-multiple-records.dto'
 
 const tableRecordsQueryOptions = (tableId: string) =>
   queryOptions<ListRecordsDto>({
@@ -53,7 +67,7 @@ const RecordsDataTable = () => {
     return <Navigate to="/404" />
   }
 
-  const mutation = useMutation({
+  const createRecordMutation = useMutation({
     mutationFn: async () => {
       const response = await client.tables[`:tableId`].$post({
         param: { tableId },
@@ -69,82 +83,167 @@ const RecordsDataTable = () => {
     },
   })
 
+  const deleteRecordsMutation = useMutation({
+    mutationFn: async (rows: string[]) => {
+      const response = await client.tables[`:tableId`].$delete({
+        param: { tableId },
+        query: { ids: rows },
+      })
+      return await response.json()
+    },
+    onSuccess: (data: DeleteMultipleRecordsDto) => {
+      if (data.records.length > 0) {
+        queryClient.invalidateQueries({ queryKey: ['tableRecordsData', tableId] })
+        toast.success(`${data.records.length} records deleted`)
+      }
+    },
+  })
+
+  const columns: ColumnDef<Record<string, string>>[] = table.fields.map((field) => ({
+    accessorKey: field.name,
+    header: () => {
+      switch (field.type) {
+        case 'single-line-text':
+          return (
+            <div className="flex items-center gap-2">
+              <Text className="size-4" />
+              <span>{field.name}</span>
+            </div>
+          )
+        case 'long-text':
+          return (
+            <div className="flex items-center gap-2">
+              <LetterText className="size-4" />
+              <span>{field.name}</span>
+            </div>
+          )
+        case 'checkbox':
+          return (
+            <div className="flex items-center gap-2">
+              <SquareCheck className="size-4" />
+              <span>{field.name}</span>
+            </div>
+          )
+        case 'single-select':
+          return (
+            <div className="flex items-center gap-2">
+              <CircleChevronDown className="size-4" />
+              <span>{field.name}</span>
+            </div>
+          )
+        case 'single-attachment':
+          return (
+            <div className="flex items-center gap-2">
+              <File className="size-4" />
+              <span>{field.name}</span>
+            </div>
+          )
+        case 'email':
+          return (
+            <div className="flex items-center gap-2">
+              <Mail className="size-4" />
+              <span>{field.name}</span>
+            </div>
+          )
+        case 'phone-number':
+          return (
+            <div className="flex items-center gap-2">
+              <Phone className="size-4" />
+              <span>{field.name}</span>
+            </div>
+          )
+        case 'url':
+          return (
+            <div className="flex items-center gap-2">
+              <Link className="size-4" />
+              <span>{field.name}</span>
+            </div>
+          )
+        default: {
+          const _exhaustiveCheck: never = field.type
+          throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+        }
+      }
+    },
+    cell: ({ row }) => {
+      switch (field.type) {
+        case 'checkbox':
+          return <Checkbox checked={row.getValue(field.name)} />
+        default:
+          return row.getValue(field.name)
+      }
+    },
+  }))
+
+  columns.unshift(
+    {
+      id: 'select',
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      size: 30,
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      id: 'actions',
+      cell: ({ row }) => (
+        <RouterLink
+          className="flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
+          to={`/admin/tables/$tableId/$recordId`}
+          params={{ tableId, recordId: row.original._id! }}
+        >
+          <Maximize2 className="size-4 cursor-pointer" />
+        </RouterLink>
+      ),
+      size: 40,
+      enableSorting: false,
+      enableHiding: false,
+    }
+  )
+
   return (
     <DataTable
-      columns={[
-        ...table.fields.map((field) => ({
-          accessorKey: field.name,
-          header: () => {
-            switch (field.type) {
-              case 'single-line-text':
-                return (
-                  <div className="flex items-center gap-2">
-                    <Text className="size-4" />
-                    <span>{field.name}</span>
-                  </div>
-                )
-              case 'long-text':
-                return (
-                  <div className="flex items-center gap-2">
-                    <LetterText className="size-4" />
-                    <span>{field.name}</span>
-                  </div>
-                )
-              case 'checkbox':
-                return (
-                  <div className="flex items-center gap-2">
-                    <SquareCheck className="size-4" />
-                    <span>{field.name}</span>
-                  </div>
-                )
-              case 'single-select':
-                return (
-                  <div className="flex items-center gap-2">
-                    <CircleChevronDown className="size-4" />
-                    <span>{field.name}</span>
-                  </div>
-                )
-              case 'single-attachment':
-                return (
-                  <div className="flex items-center gap-2">
-                    <File className="size-4" />
-                    <span>{field.name}</span>
-                  </div>
-                )
-              case 'email':
-                return (
-                  <div className="flex items-center gap-2">
-                    <Mail className="size-4" />
-                    <span>{field.name}</span>
-                  </div>
-                )
-              case 'phone-number':
-                return (
-                  <div className="flex items-center gap-2">
-                    <Phone className="size-4" />
-                    <span>{field.name}</span>
-                  </div>
-                )
-              case 'url':
-                return (
-                  <div className="flex items-center gap-2">
-                    <Link className="size-4" />
-                    <span>{field.name}</span>
-                  </div>
-                )
-              default: {
-                const _exhaustiveCheck: never = field.type
-                throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-              }
-            }
-          },
-        })),
-      ]}
+      columns={columns}
       data={records.map((record) => ({ ...record.fields, _id: record.id }))}
-      getRowLink={(row) => `/admin/tables/${tableId}/${row._id}`}
-      onCreateClick={() => {
-        mutation.mutate()
-      }}
+      actions={[
+        {
+          label: 'Create',
+          icon: <Plus />,
+          onClick: () => {
+            createRecordMutation.mutate()
+          },
+        },
+        {
+          label: 'Actions',
+          icon: <ChevronDown />,
+          variant: 'outline',
+          activeOnSelectedRows: true,
+          actions: [
+            {
+              label: 'Delete',
+              icon: <Trash />,
+              onClick: (rows) => {
+                deleteRecordsMutation.mutate(rows.map((row) => row.original._id!))
+              },
+            },
+          ],
+        },
+      ]}
     />
   )
 }

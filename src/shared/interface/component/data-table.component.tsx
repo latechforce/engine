@@ -6,33 +6,53 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   useReactTable,
+  type Row,
 } from '@tanstack/react-table'
-import { useNavigate } from '@tanstack/react-router'
 
 // Shared UI imports
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table.ui'
 import { Input } from '../ui/input.ui'
 import { Button } from '../ui/button.ui'
-import { Plus } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu.ui'
+
+type Action<TData> = {
+  label: string
+  icon: React.ReactNode
+  onClick: (rows: Row<TData>[]) => void
+  variant?: 'outline' | 'default' | 'destructive'
+  activeOnSelectedRows?: boolean
+}
+
+type DropdownActions<TData> = {
+  label: string
+  icon: React.ReactNode
+  actions: Action<TData>[]
+  variant?: 'outline' | 'default' | 'destructive'
+  activeOnSelectedRows?: boolean
+}
+
+type Actions<TData> = (Action<TData> | DropdownActions<TData>)[]
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  actions?: Actions<TData>
   onRowClick?: (row: TData) => void
-  getRowLink?: (row: TData) => string
-  onCreateClick?: () => void
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  actions = [],
   onRowClick,
-  getRowLink,
-  onCreateClick,
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = React.useState<ColumnResizeMode>('onChange')
   const [rowSelection, setRowSelection] = React.useState({})
-  const navigate = useNavigate()
 
   const table = useReactTable({
     data,
@@ -52,20 +72,11 @@ export function DataTable<TData, TValue>({
       rowSelection,
     },
     defaultColumn: {
-      size: 200, //starting column size
-      minSize: 50, //enforced during column resizing
-      maxSize: 500, //enforced during column resizing
+      size: 200,
+      minSize: 20,
+      maxSize: 500,
     },
   })
-
-  const handleRowClick = (row: TData) => {
-    if (onRowClick) {
-      onRowClick(row)
-    }
-    if (getRowLink) {
-      navigate({ to: getRowLink(row) })
-    }
-  }
 
   return (
     <div>
@@ -76,15 +87,54 @@ export function DataTable<TData, TValue>({
           onChange={(e) => table.setGlobalFilter(String(e.target.value))}
           className="mr-4 max-w-sm"
         />
-        {onCreateClick && (
-          <Button
-            className="ml-auto"
-            onClick={onCreateClick}
-          >
-            <Plus />
-            Create
-          </Button>
-        )}
+        <div className="ml-auto flex items-center gap-2">
+          {actions.map((action) => {
+            if ('actions' in action) {
+              return (
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    asChild
+                    disabled={
+                      action.activeOnSelectedRows
+                        ? table.getFilteredSelectedRowModel().rows.length === 0
+                        : false
+                    }
+                  >
+                    <Button variant={action.variant}>
+                      {action.icon}
+                      {action.label}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    {action.actions.map((action) => (
+                      <DropdownMenuItem
+                        onClick={() => action.onClick(table.getFilteredSelectedRowModel().rows)}
+                      >
+                        {action.icon}
+                        {action.label}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )
+            } else {
+              return (
+                <Button
+                  variant={action.variant}
+                  onClick={() => action.onClick(table.getFilteredSelectedRowModel().rows)}
+                  disabled={
+                    action.activeOnSelectedRows
+                      ? table.getFilteredSelectedRowModel().rows.length === 0
+                      : false
+                  }
+                >
+                  {action.icon}
+                  {action.label}
+                </Button>
+              )
+            }
+          })}
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -117,22 +167,24 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  onClick={() => handleRowClick(row.original)}
-                  className={onRowClick || getRowLink ? 'hover:bg-muted/50 cursor-pointer' : ''}
+                  className={onRowClick ? 'hover:bg-muted/50 cursor-pointer' : 'hover:bg-muted/50'}
+                  onClick={() => onRowClick?.(row.original)}
                 >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
-                      style={{
-                        width: cell.column.getSize(),
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                  ))}
+                  {row.getVisibleCells().map((cell) => {
+                    return (
+                      <TableCell
+                        key={cell.id}
+                        style={{
+                          width: cell.column.getSize(),
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      </TableCell>
+                    )
+                  })}
                 </TableRow>
               ))
             ) : (

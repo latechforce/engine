@@ -121,13 +121,22 @@ test('should update a table record', async ({ startExampleApp }) => {
   await expect(page.getByText('Doe')).toBeVisible()
 })
 
-// TODO: [@thomas-jeanneau] - should delete a table record
-test.skip('should delete a table record', async ({ startExampleApp }) => {
+test('should delete a table record', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  await page.request.post('/api/tables/1', {
+    data: {
+      records: [{ fields: { 'First name': 'John', 'Last name': 'Doe' } }],
+    },
+  })
 
   // WHEN
   await page.goto('/admin/tables')
+  await page.getByRole('cell', { name: 'Select row' }).click()
+  await page.getByRole('button', { name: 'Actions' }).click()
+  await page.getByRole('menuitem', { name: 'Delete' }).click()
+  await page.waitForSelector('text=1 records deleted')
 
   // THEN
+  await expect(page.getByText('John')).not.toBeVisible()
 })

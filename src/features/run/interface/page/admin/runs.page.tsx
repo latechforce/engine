@@ -1,4 +1,4 @@
-import { createRoute } from '@tanstack/react-router'
+import { createRoute, useNavigate } from '@tanstack/react-router'
 import Layout from '../../../../app/interface/page/admin/layout'
 import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
@@ -17,7 +17,7 @@ const columns: ColumnDef<RunDto>[] = [
   {
     accessorKey: 'status',
     header: 'Status',
-    size: 50,
+    size: 200,
     cell: ({ row }) => {
       switch (row.original.status) {
         case 'success':
@@ -50,12 +50,12 @@ const columns: ColumnDef<RunDto>[] = [
   {
     accessorKey: 'automation_name',
     header: 'Automation',
-    size: 200,
+    size: 448,
   },
   {
     accessorKey: 'created_at',
     header: 'Created at',
-    size: 50,
+    size: 200,
     cell: ({ row }) => {
       return format(new Date(row.getValue('created_at')), 'MMM dd, yyyy HH:mm:ss')
     },
@@ -69,12 +69,15 @@ const runsQueryOptions = () =>
   })
 
 const RunsDataTable = () => {
+  const navigate = useNavigate()
   const { data } = useSuspenseQuery(runsQueryOptions())
   return (
     <DataTable
       columns={columns}
       data={data.runs}
-      getRowLink={(row) => `/admin/runs/${row.id}`}
+      onRowClick={(row) => {
+        navigate({ to: `/admin/runs/$runId`, params: { runId: row.id } })
+      }}
     />
   )
 }

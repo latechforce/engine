@@ -1,4 +1,4 @@
-import { createRoute } from '@tanstack/react-router'
+import { createRoute, useNavigate } from '@tanstack/react-router'
 import Layout from '../../../../app/interface/page/admin/layout'
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query'
 import { DataTable } from '../../../../../shared/interface/component/data-table.component'
@@ -6,7 +6,6 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '../../../../../shared/interface/lib/client.lib'
 import type { ListFormsDto } from '../../../application/dto/list-forms.dto'
 import type { FormDto } from '../../../application/dto/form.dto'
-import { Button } from '../../../../../shared/interface/ui/button.ui'
 import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { adminRoute } from '../../../../app/interface/page/router'
@@ -16,6 +15,7 @@ export const columns: ColumnDef<FormDto>[] = [
   {
     accessorKey: 'title',
     header: 'Title',
+    size: 424,
   },
   {
     accessorKey: 'action',
@@ -31,30 +31,20 @@ export const columns: ColumnDef<FormDto>[] = [
         return <div>POST to {row.original.action}</div>
       }
     },
-  },
-  {
-    id: 'actions-column',
-    cell: ({ row }) => {
-      return (
-        <div className="flex justify-end">
-          <a
-            href={`/forms/${row.original.path}`}
-            target="_blank"
-          >
-            <Button>Open</Button>
-          </a>
-        </div>
-      )
-    },
+    minSize: 424,
   },
 ]
 
 export const FormsDataTable = () => {
+  const navigate = useNavigate()
   const { data } = useSuspenseQuery(formsQueryOptions())
   return (
     <DataTable
       columns={columns}
       data={data.forms}
+      onRowClick={(row) => {
+        navigate({ to: `/forms/$path`, params: { path: row.path } })
+      }}
     />
   )
 }

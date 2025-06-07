@@ -23,10 +23,12 @@ const columns: ColumnDef<ConnectionDto>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
+    size: 348,
   },
   {
     accessorKey: 'service',
     header: 'Service',
+    size: 100,
   },
   {
     accessorKey: 'authType',
@@ -34,10 +36,11 @@ const columns: ColumnDef<ConnectionDto>[] = [
     cell: ({ row }) => {
       return row.original.authType === 'oauth' ? 'OAuth' : 'API Key'
     },
+    size: 100,
   },
   {
     accessorKey: 'connected',
-    header: 'Connection',
+    header: 'Status',
     cell: ({ row }) => {
       return row.original.connected ? (
         <div className="flex items-center gap-2 text-green-700">
@@ -49,6 +52,7 @@ const columns: ColumnDef<ConnectionDto>[] = [
         </div>
       )
     },
+    size: 200,
   },
   {
     id: 'actions',
@@ -78,6 +82,7 @@ const columns: ColumnDef<ConnectionDto>[] = [
         </DropdownMenu>
       )
     },
+    size: 100,
   },
 ]
 

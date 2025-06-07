@@ -33,12 +33,12 @@ const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto
     {
       accessorKey: 'name',
       header: 'Name',
-      size: 200,
+      size: 448,
     },
     {
       accessorKey: 'updatedAt',
       header: 'Last modified',
-      size: 50,
+      size: 200,
       cell: ({ row }) => {
         const date = new Date(row.original.updatedAt)
         const now = new Date()
@@ -48,7 +48,7 @@ const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto
     {
       accessorKey: 'active',
       header: 'Status',
-      size: 50,
+      size: 100,
       cell: ({ row }) => {
         return (
           <div className="flex items-center">
@@ -63,7 +63,7 @@ const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto
     },
     {
       id: 'actions',
-      size: 50,
+      size: 100,
       cell: ({ row }) => {
         return (
           <DropdownMenu>

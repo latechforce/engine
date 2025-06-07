@@ -4,6 +4,7 @@ import { TableController } from './controller/table.controller'
 import {
   createRecordFormValidator,
   createRecordJsonValidator,
+  deleteRecordsQueryValidator,
   updateRecordFormValidator,
   updateRecordJsonValidator,
 } from './middleware/table.middleware'
@@ -52,10 +53,10 @@ export const tableRoutes = new Hono<HonoType>()
       recordId: c.req.param('recordId'),
     })
   )
-  .delete('/:tableId', (c) =>
+  .delete('/:tableId', deleteRecordsQueryValidator, (c) =>
     TableController.deleteMultipleRecords(c, {
       tableId: c.req.param('tableId'),
-      ids: c.req.queries('ids') || [],
+      ids: c.req.valid('query').ids,
     })
   )
 

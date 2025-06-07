@@ -29,3 +29,9 @@ export const updateRecordJsonValidator = zValidator('json', updateRecordJsonSche
 const updateRecordFormSchema = z.record(z.string(), z.string().or(z.instanceof(File)))
 
 export const updateRecordFormValidator = zValidator('form', updateRecordFormSchema)
+
+const deleteRecordsQuerySchema = z.object({
+  ids: z.array(z.string()).or(z.string()),
+})
+
+export const deleteRecordsQueryValidator = zValidator('query', deleteRecordsQuerySchema)
