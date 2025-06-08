@@ -25,7 +25,14 @@ export class SetupConnectionUseCase {
       }
       await this.connectionRepository.status.create(status)
     }
+    this.tokenRepository.onNewRefreshToken(connection, async (token) => {
+      this.connectionRepository.debug(`new token for "${connection.schema.name}"`)
+      await this.tokenRepository.update(token)
+    })
     const connected = await this.tokenRepository.check(connection)
     await this.connectionRepository.status.setConnected(status.id, connected)
+    this.connectionRepository.debug(
+      `"${connection.schema.name}" is ${connected ? 'connected' : 'disconnected'}`
+    )
   }
 }

@@ -1,6 +1,5 @@
 // App domain types
 export type { AppSchema } from './features/app/domain/schema/app.schema'
-export type { Mock } from './features/app/domain/value-object/mock.value-object'
 
 // Shared domain types
 export type { EnvSchema } from './shared/domain/schema/env.schema'

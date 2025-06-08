@@ -11,6 +11,10 @@ export class Connection {
   }
 
   get redirectUri() {
-    return this.appBaseUrl + '/api/connections/auth?id=' + this.schema.id
+    return this.appBaseUrl + '/api/connections/auth'
+  }
+
+  get redirectUriWithState() {
+    return this.redirectUri + '&state=' + JSON.stringify({ id: this.schema.id })
   }
 }

@@ -3,7 +3,7 @@ import { connectTo } from '@/e2e/steps'
 
 test('should connect to Google Sheets', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, env: { PORT: '3000' } })
 
   // WHEN
   await connectTo('google', page)

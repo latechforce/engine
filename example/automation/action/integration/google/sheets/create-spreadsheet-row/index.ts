@@ -1,13 +1,7 @@
-import type { AppSchema, Mock } from '@/types'
-import googleSheetsConnection, {
-  mock as googleSheetsMock,
-} from '@/example/connection/google/sheets'
+import type { AppSchema } from '@/types'
+import googleSheetsConnection from '@/example/connection/google/sheets'
 
 export const inGuides = false
-
-export const mock: Mock = {
-  ...googleSheetsMock,
-}
 
 export default {
   name: 'Create a Google Sheets row',

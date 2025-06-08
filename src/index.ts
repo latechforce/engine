@@ -5,16 +5,13 @@ import 'reflect-metadata'
 // Relative imports
 import { registerDependencies } from './shared/infrastructure/di/container'
 import TYPES from './shared/application/di/types'
-import type { Mock } from './features/app/domain/value-object/mock.value-object'
 import { apiRoutes } from './shared/interface/routes'
 import { AppController } from './features/app/interface/controller/app.controller'
 
 export * from './types'
-export * from './mocks'
 
 type Options = {
   externals?: Record<string, unknown>
-  mock?: Mock
 }
 
 export default class App {
@@ -33,9 +30,8 @@ export default class App {
   }
 
   async start(unknownSchema: unknown = {}) {
-    const { mock, externals } = this.options
+    const { externals } = this.options
     const appController = await this.getAppController(externals)
-    if (mock) appController.mock(mock)
     return appController.start(unknownSchema)
   }
 }

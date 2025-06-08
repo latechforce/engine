@@ -12,6 +12,7 @@ export const token = sqliteTable('token', {
   token_type: text('token_type').notNull(),
   access_token: text('access_token').notNull(),
   refresh_token: text('refresh_token'),
+  // In seconds
   expires_in: integer('expires_in'),
   scope: text('scope'),
   created_at: integer('created_at', { mode: 'timestamp' }).notNull(),

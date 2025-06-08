@@ -7,4 +7,5 @@ export type ITokenRepository = {
   update: (token: Token) => Promise<void>
   get: (id: number) => Promise<Token | undefined>
   getAccessToken: (connection: Connection) => Promise<Token | undefined>
+  onNewRefreshToken: (connection: Connection, callback: (token: Token) => Promise<void>) => void
 }

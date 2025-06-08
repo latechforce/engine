@@ -14,7 +14,8 @@ export class AuthenticateConnectionUseCase {
     private readonly tokenRepository: ITokenRepository
   ) {}
 
-  async execute(app: App, id?: string, code?: string) {
+  async execute(app: App, code?: string, state?: string) {
+    const { id } = JSON.parse(state || '{}')
     if (!id || !code) {
       throw new HttpError('Missing id or code', 400)
     }
@@ -30,7 +31,11 @@ export class AuthenticateConnectionUseCase {
     } else {
       await this.tokenRepository.create(token)
     }
-    await this.connectionRepository.status.setConnected(connection.schema.id, true)
+    const isValid = await this.tokenRepository.check(connection)
+    await this.connectionRepository.status.setConnected(connection.schema.id, isValid)
+    if (!isValid) {
+      throw new HttpError('Invalid token', 401)
+    }
     return `
       <html>
         <body>

@@ -1,17 +1,10 @@
-import type { AppSchema, Mock } from '@/types'
-import calendlyConnection, { mock as calendlyMock } from '@/example/connection/calendly'
-import { listWebhookSubscriptionsResponse } from '@/mocks/calendly'
+import type { AppSchema } from '@/types'
+import calendlyConnection from '@/example/connection/calendly'
+import type { Handlers } from '@/script/mock'
+import { handlers as calendlyHandlers } from '../../../../../connection/calendly'
+import { listWebhookSubscriptionsResponse } from '@/e2e/__mocks__/calendly'
 
 export const inGuides = false
-
-export const mock: Mock = {
-  ...calendlyMock,
-  '/webhook_subscriptions': {
-    GET: () => ({
-      json: listWebhookSubscriptionsResponse,
-    }),
-  },
-}
 
 export default {
   name: 'List Calendly webhook subscriptions',
@@ -37,3 +30,12 @@ export default {
   ],
   connections: calendlyConnection.connections,
 } satisfies AppSchema
+
+export const handlers: Handlers = {
+  ...calendlyHandlers,
+  'https://api.calendly.com/webhook_subscriptions': {
+    GET: () => ({
+      json: listWebhookSubscriptionsResponse,
+    }),
+  },
+}

@@ -15,18 +15,6 @@ export async function connectTo(
   service: 'calendly' | 'google' | 'facebook' | 'linkedin' | 'youcanbookme',
   page: Page
 ) {
-  let loginUrl: string
-  if (service === 'calendly') {
-    loginUrl = 'https://calendly.com/app/login'
-  } else if (service === 'google') {
-    loginUrl = 'https://accounts.google.com/o/oauth2/v2/auth'
-  } else if (service === 'facebook') {
-    loginUrl = 'https://www.facebook.com/v18.0/dialog/oauth'
-  } else if (service === 'linkedin') {
-    loginUrl = 'https://www.linkedin.com/oauth/v2/authorization'
-  } else if (service === 'youcanbookme') {
-    loginUrl = 'https://app.youcanbook.me/oauth/authorize'
-  }
   await test.step(`Connect to ${service}`, async () => {
     await page.goto('/admin/connections')
     await page.getByRole('button', { name: 'Open menu' }).click()
@@ -34,8 +22,7 @@ export async function connectTo(
       page.waitForEvent('popup'),
       page.getByRole('menuitem', { name: 'Connect account' }).click(),
     ])
-    await popup.waitForURL(loginUrl)
-    await popup.goto(`/api/connections/auth?id=1&code=AUTH_CODE`)
+    await popup.goto(`/api/connections/auth?state={"id":1}&code=AUTH_CODE`)
     await popup.close()
     await page.reload()
     await expect(page.getByRole('cell', { name: 'Connected', exact: true })).toBeVisible()

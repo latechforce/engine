@@ -32,9 +32,7 @@ export class LinkedInAdsConnectionIntegration {
       id: this.schema.id,
       token_type: 'Bearer',
       access_token: data.access_token,
-      refresh_token: null,
       expires_in: data.expires_in,
-      scope: null,
       created_at: new Date(),
     }
   }

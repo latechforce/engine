@@ -9,10 +9,10 @@ export class ConnectionController {
     return c.json(listConnectionsDto)
   }
 
-  static async authenticate(c: Context<HonoType>, data: { id?: string; code?: string }) {
+  static async authenticate(c: Context<HonoType>, data: { code?: string; state?: string }) {
     const app = c.get('app')
     const authenticateConnectionUseCase = c.get('authenticateConnectionUseCase')
-    const html = await authenticateConnectionUseCase.execute(app, data.id, data.code)
+    const html = await authenticateConnectionUseCase.execute(app, data.code, data.state)
     return c.html(html)
   }
 }

@@ -2,6 +2,7 @@ import type { AppSchema } from '@/types'
 import App from '@/app'
 import { join, relative } from 'path'
 import { readdir } from 'fs/promises'
+import { mockServer, type Handlers } from './mock'
 
 const searchTerm = process.argv[2]
 const examplesDir = join(process.cwd(), 'example')
@@ -56,10 +57,6 @@ if (searchTerm) {
     process.exit(1)
   }
 
-  console.log(
-    `Running example/${relative(examplesDir, selectedFile)}\n--------------------------------`
-  )
-
   const externals = await import(selectedFile).then((m) => {
     if (m.externals) {
       return m.externals
@@ -67,16 +64,26 @@ if (searchTerm) {
     return {}
   })
 
-  const mock = await import(selectedFile).then((m) => {
-    if (process.env.MOCK && m.mock) {
-      return m.mock
+  const handlers: Handlers = await import(selectedFile).then((m) => {
+    if (m.handlers) {
+      return m.handlers
     }
-    return {}
+    return undefined
   })
+
+  if (handlers) {
+    mockServer(handlers)
+  }
 
   const schema: AppSchema = await import(selectedFile).then((m) => m.default)
 
-  await new App({ externals, mock }).start(schema)
+  console.log(
+    `Running example/${relative(examplesDir, selectedFile)}${
+      handlers ? ` with mock` : ''
+    }\n--------------------------------`
+  )
+
+  await new App({ externals }).start(schema)
 } else {
   await new App().start()
 }

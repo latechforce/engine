@@ -2,7 +2,7 @@ import { PostgreSqlContainer, type StartedPostgreSqlContainer } from '@testconta
 import { createServer } from 'http'
 
 export let container: StartedPostgreSqlContainer
-export let server: ReturnType<typeof createServer>
+export let testServer: ReturnType<typeof createServer>
 
 async function globalSetup() {
   container = await new PostgreSqlContainer('postgres:16.9').start()
@@ -14,7 +14,7 @@ async function globalSetup() {
   process.env.POSTGRES_PASSWORD = container.getPassword()
 
   // Test server
-  server = createServer(async (req, res) => {
+  testServer = createServer(async (req, res) => {
     const { url, method, headers } = req
     let body = ''
     for await (const chunk of req) {
@@ -44,7 +44,7 @@ async function globalSetup() {
     res.end(response)
   })
   await new Promise<void>((resolve) => {
-    server.listen(6000, resolve)
+    testServer.listen(6000, resolve)
   })
 }
 

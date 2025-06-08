@@ -8,6 +8,9 @@ const TYPES = {
     Mock: Symbol.for('MockAppUseCase'),
   },
   Controller: Symbol.for('AppController'),
+  Service: {
+    Mock: Symbol.for('MockService'),
+  },
 }
 
 export default TYPES

@@ -76,7 +76,6 @@ export class FacebookLeadAdsConnectionIntegration {
       id: this.schema.id,
       token_type: 'Bearer',
       access_token,
-      refresh_token: null,
       expires_in,
       scope: 'ads_read,ads_management',
       created_at: new Date(),

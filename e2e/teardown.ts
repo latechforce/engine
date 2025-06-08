@@ -1,11 +1,11 @@
-import { container, server } from './setup'
+import { container, testServer } from './setup'
 
 async function globalTeardown() {
   if (container) {
     await container.stop()
   }
-  if (server) {
-    server.close()
+  if (testServer) {
+    testServer.close()
   }
 }
 

@@ -1,23 +1,13 @@
-import type { AppSchema, Mock } from '@/types'
-import calendlyConnection, { mock as calendlyMock } from '@/example/connection/calendly'
+import type { AppSchema } from '@/types'
+import calendlyConnection from '@/example/connection/calendly'
+import type { Handlers } from '@/script/mock'
+import { handlers as calendlyHandlers } from '../../../../../connection/calendly'
 import {
-  createWebhookSubscriptionResponse,
   listWebhookSubscriptionsResponse,
-} from '../../../../../../src/mocks/calendly'
+  createWebhookSubscriptionResponse,
+} from '@/e2e/__mocks__/calendly'
 
 export const inGuides = false
-
-export const mock: Mock = {
-  ...calendlyMock,
-  '/webhook_subscriptions': {
-    GET: () => ({
-      json: listWebhookSubscriptionsResponse,
-    }),
-    POST: () => ({
-      json: createWebhookSubscriptionResponse,
-    }),
-  },
-}
 
 export default {
   name: 'Trigger an automation with a Calendly invite created event',
@@ -37,3 +27,15 @@ export default {
   ],
   connections: calendlyConnection.connections,
 } satisfies AppSchema
+
+export const handlers: Handlers = {
+  ...calendlyHandlers,
+  'https://api.calendly.com/webhook_subscriptions': {
+    GET: () => ({
+      json: listWebhookSubscriptionsResponse,
+    }),
+    POST: () => ({
+      json: createWebhookSubscriptionResponse,
+    }),
+  },
+}

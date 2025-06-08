@@ -1,7 +1,7 @@
 import type { RunDto } from '../../../../../src/features/run/application/dto/run.dto'
 import { expect, test } from '../../../../fixtures'
 import { connectTo } from '../../../../steps'
-import { webhookPayloadInviteCreated } from '../../../../../src/mocks/calendly'
+import { webhookPayloadInviteCreated } from '../../../../__mocks__/calendly'
 
 test('should trigger an automation when a calendly invite is created', async ({
   startExampleApp,

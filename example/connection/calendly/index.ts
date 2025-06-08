@@ -1,24 +1,8 @@
-import type { AppSchema, Mock } from '@/types'
+import { getCurrentUserResponse } from '@/e2e/__mocks__/calendly'
+import type { AppSchema } from '@/types'
+import type { Handlers } from 'script/mock'
 
 export const inGuides = false
-
-export const mock: Mock = {
-  '/oauth/token': {
-    POST: () => ({
-      json: {
-        access_token: 'mock-token',
-        token_type: 'Bearer',
-        expires_in: 3600,
-        refresh_token: 'mock-refresh-token',
-        scope: 'default',
-        created_at: 1716633078,
-      },
-    }),
-  },
-  '/users/me': {
-    GET: () => ({ json: { resource: { email: 'mock@calendly.com' } } }),
-  },
-}
 
 export default {
   name: 'Start with a Calendly connection',
@@ -33,3 +17,23 @@ export default {
     },
   ],
 } satisfies AppSchema
+
+export const handlers: Handlers = {
+  'https://auth.calendly.com/oauth/token': {
+    POST: () => ({
+      json: {
+        access_token: 'mock-token',
+        token_type: 'Bearer',
+        expires_in: 3600,
+        refresh_token: 'mock-refresh-token',
+        scope: 'default',
+        created_at: new Date().getTime(),
+      },
+    }),
+  },
+  'https://api.calendly.com/users/me': {
+    GET: () => ({
+      json: getCurrentUserResponse,
+    }),
+  },
+}

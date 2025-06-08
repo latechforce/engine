@@ -24,6 +24,14 @@ export class TokenRepository implements ITokenRepository {
     private readonly connectionRepository: IConnectionRepository
   ) {}
 
+  async onNewRefreshToken(connection: Connection, callback: (token: Token) => Promise<void>) {
+    const integration = toConnectionIntegration(connection)
+    if (!('onNewRefreshToken' in integration)) {
+      return
+    }
+    integration.onNewRefreshToken(callback)
+  }
+
   async getAccessToken(connection: Connection): Promise<Token | undefined> {
     const token = await this.get(connection.schema.id)
     if (!token) return undefined

@@ -11,7 +11,7 @@ export const connectionRoutes = new Hono<HonoType>()
   .get('/', ConnectionController.list)
   .get('/auth', (c) =>
     ConnectionController.authenticate(c, {
-      id: c.req.query('id'),
+      state: c.req.query('state'),
       code: c.req.query('code'),
     })
   )

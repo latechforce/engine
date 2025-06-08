@@ -2,6 +2,15 @@ import ky from 'ky'
 import type { Token } from '../../domain/value-object/token.value-object'
 import type { CalendlyConnectionSchema } from '../../domain/schema/integration/calendly.schema'
 
+type CalendlyToken = {
+  token_type: string
+  access_token: string
+  refresh_token: string
+  expires_in: number
+  scope: string
+  created_at: string
+}
+
 export class CalendlyConnectionIntegration {
   private readonly baseUrl = 'https://api.calendly.com'
   private readonly authBaseUrl = 'https://auth.calendly.com'
@@ -28,7 +37,7 @@ export class CalendlyConnectionIntegration {
         },
         body: new URLSearchParams(body),
       })
-      .json<Omit<Token, 'id'>>()
+      .json<CalendlyToken>()
     return {
       id,
       token_type: response.token_type,
