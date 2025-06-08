@@ -82,6 +82,7 @@ test('should run a TypeScript code with tables', async ({ startExampleApp }) => 
   expect(data.updatedRecord.fields.name).toEqual('Jane Doe')
   expect(data.exists).toBe(false)
   expect(data.list.length).toBe(1)
+  expect(data.list[0].fields.name).toEqual('Jane Doe')
 })
 
 test('should run a TypeScript code with buckets', async ({ startExampleApp }) => {

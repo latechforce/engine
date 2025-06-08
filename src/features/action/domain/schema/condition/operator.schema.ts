@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
 
 export const operatorConditionSchema = z.object({
-  input: z.string(),
+  target: z.string(),
   operator: z.enum(['exists', 'does-not-exist']),
 })
 

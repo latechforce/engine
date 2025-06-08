@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
 
 export const valueConditionSchema = z.object({
-  input: z.string(),
+  target: z.string(),
   operator: z.enum(['contains', 'does-not-contain']),
   value: z.string(),
 })

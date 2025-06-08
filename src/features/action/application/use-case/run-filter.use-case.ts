@@ -1,15 +1,10 @@
-import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
 import type { ConditionsSchema } from '../../domain/schema/condition'
 import type { Run } from '../../../run/domain/entity/run.entity'
-import { inject, injectable } from 'inversify'
-import TYPES from '../di/types'
+import { injectable } from 'inversify'
 
 @injectable()
 export class RunFilterUseCase {
-  constructor(
-    @inject(TYPES.Repository)
-    private readonly actionRepository: IActionRepository
-  ) {}
+  constructor() {}
 
   async execute(schema: ConditionsSchema, run: Run): Promise<{ canContinue: boolean }> {
     const canContinue = await this.executeCondition(schema, run)
@@ -39,17 +34,21 @@ export class RunFilterUseCase {
       switch (conditions.operator) {
         case 'exists':
           return (
-            conditions.input !== '' && conditions.input !== undefined && conditions.input !== null
+            conditions.target !== '' &&
+            conditions.target !== undefined &&
+            conditions.target !== null
           )
         case 'contains': {
-          return conditions.input.includes(conditions.value)
+          return conditions.target.includes(conditions.value)
         }
         case 'does-not-exist':
           return (
-            conditions.input === '' || conditions.input === undefined || conditions.input === null
+            conditions.target === '' ||
+            conditions.target === undefined ||
+            conditions.target === null
           )
         case 'does-not-contain':
-          return !conditions.input.includes(conditions.value)
+          return !conditions.target.includes(conditions.value)
         default: {
           const _exhaustiveCheck: never = conditions
           throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

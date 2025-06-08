@@ -22,11 +22,11 @@ export default {
           conditions: {
             or: [
               {
-                input: '{{ trigger.body.name }}',
+                target: '{{ trigger.body.name }}',
                 operator: 'exists',
               },
               {
-                input: '{{ trigger.body.name }}',
+                target: '{{ trigger.body.name }}',
                 operator: 'contains',
                 value: 'John',
               },

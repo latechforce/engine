@@ -32,6 +32,7 @@ import type { Connection } from '../../../connection/domain/entity/connection.en
 import type { IObjectRepository } from '../../../bucket/domain/repository-interface/object-repository.interface'
 import { Object } from '../../../bucket/domain/entity/object.entity'
 import { toObjectDto } from '../../../bucket/application/dto/object.dto'
+import type { ConditionsSchema } from '../../domain/schema/condition'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -96,7 +97,8 @@ export class ActionRepository implements IActionRepository {
           return records
         },
         read: async (id: string) => await this.recordRepository.read<T>(table, id),
-        list: async () => await this.recordRepository.list<T>(table),
+        list: async (filter?: ConditionsSchema) =>
+          await this.recordRepository.list<T>(table, filter),
         delete: async (id: string) => {
           await this.recordRepository.delete(id)
         },

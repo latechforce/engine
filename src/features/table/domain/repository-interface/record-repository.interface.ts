@@ -5,6 +5,7 @@ import type { RecordFieldRow } from '../object-value/record-field-row.object-val
 import type { SchemaObject } from 'ajv'
 import type { Fields } from '../object-value/fields.object-value'
 import type { RecordRow } from '../object-value/record-row.object-value'
+import type { ConditionsSchema } from '../../../action/domain/schema/condition'
 
 export type RecordTransaction = {
   create(tableId: number, record: Record): Promise<void>
@@ -30,7 +31,7 @@ export type IRecordRepository = {
   delete(recordId: string): Promise<void>
   deleteMany(recordIds: string[]): Promise<void>
   read<T extends Fields>(table: Table, recordId: string): Promise<Record<T> | undefined>
-  list<T extends Fields>(table: Table): Promise<Record<T>[]>
+  list<T extends Fields>(table: Table, filter?: ConditionsSchema): Promise<Record<T>[]>
   listByIds<T extends Fields>(table: Table, recordIds: string[]): Promise<Record<T>[]>
   onRecordCreated(callback: (record: RecordRow) => void): void
   onRecordUpdated(callback: (record: RecordRow) => void): void

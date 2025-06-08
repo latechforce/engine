@@ -23,7 +23,7 @@ export default {
             {
               name: 'path1',
               conditions: {
-                input: '{{ trigger.body.name }}',
+                target: '{{ trigger.body.name }}',
                 operator: 'exists',
               },
               actions: [
@@ -40,7 +40,7 @@ export default {
             {
               name: 'path2',
               conditions: {
-                input: '{{ trigger.body.name }}',
+                target: '{{ trigger.body.name }}',
                 operator: 'does-not-exist',
               },
               actions: [

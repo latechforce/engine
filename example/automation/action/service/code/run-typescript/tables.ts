@@ -26,6 +26,11 @@ export default {
                   name: 'Jane Doe',
                 },
               },
+              {
+                fields: {
+                  name: 'Jacob Doe',
+                },
+              },
             ])
             const updatedRecord = await contacts.update(record.id, {
               name: 'Jane Doe',
@@ -42,7 +47,11 @@ export default {
             await contacts.delete(updatedRecord.id)
             const exists = await contacts.exists(record.id)
             await contacts.deleteMany([record.id, updatedRecord.id])
-            const list = await contacts.list()
+            const list = await contacts.list({
+              target: 'name',
+              operator: 'contains',
+              value: 'Jane',
+            })
             return {
               record,
               updatedRecord,

@@ -15,6 +15,7 @@ import type { ViewRow } from '../../domain/object-value/view-row.object-value'
 import type { Fields } from '../../domain/object-value/fields.object-value'
 import { EventEmitter } from 'events'
 import type { RecordRow } from '../../domain/object-value/record-row.object-value'
+import type { ConditionsSchema } from '../../../action/domain/schema/condition'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {
@@ -196,9 +197,9 @@ export class RecordRepository implements IRecordRepository {
     return this.toRecord<T>(table, row)
   }
 
-  async list<T extends Fields>(table: Table): Promise<Record<T>[]> {
+  async list<T extends Fields>(table: Table, filter?: ConditionsSchema): Promise<Record<T>[]> {
     const view = this.database.view(table)
-    const rows = await view.list()
+    const rows = await view.list(filter)
     return rows.map((row) => this.toRecord<T>(table, row))
   }
 

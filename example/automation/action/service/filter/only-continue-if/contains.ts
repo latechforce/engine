@@ -20,7 +20,7 @@ export default {
           service: 'filter',
           action: 'only-continue-if',
           conditions: {
-            input: '{{ trigger.body.name }}',
+            target: '{{ trigger.body.name }}',
             operator: 'contains',
             value: 'John',
           },

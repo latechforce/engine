@@ -1,12 +1,14 @@
 import { inject, injectable } from 'inversify'
 import TYPES from '../../../../shared/application/di/types'
-import { and, eq, type SQL } from 'drizzle-orm'
+import { and, eq, SQL } from 'drizzle-orm'
 import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
-import { Kysely, PostgresDialect, type Dialect } from 'kysely'
+import { Kysely, PostgresDialect, type Dialect, ExpressionWrapper } from 'kysely'
+import type { SqlBool } from 'kysely'
 import { BunWorkerDialect } from 'kysely-bun-worker'
 import type { Table } from '../../domain/entity/table.entity'
 import type { ViewRow } from '../../domain/object-value/view-row.object-value'
 import type { RecordFieldRow } from '../../domain/object-value/record-field-row.object-value'
+import type { ConditionsSchema } from '../../../action/domain/schema/condition'
 
 type Base<I, D> = {
   create(data: I): Promise<void>
@@ -246,8 +248,40 @@ export class TableDatabaseService {
           .executeTakeFirst()
         return record ? this.postProcessViewRecord(table, record) : undefined
       },
-      list: async (): Promise<ViewRow[]> => {
-        const records = await view.selectAll().where('_archived_at', 'is', null).execute()
+      list: async (filter?: ConditionsSchema): Promise<ViewRow[]> => {
+        let query = view.selectAll().where('_archived_at', 'is', null)
+
+        if (filter) {
+          query = query.where(({ and, or, not, eb, exists }) => {
+            const buildWhere = (
+              condition: ConditionsSchema
+            ): ExpressionWrapper<{ [key: string]: ViewRow }, string, SqlBool> => {
+              if ('and' in condition) {
+                return and(condition.and.map(buildWhere))
+              }
+              if ('or' in condition) {
+                return or(condition.or.map(buildWhere))
+              }
+              switch (condition.operator) {
+                case 'contains':
+                  return eb(condition.target, 'like', `%${condition.value}%`)
+                case 'does-not-contain':
+                  return not(eb(condition.target, 'like', `%${condition.value}%`))
+                case 'exists':
+                  return exists(condition.target)
+                case 'does-not-exist':
+                  return not(exists(condition.target))
+                default: {
+                  const _exhaustiveCheck: never = condition
+                  throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+                }
+              }
+            }
+            return buildWhere(filter)
+          })
+        }
+
+        const records = await query.execute()
         return this.postProcessViewRecords(table, records)
       },
       listByIds: async (ids: string[]): Promise<ViewRow[]> => {

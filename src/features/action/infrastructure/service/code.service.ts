@@ -6,6 +6,7 @@ import js from '@eslint/js'
 import type { Fields } from '../../../table/domain/object-value/fields.object-value'
 import type { Record } from '../../../table/domain/entity/record.entity'
 import type { ObjectDto } from '../../../bucket/application/dto/object.dto'
+import type { ConditionsSchema } from '../../domain/schema/condition'
 
 export type TableContext = <T extends Fields>(
   name: string
@@ -18,7 +19,7 @@ export type TableContext = <T extends Fields>(
   delete: (id: string) => Promise<void>
   deleteMany: (ids: string[]) => Promise<void>
   read: (id: string) => Promise<Record<T> | undefined>
-  list: () => Promise<Record<T>[]>
+  list: (filter?: ConditionsSchema) => Promise<Record<T>[]>
 }
 
 export type BucketContext = (name: string) => {
