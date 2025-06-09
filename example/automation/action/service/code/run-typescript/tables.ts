@@ -8,57 +8,61 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-typescript',
+        postHttp: {
+          path: 'run-typescript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-typescript',
           name: 'runTypescriptCode',
-          code: String(async function (context: CodeContext) {
-            const contacts = context.table<{ name: string }>('Contacts')
-            const record = await contacts.create({
-              name: 'John Doe',
-            })
-            await contacts.createMany([
-              {
-                fields: {
-                  name: 'Jane Doe',
+          runTypescriptCode: {
+            code: String(async function (context: CodeContext) {
+              const contacts = context.table<{ name: string }>('Contacts')
+              const record = await contacts.create({
+                name: 'John Doe',
+              })
+              await contacts.createMany([
+                {
+                  fields: {
+                    name: 'Jane Doe',
+                  },
                 },
-              },
-              {
-                fields: {
-                  name: 'Jacob Doe',
+                {
+                  fields: {
+                    name: 'Jacob Doe',
+                  },
                 },
-              },
-            ])
-            const updatedRecord = await contacts.update(record.id, {
-              name: 'Jane Doe',
-            })
-            await contacts.updateMany([
-              {
-                id: updatedRecord.id,
-                fields: {
-                  name: 'John Doe',
+              ])
+              const updatedRecord = await contacts.update(record.id, {
+                name: 'Jane Doe',
+              })
+              await contacts.updateMany([
+                {
+                  id: updatedRecord.id,
+                  fields: {
+                    name: 'John Doe',
+                  },
                 },
-              },
-            ])
-            await contacts.read(updatedRecord.id)
-            await contacts.delete(updatedRecord.id)
-            const exists = await contacts.exists(record.id)
-            await contacts.deleteMany([record.id, updatedRecord.id])
-            const list = await contacts.list({
-              target: 'name',
-              operator: 'contains',
-              value: 'Jane',
-            })
-            return {
-              record,
-              updatedRecord,
-              exists,
-              list,
-            }
-          }),
+              ])
+              await contacts.read(updatedRecord.id)
+              await contacts.delete(updatedRecord.id)
+              const exists = await contacts.exists(record.id)
+              await contacts.deleteMany([record.id, updatedRecord.id])
+              const list = await contacts.list({
+                target: 'name',
+                operator: 'contains',
+                value: 'Jane',
+              })
+              return {
+                record,
+                updatedRecord,
+                exists,
+                list,
+              }
+            }),
+          },
         },
       ],
     },

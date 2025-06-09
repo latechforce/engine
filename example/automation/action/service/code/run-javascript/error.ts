@@ -8,16 +8,20 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-javascript',
+        postHttp: {
+          path: 'run-javascript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-javascript',
           name: 'runJavascriptCode',
-          code: String(function () {
-            throw new Error('This is a test error')
-          }),
+          runJavascriptCode: {
+            code: String(function () {
+              throw new Error('This is a test error')
+            }),
+          },
         },
       ],
     },

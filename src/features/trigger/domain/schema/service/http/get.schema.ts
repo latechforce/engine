@@ -7,8 +7,10 @@ import { basehttpTriggerSchema } from './base'
 export const getHttpTriggerSchema = basehttpTriggerSchema
   .extend({
     event: z.literal('get'),
-    path: z.string(),
-    respondImmediately: z.boolean().default(false).optional(),
+    getHttp: z.object({
+      path: z.string(),
+      respondImmediately: z.boolean().default(false).optional(),
+    }),
   })
   .meta({
     title: 'GET',

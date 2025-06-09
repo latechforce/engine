@@ -8,15 +8,19 @@ export default {
       trigger: {
         service: 'http',
         event: 'get',
-        path: 'response',
+        getHttp: {
+          path: 'response',
+        },
       },
       actions: [
         {
           name: 'response',
           service: 'http',
           action: 'response',
-          body: {
-            message: 'Hello, world!',
+          responseHttp: {
+            body: {
+              message: 'Hello, world!',
+            },
           },
         },
       ],

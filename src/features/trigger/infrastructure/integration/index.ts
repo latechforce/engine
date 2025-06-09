@@ -3,10 +3,13 @@ import type { IntegrationTriggerSchema } from '../../domain/schema/integration'
 
 export type TriggerIntegration = CalendlyTriggerIntegration
 
-export const toTriggerIntegration = (schema: IntegrationTriggerSchema): TriggerIntegration => {
+export const toTriggerIntegration = (
+  schema: IntegrationTriggerSchema,
+  automationId: number
+): TriggerIntegration => {
   switch (schema.service) {
     case 'calendly':
-      return new CalendlyTriggerIntegration(schema)
+      return new CalendlyTriggerIntegration(schema, automationId)
     case 'facebook-lead-ads':
       throw new Error('Facebook Lead Ads is not supported yet')
     case 'linkedin-ads':

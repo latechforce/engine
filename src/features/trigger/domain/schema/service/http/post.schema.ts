@@ -8,9 +8,11 @@ import { jsonSchemaSchema } from '../../../../../../shared/domain/schema/json-sc
 export const postHttpTriggerSchema = basehttpTriggerSchema
   .extend({
     event: z.literal('post'),
-    path: z.string(),
-    respondImmediately: z.boolean().default(false).optional(),
-    requestBody: jsonSchemaSchema.optional(),
+    postHttp: z.object({
+      path: z.string(),
+      respondImmediately: z.boolean().default(false).optional(),
+      requestBody: jsonSchemaSchema.optional(),
+    }),
   })
   .meta({
     title: 'POST',

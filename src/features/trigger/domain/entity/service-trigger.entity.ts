@@ -1,15 +1,9 @@
+import type { Automation } from '../../../automation/domain/entity/automation.entity'
 import type { ServiceTriggerSchema } from '../schema/service'
 
 export class ServiceTrigger {
   constructor(
     public readonly schema: ServiceTriggerSchema,
-    public readonly automationName: string
+    public readonly automation: Automation
   ) {}
-
-  get path(): string | undefined {
-    if ('path' in this.schema) {
-      return this.schema.path.replace(/^\//, '')
-    }
-    return undefined
-  }
 }

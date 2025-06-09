@@ -39,7 +39,9 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            path: '/automation',
+            postHttp: {
+              path: '/automation',
+            },
           },
           actions: [],
         },
@@ -49,7 +51,9 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            path: '/automation',
+            postHttp: {
+              path: '/automation',
+            },
           },
           actions: [],
         },
@@ -197,7 +201,9 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            path: '/automation',
+            postHttp: {
+              path: '/automation',
+            },
           },
           actions: [],
         },
@@ -207,7 +213,9 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            path: '/automation',
+            postHttp: {
+              path: '/automation',
+            },
           },
           actions: [],
         },
@@ -288,20 +296,26 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            path: '/automation',
+            postHttp: {
+              path: '/automation',
+            },
           },
           actions: [
             {
               name: 'action',
               service: 'code',
               action: 'run-javascript',
-              code: 'console.log("action")',
+              runJavascriptCode: {
+                code: 'console.log("action")',
+              },
             },
             {
               name: 'action',
               service: 'code',
               action: 'run-javascript',
-              code: 'console.log("action")',
+              runJavascriptCode: {
+                code: 'console.log("action")',
+              },
             },
           ],
         },
@@ -324,24 +338,26 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            path: '/automation',
+            postHttp: {
+              path: '/automation',
+            },
           },
           actions: [
             {
               name: 'action',
-              service: 'paths',
+              service: 'filter',
               action: 'split-into-paths',
-              paths: [
+              splitIntoPathsFilter: [
                 {
                   name: 'path',
-                  conditions: {
+                  onlyContinueIf: {
                     or: [],
                   },
                   actions: [],
                 },
                 {
                   name: 'path',
-                  conditions: {
+                  onlyContinueIf: {
                     or: [],
                   },
                   actions: [],
@@ -369,7 +385,9 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            path: '/automation',
+            postHttp: {
+              path: '/automation',
+            },
           },
           actions: [],
         },
@@ -379,7 +397,9 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            path: '/automation',
+            postHttp: {
+              path: '/automation',
+            },
           },
           actions: [],
         },

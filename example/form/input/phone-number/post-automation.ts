@@ -27,7 +27,9 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: '/post',
+        postHttp: {
+          path: '/post',
+        },
       },
       actions: [],
     },

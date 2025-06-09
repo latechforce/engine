@@ -9,6 +9,8 @@ export const toActionIntegration = (schema: IntegrationActionSchema): ActionInte
       return new CalendlyActionIntegration(schema)
     case 'google-sheets':
       throw new Error('Google Sheets is not supported yet')
+    case 'google-gmail':
+      throw new Error('Google Gmail is not supported yet')
     default: {
       const _exhaustiveCheck: never = schema
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

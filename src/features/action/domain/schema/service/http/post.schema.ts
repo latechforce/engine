@@ -4,9 +4,11 @@ import { baseHttpActionSchema } from './base'
 export const postHttpActionSchema = baseHttpActionSchema
   .extend({
     action: z.literal('post'),
-    url: z.string(),
-    headers: z.record(z.string(), z.string()).optional(),
-    body: z.record(z.string(), z.unknown()).optional(),
+    postHttp: z.object({
+      url: z.string(),
+      headers: z.record(z.string(), z.string()).optional(),
+      body: z.record(z.string(), z.unknown()).optional(),
+    }),
   })
   .meta({
     title: 'POST',

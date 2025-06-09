@@ -4,7 +4,9 @@ import { baseHttpActionSchema } from './base'
 export const responseHttpActionSchema = baseHttpActionSchema
   .extend({
     action: z.literal('response'),
-    body: z.record(z.string(), z.unknown()).optional(),
+    responseHttp: z.object({
+      body: z.record(z.string(), z.unknown()).optional(),
+    }),
   })
   .meta({
     title: 'Response',

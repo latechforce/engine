@@ -12,14 +12,16 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: '/run-filter',
+        postHttp: {
+          path: '/run-filter',
+        },
       },
       actions: [
         {
           name: 'onlyContinueIf',
           service: 'filter',
           action: 'only-continue-if',
-          conditions: {
+          onlyContinueIfFilter: {
             target: '{{ trigger.body.name }}',
             operator: 'exists',
           },
@@ -28,9 +30,11 @@ export default {
           name: 'actionNotFiltered',
           service: 'code',
           action: 'run-typescript',
-          code: String(function () {
-            return { continue: true }
-          }),
+          runTypescriptCode: {
+            code: String(function () {
+              return { continue: true }
+            }),
+          },
         },
       ],
     },

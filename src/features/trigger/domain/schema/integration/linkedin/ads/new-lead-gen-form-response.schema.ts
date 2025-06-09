@@ -4,7 +4,7 @@ import { baseLinkedinAdsTriggerSchema } from './base'
 export const newLeadGenFormResponseLinkedinAdsTriggerSchema = baseLinkedinAdsTriggerSchema
   .extend({
     event: z.literal('new-lead-gen-form-response'),
-    path: z.string(),
+    newLeadGenFormResponseLinkedinAds: z.object({}),
   })
   .meta({
     title: 'New Lead Gen Form Response',

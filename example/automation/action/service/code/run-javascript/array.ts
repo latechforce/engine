@@ -12,41 +12,47 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: '/run-javascript',
+        postHttp: {
+          path: '/run-javascript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-javascript',
           name: 'runJavaScriptCode',
-          code: String(function () {
-            const list = [
-              {
-                name: 'John Doe',
-              },
-              {
-                name: 'Jane Doe',
-              },
-              {
-                name: 'Jacob Doe',
-              },
-            ]
-            return list
-          }),
+          runJavascriptCode: {
+            code: String(function () {
+              const list = [
+                {
+                  name: 'John Doe',
+                },
+                {
+                  name: 'Jane Doe',
+                },
+                {
+                  name: 'Jacob Doe',
+                },
+              ]
+              return list
+            }),
+          },
         },
         {
           service: 'code',
           action: 'run-javascript',
           name: 'buildMessage',
-          inputData: {
-            name: '{{runJavaScriptCode.name}}',
+          runJavascriptCode: {
+            inputData: {
+              name: '{{runJavaScriptCode.name}}',
+            },
+            code: String(function (context: CodeContext<{ name: string }>) {
+              const { name } = context.inputData
+              return {
+                message: `Hello, ${name}!`,
+              }
+            }),
           },
-          code: String(function (context: CodeContext<{ name: string }>) {
-            const { name } = context.inputData
-            return {
-              message: `Hello, ${name}!`,
-            }
-          }),
         },
       ],
     },

@@ -38,8 +38,8 @@ export class Automation {
         throw new Error(`Duplicate action name: ${action.name}`)
       }
       actionNames.add(action.name)
-      if (action.service === 'paths') {
-        for (const path of action.paths) {
+      if (action.service === 'filter' && action.action === 'split-into-paths') {
+        for (const path of action.splitIntoPathsFilter) {
           if (pathNames.has(path.name)) {
             throw new Error(`Duplicate path name: ${path.name}`)
           }
@@ -66,9 +66,9 @@ export class Automation {
           `Account "${trigger.account}" not found for trigger "${trigger.service}/${trigger.event}"`
         )
       }
-      return new IntegrationTrigger(trigger, this.schema.name, connection)
+      return new IntegrationTrigger(trigger, this, connection)
     } else {
-      return new ServiceTrigger(trigger, this.schema.name)
+      return new ServiceTrigger(trigger, this)
     }
   }
 
@@ -112,8 +112,12 @@ export class Automation {
     | undefined {
     const [actionName, pathName] = actionPathName.split('.')
     for (const action of actions) {
-      if (action.name === actionName && action.service === 'paths') {
-        const path = action.paths.find((path) => path.name === pathName)
+      if (
+        action.name === actionName &&
+        action.service === 'filter' &&
+        action.action === 'split-into-paths'
+      ) {
+        const path = action.splitIntoPathsFilter.find((path) => path.name === pathName)
         if (path) {
           return {
             actionName: action.name,
@@ -121,7 +125,7 @@ export class Automation {
             actions: path.actions.map((action) => this.mapAction(action)),
           }
         }
-        for (const { actions } of action.paths) {
+        for (const { actions } of action.splitIntoPathsFilter) {
           return this.findPathFromName(actionPathName, actions)
         }
       }

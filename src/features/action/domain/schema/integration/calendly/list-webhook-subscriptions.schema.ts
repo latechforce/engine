@@ -4,14 +4,16 @@ import { baseCalendlyActionSchema } from './base'
 export const listWebhookSubscriptionsCalendlyActionSchema = baseCalendlyActionSchema
   .extend({
     action: z.literal('list-webhook-subscriptions'),
-    organization: z.string().optional().meta({
-      default: 'Current user organisation',
-    }),
-    scope: z.enum(['user', 'organization', 'group']).optional().meta({
-      default: 'user',
-    }),
-    count: z.number().min(1).max(100).optional().meta({
-      default: 20,
+    listWebhookSubscriptionsCalendly: z.object({
+      organization: z.string().optional().meta({
+        default: 'Current user organisation',
+      }),
+      scope: z.enum(['user', 'organization', 'group']).optional().meta({
+        default: 'user',
+      }),
+      count: z.number().min(1).max(100).optional().meta({
+        default: 20,
+      }),
     }),
   })
   .meta({

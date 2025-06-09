@@ -19,18 +19,22 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-typescript',
+        postHttp: {
+          path: 'run-typescript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-typescript',
           name: 'runTypescriptCode',
-          code: String(function (context: CodeContext<{}, typeof externals>) {
-            const { customFunction } = context.externals
-            const message = customFunction()
-            return { message }
-          }),
+          runTypescriptCode: {
+            code: String(function (context: CodeContext<{}, typeof externals>) {
+              const { customFunction } = context.externals
+              const message = customFunction()
+              return { message }
+            }),
+          },
         },
       ],
     },

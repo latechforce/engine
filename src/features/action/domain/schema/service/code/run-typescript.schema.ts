@@ -4,8 +4,10 @@ import { baseCodeActionSchema } from './base'
 export const runTypescriptCodeActionSchema = baseCodeActionSchema
   .extend({
     action: z.literal('run-typescript'),
-    inputData: z.record(z.string(), z.string()).default({}).optional(),
-    code: z.string(),
+    runTypescriptCode: z.object({
+      inputData: z.record(z.string(), z.string()).default({}).optional(),
+      code: z.string(),
+    }),
   })
   .meta({
     title: 'Run Typescript',

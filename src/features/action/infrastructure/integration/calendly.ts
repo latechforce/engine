@@ -9,10 +9,11 @@ export class CalendlyActionIntegration {
     const calendly = new CalendlyIntegration(token.access_token)
     switch (this.schema.action) {
       case 'list-webhook-subscriptions': {
+        const params = this.schema.listWebhookSubscriptionsCalendly
         const currentUser = await calendly.getCurrentUser()
-        const organization = this.schema.organization ?? currentUser.resource.current_organization
-        const scope = this.schema.scope ?? 'user'
-        const count = this.schema.count ?? 20
+        const organization = params.organization ?? currentUser.resource.current_organization
+        const scope = params.scope ?? 'user'
+        const count = params.count ?? 20
         const user = scope === 'user' ? currentUser.resource.uri : undefined
         return calendly.listWebhookSubscriptions({
           organization,

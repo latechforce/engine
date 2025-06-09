@@ -18,14 +18,16 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-typescript',
-        requestBody: {
-          type: 'object',
-          properties: {
-            message: { type: 'string' },
+        postHttp: {
+          path: 'run-typescript',
+          requestBody: {
+            type: 'object',
+            properties: {
+              message: { type: 'string' },
+            },
+            required: ['message'],
+            additionalProperties: false,
           },
-          required: ['message'],
-          additionalProperties: false,
         },
       },
       actions: [
@@ -33,13 +35,15 @@ export default {
           service: 'code',
           action: 'run-typescript',
           name: 'runTypescriptCode',
-          inputData: {
-            body: '{{json trigger.body}}',
+          runTypescriptCode: {
+            inputData: {
+              body: '{{json trigger.body}}',
+            },
+            code: String(function (context: CodeContext<InputData>) {
+              const { message } = context.inputData.body
+              return { message }
+            }),
           },
-          code: String(function (context: CodeContext<InputData>) {
-            const { message } = context.inputData.body
-            return { message }
-          }),
         },
       ],
     },

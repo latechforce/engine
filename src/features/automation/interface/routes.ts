@@ -9,16 +9,21 @@ import {
 
 export const automationRoutes = new Hono<HonoType>()
   .get('/', AutomationController.list)
-  .get('/:path', (c) => AutomationController.trigger(c, { path: c.req.param('path'), body: {} }))
-  .post('/:path', automationPostJsonValidator, (c) =>
+  .get('/:automationIdOrPath', (c) =>
     AutomationController.trigger(c, {
-      path: c.req.param('path'),
+      automationIdOrPath: c.req.param('automationIdOrPath'),
+      body: {},
+    })
+  )
+  .post('/:automationIdOrPath', automationPostJsonValidator, (c) =>
+    AutomationController.trigger(c, {
+      automationIdOrPath: c.req.param('automationIdOrPath'),
       body: c.req.valid('json'),
     })
   )
-  .post('/:path/form', automationFormValidator, (c) =>
+  .post('/:automationIdOrPath/form', automationFormValidator, (c) =>
     AutomationController.trigger(c, {
-      path: c.req.param('path'),
+      automationIdOrPath: c.req.param('automationIdOrPath'),
       body: c.req.valid('form'),
     })
   )

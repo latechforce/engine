@@ -12,24 +12,30 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'response',
+        postHttp: {
+          path: 'response',
+        },
       },
       actions: [
         {
           name: 'buildMessage',
           service: 'code',
           action: 'run-typescript',
-          code: String(function () {
-            const message: string = 'Hello world!'
-            return { message }
-          }),
+          runTypescriptCode: {
+            code: String(function () {
+              const message: string = 'Hello world!'
+              return { message }
+            }),
+          },
         },
         {
           name: 'sendResponse',
           service: 'http',
           action: 'response',
-          body: {
-            message: '{{ buildMessage.message }}',
+          responseHttp: {
+            body: {
+              message: '{{ buildMessage.message }}',
+            },
           },
         },
       ],

@@ -17,10 +17,12 @@ export default {
           service: 'code',
           action: 'run-javascript',
           name: 'runJavascriptCode',
-          code: String(function () {
-            const message = 'Hello, world!'
-            return { mesesage }
-          }),
+          runJavascriptCode: {
+            code: String(function () {
+              const message = 'Hello, world!'
+              return { mesesage }
+            }),
+          },
         },
       ],
     },

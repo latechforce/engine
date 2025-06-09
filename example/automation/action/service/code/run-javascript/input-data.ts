@@ -12,15 +12,17 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: '/run-javascript',
-        requestBody: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string',
+        postHttp: {
+          path: '/run-javascript',
+          requestBody: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+              },
             },
+            required: ['name'],
           },
-          required: ['name'],
         },
       },
       actions: [
@@ -28,15 +30,17 @@ export default {
           service: 'code',
           action: 'run-javascript',
           name: 'runJavascriptCode',
-          inputData: {
-            name: '{{trigger.body.name}}',
+          runJavascriptCode: {
+            inputData: {
+              name: '{{trigger.body.name}}',
+            },
+            // @ts-expect-error - CodeContext is not defined in the externals
+            code: String(function (context) {
+              const { name } = context.inputData
+              const message: string = `Hello, ${name}!`
+              return { message }
+            }),
           },
-          // @ts-expect-error - CodeContext is not defined in the externals
-          code: String(function (context) {
-            const { name } = context.inputData
-            const message: string = `Hello, ${name}!`
-            return { message }
-          }),
         },
       ],
     },

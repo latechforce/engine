@@ -13,7 +13,7 @@ export default {
       trigger: {
         service: 'linkedin-ads',
         event: 'new-lead-gen-form-response',
-        path: '/linkedin-ads-new-lead-gen-form-response',
+        newLeadGenFormResponseLinkedinAds: {},
         account: 'LinkedIn Ads',
       },
       actions: [],

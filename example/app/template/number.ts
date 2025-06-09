@@ -16,14 +16,16 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-typescript',
-        requestBody: {
-          type: 'object',
-          properties: {
-            amount: { type: 'number' },
+        postHttp: {
+          path: 'run-typescript',
+          requestBody: {
+            type: 'object',
+            properties: {
+              amount: { type: 'number' },
+            },
+            required: ['amount'],
+            additionalProperties: false,
           },
-          required: ['amount'],
-          additionalProperties: false,
         },
       },
       actions: [
@@ -31,13 +33,15 @@ export default {
           service: 'code',
           action: 'run-typescript',
           name: 'runTypescriptCode',
-          inputData: {
-            amount: '{{number trigger.body.amount}}',
+          runTypescriptCode: {
+            inputData: {
+              amount: '{{number trigger.body.amount}}',
+            },
+            code: String(function (context: CodeContext<InputData>) {
+              const { amount } = context.inputData
+              return { amount }
+            }),
           },
-          code: String(function (context: CodeContext<InputData>) {
-            const { amount } = context.inputData
-            return { amount }
-          }),
         },
       ],
     },

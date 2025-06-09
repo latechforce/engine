@@ -13,7 +13,9 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: '/create-spreadsheet-row',
+        postHttp: {
+          path: '/create-spreadsheet-row',
+        },
       },
       actions: [
         {
@@ -21,6 +23,14 @@ export default {
           account: 'Google Sheets',
           service: 'google-sheets',
           action: 'create-spreadsheet-row',
+          createSpreadsheetRowGoogleSheets: {
+            spreadsheetId: '1234567890',
+            sheetName: 'Sheet1',
+            row: {
+              name: 'John Doe',
+              email: 'john.doe@example.com',
+            },
+          },
         },
       ],
     },

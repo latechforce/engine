@@ -12,15 +12,17 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'post',
-        requestBody: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string',
+        postHttp: {
+          path: 'post',
+          requestBody: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+              },
             },
+            required: ['name'],
           },
-          required: ['name'],
         },
       },
       actions: [
@@ -28,8 +30,10 @@ export default {
           name: 'response',
           service: 'http',
           action: 'response',
-          body: {
-            message: 'Hello, {{trigger.body.name}}!',
+          responseHttp: {
+            body: {
+              message: 'Hello, {{trigger.body.name}}!',
+            },
           },
         },
       ],

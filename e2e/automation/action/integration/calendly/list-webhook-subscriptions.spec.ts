@@ -9,7 +9,7 @@ test('should run a calendly list webhook subscriptions action', async ({ startEx
 
   // WHEN
   await connectTo('calendly', page)
-  const response = await page.request.post('/api/automations/list-webhook-subscriptions')
+  const response = await page.request.post('/api/automations/1')
 
   // THEN
   const { data }: { data: ListWebhookSubscriptionsResponse } = await response.json()

@@ -50,13 +50,13 @@ export class TriggerRepository implements ITriggerRepository {
 
   async setupIntegration(trigger: IntegrationTrigger): Promise<void> {
     try {
-      const integration = toTriggerIntegration(trigger.schema)
+      const integration = toTriggerIntegration(trigger.schema, trigger.automation.schema.id)
       const token = await this.tokenRepository.getAccessToken(trigger.connection)
       if (token) await integration.setupTrigger(token, trigger.url)
     } catch (error) {
       if (error instanceof HTTPError) {
         const result = {
-          automation: trigger.automationName,
+          automation: trigger.automation.schema.name,
           service: trigger.schema.service,
           status: error.response.status,
           message: error.message,

@@ -8,26 +8,30 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-typescript',
+        postHttp: {
+          path: 'run-typescript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-typescript',
           name: 'runTypescriptCode',
-          code: String(async function (context: CodeContext) {
-            const pictures = context.bucket('pictures')
-            await pictures.upload('picture.jpg', new Uint8Array([1, 2, 3]))
-            const data = await pictures.download('picture.jpg')
-            const object = await pictures.get('picture.jpg')
-            const list = await pictures.list()
-            await pictures.delete('picture.jpg')
-            return {
-              data,
-              list,
-              object,
-            }
-          }),
+          runTypescriptCode: {
+            code: String(async function (context: CodeContext) {
+              const pictures = context.bucket('pictures')
+              await pictures.upload('picture.jpg', new Uint8Array([1, 2, 3]))
+              const data = await pictures.download('picture.jpg')
+              const object = await pictures.get('picture.jpg')
+              const list = await pictures.list()
+              await pictures.delete('picture.jpg')
+              return {
+                data,
+                list,
+                object,
+              }
+            }),
+          },
         },
       ],
     },

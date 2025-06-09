@@ -12,7 +12,9 @@ export default {
       trigger: {
         service: 'http',
         event: 'get',
-        path: 'get',
+        getHttp: {
+          path: 'get',
+        },
       },
       actions: [],
     },

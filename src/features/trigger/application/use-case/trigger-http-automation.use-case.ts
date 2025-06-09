@@ -32,16 +32,19 @@ export class TriggerHttpAutomationUseCase {
 
   async execute(
     app: App,
-    paramPath: string,
+    automationIdOrPath: string,
     request: Request,
     body: Record<string, unknown>
   ): Promise<ResponseDto> {
-    const automation = app.automations.find(({ trigger }) => {
-      if (trigger.path === paramPath) {
-        if (trigger.schema.service === 'http') {
-          return request.method.toLowerCase() === trigger.schema.event.toLowerCase()
+    console.log(automationIdOrPath)
+    const automation = app.automations.find(({ schema }) => {
+      if (schema.id === Number(automationIdOrPath)) return true
+      if (schema.trigger.service === 'http') {
+        if (schema.trigger.event === 'post' && request.method === 'POST') {
+          return schema.trigger.postHttp.path.replace(/^\//, '') === automationIdOrPath
+        } else if (schema.trigger.event === 'get' && request.method === 'GET') {
+          return schema.trigger.getHttp.path.replace(/^\//, '') === automationIdOrPath
         }
-        return true
       }
       return false
     })
@@ -103,8 +106,8 @@ export class TriggerHttpAutomationUseCase {
             trigger.body = fields
           }
           if (
-            schema.requestBody &&
-            !this.triggerRepository.validateData(schema.requestBody, trigger.body)
+            schema.postHttp.requestBody &&
+            !this.triggerRepository.validateData(schema.postHttp.requestBody, trigger.body)
           ) {
             throw new TriggerError('Invalid body', 400)
           }
@@ -136,7 +139,11 @@ export class TriggerHttpAutomationUseCase {
       initRun = new Run(automation.schema, { trigger })
       await this.runRepository.create(initRun)
     }
-    if ((schema.service === 'http' && schema.respondImmediately) || schema.service !== 'http') {
+    if (
+      ('postHttp' in schema && schema.postHttp.respondImmediately) ||
+      ('getHttp' in schema && schema.getHttp.respondImmediately) ||
+      schema.service !== 'http'
+    ) {
       return { success: true, runId: initRun?.id }
     }
     if (!initRun) {
@@ -152,9 +159,9 @@ export class TriggerHttpAutomationUseCase {
           switch (run.status) {
             case 'playing':
               if (run.lastActionName === responseActionSchema?.name) {
-                if (responseActionSchema.body) {
+                if (responseActionSchema.responseHttp.body) {
                   const response = this.triggerRepository.fillTemplateObject(
-                    responseActionSchema.body,
+                    responseActionSchema.responseHttp.body,
                     run.data
                   )
                   resolve({ data: response, ...successResponse })

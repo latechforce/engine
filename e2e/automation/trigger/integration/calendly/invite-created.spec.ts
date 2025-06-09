@@ -11,7 +11,7 @@ test('should trigger an automation when a calendly invite is created', async ({
 
   // WHEN
   await connectTo('calendly', page)
-  await page.request.post('/api/automations/calendly-invite-created', {
+  await page.request.post('/api/automations/1', {
     data: webhookPayloadInviteCreated,
   })
 

@@ -4,7 +4,9 @@ import { baseDatabaseTriggerSchema } from './base'
 export const recordCreatedDatabaseTriggerSchema = baseDatabaseTriggerSchema
   .extend({
     event: z.literal('record-created'),
-    table: z.string(),
+    recordCreatedDatabase: z.object({
+      table: z.string(),
+    }),
   })
   .meta({
     title: 'Record Created',

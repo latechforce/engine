@@ -19,7 +19,8 @@ export class SetupActionUseCase {
       case 'code': {
         switch (schema.action) {
           case 'run-typescript': {
-            const error = await this.actionRepository.code(app, {}).lint(schema.code)
+            const { code } = schema.runTypescriptCode
+            const error = await this.actionRepository.code(app, {}).lint(code)
             if (error) {
               this.actionRepository.error(error)
               throw new Error('Invalid Typescript code')
@@ -27,7 +28,8 @@ export class SetupActionUseCase {
             break
           }
           case 'run-javascript': {
-            const error = await this.actionRepository.code(app, {}).lint(schema.code)
+            const { code } = schema.runJavascriptCode
+            const error = await this.actionRepository.code(app, {}).lint(code)
             if (error) {
               this.actionRepository.error(error)
               throw new Error('Invalid Javascript code')
@@ -60,13 +62,12 @@ export class SetupActionUseCase {
         switch (schema.action) {
           case 'only-continue-if':
             break
-        }
-        break
-      }
-      case 'paths': {
-        switch (schema.action) {
           case 'split-into-paths':
             break
+          default: {
+            const _exhaustiveCheck: never = schema
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+          }
         }
         break
       }
@@ -74,6 +75,10 @@ export class SetupActionUseCase {
         switch (schema.action) {
           case 'list-webhook-subscriptions':
             break
+          default: {
+            const _exhaustiveCheck: never = schema
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+          }
         }
         break
       }
@@ -81,6 +86,21 @@ export class SetupActionUseCase {
         switch (schema.action) {
           case 'create-spreadsheet-row':
             break
+          default: {
+            const _exhaustiveCheck: never = schema
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+          }
+        }
+        break
+      }
+      case 'google-gmail': {
+        switch (schema.action) {
+          case 'send-email':
+            break
+          default: {
+            const _exhaustiveCheck: never = schema
+            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+          }
         }
         break
       }

@@ -4,6 +4,11 @@ import { baseGoogleSheetsActionSchema } from './base'
 export const createSpreadsheetRowGoogleSheetsActionSchema = baseGoogleSheetsActionSchema
   .extend({
     action: z.literal('create-spreadsheet-row'),
+    createSpreadsheetRowGoogleSheets: z.object({
+      spreadsheetId: z.string(),
+      sheetName: z.string(),
+      row: z.record(z.string(), z.string()),
+    }),
   })
   .meta({
     title: 'Create a Google Sheets row',

@@ -56,27 +56,32 @@ export class SetupAutomationUseCase {
 
     // Build OpenAPI routes
     const { schema } = automation.trigger
-    if ('path' in schema) {
+    if ('postHttp' in schema || 'getHttp' in schema) {
       const responseAction = automation.actions.find(
         (action) => action.schema.service === 'http' && action.schema.action === 'response'
       )
+
       const response =
-        responseAction && 'body' in responseAction.schema && responseAction.schema.body
-          ? this.generateJsonSchema(responseAction.schema.body)
+        responseAction &&
+        'responseHttp' in responseAction.schema &&
+        responseAction.schema.responseHttp.body
+          ? this.generateJsonSchema(responseAction.schema.responseHttp.body)
           : undefined
       const method = schema.event === 'get' ? 'get' : 'post'
       this.automationRepository.addOpenAPIRoute({
         summary: `Trigger "${automation.schema.name}"`,
         method,
-        path: '/' + join('automations', schema.path),
+        path:
+          '/' +
+          join('automations', schema.event === 'get' ? schema.getHttp.path : schema.postHttp.path),
         description: `Run the automation "${automation.schema.name}" from a ${method.toUpperCase()} request`,
         tags: [`Automation`],
         requestBody:
-          schema.event === 'post' && schema.requestBody
+          schema.event === 'post' && schema.postHttp.requestBody
             ? {
                 content: {
                   'application/json': {
-                    schema: this.convertJsonSchemaToOpenApi(schema.requestBody),
+                    schema: this.convertJsonSchemaToOpenApi(schema.postHttp.requestBody),
                   },
                 },
               }

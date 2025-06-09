@@ -4,8 +4,10 @@ import { baseCodeActionSchema } from './base'
 export const runJavascriptCodeActionSchema = baseCodeActionSchema
   .extend({
     action: z.literal('run-javascript'),
-    inputData: z.record(z.string(), z.string()).default({}).optional(),
-    code: z.string(),
+    runJavascriptCode: z.object({
+      inputData: z.record(z.string(), z.string()).default({}).optional(),
+      code: z.string(),
+    }),
   })
   .meta({
     title: 'Run Javascript',

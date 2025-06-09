@@ -39,10 +39,10 @@ const FormDataPage = () => {
         setIsSubmitted(true)
       }
     } else if (action.startsWith('/api/automations/')) {
-      const path = action.replace('/api/automations/', '')
-      const response = await client.automations[':path'].form.$post(
+      const automationIdOrPath = action.replace('/api/automations/', '')
+      const response = await client.automations[':automationIdOrPath'].form.$post(
         {
-          param: { path },
+          param: { automationIdOrPath },
           form: values,
         },
         {

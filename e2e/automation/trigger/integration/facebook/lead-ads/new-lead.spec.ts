@@ -11,7 +11,7 @@ test.skip('should trigger an automation when a facebook lead ads new lead is cre
 
   // WHEN
   await connectTo('facebook', page)
-  await page.request.post('/api/automations/facebook-lead-ads-new-lead')
+  await page.request.post('/api/automations/1')
 
   // THEN
   const response = await page.request.get('/api/runs')

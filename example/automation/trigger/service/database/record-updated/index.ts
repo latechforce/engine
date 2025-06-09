@@ -12,20 +12,24 @@ export default {
       trigger: {
         service: 'database',
         event: 'record-updated',
-        table: 'users',
+        recordUpdatedDatabase: {
+          table: 'users',
+        },
       },
       actions: [
         {
           name: 'runTypescript',
           service: 'code',
           action: 'run-typescript',
-          inputData: {
-            name: '{{trigger.fields.name}}',
+          runTypescriptCode: {
+            inputData: {
+              name: '{{trigger.fields.name}}',
+            },
+            code: String(function (context: CodeContext<{ name: string }>) {
+              const { name } = context.inputData
+              return { name }
+            }),
           },
-          code: String(function (context: CodeContext<{ name: string }>) {
-            const { name } = context.inputData
-            return { name }
-          }),
         },
       ],
     },

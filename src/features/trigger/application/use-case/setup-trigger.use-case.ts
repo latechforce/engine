@@ -30,12 +30,12 @@ export class SetupTriggerUseCase {
       const { schema } = trigger
       switch (schema.service) {
         case 'database': {
-          const table = app.findTable(schema.table)
-          if (!table) {
-            throw new Error(`Table "${schema.table}" not found`)
-          }
           switch (schema.event) {
             case 'record-created': {
+              const table = app.findTable(schema.recordCreatedDatabase.table)
+              if (!table) {
+                throw new Error(`Table "${schema.recordCreatedDatabase.table}" not found`)
+              }
               this.recordRepository.onRecordCreated(async (recordRow: RecordRow) => {
                 if (recordRow.tableId === table.schema.id) {
                   const record = await this.recordRepository.read(table, recordRow.id)
@@ -49,6 +49,10 @@ export class SetupTriggerUseCase {
               break
             }
             case 'record-updated': {
+              const table = app.findTable(schema.recordUpdatedDatabase.table)
+              if (!table) {
+                throw new Error(`Table "${schema.recordUpdatedDatabase.table}" not found`)
+              }
               this.recordRepository.onRecordUpdated(async (recordRow: RecordRow) => {
                 if (recordRow.tableId === table.schema.id) {
                   const record = await this.recordRepository.read(table, recordRow.id)

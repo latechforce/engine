@@ -11,14 +11,14 @@ export class AutomationController {
 
   static async trigger(
     c: Context<HonoType>,
-    data: { path: string; body: Record<string, unknown> }
+    data: { automationIdOrPath: string; body: Record<string, unknown> }
   ) {
     const app = c.get('app')
-    const paramPath = c.req.param('path')
+    const automationIdOrPath = c.req.param('automationIdOrPath')
     const triggerHttpAutomationUseCase = c.get('triggerHttpAutomationUseCase')
     const triggerHttpAutomationDto = await triggerHttpAutomationUseCase.execute(
       app,
-      paramPath,
+      automationIdOrPath,
       c.req.raw,
       data.body
     )

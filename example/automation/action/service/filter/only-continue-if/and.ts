@@ -12,14 +12,16 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: '/run-filter',
+        postHttp: {
+          path: '/run-filter',
+        },
       },
       actions: [
         {
           name: 'onlyContinueIf',
           service: 'filter',
           action: 'only-continue-if',
-          conditions: {
+          onlyContinueIfFilter: {
             and: [
               {
                 target: '{{ trigger.body.name }}',

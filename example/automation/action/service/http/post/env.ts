@@ -16,16 +16,20 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'post',
+        postHttp: {
+          path: 'post',
+        },
       },
       actions: [
         {
           name: 'request',
           service: 'http',
           action: 'post',
-          url: 'http://localhost:{{env "API_PORT"}}/api/automations/post-response',
-          headers: {
-            'X-Custom-Header': '{{env "TEST_HEADER"}}',
+          postHttp: {
+            url: 'http://localhost:{{env "API_PORT"}}/api/automations/post-response',
+            headers: {
+              'X-Custom-Header': '{{env "TEST_HEADER"}}',
+            },
           },
         },
       ],

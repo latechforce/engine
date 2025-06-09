@@ -3,15 +3,19 @@ import { CalendlyIntegration } from '../../../../shared/infrastructure/integrati
 import type { CalendlyTriggerSchema } from '../../domain/schema/integration/calendly'
 
 export class CalendlyTriggerIntegration {
-  constructor(private readonly schema: CalendlyTriggerSchema) {}
+  constructor(
+    private readonly schema: CalendlyTriggerSchema,
+    private readonly automationId: number
+  ) {}
 
   async setupTrigger(token: Token, url: string) {
     const calendly = new CalendlyIntegration(token.access_token)
     switch (this.schema.event) {
       case 'invite-created': {
+        const params = this.schema.inviteCreatedCalendly
         const currentUser = await calendly.getCurrentUser()
-        const organization = this.schema.organization ?? currentUser.resource.current_organization
-        const scope = this.schema.scope ?? 'user'
+        const organization = params.organization ?? currentUser.resource.current_organization
+        const scope = params.scope ?? 'user'
         const user = scope === 'user' ? currentUser.resource.uri : undefined
         const webhookSubscriptions = await calendly.listWebhookSubscriptions({
           organization,
@@ -19,7 +23,7 @@ export class CalendlyTriggerIntegration {
           user,
         })
         const webhookSubscription = webhookSubscriptions.collection.find((subscription) =>
-          subscription.callback_url.includes(this.schema.path)
+          subscription.callback_url.endsWith(this.automationId.toString())
         )
         if (!webhookSubscription) {
           await calendly.createWebhookSubscription({

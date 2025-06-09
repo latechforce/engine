@@ -12,13 +12,16 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'response',
+        postHttp: {
+          path: 'response',
+        },
       },
       actions: [
         {
           name: 'response',
           service: 'http',
           action: 'response',
+          responseHttp: {},
         },
       ],
     },

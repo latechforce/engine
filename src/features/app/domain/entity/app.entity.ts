@@ -52,6 +52,22 @@ export class App {
       }
       automationIds.add(automation.id)
     }
+    const automationPaths = new Set<string>()
+    for (const automation of this.schema.automations) {
+      if (automation.trigger.service === 'http') {
+        if (automation.trigger.event === 'post') {
+          if (automationPaths.has(automation.trigger.postHttp.path)) {
+            throw new Error(`Duplicate automation path: ${automation.trigger.postHttp.path}`)
+          }
+          automationPaths.add(automation.trigger.postHttp.path)
+        } else if (automation.trigger.event === 'get') {
+          if (automationPaths.has(automation.trigger.getHttp.path)) {
+            throw new Error(`Duplicate automation path: ${automation.trigger.getHttp.path}`)
+          }
+          automationPaths.add(automation.trigger.getHttp.path)
+        }
+      }
+    }
     const tableIds = new Set<number>()
     for (const table of this.schema.tables) {
       if (tableIds.has(table.id)) {
@@ -82,15 +98,6 @@ export class App {
         throw new Error(`Duplicate bucket id: ${bucket.id}`)
       }
       bucketIds.add(bucket.id)
-    }
-    const triggerPaths = new Set<string>()
-    for (const automation of this.schema.automations) {
-      if ('path' in automation.trigger) {
-        if (triggerPaths.has(automation.trigger.path)) {
-          throw new Error(`Duplicate trigger path: ${automation.trigger.path}`)
-        }
-        triggerPaths.add(automation.trigger.path)
-      }
     }
     this.connections = this.schema.connections.map(
       (connection) => new Connection(connection, this.env.BASE_URL)

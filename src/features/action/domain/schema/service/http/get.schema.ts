@@ -4,8 +4,10 @@ import { baseHttpActionSchema } from './base'
 export const getHttpActionSchema = baseHttpActionSchema
   .extend({
     action: z.literal('get'),
-    url: z.string(),
-    headers: z.record(z.string(), z.string()).optional(),
+    getHttp: z.object({
+      url: z.string(),
+      headers: z.record(z.string(), z.string()).optional(),
+    }),
   })
   .meta({
     title: 'GET',

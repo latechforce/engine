@@ -18,19 +18,23 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-javascript',
+        postHttp: {
+          path: 'run-javascript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-javascript',
           name: 'runJavascriptCode',
-          // @ts-expect-error - CodeContext is not defined in JavaScript
-          code: String(function (context) {
-            const { customFunction } = context.externals
-            const message = customFunction()
-            return { message }
-          }),
+          runJavascriptCode: {
+            // @ts-expect-error - CodeContext is not defined in JavaScript
+            code: String(function (context) {
+              const { customFunction } = context.externals
+              const message = customFunction()
+              return { message }
+            }),
+          },
         },
       ],
     },

@@ -16,14 +16,16 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-typescript',
-        requestBody: {
-          type: 'object',
-          properties: {
-            success: { type: 'boolean' },
+        postHttp: {
+          path: 'run-typescript',
+          requestBody: {
+            type: 'object',
+            properties: {
+              success: { type: 'boolean' },
+            },
+            required: ['success'],
+            additionalProperties: false,
           },
-          required: ['success'],
-          additionalProperties: false,
         },
       },
       actions: [
@@ -31,13 +33,15 @@ export default {
           service: 'code',
           action: 'run-typescript',
           name: 'runTypescriptCode',
-          inputData: {
-            success: '{{boolean trigger.body.success}}',
+          runTypescriptCode: {
+            inputData: {
+              success: '{{boolean trigger.body.success}}',
+            },
+            code: String(function (context: CodeContext<InputData>) {
+              const { success } = context.inputData
+              return { success }
+            }),
           },
-          code: String(function (context: CodeContext<InputData>) {
-            const { success } = context.inputData
-            return { success }
-          }),
         },
       ],
     },

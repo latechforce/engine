@@ -12,16 +12,20 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'post',
-        respondImmediately: true,
+        postHttp: {
+          path: 'post',
+          respondImmediately: true,
+        },
       },
       actions: [
         {
           name: 'response',
           service: 'http',
           action: 'response',
-          body: {
-            message: 'Hello, world!',
+          responseHttp: {
+            body: {
+              message: 'Hello, world!',
+            },
           },
         },
       ],

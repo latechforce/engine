@@ -17,7 +17,7 @@ import type { Automation } from '../../domain/entity/automation.entity'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
 import type { Action } from '../../../action/domain/entity'
 import type { IntegrationError, ServiceError } from '../../../action/domain/value-object'
-import type { PathsActionSchema } from '../../../action/domain/schema/service/paths'
+import type { SplitIntoPathsFilterActionSchema } from '../../../action/domain/schema/service/filter/split-into-paths.schema'
 
 @injectable()
 export class RunAutomationUseCase {
@@ -131,7 +131,7 @@ export class RunAutomationUseCase {
     } else {
       await this.success(run, action, data, pathName)
       await this.runRepository.update(run)
-      if (action.schema.service === 'paths') {
+      if (action.schema.service === 'filter' && action.schema.action === 'split-into-paths') {
         await this.executePaths(app, run, automation, action.schema, data, pathName)
       }
       this.info(`action "${action.schema.name}" succeeded`)
@@ -169,12 +169,12 @@ export class RunAutomationUseCase {
     app: App,
     run: Run,
     automation: Automation,
-    schema: PathsActionSchema,
+    schema: SplitIntoPathsFilterActionSchema,
     data: Record<string, unknown>,
     pathName?: string
   ) {
     await Promise.all(
-      schema.paths.map(async (path) => {
+      schema.splitIntoPathsFilter.map(async (path) => {
         const nextPathName = (pathName ? pathName + '.' : '') + schema.name + '.' + path.name
         const result = data[path.name]
         if (

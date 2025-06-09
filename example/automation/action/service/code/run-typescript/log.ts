@@ -12,16 +12,20 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: '/run-typescript',
+        postHttp: {
+          path: '/run-typescript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-typescript',
           name: 'runTypescriptCode',
-          code: String(function (context: CodeContext) {
-            context.log.info('Hello, world!')
-          }),
+          runTypescriptCode: {
+            code: String(function (context: CodeContext) {
+              context.log.info('Hello, world!')
+            }),
+          },
         },
       ],
     },

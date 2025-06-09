@@ -30,16 +30,16 @@ export class RunActionUseCase {
         switch (schema.service) {
           case 'code': {
             switch (schema.action) {
-              case 'run-typescript':
-                data = await this.actionRepository
-                  .code(app, schema.inputData)
-                  .runTypescript(schema.code)
+              case 'run-typescript': {
+                const { inputData, code } = schema.runTypescriptCode
+                data = await this.actionRepository.code(app, inputData).runTypescript(code)
                 break
-              case 'run-javascript':
-                data = await this.actionRepository
-                  .code(app, schema.inputData)
-                  .runJavascript(schema.code)
+              }
+              case 'run-javascript': {
+                const { inputData, code } = schema.runJavascriptCode
+                data = await this.actionRepository.code(app, inputData).runJavascript(code)
                 break
+              }
               default: {
                 const _exhaustiveCheck: never = schema
                 throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
@@ -49,16 +49,16 @@ export class RunActionUseCase {
           }
           case 'http': {
             switch (schema.action) {
-              case 'get':
-                data = await this.actionRepository
-                  .http(schema.url, { headers: schema.headers })
-                  .get()
+              case 'get': {
+                const { url, headers } = schema.getHttp
+                data = await this.actionRepository.http(url, { headers }).get()
                 break
-              case 'post':
-                data = await this.actionRepository
-                  .http(schema.url, { headers: schema.headers })
-                  .post(schema.body)
+              }
+              case 'post': {
+                const { url, headers, body } = schema.postHttp
+                data = await this.actionRepository.http(url, { headers }).post(body)
                 break
+              }
               case 'response':
                 break
               default: {
@@ -71,22 +71,14 @@ export class RunActionUseCase {
           case 'filter': {
             switch (schema.action) {
               case 'only-continue-if': {
-                data = await this.runFilterUseCase.execute(schema.conditions, run)
+                const { onlyContinueIfFilter } = schema
+                data = await this.runFilterUseCase.execute(onlyContinueIfFilter, run)
                 break
               }
-              default: {
-                const _exhaustiveCheck: never = schema
-                throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-              }
-            }
-            break
-          }
-          case 'paths': {
-            switch (schema.action) {
               case 'split-into-paths': {
                 const paths: { [key: string]: object } = {}
-                for (const path of schema.paths) {
-                  const result = await this.runFilterUseCase.execute(path.conditions, run)
+                for (const path of schema.splitIntoPathsFilter) {
+                  const result = await this.runFilterUseCase.execute(path.onlyContinueIf, run)
                   paths[path.name] = result
                 }
                 data = paths

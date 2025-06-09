@@ -5,7 +5,7 @@ import { conditionsSchema } from '../../condition'
 export const onlyContinueIfFilterActionSchema = baseFilterActionSchema
   .extend({
     action: z.literal('only-continue-if'),
-    conditions: conditionsSchema,
+    onlyContinueIfFilter: conditionsSchema,
   })
   .meta({
     title: 'Only continue if',

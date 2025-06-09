@@ -19,7 +19,7 @@ export default {
       trigger: {
         service: 'calendly',
         event: 'invite-created',
-        path: '/calendly-invite-created',
+        inviteCreatedCalendly: {},
         account: 'Calendly',
       },
       actions: [],

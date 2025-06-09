@@ -16,14 +16,18 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'get',
+        postHttp: {
+          path: 'get',
+        },
       },
       actions: [
         {
           name: 'request',
           service: 'http',
           action: 'get',
-          url: 'http://localhost:{{env "API_PORT"}}/api/automations/get-response',
+          getHttp: {
+            url: 'http://localhost:{{env "API_PORT"}}/api/automations/get-response',
+          },
         },
       ],
     },

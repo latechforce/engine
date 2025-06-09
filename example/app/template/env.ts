@@ -20,20 +20,24 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-typescript',
+        postHttp: {
+          path: 'run-typescript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-typescript',
           name: 'runTypescriptCode',
-          inputData: {
-            apiKey: '{{env "API_KEY"}}',
+          runTypescriptCode: {
+            inputData: {
+              apiKey: '{{env "API_KEY"}}',
+            },
+            code: String(function (context: CodeContext<InputData>) {
+              const { apiKey } = context.inputData
+              return { apiKey }
+            }),
           },
-          code: String(function (context: CodeContext<InputData>) {
-            const { apiKey } = context.inputData
-            return { apiKey }
-          }),
         },
       ],
     },
