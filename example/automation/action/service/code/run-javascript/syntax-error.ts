@@ -10,7 +10,9 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-javascript',
+        postHttp: {
+          path: 'run-javascript',
+        },
       },
       actions: [
         {
