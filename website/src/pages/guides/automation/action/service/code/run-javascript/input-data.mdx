@@ -39,15 +39,17 @@ const schema: AppSchema = {
       trigger: {
         service: 'http',
         event: 'post',
-        path: '/run-javascript',
-        requestBody: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string',
+        postHttp: {
+          path: '/run-javascript',
+          requestBody: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+              },
             },
+            required: ['name'],
           },
-          required: ['name'],
         },
       },
       actions: [
@@ -55,13 +57,15 @@ const schema: AppSchema = {
           service: 'code',
           action: 'run-javascript',
           name: 'runJavascriptCode',
-          inputData: {
-            name: '{{trigger.body.name}}',
+          runJavascriptCode: {
+            inputData: {
+              name: '{{trigger.body.name}}',
+            },
+            code: String(function (context) {
+              const { name } = context.inputData;
+              return { message: `Hello, ${name}!` };
+            }),
           },
-          code: String(function (context) {
-            const { name } = context.inputData;
-            return { message: `Hello, ${name}!` };
-          }),
         },
       ],
     },

@@ -39,15 +39,17 @@ const schema: AppSchema = {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'post',
-        requestBody: {
-          type: 'object',
-          properties: {
-            name: {
-              type: 'string',
+        postHttp: {
+          path: 'post',
+          requestBody: {
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+              },
             },
+            required: ['name'],
           },
-          required: ['name'],
         },
       },
       actions: [
@@ -55,8 +57,10 @@ const schema: AppSchema = {
           name: 'response',
           service: 'http',
           action: 'response',
-          body: {
-            message: 'Hello, {{trigger.body.name}}!',
+          responseHttp: {
+            body: {
+              message: 'Hello, {{trigger.body.name}}!',
+            },
           },
         },
       ],

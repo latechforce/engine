@@ -39,16 +39,20 @@ const schema: AppSchema = {
       trigger: {
         service: 'http',
         event: 'post',
-        path: 'run-javascript',
+        postHttp: {
+          path: 'run-javascript',
+        },
       },
       actions: [
         {
           service: 'code',
           action: 'run-javascript',
           name: 'runJavascriptCode',
-          code: String(function () {
-            return { message: 'Hello, world!' };
-          }),
+          runJavascriptCode: {
+            code: String(function () {
+              return { message: 'Hello, world!' };
+            }),
+          },
         },
       ],
     },
