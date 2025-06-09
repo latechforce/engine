@@ -35,6 +35,13 @@ export const toConnectionIntegration = (connection: Connection): ConnectionInteg
         'https://www.googleapis.com/auth/drive.file',
       ])
       break
+    case 'google-gmail':
+      integration = new GoogleConnectionIntegration(connection.schema, connection.redirectUri, [
+        'https://www.googleapis.com/auth/gmail.send',
+        'https://www.googleapis.com/auth/gmail.readonly',
+        'https://www.googleapis.com/auth/gmail.modify',
+      ])
+      break
     case 'facebook-lead-ads':
       integration = new FacebookLeadAdsConnectionIntegration(
         connection.schema,

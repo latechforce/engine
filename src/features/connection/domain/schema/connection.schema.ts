@@ -3,14 +3,14 @@ import { z } from 'zod/v4'
 
 // Connection domain imports
 import { calendlyConnectionSchema } from './integration/calendly.schema'
-import { googleSheetsConnectionSchema } from './integration/google-sheets.schema'
+import { googleConnectionSchema } from './integration/google.schema'
 import { facebookLeadAdsConnectionSchema } from './integration/facebook-lead-ads.schema'
 import { linkedinAdsConnectionSchema } from './integration/linkedin-ads.schema'
 
 export const connectionSchema = z
   .union([
     calendlyConnectionSchema,
-    googleSheetsConnectionSchema,
+    googleConnectionSchema,
     facebookLeadAdsConnectionSchema,
     linkedinAdsConnectionSchema,
   ])

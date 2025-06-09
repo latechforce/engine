@@ -71,7 +71,7 @@ if (searchTerm) {
     return undefined
   })
 
-  if (handlers) {
+  if (handlers && process.env.MOCK === '*') {
     mockServer(handlers)
   }
 
@@ -79,7 +79,7 @@ if (searchTerm) {
 
   console.log(
     `Running example/${relative(examplesDir, selectedFile)}${
-      handlers ? ` with mock` : ''
+      process.env.MOCK === '*' ? ` with mock` : ''
     }\n--------------------------------`
   )
 

@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import { CodeChallengeMethod, type Credentials, type OAuth2Client } from 'google-auth-library'
 
 import type { Token } from '../../domain/value-object/token.value-object'
-import type { GoogleConnectionSchema } from '../../domain/schema/integration/google-sheets.schema'
+import type { GoogleConnectionSchema } from '../../domain/schema/integration/google.schema'
 
 export class GoogleConnectionIntegration {
   private readonly oauth2Client: OAuth2Client
