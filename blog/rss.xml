@@ -4,10 +4,29 @@
         <title>LTF Engine Blog</title>
         <link>https://engine.latechforce.com/blog</link>
         <description>LTF Engine Blog</description>
-        <lastBuildDate>Fri, 06 Jun 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 09 Jun 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Release 0.55.0]]></title>
+            <link>https://engine.latechforce.com/blog/release-0-55-0</link>
+            <guid>https://engine.latechforce.com/blog/release-0-55-0</guid>
+            <pubDate>Mon, 09 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Changelog for version 0.55.0]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-55-0"><p class="before-truncate"> 0.55.0   Features  * action: can list table records with filter (33fd4c9) — Thomas JEANNEAU * connection: should connect to Gmail (a689a7f) — Thomas JEANNEAU * connection: should connect to Google Sheets (fe8a7f3) — Thomas JEANNEAU * table: should delete a table record (61c1ef9) — Thomas JEANNEAU *...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0550"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-55-0">0.55.0</a><a href="https://engine.latechforce.com/blog/release-0-55-0#0550" class="hash-link" aria-label="Direct link to 0.55.0" title="Direct link to 0.55.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-55-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li><strong>action:</strong> can list table records with filter (<a href="https://github.com/latechforce/engine/commit/33fd4c9716f0fb3e14e548b84a49d0ed6bfbf4d0" target="_blank" rel="noopener noreferrer">33fd4c9</a>) — Thomas JEANNEAU</li>
+<li><strong>connection:</strong> should connect to Gmail (<a href="https://github.com/latechforce/engine/commit/a689a7f1a1a36d11bca2c0a46111110ce16e6a7c" target="_blank" rel="noopener noreferrer">a689a7f</a>) — Thomas JEANNEAU</li>
+<li><strong>connection:</strong> should connect to Google Sheets (<a href="https://github.com/latechforce/engine/commit/fe8a7f3178d55cbb0012c4b587bf46f95619ae19" target="_blank" rel="noopener noreferrer">fe8a7f3</a>) — Thomas JEANNEAU</li>
+<li><strong>table:</strong> should delete a table record (<a href="https://github.com/latechforce/engine/commit/61c1ef9548f4c373407781a4186611bd511f6bd3" target="_blank" rel="noopener noreferrer">61c1ef9</a>) — Thomas JEANNEAU</li>
+<li><strong>table:</strong> should open and display a table record (<a href="https://github.com/latechforce/engine/commit/9205ceaea68f1bf91a3c71cf2602c6af1f99310b" target="_blank" rel="noopener noreferrer">9205cea</a>) — Thomas JEANNEAU</li>
+<li><strong>table:</strong> should update a table record (<a href="https://github.com/latechforce/engine/commit/c23b02752d80a607a4224501c85d9ffd014ef2d8" target="_blank" rel="noopener noreferrer">c23b027</a>) — Thomas JEANNEAU</li>
+</ul>]]></content:encoded>
+            <category>Release</category>
+        </item>
         <item>
             <title><![CDATA[Fix 0.54.1]]></title>
             <link>https://engine.latechforce.com/blog/fix-0-54-1</link>
