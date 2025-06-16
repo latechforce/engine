@@ -130,7 +130,7 @@
     "@types/bun": "^1.2.15",
     "@types/inversify": "^2.0.33",
     "@types/mime-types": "^3.0.1",
-    "@types/node": "^22.15.30",
+    "@types/node": "^24.0.1",
     "@types/pg": "^8.15.4",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",
