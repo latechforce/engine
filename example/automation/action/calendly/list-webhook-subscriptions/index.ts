@@ -1,7 +1,7 @@
 import type { AppSchema } from '@/types'
 import calendlyConnection from '@/example/connection/calendly'
 import type { Handlers } from '@/script/mock'
-import { handlers as calendlyHandlers } from '../../../../../connection/calendly'
+import { handlers as calendlyHandlers } from '../../../../connection/calendly'
 import { listWebhookSubscriptionsResponse } from '@/e2e/__mocks__/calendly'
 
 export const inGuides = false

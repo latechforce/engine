@@ -1,7 +1,7 @@
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
 import { listWebhookSubscriptionsResponse } from '@/e2e/__mocks__/calendly'
-import type { ListWebhookSubscriptionsResponse } from '../../../../../src/integrations/calendly/types'
+import type { ListWebhookSubscriptionsResponse } from '../../../../src/integrations/calendly/types'
 
 test('should run a calendly list webhook subscriptions action', async ({ startExampleApp }) => {
   // GIVEN
