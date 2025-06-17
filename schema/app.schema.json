@@ -199,147 +199,196 @@
                 ]
               },
               {
-                "title": "Calendly",
-                "description": "The Calendly trigger is a trigger that is triggered by a Calendly event",
+                "title": "Schedule",
+                "description": "The Schedule trigger is a trigger that is triggered by a schedule event",
                 "anyOf": [
                   {
-                    "title": "Invite Created",
-                    "description": "The Calendly invite created trigger is a trigger that is triggered by a invite created event",
+                    "title": "Cron Time",
+                    "description": "The Cron Time trigger is a trigger that is triggered by a cron time",
                     "type": "object",
                     "properties": {
-                      "account": {
-                        "anyOf": [
-                          {
-                            "type": "number"
-                          },
-                          {
-                            "type": "string"
-                          }
-                        ]
-                      },
                       "service": {
                         "type": "string",
-                        "const": "calendly"
+                        "const": "schedule"
                       },
                       "event": {
                         "type": "string",
-                        "const": "invite-created"
+                        "const": "cron-time"
                       },
-                      "inviteCreatedCalendly": {
+                      "cronTime": {
                         "type": "object",
                         "properties": {
-                          "organization": {
-                            "description": "The organization of the trigger",
-                            "default": "Current user organization",
+                          "expression": {
                             "type": "string"
                           },
-                          "scope": {
-                            "description": "The scope of the trigger",
-                            "default": "user",
-                            "type": "string",
-                            "enum": [
-                              "user",
-                              "organization",
-                              "group"
-                            ]
+                          "timeZone": {
+                            "type": "string"
                           }
                         },
+                        "required": [
+                          "expression",
+                          "timeZone"
+                        ],
                         "additionalProperties": false
                       }
                     },
                     "required": [
-                      "account",
                       "service",
                       "event",
-                      "inviteCreatedCalendly"
+                      "cronTime"
                     ],
                     "additionalProperties": false
                   }
                 ]
               },
               {
-                "title": "Facebook Lead Ads",
-                "description": "The Facebook Lead Ads trigger is a trigger that is used to interact with the Facebook Lead Ads API",
+                "title": "Integration Trigger",
+                "description": "The integration trigger is the event that triggers the automation",
                 "anyOf": [
                   {
-                    "title": "New Lead",
-                    "description": "The Facebook Lead Ads new lead trigger is a trigger that is used to trigger an automation when a new lead is created",
-                    "type": "object",
-                    "properties": {
-                      "account": {
-                        "anyOf": [
-                          {
-                            "type": "number"
-                          },
-                          {
-                            "type": "string"
-                          }
-                        ]
-                      },
-                      "service": {
-                        "type": "string",
-                        "const": "facebook-lead-ads"
-                      },
-                      "event": {
-                        "type": "string",
-                        "const": "new-lead"
-                      },
-                      "newLeadFacebookLeadAds": {
+                    "title": "Calendly",
+                    "description": "The Calendly trigger is a trigger that is triggered by a Calendly event",
+                    "anyOf": [
+                      {
+                        "title": "Invite Created",
+                        "description": "The Calendly invite created trigger is a trigger that is triggered by a invite created event",
                         "type": "object",
-                        "properties": {},
+                        "properties": {
+                          "account": {
+                            "anyOf": [
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "service": {
+                            "type": "string",
+                            "const": "calendly"
+                          },
+                          "event": {
+                            "type": "string",
+                            "const": "invite-created"
+                          },
+                          "inviteCreatedCalendly": {
+                            "type": "object",
+                            "properties": {
+                              "organization": {
+                                "description": "The organization of the trigger",
+                                "default": "Current user organization",
+                                "type": "string"
+                              },
+                              "scope": {
+                                "description": "The scope of the trigger",
+                                "default": "user",
+                                "type": "string",
+                                "enum": [
+                                  "user",
+                                  "organization",
+                                  "group"
+                                ]
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "account",
+                          "service",
+                          "event",
+                          "inviteCreatedCalendly"
+                        ],
                         "additionalProperties": false
                       }
-                    },
-                    "required": [
-                      "account",
-                      "service",
-                      "event",
-                      "newLeadFacebookLeadAds"
-                    ],
-                    "additionalProperties": false
-                  }
-                ]
-              },
-              {
-                "title": "LinkedIn Ads",
-                "description": "The LinkedIn Ads trigger is a trigger that is used to interact with the LinkedIn Ads API",
-                "anyOf": [
+                    ]
+                  },
                   {
-                    "title": "New Lead Gen Form Response",
-                    "description": "The LinkedIn Ads new lead gen form response trigger is a trigger that is used to trigger an automation when a new lead gen form response is created",
-                    "type": "object",
-                    "properties": {
-                      "account": {
-                        "anyOf": [
-                          {
-                            "type": "number"
-                          },
-                          {
-                            "type": "string"
-                          }
-                        ]
-                      },
-                      "service": {
-                        "type": "string",
-                        "const": "linkedin-ads"
-                      },
-                      "event": {
-                        "type": "string",
-                        "const": "new-lead-gen-form-response"
-                      },
-                      "newLeadGenFormResponseLinkedinAds": {
+                    "title": "Facebook Lead Ads",
+                    "description": "The Facebook Lead Ads trigger is a trigger that is used to interact with the Facebook Lead Ads API",
+                    "anyOf": [
+                      {
+                        "title": "New Lead",
+                        "description": "The Facebook Lead Ads new lead trigger is a trigger that is used to trigger an automation when a new lead is created",
                         "type": "object",
-                        "properties": {},
+                        "properties": {
+                          "account": {
+                            "anyOf": [
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "service": {
+                            "type": "string",
+                            "const": "facebook-lead-ads"
+                          },
+                          "event": {
+                            "type": "string",
+                            "const": "new-lead"
+                          },
+                          "newLeadFacebookLeadAds": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "account",
+                          "service",
+                          "event",
+                          "newLeadFacebookLeadAds"
+                        ],
                         "additionalProperties": false
                       }
-                    },
-                    "required": [
-                      "account",
-                      "service",
-                      "event",
-                      "newLeadGenFormResponseLinkedinAds"
-                    ],
-                    "additionalProperties": false
+                    ]
+                  },
+                  {
+                    "title": "LinkedIn Ads",
+                    "description": "The LinkedIn Ads trigger is a trigger that is used to interact with the LinkedIn Ads API",
+                    "anyOf": [
+                      {
+                        "title": "New Lead Gen Form Response",
+                        "description": "The LinkedIn Ads new lead gen form response trigger is a trigger that is used to trigger an automation when a new lead gen form response is created",
+                        "type": "object",
+                        "properties": {
+                          "account": {
+                            "anyOf": [
+                              {
+                                "type": "number"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "service": {
+                            "type": "string",
+                            "const": "linkedin-ads"
+                          },
+                          "event": {
+                            "type": "string",
+                            "const": "new-lead-gen-form-response"
+                          },
+                          "newLeadGenFormResponseLinkedinAds": {
+                            "type": "object",
+                            "properties": {},
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "account",
+                          "service",
+                          "event",
+                          "newLeadGenFormResponseLinkedinAds"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
                   }
                 ]
               }
@@ -1148,6 +1197,334 @@
       "description": "The action is an action that is performed by the automation",
       "anyOf": [
         {
+          "title": "HTTP",
+          "description": "The HTTP action is an action that is performed by the automation",
+          "anyOf": [
+            {
+              "title": "GET",
+              "description": "The GET HTTP action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string",
+                  "const": "http"
+                },
+                "action": {
+                  "type": "string",
+                  "const": "get"
+                },
+                "getHttp": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "headers": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "getHttp"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "title": "POST",
+              "description": "The POST HTTP action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string",
+                  "const": "http"
+                },
+                "action": {
+                  "type": "string",
+                  "const": "post"
+                },
+                "postHttp": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "headers": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "body": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "postHttp"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "title": "Response",
+              "description": "The response HTTP action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string",
+                  "const": "http"
+                },
+                "action": {
+                  "type": "string",
+                  "const": "response"
+                },
+                "responseHttp": {
+                  "type": "object",
+                  "properties": {
+                    "body": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {}
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "responseHttp"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "title": "Code",
+          "description": "The code action is a code action that is performed by the automation",
+          "anyOf": [
+            {
+              "title": "Run Typescript",
+              "description": "The run typescript code action is a code action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string",
+                  "const": "code"
+                },
+                "action": {
+                  "type": "string",
+                  "const": "run-typescript"
+                },
+                "runTypescriptCode": {
+                  "type": "object",
+                  "properties": {
+                    "inputData": {
+                      "default": {},
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "runTypescriptCode"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "title": "Run Javascript",
+              "description": "The run javascript code action is a code action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string",
+                  "const": "code"
+                },
+                "action": {
+                  "type": "string",
+                  "const": "run-javascript"
+                },
+                "runJavascriptCode": {
+                  "type": "object",
+                  "properties": {
+                    "inputData": {
+                      "default": {},
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "runJavascriptCode"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
+          "title": "Filter",
+          "description": "The Filter action is an action that is performed by the automation",
+          "anyOf": [
+            {
+              "title": "Only continue if",
+              "description": "The Only continue if filter action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string",
+                  "const": "filter"
+                },
+                "action": {
+                  "type": "string",
+                  "const": "only-continue-if"
+                },
+                "onlyContinueIfFilter": {
+                  "$ref": "#/$defs/__schema2"
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "onlyContinueIfFilter"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "title": "Split into paths",
+              "description": "The Split into paths filter action is an action that is performed by the automation",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string",
+                  "const": "filter"
+                },
+                "action": {
+                  "type": "string",
+                  "const": "split-into-paths"
+                },
+                "splitIntoPathsFilter": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "onlyContinueIf": {
+                        "$ref": "#/$defs/__schema2"
+                      },
+                      "actions": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/__schema1"
+                        }
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "onlyContinueIf",
+                      "actions"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "splitIntoPathsFilter"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        {
           "anyOf": [
             {
               "title": "Calendly",
@@ -1221,8 +1598,8 @@
               "description": "The Google Sheets action is a action that is used to interact with the Google Sheets API",
               "anyOf": [
                 {
-                  "title": "Create a Google Sheets row",
-                  "description": "The Google Sheets create row action is a action that creates a row in a Google Sheets spreadsheet",
+                  "title": "Append values to a Google Sheets",
+                  "description": "The Google Sheets append values action is a action that appends values to a Google Sheets spreadsheet",
                   "type": "object",
                   "properties": {
                     "name": {
@@ -1244,31 +1621,31 @@
                     },
                     "action": {
                       "type": "string",
-                      "const": "create-spreadsheet-row"
+                      "const": "append-values"
                     },
-                    "createSpreadsheetRowGoogleSheets": {
+                    "appendValuesGoogleSheets": {
                       "type": "object",
                       "properties": {
                         "spreadsheetId": {
                           "type": "string"
                         },
-                        "sheetName": {
+                        "range": {
                           "type": "string"
                         },
-                        "row": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
                           }
                         }
                       },
                       "required": [
                         "spreadsheetId",
-                        "sheetName",
-                        "row"
+                        "range",
+                        "values"
                       ],
                       "additionalProperties": false
                     }
@@ -1278,7 +1655,7 @@
                     "account",
                     "service",
                     "action",
-                    "createSpreadsheetRowGoogleSheets"
+                    "appendValuesGoogleSheets"
                   ],
                   "additionalProperties": false
                 }
@@ -1341,338 +1718,6 @@
                     "service",
                     "action",
                     "sendEmailGoogleGmail"
-                  ],
-                  "additionalProperties": false
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "anyOf": [
-            {
-              "title": "Code",
-              "description": "The code action is a code action that is performed by the automation",
-              "anyOf": [
-                {
-                  "title": "Run Typescript",
-                  "description": "The run typescript code action is a code action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "type": "string",
-                      "const": "code"
-                    },
-                    "action": {
-                      "type": "string",
-                      "const": "run-typescript"
-                    },
-                    "runTypescriptCode": {
-                      "type": "object",
-                      "properties": {
-                        "inputData": {
-                          "default": {},
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
-                          }
-                        },
-                        "code": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "code"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action",
-                    "runTypescriptCode"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "title": "Run Javascript",
-                  "description": "The run javascript code action is a code action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "type": "string",
-                      "const": "code"
-                    },
-                    "action": {
-                      "type": "string",
-                      "const": "run-javascript"
-                    },
-                    "runJavascriptCode": {
-                      "type": "object",
-                      "properties": {
-                        "inputData": {
-                          "default": {},
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
-                          }
-                        },
-                        "code": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "code"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action",
-                    "runJavascriptCode"
-                  ],
-                  "additionalProperties": false
-                }
-              ]
-            },
-            {
-              "title": "HTTP",
-              "description": "The HTTP action is an action that is performed by the automation",
-              "anyOf": [
-                {
-                  "title": "GET",
-                  "description": "The GET HTTP action is an action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "type": "string",
-                      "const": "http"
-                    },
-                    "action": {
-                      "type": "string",
-                      "const": "get"
-                    },
-                    "getHttp": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string"
-                        },
-                        "headers": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "required": [
-                        "url"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action",
-                    "getHttp"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "title": "POST",
-                  "description": "The POST HTTP action is an action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "type": "string",
-                      "const": "http"
-                    },
-                    "action": {
-                      "type": "string",
-                      "const": "post"
-                    },
-                    "postHttp": {
-                      "type": "object",
-                      "properties": {
-                        "url": {
-                          "type": "string"
-                        },
-                        "headers": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {
-                            "type": "string"
-                          }
-                        },
-                        "body": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {}
-                        }
-                      },
-                      "required": [
-                        "url"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action",
-                    "postHttp"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "title": "Response",
-                  "description": "The response HTTP action is an action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "type": "string",
-                      "const": "http"
-                    },
-                    "action": {
-                      "type": "string",
-                      "const": "response"
-                    },
-                    "responseHttp": {
-                      "type": "object",
-                      "properties": {
-                        "body": {
-                          "type": "object",
-                          "propertyNames": {
-                            "type": "string"
-                          },
-                          "additionalProperties": {}
-                        }
-                      },
-                      "additionalProperties": false
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action",
-                    "responseHttp"
-                  ],
-                  "additionalProperties": false
-                }
-              ]
-            },
-            {
-              "title": "Filter",
-              "description": "The Filter action is an action that is performed by the automation",
-              "anyOf": [
-                {
-                  "title": "Only continue if",
-                  "description": "The Only continue if filter action is an action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "type": "string",
-                      "const": "filter"
-                    },
-                    "action": {
-                      "type": "string",
-                      "const": "only-continue-if"
-                    },
-                    "onlyContinueIfFilter": {
-                      "$ref": "#/$defs/__schema2"
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action",
-                    "onlyContinueIfFilter"
-                  ],
-                  "additionalProperties": false
-                },
-                {
-                  "title": "Split into paths",
-                  "description": "The Split into paths filter action is an action that is performed by the automation",
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "service": {
-                      "type": "string",
-                      "const": "filter"
-                    },
-                    "action": {
-                      "type": "string",
-                      "const": "split-into-paths"
-                    },
-                    "splitIntoPathsFilter": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string"
-                          },
-                          "onlyContinueIf": {
-                            "$ref": "#/$defs/__schema2"
-                          },
-                          "actions": {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/$defs/__schema1"
-                            }
-                          }
-                        },
-                        "required": [
-                          "name",
-                          "onlyContinueIf",
-                          "actions"
-                        ],
-                        "additionalProperties": false
-                      }
-                    }
-                  },
-                  "required": [
-                    "name",
-                    "service",
-                    "action",
-                    "splitIntoPathsFilter"
                   ],
                   "additionalProperties": false
                 }
