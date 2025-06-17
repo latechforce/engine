@@ -31,7 +31,9 @@ import type { IObjectRepository } from '../../../bucket/domain/repository-interf
 import { Object } from '../../../bucket/domain/entity/object.entity'
 import { toObjectDto } from '../../../bucket/application/dto/object.dto'
 import type { ConditionsSchema } from '../../domain/schema/condition'
-import type { Token } from '../../../connection/domain/value-object/token.value-object'
+import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { IConnectionRepository } from '../../../connection/domain/repository-interface/connection-repository.interface'
+import type { ITokenRepository } from '../../../connection/domain/repository-interface/token-repository.interface'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -45,7 +47,11 @@ export class ActionRepository implements IActionRepository {
     @inject(TYPES.Table.Repository.Record)
     private readonly recordRepository: IRecordRepository,
     @inject(TYPES.Bucket.Repository.Object)
-    private readonly objectRepository: IObjectRepository
+    private readonly objectRepository: IObjectRepository,
+    @inject(TYPES.Connection.Repository.Connection)
+    private readonly connectionRepository: IConnectionRepository,
+    @inject(TYPES.Connection.Repository.Token)
+    private readonly tokenRepository: ITokenRepository
   ) {}
 
   debug(message: string) {
@@ -171,10 +177,16 @@ export class ActionRepository implements IActionRepository {
 
   async runIntegration(
     schema: IntegrationActionSchema,
-    token: Token
+    connection: ConnectionSchema
   ): Promise<ActionResult<IntegrationError>> {
     try {
-      const integration = toActionIntegration(schema)
+      const integration = toActionIntegration(
+        schema,
+        connection,
+        this.connectionRepository.redirectUri
+      )
+      const token = await this.tokenRepository.getAccessToken(connection)
+      if (!token) throw new Error(`Token not found for connection ${connection.id}`)
       const data = await integration.runAction(token)
       return { data }
     } catch (error) {

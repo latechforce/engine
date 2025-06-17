@@ -3,7 +3,7 @@ import type {
   CreateWebhookSubscriptionResponse,
   GetCurrentUserResponse,
   ListWebhookSubscriptionsResponse,
-} from './types'
+} from './calendly.types'
 
 export class CalendlyIntegration {
   private readonly baseUrl = 'https://api.calendly.com'

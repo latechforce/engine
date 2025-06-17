@@ -1,5 +1,5 @@
 import { z } from 'zod/v4'
-import { calendlyTriggerSchema } from './calendly'
+import { calendlyTriggerSchema } from './calendly/calendly-trigger.schema'
 import { linkedinAdsTriggerSchema } from './linkedin/ads/linkedin-ads-trigger.schema'
 import { facebookLeadAdsTriggerSchema } from './facebook/lead-ads/facebook-lead-ads-trigger.schema'
 

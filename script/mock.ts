@@ -39,6 +39,18 @@ const mockGoogleApis = (handlers: Handlers) => {
             },
           }
         },
+        gmail: () => {
+          return {
+            users: {
+              messages: {
+                send: async () => {
+                  return handlers['https://www.googleapis.com/gmail/v1/users/me/messages']?.POST?.()
+                    ?.json
+                },
+              },
+            },
+          }
+        },
       },
     }
   })

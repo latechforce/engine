@@ -50,6 +50,7 @@ export class GoogleGmailActionIntegration {
           labelIds: response.data.labelIds,
           payload: response.data.payload,
           raw: response.data.raw,
+          snippet: response.data.snippet,
           sizeEstimate: response.data.sizeEstimate,
           threadId: response.data.threadId,
         }

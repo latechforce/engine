@@ -31,7 +31,6 @@ export class TriggerHttpAutomationUseCase {
     request: Request,
     body: Record<string, unknown>
   ): Promise<ResponseDto> {
-    console.log(automationIdOrPath)
     const automation = app.automations.find(({ schema }) => {
       if (schema.id === Number(automationIdOrPath)) return true
       if (schema.trigger.service === 'http') {

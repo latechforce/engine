@@ -1,5 +1,8 @@
 import type { AppSchema } from '@/types'
 import googleGmailConnection from '@/example/connection/google/gmail'
+import { sendEmailResponse } from '@/e2e/__mocks__/google/gmail'
+import type { Handlers } from '@/script/mock'
+import { handlers as googleHandlers } from '@/example/connection/google'
 
 export const inGuides = false
 
@@ -34,3 +37,12 @@ export default {
   ],
   connections: googleGmailConnection.connections,
 } satisfies AppSchema
+
+export const handlers: Handlers = {
+  ...googleHandlers,
+  'https://www.googleapis.com/gmail/v1/users/me/messages': {
+    POST: () => ({
+      json: { data: sendEmailResponse },
+    }),
+  },
+}

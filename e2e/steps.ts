@@ -11,10 +11,7 @@ export async function loginToAdmin(page: Page) {
   })
 }
 
-export async function connectTo(
-  service: 'calendly' | 'google' | 'facebook' | 'linkedin' | 'youcanbookme',
-  page: Page
-) {
+export async function connectTo(service: string, page: Page) {
   await test.step(`Connect to ${service}`, async () => {
     await page.goto('/admin/connections')
     await page.getByRole('button', { name: 'Open menu' }).click()

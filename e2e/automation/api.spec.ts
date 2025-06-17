@@ -3,7 +3,7 @@ import { expect, test } from '../fixtures'
 
 test('should return a list of automations', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'trigger/service/http/post' })
+  const { page } = await startExampleApp({ test, filter: 'trigger/http/post' })
 
   // WHEN
   const response = await page.request.get('/api/automations')

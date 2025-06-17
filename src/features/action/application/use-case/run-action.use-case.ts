@@ -93,9 +93,7 @@ export class RunActionUseCase {
           if (!connection) {
             throw new Error(`Connection not found for account ${actionFilled.account}`)
           }
-          const token = await this.tokenRepository.getAccessToken(connection)
-          if (!token) throw new Error(`Token not found for connection ${connection.id}`)
-          return await this.actionRepository.runIntegration(actionFilled, token)
+          return await this.actionRepository.runIntegration(actionFilled, connection)
         }
       }
       if (!data) data = {}
