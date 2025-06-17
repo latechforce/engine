@@ -1,6 +1,7 @@
 import { CalendlyActionIntegration } from './calendly/calendly-action'
 import type { IntegrationActionSchema } from './action.schema'
 import { GoogleGmailActionIntegration } from './google/gmail/google-gmail-action'
+import { GoogleSheetsActionIntegration } from './google/sheets/google-sheets-action'
 import type { ConnectionSchema } from './connection.schema'
 
 export const toActionIntegration = (
@@ -12,7 +13,10 @@ export const toActionIntegration = (
     case 'calendly':
       return new CalendlyActionIntegration(action)
     case 'google-sheets':
-      throw new Error('Google Sheets integration not implemented')
+      if (connection.service !== 'google-sheets') {
+        throw new Error('Connection and action services do not match')
+      }
+      return new GoogleSheetsActionIntegration(action, connection, redirectUri)
     case 'google-gmail':
       if (connection.service !== 'google-gmail') {
         throw new Error('Connection and action services do not match')

@@ -8,7 +8,7 @@ test('should run a google gmail send email action', async ({ startExampleApp }) 
 
   // WHEN
   await connectTo('google', page)
-  const response = await page.request.post('/api/automations/1')
+  const response = await page.request.post('/api/automations/send-email')
 
   // THEN
   const { data } = await response.json()

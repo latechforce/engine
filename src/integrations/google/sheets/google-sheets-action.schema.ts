@@ -5,23 +5,23 @@ const baseGoogleSheetsActionSchema = baseIntegrationActionSchema.extend({
   service: z.literal('google-sheets'),
 })
 
-const createSpreadsheetRowGoogleSheetsActionSchema = baseGoogleSheetsActionSchema
+const appendSpreadsheetValuesGoogleSheetsActionSchema = baseGoogleSheetsActionSchema
   .extend({
-    action: z.literal('create-spreadsheet-row'),
-    createSpreadsheetRowGoogleSheets: z.object({
+    action: z.literal('append-values'),
+    appendValuesGoogleSheets: z.object({
       spreadsheetId: z.string(),
-      sheetName: z.string(),
-      row: z.record(z.string(), z.string()),
+      range: z.string(),
+      values: z.array(z.array(z.string())),
     }),
   })
   .meta({
-    title: 'Create a Google Sheets row',
+    title: 'Append values to a Google Sheets',
     description:
-      'The Google Sheets create row action is a action that creates a row in a Google Sheets spreadsheet',
+      'The Google Sheets append values action is a action that appends values to a Google Sheets spreadsheet',
   })
 
 export const googleSheetsActionSchema = z
-  .union([createSpreadsheetRowGoogleSheetsActionSchema])
+  .union([appendSpreadsheetValuesGoogleSheetsActionSchema])
   .meta({
     title: 'Google Sheets',
     description:

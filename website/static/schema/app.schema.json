@@ -1389,7 +1389,7 @@
                 },
                 "action": {
                   "type": "string",
-                  "const": "create-spreadsheet-row"
+                  "const": "append-values"
                 }
               },
               "required": [

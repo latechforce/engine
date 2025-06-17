@@ -51,6 +51,19 @@ const mockGoogleApis = (handlers: Handlers) => {
             },
           }
         },
+        sheets: () => {
+          return {
+            spreadsheets: {
+              values: {
+                append: async () => {
+                  return handlers[
+                    'https://sheets.googleapis.com/v4/spreadsheets/1234567890/values/Sheet1!A1:append'
+                  ]?.POST?.()?.json
+                },
+              },
+            },
+          }
+        },
       },
     }
   })

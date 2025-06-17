@@ -83,7 +83,7 @@ export class SetupActionUseCase {
       }
       case 'google-sheets': {
         switch (action.action) {
-          case 'create-spreadsheet-row':
+          case 'append-values':
             break
           default: {
             const _exhaustiveCheck: never = action
