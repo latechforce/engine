@@ -262,7 +262,7 @@ A collection of code samples and walkthroughs for configuring and using LTF Engi
 
 <div style={{ display: 'flex', flexDirection: 'row', gap: '2rem', marginBottom: '2rem' }}>
   ${generateGuideCard(guides.find((g) => g.pathWithIndex.includes('form/index'))!)}
-  ${generateGuideCard(guides.find((g) => g.pathWithIndex.includes('trigger/service/http/post/request-body'))!)}
+  ${generateGuideCard(guides.find((g) => g.pathWithIndex.includes('trigger/http/post/request-body'))!)}
   ${generateGuideCard(guides.find((g) => g.pathWithIndex.includes('table/index'))!)}
 </div>
 
