@@ -1,6 +1,7 @@
 import { inject, injectable } from 'inversify'
 import { HTTPError } from 'ky'
 import type { SchemaObject } from 'ajv'
+import { CronJob } from 'cron'
 import TYPES from '../../../../shared/application/di/types'
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 import type { ITokenRepository } from '../../../../features/connection/domain/repository-interface/token-repository.interface'
@@ -42,6 +43,10 @@ export class TriggerRepository implements ITriggerRepository {
 
   fillTemplateObject(template: Record<string, unknown>, data: object): Record<string, unknown> {
     return this.template.fillObject(template, data)
+  }
+
+  onCronTime(expression: string, timeZone: string, callback: () => Promise<void>): void {
+    new CronJob(expression, callback, null, true, timeZone)
   }
 
   async setupIntegration(

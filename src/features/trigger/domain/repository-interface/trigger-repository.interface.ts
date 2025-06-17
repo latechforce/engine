@@ -13,4 +13,5 @@ export type ITriggerRepository = {
   ): Promise<void>
   fillTemplateObject(template: Record<string, unknown>, data: object): Record<string, unknown>
   validateData(schema: JSONSchemaSchema, data: unknown): boolean
+  onCronTime(expression: string, timeZone: string, callback: () => Promise<void>): void
 }

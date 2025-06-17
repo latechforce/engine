@@ -77,6 +77,29 @@ export class SetupTriggerUseCase {
         case 'http': {
           break
         }
+        case 'schedule': {
+          switch (trigger.event) {
+            case 'cron-time': {
+              const { expression, timeZone } = trigger.cronTime
+              this.triggerRepository.onCronTime(expression, timeZone, async () => {
+                const date = new Date()
+                const run = new Run(automation.schema, {
+                  trigger: {
+                    dateTime: date.toISOString(),
+                    timestamp: date.getTime(),
+                  },
+                })
+                await this.runRepository.create(run)
+              })
+              break
+            }
+            default: {
+              const _exhaustiveCheck: never = trigger
+              throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+            }
+          }
+          break
+        }
         default: {
           const _exhaustiveCheck: never = trigger
           throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
