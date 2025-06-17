@@ -39,7 +39,9 @@ const schema: AppSchema = {
       trigger: {
         service: 'http',
         event: 'get',
-        path: 'get',
+        getHttp: {
+          path: 'get',
+        },
       },
       actions: [],
     },

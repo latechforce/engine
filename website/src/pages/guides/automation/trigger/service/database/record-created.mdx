@@ -39,20 +39,24 @@ const schema: AppSchema = {
       trigger: {
         service: 'database',
         event: 'record-created',
-        table: 'users',
+        recordCreatedDatabase: {
+          table: 'users',
+        },
       },
       actions: [
         {
           name: 'runTypescript',
           service: 'code',
           action: 'run-typescript',
-          inputData: {
-            name: '{{trigger.fields.name}}',
+          runTypescriptCode: {
+            inputData: {
+              name: '{{trigger.fields.name}}',
+            },
+            code: String(function (context) {
+              const { name } = context.inputData;
+              return { name };
+            }),
           },
-          code: String(function (context) {
-            const { name } = context.inputData;
-            return { name };
-          }),
         },
       ],
     },
