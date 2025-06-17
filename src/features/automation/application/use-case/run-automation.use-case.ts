@@ -15,9 +15,9 @@ import { Run } from '../../../run/domain/entity/run.entity'
 import type { IAutomationRepository } from '../../domain/repository-interface/automation-repository.interface'
 import type { Automation } from '../../domain/entity/automation.entity'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
-import type { Action } from '../../../action/domain/entity'
 import type { IntegrationError, ServiceError } from '../../../action/domain/value-object'
-import type { SplitIntoPathsFilterActionSchema } from '../../../action/domain/schema/service/filter/split-into-paths.schema'
+import type { SplitIntoPathsFilterActionSchema } from '../../../action/domain/schema/filter/split-into-paths.schema'
+import type { ActionSchema } from '../../../action/domain/schema/action.schema'
 
 @injectable()
 export class RunAutomationUseCase {
@@ -46,7 +46,7 @@ export class RunAutomationUseCase {
 
         if (path.actions.length > 0) {
           for (const action of path.actions) {
-            if (run.isActionPathSuccess(pathName + '.' + action.schema.name)) {
+            if (run.isActionPathSuccess(pathName + '.' + action.name)) {
               this.debug(`path "${pathName}" has already been run`)
               continue
             }
@@ -65,8 +65,8 @@ export class RunAutomationUseCase {
           await this.runRepository.update(run)
         } else {
           for (const action of automation.actions) {
-            if (run.isActionSuccess(action.schema.name)) {
-              this.debug(`action "${action.schema.name}" has already been run`)
+            if (run.isActionSuccess(action.name)) {
+              this.debug(`action "${action.name}" has already been run`)
               continue
             }
             const shouldContinue = await this.runAction(app, run, automation, action)
@@ -98,7 +98,7 @@ export class RunAutomationUseCase {
     app: App,
     run: Run,
     automation: Automation,
-    action: Action,
+    action: ActionSchema,
     pathName?: string
   ): Promise<boolean> {
     const { data, error } = await this.runActionUseCase.execute(app, action, run)
@@ -108,7 +108,7 @@ export class RunAutomationUseCase {
       return false
     }
 
-    if (action.schema.service === 'filter' && 'canContinue' in data && !data.canContinue) {
+    if (action.service === 'filter' && 'canContinue' in data && !data.canContinue) {
       await this.filter(run, action, data)
       return false
     }
@@ -119,22 +119,22 @@ export class RunAutomationUseCase {
         if (i === 0) {
           await this.success(run, action, item, pathName)
           await this.runRepository.update(run)
-          this.info(`action "${action.schema.name}" succeeded`)
+          this.info(`action "${action.name}" succeeded`)
         } else {
           const newRun = run.clone()
           await this.success(newRun, action, item, pathName)
           await this.runRepository.create(newRun)
-          this.debug(`create new run for action "${action.schema.name}"`)
+          this.debug(`create new run for action "${action.name}"`)
         }
       }
       return true
     } else {
       await this.success(run, action, data, pathName)
       await this.runRepository.update(run)
-      if (action.schema.service === 'filter' && action.schema.action === 'split-into-paths') {
-        await this.executePaths(app, run, automation, action.schema, data, pathName)
+      if (action.service === 'filter' && action.action === 'split-into-paths') {
+        await this.executePaths(app, run, automation, action, data, pathName)
       }
-      this.info(`action "${action.schema.name}" succeeded`)
+      this.info(`action "${action.name}" succeeded`)
     }
 
     return true
@@ -142,27 +142,27 @@ export class RunAutomationUseCase {
 
   private async success(
     run: Run,
-    action: Action,
+    action: ActionSchema,
     data: Record<string, unknown>,
     pathName?: string
   ) {
     if (pathName) {
       run.actionPathSuccess(pathName, data)
     } else {
-      run.actionSuccess(action.schema.name, data)
+      run.actionSuccess(action.name, data)
     }
   }
 
-  private async stop(run: Run, action: Action, error: IntegrationError | ServiceError) {
-    run.stop(action.schema.name, error)
+  private async stop(run: Run, action: ActionSchema, error: IntegrationError | ServiceError) {
+    run.stop(action.name, error)
     await this.runRepository.update(run)
-    this.info(`action "${action.schema.name}" stopped with error: ${error.message}`)
+    this.info(`action "${action.name}" stopped with error: ${error.message}`)
   }
 
-  private async filter(run: Run, action: Action, data: Record<string, unknown>) {
-    run.filter(action.schema.name, data)
+  private async filter(run: Run, action: ActionSchema, data: Record<string, unknown>) {
+    run.filter(action.name, data)
     await this.runRepository.update(run)
-    this.info(`action "${action.schema.name}" filtered`)
+    this.info(`action "${action.name}" filtered`)
   }
 
   private async executePaths(

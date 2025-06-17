@@ -1,4 +1,4 @@
-import type { Connection } from '../../domain/entity/connection.entity'
+import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 import type { ConnectionStatus } from '../../domain/value-object/connection-status.value-object'
 import { toConnectionDto, type ConnectionDto } from './connection.dto'
 
@@ -7,7 +7,7 @@ export type ListConnectionsDto = {
 }
 
 export type ListConnectionsDtoItem = {
-  connection: Connection
+  connection: ConnectionSchema
   status: ConnectionStatus
   authorizationUrl?: string
 }

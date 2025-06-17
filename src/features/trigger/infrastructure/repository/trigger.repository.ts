@@ -1,23 +1,17 @@
-// Third-party imports
 import { inject, injectable } from 'inversify'
 import { HTTPError } from 'ky'
 import type { SchemaObject } from 'ajv'
-
-// Shared imports
 import TYPES from '../../../../shared/application/di/types'
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
-
-// Connection domain imports
 import type { ITokenRepository } from '../../../../features/connection/domain/repository-interface/token-repository.interface'
-
-// Trigger domain imports
 import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
-import type { IntegrationTrigger } from '../../domain/entity/integration-trigger.entity'
-
-// Trigger infrastructure imports
-import { toTriggerIntegration } from '../integration'
+import { toTriggerIntegration } from '../../../../integrations/trigger'
 import type { SchemaService } from '../../../../shared/infrastructure/service/validator.service'
 import type { TemplateService } from '../../../../shared/infrastructure/service/template.service'
+import type { IntegrationTriggerSchema } from '../../../../integrations/trigger.schema'
+import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
+import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 
 @injectable()
 export class TriggerRepository implements ITriggerRepository {
@@ -29,7 +23,9 @@ export class TriggerRepository implements ITriggerRepository {
     @inject(TYPES.Service.Template)
     private readonly template: TemplateService,
     @inject(TYPES.Connection.Repository.Token)
-    private readonly tokenRepository: ITokenRepository
+    private readonly tokenRepository: ITokenRepository,
+    @inject(TYPES.Service.Env)
+    private readonly env: EnvService
   ) {}
 
   debug(message: string) {
@@ -48,16 +44,25 @@ export class TriggerRepository implements ITriggerRepository {
     return this.template.fillObject(template, data)
   }
 
-  async setupIntegration(trigger: IntegrationTrigger): Promise<void> {
+  async setupIntegration(
+    trigger: IntegrationTriggerSchema,
+    connection: ConnectionSchema,
+    automation: Automation
+  ): Promise<void> {
     try {
-      const integration = toTriggerIntegration(trigger.schema, trigger.automation.schema.id)
-      const token = await this.tokenRepository.getAccessToken(trigger.connection)
-      if (token) await integration.setupTrigger(token, trigger.url)
+      let baseUrl = this.env.get('BASE_URL')
+      if (baseUrl.includes('localhost')) {
+        baseUrl = 'https://example.com'
+      }
+      const url = `${baseUrl}/api/automations/${automation.schema.id}`
+      const integration = toTriggerIntegration(trigger, automation.schema.id)
+      const token = await this.tokenRepository.getAccessToken(connection)
+      if (token) await integration.setupTrigger(token, url)
     } catch (error) {
       if (error instanceof HTTPError) {
         const result = {
-          automation: trigger.automation.schema.name,
-          service: trigger.schema.service,
+          automation: automation.schema.name,
+          service: trigger.service,
           status: error.response.status,
           message: error.message,
           response: await error.response.json(),

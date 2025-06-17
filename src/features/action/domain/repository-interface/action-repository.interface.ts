@@ -1,8 +1,8 @@
-import type { Connection } from '../../../connection/domain/entity/connection.entity'
 import type { App } from '../../../app/domain/entity/app.entity'
-import type { IntegrationActionSchema } from '../schema/integration'
+import type { IntegrationActionSchema } from '../../../../integrations/action.schema'
 import type { ActionResult } from '../value-object/action-result.value-object'
 import type { IntegrationError } from '../value-object/integration-error.value.object'
+import type { Token } from '../../../connection/domain/value-object/token.value-object'
 
 export type IActionRepository = {
   debug(message: string): void
@@ -28,6 +28,6 @@ export type IActionRepository = {
   }
   runIntegration: (
     schema: IntegrationActionSchema,
-    connection: Connection
+    token: Token
   ) => Promise<ActionResult<IntegrationError>>
 }

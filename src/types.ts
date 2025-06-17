@@ -10,7 +10,7 @@ export type { AutomationSchema } from './features/automation/domain/schema/autom
 export type { TriggerSchema } from './features/trigger/domain/schema/trigger.schema'
 export type { FieldSchema } from './features/table/domain/schema/field'
 export type { TableSchema } from './features/table/domain/schema/table.schema'
-export type { ConnectionSchema } from './features/connection/domain/schema/connection.schema'
+export type { ConnectionSchema } from './integrations/connection.schema'
 export type { FormSchema } from './features/form/domain/schema/form.schema'
 
 // Infrastructure types

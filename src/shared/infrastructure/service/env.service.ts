@@ -21,7 +21,7 @@ export class EnvService {
     this.env = {
       ...this.parsedEnv,
       PORT: port,
-      BASE_URL: this.parsedEnv.BASE_URL ?? `http://localhost:${port}`,
+      BASE_URL: this.parsedEnv.BASE_URL?.replace(/\/$/, '') ?? `http://localhost:${port}`,
     }
     return this.env
   }

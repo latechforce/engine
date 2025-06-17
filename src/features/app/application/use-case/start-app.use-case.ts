@@ -8,7 +8,7 @@ import type { ValidateAppUseCase } from './validate-app.use-case'
 import type { SetupConnectionUseCase } from '../../../connection/application/use-case/setup-connection.use-case'
 import type { SetupBucketUseCase } from '../../../bucket/application/use-case/setup-bucket.use-case'
 import { Bucket } from '../../../bucket/domain/entity/bucket.entity'
-import type { ConnectionSchema } from '../../../connection/domain/schema/connection.schema'
+import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 
 @injectable()
 export class StartAppUseCase {

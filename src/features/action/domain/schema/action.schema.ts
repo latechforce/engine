@@ -1,10 +1,14 @@
 import { z } from 'zod/v4'
-import { integrationActionSchema } from './integration'
-import { serviceActionSchema } from './service'
+import { httpActionSchema } from './http'
+import { codeActionSchema } from './code'
+import { filterActionSchema } from './filter'
+import { integrationActionSchema } from '../../../../integrations/action.schema'
 
-export const actionSchema = z.union([integrationActionSchema, serviceActionSchema]).meta({
-  title: 'Action',
-  description: 'The action is an action that is performed by the automation',
-})
+export const actionSchema = z
+  .union([httpActionSchema, codeActionSchema, filterActionSchema, integrationActionSchema])
+  .meta({
+    title: 'Action',
+    description: 'The action is an action that is performed by the automation',
+  })
 
 export type ActionSchema = z.infer<typeof actionSchema>

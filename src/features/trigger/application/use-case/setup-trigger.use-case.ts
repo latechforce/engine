@@ -2,7 +2,6 @@ import { injectable, inject } from 'inversify'
 import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
 import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
-import { IntegrationTrigger } from '../../domain/entity/integration-trigger.entity'
 import TYPES from '../../../../shared/application/di/types'
 import type { RecordRow } from '../../../../features/table/domain/object-value/record-row.object-value'
 import type { IRecordRepository } from '../../../../features/table/domain/repository-interface/record-repository.interface'
@@ -24,17 +23,20 @@ export class SetupTriggerUseCase {
   async execute(app: App, automation: Automation) {
     this.triggerRepository.debug(`setup trigger for "${automation.schema.name}"`)
     const { trigger } = automation
-    if (trigger instanceof IntegrationTrigger) {
-      await this.triggerRepository.setupIntegration(trigger)
+    if ('account' in trigger) {
+      const connection = app.findConnection(trigger.account)
+      if (!connection) {
+        throw new Error(`Connection "${trigger.account}" not found`)
+      }
+      await this.triggerRepository.setupIntegration(trigger, connection, automation)
     } else {
-      const { schema } = trigger
-      switch (schema.service) {
+      switch (trigger.service) {
         case 'database': {
-          switch (schema.event) {
+          switch (trigger.event) {
             case 'record-created': {
-              const table = app.findTable(schema.recordCreatedDatabase.table)
+              const table = app.findTable(trigger.recordCreatedDatabase.table)
               if (!table) {
-                throw new Error(`Table "${schema.recordCreatedDatabase.table}" not found`)
+                throw new Error(`Table "${trigger.recordCreatedDatabase.table}" not found`)
               }
               this.recordRepository.onRecordCreated(async (recordRow: RecordRow) => {
                 if (recordRow.tableId === table.schema.id) {
@@ -49,9 +51,9 @@ export class SetupTriggerUseCase {
               break
             }
             case 'record-updated': {
-              const table = app.findTable(schema.recordUpdatedDatabase.table)
+              const table = app.findTable(trigger.recordUpdatedDatabase.table)
               if (!table) {
-                throw new Error(`Table "${schema.recordUpdatedDatabase.table}" not found`)
+                throw new Error(`Table "${trigger.recordUpdatedDatabase.table}" not found`)
               }
               this.recordRepository.onRecordUpdated(async (recordRow: RecordRow) => {
                 if (recordRow.tableId === table.schema.id) {
@@ -66,7 +68,7 @@ export class SetupTriggerUseCase {
               break
             }
             default: {
-              const _exhaustiveCheck: never = schema
+              const _exhaustiveCheck: never = trigger
               throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
             }
           }
@@ -76,7 +78,7 @@ export class SetupTriggerUseCase {
           break
         }
         default: {
-          const _exhaustiveCheck: never = schema
+          const _exhaustiveCheck: never = trigger
           throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
         }
       }

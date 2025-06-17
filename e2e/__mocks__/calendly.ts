@@ -3,7 +3,7 @@ import type {
   CreateWebhookSubscriptionResponse,
   GetCurrentUserResponse,
   WebhookPayload,
-} from '../../src/shared/infrastructure/integration/calendly/types'
+} from '../../src/integrations/calendly/types'
 
 export const webhookPayloadInviteCreated: WebhookPayload = {
   created_at: '2020-11-23T17:51:19.000000Z',

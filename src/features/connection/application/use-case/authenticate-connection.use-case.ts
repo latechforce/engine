@@ -19,11 +19,11 @@ export class AuthenticateConnectionUseCase {
     if (!id || !code) {
       throw new HttpError('Missing id or code', 400)
     }
-    const connection = app.connections.find((connection) => connection.schema.id === Number(id))
+    const connection = app.connections.find((connection) => connection.id === Number(id))
     if (!connection) {
       throw new HttpError('Connection not found', 404)
     }
-    this.connectionRepository.debug(`authenticate "${connection.schema.name}"`)
+    this.connectionRepository.debug(`authenticate "${connection.name}"`)
     const token = await this.connectionRepository.getAccessTokenFromCode(connection, code)
     const existingToken = await this.tokenRepository.get(token.id)
     if (existingToken) {
@@ -32,7 +32,7 @@ export class AuthenticateConnectionUseCase {
       await this.tokenRepository.create(token)
     }
     const isValid = await this.tokenRepository.check(connection)
-    await this.connectionRepository.status.setConnected(connection.schema.id, isValid)
+    await this.connectionRepository.status.setConnected(connection.id, isValid)
     if (!isValid) {
       throw new HttpError('Invalid token', 401)
     }

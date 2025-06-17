@@ -3,10 +3,11 @@ import TYPES from '../../../../shared/application/di/types'
 import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 import type { Token } from '../../domain/value-object/token.value-object'
-import { toConnectionIntegration } from '../integration'
-import { Connection } from '../../domain/entity/connection.entity'
+import { toConnectionIntegration } from '../../../../integrations/connection'
+import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 import type { ConnectionStatus } from '../../domain/value-object/connection-status.value-object'
 import type { ConnectionDatabaseService } from '../service/database.service'
+import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
 
 @injectable()
 export class ConnectionRepository implements IConnectionRepository {
@@ -14,7 +15,9 @@ export class ConnectionRepository implements IConnectionRepository {
     @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
     @inject(TYPES.Connection.Service.Database)
-    private readonly database: ConnectionDatabaseService
+    private readonly database: ConnectionDatabaseService,
+    @inject(TYPES.Service.Env)
+    private readonly env: EnvService
   ) {}
 
   debug(message: string) {
@@ -25,13 +28,17 @@ export class ConnectionRepository implements IConnectionRepository {
     this.logger.error(message)
   }
 
-  getAuthorizationUrl(connection: Connection): string {
-    const integration = toConnectionIntegration(connection)
-    return integration.getAuthorizationUrl(connection.schema.id)
+  get redirectUri() {
+    return this.env.get('BASE_URL') + '/api/connections/auth'
   }
 
-  async getAccessTokenFromCode(connection: Connection, code: string): Promise<Token> {
-    const integration = toConnectionIntegration(connection)
+  getAuthorizationUrl(connection: ConnectionSchema): string {
+    const integration = toConnectionIntegration(connection, this.redirectUri)
+    return integration.getAuthorizationUrl(connection.id)
+  }
+
+  async getAccessTokenFromCode(connection: ConnectionSchema, code: string): Promise<Token> {
+    const integration = toConnectionIntegration(connection, this.redirectUri)
     return integration.getAccessTokenFromCode(code)
   }
 

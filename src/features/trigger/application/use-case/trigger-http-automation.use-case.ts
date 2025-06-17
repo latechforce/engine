@@ -1,10 +1,5 @@
-// Third-party imports
 import { inject, injectable } from 'inversify'
-
-// Shared imports
 import TYPES from '../../../../shared/application/di/types'
-
-// Run domain imports
 import { Run } from '../../../../features/run/domain/entity/run.entity'
 import type { IRunRepository } from '../../../../features/run/domain/repository-interface/run-repository.interface'
 import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
@@ -51,20 +46,20 @@ export class TriggerHttpAutomationUseCase {
     if (!automation) throw new TriggerError('Automation not found', 404)
     const status = await this.automationRepository.status.get(automation.schema.id)
     if (!status) throw new TriggerError('Automation status not found', 404)
-    const { schema } = automation.trigger
+    const { trigger } = automation
     let initRun: Run | undefined
     if (status.active) {
       const objects: ObjectEntity[] = []
-      let trigger: Record<string, unknown> = {}
-      if (schema.service === 'http') {
-        trigger.url = request.url
-        trigger.method = request.method
-        trigger.headers = request.headers
-        if (schema.event === 'post') {
+      let triggerData: Record<string, unknown> = {}
+      if (trigger.service === 'http') {
+        triggerData.url = request.url
+        triggerData.method = request.method
+        triggerData.headers = request.headers
+        if (trigger.event === 'post') {
           const contentType = request.headers.get('content-type') || ''
           if (contentType.includes('application/json')) {
-            trigger.body = body
-            this.triggerRepository.http('body', trigger.body)
+            triggerData.body = body
+            this.triggerRepository.http('body', triggerData.body)
           } else if (
             contentType.includes('application/x-www-form-urlencoded') ||
             contentType.includes('multipart/form-data')
@@ -103,11 +98,11 @@ export class TriggerHttpAutomationUseCase {
                   fields[key] = String(value)
               }
             }
-            trigger.body = fields
+            triggerData.body = fields
           }
           if (
-            schema.postHttp.requestBody &&
-            !this.triggerRepository.validateData(schema.postHttp.requestBody, trigger.body)
+            trigger.postHttp.requestBody &&
+            !this.triggerRepository.validateData(trigger.postHttp.requestBody, triggerData.body)
           ) {
             throw new TriggerError('Invalid body', 400)
           }
@@ -115,8 +110,8 @@ export class TriggerHttpAutomationUseCase {
       } else if (request.method === 'POST') {
         const contentType = request.headers.get('content-type') || ''
         if (contentType.includes('application/json')) {
-          trigger = body
-          this.triggerRepository.http('body', trigger)
+          triggerData = body
+          this.triggerRepository.http('body', triggerData)
         } else if (
           contentType.includes('application/x-www-form-urlencoded') ||
           contentType.includes('multipart/form-data')
@@ -130,19 +125,19 @@ export class TriggerHttpAutomationUseCase {
             }
             fields[key] = String(value)
           }
-          trigger = fields
+          triggerData = fields
         }
       }
       for (const object of objects) {
         await this.objectRepository.create(object)
       }
-      initRun = new Run(automation.schema, { trigger })
+      initRun = new Run(automation.schema, { trigger: triggerData })
       await this.runRepository.create(initRun)
     }
     if (
-      ('postHttp' in schema && schema.postHttp.respondImmediately) ||
-      ('getHttp' in schema && schema.getHttp.respondImmediately) ||
-      schema.service !== 'http'
+      ('postHttp' in trigger && trigger.postHttp.respondImmediately) ||
+      ('getHttp' in trigger && trigger.getHttp.respondImmediately) ||
+      trigger.service !== 'http'
     ) {
       return { success: true, runId: initRun?.id }
     }

@@ -19,20 +19,19 @@ import type {
   ServiceContext,
   TableContext,
 } from '../service/code.service'
-import { toActionIntegration } from '../integration'
+import { toActionIntegration } from '../../../../integrations/action'
 
 // Connection domain imports
-import type { ITokenRepository } from '../../../connection/domain/repository-interface/token-repository.interface'
 import type { Fields } from '../../../table/domain/object-value/fields.object-value'
 import type { IRecordRepository } from '../../../table/domain/repository-interface/record-repository.interface'
 import type { App } from '../../../app/domain/entity/app.entity'
 import { Record } from '../../../table/domain/entity/record.entity'
-import type { IntegrationActionSchema } from '../../domain/schema/integration'
-import type { Connection } from '../../../connection/domain/entity/connection.entity'
+import type { IntegrationActionSchema } from '../../../../integrations/action.schema'
 import type { IObjectRepository } from '../../../bucket/domain/repository-interface/object-repository.interface'
 import { Object } from '../../../bucket/domain/entity/object.entity'
 import { toObjectDto } from '../../../bucket/application/dto/object.dto'
 import type { ConditionsSchema } from '../../domain/schema/condition'
+import type { Token } from '../../../connection/domain/value-object/token.value-object'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -43,8 +42,6 @@ export class ActionRepository implements IActionRepository {
     private readonly templateService: TemplateService,
     @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Connection.Repository.Token)
-    private readonly tokenRepository: ITokenRepository,
     @inject(TYPES.Table.Repository.Record)
     private readonly recordRepository: IRecordRepository,
     @inject(TYPES.Bucket.Repository.Object)
@@ -174,12 +171,10 @@ export class ActionRepository implements IActionRepository {
 
   async runIntegration(
     schema: IntegrationActionSchema,
-    connection: Connection
+    token: Token
   ): Promise<ActionResult<IntegrationError>> {
     try {
       const integration = toActionIntegration(schema)
-      const token = await this.tokenRepository.getAccessToken(connection)
-      if (!token) throw new Error(`Token not found for connection ${connection.schema.id}`)
       const data = await integration.runAction(token)
       return { data }
     } catch (error) {

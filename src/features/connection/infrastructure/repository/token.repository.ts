@@ -6,13 +6,13 @@ import { addSeconds, isAfter } from 'date-fns'
 import TYPES from '../../../../shared/application/di/types'
 
 // Connection domain imports
-import type { Connection } from '../../domain/entity/connection.entity'
+import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 import type { Token } from '../../domain/value-object/token.value-object'
 import type { ITokenRepository } from '../../domain/repository-interface/token-repository.interface'
 
 // Connection infrastructure imports
 import type { ConnectionDatabaseService } from '../service/database.service'
-import { toConnectionIntegration } from '../integration'
+import { toConnectionIntegration } from '../../../../integrations/connection'
 import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 
 @injectable()
@@ -24,21 +24,21 @@ export class TokenRepository implements ITokenRepository {
     private readonly connectionRepository: IConnectionRepository
   ) {}
 
-  async onNewRefreshToken(connection: Connection, callback: (token: Token) => Promise<void>) {
-    const integration = toConnectionIntegration(connection)
+  async onNewRefreshToken(connection: ConnectionSchema, callback: (token: Token) => Promise<void>) {
+    const integration = toConnectionIntegration(connection, this.connectionRepository.redirectUri)
     if (!('onNewRefreshToken' in integration)) {
       return
     }
     integration.onNewRefreshToken(callback)
   }
 
-  async getAccessToken(connection: Connection): Promise<Token | undefined> {
-    const token = await this.get(connection.schema.id)
+  async getAccessToken(connection: ConnectionSchema): Promise<Token | undefined> {
+    const token = await this.get(connection.id)
     if (!token) return undefined
     if (!this.isTokenValid(token)) {
-      const integration = toConnectionIntegration(connection)
+      const integration = toConnectionIntegration(connection, this.connectionRepository.redirectUri)
       if (!token.refresh_token || !('getAccessTokenFromRefreshToken' in integration)) {
-        await this.connectionRepository.status.setConnected(connection.schema.id, false)
+        await this.connectionRepository.status.setConnected(connection.id, false)
         return undefined
       }
       const newToken = await integration.getAccessTokenFromRefreshToken(token.refresh_token)
@@ -48,8 +48,8 @@ export class TokenRepository implements ITokenRepository {
     return token
   }
 
-  async check(connection: Connection): Promise<boolean> {
-    const integration = toConnectionIntegration(connection)
+  async check(connection: ConnectionSchema): Promise<boolean> {
+    const integration = toConnectionIntegration(connection, this.connectionRepository.redirectUri)
     const token = await this.getAccessToken(connection)
     return integration.checkConnection(token)
   }

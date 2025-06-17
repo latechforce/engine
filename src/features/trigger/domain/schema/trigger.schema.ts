@@ -1,21 +1,10 @@
-// Third-party imports
 import { z } from 'zod/v4'
-
-// Trigger domain imports
-import { httpTriggerSchema } from './service/http'
-import { calendlyTriggerSchema } from './integration/calendly'
-import { facebookLeadAdsTriggerSchema } from './integration/facebook/lead-ads'
-import { linkedinAdsTriggerSchema } from './integration/linkedin/ads'
-import { databaseTriggerSchema } from './service/database'
+import { httpTriggerSchema } from './http'
+import { databaseTriggerSchema } from './database'
+import { integrationTriggerSchema } from '../../../../integrations/trigger.schema'
 
 export const triggerSchema = z
-  .union([
-    httpTriggerSchema,
-    databaseTriggerSchema,
-    calendlyTriggerSchema,
-    facebookLeadAdsTriggerSchema,
-    linkedinAdsTriggerSchema,
-  ])
+  .union([httpTriggerSchema, databaseTriggerSchema, integrationTriggerSchema])
   .meta({
     title: 'Trigger',
     description: 'The trigger is the event that triggers the automation',

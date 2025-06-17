@@ -55,33 +55,34 @@ export class SetupAutomationUseCase {
     })
 
     // Build OpenAPI routes
-    const { schema } = automation.trigger
-    if ('postHttp' in schema || 'getHttp' in schema) {
+    const { trigger } = automation
+    if ('postHttp' in trigger || 'getHttp' in trigger) {
       const responseAction = automation.actions.find(
-        (action) => action.schema.service === 'http' && action.schema.action === 'response'
+        (action) => action.service === 'http' && action.action === 'response'
       )
 
       const response =
-        responseAction &&
-        'responseHttp' in responseAction.schema &&
-        responseAction.schema.responseHttp.body
-          ? this.generateJsonSchema(responseAction.schema.responseHttp.body)
+        responseAction && 'responseHttp' in responseAction && responseAction.responseHttp.body
+          ? this.generateJsonSchema(responseAction.responseHttp.body)
           : undefined
-      const method = schema.event === 'get' ? 'get' : 'post'
+      const method = trigger.event === 'get' ? 'get' : 'post'
       this.automationRepository.addOpenAPIRoute({
         summary: `Trigger "${automation.schema.name}"`,
         method,
         path:
           '/' +
-          join('automations', schema.event === 'get' ? schema.getHttp.path : schema.postHttp.path),
+          join(
+            'automations',
+            trigger.event === 'get' ? trigger.getHttp.path : trigger.postHttp.path
+          ),
         description: `Run the automation "${automation.schema.name}" from a ${method.toUpperCase()} request`,
         tags: [`Automation`],
         requestBody:
-          schema.event === 'post' && schema.postHttp.requestBody
+          trigger.event === 'post' && trigger.postHttp.requestBody
             ? {
                 content: {
                   'application/json': {
-                    schema: this.convertJsonSchemaToOpenApi(schema.postHttp.requestBody),
+                    schema: this.convertJsonSchemaToOpenApi(trigger.postHttp.requestBody),
                   },
                 },
               }

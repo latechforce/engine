@@ -18,15 +18,15 @@ export class ListConnectionsUseCase {
   async execute(app: App): Promise<ListConnectionsDto> {
     const connections: ListConnectionsDtoItem[] = []
     const statuses = await this.connectionRepository.status.listByIds(
-      app.connections.map((c) => c.schema.id)
+      app.connections.map((c) => c.id)
     )
     for (const connection of app.connections) {
-      const status = statuses.find((s) => s.id === connection.schema.id)
+      const status = statuses.find((s) => s.id === connection.id)
       if (!status) {
         continue
       }
       const authorizationUrl =
-        connection.authType === 'oauth'
+        'clientId' in connection && 'clientSecret' in connection
           ? this.connectionRepository.getAuthorizationUrl(connection)
           : undefined
       connections.push({ connection, status, authorizationUrl })

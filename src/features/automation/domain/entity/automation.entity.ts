@@ -1,33 +1,28 @@
-// Action domain imports
-import type { Action } from '../../../action/domain/entity'
-import { IntegrationAction } from '../../../action/domain/entity/integration-action.entity'
-import { ServiceAction } from '../../../action/domain/entity/service-action.entity'
-
-// Connection domain imports
-import type { Connection } from '../../../connection/domain/entity/connection.entity'
-
-// Trigger domain imports
-import type { Trigger } from '../../../trigger/domain/entity/trigger.entity'
-import { IntegrationTrigger } from '../../../trigger/domain/entity/integration-trigger.entity'
-import { ServiceTrigger } from '../../../trigger/domain/entity/service-trigger.entity'
-
-// Automation domain imports
+import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 import type { AutomationSchema } from '../schema/automation.schema'
 import type { ActionSchema } from '../../../action/domain/schema/action.schema'
 import type { TriggerSchema } from '../../../trigger/domain/schema/trigger.schema'
 
 export class Automation {
-  public readonly trigger: Trigger
-  public readonly actions: Action[]
+  public readonly trigger: TriggerSchema
+  public readonly actions: ActionSchema[]
 
   constructor(
     public readonly schema: AutomationSchema,
-    public readonly connections: Connection[]
+    public readonly connections: ConnectionSchema[]
   ) {
     const { trigger } = schema
     this.validateActionsSchema(schema.actions)
-    this.trigger = this.mapTrigger(trigger)
-    this.actions = schema.actions.map((action) => this.mapAction(action))
+    if ('account' in trigger) {
+      const triggerConnection = this.getAccount(trigger.account, trigger.service)
+      if (!triggerConnection) {
+        throw new Error(
+          `Account "${trigger.account}" not found for trigger "${trigger.service}/${trigger.event}"`
+        )
+      }
+    }
+    this.trigger = trigger
+    this.actions = schema.actions
   }
 
   validateActionsSchema(actions: ActionSchema[]) {
@@ -53,37 +48,9 @@ export class Automation {
   private getAccount(nameOrId: string | number, service: string) {
     return this.connections.find(
       (connection) =>
-        (connection.schema.id === nameOrId || connection.schema.name === nameOrId) &&
-        connection.schema.service === service
+        (connection.id === nameOrId || connection.name === nameOrId) &&
+        connection.service === service
     )
-  }
-
-  private mapTrigger(trigger: TriggerSchema): Trigger {
-    if ('account' in trigger) {
-      const connection = this.getAccount(trigger.account, trigger.service)
-      if (!connection) {
-        throw new Error(
-          `Account "${trigger.account}" not found for trigger "${trigger.service}/${trigger.event}"`
-        )
-      }
-      return new IntegrationTrigger(trigger, this, connection)
-    } else {
-      return new ServiceTrigger(trigger, this)
-    }
-  }
-
-  private mapAction(action: ActionSchema): Action {
-    if ('account' in action) {
-      const connection = this.getAccount(action.account, action.service)
-      if (!connection) {
-        throw new Error(
-          `Account "${action.account}" not found for action "${action.service}/${action.action}"`
-        )
-      }
-      return new IntegrationAction(action, this.schema.name, connection)
-    } else {
-      return new ServiceAction(action, this.schema.name)
-    }
   }
 
   findPath(pathName: string) {
@@ -107,7 +74,7 @@ export class Automation {
     | {
         actionName: string
         pathName: string
-        actions: Action[]
+        actions: ActionSchema[]
       }
     | undefined {
     const [actionName, pathName] = actionPathName.split('.')
@@ -122,7 +89,7 @@ export class Automation {
           return {
             actionName: action.name,
             pathName: path.name,
-            actions: path.actions.map((action) => this.mapAction(action)),
+            actions: path.actions,
           }
         }
         for (const { actions } of action.splitIntoPathsFilter) {
