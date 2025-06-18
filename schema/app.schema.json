@@ -297,8 +297,7 @@
                         "required": [
                           "account",
                           "service",
-                          "event",
-                          "inviteCreatedCalendly"
+                          "event"
                         ],
                         "additionalProperties": false
                       }
@@ -340,8 +339,7 @@
                         "required": [
                           "account",
                           "service",
-                          "event",
-                          "newLeadFacebookLeadAds"
+                          "event"
                         ],
                         "additionalProperties": false
                       }
@@ -383,8 +381,7 @@
                         "required": [
                           "account",
                           "service",
-                          "event",
-                          "newLeadGenFormResponseLinkedinAds"
+                          "event"
                         ],
                         "additionalProperties": false
                       }
