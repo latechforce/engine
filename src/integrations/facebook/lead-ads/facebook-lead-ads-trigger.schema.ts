@@ -9,7 +9,7 @@ export const baseFacebookLeadAdsTriggerSchema = baseIntegrationTriggerSchema.ext
 export const newLeadFacebookLeadAdsTriggerSchema = baseFacebookLeadAdsTriggerSchema
   .extend({
     event: z.literal('new-lead'),
-    newLeadFacebookLeadAds: z.object({}),
+    newLeadFacebookLeadAds: z.object({}).optional(),
   })
   .meta({
     title: 'New Lead',

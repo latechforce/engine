@@ -28,7 +28,7 @@ export class UpdateMultipleRecordsUseCase {
     if (!this.validateUpdateMultipleRecordBody(table, body)) {
       throw new HttpError('Invalid record', 400)
     }
-    await this.recordRepository.updateMany(table, body.records)
+    await this.recordRepository.updateMany(body.records)
     const records = await this.recordRepository.listByIds(
       table,
       body.records.map((record) => record.id)

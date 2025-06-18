@@ -1,19 +1,28 @@
 import { inject, injectable } from 'inversify'
 import TYPES from '../../../../shared/application/di/types'
 import type { IRunRepository } from '../../domain/repository-interface/run-repository.interface'
-import { EventEmitter } from 'events'
 import { Run } from '../../domain/entity/run.entity'
 import type { RunDatabaseService } from '../service/database.service'
 import { desc } from 'drizzle-orm'
+import { EventEmitter } from 'events'
 
 @injectable()
 export class RunRepository implements IRunRepository {
   private eventEmitter = new EventEmitter()
+  private createListeners: ((run: Run) => Promise<void>)[] = []
+  private updateListeners: ((run: Run) => Promise<void>)[] = []
 
   constructor(
     @inject(TYPES.Run.Service.Database)
     private readonly database: RunDatabaseService
-  ) {}
+  ) {
+    this.eventEmitter.on('created', async (run: Run) => {
+      await Promise.all(this.createListeners.map((listener) => listener(run)))
+    })
+    this.eventEmitter.on('updated', async (run: Run) => {
+      await Promise.all(this.updateListeners.map((listener) => listener(run)))
+    })
+  }
 
   async create(run: Run) {
     await this.database.run.create({
@@ -25,11 +34,11 @@ export class RunRepository implements IRunRepository {
       updated_at: run.updatedAt,
       last_action_name: run.lastActionName,
     })
-    this.eventEmitter.emit<Run>('create', run)
+    this.eventEmitter.emit('created', run)
   }
 
-  onCreate(handler: (run: Run) => Promise<void>) {
-    this.eventEmitter.on<Run>('create', handler)
+  onCreate(listener: (run: Run) => Promise<void>) {
+    this.createListeners.push(listener)
   }
 
   async update(run: Run) {
@@ -40,11 +49,11 @@ export class RunRepository implements IRunRepository {
       last_action_name: run.lastActionName,
       error_message: run.errorMessage,
     })
-    this.eventEmitter.emit<Run>('update', run)
+    this.eventEmitter.emit('updated', run)
   }
 
-  onUpdate(handler: (run: Run) => Promise<void>) {
-    this.eventEmitter.on<Run>('update', handler)
+  onUpdate(listener: (run: Run) => Promise<void>) {
+    this.updateListeners.push(listener)
   }
 
   async list(): Promise<Run[]> {

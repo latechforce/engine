@@ -9,16 +9,18 @@ export const baseCalendlyTriggerSchema = baseIntegrationTriggerSchema.extend({
 export const inviteCreatedCalendlyTriggerSchema = baseCalendlyTriggerSchema
   .extend({
     event: z.literal('invite-created'),
-    inviteCreatedCalendly: z.object({
-      organization: z.string().optional().meta({
-        description: 'The organization of the trigger',
-        default: 'Current user organization',
-      }),
-      scope: z.enum(['user', 'organization', 'group']).optional().meta({
-        description: 'The scope of the trigger',
-        default: 'user',
-      }),
-    }),
+    inviteCreatedCalendly: z
+      .object({
+        organization: z.string().optional().meta({
+          description: 'The organization of the trigger',
+          default: 'Current user organization',
+        }),
+        scope: z.enum(['user', 'organization', 'group']).optional().meta({
+          description: 'The scope of the trigger',
+          default: 'user',
+        }),
+      })
+      .optional(),
   })
   .meta({
     title: 'Invite Created',

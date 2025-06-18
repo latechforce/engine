@@ -26,13 +26,13 @@ export type IRecordRepository = {
   exists(table: Table, recordId: string): Promise<boolean>
   create(table: Table, record: Record): Promise<void>
   createMany(table: Table, records: Record[]): Promise<void>
-  update(table: Table, recordId: string, fields: Fields): Promise<void>
-  updateMany(table: Table, records: { id: string; fields: Fields }[]): Promise<void>
+  update(recordId: string, fields: Fields): Promise<void>
+  updateMany(records: { id: string; fields: Fields }[]): Promise<void>
   delete(recordId: string): Promise<void>
   deleteMany(recordIds: string[]): Promise<void>
   read<T extends Fields>(table: Table, recordId: string): Promise<Record<T> | undefined>
   list<T extends Fields>(table: Table, filter?: ConditionsSchema): Promise<Record<T>[]>
   listByIds<T extends Fields>(table: Table, recordIds: string[]): Promise<Record<T>[]>
-  onRecordCreated(callback: (record: RecordRow) => void): void
-  onRecordUpdated(callback: (record: RecordRow) => void): void
+  onRecordCreated(callback: (record: RecordRow) => Promise<void>): void
+  onRecordUpdated(callback: (record: RecordRow) => Promise<void>): void
 }

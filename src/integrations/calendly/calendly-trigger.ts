@@ -14,8 +14,8 @@ export class CalendlyTriggerIntegration {
       case 'invite-created': {
         const params = this.schema.inviteCreatedCalendly
         const currentUser = await calendly.getCurrentUser()
-        const organization = params.organization ?? currentUser.resource.current_organization
-        const scope = params.scope ?? 'user'
+        const organization = params?.organization ?? currentUser.resource.current_organization
+        const scope = params?.scope ?? 'user'
         const user = scope === 'user' ? currentUser.resource.uri : undefined
         const webhookSubscriptions = await calendly.listWebhookSubscriptions({
           organization,

@@ -86,13 +86,13 @@ export class ActionRepository implements IActionRepository {
           return records
         },
         update: async (id: string, fields: Partial<T>) => {
-          await this.recordRepository.update(table, id, fields)
+          await this.recordRepository.update(id, fields)
           const record = await this.recordRepository.read<T>(table, id)
           if (!record) throw new Error(`Record "${id}" not found`)
           return record
         },
         updateMany: async (recordsFields: { id: string; fields: Partial<T> }[]) => {
-          await this.recordRepository.updateMany(table, recordsFields)
+          await this.recordRepository.updateMany(recordsFields)
           const records = await this.recordRepository.listByIds<T>(
             table,
             recordsFields.map((recordField) => recordField.id)

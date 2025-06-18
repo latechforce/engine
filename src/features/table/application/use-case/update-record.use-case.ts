@@ -79,7 +79,7 @@ export class UpdateRecordUseCase {
       throw new HttpError('Invalid record', 400)
     }
     await Promise.all(objects.map((object) => this.objectRepository.create(object)))
-    await this.recordRepository.update(table, recordId, data.fields)
+    await this.recordRepository.update(recordId, data.fields)
     const record = await this.recordRepository.read(table, recordId)
     if (!record) {
       throw new HttpError('Record not found', 404)

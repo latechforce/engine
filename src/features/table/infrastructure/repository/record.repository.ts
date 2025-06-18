@@ -13,20 +13,29 @@ import type { RecordFieldRow } from '../../domain/object-value/record-field-row.
 import type { SchemaObject } from 'ajv'
 import type { ViewRow } from '../../domain/object-value/view-row.object-value'
 import type { Fields } from '../../domain/object-value/fields.object-value'
-import { EventEmitter } from 'events'
 import type { RecordRow } from '../../domain/object-value/record-row.object-value'
 import type { ConditionsSchema } from '../../../action/domain/schema/condition'
+import { EventEmitter } from 'events'
 
 @injectable()
 export class RecordRepository implements IRecordRepository {
   private eventEmitter = new EventEmitter()
+  private createListeners: ((record: RecordRow) => Promise<void>)[] = []
+  private updateListeners: ((record: RecordRow) => Promise<void>)[] = []
 
   constructor(
     @inject(TYPES.Service.Schema)
     private readonly validator: SchemaService,
     @inject(TYPES.Table.Service.Database)
     private readonly database: TableDatabaseService
-  ) {}
+  ) {
+    this.eventEmitter.on('created', async (record: RecordRow) => {
+      await Promise.all(this.createListeners.map((listener) => listener(record)))
+    })
+    this.eventEmitter.on('updated', async (record: RecordRow) => {
+      await Promise.all(this.updateListeners.map((listener) => listener(record)))
+    })
+  }
 
   validateSchema(schema: SchemaObject, body: unknown): boolean {
     return this.validator.validate(schema, body)
@@ -103,13 +112,14 @@ export class RecordRepository implements IRecordRepository {
         await tx.field.create(table.schema.id, field.id, record.id, record.fields[field.name])
       }
     })
-    this.eventEmitter.emit<RecordRow>('create', {
+    const recordRow: RecordRow = {
       id: record.id,
       tableId: table.schema.id,
       createdAt: record.createdAt,
       updatedAt: record.updatedAt,
       archivedAt: null,
-    })
+    }
+    this.eventEmitter.emit('created', recordRow)
   }
 
   async createMany(table: Table, records: Record[]) {
@@ -122,21 +132,22 @@ export class RecordRepository implements IRecordRepository {
       }
     })
     for (const record of records) {
-      this.eventEmitter.emit<RecordRow>('create', {
+      const recordRow: RecordRow = {
         id: record.id,
         tableId: table.schema.id,
         createdAt: record.createdAt,
         updatedAt: record.updatedAt,
         archivedAt: null,
-      })
+      }
+      this.eventEmitter.emit('created', recordRow)
     }
   }
 
-  onRecordCreated(callback: (record: RecordRow) => void): void {
-    this.eventEmitter.on<RecordRow>('create', callback)
+  onRecordCreated(listener: (record: RecordRow) => Promise<void>): void {
+    this.createListeners.push(listener)
   }
 
-  async update(table: Table, recordId: string, fields: Fields) {
+  async update(recordId: string, fields: Fields) {
     await this.transaction(async (tx: RecordTransaction) => {
       const recordsFields = await tx.field.listByRecordId(recordId)
       for (const key of Object.keys(fields)) {
@@ -149,16 +160,17 @@ export class RecordRepository implements IRecordRepository {
     if (!recordRow) {
       return
     }
-    this.eventEmitter.emit<RecordRow>('update', {
+    const record: RecordRow = {
       id: recordRow.id,
       tableId: recordRow.table_id,
       createdAt: recordRow.created_at,
       updatedAt: recordRow.updated_at,
       archivedAt: recordRow.archived_at,
-    })
+    }
+    this.eventEmitter.emit('updated', record)
   }
 
-  async updateMany(table: Table, records: { id: string; fields: Fields }[]) {
+  async updateMany(records: { id: string; fields: Fields }[]) {
     await this.transaction(async (tx: RecordTransaction) => {
       for (const record of records) {
         const recordsFields = await tx.field.listByRecordId(record.id)
@@ -174,18 +186,19 @@ export class RecordRepository implements IRecordRepository {
       if (!recordRow) {
         return
       }
-      this.eventEmitter.emit<RecordRow>('update', {
+      const recordData: RecordRow = {
         id: recordRow.id,
         tableId: recordRow.table_id,
         createdAt: recordRow.created_at,
         updatedAt: recordRow.updated_at,
         archivedAt: recordRow.archived_at,
-      })
+      }
+      this.eventEmitter.emit('updated', recordData)
     }
   }
 
-  onRecordUpdated(callback: (record: RecordRow) => void): void {
-    this.eventEmitter.on<RecordRow>('update', callback)
+  onRecordUpdated(listener: (record: RecordRow) => Promise<void>): void {
+    this.updateListeners.push(listener)
   }
 
   async read<T extends Fields>(table: Table, recordId: string): Promise<Record<T> | undefined> {
