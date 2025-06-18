@@ -1,3 +1,10 @@
+## [0.56.1](https://github.com/latechforce/engine/compare/v0.56.0...v0.56.1) (2025-06-18)
+
+
+### Bug Fixes
+
+* event memory leak ([ac2ab00](https://github.com/latechforce/engine/commit/ac2ab00af820b219e13edf8ae3971453ac44bdec)) — Thomas JEANNEAU
+
 # [0.56.0](https://github.com/latechforce/engine/compare/v0.55.0...v0.56.0) (2025-06-17)
 
 
