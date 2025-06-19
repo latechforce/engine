@@ -668,6 +668,52 @@ function SidebarMenuSubButton({
   )
 }
 
+function SidebarSkeleton({ className, ...props }: React.ComponentProps<'div'>) {
+  return (
+    <div
+      data-slot="sidebar-skeleton"
+      data-sidebar="skeleton"
+      className={cn('flex h-full w-full flex-col gap-2 p-2', className)}
+      {...props}
+    >
+      {/* Header */}
+      <div className="flex flex-col gap-2 p-2">
+        <Skeleton className="h-8 w-full rounded-md" />
+        <Skeleton className="h-8 w-full rounded-md" />
+      </div>
+
+      {/* Content */}
+      <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-auto">
+        {/* First Group */}
+        <div className="flex flex-col gap-2 p-2">
+          <Skeleton className="h-4 w-24 rounded-md" />
+          <div className="flex flex-col gap-1">
+            <SidebarMenuSkeleton showIcon />
+            <SidebarMenuSkeleton showIcon />
+            <SidebarMenuSkeleton showIcon />
+          </div>
+        </div>
+
+        {/* Second Group */}
+        <div className="flex flex-col gap-2 p-2">
+          <Skeleton className="h-4 w-32 rounded-md" />
+          <div className="flex flex-col gap-1">
+            <SidebarMenuSkeleton showIcon />
+            <SidebarMenuSkeleton showIcon />
+            <SidebarMenuSkeleton showIcon />
+            <SidebarMenuSkeleton showIcon />
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="flex flex-col gap-2 p-2">
+        <Skeleton className="h-8 w-full rounded-md" />
+      </div>
+    </div>
+  )
+}
+
 export {
   Sidebar,
   SidebarContent,
@@ -693,4 +739,5 @@ export {
   SidebarSeparator,
   SidebarTrigger,
   useSidebar,
+  SidebarSkeleton,
 }

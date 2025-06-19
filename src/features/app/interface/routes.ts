@@ -9,6 +9,7 @@ export type HonoType = { Variables: AppHonoContextType }
 
 export const appRoutes = new Hono<HonoType>()
   .get('/health', (c) => c.text('OK'))
-  .get('/metadata', AppController.metadata)
+  .get('/metadata/app', AppController.appMetadata)
+  .get('/metadata/admin', AppController.adminMetadata)
 
 export type AppRoutesType = typeof appRoutes

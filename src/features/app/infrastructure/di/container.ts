@@ -13,6 +13,7 @@ import { ValidateAppUseCase } from '../../application/use-case/validate-app.use-
 // App infrastructure imports
 import { AppRepository } from '../repository/app.repository'
 import { AppHonoContext } from './context'
+import { GetAdminMetadataUseCase } from '../../application/use-case/get-admin-metadata.use-case'
 
 export function registerAppDependencies(container: Container) {
   // Register repositories
@@ -27,6 +28,10 @@ export function registerAppDependencies(container: Container) {
   container
     .bind<GetAppMetadataUseCase>(TYPES.UseCase.GetMetadata)
     .to(GetAppMetadataUseCase)
+    .inSingletonScope()
+  container
+    .bind<GetAdminMetadataUseCase>(TYPES.UseCase.GetAdminMetadata)
+    .to(GetAdminMetadataUseCase)
     .inSingletonScope()
 
   // Register context

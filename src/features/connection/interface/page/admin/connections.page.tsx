@@ -23,14 +23,15 @@ const columns: ColumnDef<ConnectionDto>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
-    size: 348,
+    size: 397,
   },
   {
     accessorKey: 'service',
     header: 'Service',
-    size: 100,
+    size: 150,
     cell: ({ row }) => {
-      return row.original.service.charAt(0).toUpperCase() + row.original.service.slice(1)
+      const words = row.original.service.split('-')
+      return words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
     },
   },
   {

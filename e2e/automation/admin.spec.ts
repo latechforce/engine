@@ -8,7 +8,7 @@ test('should list automations', async ({ startExampleApp }) => {
   await page.goto('/admin/automations')
 
   // THEN
-  await expect(page.getByText('run-typescript')).toBeVisible()
+  await expect(page.getByRole('cell', { name: 'run-typescript' })).toBeVisible()
   await expect(page.getByText('less than a minute ago')).toBeVisible()
 })
 

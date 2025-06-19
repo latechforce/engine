@@ -171,14 +171,16 @@ describe('start', () => {
     const schema: AppSchema = {
       forms: [
         {
+          id: 1,
           name: 'form',
-          path: '/form',
+          path: '/form-1',
           action: 'submit',
           inputs: [],
         },
         {
+          id: 2,
           name: 'form',
-          path: '/form',
+          path: '/form-2',
           action: 'submit',
           inputs: [],
         },
@@ -190,6 +192,60 @@ describe('start', () => {
 
     // THEN
     expect(call).toThrow('Duplicate form name: form')
+  })
+
+  it('should throw an error if there are duplicate form ids', async () => {
+    const schema: AppSchema = {
+      forms: [
+        {
+          id: 1,
+          name: 'form 1',
+          path: '/form-1',
+          action: 'submit',
+          inputs: [],
+        },
+        {
+          id: 1,
+          name: 'form 2',
+          path: '/form-2',
+          action: 'submit',
+          inputs: [],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Duplicate form id: 1')
+  })
+
+  it('should throw an error if there are duplicate form paths', async () => {
+    const schema: AppSchema = {
+      forms: [
+        {
+          id: 1,
+          name: 'form 1',
+          path: '/form',
+          action: 'submit',
+          inputs: [],
+        },
+        {
+          id: 2,
+          name: 'form 2',
+          path: '/form',
+          action: 'submit',
+          inputs: [],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Duplicate form path: /form')
   })
 
   it('should throw an error if there are duplicate trigger paths', async () => {

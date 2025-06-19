@@ -7,6 +7,7 @@ export default {
   description: 'Trigger an automation when a form with a single attachment input is submitted',
   forms: [
     {
+      id: 1,
       name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',

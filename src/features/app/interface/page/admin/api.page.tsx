@@ -2,13 +2,13 @@ import { createRoute } from '@tanstack/react-router'
 import Layout from './layout'
 import { adminRoute } from '../router'
 
-export const OpenAPIPage = () => {
+export const APIPage = () => {
   return (
-    <Layout breadcrumbs={[{ title: 'OpenAPI', url: '/admin/openapi' }]}>
+    <Layout breadcrumbs={[{ title: 'API Docs', url: '/admin/api' }]}>
       <div className="h-full w-full">
         <iframe
           src="/openapi/scalar"
-          title="API Documentation"
+          title="API Docs"
           width="100%"
           height="100%"
           style={{ border: 'none' }}
@@ -18,18 +18,18 @@ export const OpenAPIPage = () => {
   )
 }
 
-export const openapiAdminRoute = createRoute({
+export const apiAdminRoute = createRoute({
   getParentRoute: () => adminRoute,
-  path: '/openapi',
-  component: OpenAPIPage,
+  path: '/api',
+  component: APIPage,
   head: () => ({
     meta: [
       {
-        title: 'OpenAPI - Admin',
+        title: 'API Docs - Admin',
       },
       {
         name: 'description',
-        content: `OpenAPI page for admin`,
+        content: `API page for admin`,
       },
     ],
   }),

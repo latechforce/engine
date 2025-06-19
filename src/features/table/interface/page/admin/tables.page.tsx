@@ -184,15 +184,19 @@ const RecordsDataTable = () => {
       enableHiding: false,
     },
     {
-      id: 'actions',
+      id: 'number',
+      header: () => <span className="text-center">#</span>,
       cell: ({ row }) => (
-        <RouterLink
-          className="hover:bg-muted flex items-center justify-center rounded-full p-1 opacity-0 transition-opacity group-hover:opacity-100"
-          to={`/admin/tables/$tableId/records/$recordId`}
-          params={{ tableId, recordId: row.original._id! }}
-        >
-          <Maximize2 className="size-4 cursor-pointer" />
-        </RouterLink>
+        <div className="relative flex items-center justify-center">
+          <span className="group-hover:opacity-0">{row.index + 1}.</span>
+          <RouterLink
+            className="hover:bg-muted absolute flex items-center justify-center rounded-full p-1 opacity-0 group-hover:opacity-100"
+            to={`/admin/tables/$tableId/records/$recordId`}
+            params={{ tableId, recordId: row.original._id! }}
+          >
+            <Maximize2 className="size-4 cursor-pointer" />
+          </RouterLink>
+        </div>
       ),
       size: 40,
       enableSorting: false,
@@ -202,6 +206,7 @@ const RecordsDataTable = () => {
 
   return (
     <DataTable
+      verticalSeparator
       columns={columns}
       data={records.map((record) => ({ ...record.fields, _id: record.id }))}
       actions={[

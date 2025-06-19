@@ -28,10 +28,17 @@ export class AppController {
     return this.startAppUseCase.execute(unknownSchema)
   }
 
-  static async metadata(c: Context<HonoType>) {
+  static async appMetadata(c: Context<HonoType>) {
     const app = c.get('app')
     const getAppMetadataUseCase = c.get('getAppMetadataUseCase')
     const getAppMetadataDto = await getAppMetadataUseCase.execute(app)
     return c.json(getAppMetadataDto)
+  }
+
+  static async adminMetadata(c: Context<HonoType>) {
+    const app = c.get('app')
+    const getAdminMetadataUseCase = c.get('getAdminMetadataUseCase')
+    const getAdminMetadataDto = await getAdminMetadataUseCase.execute(app)
+    return c.json(getAdminMetadataDto)
   }
 }

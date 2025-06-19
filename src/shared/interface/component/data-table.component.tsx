@@ -43,6 +43,7 @@ type DataTableProps<TData, TValue> = {
   data: TData[]
   actions?: Actions<TData>
   onRowClick?: (row: TData) => void
+  verticalSeparator?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -50,6 +51,7 @@ export function DataTable<TData, TValue>({
   data,
   actions = [],
   onRowClick,
+  verticalSeparator = false,
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = React.useState<ColumnResizeMode>('onChange')
   const [rowSelection, setRowSelection] = React.useState({})
@@ -91,7 +93,7 @@ export function DataTable<TData, TValue>({
           {actions.map((action) => {
             if ('actions' in action) {
               return (
-                <DropdownMenu>
+                <DropdownMenu key={action.label}>
                   <DropdownMenuTrigger
                     asChild
                     disabled={
@@ -120,6 +122,7 @@ export function DataTable<TData, TValue>({
             } else {
               return (
                 <Button
+                  key={action.label}
                   variant={action.variant}
                   onClick={() => action.onClick(table.getFilteredSelectedRowModel().rows)}
                   disabled={
@@ -146,6 +149,7 @@ export function DataTable<TData, TValue>({
                     <TableHead
                       key={header.id}
                       style={{ width: header.getSize() }}
+                      className={verticalSeparator ? 'border-border border-r' : ''}
                     >
                       {header.isPlaceholder
                         ? null
@@ -180,6 +184,7 @@ export function DataTable<TData, TValue>({
                           textOverflow: 'ellipsis',
                           whiteSpace: 'nowrap',
                         }}
+                        className={verticalSeparator ? 'border-border border-r' : ''}
                       >
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>

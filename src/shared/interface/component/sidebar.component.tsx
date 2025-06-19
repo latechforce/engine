@@ -10,7 +10,7 @@ import {
   SidebarGroupLabel,
   SidebarFooter,
 } from '../ui/sidebar.ui'
-import { TypographyH3 } from '../ui/typography.ui'
+import { TypographyMuted, TypographyLarge } from '../ui/typography.ui'
 import { Bug, LogOut, User2, Sparkles } from 'lucide-react'
 import { ChevronUp } from 'lucide-react'
 import {
@@ -36,18 +36,20 @@ export type SidebarGroup = {
 }
 
 export type SidebarProps = React.ComponentPropsWithoutRef<'div'> & {
-  title?: string
+  title: string
+  description?: string
   groups?: SidebarGroup[]
   startPath?: string
 }
 
-export function Sidebar({ title, groups, startPath, ...props }: SidebarProps) {
+export function Sidebar({ title, description, groups, startPath, ...props }: SidebarProps) {
   const { data: session } = authClient.useSession()
   return (
     <SidebarUI {...props}>
       <SidebarHeader>
         <SidebarGroup>
-          <TypographyH3>{title}</TypographyH3>
+          <TypographyLarge>{title}</TypographyLarge>
+          {description && <TypographyMuted>{description}</TypographyMuted>}
         </SidebarGroup>
       </SidebarHeader>
       <SidebarContent>

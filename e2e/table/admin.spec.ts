@@ -78,8 +78,8 @@ test('should open and display a table record', async ({ startExampleApp }) => {
 
   // WHEN
   await page.goto('/admin/tables')
-  await page.getByRole('row', { name: 'Select row John Doe' }).getByRole('link').click()
-  await page.waitForURL(`/admin/tables/1/${recordId}`)
+  await page.getByRole('cell', { name: '1.' }).getByRole('link').click()
+  await page.waitForURL(`/admin/tables/1/records/${recordId}`)
 
   // THEN
   await expect(page.getByRole('heading', { name: 'John' })).toBeVisible()
@@ -126,22 +126,28 @@ test('should create a table record with required fields', async ({ startExampleA
 test('should update a table record', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const response = await page.request.post('/api/tables/1', {
+    data: {
+      records: [{ fields: { 'First name': 'John', 'Last name': 'Doe' } }],
+    },
+  })
+  const recordId = (await response.json()).records[0].id
 
   // WHEN
   await page.goto('/admin/tables')
-  await page.getByRole('button', { name: 'Create' }).click()
-  await page.waitForSelector('text=Record without name')
-  await page.getByRole('textbox', { name: 'First name' }).fill('John')
-  await page.getByRole('textbox', { name: 'Last name' }).fill('Doe')
+  await page.getByRole('cell', { name: '1.' }).getByRole('link').click()
+  await page.waitForURL(`/admin/tables/1/records/${recordId}`)
+  await page.getByRole('textbox', { name: 'First name' }).fill('Jane')
+  await page.getByRole('textbox', { name: 'Last name' }).fill('Dae')
   await page.getByRole('button', { name: 'Update' }).click()
 
   // THEN
-  await expect(page.getByRole('heading', { name: 'John' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Jane' })).toBeVisible()
   const lastName = await page.getByRole('textbox', { name: 'Last name' }).inputValue()
-  expect(lastName).toBe('Doe')
+  expect(lastName).toBe('Dae')
   await page.goto('/admin/tables')
-  await expect(page.getByText('John')).toBeVisible()
-  await expect(page.getByText('Doe')).toBeVisible()
+  await expect(page.getByText('John')).not.toBeVisible()
+  await expect(page.getByText('Jane')).toBeVisible()
 })
 
 test('should delete a table record', async ({ startExampleApp }) => {

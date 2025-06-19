@@ -40,5 +40,5 @@ test('should not create a record with an invalid single select field', async ({
   // THEN
   expect(response.status()).toBe(400)
   const { error } = await response.json()
-  expect(error).toBe('Invalid record')
+  expect(error).toBe('Invalid record: must be equal to one of the allowed values')
 })

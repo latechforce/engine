@@ -7,6 +7,7 @@ export default {
   description: 'Form with a name input',
   forms: [
     {
+      id: 1,
       name: 'contact-us',
       title: 'Contact us',
       description: 'Please fill in the form below to contact us.',

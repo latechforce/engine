@@ -9,7 +9,7 @@ import { loginAdminRoute } from '../../../features/user/interface/page/login.pag
 import { automationsAdminRoute } from '../../../features/automation/interface/page/admin/automations.page'
 import { dashboardAdminRoute } from '../../../features/app/interface/page/admin/dashboard.page'
 import { runsAdminRoute } from '../../../features/run/interface/page/admin/runs.page'
-import { openapiAdminRoute } from '../../../features/app/interface/page/admin/openapi.page'
+import { apiAdminRoute } from '../../../features/app/interface/page/admin/api.page'
 import { connectionsAdminRoute } from '../../../features/connection/interface/page/admin/connections.page'
 import { formsAdminRoute } from '../../../features/form/interface/page/admin/forms.page'
 import {
@@ -30,7 +30,7 @@ const routeTree = rootRoute.addChildren([
     automationsAdminRoute,
     runsAdminRoute,
     runAdminRoute,
-    openapiAdminRoute,
+    apiAdminRoute,
     connectionsAdminRoute,
     formsAdminRoute,
     tablesAdminRoute,

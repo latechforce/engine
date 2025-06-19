@@ -7,6 +7,7 @@ export default {
   description: 'Form with an url field',
   forms: [
     {
+      id: 1,
       name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',

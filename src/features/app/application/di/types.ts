@@ -4,6 +4,7 @@ const TYPES = {
   UseCase: {
     Start: Symbol.for('StartAppUseCase'),
     GetMetadata: Symbol.for('GetAppMetadataUseCase'),
+    GetAdminMetadata: Symbol.for('GetAdminMetadataUseCase'),
     Validate: Symbol.for('ValidateAppUseCase'),
     Mock: Symbol.for('MockAppUseCase'),
   },

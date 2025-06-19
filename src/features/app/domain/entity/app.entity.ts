@@ -82,6 +82,20 @@ export class App {
       }
       formNames.add(form.name)
     }
+    const formIds = new Set<number>()
+    for (const form of this.schema.forms) {
+      if (formIds.has(form.id)) {
+        throw new Error(`Duplicate form id: ${form.id}`)
+      }
+      formIds.add(form.id)
+    }
+    const formPaths = new Set<string>()
+    for (const form of this.schema.forms) {
+      if (formPaths.has(form.path)) {
+        throw new Error(`Duplicate form path: ${form.path}`)
+      }
+      formPaths.add(form.path)
+    }
     const bucketNames = new Set<string>()
     for (const bucket of this.schema.buckets) {
       if (bucketNames.has(bucket.name)) {

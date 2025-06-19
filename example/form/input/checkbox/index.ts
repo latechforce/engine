@@ -7,6 +7,7 @@ export default {
   description: 'Form with a checkbox field',
   forms: [
     {
+      id: 1,
       name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',

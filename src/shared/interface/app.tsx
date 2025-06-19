@@ -12,7 +12,9 @@ import { queryClient } from './lib/query.lib'
 import './styles/globals.css'
 import 'tailwindcss'
 
-import.meta.hot.accept()
+if (import.meta.hot) {
+  import.meta.hot.accept()
+}
 
 const rootElement = document.getElementById('root')!
 if (!rootElement.innerHTML) {

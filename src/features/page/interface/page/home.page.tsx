@@ -6,7 +6,7 @@ import { client } from '../../../../shared/interface/lib/client.lib'
 import type { GetAppMetadataDto } from '../../../app/application/dto/get-app-metadata.dto'
 
 const HomePage = () => {
-  const { data } = useSuspenseQuery(metadataQueryOptions())
+  const { data } = useSuspenseQuery(appMetadataQueryOptions())
   return (
     <Hero01
       title={data.app.name}
@@ -18,17 +18,17 @@ const HomePage = () => {
   )
 }
 
-const metadataQueryOptions = () =>
+const appMetadataQueryOptions = () =>
   queryOptions<GetAppMetadataDto>({
-    queryKey: ['metadataData'],
-    queryFn: () => client.metadata.$get().then((res) => res.json()),
+    queryKey: ['appMetadataData'],
+    queryFn: () => client.metadata.app.$get().then((res) => res.json()),
   })
 
 export const homeRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   component: HomePage,
-  loader: async ({ context }) => context.queryClient.ensureQueryData(metadataQueryOptions()),
+  loader: async ({ context }) => context.queryClient.ensureQueryData(appMetadataQueryOptions()),
   head: ({ loaderData }) => ({
     meta: [
       {

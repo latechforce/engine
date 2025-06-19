@@ -6,6 +6,7 @@ import { inputSchema } from './input'
 
 export const formSchema = z
   .object({
+    id: z.number(),
     path: z.string(),
     action: z.string(),
     name: z.string(),
