@@ -29,14 +29,9 @@ const columns: ColumnDef<ConnectionDto>[] = [
     accessorKey: 'service',
     header: 'Service',
     size: 100,
-  },
-  {
-    accessorKey: 'authType',
-    header: 'Auth Type',
     cell: ({ row }) => {
-      return row.original.authorizationUrl ? 'OAuth' : 'API Key'
+      return row.original.service.charAt(0).toUpperCase() + row.original.service.slice(1)
     },
-    size: 100,
   },
   {
     accessorKey: 'connected',

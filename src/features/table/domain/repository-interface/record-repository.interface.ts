@@ -22,6 +22,7 @@ export type RecordTransaction = {
 
 export type IRecordRepository = {
   validateSchema(schema: SchemaObject, body: unknown): boolean
+  getSchemaErrors(schema: SchemaObject, body: unknown): string[]
   transaction(callback: (tx: RecordTransaction) => Promise<void>): Promise<void>
   exists(table: Table, recordId: string): Promise<boolean>
   create(table: Table, record: Record): Promise<void>

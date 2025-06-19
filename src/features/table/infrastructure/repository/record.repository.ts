@@ -41,6 +41,10 @@ export class RecordRepository implements IRecordRepository {
     return this.validator.validate(schema, body)
   }
 
+  getSchemaErrors(schema: SchemaObject, body: unknown): string[] {
+    return this.validator.getErrors(schema, body)
+  }
+
   async transaction(callback: (tx: RecordTransaction) => Promise<void>) {
     await this.database.transaction(async (tx) => {
       await callback({

@@ -75,7 +75,8 @@ export class CreateRecordUseCase {
       throw new HttpError('Invalid content type', 400)
     }
     if (!this.validateCreateRecordBody(table, data)) {
-      throw new HttpError('Invalid record', 400)
+      const errors = this.getSchemaErrors(table, data)
+      throw new HttpError(`Invalid record: ${errors.join(', ')}`, 400)
     }
     await Promise.all(objects.map((object) => this.objectRepository.create(object)))
     if ('fields' in data) {
@@ -92,5 +93,13 @@ export class CreateRecordUseCase {
   validateCreateRecordBody(table: Table, body: unknown): body is CreateRecordBody {
     const schema = table.getSingleOrMultipleCreateRecordSchema()
     return this.recordRepository.validateSchema(schema, body)
+  }
+
+  getSchemaErrors(table: Table, body: unknown): string[] {
+    if (body && typeof body === 'object' && 'fields' in body) {
+      return this.recordRepository.getSchemaErrors(table.getSingleCreateRecordSchema(), body)
+    } else {
+      return this.recordRepository.getSchemaErrors(table.getMultipleCreateRecordSchema(), body)
+    }
   }
 }

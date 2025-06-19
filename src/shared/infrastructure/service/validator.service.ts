@@ -31,4 +31,19 @@ export class SchemaService {
   validate(schema: SchemaObject, data: unknown): boolean {
     return this.ajv.validate(schema, data)
   }
+
+  getErrors(schema: SchemaObject, data: unknown): string[] {
+    const validate = this.ajv.compile(schema)
+    if (!validate(data)) {
+      const errors: string[] = []
+      console.log(validate.errors)
+      for (const error of validate.errors ?? []) {
+        if (error.message) {
+          errors.push(error.message)
+        }
+      }
+      return errors
+    }
+    return []
+  }
 }

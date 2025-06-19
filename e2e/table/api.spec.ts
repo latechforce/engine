@@ -1,5 +1,25 @@
 import { expect, test } from '@/e2e/fixtures'
 
+test('should not create a record from a POST request with missing required fields', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'table/required' })
+  const text = 'John'
+
+  // WHEN
+  const response = await page.request.post('/api/tables/Users', {
+    data: {
+      fields: { 'First name': text },
+    },
+  })
+
+  // THEN
+  expect(response.status()).toBe(400)
+  const { error } = await response.json()
+  expect(error).toBe("Invalid record: must have required property 'Last name'")
+})
+
 test('should create a record from a POST request', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test, filter: 'table/index' })
@@ -21,6 +41,32 @@ test('should create a record from a POST request', async ({ startExampleApp }) =
   expect(record.fields).toEqual({
     'First name': text,
   })
+})
+
+test('should not create multiple records from a POST request with missing required fields', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'table/required' })
+
+  // WHEN
+  const response = await page.request.post('/api/tables/Users', {
+    data: {
+      records: [
+        {
+          fields: { 'First name': 'John' },
+        },
+        {
+          fields: { 'Last name': 'Doe' },
+        },
+      ],
+    },
+  })
+
+  // THEN
+  expect(response.status()).toBe(400)
+  const { error } = await response.json()
+  expect(error).toBe("Invalid record: must have required property 'Last name'")
 })
 
 test('should create multiple records from a POST request', async ({ startExampleApp }) => {

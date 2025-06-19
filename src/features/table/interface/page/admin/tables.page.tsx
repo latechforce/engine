@@ -67,22 +67,6 @@ const RecordsDataTable = () => {
     return <Navigate to="/404" />
   }
 
-  const createRecordMutation = useMutation({
-    mutationFn: async () => {
-      const response = await client.tables[`:tableId`].$post({
-        param: { tableId },
-        json: { fields: {} },
-      })
-      return await response.json()
-    },
-    onSuccess: (data) => {
-      if ('record' in data) {
-        queryClient.invalidateQueries({ queryKey: ['tableRecordsData', tableId] })
-        navigate({ to: `/admin/tables/${tableId}/${data.record.id}` })
-      }
-    },
-  })
-
   const deleteRecordsMutation = useMutation({
     mutationFn: async (rows: string[]) => {
       const response = await client.tables[`:tableId`].$delete({
@@ -203,8 +187,8 @@ const RecordsDataTable = () => {
       id: 'actions',
       cell: ({ row }) => (
         <RouterLink
-          className="flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100"
-          to={`/admin/tables/$tableId/$recordId`}
+          className="hover:bg-muted flex items-center justify-center rounded-full p-1 opacity-0 transition-opacity group-hover:opacity-100"
+          to={`/admin/tables/$tableId/records/$recordId`}
           params={{ tableId, recordId: row.original._id! }}
         >
           <Maximize2 className="size-4 cursor-pointer" />
@@ -225,7 +209,7 @@ const RecordsDataTable = () => {
           label: 'Create',
           icon: <Plus />,
           onClick: () => {
-            createRecordMutation.mutate()
+            navigate({ to: `/admin/tables/${tableId}/record/new` })
           },
         },
         {

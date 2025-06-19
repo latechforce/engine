@@ -22,7 +22,7 @@ const recordQueryOptions = (tableId: string, recordId: string) =>
   })
 
 const RecordForm = () => {
-  const { tableId, recordId } = useParams({ from: '/admin/tables/$tableId/$recordId' })
+  const { tableId, recordId } = useParams({ from: '/admin/tables/$tableId/records/$recordId' })
   const { data: dataTables } = useSuspenseQuery(tablesQueryOptions())
   const { data: dataRecord } = useSuspenseQuery(recordQueryOptions(tableId, recordId))
   const table = dataTables?.tables.find((table) => table.id === tableId)
@@ -37,6 +37,9 @@ const RecordForm = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recordData', tableId, recordId] })
       toast.success(`Record updated successfully`)
+    },
+    onError: (error) => {
+      toast.error(error.message)
     },
   })
 
@@ -67,7 +70,7 @@ const RecordForm = () => {
 }
 
 const RecordPage = () => {
-  const { tableId, recordId } = useParams({ from: '/admin/tables/$tableId/$recordId' })
+  const { tableId, recordId } = useParams({ from: '/admin/tables/$tableId/records/$recordId' })
   const { data: dataTables, isLoading: isLoadingTables } = useQuery(tablesQueryOptions())
   const { data: dataRecord, isLoading: isLoadingRecord } = useQuery(
     recordQueryOptions(tableId, recordId)
@@ -84,7 +87,7 @@ const RecordPage = () => {
       breadcrumbs={[
         { title: 'Tables', url: '/admin/tables' },
         { title: table?.name ?? '', url: '/admin/tables/$tableId' },
-        { title: record?.primaryFieldValue ?? '', url: '/admin/tables/$tableId/$recordId' },
+        { title: record?.primaryFieldValue ?? '', url: '/admin/tables/$tableId/records/$recordId' },
       ]}
     >
       <div className="container mx-auto max-w-3xl p-6">
@@ -97,9 +100,9 @@ const RecordPage = () => {
   )
 }
 
-export const recordAdminRoute = createRoute({
+export const updateRecordAdminRoute = createRoute({
   getParentRoute: () => adminRoute,
-  path: '/tables/$tableId/$recordId',
+  path: '/tables/$tableId/records/$recordId',
   loader: async ({ context: { queryClient }, params: { tableId, recordId } }) =>
     queryClient.ensureQueryData(recordQueryOptions(tableId, recordId)),
   component: RecordPage,
