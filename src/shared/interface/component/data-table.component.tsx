@@ -8,6 +8,7 @@ import {
   useReactTable,
   type Row,
 } from '@tanstack/react-table'
+import { cn } from '../lib/utils.lib'
 
 // Shared UI imports
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table.ui'
@@ -44,6 +45,7 @@ type DataTableProps<TData, TValue> = {
   actions?: Actions<TData>
   onRowClick?: (row: TData) => void
   verticalSeparator?: boolean
+  fullPage?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -52,6 +54,7 @@ export function DataTable<TData, TValue>({
   actions = [],
   onRowClick,
   verticalSeparator = false,
+  fullPage = false,
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = React.useState<ColumnResizeMode>('onChange')
   const [rowSelection, setRowSelection] = React.useState({})
@@ -82,7 +85,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center pb-4">
+      <div className={cn('flex items-center', fullPage ? 'p-2' : 'pb-4')}>
         <Input
           placeholder="Search..."
           value={table.getState().globalFilter ?? ''}
@@ -139,7 +142,7 @@ export function DataTable<TData, TValue>({
           })}
         </div>
       </div>
-      <div className="rounded-md border">
+      <div className={cn(fullPage ? 'border-y' : 'rounded-md border')}>
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -19,8 +19,8 @@ test('should list tables', async ({ startExampleApp }) => {
   await page.goto('/admin/tables')
 
   // THEN
-  await expect(page.getByRole('tab', { name: 'Users' })).toBeVisible()
-  await expect(page.getByRole('tab', { name: 'Posts' })).toBeVisible()
+  await expect(page.locator('a').filter({ hasText: 'Users' })).toBeVisible()
+  await expect(page.locator('a').filter({ hasText: 'Posts' })).toBeVisible()
 })
 
 test('should list table records', async ({ startExampleApp }) => {

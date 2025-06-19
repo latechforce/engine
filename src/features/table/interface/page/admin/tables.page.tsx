@@ -13,13 +13,7 @@ import { Suspense } from 'react'
 import { adminRoute } from '../../../../app/interface/page/router'
 import type { ListTablesDto } from '../../../application/dto/list-table.dto'
 import type { ListRecordsDto } from '../../../application/dto/list-records.dto'
-import {
-  Tabs,
-  TabsList,
-  TabsSkeleton,
-  TabsTrigger,
-} from '../../../../../shared/interface/ui/tabs.ui'
-import { TypographyH3, TypographyP } from '../../../../../shared/interface/ui/typography.ui'
+import { TypographyP } from '../../../../../shared/interface/ui/typography.ui'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { queryClient } from '../../../../../shared/interface/lib/query.lib'
 import {
@@ -207,6 +201,7 @@ const RecordsDataTable = () => {
   return (
     <DataTable
       verticalSeparator
+      fullPage
       columns={columns}
       data={records.map((record) => ({ ...record.fields, _id: record.id }))}
       actions={[
@@ -237,35 +232,6 @@ const RecordsDataTable = () => {
   )
 }
 
-const TablesTabs = () => {
-  const { data } = useSuspenseQuery(tablesQueryOptions())
-  const navigate = useNavigate()
-  const { tableId } = useParams({ from: '/admin/tables/$tableId' })
-  if (!data.tables.find((table) => table.id === tableId)) {
-    return <Navigate to="/404" />
-  }
-  return (
-    <Tabs
-      defaultValue={tableId}
-      className="overflow-x-auto"
-    >
-      <TabsList>
-        {data.tables.map((table) => (
-          <TabsTrigger
-            key={table.id}
-            value={table.id}
-            onClick={() => {
-              navigate({ to: '/admin/tables/$tableId', params: { tableId: table.id } })
-            }}
-          >
-            {table.name}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-    </Tabs>
-  )
-}
-
 const TablesPage = () => {
   const { data } = useQuery(tablesQueryOptions())
   const { tableId } = useParams({ from: '/admin/tables/$tableId' })
@@ -277,15 +243,15 @@ const TablesPage = () => {
         { title: table?.name ?? '', url: '/admin/tables/$tableId' },
       ]}
     >
-      <div className="flex flex-col gap-4 p-6">
-        <TypographyH3>Tables</TypographyH3>
-        <Suspense fallback={<TabsSkeleton />}>
-          <TablesTabs />
-        </Suspense>
-        <Suspense fallback={<TableSkeleton />}>
-          <RecordsDataTable />
-        </Suspense>
-      </div>
+      <Suspense
+        fallback={
+          <div className="flex flex-col gap-4 p-6">
+            <TableSkeleton />
+          </div>
+        }
+      >
+        <RecordsDataTable />
+      </Suspense>
     </Layout>
   )
 }

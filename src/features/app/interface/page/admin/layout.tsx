@@ -118,32 +118,34 @@ function SidebarLayout({ children, breadcrumbs = [] }: LayoutProps) {
         startPath="/admin"
       />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-          <SidebarTrigger className="mr-2 -ml-1" />
-          <Breadcrumb>
-            <BreadcrumbList>
-              {breadcrumbs.map((breadcrumb, index) => [
-                <BreadcrumbItem
-                  key={breadcrumb.title}
-                  className="hidden md:block"
-                >
-                  {index < breadcrumbs.length - 1 ? (
-                    <BreadcrumbLink href={breadcrumb.url}>{breadcrumb.title}</BreadcrumbLink>
-                  ) : (
-                    <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
-                  )}
-                </BreadcrumbItem>,
-                index < breadcrumbs.length - 1 && (
-                  <BreadcrumbSeparator
-                    key={`${breadcrumb.title}-separator`}
+        <div className="flex h-full flex-col">
+          <header className="bg-background sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b px-4">
+            <SidebarTrigger className="mr-2 -ml-1" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                {breadcrumbs.map((breadcrumb, index) => [
+                  <BreadcrumbItem
+                    key={breadcrumb.title}
                     className="hidden md:block"
-                  />
-                ),
-              ])}
-            </BreadcrumbList>
-          </Breadcrumb>
-        </header>
-        {children}
+                  >
+                    {index < breadcrumbs.length - 1 ? (
+                      <BreadcrumbLink href={breadcrumb.url}>{breadcrumb.title}</BreadcrumbLink>
+                    ) : (
+                      <BreadcrumbPage>{breadcrumb.title}</BreadcrumbPage>
+                    )}
+                  </BreadcrumbItem>,
+                  index < breadcrumbs.length - 1 && (
+                    <BreadcrumbSeparator
+                      key={`${breadcrumb.title}-separator`}
+                      className="hidden md:block"
+                    />
+                  ),
+                ])}
+              </BreadcrumbList>
+            </Breadcrumb>
+          </header>
+          <main className="flex-1 overflow-auto">{children}</main>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )
