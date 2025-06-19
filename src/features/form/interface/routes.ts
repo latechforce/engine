@@ -4,6 +4,6 @@ import { FormController } from './controller/form.controller'
 
 export const formRoutes = new Hono<HonoType>()
   .get('/', FormController.list)
-  .get('/:path', (c) => FormController.get(c, { path: c.req.param('path') }))
+  .get('/:pathOrId', (c) => FormController.get(c, { pathOrId: c.req.param('pathOrId') }))
 
 export type FormType = typeof formRoutes

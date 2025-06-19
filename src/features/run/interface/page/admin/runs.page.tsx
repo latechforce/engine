@@ -7,7 +7,7 @@ import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListRunsDto } from '../../../application/dto/list-runs.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
 import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
-import { RunsDataTable } from '../../components/runs-data-table.component'
+import { RunsDataTable } from '../../component/runs-data-table.component'
 
 const runsQueryOptions = () =>
   queryOptions<ListRunsDto>({

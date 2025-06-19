@@ -7,8 +7,8 @@ import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 export class GetFormUseCase {
   constructor() {}
 
-  async execute(app: App, path: string): Promise<GetFormDto> {
-    const form = app.forms.find((form) => form.path === path)
+  async execute(app: App, pathOrId: string): Promise<GetFormDto> {
+    const form = app.findForm(pathOrId)
     if (!form) {
       throw new HttpError('Form not found', 404)
     }

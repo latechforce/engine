@@ -17,6 +17,7 @@ export type GetAdminMetadataDto = {
     forms: {
       id: number
       name: string
+      path: string
     }[]
     tables: {
       id: number
@@ -46,6 +47,7 @@ export function toGetAdminMetadataDto(app: App, status: AutomationStatus[]): Get
       forms: app.schema.forms.map((form) => ({
         id: form.id,
         name: form.name,
+        path: form.path,
       })),
     },
   }

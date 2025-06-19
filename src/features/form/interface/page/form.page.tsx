@@ -112,7 +112,7 @@ const formQueryOptions = (path: string) =>
   queryOptions<GetFormDto | ErrorDto>({
     queryKey: ['formData'],
     queryFn: async () => {
-      const response = await client.forms[':path'].$get({ param: { path } })
+      const response = await client.forms[':pathOrId'].$get({ param: { pathOrId: path } })
       const data = await response.json()
       return { ...data, status: response.status }
     },

@@ -135,8 +135,13 @@ export class App {
     )
   }
 
-  findForm(name: string): Form | undefined {
-    return this.forms.find((form) => form.schema.name === name)
+  findForm(nameOrPathOrId: string | number): Form | undefined {
+    return this.forms.find(
+      (form) =>
+        form.schema.name === String(nameOrPathOrId) ||
+        form.schema.path === String(nameOrPathOrId) ||
+        form.schema.id === Number(nameOrPathOrId)
+    )
   }
 
   findBucket(nameOrId: string | number): Bucket | undefined {

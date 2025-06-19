@@ -95,7 +95,7 @@ function SidebarLayout({ children, breadcrumbs = [] }: LayoutProps) {
       },
       items: admin.forms.map((form) => ({
         title: form.name,
-        url: `/admin/forms/${form.id}`,
+        url: `/forms/${form.path}`,
         icon: FileText,
       })),
     })

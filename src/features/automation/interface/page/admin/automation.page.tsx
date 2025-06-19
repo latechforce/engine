@@ -5,9 +5,13 @@ import { client } from '../../../../../shared/interface/lib/client.lib'
 import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { adminRoute } from '../../../../app/interface/page/router'
-import { TypographyH3, TypographySmall } from '../../../../../shared/interface/ui/typography.ui'
+import {
+  TypographyH3,
+  TypographyP,
+  TypographySmall,
+} from '../../../../../shared/interface/ui/typography.ui'
 import type { GetAutomationDto } from '../../../application/dto/get-automation.dto'
-import { RunsDataTable } from '../../../../run/interface/components/runs-data-table.component'
+import { RunsDataTable } from '../../../../run/interface/component/runs-data-table.component'
 import { setStatusMutation } from '../../mutations/set-status.mutation'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 
@@ -54,6 +58,11 @@ const AutomationPage = () => {
             />
           </div>
         </div>
+        {data?.automation.description && (
+          <div className="flex items-center justify-between">
+            <TypographyP>{data.automation.description}</TypographyP>
+          </div>
+        )}
         <Suspense fallback={<TableSkeleton />}>
           <AutomationDataTable />
         </Suspense>
