@@ -1,0 +1,1 @@
+ALTER TABLE `run` ADD `automation_id` integer NOT NULL;

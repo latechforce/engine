@@ -1,3 +1,4 @@
+import type { AutomationStatus } from '../../../../features/automation/domain/value-object/automation-status.value-object'
 import type { App } from '../../domain/entity/app.entity'
 
 export type GetAdminMetadataDto = {
@@ -7,6 +8,7 @@ export type GetAdminMetadataDto = {
     automations: {
       id: number
       name: string
+      active: boolean
     }[]
     connections: {
       id: number
@@ -23,7 +25,7 @@ export type GetAdminMetadataDto = {
   }
 }
 
-export function toGetAdminMetadataDto(app: App): GetAdminMetadataDto {
+export function toGetAdminMetadataDto(app: App, status: AutomationStatus[]): GetAdminMetadataDto {
   return {
     admin: {
       name: app.schema.name,
@@ -35,6 +37,7 @@ export function toGetAdminMetadataDto(app: App): GetAdminMetadataDto {
       automations: app.schema.automations.map((automation) => ({
         id: automation.id,
         name: automation.name,
+        active: status.find((s) => s.id === automation.id)?.active ?? false,
       })),
       connections: app.schema.connections.map((connection) => ({
         id: connection.id,

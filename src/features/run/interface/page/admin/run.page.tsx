@@ -15,7 +15,7 @@ const runQueryOptions = (runId: string) =>
   })
 
 const RunDataPage = () => {
-  const { runId } = useParams({ from: '/admin/runs/$runId' })
+  const { runId } = useParams({ from: '/admin/automations/$automationId/runs/$runId' })
   const { data } = useSuspenseQuery(runQueryOptions(runId))
   return (
     <div>
@@ -26,14 +26,17 @@ const RunDataPage = () => {
 }
 
 const RunPage = () => {
-  const { runId } = useParams({ from: '/admin/runs/$runId' })
+  const { runId } = useParams({ from: '/admin/automations/$automationId/runs/$runId' })
   const { data } = useQuery(runQueryOptions(runId))
   return (
     <Layout
       breadcrumbs={[
         { title: 'Automations', url: '/admin/automations' },
-        { title: 'Runs', url: '/admin/runs' },
-        { title: data?.run.automation_name ?? 'Run', url: '/admin/runs/' + data?.run.id },
+        {
+          title: data?.run.automation_name ?? '...',
+          url: '/admin/automations/' + data?.run.automation_id,
+        },
+        { title: 'Run ' + data?.run.id, url: '/admin/runs/' + data?.run.id },
       ]}
     >
       <div className="container p-6">
@@ -47,7 +50,7 @@ const RunPage = () => {
 
 export const runAdminRoute = createRoute({
   getParentRoute: () => adminRoute,
-  path: '/runs/$runId',
+  path: '/automations/$automationId/runs/$runId',
   loader: async ({ context: { queryClient }, params }) => {
     return queryClient.ensureQueryData(runQueryOptions(params.runId))
   },

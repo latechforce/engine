@@ -35,7 +35,7 @@ test('should open and display an automation run', async ({ startExampleApp }) =>
   // WHEN
   await page.goto('/admin/runs')
   await page.getByRole('row', { name: 'run-typescript' }).click()
-  await page.waitForURL(`/admin/runs/${runId}`)
+  await page.waitForURL(`/admin/automations/1/runs/${runId}`)
 
   // THEN
   await expect(page.getByRole('heading', { name: 'run-typescript' })).toBeVisible()

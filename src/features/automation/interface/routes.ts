@@ -33,5 +33,10 @@ export const automationRoutes = new Hono<HonoType>()
       active: c.req.valid('json').active,
     })
   )
+  .get('/:automationId/runs', (c) =>
+    AutomationController.get(c, {
+      automationId: c.req.param('automationId'),
+    })
+  )
 
 export type AutomationType = typeof automationRoutes

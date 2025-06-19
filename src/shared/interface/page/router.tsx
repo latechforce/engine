@@ -19,6 +19,7 @@ import {
 import { runAdminRoute } from '../../../features/run/interface/page/admin/run.page'
 import { updateRecordAdminRoute } from '../../../features/table/interface/page/admin/update-record.page'
 import { createRecordAdminRoute } from '../../../features/table/interface/page/admin/create-record.page'
+import { automationAdminRoute } from '../../../features/automation/interface/page/admin/automation.page'
 
 const routeTree = rootRoute.addChildren([
   notFoundRoute,
@@ -27,6 +28,7 @@ const routeTree = rootRoute.addChildren([
   adminRoute.addChildren([
     loginAdminRoute,
     dashboardAdminRoute,
+    automationAdminRoute,
     automationsAdminRoute,
     runsAdminRoute,
     runAdminRoute,

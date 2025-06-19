@@ -3,6 +3,7 @@ import type { AutomationSchema } from '../../../../features/automation/domain/sc
 
 export const run = sqliteTable('run', {
   id: text('id').primaryKey(),
+  automation_id: integer('automation_id').notNull(),
   automation_schema: text('automation_schema', { mode: 'json' })
     .$type<AutomationSchema>()
     .notNull(),

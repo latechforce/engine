@@ -6,6 +6,7 @@ export type IRunRepository = {
   update: (run: Run) => Promise<void>
   onUpdate: (handler: (run: Run) => Promise<void>) => void
   list: () => Promise<Run[]>
+  listByAutomationId: (automationId: number) => Promise<Run[]>
   get: (id: string) => Promise<Run | undefined>
   delete: (id: string) => Promise<void>
 }

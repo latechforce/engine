@@ -3,7 +3,7 @@ import TYPES from '../../../../shared/application/di/types'
 import type { IRunRepository } from '../../domain/repository-interface/run-repository.interface'
 import { Run } from '../../domain/entity/run.entity'
 import type { RunDatabaseService } from '../service/database.service'
-import { desc } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 import { EventEmitter } from 'events'
 
 @injectable()
@@ -27,6 +27,7 @@ export class RunRepository implements IRunRepository {
   async create(run: Run) {
     await this.database.run.create({
       id: run.id,
+      automation_id: run.automation_schema.id,
       automation_schema: run.automation_schema,
       status: run.status,
       data: run.data,
@@ -58,6 +59,14 @@ export class RunRepository implements IRunRepository {
 
   async list(): Promise<Run[]> {
     const runs = await this.database.run.list({
+      orderBy: desc(this.database.schema.run.created_at),
+    })
+    return runs.map((run) => this.toEntity(run))
+  }
+
+  async listByAutomationId(automationId: number): Promise<Run[]> {
+    const runs = await this.database.run.list({
+      where: eq(this.database.schema.run.automation_id, automationId),
       orderBy: desc(this.database.schema.run.created_at),
     })
     return runs.map((run) => this.toEntity(run))

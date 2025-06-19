@@ -8,7 +8,7 @@ import {
   Sidebar,
   type SidebarGroup,
 } from '../../../../../shared/interface/component/sidebar.component'
-import { History, Zap, Webhook, Link, FileText, Table } from 'lucide-react'
+import { History, Zap, ZapOff, Webhook, Link, FileText, Table, Gauge, Search } from 'lucide-react'
 import { RequireAuth } from '../../../../user/interface/context/require-auth.context'
 import {
   Breadcrumb,
@@ -46,34 +46,53 @@ function SidebarLayout({ children, breadcrumbs = [] }: LayoutProps) {
   const items: SidebarGroup[] = [
     {
       title: 'Application',
-      items: [],
+      items: [
+        {
+          title: 'Dashboard',
+          url: '/admin',
+          icon: Gauge,
+        },
+      ],
     },
   ]
 
+  if (admin.automations.length > 0 || admin.tables.length > 0) {
+    items[0]?.items.push({
+      title: 'API Docs',
+      url: '/admin/api',
+      icon: Webhook,
+    })
+  }
+
   if (admin.automations.length > 0) {
     items[0]?.items.push({
-      title: 'Runs',
+      title: 'Automation Runs',
       url: '/admin/runs',
       icon: History,
     })
     items.push({
       title: 'Automations',
+      action: {
+        title: 'Search Automation',
+        url: '/admin/automations',
+        icon: Search,
+      },
       items: admin.automations.map((automation) => ({
         title: automation.name,
         url: `/admin/automations/${automation.id}`,
-        icon: Zap,
+        icon: automation.active ? Zap : ZapOff,
       })),
     })
   }
 
   if (admin.forms.length > 0) {
-    items[0]?.items.push({
-      title: 'Submissions',
-      url: '/admin/submissions',
-      icon: FileText,
-    })
     items.push({
       title: 'Forms',
+      action: {
+        title: 'Search Form',
+        url: '/admin/forms',
+        icon: Search,
+      },
       items: admin.forms.map((form) => ({
         title: form.name,
         url: `/admin/forms/${form.id}`,
@@ -98,14 +117,6 @@ function SidebarLayout({ children, breadcrumbs = [] }: LayoutProps) {
       title: 'Connections',
       url: '/admin/connections',
       icon: Link,
-    })
-  }
-
-  if (admin.automations.length > 0 || admin.tables.length > 0) {
-    items[0]?.items.push({
-      title: 'API Docs',
-      url: '/admin/api',
-      icon: Webhook,
     })
   }
 

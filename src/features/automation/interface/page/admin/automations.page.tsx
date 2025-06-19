@@ -1,23 +1,16 @@
-import { createRoute } from '@tanstack/react-router'
+import { createRoute, Link } from '@tanstack/react-router'
 import Layout from '../../../../app/interface/page/admin/layout'
 import { DataTable } from '../../../../../shared/interface/component/data-table.component'
 import type { ColumnDef } from '@tanstack/react-table'
 import { client } from '../../../../../shared/interface/lib/client.lib'
 import type { AutomationDto } from '../../../application/dto/automation.dto'
-import {
-  queryOptions,
-  useSuspenseQuery,
-  useMutation,
-  type UseMutationResult,
-} from '@tanstack/react-query'
+import { queryOptions, useSuspenseQuery, type UseMutationResult } from '@tanstack/react-query'
 import { Suspense } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListAutomationsDto } from '../../../application/dto/list-automations.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
 import { formatDistance } from 'date-fns'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
-import { queryClient } from '../../../../../shared/interface/lib/query.lib'
-import { toast } from 'sonner'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
 import {
   DropdownMenu,
@@ -27,13 +20,14 @@ import {
 } from '../../../../../shared/interface/ui/dropdown-menu.ui'
 import { MoreVertical } from 'lucide-react'
 import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
+import { setStatusMutation } from '../../mutations/set-status.mutation'
 
 const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto, unknown>) =>
   [
     {
       accessorKey: 'name',
       header: 'Name',
-      size: 448,
+      size: 446,
     },
     {
       accessorKey: 'updatedAt',
@@ -85,6 +79,12 @@ const columns = (mutation: UseMutationResult<AutomationDto, Error, AutomationDto
               >
                 Edit this automation
               </DropdownMenuItem>
+              <Link
+                to={`/admin/automations/$automationId`}
+                params={{ automationId: row.original.id.toString() }}
+              >
+                <DropdownMenuItem>View runs</DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
         )
@@ -100,21 +100,7 @@ const automationsQueryOptions = () =>
 
 const AutomationsDataTable = () => {
   const { data } = useSuspenseQuery(automationsQueryOptions())
-
-  const mutation = useMutation({
-    mutationFn: async (automation: AutomationDto) => {
-      await client.automations[':automationId'].status.$patch({
-        param: { automationId: automation.id.toString() },
-        json: { active: !automation.active },
-      })
-      return automation
-    },
-    onSuccess: (automation) => {
-      queryClient.invalidateQueries({ queryKey: ['automationsData'] })
-      toast(`Automation "${automation.name}" is now ${!automation.active ? 'active' : 'inactive'}.`)
-    },
-  })
-
+  const mutation = setStatusMutation('automationsData')
   return (
     <DataTable
       columns={columns(mutation)}

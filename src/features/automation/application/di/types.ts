@@ -6,6 +6,7 @@ const TYPES = {
     Run: Symbol.for('RunAutomationUseCase'),
     List: Symbol.for('ListAutomationsUseCase'),
     SetStatus: Symbol.for('SetStatusUseCase'),
+    GetAutomation: Symbol.for('GetAutomationUseCase'),
   },
   Service: {
     Database: Symbol.for('AutomationDatabaseService'),

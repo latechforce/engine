@@ -5,6 +5,7 @@ export type RunDto = {
   status: 'playing' | 'success' | 'stopped' | 'filtered'
   created_at: string
   updated_at: string
+  automation_id: string
   automation_name: string
 }
 
@@ -14,6 +15,7 @@ export function toRunDto(run: Run): RunDto {
     status: run.status,
     created_at: run.createdAt.toISOString(),
     updated_at: run.updatedAt.toISOString(),
+    automation_id: run.automation_schema.id.toString(),
     automation_name: run.automation_schema.name,
   }
 }

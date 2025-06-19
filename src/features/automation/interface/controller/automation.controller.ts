@@ -31,4 +31,11 @@ export class AutomationController {
     await setStatusUseCase.execute(app, data.automationId, data.active)
     return c.text('OK')
   }
+
+  static async get(c: Context<HonoType>, data: { automationId: string }) {
+    const app = c.get('app')
+    const getAutomationUseCase = c.get('getAutomationUseCase')
+    const getAutomationDto = await getAutomationUseCase.execute(app, data.automationId)
+    return c.json(getAutomationDto)
+  }
 }

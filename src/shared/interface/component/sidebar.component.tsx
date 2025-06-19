@@ -9,6 +9,7 @@ import {
   SidebarHeader,
   SidebarGroupLabel,
   SidebarFooter,
+  SidebarGroupAction,
 } from '../ui/sidebar.ui'
 import { TypographyMuted, TypographyLarge } from '../ui/typography.ui'
 import { Bug, LogOut, User2, Sparkles } from 'lucide-react'
@@ -33,6 +34,11 @@ export type SidebarItem = {
 export type SidebarGroup = {
   title: string
   items: SidebarItem[]
+  action?: {
+    title: string
+    url: string
+    icon: React.ElementType
+  }
 }
 
 export type SidebarProps = React.ComponentPropsWithoutRef<'div'> & {
@@ -56,6 +62,16 @@ export function Sidebar({ title, description, groups, startPath, ...props }: Sid
         {groups?.map((group) => (
           <SidebarGroup key={group.title}>
             <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
+            {group.action && (
+              <Link to={group.action.url}>
+                <SidebarGroupAction
+                  title={group.action.title}
+                  className="cursor-pointer"
+                >
+                  <group.action.icon /> <span className="sr-only">{group.action.title}</span>
+                </SidebarGroupAction>
+              </Link>
+            )}
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => (
