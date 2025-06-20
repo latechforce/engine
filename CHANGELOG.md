@@ -1,3 +1,10 @@
+## [0.57.2](https://github.com/latechforce/engine/compare/v0.57.1...v0.57.2) (2025-06-20)
+
+
+### Bug Fixes
+
+* **connection:** fix state in redirect uri ([2facd8e](https://github.com/latechforce/engine/commit/2facd8e840b64fc2c4178e27ca0aed4b3606331e)) — Thomas JEANNEAU
+
 ## [0.57.1](https://github.com/latechforce/engine/compare/v0.57.0...v0.57.1) (2025-06-20)
 
 
