@@ -34,6 +34,7 @@ import { App, type AppSchema } from '@latechforce/engine';
 const schema: AppSchema = {
   forms: [
     {
+      id: 1,
       name: 'contact-us',
       title: 'Contact us',
       path: '/contact-us',
@@ -324,6 +325,11 @@ await new App().start(schema);
 
     <Link to="/guides/table">
       <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Configure multiple tables</p>
+    </Link>
+  
+
+    <Link to="/guides/table/required">
+      <p style={{ fontWeight: '400', color: 'var(--ifm-color-primary)', margin: 0 }}>Configure a table with required fields</p>
     </Link>
   
     </div>

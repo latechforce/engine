@@ -35,6 +35,9 @@
             "type": "string",
             "minLength": 3
           },
+          "description": {
+            "type": "string"
+          },
           "editUrl": {
             "type": "string",
             "format": "uri"
@@ -100,7 +103,7 @@
                         "type": "string",
                         "const": "get"
                       },
-                      "getHttp": {
+                      "params": {
                         "type": "object",
                         "properties": {
                           "path": {
@@ -120,7 +123,7 @@
                     "required": [
                       "service",
                       "event",
-                      "getHttp"
+                      "params"
                     ],
                     "additionalProperties": false
                   }
@@ -143,7 +146,7 @@
                         "type": "string",
                         "const": "record-created"
                       },
-                      "recordCreatedDatabase": {
+                      "params": {
                         "type": "object",
                         "properties": {
                           "table": {
@@ -159,7 +162,7 @@
                     "required": [
                       "service",
                       "event",
-                      "recordCreatedDatabase"
+                      "params"
                     ],
                     "additionalProperties": false
                   },
@@ -176,7 +179,7 @@
                         "type": "string",
                         "const": "record-updated"
                       },
-                      "recordUpdatedDatabase": {
+                      "params": {
                         "type": "object",
                         "properties": {
                           "table": {
@@ -192,7 +195,7 @@
                     "required": [
                       "service",
                       "event",
-                      "recordUpdatedDatabase"
+                      "params"
                     ],
                     "additionalProperties": false
                   }
@@ -215,7 +218,7 @@
                         "type": "string",
                         "const": "cron-time"
                       },
-                      "cronTime": {
+                      "params": {
                         "type": "object",
                         "properties": {
                           "expression": {
@@ -235,7 +238,7 @@
                     "required": [
                       "service",
                       "event",
-                      "cronTime"
+                      "params"
                     ],
                     "additionalProperties": false
                   }
@@ -272,7 +275,7 @@
                             "type": "string",
                             "const": "invite-created"
                           },
-                          "inviteCreatedCalendly": {
+                          "params": {
                             "type": "object",
                             "properties": {
                               "organization": {
@@ -330,7 +333,7 @@
                             "type": "string",
                             "const": "new-lead"
                           },
-                          "newLeadFacebookLeadAds": {
+                          "params": {
                             "type": "object",
                             "properties": {},
                             "additionalProperties": false
@@ -372,7 +375,7 @@
                             "type": "string",
                             "const": "new-lead-gen-form-response"
                           },
-                          "newLeadGenFormResponseLinkedinAds": {
+                          "params": {
                             "type": "object",
                             "properties": {},
                             "additionalProperties": false
@@ -586,6 +589,9 @@
         "description": "The form is a collection of inputs",
         "type": "object",
         "properties": {
+          "id": {
+            "type": "number"
+          },
           "path": {
             "type": "string"
           },
@@ -774,6 +780,7 @@
           }
         },
         "required": [
+          "id",
           "path",
           "action",
           "name",
@@ -1213,7 +1220,7 @@
                   "type": "string",
                   "const": "get"
                 },
-                "getHttp": {
+                "params": {
                   "type": "object",
                   "properties": {
                     "url": {
@@ -1239,7 +1246,7 @@
                 "name",
                 "service",
                 "action",
-                "getHttp"
+                "params"
               ],
               "additionalProperties": false
             },
@@ -1312,7 +1319,7 @@
                   "type": "string",
                   "const": "response"
                 },
-                "responseHttp": {
+                "params": {
                   "type": "object",
                   "properties": {
                     "body": {
@@ -1329,8 +1336,7 @@
               "required": [
                 "name",
                 "service",
-                "action",
-                "responseHttp"
+                "action"
               ],
               "additionalProperties": false
             }
@@ -1484,7 +1490,7 @@
                   "type": "string",
                   "const": "split-into-paths"
                 },
-                "splitIntoPathsFilter": {
+                "params": {
                   "type": "array",
                   "items": {
                     "type": "object",
@@ -1492,7 +1498,7 @@
                       "name": {
                         "type": "string"
                       },
-                      "onlyContinueIf": {
+                      "filter": {
                         "$ref": "#/$defs/__schema2"
                       },
                       "actions": {
@@ -1504,7 +1510,7 @@
                     },
                     "required": [
                       "name",
-                      "onlyContinueIf",
+                      "filter",
                       "actions"
                     ],
                     "additionalProperties": false
@@ -1515,7 +1521,7 @@
                 "name",
                 "service",
                 "action",
-                "splitIntoPathsFilter"
+                "params"
               ],
               "additionalProperties": false
             }
@@ -1553,7 +1559,7 @@
                       "type": "string",
                       "const": "list-webhook-subscriptions"
                     },
-                    "listWebhookSubscriptionsCalendly": {
+                    "params": {
                       "type": "object",
                       "properties": {
                         "organization": {
@@ -1583,8 +1589,7 @@
                     "name",
                     "account",
                     "service",
-                    "action",
-                    "listWebhookSubscriptionsCalendly"
+                    "action"
                   ],
                   "additionalProperties": false
                 }
@@ -1620,7 +1625,7 @@
                       "type": "string",
                       "const": "append-values"
                     },
-                    "appendValuesGoogleSheets": {
+                    "params": {
                       "type": "object",
                       "properties": {
                         "spreadsheetId": {
@@ -1652,7 +1657,7 @@
                     "account",
                     "service",
                     "action",
-                    "appendValuesGoogleSheets"
+                    "params"
                   ],
                   "additionalProperties": false
                 }
@@ -1688,7 +1693,7 @@
                       "type": "string",
                       "const": "send-email"
                     },
-                    "sendEmailGoogleGmail": {
+                    "params": {
                       "type": "object",
                       "properties": {
                         "to": {
@@ -1714,7 +1719,7 @@
                     "account",
                     "service",
                     "action",
-                    "sendEmailGoogleGmail"
+                    "params"
                   ],
                   "additionalProperties": false
                 }
