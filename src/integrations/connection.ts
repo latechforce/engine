@@ -23,7 +23,7 @@ export const toConnectionIntegration = (
     return cachedIntegration
   }
 
-  const redirectUriWithState = redirectUri + '&state=' + JSON.stringify({ id: connection.id })
+  const redirectUriWithState = redirectUri + '?state=' + JSON.stringify({ id: connection.id })
 
   // Create new instance if not cached
   let integration: ConnectionIntegration

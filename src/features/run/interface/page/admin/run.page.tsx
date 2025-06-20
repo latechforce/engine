@@ -206,7 +206,7 @@ const StepsCards = ({ run, steps, startIndex = 0 }: StepCardProps) => {
                     <StepsCards
                       run={run}
                       steps={path.actions}
-                      startIndex={index + startIndex}
+                      startIndex={index + startIndex + 1}
                     />
                   </TabsContent>
                 ))}
