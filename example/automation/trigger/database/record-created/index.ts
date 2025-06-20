@@ -9,6 +9,7 @@ export default {
     {
       id: 1,
       name: 'record-created',
+      editUrl: 'https://www.github.com',
       trigger: {
         service: 'database',
         event: 'record-created',

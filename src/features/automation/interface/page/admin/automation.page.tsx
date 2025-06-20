@@ -1,4 +1,4 @@
-import { createRoute, useParams } from '@tanstack/react-router'
+import { createRoute, Link, useParams } from '@tanstack/react-router'
 import Layout from '../../../../app/interface/page/admin/layout'
 import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { client } from '../../../../../shared/interface/lib/client.lib'
@@ -14,6 +14,8 @@ import type { GetAutomationDto } from '../../../application/dto/get-automation.d
 import { RunsDataTable } from '../../../../run/interface/component/runs-data-table.component'
 import { setStatusMutation } from '../../mutations/set-status.mutation'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
+import { Button } from '../../../../../shared/interface/ui/button.ui'
+import { PencilIcon } from 'lucide-react'
 
 const automationQueryOptions = (automationId: string) =>
   queryOptions<GetAutomationDto>({
@@ -56,6 +58,17 @@ const AutomationPage = () => {
                 }
               }}
             />
+            {data?.automation.editUrl && (
+              <Link
+                to={data.automation.editUrl}
+                target="_blank"
+              >
+                <Button variant="outline">
+                  <PencilIcon className="h-4 w-4" />
+                  Edit on Github
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
         {data?.automation.description && (

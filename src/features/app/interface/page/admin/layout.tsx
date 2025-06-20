@@ -64,9 +64,25 @@ function SidebarLayout({ children, breadcrumbs = [] }: LayoutProps) {
     })
   }
 
+  if (admin.forms.length > 0) {
+    items.push({
+      title: 'Forms',
+      action: {
+        title: 'Search Form',
+        url: '/admin/forms',
+        icon: Search,
+      },
+      items: admin.forms.map((form) => ({
+        title: form.name,
+        url: `/forms/${form.path}`,
+        icon: FileText,
+      })),
+    })
+  }
+
   if (admin.automations.length > 0) {
     items[0]?.items.push({
-      title: 'Automation Runs',
+      title: 'Runs',
       url: '/admin/runs',
       icon: History,
     })
@@ -81,22 +97,6 @@ function SidebarLayout({ children, breadcrumbs = [] }: LayoutProps) {
         title: automation.name,
         url: `/admin/automations/${automation.id}`,
         icon: automation.active ? Zap : ZapOff,
-      })),
-    })
-  }
-
-  if (admin.forms.length > 0) {
-    items.push({
-      title: 'Forms',
-      action: {
-        title: 'Search Form',
-        url: '/admin/forms',
-        icon: Search,
-      },
-      items: admin.forms.map((form) => ({
-        title: form.name,
-        url: `/forms/${form.path}`,
-        icon: FileText,
       })),
     })
   }

@@ -2,7 +2,7 @@ import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query'
 import { type GetRunDto } from '../../../application/dto/get-run.dto'
 import { client } from '../../../../../shared/interface/lib/client.lib'
 import Layout from '../../../../app/interface/page/admin/layout'
-import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
+import { TypographyH3, TypographySmall } from '../../../../../shared/interface/ui/typography.ui'
 import { createRoute, useParams } from '@tanstack/react-router'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { Suspense } from 'react'
@@ -24,6 +24,12 @@ import {
 import { type Steps } from '../../../domain/value-object.ts/step.value-object'
 import { type ActionStep } from '../../../domain/value-object.ts/action-step.value-object'
 import type { RunDto } from '../../../application/dto/run.dto'
+import { Switch } from '../../../../../shared/interface/ui/switch.ui'
+import { Button } from '../../../../../shared/interface/ui/button.ui'
+import { PencilIcon } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
+import { setStatusMutation } from '../../../../automation/interface/mutations/set-status.mutation'
+import { RunStatus } from '../../component/status.component'
 
 const runQueryOptions = (runId: string) =>
   queryOptions<GetRunDto>({
@@ -47,7 +53,10 @@ const StepsCards = ({ run, steps, startIndex = 0 }: StepCardProps) => {
             className="mb-4"
           >
             <CardHeader>
-              <CardTitle>{index + 1}. Trigger</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                {index + 1}. Trigger - {step.schema.service} / {step.schema.event}
+                <RunStatus status="success" />
+              </CardTitle>
               <CardDescription>
                 {format(new Date(run.createdAt), 'dd/MM/yyyy HH:mm:ss')}
               </CardDescription>
@@ -79,19 +88,32 @@ const StepsCards = ({ run, steps, startIndex = 0 }: StepCardProps) => {
             className="mt-4"
           >
             <CardHeader>
-              <CardTitle>
-                {index + startIndex + 1}. {step.schema.name}
+              <CardTitle className="flex items-center gap-2">
+                {index + startIndex + 1}. {step.schema.name} - {step.schema.service} /{' '}
+                {step.schema.action}
+                <RunStatus
+                  status={
+                    step.schema.service === 'filter' && step.schema.action === 'only-continue-if'
+                      ? step.output?.canContinue === true
+                        ? 'success'
+                        : 'filtered'
+                      : step.error
+                        ? 'stopped'
+                        : 'success'
+                  }
+                />
               </CardTitle>
               <CardDescription>
                 {format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Tabs defaultValue="output">
+              <Tabs defaultValue={step.error ? 'error' : 'output'}>
                 <TabsList>
                   <TabsTrigger value="schema">Schema</TabsTrigger>
                   <TabsTrigger value="input">Input Data</TabsTrigger>
-                  <TabsTrigger value="output">Output Data</TabsTrigger>
+                  {!step.error && <TabsTrigger value="output">Output Data</TabsTrigger>}
+                  {step.error && <TabsTrigger value="error">Error</TabsTrigger>}
                 </TabsList>
                 <TabsContent value="schema">
                   <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
@@ -108,13 +130,21 @@ const StepsCards = ({ run, steps, startIndex = 0 }: StepCardProps) => {
                     {JSON.stringify(step.output ?? {}, null, 2)}
                   </pre>
                 </TabsContent>
+                <TabsContent value="error">
+                  <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
+                    {JSON.stringify(step.error, null, 2)}
+                  </pre>
+                </TabsContent>
               </Tabs>
             </CardContent>
           </Card>
         )
       case 'paths':
         return (
-          <Card key={index + startIndex}>
+          <Card
+            key={index + startIndex}
+            className="mt-4"
+          >
             <CardHeader>
               <CardTitle>{index + startIndex + 1}. Paths</CardTitle>
               <CardDescription>
@@ -191,9 +221,41 @@ const StepsCards = ({ run, steps, startIndex = 0 }: StepCardProps) => {
 const RunDataPage = () => {
   const { runId } = useParams({ from: '/admin/automations/$automationId/runs/$runId' })
   const { data } = useSuspenseQuery(runQueryOptions(runId))
+  const mutation = setStatusMutation('runData')
   return (
     <div>
-      <TypographyH3 className="mb-4">{data.run.automationName}</TypographyH3>
+      <div className="mb-4 flex items-center justify-between">
+        <TypographyH3 className="flex items-center gap-2">
+          <RunStatus status={data.run.status} />- {data.run.automationName} -
+          <span className="text-muted-foreground font-normal">
+            {format(new Date(data.run.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+          </span>
+        </TypographyH3>
+        <div className="flex items-center gap-2">
+          <TypographySmall>
+            Automation is <strong>{data.automation.active ? 'ON' : 'OFF'}</strong>
+          </TypographySmall>
+          <Switch
+            checked={data?.automation.active}
+            onCheckedChange={() => {
+              if (data?.automation) {
+                mutation.mutate(data.automation)
+              }
+            }}
+          />
+          {data?.automation.editUrl && (
+            <Link
+              to={data.automation.editUrl}
+              target="_blank"
+            >
+              <Button variant="outline">
+                <PencilIcon className="h-4 w-4" />
+                Edit on Github
+              </Button>
+            </Link>
+          )}
+        </div>
+      </div>
       <StepsCards
         run={data.run}
         steps={data.steps}
@@ -213,7 +275,10 @@ const RunPage = () => {
           title: data?.run.automationName ?? '...',
           url: '/admin/automations/' + data?.run.automationId,
         },
-        { title: 'Run ' + data?.run.id, url: '/admin/runs/' + data?.run.id },
+        {
+          title: 'Run ' + format(new Date(data?.run.createdAt ?? ''), 'dd/MM/yyyy HH:mm:ss'),
+          url: '/admin/runs/' + data?.run.id,
+        },
       ]}
     >
       <div className="container p-6">

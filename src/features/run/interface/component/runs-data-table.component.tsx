@@ -1,9 +1,9 @@
 import { useNavigate } from '@tanstack/react-router'
 import type { RunDto } from '../../application/dto/run.dto'
 import type { ColumnDef } from '@tanstack/react-table'
-import { CheckCircle, Filter, Play, XCircle } from 'lucide-react'
 import { format } from 'date-fns'
 import { DataTable } from '../../../../shared/interface/component/data-table.component'
+import { RunStatus } from './status.component'
 
 export const columns: ColumnDef<RunDto>[] = [
   {
@@ -11,32 +11,7 @@ export const columns: ColumnDef<RunDto>[] = [
     header: 'Status',
     size: 200,
     cell: ({ row }) => {
-      switch (row.original.status) {
-        case 'success':
-          return (
-            <div className="flex items-center gap-2 text-green-700">
-              <CheckCircle /> Success
-            </div>
-          )
-        case 'stopped':
-          return (
-            <div className="flex items-center gap-2 text-red-700">
-              <XCircle /> Stopped
-            </div>
-          )
-        case 'filtered':
-          return (
-            <div className="flex items-center gap-2 text-gray-500">
-              <Filter /> Filtered
-            </div>
-          )
-        case 'playing':
-          return (
-            <div className="flex items-center gap-2 text-blue-700">
-              <Play /> Playing
-            </div>
-          )
-      }
+      return <RunStatus status={row.original.status} />
     },
   },
   {
