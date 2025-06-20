@@ -1,1 +1,0 @@
-ALTER TABLE "run" ADD COLUMN "automation_id" integer NOT NULL;

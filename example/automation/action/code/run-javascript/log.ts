@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: '/run-javascript',
         },
       },
@@ -20,8 +20,8 @@ export default {
         {
           service: 'code',
           action: 'run-javascript',
-          name: 'runJavascriptCode',
-          runJavascriptCode: {
+          name: 'params',
+          params: {
             // @ts-expect-error - CodeContext is not defined in JavaScript
             code: String(function (context) {
               context.log.info('Hello, world!')

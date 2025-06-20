@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: '/run-paths',
         },
       },
@@ -21,10 +21,10 @@ export default {
           name: 'splitIntoPaths',
           service: 'filter',
           action: 'split-into-paths',
-          splitIntoPathsFilter: [
+          params: [
             {
               name: 'path1',
-              onlyContinueIf: {
+              filter: {
                 target: '{{ trigger.body.name }}',
                 operator: 'exists',
               },
@@ -33,7 +33,7 @@ export default {
                   name: 'runTypescript1',
                   service: 'code',
                   action: 'run-typescript',
-                  runTypescriptCode: {
+                  params: {
                     code: String(function () {
                       return { success: true }
                     }),
@@ -43,7 +43,7 @@ export default {
             },
             {
               name: 'path2',
-              onlyContinueIf: {
+              filter: {
                 target: '{{ trigger.body.name }}',
                 operator: 'does-not-exist',
               },
@@ -52,7 +52,7 @@ export default {
                   name: 'runTypescript2',
                   service: 'code',
                   action: 'run-typescript',
-                  runTypescriptCode: {
+                  params: {
                     code: String(function () {
                       return { success: true }
                     }),

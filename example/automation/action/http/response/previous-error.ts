@@ -8,7 +8,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'response',
         },
       },
@@ -16,8 +16,8 @@ export default {
         {
           service: 'code',
           action: 'run-typescript',
-          name: 'runTypescriptCode',
-          runTypescriptCode: {
+          name: 'params',
+          params: {
             code: String(async function () {
               throw new Error('This is a test error')
             }),
@@ -27,7 +27,7 @@ export default {
           name: 'response',
           service: 'http',
           action: 'response',
-          responseHttp: {
+          params: {
             body: {
               message: 'Hello, world!',
             },

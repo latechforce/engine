@@ -125,20 +125,20 @@ test('should run a TypeScript code that return an array', async ({ startExampleA
   for (let i = 0; i < runs.length; i++) {
     const run = runs[i]!
     const runResponse = await page.request.get(`/api/runs/${run.id}`)
-    const { data } = await runResponse.json()
-    if (data.runTypeScriptCode.index === 0) {
-      expect(data.runTypeScriptCode.name).toEqual('John Doe')
-      expect(data.buildMessage).toEqual({
+    const { steps } = await runResponse.json()
+    if (steps[1]?.output?.index === 1) {
+      expect(steps[1]?.output?.name).toEqual('John Doe')
+      expect(steps[2]?.output).toEqual({
         message: 'Hello, John Doe!',
       })
-    } else if (data.runTypeScriptCode.index === 1) {
-      expect(data.runTypeScriptCode.name).toEqual('Jane Doe')
-      expect(data.buildMessage).toEqual({
+    } else if (steps[1]?.output?.index === 2) {
+      expect(steps[1]?.output?.name).toEqual('Jane Doe')
+      expect(steps[2]?.output).toEqual({
         message: 'Hello, Jane Doe!',
       })
-    } else if (data.runTypeScriptCode.index === 2) {
-      expect(data.runTypeScriptCode.name).toEqual('Jacob Doe')
-      expect(data.buildMessage).toEqual({
+    } else if (steps[1]?.output?.index === 3) {
+      expect(steps[1]?.output?.name).toEqual('Jacob Doe')
+      expect(steps[2]?.output).toEqual({
         message: 'Hello, Jacob Doe!',
       })
     }

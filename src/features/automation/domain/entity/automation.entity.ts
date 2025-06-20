@@ -34,7 +34,7 @@ export class Automation {
       }
       actionNames.add(action.name)
       if (action.service === 'filter' && action.action === 'split-into-paths') {
-        for (const path of action.splitIntoPathsFilter) {
+        for (const path of action.params) {
           if (pathNames.has(path.name)) {
             throw new Error(`Duplicate path name: ${path.name}`)
           }
@@ -84,7 +84,7 @@ export class Automation {
         action.service === 'filter' &&
         action.action === 'split-into-paths'
       ) {
-        const path = action.splitIntoPathsFilter.find((path) => path.name === pathName)
+        const path = action.params.find((path) => path.name === pathName)
         if (path) {
           return {
             actionName: action.name,
@@ -92,7 +92,7 @@ export class Automation {
             actions: path.actions,
           }
         }
-        for (const { actions } of action.splitIntoPathsFilter) {
+        for (const { actions } of action.params) {
           return this.findPathFromName(actionPathName, actions)
         }
       }

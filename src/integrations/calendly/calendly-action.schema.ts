@@ -8,17 +8,19 @@ const baseCalendlyActionSchema = baseIntegrationActionSchema.extend({
 const listWebhookSubscriptionsCalendlyActionSchema = baseCalendlyActionSchema
   .extend({
     action: z.literal('list-webhook-subscriptions'),
-    listWebhookSubscriptionsCalendly: z.object({
-      organization: z.string().optional().meta({
-        default: 'Current user organisation',
-      }),
-      scope: z.enum(['user', 'organization', 'group']).optional().meta({
-        default: 'user',
-      }),
-      count: z.number().min(1).max(100).optional().meta({
-        default: 20,
-      }),
-    }),
+    params: z
+      .object({
+        organization: z.string().optional().meta({
+          default: 'Current user organisation',
+        }),
+        scope: z.enum(['user', 'organization', 'group']).optional().meta({
+          default: 'user',
+        }),
+        count: z.number().min(1).max(100).optional().meta({
+          default: 20,
+        }),
+      })
+      .optional(),
   })
   .meta({
     title: 'List Webhook Subscriptions',

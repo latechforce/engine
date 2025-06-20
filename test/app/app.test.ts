@@ -39,7 +39,7 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            postHttp: {
+            params: {
               path: '/automation',
             },
           },
@@ -51,7 +51,7 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            postHttp: {
+            params: {
               path: '/automation',
             },
           },
@@ -257,7 +257,7 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            postHttp: {
+            params: {
               path: '/automation',
             },
           },
@@ -269,7 +269,7 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            postHttp: {
+            params: {
               path: '/automation',
             },
           },
@@ -352,7 +352,7 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            postHttp: {
+            params: {
               path: '/automation',
             },
           },
@@ -361,7 +361,7 @@ describe('start', () => {
               name: 'action',
               service: 'code',
               action: 'run-javascript',
-              runJavascriptCode: {
+              params: {
                 code: 'console.log("action")',
               },
             },
@@ -369,7 +369,7 @@ describe('start', () => {
               name: 'action',
               service: 'code',
               action: 'run-javascript',
-              runJavascriptCode: {
+              params: {
                 code: 'console.log("action")',
               },
             },
@@ -394,7 +394,7 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            postHttp: {
+            params: {
               path: '/automation',
             },
           },
@@ -403,17 +403,17 @@ describe('start', () => {
               name: 'action',
               service: 'filter',
               action: 'split-into-paths',
-              splitIntoPathsFilter: [
+              params: [
                 {
                   name: 'path',
-                  onlyContinueIf: {
+                  filter: {
                     or: [],
                   },
                   actions: [],
                 },
                 {
                   name: 'path',
-                  onlyContinueIf: {
+                  filter: {
                     or: [],
                   },
                   actions: [],
@@ -441,7 +441,7 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            postHttp: {
+            params: {
               path: '/automation',
             },
           },
@@ -453,7 +453,7 @@ describe('start', () => {
           trigger: {
             service: 'http',
             event: 'post',
-            postHttp: {
+            params: {
               path: '/automation',
             },
           },

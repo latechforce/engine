@@ -13,12 +13,12 @@ export class SetupActionUseCase {
 
   async execute(app: App, action: ActionSchema) {
     this.actionRepository.debug(`setup "${action.name}"`)
-    this.actionRepository.fillSchema(action)
+    this.actionRepository.fillSchema(action, {})
     switch (action.service) {
       case 'code': {
         switch (action.action) {
           case 'run-typescript': {
-            const { code } = action.runTypescriptCode
+            const { code } = action.params
             const error = await this.actionRepository.code(app, {}).lint(code)
             if (error) {
               this.actionRepository.error(error)
@@ -27,7 +27,7 @@ export class SetupActionUseCase {
             break
           }
           case 'run-javascript': {
-            const { code } = action.runJavascriptCode
+            const { code } = action.params
             const error = await this.actionRepository.code(app, {}).lint(code)
             if (error) {
               this.actionRepository.error(error)

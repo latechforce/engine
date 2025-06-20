@@ -1,17 +1,8 @@
-// Third-party imports
 import { injectable, inject } from 'inversify'
-
-// Shared imports
 import TYPES from '../../../../shared/application/di/types'
-
-// Action application imports
 import type { RunActionUseCase } from '../../../action/application/use-case/run-action.use-case'
-
-// Run domain imports
 import type { IRunRepository } from '../../../run/domain/repository-interface/run-repository.interface'
 import { Run } from '../../../run/domain/entity/run.entity'
-
-// Automation domain imports
 import type { IAutomationRepository } from '../../domain/repository-interface/automation-repository.interface'
 import type { Automation } from '../../domain/entity/automation.entity'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
@@ -46,8 +37,9 @@ export class RunAutomationUseCase {
 
         if (path.actions.length > 0) {
           for (const action of path.actions) {
-            if (run.isActionPathSuccess(pathName + '.' + action.name)) {
-              this.debug(`path "${pathName}" has already been run`)
+            const actionPath = pathName + '.' + action.name
+            if (run.isStepSucceed(actionPath)) {
+              this.debug(`action "${actionPath}" has already been run`)
               continue
             }
             const shouldContinue = await this.runAction(app, run, automation, action, pathName)
@@ -61,18 +53,18 @@ export class RunAutomationUseCase {
         this.info(`playing automation "${automation.schema.name}"`)
         if (automation.actions.length === 0) {
           this.debug(`automation "${automation.schema.name}" has no actions`)
-          run.success()
+          run.runSucceed()
           await this.runRepository.update(run)
         } else {
           for (const action of automation.actions) {
-            if (run.isActionSuccess(action.name)) {
+            if (run.isStepSucceed(action.name)) {
               this.debug(`action "${action.name}" has already been run`)
               continue
             }
             const shouldContinue = await this.runAction(app, run, automation, action)
             if (!shouldContinue) break
           }
-          run.success()
+          run.runSucceed()
           await this.runRepository.update(run)
         }
         this.info(`automation "${automation.schema.name}" finished`)
@@ -86,7 +78,7 @@ export class RunAutomationUseCase {
           message = `automation "${automation.schema.name}" failed: ${error.message}`
         }
         this.error(message)
-        run.stop('execution', error)
+        run.stopActionStep('execution', error)
         await this.runRepository.update(run)
       } else {
         throw error
@@ -101,35 +93,37 @@ export class RunAutomationUseCase {
     action: ActionSchema,
     pathName?: string
   ): Promise<boolean> {
-    const { data, error } = await this.runActionUseCase.execute(app, action, run)
+    const actionPath = pathName ? pathName + '.' + action.name : action.name
+
+    const { data, error } = await this.runActionUseCase.execute(app, action, run, actionPath)
 
     if (error) {
-      await this.stop(run, action, error)
+      await this.stop(run, actionPath, error)
       return false
     }
 
     if (action.service === 'filter' && 'canContinue' in data && !data.canContinue) {
-      await this.filter(run, action, data)
+      await this.filter(run, actionPath, data)
       return false
     }
 
     if (Array.isArray(data)) {
       for (let i = 0; i < data.length; i++) {
-        const item = { ...data[i], index: i }
+        const item = { ...data[i], index: i + 1 }
         if (i === 0) {
-          await this.success(run, action, item, pathName)
+          run.successActionStep(actionPath, item)
           await this.runRepository.update(run)
           this.info(`action "${action.name}" succeeded`)
         } else {
           const newRun = run.clone()
-          await this.success(newRun, action, item, pathName)
+          newRun.successActionStep(actionPath, item)
           await this.runRepository.create(newRun)
           this.debug(`create new run for action "${action.name}"`)
         }
       }
       return true
     } else {
-      await this.success(run, action, data, pathName)
+      run.successActionStep(actionPath, data)
       await this.runRepository.update(run)
       if (action.service === 'filter' && action.action === 'split-into-paths') {
         await this.executePaths(app, run, automation, action, data, pathName)
@@ -140,29 +134,16 @@ export class RunAutomationUseCase {
     return true
   }
 
-  private async success(
-    run: Run,
-    action: ActionSchema,
-    data: Record<string, unknown>,
-    pathName?: string
-  ) {
-    if (pathName) {
-      run.actionPathSuccess(pathName, data)
-    } else {
-      run.actionSuccess(action.name, data)
-    }
+  private async stop(run: Run, actionPath: string, error: IntegrationError | ServiceError) {
+    run.stopActionStep(actionPath, error)
+    await this.runRepository.update(run)
+    this.info(`action "${actionPath}" stopped with error: ${error.message}`)
   }
 
-  private async stop(run: Run, action: ActionSchema, error: IntegrationError | ServiceError) {
-    run.stop(action.name, error)
+  private async filter(run: Run, actionPath: string, data: Record<string, unknown>) {
+    run.filterActionStep(actionPath, data)
     await this.runRepository.update(run)
-    this.info(`action "${action.name}" stopped with error: ${error.message}`)
-  }
-
-  private async filter(run: Run, action: ActionSchema, data: Record<string, unknown>) {
-    run.filter(action.name, data)
-    await this.runRepository.update(run)
-    this.info(`action "${action.name}" filtered`)
+    this.info(`action "${actionPath}" filtered`)
   }
 
   private async executePaths(
@@ -174,7 +155,7 @@ export class RunAutomationUseCase {
     pathName?: string
   ) {
     await Promise.all(
-      schema.splitIntoPathsFilter.map(async (path) => {
+      schema.params.map(async (path) => {
         const nextPathName = (pathName ? pathName + '.' : '') + schema.name + '.' + path.name
         const result = data[path.name]
         if (

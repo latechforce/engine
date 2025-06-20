@@ -1,4 +1,6 @@
 import { expect, test } from '@/e2e/fixtures'
+import type { GetRunDto } from '../../../src/features/run/application/dto/get-run.dto'
+import type { ListRunsDto } from '../../../src/features/run/application/dto/list-runs.dto'
 
 test('should display a form with an url input', async ({ startExampleApp }) => {
   // GIVEN
@@ -24,10 +26,12 @@ test('should run an automation when a form with a url input is submitted', async
   await page.waitForSelector('text="Thank you for your submission"')
 
   // THEN
-  const { runs } = await page.request.get('/api/runs').then((res) => res.json())
+  const { runs }: ListRunsDto = await page.request.get('/api/runs').then((res) => res.json())
   expect(runs.length).toBe(1)
-  const { data } = await page.request.get(`/api/runs/${runs[0].id}`).then((res) => res.json())
-  expect(data.trigger?.body?.url).toBe('https://www.google.com')
+  const { steps }: GetRunDto = await page.request
+    .get(`/api/runs/${runs[0]!.id}`)
+    .then((res) => res.json())
+  expect(steps[0]!.output.body).toEqual({ url: 'https://www.google.com' })
 })
 
 test('should create a record with a url input', async ({ startExampleApp }) => {

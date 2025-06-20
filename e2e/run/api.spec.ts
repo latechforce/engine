@@ -32,9 +32,8 @@ test('should return a run by id', async ({ startExampleApp }) => {
 
   // THEN
   expect(response.status()).toBe(200)
-  const { run, data, automation_schema }: GetRunDto = await response.json()
+  const { run, steps }: GetRunDto = await response.json()
   expect(run.automation_name).toBe('post')
   expect(run.status).toBe('success')
-  expect(automation_schema).toBeDefined()
-  expect(data).toBeDefined()
+  expect(steps).toBeDefined()
 })

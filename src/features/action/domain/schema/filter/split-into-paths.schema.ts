@@ -3,9 +3,9 @@ import { baseFilterActionSchema } from './base'
 import { actionSchema, type ActionSchema } from '../action.schema'
 import { conditionsSchema, type ConditionsSchema } from '../condition'
 
-type PathSchema = {
+export type PathSchema = {
   name: string
-  onlyContinueIf: ConditionsSchema
+  filter: ConditionsSchema
   actions: ActionSchema[]
 }
 
@@ -13,7 +13,7 @@ export type SplitIntoPathsFilterActionSchema = {
   name: string
   service: 'filter'
   action: 'split-into-paths'
-  splitIntoPathsFilter: PathSchema[]
+  params: PathSchema[]
 }
 
 export const splitIntoPathsFilterActionSchema: z.ZodType<SplitIntoPathsFilterActionSchema> = z.lazy(
@@ -21,10 +21,10 @@ export const splitIntoPathsFilterActionSchema: z.ZodType<SplitIntoPathsFilterAct
     baseFilterActionSchema
       .extend({
         action: z.literal('split-into-paths'),
-        splitIntoPathsFilter: z.array(
+        params: z.array(
           z.object({
             name: z.string(),
-            onlyContinueIf: conditionsSchema,
+            filter: conditionsSchema,
             actions: z.array(actionSchema),
           })
         ),

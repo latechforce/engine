@@ -36,7 +36,6 @@ export class SchemaService {
     const validate = this.ajv.compile(schema)
     if (!validate(data)) {
       const errors: string[] = []
-      console.log(validate.errors)
       for (const error of validate.errors ?? []) {
         if (error.message) {
           errors.push(error.message)

@@ -4,7 +4,7 @@ import { baseDatabaseTriggerSchema } from './base'
 export const recordUpdatedDatabaseTriggerSchema = baseDatabaseTriggerSchema
   .extend({
     event: z.literal('record-updated'),
-    recordUpdatedDatabase: z.object({
+    params: z.object({
       table: z.string(),
     }),
   })

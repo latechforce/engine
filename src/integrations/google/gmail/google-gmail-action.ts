@@ -29,7 +29,7 @@ export class GoogleGmailActionIntegration {
     const gmail = google.gmail({ version: 'v1', auth: this.oauth2Client })
     switch (this.actionSchema.action) {
       case 'send-email': {
-        const { to, subject, html } = this.actionSchema.sendEmailGoogleGmail
+        const { to, subject, html } = this.actionSchema.params
         const messageParts = [`To: ${to}`, `Subject: ${subject}`, '', html]
         const message = messageParts.join('\n')
         const encodedMessage = Buffer.from(message)

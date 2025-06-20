@@ -21,10 +21,11 @@ export const automationRoutes = new Hono<HonoType>()
       body: c.req.valid('json'),
     })
   )
-  .post('/:automationIdOrPath/form', automationFormValidator, (c) =>
+  .post('/:automationIdOrPath/form/:formId', automationFormValidator, (c) =>
     AutomationController.trigger(c, {
       automationIdOrPath: c.req.param('automationIdOrPath'),
       body: c.req.valid('form'),
+      formId: c.req.param('formId'),
     })
   )
   .patch('/:automationId/status', setStatusValidator, (c) =>

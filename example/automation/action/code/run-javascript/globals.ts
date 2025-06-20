@@ -8,7 +8,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'run-javascript',
         },
       },
@@ -16,8 +16,8 @@ export default {
         {
           service: 'code',
           action: 'run-javascript',
-          name: 'runJavascriptCode',
-          runJavascriptCode: {
+          name: 'params',
+          params: {
             code: String(async function () {
               // Test URLSearchParams
               const params = new URLSearchParams()

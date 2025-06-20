@@ -1,4 +1,6 @@
 import { expect, test } from '@/e2e/fixtures'
+import type { GetRunDto } from '../../../src/features/run/application/dto/get-run.dto'
+import type { ListRunsDto } from '../../../src/features/run/application/dto/list-runs.dto'
 
 test('should display a form with a single attachment input', async ({ startExampleApp }) => {
   // GIVEN
@@ -24,10 +26,12 @@ test('should run an automation when a form with a single attachment input is sub
   await page.waitForSelector('text="Thank you for your submission"')
 
   // THEN
-  const { runs } = await page.request.get('/api/runs').then((res) => res.json())
+  const { runs }: ListRunsDto = await page.request.get('/api/runs').then((res) => res.json())
   expect(runs.length).toBe(1)
-  const { data } = await page.request.get(`/api/runs/${runs[0].id}`).then((res) => res.json())
-  expect(data.trigger?.body?.attachment).toBe('screenshot.png')
+  const { steps }: GetRunDto = await page.request
+    .get(`/api/runs/${runs[0]!.id}`)
+    .then((res) => res.json())
+  expect(steps[0]!.output.body).toEqual({ attachment: 'screenshot.png' })
 })
 
 test('should create a record with a single attachment input', async ({ startExampleApp }) => {

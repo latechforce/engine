@@ -34,9 +34,9 @@ export class SetupTriggerUseCase {
         case 'database': {
           switch (trigger.event) {
             case 'record-created': {
-              const table = app.findTable(trigger.recordCreatedDatabase.table)
+              const table = app.findTable(trigger.params.table)
               if (!table) {
-                throw new Error(`Table "${trigger.recordCreatedDatabase.table}" not found`)
+                throw new Error(`Table "${trigger.params.table}" not found`)
               }
               this.recordRepository.onRecordCreated(async (recordRow: RecordRow) => {
                 if (recordRow.tableId === table.schema.id) {
@@ -44,16 +44,21 @@ export class SetupTriggerUseCase {
                   if (!record) {
                     throw new Error(`Record "${recordRow.id}" not found`)
                   }
-                  const run = new Run(automation.schema, { trigger: toRecordDto(record, table) })
+                  const run = new Run(automation.schema.id, [
+                    {
+                      schema: trigger,
+                      output: toRecordDto(record, table),
+                    },
+                  ])
                   await this.runRepository.create(run)
                 }
               })
               break
             }
             case 'record-updated': {
-              const table = app.findTable(trigger.recordUpdatedDatabase.table)
+              const table = app.findTable(trigger.params.table)
               if (!table) {
-                throw new Error(`Table "${trigger.recordUpdatedDatabase.table}" not found`)
+                throw new Error(`Table "${trigger.params.table}" not found`)
               }
               this.recordRepository.onRecordUpdated(async (recordRow: RecordRow) => {
                 if (recordRow.tableId === table.schema.id) {
@@ -61,7 +66,12 @@ export class SetupTriggerUseCase {
                   if (!record) {
                     throw new Error(`Record "${recordRow.id}" not found`)
                   }
-                  const run = new Run(automation.schema, { trigger: toRecordDto(record, table) })
+                  const run = new Run(automation.schema.id, [
+                    {
+                      schema: trigger,
+                      output: toRecordDto(record, table),
+                    },
+                  ])
                   await this.runRepository.create(run)
                 }
               })
@@ -80,15 +90,18 @@ export class SetupTriggerUseCase {
         case 'schedule': {
           switch (trigger.event) {
             case 'cron-time': {
-              const { expression, timeZone } = trigger.cronTime
+              const { expression, timeZone } = trigger.params
               this.triggerRepository.onCronTime(expression, timeZone, async () => {
                 const date = new Date()
-                const run = new Run(automation.schema, {
-                  trigger: {
-                    dateTime: date.toISOString(),
-                    timestamp: date.getTime(),
+                const run = new Run(automation.schema.id, [
+                  {
+                    schema: trigger,
+                    output: {
+                      dateTime: date.toISOString(),
+                      timestamp: date.getTime(),
+                    },
                   },
-                })
+                ])
                 await this.runRepository.create(run)
               })
               break

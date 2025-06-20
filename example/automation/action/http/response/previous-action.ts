@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'response',
         },
       },
@@ -21,7 +21,7 @@ export default {
           name: 'buildMessage',
           service: 'code',
           action: 'run-typescript',
-          runTypescriptCode: {
+          params: {
             code: String(function () {
               const message: string = 'Hello world!'
               return { message }
@@ -32,7 +32,7 @@ export default {
           name: 'sendResponse',
           service: 'http',
           action: 'response',
-          responseHttp: {
+          params: {
             body: {
               message: '{{ buildMessage.message }}',
             },

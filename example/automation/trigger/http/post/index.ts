@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'post',
         },
       },

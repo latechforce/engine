@@ -2,6 +2,7 @@ import type { Form } from '../../domain/entity/form.entity'
 import { toInputDto, type InputDto } from './input.dto'
 
 export type FormDto = {
+  id: number
   name: string
   path: string
   action: string
@@ -13,6 +14,7 @@ export type FormDto = {
 
 export function toFormDto(form: Form): FormDto {
   return {
+    id: form.schema.id,
     name: form.schema.name,
     title: form.schema.title,
     path: form.path,

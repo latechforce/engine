@@ -16,7 +16,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'get',
         },
       },
@@ -25,7 +25,7 @@ export default {
           name: 'request',
           service: 'http',
           action: 'get',
-          getHttp: {
+          params: {
             url: 'http://localhost:{{env "API_PORT"}}/api/automations/post-response',
             headers: {
               'X-Custom-Header': 'test',

@@ -16,7 +16,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: '/append-values',
         },
       },
@@ -26,7 +26,7 @@ export default {
           account: 'Google Sheets',
           service: 'google-sheets',
           action: 'append-values',
-          appendValuesGoogleSheets: {
+          params: {
             spreadsheetId: '1234567890',
             range: 'Sheet1!A1',
             values: [['John Doe', 'john.doe@example.com']],

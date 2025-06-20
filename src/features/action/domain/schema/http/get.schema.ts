@@ -4,7 +4,7 @@ import { baseHttpActionSchema } from './base'
 export const getHttpActionSchema = baseHttpActionSchema
   .extend({
     action: z.literal('get'),
-    getHttp: z.object({
+    params: z.object({
       url: z.string(),
       headers: z.record(z.string(), z.string()).optional(),
     }),

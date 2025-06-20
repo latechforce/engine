@@ -11,7 +11,7 @@ test('should start an app with 100 triggers', async () => {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: `/${index + 1}`,
         },
       },

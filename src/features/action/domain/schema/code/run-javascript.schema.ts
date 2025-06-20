@@ -4,7 +4,7 @@ import { baseCodeActionSchema } from './base'
 export const runJavascriptCodeActionSchema = baseCodeActionSchema
   .extend({
     action: z.literal('run-javascript'),
-    runJavascriptCode: z.object({
+    params: z.object({
       inputData: z.record(z.string(), z.string()).default({}).optional(),
       code: z.string(),
     }),

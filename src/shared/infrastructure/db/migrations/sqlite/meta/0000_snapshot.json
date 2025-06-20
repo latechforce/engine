@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "40aa4d5f-23f6-4b28-8f3a-ba4dfc226089",
+  "id": "1070fda1-a5f1-4ebf-844c-052c693be65f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
@@ -468,11 +468,18 @@
           "notNull": true,
           "autoincrement": false
         },
-        "automation_schema": {
-          "name": "automation_schema",
-          "type": "text",
+        "automation_id": {
+          "name": "automation_id",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "form_id": {
+          "name": "form_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "status": {
@@ -482,25 +489,11 @@
           "notNull": true,
           "autoincrement": false
         },
-        "data": {
-          "name": "data",
+        "steps": {
+          "name": "steps",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
-        },
-        "last_action_name": {
-          "name": "last_action_name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "error_message": {
-          "name": "error_message",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
           "autoincrement": false
         },
         "created_at": {

@@ -8,7 +8,7 @@ import { jsonSchemaSchema } from '../../../../../shared/domain/schema/json-schem
 export const postHttpTriggerSchema = basehttpTriggerSchema
   .extend({
     event: z.literal('post'),
-    postHttp: z.object({
+    params: z.object({
       path: z.string(),
       respondImmediately: z.boolean().default(false).optional(),
       requestBody: jsonSchemaSchema.optional(),

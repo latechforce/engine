@@ -1,4 +1,5 @@
 import { expect, test } from '@/e2e/fixtures'
+import type { GetRunDto } from '../../../../src/features/run/application/dto/get-run.dto'
 
 test('should trigger the automation with a cron time', async ({ startExampleApp }) => {
   // GIVEN
@@ -14,9 +15,11 @@ test('should trigger the automation with a cron time', async ({ startExampleApp 
   expect(runs[0].status).toBe('success')
   expect(runs[1].status).toBe('success')
   const firstRun = await page.request.get(`/api/runs/${runs[1].id}`)
-  const { data: firstRunData } = await firstRun.json()
+  const { steps: firstRunSteps }: GetRunDto = await firstRun.json()
   const secondRun = await page.request.get(`/api/runs/${runs[0].id}`)
-  const { data: secondRunData } = await secondRun.json()
-  expect(secondRunData.trigger.dateTime).toBeDefined()
-  expect(secondRunData.trigger.timestamp).toBeGreaterThan(firstRunData.trigger.timestamp)
+  const { steps: secondRunSteps }: GetRunDto = await secondRun.json()
+  expect(secondRunSteps[0].output.dateTime).toBeDefined()
+  expect(secondRunSteps[0].output.timestamp).toBeGreaterThan(
+    firstRunSteps[0].output.timestamp as number
+  )
 })

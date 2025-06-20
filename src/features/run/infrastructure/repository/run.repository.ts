@@ -27,13 +27,12 @@ export class RunRepository implements IRunRepository {
   async create(run: Run) {
     await this.database.run.create({
       id: run.id,
-      automation_id: run.automation_schema.id,
-      automation_schema: run.automation_schema,
+      automation_id: run.automation_id,
+      form_id: run.form_id,
       status: run.status,
-      data: run.data,
+      steps: run.steps,
       created_at: run.createdAt,
       updated_at: run.updatedAt,
-      last_action_name: run.lastActionName,
     })
     this.eventEmitter.emit('created', run)
   }
@@ -45,10 +44,8 @@ export class RunRepository implements IRunRepository {
   async update(run: Run) {
     await this.database.run.update(run.id, {
       status: run.status,
-      data: run.data,
+      steps: run.steps,
       updated_at: run.updatedAt,
-      last_action_name: run.lastActionName,
-      error_message: run.errorMessage,
     })
     this.eventEmitter.emit('updated', run)
   }
@@ -84,14 +81,13 @@ export class RunRepository implements IRunRepository {
 
   private toEntity(run: typeof this.database.schema.run.$inferSelect): Run {
     return new Run(
-      run.automation_schema,
-      run.data,
+      run.automation_id,
+      run.steps,
+      run.form_id,
       run.status,
       run.id,
       run.created_at,
-      run.updated_at,
-      run.last_action_name,
-      run.error_message
+      run.updated_at
     )
   }
 }

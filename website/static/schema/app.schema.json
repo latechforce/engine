@@ -60,7 +60,7 @@
                         "type": "string",
                         "const": "post"
                       },
-                      "postHttp": {
+                      "params": {
                         "type": "object",
                         "properties": {
                           "path": {
@@ -83,7 +83,7 @@
                     "required": [
                       "service",
                       "event",
-                      "postHttp"
+                      "params"
                     ],
                     "additionalProperties": false
                   },
@@ -1259,7 +1259,7 @@
                   "type": "string",
                   "const": "post"
                 },
-                "postHttp": {
+                "params": {
                   "type": "object",
                   "properties": {
                     "url": {
@@ -1292,7 +1292,7 @@
                 "name",
                 "service",
                 "action",
-                "postHttp"
+                "params"
               ],
               "additionalProperties": false
             },
@@ -1356,7 +1356,7 @@
                   "type": "string",
                   "const": "run-typescript"
                 },
-                "runTypescriptCode": {
+                "params": {
                   "type": "object",
                   "properties": {
                     "inputData": {
@@ -1383,7 +1383,7 @@
                 "name",
                 "service",
                 "action",
-                "runTypescriptCode"
+                "params"
               ],
               "additionalProperties": false
             },
@@ -1403,7 +1403,7 @@
                   "type": "string",
                   "const": "run-javascript"
                 },
-                "runJavascriptCode": {
+                "params": {
                   "type": "object",
                   "properties": {
                     "inputData": {
@@ -1430,7 +1430,7 @@
                 "name",
                 "service",
                 "action",
-                "runJavascriptCode"
+                "params"
               ],
               "additionalProperties": false
             }
@@ -1456,7 +1456,7 @@
                   "type": "string",
                   "const": "only-continue-if"
                 },
-                "onlyContinueIfFilter": {
+                "params": {
                   "$ref": "#/$defs/__schema2"
                 }
               },
@@ -1464,7 +1464,7 @@
                 "name",
                 "service",
                 "action",
-                "onlyContinueIfFilter"
+                "params"
               ],
               "additionalProperties": false
             },

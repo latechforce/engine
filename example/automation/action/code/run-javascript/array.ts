@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: '/run-javascript',
         },
       },
@@ -21,7 +21,7 @@ export default {
           service: 'code',
           action: 'run-javascript',
           name: 'runJavaScriptCode',
-          runJavascriptCode: {
+          params: {
             code: String(function () {
               const list = [
                 {
@@ -42,7 +42,7 @@ export default {
           service: 'code',
           action: 'run-javascript',
           name: 'buildMessage',
-          runJavascriptCode: {
+          params: {
             inputData: {
               name: '{{runJavaScriptCode.name}}',
             },

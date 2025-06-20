@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'schedule',
         event: 'cron-time',
-        cronTime: {
+        params: {
           expression: '*/2 * * * * *',
           timeZone: 'Europe/Paris',
         },

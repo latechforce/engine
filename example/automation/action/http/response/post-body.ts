@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'response',
         },
       },
@@ -21,7 +21,7 @@ export default {
           name: 'response',
           service: 'http',
           action: 'response',
-          responseHttp: {
+          params: {
             body: {
               message: 'Hello, world!',
             },

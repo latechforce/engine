@@ -13,7 +13,6 @@ export default {
       trigger: {
         service: 'facebook-lead-ads',
         event: 'new-lead',
-        newLeadFacebookLeadAds: {},
         account: 'Facebook Lead Ads',
       },
       actions: [],

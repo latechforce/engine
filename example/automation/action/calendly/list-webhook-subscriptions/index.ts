@@ -16,7 +16,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: '/list-webhook-subscriptions',
         },
       },
@@ -26,7 +26,6 @@ export default {
           account: 'Calendly',
           service: 'calendly',
           action: 'list-webhook-subscriptions',
-          listWebhookSubscriptionsCalendly: {},
         },
       ],
     },

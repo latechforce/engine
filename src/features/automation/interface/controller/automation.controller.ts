@@ -11,7 +11,7 @@ export class AutomationController {
 
   static async trigger(
     c: Context<HonoType>,
-    data: { automationIdOrPath: string; body: Record<string, unknown> }
+    data: { automationIdOrPath: string; body: Record<string, unknown>; formId?: string }
   ) {
     const app = c.get('app')
     const automationIdOrPath = c.req.param('automationIdOrPath')
@@ -20,7 +20,8 @@ export class AutomationController {
       app,
       automationIdOrPath,
       c.req.raw,
-      data.body
+      data.body,
+      data.formId
     )
     return c.json(triggerHttpAutomationDto)
   }

@@ -8,7 +8,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'get',
-        getHttp: {
+        params: {
           path: 'response',
         },
       },
@@ -17,7 +17,7 @@ export default {
           name: 'response',
           service: 'http',
           action: 'response',
-          responseHttp: {
+          params: {
             body: {
               message: 'Hello, world!',
             },

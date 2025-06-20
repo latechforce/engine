@@ -29,7 +29,7 @@ export class GoogleSheetsActionIntegration {
     const sheets = google.sheets({ version: 'v4', auth: this.oauth2Client })
     switch (this.actionSchema.action) {
       case 'append-values': {
-        const { spreadsheetId, range, values } = this.actionSchema.appendValuesGoogleSheets
+        const { spreadsheetId, range, values } = this.actionSchema.params
         const response = await sheets.spreadsheets.values.append({
           spreadsheetId,
           range,

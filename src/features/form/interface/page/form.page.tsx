@@ -40,9 +40,9 @@ const FormDataPage = () => {
       }
     } else if (action.startsWith('/api/automations/')) {
       const automationIdOrPath = action.replace('/api/automations/', '')
-      const response = await client.automations[':automationIdOrPath'].form.$post(
+      const response = await client.automations[':automationIdOrPath'].form[':formId'].$post(
         {
-          param: { automationIdOrPath },
+          param: { automationIdOrPath, formId: form.id.toString() },
           form: values,
         },
         {

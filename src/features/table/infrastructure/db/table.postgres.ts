@@ -49,6 +49,7 @@ export const record = pgTable('record', {
   table_id: integer('table_id')
     .notNull()
     .references(() => table.id, { onDelete: 'cascade' }),
+  form_id: integer('form_id'),
   created_at: timestamp('created_at').notNull(),
   updated_at: timestamp('updated_at').notNull(),
   archived_at: timestamp('archived_at'),

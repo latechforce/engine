@@ -9,7 +9,7 @@ export const baseCalendlyTriggerSchema = baseIntegrationTriggerSchema.extend({
 export const inviteCreatedCalendlyTriggerSchema = baseCalendlyTriggerSchema
   .extend({
     event: z.literal('invite-created'),
-    inviteCreatedCalendly: z
+    params: z
       .object({
         organization: z.string().optional().meta({
           description: 'The organization of the trigger',

@@ -4,7 +4,7 @@ import { baseScheduleTriggerSchema } from './base'
 export const cronTimeScheduleTriggerSchema = baseScheduleTriggerSchema
   .extend({
     event: z.literal('cron-time'),
-    cronTime: z.object({
+    params: z.object({
       expression: z.string(),
       timeZone: z.string(),
     }),

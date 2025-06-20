@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'database',
         event: 'record-updated',
-        recordUpdatedDatabase: {
+        params: {
           table: 'users',
         },
       },
@@ -21,7 +21,7 @@ export default {
           name: 'runTypescript',
           service: 'code',
           action: 'run-typescript',
-          runTypescriptCode: {
+          params: {
             inputData: {
               name: '{{trigger.fields.name}}',
             },

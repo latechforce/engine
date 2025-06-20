@@ -12,7 +12,7 @@ export class CalendlyTriggerIntegration {
     const calendly = new CalendlyIntegration(token.access_token)
     switch (this.schema.event) {
       case 'invite-created': {
-        const params = this.schema.inviteCreatedCalendly
+        const { params } = this.schema
         const currentUser = await calendly.getCurrentUser()
         const organization = params?.organization ?? currentUser.resource.current_organization
         const scope = params?.scope ?? 'user'

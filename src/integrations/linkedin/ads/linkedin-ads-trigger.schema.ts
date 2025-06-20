@@ -8,7 +8,7 @@ export const baseLinkedinAdsTriggerSchema = baseIntegrationTriggerSchema.extend(
 export const newLeadGenFormResponseLinkedinAdsTriggerSchema = baseLinkedinAdsTriggerSchema
   .extend({
     event: z.literal('new-lead-gen-form-response'),
-    newLeadGenFormResponseLinkedinAds: z.object({}).optional(),
+    params: z.object({}).optional(),
   })
   .meta({
     title: 'New Lead Gen Form Response',

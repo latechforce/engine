@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1749241850957,
-      "tag": "0000_reflective_mathemanic",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1749401175075,
-      "tag": "0001_slim_kang",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1749402323252,
-      "tag": "0002_parallel_namorita",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1749403943532,
-      "tag": "0003_messy_rocket_racer",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1750350735123,
-      "tag": "0004_woozy_saracen",
+      "when": 1750369108306,
+      "tag": "0000_breezy_masque",
       "breakpoints": true
     }
   ]

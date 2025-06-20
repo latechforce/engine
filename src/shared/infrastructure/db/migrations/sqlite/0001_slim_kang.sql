@@ -1,1 +1,0 @@
-ALTER TABLE `token` ADD `id_token` text;

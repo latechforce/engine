@@ -72,11 +72,10 @@ CREATE TABLE `token` (
 --> statement-breakpoint
 CREATE TABLE `run` (
 	`id` text PRIMARY KEY NOT NULL,
-	`automation_schema` text NOT NULL,
+	`automation_id` integer NOT NULL,
+	`form_id` integer,
 	`status` text NOT NULL,
-	`data` text NOT NULL,
-	`last_action_name` text,
-	`error_message` text,
+	`steps` text NOT NULL,
 	`created_at` integer NOT NULL,
 	`updated_at` integer NOT NULL
 );

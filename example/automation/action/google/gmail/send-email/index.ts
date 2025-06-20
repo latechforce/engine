@@ -16,7 +16,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: '/send-email',
         },
       },
@@ -26,7 +26,7 @@ export default {
           service: 'google-gmail',
           action: 'send-email',
           account: 'Gmail',
-          sendEmailGoogleGmail: {
+          params: {
             to: 'test@test.com',
             subject: 'Test',
             html: `Test`,

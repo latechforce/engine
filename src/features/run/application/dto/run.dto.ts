@@ -1,3 +1,4 @@
+import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 import type { Run } from '../../domain/entity/run.entity'
 
 export type RunDto = {
@@ -9,13 +10,13 @@ export type RunDto = {
   automation_name: string
 }
 
-export function toRunDto(run: Run): RunDto {
+export function toRunDto(run: Run, automation: Automation): RunDto {
   return {
     id: run.id,
     status: run.status,
     created_at: run.createdAt.toISOString(),
     updated_at: run.updatedAt.toISOString(),
-    automation_id: run.automation_schema.id.toString(),
-    automation_name: run.automation_schema.name,
+    automation_id: automation.schema.id.toString(),
+    automation_name: automation.schema.name,
   }
 }

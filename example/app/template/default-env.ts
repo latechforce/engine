@@ -16,7 +16,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'run-typescript',
         },
       },
@@ -24,8 +24,8 @@ export default {
         {
           service: 'code',
           action: 'run-typescript',
-          name: 'runTypescriptCode',
-          runTypescriptCode: {
+          name: 'params',
+          params: {
             inputData: {
               apiKey: '{{env "API_KEY" "9876543210"}}',
             },

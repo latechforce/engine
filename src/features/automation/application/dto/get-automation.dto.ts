@@ -17,6 +17,6 @@ export function toGetAutomationDto(
 ): GetAutomationDto {
   return {
     automation: toAutomationDto(automation, status),
-    runs: runs.map((r) => toRunDto(r)),
+    runs: runs.map((r) => toRunDto(r, automation)),
   }
 }

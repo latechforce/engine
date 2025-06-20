@@ -1,5 +1,5 @@
 {
-  "id": "a9ebdaa0-e0e2-4238-a1f5-8d079cc15f52",
+  "id": "9b21da54-f698-4b9e-93a2-7a45eaac6125",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -436,11 +436,17 @@
           "primaryKey": true,
           "notNull": true
         },
-        "automation_schema": {
-          "name": "automation_schema",
-          "type": "json",
+        "automation_id": {
+          "name": "automation_id",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "form_id": {
+          "name": "form_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         },
         "status": {
           "name": "status",
@@ -448,23 +454,11 @@
           "primaryKey": false,
           "notNull": true
         },
-        "data": {
-          "name": "data",
+        "steps": {
+          "name": "steps",
           "type": "json",
           "primaryKey": false,
           "notNull": true
-        },
-        "last_action_name": {
-          "name": "last_action_name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "error_message": {
-          "name": "error_message",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
         },
         "created_at": {
           "name": "created_at",
@@ -585,6 +579,12 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "form_id": {
+          "name": "form_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

@@ -18,7 +18,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'run-typescript',
           requestBody: {
             type: 'object',
@@ -34,8 +34,8 @@ export default {
         {
           service: 'code',
           action: 'run-typescript',
-          name: 'runTypescriptCode',
-          runTypescriptCode: {
+          name: 'params',
+          params: {
             inputData: {
               body: '{{json trigger.body}}',
             },

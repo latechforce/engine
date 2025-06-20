@@ -8,7 +8,7 @@ const baseGoogleGmailActionSchema = baseIntegrationActionSchema.extend({
 const sendEmailGoogleGmailActionSchema = baseGoogleGmailActionSchema
   .extend({
     action: z.literal('send-email'),
-    sendEmailGoogleGmail: z.object({
+    params: z.object({
       to: z.string(),
       subject: z.string(),
       html: z.string(),

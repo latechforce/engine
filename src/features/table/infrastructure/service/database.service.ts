@@ -321,7 +321,14 @@ export class TableDatabaseService {
           record[field.slug] = record[field.slug] === 1
         }
       }
-      return record
+      return {
+        ...record,
+        _created_at: new Date(Number(record._created_at) * 1000).toISOString(),
+        _updated_at: new Date(Number(record._updated_at) * 1000).toISOString(),
+        _archived_at: record._archived_at
+          ? new Date(Number(record._archived_at) * 1000).toISOString()
+          : null,
+      }
     }
     return record
   }

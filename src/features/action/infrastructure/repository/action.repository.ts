@@ -9,7 +9,7 @@ import type { LoggerService, TemplateService } from '../../../../shared/infrastr
 // Action domain imports
 import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
 import type { ActionResult } from '../../domain/value-object/action-result.value-object'
-import type { IntegrationError } from '../../domain/value-object/integration-error.value.object'
+import type { IntegrationError } from '../../domain/value-object/integration-error.value-object'
 
 // Action infrastructure imports
 import type {

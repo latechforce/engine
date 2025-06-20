@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: '/run-javascript',
           requestBody: {
             type: 'object',
@@ -29,8 +29,8 @@ export default {
         {
           service: 'code',
           action: 'run-javascript',
-          name: 'runJavascriptCode',
-          runJavascriptCode: {
+          name: 'params',
+          params: {
             inputData: {
               name: '{{trigger.body.name}}',
             },

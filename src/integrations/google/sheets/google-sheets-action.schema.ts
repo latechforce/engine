@@ -8,7 +8,7 @@ const baseGoogleSheetsActionSchema = baseIntegrationActionSchema.extend({
 const appendSpreadsheetValuesGoogleSheetsActionSchema = baseGoogleSheetsActionSchema
   .extend({
     action: z.literal('append-values'),
-    appendValuesGoogleSheets: z.object({
+    params: z.object({
       spreadsheetId: z.string(),
       range: z.string(),
       values: z.array(z.array(z.string())),

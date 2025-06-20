@@ -56,15 +56,15 @@ export class App {
     for (const automation of this.schema.automations) {
       if (automation.trigger.service === 'http') {
         if (automation.trigger.event === 'post') {
-          if (automationPaths.has(automation.trigger.postHttp.path)) {
-            throw new Error(`Duplicate trigger path: ${automation.trigger.postHttp.path}`)
+          if (automationPaths.has(automation.trigger.params.path)) {
+            throw new Error(`Duplicate trigger path: ${automation.trigger.params.path}`)
           }
-          automationPaths.add(automation.trigger.postHttp.path)
+          automationPaths.add(automation.trigger.params.path)
         } else if (automation.trigger.event === 'get') {
-          if (automationPaths.has(automation.trigger.getHttp.path)) {
-            throw new Error(`Duplicate trigger path: ${automation.trigger.getHttp.path}`)
+          if (automationPaths.has(automation.trigger.params.path)) {
+            throw new Error(`Duplicate trigger path: ${automation.trigger.params.path}`)
           }
-          automationPaths.add(automation.trigger.getHttp.path)
+          automationPaths.add(automation.trigger.params.path)
         }
       }
     }

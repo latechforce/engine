@@ -1,16 +1,13 @@
 import type { App } from '../../../app/domain/entity/app.entity'
 import type { IntegrationActionSchema } from '../../../../integrations/action.schema'
 import type { ActionResult } from '../value-object/action-result.value-object'
-import type { IntegrationError } from '../value-object/integration-error.value.object'
+import type { IntegrationError } from '../value-object/integration-error.value-object'
 import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 
 export type IActionRepository = {
   debug(message: string): void
   error: (message: string) => void
-  fillSchema: <T extends { [key: string]: unknown }>(
-    schema: T,
-    data?: { [key: string]: unknown }
-  ) => T
+  fillSchema: <T extends Record<string, unknown>>(schema: T, data?: Record<string, unknown>) => T
   code: (
     app: App,
     inputData?: Record<string, string>

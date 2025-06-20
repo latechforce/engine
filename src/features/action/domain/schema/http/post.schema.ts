@@ -4,7 +4,7 @@ import { baseHttpActionSchema } from './base'
 export const postHttpActionSchema = baseHttpActionSchema
   .extend({
     action: z.literal('post'),
-    postHttp: z.object({
+    params: z.object({
       url: z.string(),
       headers: z.record(z.string(), z.string()).optional(),
       body: z.record(z.string(), z.unknown()).optional(),

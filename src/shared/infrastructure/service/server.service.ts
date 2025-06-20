@@ -57,7 +57,6 @@ export class ServerService {
 
   onError(error: Error | HTTPResponseError, c: Context<HonoType>) {
     this.logger.error(error.message)
-    console.log(error)
     if (error instanceof TriggerError) {
       return c.json({ error: error.message, success: false }, error.status)
     } else if (error instanceof HttpError) {

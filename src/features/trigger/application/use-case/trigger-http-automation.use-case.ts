@@ -29,15 +29,16 @@ export class TriggerHttpAutomationUseCase {
     app: App,
     automationIdOrPath: string,
     request: Request,
-    body: Record<string, unknown>
+    body: Record<string, unknown>,
+    formId?: string
   ): Promise<ResponseDto> {
     const automation = app.automations.find(({ schema }) => {
       if (schema.id === Number(automationIdOrPath)) return true
       if (schema.trigger.service === 'http') {
         if (schema.trigger.event === 'post' && request.method === 'POST') {
-          return schema.trigger.postHttp.path.replace(/^\//, '') === automationIdOrPath
+          return schema.trigger.params.path.replace(/^\//, '') === automationIdOrPath
         } else if (schema.trigger.event === 'get' && request.method === 'GET') {
-          return schema.trigger.getHttp.path.replace(/^\//, '') === automationIdOrPath
+          return schema.trigger.params.path.replace(/^\//, '') === automationIdOrPath
         }
       }
       return false
@@ -100,8 +101,8 @@ export class TriggerHttpAutomationUseCase {
             triggerData.body = fields
           }
           if (
-            trigger.postHttp.requestBody &&
-            !this.triggerRepository.validateData(trigger.postHttp.requestBody, triggerData.body)
+            trigger.params.requestBody &&
+            !this.triggerRepository.validateData(trigger.params.requestBody, triggerData.body)
           ) {
             throw new TriggerError('Invalid body', 400)
           }
@@ -130,12 +131,21 @@ export class TriggerHttpAutomationUseCase {
       for (const object of objects) {
         await this.objectRepository.create(object)
       }
-      initRun = new Run(automation.schema, { trigger: triggerData })
+      initRun = new Run(
+        automation.schema.id,
+        [
+          {
+            schema: trigger,
+            output: triggerData,
+          },
+        ],
+        formId ? Number(formId) : undefined
+      )
       await this.runRepository.create(initRun)
     }
     if (
-      ('postHttp' in trigger && trigger.postHttp.respondImmediately) ||
-      ('getHttp' in trigger && trigger.getHttp.respondImmediately) ||
+      (trigger.event === 'post' && trigger.params?.respondImmediately) ||
+      (trigger.event === 'get' && trigger.params?.respondImmediately) ||
       trigger.service !== 'http'
     ) {
       return { success: true, runId: initRun?.id }
@@ -151,29 +161,35 @@ export class TriggerHttpAutomationUseCase {
         if (run.id === initRun.id) {
           const successResponse = { success: true, runId: run.id }
           switch (run.status) {
-            case 'playing':
-              if (run.lastActionName === responseActionSchema?.name) {
-                if (responseActionSchema.responseHttp.body) {
-                  const response = this.triggerRepository.fillTemplateObject(
-                    responseActionSchema.responseHttp.body,
-                    run.data
-                  )
-                  resolve({ data: response, ...successResponse })
+            case 'playing': {
+              const lastAction = run.getLastActionStep()
+              if (
+                lastAction &&
+                lastAction.schema.name === responseActionSchema?.name &&
+                run.isStepSucceed(lastAction.schema.name)
+              ) {
+                const { body } = run.getLastActionStepData()
+                if (body) {
+                  resolve({ data: body, ...successResponse })
                 } else {
                   resolve(successResponse)
                 }
               }
               break
-            case 'stopped':
-              reject(new TriggerError(run.errorMessage || 'Unknown error', 500))
+            }
+            case 'stopped': {
+              reject(new TriggerError(run.getErrorMessage() || 'Unknown error', 500))
               break
-            case 'success':
-              if (run.lastActionName) {
-                resolve({ data: run.getLastActionData(), ...successResponse })
+            }
+            case 'success': {
+              const lastAction = run.getLastActionStep()
+              if (lastAction) {
+                resolve({ data: run.getLastActionStepData(), ...successResponse })
               } else {
                 resolve(successResponse)
               }
               break
+            }
             case 'filtered':
               resolve({ data: { canContinue: false }, ...successResponse })
               break

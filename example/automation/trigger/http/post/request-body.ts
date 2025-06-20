@@ -12,7 +12,7 @@ export default {
       trigger: {
         service: 'http',
         event: 'post',
-        postHttp: {
+        params: {
           path: 'post',
           requestBody: {
             type: 'object',
@@ -30,7 +30,7 @@ export default {
           name: 'response',
           service: 'http',
           action: 'response',
-          responseHttp: {
+          params: {
             body: {
               message: 'Hello, {{trigger.body.name}}!',
             },
