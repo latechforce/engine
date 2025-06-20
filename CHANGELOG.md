@@ -1,3 +1,12 @@
+## [0.57.1](https://github.com/latechforce/engine/compare/v0.57.0...v0.57.1) (2025-06-20)
+
+
+### Bug Fixes
+
+* **action:** add error display ([836b21c](https://github.com/latechforce/engine/commit/836b21c68d24894c70278003c542c73fb5c325b3)) — Thomas JEANNEAU
+* **action:** should run an is-true filter action that returns true ([4571097](https://github.com/latechforce/engine/commit/45710975cf6831beb558b7ad5cf45fd43ca086db)) — Thomas JEANNEAU
+* **form:** should display a form with a path with no slash ([d32015e](https://github.com/latechforce/engine/commit/d32015eb3edf4b5cb93fc361183585fda97b7e28)) — Thomas JEANNEAU
+
 # [0.57.0](https://github.com/latechforce/engine/compare/v0.56.1...v0.57.0) (2025-06-20)
 
 
