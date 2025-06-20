@@ -11,6 +11,17 @@ test('should display a form with a title', async ({ startExampleApp }) => {
   await expect(page.getByRole('heading', { name: 'Contact Us' })).toBeVisible()
 })
 
+test('should display a form with a path with no slash', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'form/no-slash-path' })
+
+  // WHEN
+  await page.goto('/forms/contact-us-path')
+
+  // THEN
+  await expect(page.getByRole('heading', { name: 'Contact Us' })).toBeVisible()
+})
+
 test('should display a form with a description', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test })

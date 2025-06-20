@@ -139,7 +139,7 @@ export class App {
     return this.forms.find(
       (form) =>
         form.schema.name === String(nameOrPathOrId) ||
-        form.schema.path === String(nameOrPathOrId) ||
+        form.schema.path.replace(/^\//, '') === String(nameOrPathOrId) ||
         form.schema.id === Number(nameOrPathOrId)
     )
   }
