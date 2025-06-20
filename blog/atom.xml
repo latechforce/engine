@@ -8,25 +8,30 @@
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Fix 0.57.1]]></title>
-        <id>https://engine.latechforce.com/blog/fix-0-57-1</id>
-        <link href="https://engine.latechforce.com/blog/fix-0-57-1"/>
+        <title type="html"><![CDATA[Fix 0.57.2]]></title>
+        <id>https://engine.latechforce.com/blog/fix-0-57-2</id>
+        <link href="https://engine.latechforce.com/blog/fix-0-57-2"/>
         <updated>2025-06-20T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.57.1]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-57-1"><p class="before-truncate"> 0.57.1   Bug Fixes  * action: add error display (836b21c) — Thomas JEANNEAU * action: should run an is-true filter action that returns true (4571097) — Thomas JEANNEAU * form: should display a form with a path with no slash (d32015e) — Thomas JEANNEAU   0.57.0   Bug Fixes  * table: should create a ...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0571"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-57-1">0.57.1</a><a href="https://engine.latechforce.com/blog/fix-0-57-1#0571" class="hash-link" aria-label="Direct link to 0.57.1" title="Direct link to 0.57.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-57-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+        <summary type="html"><![CDATA[Changelog for version 0.57.2]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-57-2"><p class="before-truncate"> 0.57.2   Bug Fixes  * connection: fix state in redirect uri (2facd8e) — Thomas JEANNEAU   0.57.1   Bug Fixes  * action: add error display (836b21c) — Thomas JEANNEAU * action: should run an is-true filter action that returns true (4571097) — Thomas JEANNEAU * form: should display a form with a path...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0572"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-57-2">0.57.2</a><a href="https://engine.latechforce.com/blog/fix-0-57-2#0572" class="hash-link" aria-label="Direct link to 0.57.2" title="Direct link to 0.57.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-57-2#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li><strong>connection:</strong> fix state in redirect uri (<a href="https://github.com/latechforce/engine/commit/2facd8e840b64fc2c4178e27ca0aed4b3606331e" target="_blank" rel="noopener noreferrer">2facd8e</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0571">0.57.1<a href="https://engine.latechforce.com/blog/fix-0-57-2#0571" class="hash-link" aria-label="Direct link to 0.57.1" title="Direct link to 0.57.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-57-2#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>action:</strong> add error display (<a href="https://github.com/latechforce/engine/commit/836b21c68d24894c70278003c542c73fb5c325b3" target="_blank" rel="noopener noreferrer">836b21c</a>) — Thomas JEANNEAU</li>
 <li><strong>action:</strong> should run an is-true filter action that returns true (<a href="https://github.com/latechforce/engine/commit/45710975cf6831beb558b7ad5cf45fd43ca086db" target="_blank" rel="noopener noreferrer">4571097</a>) — Thomas JEANNEAU</li>
 <li><strong>form:</strong> should display a form with a path with no slash (<a href="https://github.com/latechforce/engine/commit/d32015eb3edf4b5cb93fc361183585fda97b7e28" target="_blank" rel="noopener noreferrer">d32015e</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0570">0.57.0<a href="https://engine.latechforce.com/blog/fix-0-57-1#0570" class="hash-link" aria-label="Direct link to 0.57.0" title="Direct link to 0.57.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-57-1#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0570">0.57.0<a href="https://engine.latechforce.com/blog/fix-0-57-2#0570" class="hash-link" aria-label="Direct link to 0.57.0" title="Direct link to 0.57.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-57-2#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>table:</strong> should create a table record with required fields (<a href="https://github.com/latechforce/engine/commit/e257567db6251a504f078f2fe8eda55ae6566818" target="_blank" rel="noopener noreferrer">e257567</a>) — Thomas JEANNEAU</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-57-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-57-2#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li><strong>run:</strong> display runs steps (<a href="https://github.com/latechforce/engine/commit/72c8f25620134059af2033363301860dbeff340b" target="_blank" rel="noopener noreferrer">72c8f25</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
