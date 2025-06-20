@@ -1,3 +1,15 @@
+# [0.57.0](https://github.com/latechforce/engine/compare/v0.56.1...v0.57.0) (2025-06-20)
+
+
+### Bug Fixes
+
+* **table:** should create a table record with required fields ([e257567](https://github.com/latechforce/engine/commit/e257567db6251a504f078f2fe8eda55ae6566818)) — Thomas JEANNEAU
+
+
+### Features
+
+* **run:** display runs steps ([72c8f25](https://github.com/latechforce/engine/commit/72c8f25620134059af2033363301860dbeff340b)) — Thomas JEANNEAU
+
 ## [0.56.1](https://github.com/latechforce/engine/compare/v0.56.0...v0.56.1) (2025-06-18)
 
 
