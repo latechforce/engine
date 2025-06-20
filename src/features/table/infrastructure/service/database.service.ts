@@ -271,6 +271,18 @@ export class TableDatabaseService {
                   return exists(condition.target)
                 case 'does-not-exist':
                   return not(exists(condition.target))
+                case 'is-true':
+                  if (this.provider === 'postgres') {
+                    return eb(condition.target, '=', true)
+                  } else {
+                    return eb(condition.target, '=', 1)
+                  }
+                case 'is-false':
+                  if (this.provider === 'postgres') {
+                    return eb(condition.target, '=', false)
+                  } else {
+                    return eb(condition.target, '=', 0)
+                  }
                 default: {
                   const _exhaustiveCheck: never = condition
                   throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

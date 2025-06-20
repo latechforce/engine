@@ -152,6 +152,62 @@ test('should run an does-not-exist filter action that returns false', async ({
   expect(data.canContinue).toBe(true)
 })
 
+test('should run an is-true filter action that returns true', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'is-true' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      is_active: true,
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(true)
+})
+
+test('should run an is-true filter action that returns false', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'is-true' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter')
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(false)
+})
+
+test('should run an is-false filter action that returns true', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'is-false' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter', {
+    data: {
+      is_active: false,
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(true)
+})
+
+test('should run an is-false filter action that returns false', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'is-false' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-filter')
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.canContinue).toBe(false)
+})
+
 test('should run an contains filter action that returns true', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ test, filter: 'contains' })

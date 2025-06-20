@@ -49,6 +49,10 @@ export class RunFilterUseCase {
           )
         case 'does-not-contain':
           return !conditions.target.includes(conditions.value)
+        case 'is-true':
+          return conditions.target === 'true' || conditions.target === '1'
+        case 'is-false':
+          return conditions.target === 'false' || conditions.target === '0'
         default: {
           const _exhaustiveCheck: never = conditions
           throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
