@@ -17,6 +17,6 @@ test.skip('should trigger an automation when a facebook lead ads new lead is cre
   const response = await page.request.get('/api/runs')
   const data: RunDto[] = await response.json()
   expect(data.length).toBe(1)
-  expect(data[0]?.automation_name).toBe('facebook-lead-ads')
+  expect(data[0]?.automationName).toBe('facebook-lead-ads')
   expect(data[0]?.status).toBe('success')
 })

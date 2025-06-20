@@ -46,6 +46,7 @@ export class SetupTriggerUseCase {
                   }
                   const run = new Run(automation.schema.id, [
                     {
+                      type: 'trigger',
                       schema: trigger,
                       output: toRecordDto(record, table),
                     },
@@ -68,6 +69,7 @@ export class SetupTriggerUseCase {
                   }
                   const run = new Run(automation.schema.id, [
                     {
+                      type: 'trigger',
                       schema: trigger,
                       output: toRecordDto(record, table),
                     },
@@ -95,6 +97,7 @@ export class SetupTriggerUseCase {
                 const date = new Date()
                 const run = new Run(automation.schema.id, [
                   {
+                    type: 'trigger',
                     schema: trigger,
                     output: {
                       dateTime: date.toISOString(),

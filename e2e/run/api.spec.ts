@@ -14,10 +14,10 @@ test('should return a list of runs', async ({ startExampleApp }) => {
   expect(response.status()).toBe(200)
   const { runs }: ListRunsDto = await response.json()
   expect(runs.length).toBe(1)
-  expect(runs[0]?.automation_name).toBe('post')
+  expect(runs[0]?.automationName).toBe('post')
   expect(runs[0]?.status).toBe('success')
-  expect(runs[0]?.created_at).toBeDefined()
-  expect(runs[0]?.updated_at).toBeDefined()
+  expect(runs[0]?.createdAt).toBeDefined()
+  expect(runs[0]?.updatedAt).toBeDefined()
 })
 
 test('should return a run by id', async ({ startExampleApp }) => {
@@ -33,7 +33,7 @@ test('should return a run by id', async ({ startExampleApp }) => {
   // THEN
   expect(response.status()).toBe(200)
   const { run, steps }: GetRunDto = await response.json()
-  expect(run.automation_name).toBe('post')
+  expect(run.automationName).toBe('post')
   expect(run.status).toBe('success')
   expect(steps).toBeDefined()
 })

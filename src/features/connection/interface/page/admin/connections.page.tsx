@@ -23,7 +23,7 @@ const columns: ColumnDef<ConnectionDto>[] = [
   {
     accessorKey: 'name',
     header: 'Name',
-    size: 397,
+    size: 396,
   },
   {
     accessorKey: 'service',

@@ -12,6 +12,7 @@ export type PathStep = {
 }
 
 export type PathsStep = {
+  type: 'paths'
   createdAt: string
   schema: Omit<SplitIntoPathsFilterActionSchema, 'params'>
   paths: PathStep[]

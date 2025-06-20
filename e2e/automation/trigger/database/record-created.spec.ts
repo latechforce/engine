@@ -20,7 +20,7 @@ test('should run an automation when a record is created', async ({ startExampleA
   const responseRuns = await page.request.get('/api/runs')
   const { runs }: ListRunsDto = await responseRuns.json()
   expect(runs.length).toBe(1)
-  expect(runs[0]!.automation_name).toBe('record-created')
+  expect(runs[0]!.automationName).toBe('record-created')
   const responseRun = await page.request.get(`/api/runs/${runs[0]!.id}`)
   const { steps }: GetRunDto = await responseRun.json()
   expect(steps[0].output.fields).toEqual({ name: 'John Doe' })

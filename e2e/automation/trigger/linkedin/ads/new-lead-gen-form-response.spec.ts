@@ -17,6 +17,6 @@ test.skip('should trigger an automation when a linkedin ads new lead gen form re
   const response = await page.request.get('/api/runs')
   const data: RunDto[] = await response.json()
   expect(data.length).toBe(1)
-  expect(data[0]?.automation_name).toBe('linkedin-ads')
+  expect(data[0]?.automationName).toBe('linkedin-ads')
   expect(data[0]?.status).toBe('success')
 })

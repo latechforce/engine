@@ -42,6 +42,7 @@ export class Run {
     const pathSegments = actionPath.split('.')
     if (pathSegments.length < 2) {
       this.steps.push({
+        type: 'action',
         createdAt: new Date().toISOString(),
         schema,
         input,
@@ -52,13 +53,14 @@ export class Run {
     } else {
       const [actionName, pathName, ...segments] = pathSegments
       const step = this.getActionStepOrThrow(actionName!)
-      if ('paths' in step) {
+      if (step.type === 'paths') {
         const path = step.paths.find((path) => path.schema.name === pathName)
         if (!path) {
           throw new Error('Path step not found')
         }
         if (segments.length < 2) {
           path.actions.push({
+            type: 'action',
             createdAt: new Date().toISOString(),
             schema,
             input,
@@ -77,6 +79,7 @@ export class Run {
 
   startActionPathsStep(schema: SplitIntoPathsFilterActionSchema, paths: PathStep[]) {
     this.steps.push({
+      type: 'paths',
       createdAt: new Date().toISOString(),
       schema: {
         name: schema.name,

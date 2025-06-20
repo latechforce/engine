@@ -135,6 +135,7 @@ export class TriggerHttpAutomationUseCase {
         automation.schema.id,
         [
           {
+            type: 'trigger',
             schema: trigger,
             output: triggerData,
           },

@@ -40,16 +40,16 @@ export const columns: ColumnDef<RunDto>[] = [
     },
   },
   {
-    accessorKey: 'automation_name',
+    accessorKey: 'automationName',
     header: 'Automation',
     size: 446,
   },
   {
-    accessorKey: 'created_at',
+    accessorKey: 'createdAt',
     header: 'Created at',
     size: 200,
     cell: ({ row }) => {
-      return format(new Date(row.getValue('created_at')), 'MMM dd, yyyy HH:mm:ss')
+      return format(new Date(row.getValue('createdAt')), 'MMM dd, yyyy HH:mm:ss')
     },
   },
 ]
@@ -67,7 +67,7 @@ export const RunsDataTable = ({ runs }: RunsDataTableProps) => {
       onRowClick={(row) => {
         navigate({
           to: `/admin/automations/$automationId/runs/$runId`,
-          params: { automationId: row.automation_id, runId: row.id },
+          params: { automationId: row.automationId, runId: row.id },
         })
       }}
     />
