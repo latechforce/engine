@@ -26,7 +26,7 @@ export class RunActionUseCase {
     run: Run,
     actionPath: string
   ): Promise<ActionResult> {
-    this.actionRepository.debug(`running action "${action.name}"`)
+    this.actionRepository.log.debug(`running action "${action.name}"`)
     try {
       let data: Record<string, unknown> = {}
       const fillInputData = <T extends Record<string, unknown>>(params: T) =>
@@ -121,10 +121,10 @@ export class RunActionUseCase {
       return { data }
     } catch (error) {
       if (error instanceof Error) {
-        this.actionRepository.error(error.message)
+        this.actionRepository.log.error(error.message)
         return { error: { message: error.message } }
       } else {
-        this.actionRepository.error(String(error))
+        this.actionRepository.log.error(String(error))
         return { error: { message: 'Unknown error' } }
       }
     }

@@ -5,8 +5,11 @@ import type { IntegrationError } from '../value-object/integration-error.value-o
 import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 
 export type IActionRepository = {
-  debug(message: string): void
-  error: (message: string) => void
+  log: {
+    debug: (message: string) => void
+    error: (message: string) => void
+  }
+  validateSchemaTemplate: (schema: Record<string, unknown>) => void
   fillSchema: <T extends Record<string, unknown>>(schema: T, data?: Record<string, unknown>) => T
   code: (
     app: App,

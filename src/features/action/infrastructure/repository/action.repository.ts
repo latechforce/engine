@@ -54,19 +54,22 @@ export class ActionRepository implements IActionRepository {
     private readonly tokenRepository: ITokenRepository
   ) {}
 
-  debug(message: string) {
-    this.logger.child('action-repository').debug(message)
+  log = {
+    debug: (message: string) => this.logger.child('action-repository').debug(message),
+    error: (message: string) => this.logger.child('action-repository').error(message),
   }
 
-  error(message: string) {
-    this.logger.child('action-repository').error(message)
+  validateSchemaTemplate(schema: { [key: string]: unknown }) {
+    const cloneSchema = JSON.parse(JSON.stringify(schema))
+    this.templateService.fillObject(cloneSchema, {})
   }
 
   fillSchema<T extends { [key: string]: unknown }>(
     schema: T,
-    data: { [key: string]: unknown } = {}
+    data?: { [key: string]: unknown }
   ): T {
-    return this.templateService.fillObject<T>(schema, data)
+    const cloneSchema = JSON.parse(JSON.stringify(schema))
+    return this.templateService.fillObject<T>(cloneSchema, data)
   }
 
   code(app: App, inputData: { [key: string]: string } = {}) {

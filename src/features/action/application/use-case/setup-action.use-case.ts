@@ -12,8 +12,8 @@ export class SetupActionUseCase {
   ) {}
 
   async execute(app: App, action: ActionSchema) {
-    this.actionRepository.debug(`setup "${action.name}"`)
-    this.actionRepository.fillSchema(action, {})
+    this.actionRepository.log.debug(`setup "${action.name}"`)
+    this.actionRepository.validateSchemaTemplate(action)
     switch (action.service) {
       case 'code': {
         switch (action.action) {
@@ -21,7 +21,7 @@ export class SetupActionUseCase {
             const { code } = action.params
             const error = await this.actionRepository.code(app, {}).lint(code)
             if (error) {
-              this.actionRepository.error(error)
+              this.actionRepository.log.error(error)
               throw new Error('Invalid Typescript code')
             }
             break
@@ -30,7 +30,7 @@ export class SetupActionUseCase {
             const { code } = action.params
             const error = await this.actionRepository.code(app, {}).lint(code)
             if (error) {
-              this.actionRepository.error(error)
+              this.actionRepository.log.error(error)
               throw new Error('Invalid Javascript code')
             }
             break
