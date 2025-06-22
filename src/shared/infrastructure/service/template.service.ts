@@ -28,6 +28,11 @@ export class TemplateService {
       if (typeof defaultValue === 'string') return defaultValue
       throw new Error(`Environment variable "${key}" is not set`)
     })
+    Handlebars.registerHelper('regex', function (context: string, regex: string) {
+      const match = context.match(regex)
+      if (match) return match[1]
+      return ''
+    })
   }
 
   fill(template: string, data = {}): string | Record<string, unknown> | number | boolean | null {

@@ -65,4 +65,24 @@ describe('TemplateService', () => {
     const filledTemplate = templateService.fill(template)
     expect(filledTemplate).toBe('https://example.com')
   })
+
+  it('should fill a template with a regex helper and extract the first match', () => {
+    const template = '{{regex "https://example.com" "https://([^/]+)"}}'
+    const filledTemplate = templateService.fill(template)
+    expect(filledTemplate).toBe('example.com')
+  })
+
+  it('should fill a template with a regex helper and extract the first match with data', () => {
+    const data = { body: { url: 'https://example.com' } }
+    const template = '{{regex body.url "https://([^/]+)"}}'
+    const filledTemplate = templateService.fill(template, data)
+    expect(filledTemplate).toBe('example.com')
+  })
+
+  it('should fill a template with a regex helper and extract the first match with data and no match', () => {
+    const data = { body: { url: 'test' } }
+    const template = '{{regex body.url "https://([^/]+)"}}'
+    const filledTemplate = templateService.fill(template, data)
+    expect(filledTemplate).toBe('')
+  })
 })
