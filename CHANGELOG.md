@@ -1,3 +1,12 @@
+## [0.57.3](https://github.com/latechforce/engine/compare/v0.57.2...v0.57.3) (2025-06-22)
+
+
+### Bug Fixes
+
+* **connection:** created_at calendly value ([0b00dba](https://github.com/latechforce/engine/commit/0b00dba707e9f41d02ce691b5bc0c0158b9c8eee)) — Thomas JEANNEAU
+* **connection:** refresh google token on restart ([05549eb](https://github.com/latechforce/engine/commit/05549eb24fdb9df877d39ea831ca1cbf5f3793d8)) — Thomas JEANNEAU
+* **user:** add auth required for api endpoints ([8981131](https://github.com/latechforce/engine/commit/8981131b22ea0394fe2a6b3370fbc5e095184a58)) — Thomas JEANNEAU
+
 ## [0.57.2](https://github.com/latechforce/engine/compare/v0.57.1...v0.57.2) (2025-06-20)
 
 
