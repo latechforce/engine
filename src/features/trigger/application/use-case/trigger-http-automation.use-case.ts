@@ -59,43 +59,50 @@ export class TriggerHttpAutomationUseCase {
           const contentType = request.headers.get('content-type') || ''
           if (contentType.includes('application/json')) {
             triggerData.body = body
-            this.triggerRepository.http('body', triggerData.body)
+            this.triggerRepository.log.http('body', triggerData.body)
           } else if (
             contentType.includes('application/x-www-form-urlencoded') ||
             contentType.includes('multipart/form-data')
           ) {
-            const formName = request.headers.get('x-form-name') || ''
-            const form = app.findForm(formName)
-            const formData = body
-            this.triggerRepository.http('formData', formData)
             const fields: Fields = {}
-            for (const key of Object.keys(body)) {
-              const value = body[key]
-              switch (form?.findInput(key)?.type) {
-                case 'checkbox':
-                  fields[key] = value === 'true'
-                  break
-                case 'single-attachment':
-                  if (value instanceof File) {
-                    const data = await value.arrayBuffer()
-                    const object = new ObjectEntity(
-                      value.name,
-                      0,
-                      new Uint8Array(data),
-                      value.type,
-                      data.byteLength
-                    )
-                    objects.push(object)
-                    fields[key] = object.key
-                  } else {
-                    throw new HttpError('Invalid attachment', 400)
-                  }
-                  break
-                default:
-                  if (value instanceof File) {
-                    throw new HttpError('Invalid attachment', 400)
-                  }
-                  fields[key] = String(value)
+            if (formId) {
+              const form = app.findForm(formId)
+              if (!form) throw new TriggerError('Form not found', 404)
+              this.triggerRepository.log.http('formData', body)
+              for (const key of Object.keys(body)) {
+                const value = body[key]
+                switch (form.findInput(key)?.type) {
+                  case 'checkbox':
+                    fields[key] = value === 'true'
+                    break
+                  case 'single-attachment':
+                    if (value instanceof File) {
+                      const data = await value.arrayBuffer()
+                      const object = new ObjectEntity(
+                        value.name,
+                        0,
+                        new Uint8Array(data),
+                        value.type,
+                        data.byteLength
+                      )
+                      objects.push(object)
+                      fields[key] = object.key
+                    } else {
+                      throw new HttpError('Invalid attachment', 400)
+                    }
+                    break
+                  default:
+                    if (value instanceof File) {
+                      throw new HttpError('Invalid attachment', 400)
+                    }
+                    fields[key] = String(value)
+                }
+              }
+            } else {
+              const formData = await request.formData()
+              this.triggerRepository.log.http('formData', formData)
+              for (const [key, value] of formData.entries()) {
+                fields[key] = value
               }
             }
             triggerData.body = fields
@@ -111,12 +118,12 @@ export class TriggerHttpAutomationUseCase {
         const contentType = request.headers.get('content-type') || ''
         if (contentType.includes('application/json')) {
           triggerData = body
-          this.triggerRepository.http('body', triggerData)
+          this.triggerRepository.log.http('body', triggerData)
         } else if (
           contentType.includes('application/x-www-form-urlencoded') ||
           contentType.includes('multipart/form-data')
         ) {
-          this.triggerRepository.http('formData', body)
+          this.triggerRepository.log.http('formData', body)
           const fields: Fields = {}
           for (const key of Object.keys(body)) {
             const value = body[key]

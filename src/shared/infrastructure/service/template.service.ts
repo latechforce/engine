@@ -29,9 +29,10 @@ export class TemplateService {
       throw new Error(`Environment variable "${key}" is not set`)
     })
     Handlebars.registerHelper('regex', function (context: string, regex: string) {
+      if (!context || !regex) return null
       const match = context.match(regex)
       if (match) return match[1]
-      return ''
+      return null
     })
   }
 

@@ -81,3 +81,19 @@ test('should trigger an automation with a valid body', async ({ startExampleApp 
   const { data } = await response.json()
   expect(data.message).toBe('Hello, John Doe!')
 })
+
+test('should trigger an automation with form data', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'request-body', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/post', {
+    form: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.message).toBe('Hello, John Doe!')
+})

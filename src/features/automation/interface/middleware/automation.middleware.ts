@@ -13,4 +13,4 @@ export const automationPostJsonValidator = zValidator('json', automationPostJson
 
 export const automationPostFormSchema = z.record(z.string(), z.string().or(z.instanceof(File)))
 
-export const automationFormValidator = zValidator('form', automationPostFormSchema)
+export const automationPostFormValidator = zValidator('form', automationPostFormSchema)

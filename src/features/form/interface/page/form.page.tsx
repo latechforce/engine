@@ -45,11 +45,6 @@ const FormDataPage = () => {
           param: { automationIdOrPath, formId: form.id.toString() },
           form: values,
         },
-        {
-          headers: {
-            'x-form-name': form.name,
-          },
-        }
       )
       if (response.status === 200) {
         setIsSubmitted(true)

@@ -21,7 +21,7 @@ export class SetupTriggerUseCase {
   ) {}
 
   async execute(app: App, automation: Automation) {
-    this.triggerRepository.debug(`setup trigger for "${automation.schema.name}"`)
+    this.triggerRepository.log.debug(`setup trigger for "${automation.schema.name}"`)
     const { trigger } = automation
     if ('account' in trigger) {
       const connection = app.findConnection(trigger.account)

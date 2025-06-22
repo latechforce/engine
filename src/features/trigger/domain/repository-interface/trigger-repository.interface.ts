@@ -4,8 +4,10 @@ import type { ConnectionSchema } from '../../../../integrations/connection.schem
 import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 
 export type ITriggerRepository = {
-  debug(message: string): void
-  http(type: 'body' | 'formData', data: unknown): void
+  log: {
+    debug(message: string): void
+    http(type: 'body' | 'formData', data: unknown): void
+  }
   setupIntegration(
     trigger: IntegrationTriggerSchema,
     connection: ConnectionSchema,

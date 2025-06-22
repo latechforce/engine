@@ -29,12 +29,10 @@ export class TriggerRepository implements ITriggerRepository {
     private readonly env: EnvService
   ) {}
 
-  debug(message: string) {
-    this.logger.child('trigger-repository').debug(message)
-  }
-
-  http(type: 'body' | 'formData', data: unknown) {
-    this.logger.http(`${type}: ${JSON.stringify(data)}`)
+  log = {
+    debug: (message: string) => this.logger.child('trigger-repository').debug(message),
+    http: (type: 'body' | 'formData', data: unknown) =>
+      this.logger.http(`${type}: ${JSON.stringify(data)}`),
   }
 
   validateData(schema: SchemaObject, data: unknown): boolean {

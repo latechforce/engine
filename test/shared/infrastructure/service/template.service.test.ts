@@ -85,4 +85,11 @@ describe('TemplateService', () => {
     const filledTemplate = templateService.fill(template, data)
     expect(filledTemplate).toBe('')
   })
+
+  it('should fill a template with a regex helper and extract the first match with data and no match', () => {
+    const data = {}
+    const template = '{{regex body.url "https://([^/]+)"}}'
+    const filledTemplate = templateService.fill(template, data)
+    expect(filledTemplate).toBe('')
+  })
 })
