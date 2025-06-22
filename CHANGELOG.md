@@ -1,3 +1,10 @@
+## [0.58.1](https://github.com/latechforce/engine/compare/v0.58.0...v0.58.1) (2025-06-22)
+
+
+### Bug Fixes
+
+* **temaplte:** should fill a template with a regex helper and extract the first match ([35f6d18](https://github.com/latechforce/engine/commit/35f6d1886b8e080ab71b28660c2046b9ca8940f0)) — Thomas JEANNEAU
+
 # [0.58.0](https://github.com/latechforce/engine/compare/v0.57.4...v0.58.0) (2025-06-22)
 
 
