@@ -46,7 +46,7 @@ export class CalendlyConnectionIntegration {
       refresh_token: response.refresh_token,
       expires_in: response.expires_in,
       scope: response.scope,
-      created_at: new Date(response.created_at),
+      created_at: new Date(),
     }
   }
 
