@@ -15,6 +15,23 @@ test('should search and filter automation runs', async ({ startExampleApp }) => 
   await expect(page.getByText('No results.')).toBeVisible()
 })
 
+test('should search and filter automation runs based on steps data', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'run-typescript', loggedOnAdmin: true })
+  await page.request.post('/api/automations/run-typescript')
+
+  // WHEN
+  await page.goto('/admin/runs')
+  await page.getByRole('textbox', { name: 'Search' }).fill('Hello, world!')
+
+  // THEN
+  await expect(page.getByRole('row', { name: 'run-typescript' })).toBeVisible()
+  await page.getByRole('textbox', { name: 'Search' }).fill('invalid')
+  await expect(page.getByText('No results.')).toBeVisible()
+})
+
 // TODO: [@thomas-jeanneau] - should select and replay failed automation runs
 test.skip('should select and replay failed automation runs', async ({ startExampleApp }) => {
   // GIVEN

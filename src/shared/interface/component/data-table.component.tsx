@@ -1,5 +1,4 @@
-// Third-party imports
-import * as React from 'react'
+import { useState } from 'react'
 import type { ColumnDef, ColumnResizeMode } from '@tanstack/react-table'
 import {
   flexRender,
@@ -9,8 +8,6 @@ import {
   type Row,
 } from '@tanstack/react-table'
 import { cn } from '../lib/utils.lib'
-
-// Shared UI imports
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table.ui'
 import { Input } from '../ui/input.ui'
 import { Button } from '../ui/button.ui'
@@ -48,6 +45,16 @@ type DataTableProps<TData, TValue> = {
   fullPage?: boolean
 }
 
+const globalFilterFn = <TData,>(row: Row<TData>, _: string, filterValue: string) => {
+  const search = filterValue.toLowerCase()
+  const rowData = row.original as Record<string, unknown>
+  return Object.values(rowData).some((value) => {
+    if (value == null) return false
+    const stringValue = String(value).toLowerCase()
+    return stringValue.includes(search)
+  })
+}
+
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -56,8 +63,8 @@ export function DataTable<TData, TValue>({
   verticalSeparator = false,
   fullPage = false,
 }: DataTableProps<TData, TValue>) {
-  const [columnResizeMode] = React.useState<ColumnResizeMode>('onChange')
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
+  const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
     data,
@@ -73,6 +80,7 @@ export function DataTable<TData, TValue>({
         right: ['actions-column'],
       },
     },
+    globalFilterFn,
     state: {
       rowSelection,
     },

@@ -4,6 +4,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { DataTable } from '../../../../shared/interface/component/data-table.component'
 import { RunStatus } from './status.component'
+import type { ListRunsDto } from '../../application/dto/list-runs.dto'
 
 export const columns: ColumnDef<RunDto>[] = [
   {
@@ -29,11 +30,7 @@ export const columns: ColumnDef<RunDto>[] = [
   },
 ]
 
-type RunsDataTableProps = {
-  runs: RunDto[]
-}
-
-export const RunsDataTable = ({ runs }: RunsDataTableProps) => {
+export const RunsDataTable = ({ runs }: ListRunsDto) => {
   const navigate = useNavigate()
   return (
     <DataTable
