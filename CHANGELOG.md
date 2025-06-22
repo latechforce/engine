@@ -1,3 +1,10 @@
+## [0.58.2](https://github.com/latechforce/engine/compare/v0.58.1...v0.58.2) (2025-06-22)
+
+
+### Bug Fixes
+
+* **trigger:** should trigger an automation with form data ([bd2ddda](https://github.com/latechforce/engine/commit/bd2dddada06cae50838e73be570b06cde329cdc1)) — Thomas JEANNEAU
+
 ## [0.58.1](https://github.com/latechforce/engine/compare/v0.58.0...v0.58.1) (2025-06-22)
 
 
