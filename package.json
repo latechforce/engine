@@ -132,7 +132,7 @@
     "@testcontainers/postgresql": "^11.0.3",
     "@types/bun": "^1.2.17",
     "@types/inversify": "^2.0.33",
-    "@types/node": "^22.15.32",
+    "@types/node": "^24.0.3",
     "@types/pg": "^8.15.4",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
