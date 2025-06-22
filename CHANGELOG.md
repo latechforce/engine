@@ -1,3 +1,10 @@
+## [0.57.4](https://github.com/latechforce/engine/compare/v0.57.3...v0.57.4) (2025-06-22)
+
+
+### Bug Fixes
+
+* **run:** should search and filter automation runs based on steps data ([507dc56](https://github.com/latechforce/engine/commit/507dc56490c471a6eb4a0e3e1bc9a2e827867135)) — Thomas JEANNEAU
+
 ## [0.57.3](https://github.com/latechforce/engine/compare/v0.57.2...v0.57.3) (2025-06-22)
 
 
