@@ -109,7 +109,7 @@ test('should run a JavaScript code with buckets', async ({ startExampleApp }) =>
 
 test('should run a JavaScript code that return an array', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ filter: 'array', test })
+  const { page } = await startExampleApp({ filter: 'array', test, loggedOnAdmin: true })
 
   // WHEN
   const response = await page.request.post('/api/automations/run-javascript')

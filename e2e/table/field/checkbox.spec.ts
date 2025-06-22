@@ -2,7 +2,7 @@ import { expect, test } from '@/e2e/fixtures'
 
 test('should create a record with a checkbox field', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
   const checked = true
 
   // WHEN

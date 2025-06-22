@@ -8,10 +8,11 @@ import {
   updateRecordFormValidator,
   updateRecordJsonValidator,
 } from './middleware/table.middleware'
+import { authRequiredMiddleware } from '../../user/interface/middleware/auth.middleware'
 
 export const tableRoutes = new Hono<HonoType>()
-  .get('/', TableController.list)
-  .post('/:tableId', createRecordJsonValidator, (c) =>
+  .get('/', authRequiredMiddleware, TableController.list)
+  .post('/:tableId', authRequiredMiddleware, createRecordJsonValidator, (c) =>
     TableController.createRecord(c, {
       tableId: c.req.param('tableId'),
       body: c.req.valid('json'),
@@ -23,37 +24,39 @@ export const tableRoutes = new Hono<HonoType>()
       body: c.req.valid('form'),
     })
   )
-  .get('/:tableId/:recordId', (c) =>
+  .get('/:tableId/:recordId', authRequiredMiddleware, (c) =>
     TableController.readRecord(c, {
       tableId: c.req.param('tableId'),
       recordId: c.req.param('recordId'),
     })
   )
-  .get('/:tableId', (c) => TableController.listRecords(c, { tableId: c.req.param('tableId') }))
-  .patch('/:tableId/:recordId', updateRecordJsonValidator, (c) =>
+  .get('/:tableId', authRequiredMiddleware, (c) =>
+    TableController.listRecords(c, { tableId: c.req.param('tableId') })
+  )
+  .patch('/:tableId/:recordId', authRequiredMiddleware, updateRecordJsonValidator, (c) =>
     TableController.updateRecord(c, {
       tableId: c.req.param('tableId'),
       recordId: c.req.param('recordId'),
       body: c.req.valid('json'),
     })
   )
-  .patch('/:tableId/:recordId/form', updateRecordFormValidator, (c) =>
+  .patch('/:tableId/:recordId/form', authRequiredMiddleware, updateRecordFormValidator, (c) =>
     TableController.updateRecord(c, {
       tableId: c.req.param('tableId'),
       recordId: c.req.param('recordId'),
       body: c.req.valid('form'),
     })
   )
-  .patch('/:tableId', (c) =>
+  .patch('/:tableId', authRequiredMiddleware, (c) =>
     TableController.updateMultipleRecords(c, { tableId: c.req.param('tableId') })
   )
-  .delete('/:tableId/:recordId', (c) =>
+  .delete('/:tableId/:recordId', authRequiredMiddleware, (c) =>
     TableController.deleteRecord(c, {
       tableId: c.req.param('tableId'),
       recordId: c.req.param('recordId'),
     })
   )
-  .delete('/:tableId', deleteRecordsQueryValidator, (c) =>
+  .delete('/:tableId', authRequiredMiddleware, deleteRecordsQueryValidator, (c) =>
     TableController.deleteMultipleRecords(c, {
       tableId: c.req.param('tableId'),
       ids: c.req.valid('query').ids,

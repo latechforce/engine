@@ -2,7 +2,7 @@ import { expect, test } from '@/e2e/fixtures'
 
 test('should upload a file', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'bucket/index' })
+  const { page } = await startExampleApp({ test, filter: 'bucket/index', loggedOnAdmin: true })
 
   // WHEN
   const response = await page.request.put('/api/buckets/My bucket/my-file.txt', {
@@ -32,7 +32,7 @@ test('should upload a file', async ({ startExampleApp }) => {
 
 test('should not upload a file to a bucket that does not exist', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'bucket/index' })
+  const { page } = await startExampleApp({ test, filter: 'bucket/index', loggedOnAdmin: true })
 
   // WHEN
   const response = await page.request.put('/api/buckets/invalid/my-file.txt', {
@@ -51,7 +51,7 @@ test('should not upload a file to a bucket that does not exist', async ({ startE
 
 test('should download a file', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'bucket/index' })
+  const { page } = await startExampleApp({ test, filter: 'bucket/index', loggedOnAdmin: true })
   await page.request.put('/api/buckets/My bucket/my-file.txt', {
     data: 'Hello, world!',
     headers: {
@@ -69,7 +69,7 @@ test('should download a file', async ({ startExampleApp }) => {
 
 test('should not download a file that does not exist', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'bucket/index' })
+  const { page } = await startExampleApp({ test, filter: 'bucket/index', loggedOnAdmin: true })
 
   // WHEN
   const downloadResponse = await page.request.get('/api/buckets/My bucket/my-file.txt')
@@ -83,7 +83,7 @@ test('should not download a file that does not exist', async ({ startExampleApp 
 
 test('should delete a file', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'bucket/index' })
+  const { page } = await startExampleApp({ test, filter: 'bucket/index', loggedOnAdmin: true })
   await page.request.put('/api/buckets/My bucket/my-file.txt', {
     data: 'Hello, world!',
     headers: {
@@ -106,7 +106,7 @@ test('should delete a file', async ({ startExampleApp }) => {
 
 test('should not delete a file that does not exist', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'bucket/index' })
+  const { page } = await startExampleApp({ test, filter: 'bucket/index', loggedOnAdmin: true })
 
   // WHEN
   const response = await page.request.delete('/api/buckets/My bucket/my-file.txt')

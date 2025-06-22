@@ -3,7 +3,7 @@ import type { GetRunDto } from '../../../../src/features/run/application/dto/get
 
 test('should trigger the automation with a cron time', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
 
   // WHEN
   await new Promise((resolve) => setTimeout(resolve, 5000))

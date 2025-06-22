@@ -17,7 +17,7 @@ test('should run an automation when a form with a long text input is submitted',
   startExampleApp,
 }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'post-automation' })
+  const { page } = await startExampleApp({ test, filter: 'post-automation', loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/forms/contact-us')
@@ -36,7 +36,7 @@ test('should run an automation when a form with a long text input is submitted',
 
 test('should create a record with a long text input', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/forms/contact-us')

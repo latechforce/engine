@@ -7,7 +7,10 @@ import { corsMiddleware } from './middleware/cors.middleware'
 import type { HonoType } from '../infrastructure/service'
 
 // Feature interface imports
-import { authMiddleware } from '../../features/user/interface/middleware/auth.middleware'
+import {
+  authMiddleware,
+  authRequiredMiddleware,
+} from '../../features/user/interface/middleware/auth.middleware'
 import { appRoutes } from '../../features/app/interface/routes'
 import { runRoutes } from '../../features/run/interface/routes'
 import { automationRoutes } from '../../features/automation/interface/routes'
@@ -21,11 +24,12 @@ export const apiRoutes = new Hono<HonoType>()
   .use(authMiddleware)
   .use('*', corsMiddleware)
   .route('/', appRoutes)
-  .route('/runs', runRoutes)
   .route('/automations', automationRoutes)
-  .route('/connections', connectionRoutes)
-  .route('/forms', formRoutes)
   .route('/tables', tableRoutes)
+  .route('/forms', formRoutes)
+  .use(authRequiredMiddleware)
+  .route('/runs', runRoutes)
+  .route('/connections', connectionRoutes)
   .route('/buckets', bucketRoutes)
 
 export type ApiType = typeof apiRoutes

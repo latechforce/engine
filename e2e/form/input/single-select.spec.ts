@@ -17,7 +17,7 @@ test('should run an automation when a form with a single select input is submitt
   startExampleApp,
 }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'post-automation' })
+  const { page } = await startExampleApp({ test, filter: 'post-automation', loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/forms/contact-us')
@@ -36,7 +36,7 @@ test('should run an automation when a form with a single select input is submitt
 
 test('should create a record with a single select input', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/forms/contact-us')

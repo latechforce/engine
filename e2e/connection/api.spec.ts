@@ -3,7 +3,11 @@ import { expect, test } from '../fixtures'
 
 test('should return a list of connections', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'connection/calendly' })
+  const { page } = await startExampleApp({
+    test,
+    filter: 'connection/calendly',
+    loggedOnAdmin: true,
+  })
 
   // WHEN
   const response = await page.request.get('/api/connections')

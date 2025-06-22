@@ -14,3 +14,13 @@ export const authMiddleware: MiddlewareHandler = async (c: Context<HonoType>, ne
   c.set('session', session.session)
   return next()
 }
+
+export const authRequiredMiddleware: MiddlewareHandler = async (c: Context<HonoType>, next) => {
+  const session = c.get('session')
+
+  if (!session) {
+    return c.json({ error: 'Unauthorized' }, 401)
+  }
+
+  return next()
+}

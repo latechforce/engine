@@ -4,7 +4,7 @@ import type { GetRunDto } from '../../../../src/features/run/application/dto/get
 
 test('should run an automation when a record is created', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
 
   // WHEN
   await page.request.post('/api/tables/users', {

@@ -4,7 +4,7 @@ import { expect, test } from '../fixtures'
 
 test('should return a list of runs', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'trigger/http/post' })
+  const { page } = await startExampleApp({ test, filter: 'trigger/http/post', loggedOnAdmin: true })
   await page.request.post('/api/automations/post')
 
   // WHEN
@@ -22,7 +22,7 @@ test('should return a list of runs', async ({ startExampleApp }) => {
 
 test('should return a run by id', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'trigger/http/post' })
+  const { page } = await startExampleApp({ test, filter: 'trigger/http/post', loggedOnAdmin: true })
   await page.request.post('/api/automations/post')
   const { runs }: ListRunsDto = await page.request.get('/api/runs').then((res) => res.json())
   const { id } = runs[0]!

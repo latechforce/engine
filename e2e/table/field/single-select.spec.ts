@@ -2,7 +2,7 @@ import { expect, test } from '@/e2e/fixtures'
 
 test('should create a record with a single select field', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
   const country = 'France'
 
   // WHEN
@@ -25,7 +25,7 @@ test('should not create a record with an invalid single select field', async ({
   startExampleApp,
 }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
   const country = 'Unknown'
 
   // WHEN

@@ -17,7 +17,7 @@ test('should run an automation when a form with a single attachment input is sub
   startExampleApp,
 }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'post-automation' })
+  const { page } = await startExampleApp({ test, filter: 'post-automation', loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/forms/contact-us')
@@ -36,7 +36,7 @@ test('should run an automation when a form with a single attachment input is sub
 
 test('should create a record with a single attachment input', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
 
   // WHEN
   await page.goto('/forms/contact-us')

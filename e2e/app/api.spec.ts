@@ -31,7 +31,7 @@ test('should return app metadata', async ({ startExampleApp }) => {
 
 test('should return admin metadata', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'metadata' })
+  const { page } = await startExampleApp({ test, filter: 'metadata', loggedOnAdmin: true })
 
   // WHEN
   const response = await page.request.get('/api/metadata/admin')

@@ -4,7 +4,7 @@ import { expect, test } from '../fixtures'
 
 test('should return a list of forms', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'form/index' })
+  const { page } = await startExampleApp({ test, filter: 'form/index', loggedOnAdmin: true })
 
   // WHEN
   const response = await page.request.get('/api/forms')
@@ -21,6 +21,7 @@ test('should return a form from a path', async ({ startExampleApp }) => {
   const { page } = await startExampleApp({
     test,
     filter: 'form/index',
+    loggedOnAdmin: true,
   })
 
   // WHEN

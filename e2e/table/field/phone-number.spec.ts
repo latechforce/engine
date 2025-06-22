@@ -2,7 +2,7 @@ import { expect, test } from '@/e2e/fixtures'
 
 test('should create a record with a single line text field', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true })
   const phoneNumber = '+33612345678'
 
   // WHEN

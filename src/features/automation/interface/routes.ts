@@ -6,9 +6,10 @@ import {
   automationPostJsonValidator,
   setStatusValidator,
 } from './middleware/automation.middleware'
+import { authRequiredMiddleware } from '../../user/interface/middleware/auth.middleware'
 
 export const automationRoutes = new Hono<HonoType>()
-  .get('/', AutomationController.list)
+  .get('/', authRequiredMiddleware, AutomationController.list)
   .get('/:automationIdOrPath', (c) =>
     AutomationController.trigger(c, {
       automationIdOrPath: c.req.param('automationIdOrPath'),
@@ -28,13 +29,13 @@ export const automationRoutes = new Hono<HonoType>()
       formId: c.req.param('formId'),
     })
   )
-  .patch('/:automationId/status', setStatusValidator, (c) =>
+  .patch('/:automationId/status', authRequiredMiddleware, setStatusValidator, (c) =>
     AutomationController.setStatus(c, {
       automationId: c.req.param('automationId'),
       active: c.req.valid('json').active,
     })
   )
-  .get('/:automationId/runs', (c) =>
+  .get('/:automationId/runs', authRequiredMiddleware, (c) =>
     AutomationController.get(c, {
       automationId: c.req.param('automationId'),
     })
