@@ -35,77 +35,8 @@ export class SetupActionUseCase {
             }
             break
           }
-          default: {
-            const _exhaustiveCheck: never = action
-            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-          }
         }
         break
-      }
-      case 'http': {
-        switch (action.action) {
-          case 'get':
-            break
-          case 'post':
-            break
-          case 'response':
-            break
-          default: {
-            const _exhaustiveCheck: never = action
-            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-          }
-        }
-        break
-      }
-      case 'filter': {
-        switch (action.action) {
-          case 'only-continue-if':
-            break
-          case 'split-into-paths':
-            break
-          default: {
-            const _exhaustiveCheck: never = action
-            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-          }
-        }
-        break
-      }
-      case 'calendly': {
-        switch (action.action) {
-          case 'list-webhook-subscriptions':
-            break
-          default: {
-            const _exhaustiveCheck: never = action
-            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-          }
-        }
-        break
-      }
-      case 'google-sheets': {
-        switch (action.action) {
-          case 'append-values':
-            break
-          default: {
-            const _exhaustiveCheck: never = action
-            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-          }
-        }
-        break
-      }
-      case 'google-gmail': {
-        switch (action.action) {
-          case 'send-email':
-            break
-          default: {
-            const _exhaustiveCheck: never = action
-            throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
-          }
-        }
-        break
-      }
-      default: {
-        const _exhaustiveCheck: never = action
-        throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
       }
     }
   }

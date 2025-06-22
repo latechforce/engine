@@ -128,3 +128,60 @@ export type GetCurrentUserResponse = {
     locale: string
   }
 }
+
+export type GetEventTypeResponse = {
+  resource: {
+    uri: string
+    name: string
+    active: boolean
+    booking_method: 'instant' | 'poll'
+    slug: string
+    scheduling_url: string
+    duration: number
+    duration_options: number[]
+    kind: 'solo' | 'group'
+    pooling_type: 'round_robin' | 'collective' | 'multi_pool' | null
+    type: 'StandardEventType' | 'AdhocEventType'
+    color: string
+    created_at: string // ISO date
+    updated_at: string // ISO date
+    internal_note: string
+    description_plain: string
+    description_html: string
+    profile: {
+      type: 'User' | 'Team'
+      name: string
+      owner: string
+    }
+    secret: boolean
+    deleted_at: string | null
+    admin_managed: boolean
+    locations: {
+      kind:
+        | 'ask_invitee'
+        | 'custom'
+        | 'google_conference'
+        | 'gotomeeting_conference'
+        | 'inbound_call'
+        | 'microsoft_teams_conference'
+        | 'outbound_call'
+        | 'physical'
+        | 'webex_conference'
+        | 'zoom_conference'
+      location?: string
+      phone_number?: string
+      additional_info?: string
+    }[]
+    position: number
+    custom_questions: {
+      name: string
+      type: 'string' | 'text' | 'single_select' | 'multi_select' | 'phone_number' | string
+      position: number
+      enabled: boolean
+      required: boolean
+      answer_choices: string[]
+      include_other: boolean
+    }[]
+    locale: 'en' | 'fr' | 'es' | 'de' | 'nl' | 'pt' | 'it' | 'uk'
+  }
+}

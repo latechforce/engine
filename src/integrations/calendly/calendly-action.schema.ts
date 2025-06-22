@@ -28,9 +28,24 @@ const listWebhookSubscriptionsCalendlyActionSchema = baseCalendlyActionSchema
       'The Calendly list webhook subscriptions action is a action that lists the webhook subscriptions for a given organization',
   })
 
-export const calendlyActionSchema = z.union([listWebhookSubscriptionsCalendlyActionSchema]).meta({
-  title: 'Calendly',
-  description: 'The Calendly action is a action that is used to interact with the Calendly API',
-})
+const getEventTypeCalendlyActionSchema = baseCalendlyActionSchema
+  .extend({
+    action: z.literal('get-event-type'),
+    params: z.object({
+      uuid: z.string(),
+    }),
+  })
+  .meta({
+    title: 'Get Event Type',
+    description:
+      'The Calendly get event type action is a action that gets the event type for a given uuid',
+  })
+
+export const calendlyActionSchema = z
+  .union([listWebhookSubscriptionsCalendlyActionSchema, getEventTypeCalendlyActionSchema])
+  .meta({
+    title: 'Calendly',
+    description: 'The Calendly action is a action that is used to interact with the Calendly API',
+  })
 
 export type CalendlyActionSchema = z.infer<typeof calendlyActionSchema>

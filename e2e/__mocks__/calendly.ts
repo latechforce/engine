@@ -3,6 +3,7 @@ import type {
   CreateWebhookSubscriptionResponse,
   GetCurrentUserResponse,
   WebhookPayload,
+  GetEventTypeResponse,
 } from '../../src/integrations/calendly/calendly.types'
 
 export const webhookPayloadInviteCreated: WebhookPayload = {
@@ -131,6 +132,40 @@ export const getCurrentUserResponse: GetCurrentUserResponse = {
     updated_at: '2019-08-07T06:05:04.321123Z',
     current_organization: 'https://api.calendly.com/organizations/AAAAAAAAAAAAAAAA',
     resource_type: 'User',
+    locale: 'en',
+  },
+}
+
+export const getEventTypeResponse: GetEventTypeResponse = {
+  resource: {
+    uri: 'https://api.calendly.com/event_types/AAAAAAAAAAAAAAAA',
+    name: '15 Minute Meeting',
+    slug: '15-minute-meeting',
+    created_at: '2019-01-02T03:04:05.678123Z',
+    updated_at: '2019-08-07T06:05:04.321123Z',
+    active: true,
+    booking_method: 'instant',
+    scheduling_url: 'https://calendly.com/15-minute-meeting',
+    duration: 15,
+    duration_options: [15, 30, 60],
+    kind: 'solo',
+    pooling_type: null,
+    type: 'StandardEventType',
+    color: '#000000',
+    internal_note: 'Internal note',
+    description_plain: 'Internal note',
+    description_html: '<p>Internal note</p>',
+    profile: {
+      type: 'User',
+      name: 'John Doe',
+      owner: 'https://api.calendly.com/users/AAAAAAAAAAAAAAAA',
+    },
+    secret: false,
+    deleted_at: null,
+    admin_managed: false,
+    locations: [],
+    position: 0,
+    custom_questions: [],
     locale: 'en',
   },
 }

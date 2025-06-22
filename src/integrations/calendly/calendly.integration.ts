@@ -2,6 +2,7 @@ import ky from 'ky'
 import type {
   CreateWebhookSubscriptionResponse,
   GetCurrentUserResponse,
+  GetEventTypeResponse,
   ListWebhookSubscriptionsResponse,
 } from './calendly.types'
 
@@ -63,5 +64,13 @@ export class CalendlyIntegration {
         headers: this.getTokenHeader(),
       })
       .json<GetCurrentUserResponse>()
+  }
+
+  async getEventType(uuid: string): Promise<GetEventTypeResponse> {
+    return await ky
+      .get(this.baseUrl + '/event_types/' + uuid, {
+        headers: this.getTokenHeader(),
+      })
+      .json<GetEventTypeResponse>()
   }
 }

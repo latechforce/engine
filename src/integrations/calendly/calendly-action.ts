@@ -22,8 +22,12 @@ export class CalendlyActionIntegration {
           user,
         })
       }
+      case 'get-event-type': {
+        const { params } = this.schema
+        return calendly.getEventType(params.uuid)
+      }
       default: {
-        const _exhaustiveCheck: never = this.schema.action
+        const _exhaustiveCheck: never = this.schema
         throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
       }
     }
