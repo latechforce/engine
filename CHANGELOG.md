@@ -1,3 +1,10 @@
+## [0.58.3](https://github.com/latechforce/engine/compare/v0.58.2...v0.58.3) (2025-06-22)
+
+
+### Bug Fixes
+
+* **action:** fix bad template filling in setup ([c3a6d3b](https://github.com/latechforce/engine/commit/c3a6d3b1fe57bbd308de08c1f9a8edc2f6563e8f)) — Thomas JEANNEAU
+
 ## [0.58.2](https://github.com/latechforce/engine/compare/v0.58.1...v0.58.2) (2025-06-22)
 
 
