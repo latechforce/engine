@@ -1,3 +1,10 @@
+## [0.58.4](https://github.com/latechforce/engine/compare/v0.58.3...v0.58.4) (2025-06-22)
+
+
+### Bug Fixes
+
+* **action:** should run a calendly get event type action on invite created ([26fed45](https://github.com/latechforce/engine/commit/26fed4541cc18ef781026bb6f7e3103af9405af9)) — Thomas JEANNEAU
+
 ## [0.58.3](https://github.com/latechforce/engine/compare/v0.58.2...v0.58.3) (2025-06-22)
 
 
