@@ -3,6 +3,7 @@ import type { FacebookLeadAdsConnectionSchema } from './facebook-lead-ads-connec
 import type { Token } from '../../../features/connection/domain/value-object/token.value-object'
 
 export class FacebookLeadAdsConnectionIntegration {
+  public readonly tokenType = 'long-live-token'
   private readonly baseUrl = 'https://graph.facebook.com/v21.0'
   private readonly authBaseUrl = 'https://www.facebook.com/v21.0'
 

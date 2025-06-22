@@ -136,17 +136,18 @@
     "@types/pg": "^8.15.4",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
+    "better-sqlite3": "^12.0.0",
     "conventional-changelog-conventionalcommits": "^9.0.0",
     "drizzle-kit": "^0.31.1",
     "eslint-config-prettier": "^10.1.5",
     "eslint-import-resolver-typescript": "^4.4.3",
     "eslint-plugin-boundaries": "^5.0.1",
     "eslint-plugin-prettier": "^5.5.0",
+    "msw": "2.3.1",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12",
     "semantic-release": "^24.2.5",
-    "typescript-eslint": "^8.34.1",
-    "msw": "2.3.1"
+    "typescript-eslint": "^8.34.1"
   },
   "peerDependencies": {
     "typescript": "^5.8.3"

@@ -67,6 +67,11 @@ async function getExampleFileFilter(
   return { exampleFileFilter, env: {} }
 }
 
+function createDatabaseSqliteUrl() {
+  const id = randomBytes(10).toString('base64url').slice(0, 10)
+  return join(process.cwd(), 'tmp', `sqlite-${id}.db`)
+}
+
 async function createDatabase() {
   const dbName = `testdb_${randomUUID().replace(/-/g, '')}`
 
@@ -115,9 +120,8 @@ export const test = base.extend<StartAppFixture>({
         const dbName = await createDatabase()
         env.DATABASE_URL = `postgres://${process.env.POSTGRES_USERNAME}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${dbName}`
         env.DATABASE_PROVIDER = 'postgres'
-      } else {
-        const id = randomBytes(10).toString('base64url').slice(0, 10)
-        env.DATABASE_URL = join(process.cwd(), 'tmp', `sqlite-${id}.db`)
+      } else if (!env.DATABASE_URL) {
+        env.DATABASE_URL = createDatabaseSqliteUrl()
         env.DATABASE_PROVIDER = 'sqlite'
       }
 

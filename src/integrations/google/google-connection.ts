@@ -6,6 +6,7 @@ import type { Token } from '../../features/connection/domain/value-object/token.
 import type { GoogleConnectionSchema } from './google-connection.schema'
 
 export class GoogleConnectionIntegration {
+  public readonly tokenType = 'refresh-token'
   private readonly oauth2Client: OAuth2Client
   private readonly codeVerifier: string
 
@@ -26,6 +27,7 @@ export class GoogleConnectionIntegration {
     const codeChallenge = this.generateCodeChallenge(this.codeVerifier)
     return this.oauth2Client.generateAuthUrl({
       access_type: 'offline',
+      prompt: 'consent',
       scope: [
         'https://www.googleapis.com/auth/userinfo.profile',
         'https://www.googleapis.com/auth/userinfo.email',
@@ -43,6 +45,15 @@ export class GoogleConnectionIntegration {
       codeVerifier: this.codeVerifier,
     })
     const token = this.getTokenFromGoogle(tokens)
+    return token
+  }
+
+  async getAccessTokenFromRefreshToken(refreshToken: string): Promise<Token> {
+    this.oauth2Client.setCredentials({
+      refresh_token: refreshToken,
+    })
+    const { credentials } = await this.oauth2Client.refreshAccessToken()
+    const token = this.getTokenFromGoogle(credentials)
     return token
   }
 

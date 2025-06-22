@@ -12,6 +12,7 @@ type CalendlyToken = {
 }
 
 export class CalendlyConnectionIntegration {
+  public readonly tokenType = 'refresh-token'
   private readonly baseUrl = 'https://api.calendly.com'
   private readonly authBaseUrl = 'https://auth.calendly.com'
 

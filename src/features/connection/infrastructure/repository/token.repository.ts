@@ -37,11 +37,25 @@ export class TokenRepository implements ITokenRepository {
     if (!token) return undefined
     if (!this.isTokenValid(token)) {
       const integration = toConnectionIntegration(connection, this.connectionRepository.redirectUri)
-      if (!token.refresh_token || !('getAccessTokenFromRefreshToken' in integration)) {
-        await this.connectionRepository.status.setConnected(connection.id, false)
-        return undefined
+      let newToken: Token
+      switch (integration.tokenType) {
+        case 'refresh-token': {
+          if (!token.refresh_token) {
+            await this.connectionRepository.status.setConnected(connection.id, false)
+            return undefined
+          }
+          newToken = await integration.getAccessTokenFromRefreshToken(token.refresh_token)
+          break
+        }
+        case 'long-live-token': {
+          if (!token.access_token) {
+            await this.connectionRepository.status.setConnected(connection.id, false)
+            return undefined
+          }
+          newToken = await integration.getAccessTokenFromCurrentToken(token.access_token)
+          break
+        }
       }
-      const newToken = await integration.getAccessTokenFromRefreshToken(token.refresh_token)
       await this.update(newToken)
       return newToken
     }

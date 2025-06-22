@@ -3,6 +3,7 @@ import type { LinkedInAdsConnectionSchema } from './linkedin-ads-connection.sche
 import type { Token } from '../../../features/connection/domain/value-object/token.value-object'
 
 export class LinkedInAdsConnectionIntegration {
+  public readonly tokenType = 'refresh-token'
   private readonly authBaseUrl = 'https://www.linkedin.com/oauth/v2'
 
   constructor(
@@ -23,6 +24,28 @@ export class LinkedInAdsConnectionIntegration {
         grant_type: 'authorization_code',
         code,
         redirect_uri: this.redirectUri,
+        client_id: this.schema.clientId,
+        client_secret: this.schema.clientSecret,
+      }),
+    })
+    const data = await response.json<{ access_token: string; expires_in: number }>()
+    return {
+      id: this.schema.id,
+      token_type: 'Bearer',
+      access_token: data.access_token,
+      expires_in: data.expires_in,
+      created_at: new Date(),
+    }
+  }
+
+  async getAccessTokenFromRefreshToken(refreshToken: string): Promise<Token> {
+    const response = await ky.post(`${this.authBaseUrl}/accessToken`, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
         client_id: this.schema.clientId,
         client_secret: this.schema.clientSecret,
       }),
