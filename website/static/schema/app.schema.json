@@ -1592,6 +1592,54 @@
                     "action"
                   ],
                   "additionalProperties": false
+                },
+                {
+                  "title": "Get Event Type",
+                  "description": "The Calendly get event type action is a action that gets the event type for a given uuid",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "account": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "service": {
+                      "type": "string",
+                      "const": "calendly"
+                    },
+                    "action": {
+                      "type": "string",
+                      "const": "get-event-type"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "uuid": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "uuid"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "account",
+                    "service",
+                    "action",
+                    "params"
+                  ],
+                  "additionalProperties": false
                 }
               ]
             },

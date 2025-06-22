@@ -1,3 +1,10 @@
+# [0.58.0](https://github.com/latechforce/engine/compare/v0.57.4...v0.58.0) (2025-06-22)
+
+
+### Features
+
+* **calendly:** should run a calendly get event type action ([9432f68](https://github.com/latechforce/engine/commit/9432f68f6add9e5d1aa7275689a92dcc680c4602)) — Thomas JEANNEAU
+
 ## [0.57.4](https://github.com/latechforce/engine/compare/v0.57.3...v0.57.4) (2025-06-22)
 
 
