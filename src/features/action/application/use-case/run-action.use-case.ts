@@ -113,8 +113,9 @@ export class RunActionUseCase {
           if (!connection) {
             throw new Error(`Connection not found for account ${action.account}`)
           }
-          action.params = await fillInputData(action.params ?? {})
-          return await this.actionRepository.runIntegration(action, connection)
+          const filledAction = JSON.parse(JSON.stringify(action))
+          filledAction.params = await fillInputData(filledAction.params ?? {})
+          return await this.actionRepository.runIntegration(filledAction, connection)
         }
       }
       if (!data) data = {}

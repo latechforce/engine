@@ -11,6 +11,7 @@ import type { IAutomationRepository } from '../../domain/repository-interface/au
 import type { RunAutomationUseCase } from './run-automation.use-case'
 import type { SchemaObject } from 'ajv'
 import type { App } from '../../../app/domain/entity/app.entity'
+import type { ResponseHttpActionSchema } from '../../../action/domain/schema/http/response.schema'
 
 @injectable()
 export class SetupAutomationUseCase {
@@ -56,62 +57,78 @@ export class SetupAutomationUseCase {
 
     // Build OpenAPI routes
     const { trigger } = automation
+    let responseAction: ResponseHttpActionSchema | undefined
     if (trigger.event === 'post' || trigger.event === 'get') {
-      const responseAction = automation.actions.find(
+      responseAction = automation.actions.find(
         (action) => action.service === 'http' && action.action === 'response'
       )
+    }
 
-      const response =
-        responseAction && responseAction.params?.body
-          ? this.generateJsonSchema(responseAction.params.body)
-          : undefined
-      const method = trigger.event === 'get' ? 'get' : 'post'
-      this.automationRepository.addOpenAPIRoute({
-        summary: `Trigger "${automation.schema.name}"`,
-        method,
-        path: '/' + join('automations', trigger.params.path),
-        description: `Run the automation "${automation.schema.name}" from a ${method.toUpperCase()} request`,
-        tags: [`Automation`],
-        requestBody:
-          trigger.event === 'post' && trigger.params.requestBody
-            ? {
-                content: {
-                  'application/json': {
-                    schema: this.convertJsonSchemaToOpenApi(trigger.params.requestBody),
-                  },
-                },
-              }
-            : undefined,
-        responses: {
-          200: {
-            description: 'The automation successfully run',
-            content: {
-              'application/json': {
-                schema: {
-                  type: 'object',
-                  properties: {
-                    success: { type: 'boolean' },
-                    data: response ? this.convertJsonSchemaToOpenApi(response) : { type: 'null' },
-                  },
-                  required: ['success', 'data'],
+    const response =
+      responseAction && responseAction.params?.body
+        ? this.generateJsonSchema(responseAction.params.body)
+        : undefined
+
+    const method = trigger.event === 'get' ? 'get' : 'post'
+
+    const path =
+      trigger.params && 'path' in trigger.params
+        ? trigger.params.path
+        : automation.schema.id.toString()
+
+    this.automationRepository.addOpenAPIRoute({
+      summary: `Run "${automation.schema.name}"`,
+      method,
+      path: '/' + join('automations', path),
+      description: `Run the automation "${automation.schema.name}" from a ${method.toUpperCase()} request`,
+      tags: [`Trigger ${trigger.service}/${trigger.event}`],
+      requestBody:
+        trigger.event === 'post' && trigger.params.requestBody
+          ? {
+              content: {
+                'application/json': {
+                  schema: this.convertJsonSchemaToOpenApi(trigger.params.requestBody),
                 },
               },
-            },
-          },
-          400: {
-            content: {
-              'application/json': {
-                schema: z.object({
-                  error: z.string(),
-                  success: z.boolean().default(false),
-                }),
+            }
+          : undefined,
+      responses: {
+        200: {
+          description: 'The automation successfully run',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties:
+                  trigger.service === 'http'
+                    ? {
+                        success: { type: 'boolean' },
+                        data: response
+                          ? this.convertJsonSchemaToOpenApi(response)
+                          : { type: 'object' },
+                      }
+                    : {
+                        success: { type: 'boolean' },
+                        runId: { type: 'string' },
+                      },
+                required: trigger.service === 'http' ? ['success', 'data'] : ['success', 'runId'],
               },
             },
-            description: 'The automation failed to run',
           },
         },
-      })
-    }
+        400: {
+          content: {
+            'application/json': {
+              schema: z.object({
+                error: z.string(),
+                success: z.boolean().default(false),
+              }),
+            },
+          },
+          description: 'The automation failed to run',
+        },
+      },
+    })
   }
 
   private convertJsonSchemaToOpenApi(schema: SchemaObject): SchemaObject {

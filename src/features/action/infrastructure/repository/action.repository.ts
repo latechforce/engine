@@ -69,7 +69,8 @@ export class ActionRepository implements IActionRepository {
     data?: { [key: string]: unknown }
   ): T {
     const cloneSchema = JSON.parse(JSON.stringify(schema))
-    return this.templateService.fillObject<T>(cloneSchema, data)
+    const result = this.templateService.fillObject<T>(cloneSchema, data)
+    return result
   }
 
   code(app: App, inputData: { [key: string]: string } = {}) {
