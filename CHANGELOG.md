@@ -1,3 +1,12 @@
+# [0.59.0](https://github.com/latechforce/engine/compare/v0.58.4...v0.59.0) (2025-06-23)
+
+
+### Features
+
+* add default favicon ([c19608e](https://github.com/latechforce/engine/commit/c19608e84a5c488f79945728e8e2103f61d58689)) — Thomas JEANNEAU
+* **server:** should serve static files ([ab2652b](https://github.com/latechforce/engine/commit/ab2652b73318e04684f6428b89e1d23e39ab2e5d)) — Thomas JEANNEAU
+* **trigger:** should trigger an automation with a valid array body and respond immediately ([e57f54e](https://github.com/latechforce/engine/commit/e57f54e75f5464a47f757a4eb1077e5842659193)) — Thomas JEANNEAU
+
 ## [0.58.4](https://github.com/latechforce/engine/compare/v0.58.3...v0.58.4) (2025-06-22)
 
 
