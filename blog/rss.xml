@@ -9,19 +9,24 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Fix 0.59.1]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-59-1</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-59-1</guid>
+            <title><![CDATA[Fix 0.59.2]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-59-2</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-59-2</guid>
             <pubDate>Mon, 23 Jun 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.59.1]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-59-1"><p class="before-truncate"> 0.59.1   Bug Fixes  * default favicon path (5f69b38) — Thomas JEANNEAU   0.59.0   Features  * add default favicon (c19608e) — Thomas JEANNEAU * server: should serve static files (ab2652b) — Thomas JEANNEAU * trigger: should trigger an automation with a valid array body and respond immediately (e57f...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0591"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-59-1">0.59.1</a><a href="https://engine.latechforce.com/blog/fix-0-59-1#0591" class="hash-link" aria-label="Direct link to 0.59.1" title="Direct link to 0.59.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-59-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+            <description><![CDATA[Changelog for version 0.59.2]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-59-2"><p class="before-truncate"> 0.59.2   Bug Fixes  * breaking (1fef302) — Thomas JEANNEAU   0.59.1   Bug Fixes  * default favicon path (5f69b38) — Thomas JEANNEAU   0.59.0   Features  * add default favicon (c19608e) — Thomas JEANNEAU * server: should serve static files (ab2652b) — Thomas JEANNEAU * trigger: should trigger an aut...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0592"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-59-2">0.59.2</a><a href="https://engine.latechforce.com/blog/fix-0-59-2#0592" class="hash-link" aria-label="Direct link to 0.59.2" title="Direct link to 0.59.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-59-2#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>breaking (<a href="https://github.com/latechforce/engine/commit/1fef3027ceeae6e870183e72f58614747ca5d54d" target="_blank" rel="noopener noreferrer">1fef302</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0591">0.59.1<a href="https://engine.latechforce.com/blog/fix-0-59-2#0591" class="hash-link" aria-label="Direct link to 0.59.1" title="Direct link to 0.59.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-59-2#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>default favicon path (<a href="https://github.com/latechforce/engine/commit/5f69b38c6bcb06da4a5f530d4c4d88a21368dee6" target="_blank" rel="noopener noreferrer">5f69b38</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0590">0.59.0<a href="https://engine.latechforce.com/blog/fix-0-59-1#0590" class="hash-link" aria-label="Direct link to 0.59.0" title="Direct link to 0.59.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-59-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0590">0.59.0<a href="https://engine.latechforce.com/blog/fix-0-59-2#0590" class="hash-link" aria-label="Direct link to 0.59.0" title="Direct link to 0.59.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-59-2#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li>add default favicon (<a href="https://github.com/latechforce/engine/commit/c19608e84a5c488f79945728e8e2103f61d58689" target="_blank" rel="noopener noreferrer">c19608e</a>) — Thomas JEANNEAU</li>
 <li><strong>server:</strong> should serve static files (<a href="https://github.com/latechforce/engine/commit/ab2652b73318e04684f6428b89e1d23e39ab2e5d" target="_blank" rel="noopener noreferrer">ab2652b</a>) — Thomas JEANNEAU</li>
