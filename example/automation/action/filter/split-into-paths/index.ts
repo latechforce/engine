@@ -26,7 +26,8 @@ export default {
               name: 'path1',
               filter: {
                 target: '{{ trigger.body.name }}',
-                operator: 'exists',
+                operator: 'contains',
+                value: 'John',
               },
               actions: [
                 {
@@ -45,7 +46,8 @@ export default {
               name: 'path2',
               filter: {
                 target: '{{ trigger.body.name }}',
-                operator: 'does-not-exist',
+                operator: 'contains',
+                value: 'Jane',
               },
               actions: [
                 {

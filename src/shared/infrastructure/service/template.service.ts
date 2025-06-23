@@ -56,14 +56,22 @@ export class TemplateService {
     return compiled(data)
   }
 
+  fillArray(array: unknown[], data = {}): unknown[] {
+    return array.map((item) =>
+      typeof item === 'string'
+        ? this.fill(item, data)
+        : Array.isArray(item)
+          ? this.fillArray(item, data)
+          : this.fillObject(item as Record<string, unknown>, data)
+    )
+  }
+
   fillObject<T extends Record<string, unknown>>(object: T, data = {}): T {
     return Object.entries(object).reduce((acc: Record<string, unknown>, [key, value]) => {
       if (typeof value === 'string') {
         acc[key] = this.fill(value, data)
       } else if (Array.isArray(value)) {
-        acc[key] = value.map((item) =>
-          typeof item === 'string' ? this.fill(item, data) : this.fillObject(item, data)
-        )
+        acc[key] = this.fillArray(value, data)
       } else if (value && typeof value === 'object') {
         acc[key] = this.fillObject(value as Record<string, unknown>, data)
       } else {

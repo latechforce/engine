@@ -92,4 +92,43 @@ describe('TemplateService', () => {
     const filledTemplate = templateService.fill(template, data)
     expect(filledTemplate).toBe('')
   })
+
+  it('should fill a complex template object', () => {
+    const data = {
+      value: 'test',
+    }
+    const template = {
+      key: '{{value}}',
+      object: {
+        key: '{{value}}',
+        arrayOfArrays: [
+          ['{{value}}', '{{value}}'],
+          ['{{value}}', '{{value}}'],
+        ],
+      },
+      array: ['{{value}}'],
+      arrayOfObjects: [
+        {
+          key: '{{value}}',
+        },
+        {
+          array: ['{{value}}', '{{value}}'],
+          key: '{{value}}',
+        },
+      ],
+    }
+    const filledTemplate = templateService.fillObject(template, data)
+    expect(filledTemplate).toStrictEqual({
+      key: 'test',
+      object: {
+        key: 'test',
+        arrayOfArrays: [
+          ['test', 'test'],
+          ['test', 'test'],
+        ],
+      },
+      array: ['test'],
+      arrayOfObjects: [{ key: 'test' }, { array: ['test', 'test'], key: 'test' }],
+    })
+  })
 })
