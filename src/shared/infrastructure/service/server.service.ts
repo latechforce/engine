@@ -90,11 +90,24 @@ export class ServerService {
     this.openapiServer.get('/scalar', Scalar({ url: '/openapi/schema', theme: 'alternate' }))
   }
 
+  staticFiles = async (req: Request) => {
+    const staticPath = this.env.get('STATIC_PATH').replace(/\/$/, '')
+    const path = req.url.match(/\/static\/(.+)/)
+    if (!path || !path[1]) {
+      return new Response('Not found', { status: 404 })
+    }
+    const file = Bun.file(staticPath + '/' + path[1])
+    return (await file.exists()) ? new Response(file) : new Response('Not found', { status: 404 })
+  }
+
   start() {
     this.server.route('/openapi', this.openapiServer)
     this.server.route('/api', this.apiRoutes)
     Bun.serve({
       routes: {
+        '/static/*': {
+          GET: this.staticFiles,
+        },
         '/openapi/*': {
           GET: this.server.fetch,
         },
