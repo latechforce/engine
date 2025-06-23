@@ -2,8 +2,8 @@ import crypto from 'crypto'
 import type { IntegrationError } from '../../../action/domain/value-object/integration-error.value-object'
 import type { ServiceError } from '../../../../features/action/domain/value-object/service-error.value-object'
 import type { Steps } from '../value-object.ts/step.value-object'
-import type { ActionStep } from '../value-object.ts/action-step.value-object'
 import type { ActionSchema } from '../../../../features/action/domain/schema/action.schema'
+import type { ActionOrPathsStep } from '../value-object.ts/step.value-object'
 import type { PathStep } from '../value-object.ts/paths-step.value-object'
 import type { SplitIntoPathsFilterActionSchema } from '../../../../features/action/domain/schema/filter/split-into-paths.schema'
 
@@ -52,7 +52,7 @@ export class Run {
       this._updatedAt = new Date()
     } else {
       const [actionName, pathName, ...segments] = pathSegments
-      const step = this.getActionStepOrThrow(actionName!)
+      const step = this.getActionOrPathsStepOrThrow(actionName!)
       if (step.type === 'paths') {
         const path = step.paths.find((path) => path.schema.name === pathName)
         if (!path) {
@@ -91,7 +91,10 @@ export class Run {
     this._updatedAt = new Date()
   }
 
-  getActionStep(actionPath: string, steps?: ActionStep[]): ActionStep | undefined {
+  getActionOrPathsStep(
+    actionPath: string,
+    steps?: ActionOrPathsStep[]
+  ): ActionOrPathsStep | undefined {
     const pathSegments = actionPath.split('.')
     if (pathSegments.length < 2) {
       const actionName = pathSegments[0]!
@@ -103,7 +106,7 @@ export class Run {
       return
     } else {
       const [actionName, pathName, ...segments] = pathSegments
-      const step = this.getActionStep(actionName!)
+      const step = this.getActionOrPathsStep(actionName!)
       if (!step) return
       if ('paths' in step) {
         const path = step.paths.find((path) => path.schema.name === pathName)
@@ -111,22 +114,22 @@ export class Run {
           throw new Error('Path step not found')
         }
         if (segments.length > 0) {
-          return this.getActionStep(segments.join('.'), path.actions)
+          return this.getActionOrPathsStep(segments.join('.'), path.actions)
         }
         return step
       }
     }
   }
 
-  getActionStepOrThrow(actionPath: string): ActionStep {
-    const step = this.getActionStep(actionPath)
+  getActionOrPathsStepOrThrow(actionPath: string): ActionOrPathsStep {
+    const step = this.getActionOrPathsStep(actionPath)
     if (!step) throw new Error(`Action step "${actionPath}" not found`)
     return step
   }
 
   getStepsOutput() {
     const [trigger, ...actions] = this.steps
-    const buildOutput = (steps: ActionStep[]): Record<string, unknown> => {
+    const buildOutput = (steps: ActionOrPathsStep[]): Record<string, unknown> => {
       return steps.reduce((acc: Record<string, unknown>, step) => {
         if ('paths' in step) {
           acc[step.schema.name] = step.paths.reduce((acc: Record<string, unknown>, path) => {
@@ -147,21 +150,21 @@ export class Run {
   }
 
   isStepSucceed(actionPath: string) {
-    const step = this.getActionStep(actionPath)
+    const step = this.getActionOrPathsStep(actionPath)
     if (!step) return false
     if ('output' in step) return !!step.output
     return true
   }
 
   successActionStep(actionPath: string, output: Record<string, unknown>) {
-    const step = this.getActionStepOrThrow(actionPath)
+    const step = this.getActionOrPathsStepOrThrow(actionPath)
     if ('output' in step) step.output = output
     this._updatedAt = new Date()
   }
 
   filterActionStep(actionPath: string, result: Record<string, unknown>) {
     if (this._status === 'playing') {
-      const step = this.getActionStepOrThrow(actionPath)
+      const step = this.getActionOrPathsStepOrThrow(actionPath)
       if ('output' in step) step.output = result
       this._updatedAt = new Date()
       this._status = 'filtered'
@@ -170,7 +173,7 @@ export class Run {
 
   stopActionStep(actionPath: string, error: IntegrationError | ServiceError) {
     if (this._status === 'playing' || this._status === 'filtered') {
-      const step = this.getActionStep(actionPath)
+      const step = this.getActionOrPathsStep(actionPath)
       if (step && 'error' in step) step.error = error
       this._updatedAt = new Date()
       this._status = 'stopped'
@@ -184,7 +187,7 @@ export class Run {
   }
 
   getLastActionStepData() {
-    const buildData = (step: ActionStep): Record<string, unknown> => {
+    const buildData = (step: ActionOrPathsStep): Record<string, unknown> => {
       if ('paths' in step) {
         return step.paths.reduce((acc: Record<string, unknown>, path) => {
           const lastAction = path.actions[path.actions.length - 1]!
@@ -210,7 +213,7 @@ export class Run {
   }
 
   getErrorMessage() {
-    const getError = (steps: ActionStep[]) => {
+    const getError = (steps: ActionOrPathsStep[]) => {
       for (const step of steps) {
         if ('error' in step) return step.error
         if ('paths' in step) return getError(step.paths.flatMap((path) => path.actions))

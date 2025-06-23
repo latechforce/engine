@@ -5,10 +5,11 @@ import Layout from '../../../../app/interface/page/admin/layout'
 import { TypographyH3, TypographySmall } from '../../../../../shared/interface/ui/typography.ui'
 import { createRoute, useParams } from '@tanstack/react-router'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
-import { Suspense } from 'react'
+import { Suspense, useState } from 'react'
 import { adminRoute } from '../../../../app/interface/page/router'
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardHeader,
@@ -26,10 +27,18 @@ import { type ActionStep } from '../../../domain/value-object.ts/action-step.val
 import type { RunDto } from '../../../application/dto/run.dto'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
-import { PencilIcon } from 'lucide-react'
+import { PencilIcon, ArrowDown } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 import { setStatusMutation } from '../../../../automation/interface/mutations/set-status.mutation'
 import { RunStatus } from '../../component/status.component'
+import type { TriggerStep } from '../../../domain/value-object.ts/trigger-step.value-object'
+import type { PathsStep } from '../../../domain/value-object.ts/paths-step.value-object'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../../../../../shared/interface/ui/collapsible.ui'
+import { ChevronsUpDown } from 'lucide-react'
 
 const runQueryOptions = (runId: string) =>
   queryOptions<GetRunDto>({
@@ -40,182 +49,261 @@ const runQueryOptions = (runId: string) =>
 type StepCardProps = {
   run: RunDto
   steps: Steps | ActionStep[]
-  startIndex?: number
+  startNumber?: number
 }
 
-const StepsCards = ({ run, steps, startIndex = 0 }: StepCardProps) => {
-  return steps.map((step, index) => {
-    switch (step.type) {
-      case 'trigger':
-        return (
-          <Card
+type TriggerStepCardProps = {
+  run: RunDto
+  step: TriggerStep
+  number: number
+}
+
+type CollapsibleStepCardProps = {
+  key: number
+  title: string
+  status: RunDto['status']
+  description: string
+  children: React.ReactNode
+}
+
+const JsonViewer = ({ data }: { data: Record<string, unknown> }) => {
+  return (
+    <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
+      {JSON.stringify(data, null, 2)}
+    </pre>
+  )
+}
+
+const CollapsibleStepCard = ({
+  key,
+  title,
+  status,
+  description,
+  children,
+}: CollapsibleStepCardProps) => {
+  const [isOpen, setIsOpen] = useState(false)
+  return (
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <Card
+        key={key}
+        className="mt-4 gap-0 p-0"
+      >
+        <CollapsibleTrigger
+          asChild
+          className="gap-0"
+        >
+          <CardHeader className="cursor-pointer p-6">
+            <div className="flex gap-6">
+              <RunStatus status={status} />
+              <div className="flex flex-col gap-2">
+                <CardTitle>{title}</CardTitle>
+                <CardDescription>{description}</CardDescription>
+              </div>
+            </div>
+            <CardAction className="my-auto">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-8"
+              >
+                <ChevronsUpDown />
+                <span className="sr-only">Toggle</span>
+              </Button>
+            </CardAction>
+          </CardHeader>
+        </CollapsibleTrigger>
+        <CardContent>
+          <CollapsibleContent className="pb-6">{children}</CollapsibleContent>
+        </CardContent>
+      </Card>
+    </Collapsible>
+  )
+}
+
+const TriggerStepCard = ({ run, step, number }: TriggerStepCardProps) => {
+  return (
+    <CollapsibleStepCard
+      key={number}
+      title={`${number}. Trigger - ${step.schema.service} / ${step.schema.event}`}
+      status={run.status}
+      description={format(new Date(run.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+    >
+      <Tabs defaultValue="output">
+        <TabsList>
+          <TabsTrigger value="schema">Schema</TabsTrigger>
+          <TabsTrigger value="output">Output Data</TabsTrigger>
+        </TabsList>
+        <TabsContent value="schema">
+          <JsonViewer data={step.schema} />
+        </TabsContent>
+        <TabsContent value="output">
+          <JsonViewer data={step.output ?? {}} />
+        </TabsContent>
+      </Tabs>
+    </CollapsibleStepCard>
+  )
+}
+
+type ActionStepCardProps = {
+  step: ActionStep
+  number: number
+}
+
+const ActionStepCard = ({ step, number }: ActionStepCardProps) => {
+  const status =
+    step.schema.service === 'filter' && step.schema.action === 'only-continue-if'
+      ? step.output?.canContinue === true
+        ? 'success'
+        : 'filtered'
+      : step.error
+        ? 'stopped'
+        : step.output
+          ? 'success'
+          : 'playing'
+  return (
+    <CollapsibleStepCard
+      key={number}
+      title={`${number}. ${step.schema.name} - ${step.schema.service} / ${step.schema.action}`}
+      status={status}
+      description={format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+    >
+      <Tabs defaultValue={step.error ? 'error' : 'output'}>
+        <TabsList>
+          <TabsTrigger value="schema">Schema</TabsTrigger>
+          <TabsTrigger value="input">Input Data</TabsTrigger>
+          {!step.error && <TabsTrigger value="output">Output Data</TabsTrigger>}
+          {step.error && <TabsTrigger value="error">Error</TabsTrigger>}
+        </TabsList>
+        <TabsContent value="schema">
+          <JsonViewer data={step.schema} />
+        </TabsContent>
+        <TabsContent value="input">
+          <JsonViewer data={step.input} />
+        </TabsContent>
+        <TabsContent value="output">
+          <JsonViewer data={step.output ?? {}} />
+        </TabsContent>
+        <TabsContent value="error">
+          <JsonViewer data={step.error ?? {}} />
+        </TabsContent>
+      </Tabs>
+    </CollapsibleStepCard>
+  )
+}
+
+type PathsStepCardProps = {
+  run: RunDto
+  step: PathsStep
+  number: number
+}
+
+const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
+  return (
+    <CollapsibleStepCard
+      key={number}
+      title={`${number}. Paths`}
+      status="success"
+      description={format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+    >
+      <Tabs defaultValue={step.paths[0]!.schema.name}>
+        <TabsList>
+          {step.paths.map((path, index) => (
+            <TabsTrigger
+              key={index}
+              value={path.schema.name}
+            >
+              {path.schema.name}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {step.paths.map((path, index) => (
+          <TabsContent
             key={index}
-            className="mb-4"
+            value={path.schema.name}
           >
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                {index + 1}. Trigger - {step.schema.service} / {step.schema.event}
-                <RunStatus status="success" />
-              </CardTitle>
-              <CardDescription>
-                {format(new Date(run.createdAt), 'dd/MM/yyyy HH:mm:ss')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+            <CollapsibleStepCard
+              key={index}
+              title={`1. ${path.schema.name}`}
+              status="success"
+              description={format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+            >
               <Tabs defaultValue="output">
                 <TabsList>
                   <TabsTrigger value="schema">Schema</TabsTrigger>
+                  <TabsTrigger value="input">Input Data</TabsTrigger>
                   <TabsTrigger value="output">Output Data</TabsTrigger>
                 </TabsList>
                 <TabsContent value="schema">
-                  <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                    {JSON.stringify(step.schema, null, 2)}
-                  </pre>
-                </TabsContent>
-                <TabsContent value="output">
-                  <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                    {JSON.stringify(step.output ?? {}, null, 2)}
-                  </pre>
-                </TabsContent>
-              </Tabs>
-            </CardContent>
-          </Card>
-        )
-      case 'action':
-        return (
-          <Card
-            key={index + startIndex}
-            className="mt-4"
-          >
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                {index + startIndex + 1}. {step.schema.name} - {step.schema.service} /{' '}
-                {step.schema.action}
-                <RunStatus
-                  status={
-                    step.schema.service === 'filter' && step.schema.action === 'only-continue-if'
-                      ? step.output?.canContinue === true
-                        ? 'success'
-                        : 'filtered'
-                      : step.error
-                        ? 'stopped'
-                        : 'success'
-                  }
-                />
-              </CardTitle>
-              <CardDescription>
-                {format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Tabs defaultValue={step.error ? 'error' : 'output'}>
-                <TabsList>
-                  <TabsTrigger value="schema">Schema</TabsTrigger>
-                  <TabsTrigger value="input">Input Data</TabsTrigger>
-                  {!step.error && <TabsTrigger value="output">Output Data</TabsTrigger>}
-                  {step.error && <TabsTrigger value="error">Error</TabsTrigger>}
-                </TabsList>
-                <TabsContent value="schema">
-                  <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                    {JSON.stringify(step.schema, null, 2)}
-                  </pre>
+                  <JsonViewer data={path.schema} />
                 </TabsContent>
                 <TabsContent value="input">
-                  <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                    {JSON.stringify(step.input, null, 2)}
-                  </pre>
+                  <JsonViewer data={path.input} />
                 </TabsContent>
                 <TabsContent value="output">
-                  <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                    {JSON.stringify(step.output ?? {}, null, 2)}
-                  </pre>
-                </TabsContent>
-                <TabsContent value="error">
-                  <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                    {JSON.stringify(step.error, null, 2)}
-                  </pre>
+                  <JsonViewer data={path.output ?? {}} />
                 </TabsContent>
               </Tabs>
-            </CardContent>
-          </Card>
-        )
-      case 'paths':
+            </CollapsibleStepCard>
+            <StepsCards
+              run={run}
+              steps={path.actions}
+              startNumber={number + 1}
+            />
+          </TabsContent>
+        ))}
+      </Tabs>
+    </CollapsibleStepCard>
+  )
+}
+
+const StepsCards = ({ run, steps, startNumber = 0 }: StepCardProps) => {
+  return (
+    <>
+      {steps.map((step, index) => {
+        const number = index + startNumber + 1
+        const stepElement = (() => {
+          switch (step.type) {
+            case 'trigger':
+              return (
+                <TriggerStepCard
+                  run={run}
+                  step={step}
+                  number={number}
+                />
+              )
+            case 'action':
+              return (
+                <ActionStepCard
+                  step={step}
+                  number={number}
+                />
+              )
+            case 'paths':
+              return (
+                <PathsStepCard
+                  run={run}
+                  step={step}
+                  number={number}
+                />
+              )
+          }
+        })()
         return (
-          <Card
-            key={index + startIndex}
-            className="mt-4"
-          >
-            <CardHeader>
-              <CardTitle>{index + startIndex + 1}. Paths</CardTitle>
-              <CardDescription>
-                {format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Tabs defaultValue={step.paths[0]!.schema.name}>
-                <TabsList>
-                  {step.paths.map((path, index) => (
-                    <TabsTrigger
-                      key={index}
-                      value={path.schema.name}
-                    >
-                      {path.schema.name}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
-                {step.paths.map((path, index) => (
-                  <TabsContent
-                    key={index}
-                    value={path.schema.name}
-                  >
-                    <Card
-                      key={index}
-                      className="mt-4"
-                    >
-                      <CardHeader>
-                        <CardTitle>1. {path.schema.name}</CardTitle>
-                        <CardDescription>
-                          {format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                        <Tabs defaultValue="output">
-                          <TabsList>
-                            <TabsTrigger value="schema">Schema</TabsTrigger>
-                            <TabsTrigger value="input">Input Data</TabsTrigger>
-                            <TabsTrigger value="output">Output Data</TabsTrigger>
-                          </TabsList>
-                          <TabsContent value="schema">
-                            <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                              {JSON.stringify(path.schema, null, 2)}
-                            </pre>
-                          </TabsContent>
-                          <TabsContent value="input">
-                            <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                              {JSON.stringify(path.input, null, 2)}
-                            </pre>
-                          </TabsContent>
-                          <TabsContent value="output">
-                            <pre className="text-muted-foreground mt-4 overflow-hidden text-sm break-words whitespace-pre-wrap">
-                              {JSON.stringify(path.output ?? {}, null, 2)}
-                            </pre>
-                          </TabsContent>
-                        </Tabs>
-                      </CardContent>
-                    </Card>
-                    <StepsCards
-                      run={run}
-                      steps={path.actions}
-                      startIndex={index + startIndex + 1}
-                    />
-                  </TabsContent>
-                ))}
-              </Tabs>
-            </CardContent>
-          </Card>
+          <div key={index}>
+            {stepElement}
+            {index < steps.length - 1 && (
+              <div className="mt-4 flex justify-center">
+                <ArrowDown className="text-muted-foreground h-6 w-6" />
+              </div>
+            )}
+          </div>
         )
-    }
-  })
+      })}
+    </>
+  )
 }
 
 const RunDataPage = () => {

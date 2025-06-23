@@ -1,4 +1,7 @@
 import type { ActionStep } from './action-step.value-object'
+import type { PathsStep } from './paths-step.value-object'
 import type { TriggerStep } from './trigger-step.value-object'
 
-export type Steps = [TriggerStep, ...ActionStep[]]
+export type ActionOrPathsStep = ActionStep | PathsStep
+
+export type Steps = [TriggerStep, ...ActionOrPathsStep[]]
