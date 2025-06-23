@@ -1,3 +1,10 @@
+## [0.59.4](https://github.com/latechforce/engine/compare/v0.59.3...v0.59.4) (2025-06-23)
+
+
+### Bug Fixes
+
+* **template:** should fill a complex template object ([ad733f4](https://github.com/latechforce/engine/commit/ad733f4c8c4c7b56cae00d0c07f3fdb3f94d5afd)) — Thomas JEANNEAU
+
 ## [0.59.3](https://github.com/latechforce/engine/compare/v0.59.2...v0.59.3) (2025-06-23)
 
 
