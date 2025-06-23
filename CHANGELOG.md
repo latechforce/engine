@@ -1,3 +1,10 @@
+## [0.59.2](https://github.com/latechforce/engine/compare/v0.59.1...v0.59.2) (2025-06-23)
+
+
+### Bug Fixes
+
+* breaking ([1fef302](https://github.com/latechforce/engine/commit/1fef3027ceeae6e870183e72f58614747ca5d54d)) — Thomas JEANNEAU
+
 ## [0.59.1](https://github.com/latechforce/engine/compare/v0.59.0...v0.59.1) (2025-06-23)
 
 
