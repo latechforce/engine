@@ -1,3 +1,10 @@
+## [0.59.1](https://github.com/latechforce/engine/compare/v0.59.0...v0.59.1) (2025-06-23)
+
+
+### Bug Fixes
+
+* default favicon path ([5f69b38](https://github.com/latechforce/engine/commit/5f69b38c6bcb06da4a5f530d4c4d88a21368dee6)) — Thomas JEANNEAU
+
 # [0.59.0](https://github.com/latechforce/engine/compare/v0.58.4...v0.59.0) (2025-06-23)
 
 
