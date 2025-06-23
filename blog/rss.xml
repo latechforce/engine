@@ -4,10 +4,26 @@
         <title>LTF Engine Blog</title>
         <link>https://engine.latechforce.com/blog</link>
         <description>LTF Engine Blog</description>
-        <lastBuildDate>Sun, 22 Jun 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 23 Jun 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Release 0.59.0]]></title>
+            <link>https://engine.latechforce.com/blog/release-0-59-0</link>
+            <guid>https://engine.latechforce.com/blog/release-0-59-0</guid>
+            <pubDate>Mon, 23 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Changelog for version 0.59.0]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-59-0"><p class="before-truncate"> 0.59.0   Features  * add default favicon (c19608e) — Thomas JEANNEAU * server: should serve static files (ab2652b) — Thomas JEANNEAU * trigger: should trigger an automation with a valid array body and respond immediately (e57f54e) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0590"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-59-0">0.59.0</a><a href="https://engine.latechforce.com/blog/release-0-59-0#0590" class="hash-link" aria-label="Direct link to 0.59.0" title="Direct link to 0.59.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-59-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>add default favicon (<a href="https://github.com/latechforce/engine/commit/c19608e84a5c488f79945728e8e2103f61d58689" target="_blank" rel="noopener noreferrer">c19608e</a>) — Thomas JEANNEAU</li>
+<li><strong>server:</strong> should serve static files (<a href="https://github.com/latechforce/engine/commit/ab2652b73318e04684f6428b89e1d23e39ab2e5d" target="_blank" rel="noopener noreferrer">ab2652b</a>) — Thomas JEANNEAU</li>
+<li><strong>trigger:</strong> should trigger an automation with a valid array body and respond immediately (<a href="https://github.com/latechforce/engine/commit/e57f54e75f5464a47f757a4eb1077e5842659193" target="_blank" rel="noopener noreferrer">e57f54e</a>) — Thomas JEANNEAU</li>
+</ul>]]></content:encoded>
+            <category>Release</category>
+        </item>
         <item>
             <title><![CDATA[Fix 0.58.4]]></title>
             <link>https://engine.latechforce.com/blog/fix-0-58-4</link>
