@@ -57,6 +57,11 @@ export class SetupAutomationUseCase {
 
     // Build OpenAPI routes
     const { trigger } = automation
+
+    if (trigger.service !== 'http') {
+      return
+    }
+
     let responseAction: ResponseHttpActionSchema | undefined
     if (trigger.event === 'post' || trigger.event === 'get') {
       responseAction = automation.actions.find(
@@ -77,11 +82,11 @@ export class SetupAutomationUseCase {
         : automation.schema.id.toString()
 
     this.automationRepository.addOpenAPIRoute({
-      summary: `Run "${automation.schema.name}"`,
+      summary: `Trigger "${automation.schema.name}"`,
       method,
       path: '/' + join('automations', path),
       description: `Run the automation "${automation.schema.name}" from a ${method.toUpperCase()} request`,
-      tags: [`Trigger ${trigger.service}/${trigger.event}`],
+      tags: [`Automations`],
       requestBody:
         trigger.event === 'post' && trigger.params.requestBody
           ? {

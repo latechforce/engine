@@ -7,7 +7,9 @@ export const setStatusSchema = z.object({
 
 export const setStatusValidator = zValidator('json', setStatusSchema)
 
-export const automationPostJsonSchema = z.record(z.string(), z.unknown())
+export const automationPostJsonSchema = z
+  .record(z.string(), z.unknown())
+  .or(z.array(z.record(z.string(), z.unknown())))
 
 export const automationPostJsonValidator = zValidator('json', automationPostJsonSchema)
 

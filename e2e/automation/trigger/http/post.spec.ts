@@ -66,7 +66,7 @@ test('should not trigger an automation with a invalid body', async ({ startExamp
   expect(success).toBe(false)
 })
 
-test('should trigger an automation with a valid body', async ({ startExampleApp }) => {
+test('should trigger an automation with a valid object body', async ({ startExampleApp }) => {
   // GIVEN
   const { page } = await startExampleApp({ filter: 'request-body', test })
 
@@ -80,6 +80,60 @@ test('should trigger an automation with a valid body', async ({ startExampleApp 
   // THEN
   const { data } = await response.json()
   expect(data.message).toBe('Hello, John Doe!')
+})
+
+test('should trigger an automation with a valid array body', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'request-body', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/post', {
+    data: [
+      {
+        name: 'John Doe',
+      },
+      {
+        name: 'Jane Dae',
+      },
+      {
+        name: 'Jacob Doe',
+      },
+    ],
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data[0].data.message).toBe('Hello, John Doe!')
+  expect(data[1].data.message).toBe('Hello, Jane Dae!')
+  expect(data[2].data.message).toBe('Hello, Jacob Doe!')
+})
+
+test('should trigger an automation with a valid array body and respond immediately', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'request-body-respond-immediately', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/post', {
+    data: [
+      {
+        name: 'John Doe',
+      },
+      {
+        name: 'Jane Dae',
+      },
+      {
+        name: 'Jacob Doe',
+      },
+    ],
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data[0].success).toBe(true)
+  expect(data[1].success).toBe(true)
+  expect(data[2].success).toBe(true)
 })
 
 test('should trigger an automation with form data', async ({ startExampleApp }) => {

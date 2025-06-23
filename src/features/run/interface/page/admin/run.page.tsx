@@ -313,11 +313,9 @@ const RunDataPage = () => {
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
-        <TypographyH3 className="flex items-center gap-2">
-          <RunStatus status={data.run.status} />- {data.run.automationName} -
-          <span className="text-muted-foreground font-normal">
-            {format(new Date(data.run.createdAt), 'dd/MM/yyyy HH:mm:ss')}
-          </span>
+        <TypographyH3 className="flex items-center gap-6">
+          <RunStatus status={data.run.status} />
+          <span>{data.run.automationName}</span>
         </TypographyH3>
         <div className="flex items-center gap-2">
           <TypographySmall>

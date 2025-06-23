@@ -29,6 +29,29 @@ export class TriggerHttpAutomationUseCase {
     app: App,
     automationIdOrPath: string,
     request: Request,
+    body: Record<string, unknown> | Record<string, unknown>[],
+    formId?: string
+  ): Promise<ResponseDto> {
+    if (Array.isArray(body)) {
+      const responses: ResponseDto[] = []
+      for (const item of body) {
+        responses.push(
+          await this.triggerWithObjectBody(app, automationIdOrPath, request, item, formId)
+        )
+      }
+      return {
+        data: responses,
+        success: true,
+      }
+    } else {
+      return this.triggerWithObjectBody(app, automationIdOrPath, request, body, formId)
+    }
+  }
+
+  async triggerWithObjectBody(
+    app: App,
+    automationIdOrPath: string,
+    request: Request,
     body: Record<string, unknown>,
     formId?: string
   ): Promise<ResponseDto> {
