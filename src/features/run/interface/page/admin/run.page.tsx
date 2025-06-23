@@ -122,7 +122,7 @@ const TriggerStepCard = ({ run, step, number }: TriggerStepCardProps) => {
   return (
     <CollapsibleStepCard
       title={`${number}. Trigger - ${step.schema.service} / ${step.schema.event}`}
-      status={run.status}
+      status="success"
       description={format(new Date(run.createdAt), 'dd/MM/yyyy HH:mm:ss')}
     >
       <Tabs defaultValue="output">
@@ -243,7 +243,7 @@ const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
             <StepsCards
               run={run}
               steps={path.actions}
-              startNumber={number + 1}
+              startNumber={index}
             />
           </TabsContent>
         ))}
@@ -360,7 +360,7 @@ const RunPage = () => {
         },
       ]}
     >
-      <div className="container p-6">
+      <div className="container mx-auto p-6">
         <Suspense fallback={<TableSkeleton />}>
           <RunDataPage />
         </Suspense>

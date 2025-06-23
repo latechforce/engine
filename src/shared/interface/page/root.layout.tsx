@@ -27,6 +27,7 @@ export const rootRoute = createRootRouteWithContext<{
       {
         rel: 'icon',
         href: '/static/favicon.ico',
+        type: 'image/x-icon',
       },
     ],
   }),
