@@ -1,3 +1,10 @@
+## [0.59.3](https://github.com/latechforce/engine/compare/v0.59.2...v0.59.3) (2025-06-23)
+
+
+### Bug Fixes
+
+* ui ([c63e4e0](https://github.com/latechforce/engine/commit/c63e4e00acd8f5e9743976d768827ba64f37c71f)) — Thomas JEANNEAU
+
 ## [0.59.2](https://github.com/latechforce/engine/compare/v0.59.1...v0.59.2) (2025-06-23)
 
 
