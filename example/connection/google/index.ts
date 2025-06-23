@@ -1,4 +1,4 @@
-import type { Handlers } from 'script/mock'
+import type { Handlers } from '@/script/mock'
 
 export const handlers: Handlers = {
   'https://oauth2.googleapis.com/token': {

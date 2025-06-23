@@ -8,6 +8,7 @@ import { Scalar } from '@scalar/hono-api-reference'
 import { OpenAPIHono, createRoute, type RouteConfig } from '@hono/zod-openapi'
 import type { HTTPResponseError } from 'hono/types'
 import { timeout } from 'hono/timeout'
+import { serveStatic } from 'hono/bun'
 
 // Internal types
 import type { App } from '../../../features/app/domain/entity/app.entity'
@@ -20,13 +21,15 @@ import type { LoggerService } from './logger.service'
 import index from '../index.html'
 import { HttpError } from '../../domain/entity/http-error.entity'
 import { TriggerError } from '../../../features/trigger/domain/entity/trigger-error.entity'
+import { join } from 'path'
 
 export type HonoType = { Variables: HonoContextType }
 
 @injectable()
 export class ServerService {
-  public readonly server: Hono<HonoType>
-  private readonly openapiServer: OpenAPIHono<HonoType>
+  private server: Bun.Server | null = null
+  private readonly app: Hono<HonoType>
+  private readonly openapi: OpenAPIHono<HonoType>
 
   constructor(
     @inject(TYPES.Service.Env)
@@ -38,21 +41,22 @@ export class ServerService {
   ) {
     this.logger = this.logger.child('server-service')
     this.logger.debug('init server')
-    this.server = new Hono<HonoType>()
-    this.openapiServer = new OpenAPIHono<HonoType>()
-    this.server.use(secureHeaders())
-    this.server.use(trimTrailingSlash())
-    this.server.use(prettyJSON())
-    this.server.use('/api', timeout(30000))
-    this.server.onError((error, c) => this.onError(error, c))
+    this.app = new Hono<HonoType>()
+    this.openapi = new OpenAPIHono<HonoType>()
+    this.app.use(secureHeaders())
+    this.app.use(trimTrailingSlash())
+    this.app.use(prettyJSON())
+    this.app.use('/api', timeout(30000))
+    this.app.use('/static/*', serveStatic({ root: './static' }))
+    this.app.onError((error, c) => this.onError(error, c))
   }
 
   use(middleware: MiddlewareHandler) {
-    this.server.use(middleware)
+    this.app.use(middleware)
   }
 
   on(methods: string[], path: string, handler: Handler) {
-    this.server.on(methods, path, handler)
+    this.app.on(methods, path, handler)
   }
 
   onError(error: Error | HTTPResponseError, c: Context<HonoType>) {
@@ -67,13 +71,13 @@ export class ServerService {
 
   addOpenAPIRoute(routeConfig: RouteConfig) {
     const route = createRoute(routeConfig)
-    this.openapiServer.openapi(route, (c) => {
+    this.openapi.openapi(route, (c) => {
       return c.json({}, 200)
     })
   }
 
   addOpenAPIDoc(app: App) {
-    this.openapiServer.doc('/schema', {
+    this.openapi.doc('/schema', {
       openapi: '3.0.0',
       info: {
         title: app.schema.name,
@@ -87,36 +91,36 @@ export class ServerService {
         },
       ],
     })
-    this.openapiServer.get('/scalar', Scalar({ url: '/openapi/schema', theme: 'alternate' }))
+    this.openapi.get('/scalar', Scalar({ url: '/openapi/schema', theme: 'alternate' }))
   }
 
   staticFiles = async (req: Request) => {
-    const staticPath = this.env.get('STATIC_PATH').replace(/\/$/, '')
     const path = req.url.match(/\/static\/(.+)/)
     if (!path || !path[1]) {
       return new Response('Not found', { status: 404 })
     }
-    const file = Bun.file(staticPath + '/' + path[1])
+    const filePath = join(process.cwd(), 'public', path[1])
+    const file = Bun.file(filePath)
     return (await file.exists()) ? new Response(file) : new Response('Not found', { status: 404 })
   }
 
   start() {
-    this.server.route('/openapi', this.openapiServer)
-    this.server.route('/api', this.apiRoutes)
-    Bun.serve({
+    this.app.route('/openapi', this.openapi)
+    this.app.route('/api', this.apiRoutes)
+    this.server = Bun.serve({
       routes: {
         '/static/*': {
           GET: this.staticFiles,
         },
         '/openapi/*': {
-          GET: this.server.fetch,
+          GET: this.app.fetch,
         },
         '/api/*': {
-          GET: this.server.fetch,
-          POST: this.server.fetch,
-          PATCH: this.server.fetch,
-          PUT: this.server.fetch,
-          DELETE: this.server.fetch,
+          GET: this.app.fetch,
+          POST: this.app.fetch,
+          PATCH: this.app.fetch,
+          PUT: this.app.fetch,
+          DELETE: this.app.fetch,
         },
         '/*': {
           GET: index,
@@ -125,5 +129,11 @@ export class ServerService {
       port: Number(this.env.get('PORT')),
       development: this.env.get('NODE_ENV') !== 'production',
     })
+  }
+
+  async stop() {
+    if (this.server) {
+      await this.server.stop()
+    }
   }
 }

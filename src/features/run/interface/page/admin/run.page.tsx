@@ -59,7 +59,6 @@ type TriggerStepCardProps = {
 }
 
 type CollapsibleStepCardProps = {
-  key: number
   title: string
   status: RunDto['status']
   description: string
@@ -75,7 +74,6 @@ const JsonViewer = ({ data }: { data: Record<string, unknown> }) => {
 }
 
 const CollapsibleStepCard = ({
-  key,
   title,
   status,
   description,
@@ -87,10 +85,7 @@ const CollapsibleStepCard = ({
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      <Card
-        key={key}
-        className="mt-4 gap-0 p-0"
-      >
+      <Card className="mt-4 gap-0 p-0">
         <CollapsibleTrigger
           asChild
           className="gap-0"
@@ -126,7 +121,6 @@ const CollapsibleStepCard = ({
 const TriggerStepCard = ({ run, step, number }: TriggerStepCardProps) => {
   return (
     <CollapsibleStepCard
-      key={number}
       title={`${number}. Trigger - ${step.schema.service} / ${step.schema.event}`}
       status={run.status}
       description={format(new Date(run.createdAt), 'dd/MM/yyyy HH:mm:ss')}
@@ -203,7 +197,6 @@ type PathsStepCardProps = {
 const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
   return (
     <CollapsibleStepCard
-      key={number}
       title={`${number}. Paths`}
       status="success"
       description={format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}

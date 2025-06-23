@@ -22,4 +22,12 @@ export const rootRoute = createRootRouteWithContext<{
 }>()({
   component: RootLayout,
   notFoundComponent: NotFoundPage,
+  head: () => ({
+    links: [
+      {
+        rel: 'icon',
+        href: '/static/favicon.ico',
+      },
+    ],
+  }),
 })

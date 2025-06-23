@@ -2,7 +2,6 @@ export type Env = {
   NODE_ENV: 'development' | 'production' | 'test'
   PORT: string
   BASE_URL: string
-  STATIC_PATH: string
   LOG_LEVEL: 'silent' | 'error' | 'info' | 'http' | 'debug'
   DATABASE_PROVIDER: 'postgres' | 'sqlite'
   DATABASE_URL: string

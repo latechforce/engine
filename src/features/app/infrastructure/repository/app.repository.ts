@@ -34,11 +34,11 @@ export class AppRepository implements IAppRepository {
     @inject(TYPES.User.Service.Auth)
     private readonly auth: AuthService,
     @inject(TYPES.Service.Server)
-    private readonly serverService: ServerService,
+    private readonly server: ServerService,
     @inject(TYPES.Hono.Context)
     private readonly honoContext: HonoContext,
     @inject(TYPES.Service.Template)
-    private readonly templateService: TemplateService
+    private readonly template: TemplateService
   ) {}
 
   info(message: string) {
@@ -54,7 +54,7 @@ export class AppRepository implements IAppRepository {
   }
 
   fillSchemaEnvVariables<T extends { [key: string]: unknown }>(schema: T): T {
-    return this.templateService.fillObject(schema)
+    return this.template.fillObject(schema)
   }
 
   validate(unknownSchema: unknown): ValidateResult {
@@ -69,14 +69,15 @@ export class AppRepository implements IAppRepository {
     await this.database.migrate()
     await this.auth.setup()
     this.honoContext.setVariables(app)
-    this.serverService.addOpenAPIDoc(app)
+    this.server.addOpenAPIDoc(app)
   }
 
   async start() {
-    this.serverService.start()
+    this.server.start()
   }
 
   async stop() {
+    await this.server.stop()
     await this.database.stop()
   }
 }

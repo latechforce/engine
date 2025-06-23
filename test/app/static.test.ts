@@ -3,16 +3,14 @@ import App from '@/app'
 
 describe('start', () => {
   it('should serve static files', async () => {
-    const initStaticPath = process.env.STATIC_PATH
-    process.env.STATIC_PATH = 'test/app/static'
-
-    // WHEN
+    // GIVEN
     const app = await new App().start()
 
+    // WHEN
+    const response = await fetch(app.url('/static/favicon.ico'))
+
     // THEN
-    const response = await fetch(app.url('/static/img.png'))
     expect(response.status).toBe(200)
-    expect(response.headers.get('content-type')).toBe('image/png')
-    process.env.STATIC_PATH = initStaticPath
+    expect(response.headers.get('content-type')).toBe('image/x-icon')
   })
 })

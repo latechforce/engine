@@ -1,6 +1,6 @@
 import { getCurrentUserResponse } from '@/e2e/__mocks__/calendly'
 import type { AppSchema } from '@/types'
-import type { Handlers } from 'script/mock'
+import type { Handlers } from '@/script/mock'
 
 export const inGuides = false
 
