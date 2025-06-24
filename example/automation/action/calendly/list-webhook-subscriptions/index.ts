@@ -36,7 +36,7 @@ export default {
 export const handlers: Handlers = {
   ...calendlyHandlers,
   'https://api.calendly.com/webhook_subscriptions': {
-    GET: () => ({
+    GET: async () => ({
       json: listWebhookSubscriptionsResponse,
     }),
   },

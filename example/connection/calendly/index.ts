@@ -20,7 +20,7 @@ export default {
 
 export const handlers: Handlers = {
   'https://auth.calendly.com/oauth/token': {
-    POST: () => ({
+    POST: async () => ({
       json: {
         access_token: 'mock-token',
         token_type: 'Bearer',
@@ -32,7 +32,7 @@ export const handlers: Handlers = {
     }),
   },
   'https://api.calendly.com/users/me': {
-    GET: () => ({
+    GET: async () => ({
       json: getCurrentUserResponse,
     }),
   },

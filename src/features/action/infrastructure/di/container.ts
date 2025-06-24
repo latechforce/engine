@@ -1,5 +1,6 @@
 import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
 import { CodeService } from '../service/code.service'
+import { QueueService } from '../service/queue.service'
 import TYPES from '../../application/di/types'
 import type { Container } from 'inversify'
 import { ActionRepository } from '../repository/action.repository'
@@ -21,6 +22,7 @@ export function registerActionDependencies(
 
   // Register services
   container.bind<CodeService>(TYPES.Service.Code).toConstantValue(new CodeService(externals))
+  container.bind<QueueService>(TYPES.Service.Queue).toConstantValue(new QueueService())
 
   return container
 }

@@ -162,7 +162,7 @@ const ActionStepCard = ({ step, number }: ActionStepCardProps) => {
       key={number}
       title={`${number}. ${step.schema.name} - ${step.schema.service} / ${step.schema.action}`}
       status={status}
-      description={format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+      description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
     >
       <Tabs defaultValue={step.error ? 'error' : 'output'}>
         <TabsList>
@@ -199,7 +199,7 @@ const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
     <CollapsibleStepCard
       title={`${number}. Paths`}
       status="success"
-      description={format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+      description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
     >
       <Tabs defaultValue={step.paths[0]!.schema.name}>
         <TabsList>
@@ -221,7 +221,7 @@ const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
               key={index}
               title={`1. ${path.schema.name}`}
               status="success"
-              description={format(new Date(step.createdAt), 'dd/MM/yyyy HH:mm:ss')}
+              description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
             >
               <Tabs defaultValue="output">
                 <TabsList>

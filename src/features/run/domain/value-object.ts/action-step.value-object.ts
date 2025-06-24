@@ -4,7 +4,8 @@ import type { IntegrationError } from '../../../action/domain/value-object/integ
 
 export type ActionStep = {
   type: 'action'
-  createdAt: string
+  startedAt: string
+  finishedAt?: string
   schema: Omit<ActionSchema, 'splitIntoPathsFilter'>
   input: Record<string, unknown>
   output?: Record<string, unknown>

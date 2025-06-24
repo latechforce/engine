@@ -131,4 +131,10 @@ describe('TemplateService', () => {
       arrayOfObjects: [{ key: 'test' }, { array: ['test', 'test'], key: 'test' }],
     })
   })
+
+  it('should fill a template with the current date in ISO format', () => {
+    const template = '{{currentDateTime}}'
+    const filledTemplate = templateService.fill(template)
+    expect(filledTemplate).toBe(new Date().toISOString())
+  })
 })

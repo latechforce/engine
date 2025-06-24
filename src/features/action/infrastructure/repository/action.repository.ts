@@ -36,6 +36,7 @@ import type { IConnectionRepository } from '../../../connection/domain/repositor
 import type { ITokenRepository } from '../../../connection/domain/repository-interface/token-repository.interface'
 import type { FieldValue } from '../../../table/domain/object-value/field-value.object-value'
 import type { Table } from '../../../table/domain/entity/table.entity'
+import type { QueueService } from '../service/queue.service'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -53,7 +54,9 @@ export class ActionRepository implements IActionRepository {
     @inject(TYPES.Connection.Repository.Connection)
     private readonly connectionRepository: IConnectionRepository,
     @inject(TYPES.Connection.Repository.Token)
-    private readonly tokenRepository: ITokenRepository
+    private readonly tokenRepository: ITokenRepository,
+    @inject(TYPES.Action.Service.Queue)
+    private readonly queueService: QueueService
   ) {}
 
   log = {
@@ -201,9 +204,14 @@ export class ActionRepository implements IActionRepository {
         connection,
         this.connectionRepository.redirectUri
       )
-      const token = await this.tokenRepository.getAccessToken(connection)
-      if (!token) throw new Error(`Token not found for connection ${connection.id}`)
-      const data = await integration.runAction(token)
+      const data = await this.queueService.wait<{ [key: string]: unknown }>(
+        schema.service + '-' + schema.action,
+        async () => {
+          const token = await this.tokenRepository.getAccessToken(connection)
+          if (!token) throw new Error(`Token not found for connection ${connection.id}`)
+          return await integration.runAction(token)
+        }
+      )
       return { data }
     } catch (error) {
       if (error instanceof HTTPError) {

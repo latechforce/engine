@@ -72,7 +72,7 @@ if (searchTerm) {
   })
 
   if (handlers && process.env.MOCK === '*') {
-    mockServer(handlers)
+    await mockServer(handlers)
   }
 
   const schema: AppSchema = await import(selectedFile).then((m) => m.default)

@@ -7,7 +7,7 @@ const TYPES = {
   },
   Service: {
     Code: Symbol.for('CodeService'),
-    Template: Symbol.for('TemplateService'),
+    Queue: Symbol.for('QueueService'),
   },
 }
 

@@ -41,7 +41,7 @@ export default {
 export const handlers: Handlers = {
   ...googleHandlers,
   'https://sheets.googleapis.com/v4/spreadsheets/1234567890/values/Sheet1!A1:append': {
-    POST: () => ({
+    POST: async () => ({
       json: { data: appendValuesResponse },
     }),
   },

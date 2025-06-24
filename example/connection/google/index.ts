@@ -2,7 +2,7 @@ import type { Handlers } from '@/script/mock'
 
 export const handlers: Handlers = {
   'https://oauth2.googleapis.com/token': {
-    POST: () => ({
+    POST: async () => ({
       json: {
         tokens: {
           access_token: 'mock-token',
@@ -16,7 +16,7 @@ export const handlers: Handlers = {
     }),
   },
   'https://www.googleapis.com/oauth2/v2/userinfo': {
-    GET: () => ({
+    GET: async () => ({
       json: {
         data: { email: 'mock@google.com' },
       },

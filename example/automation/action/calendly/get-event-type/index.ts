@@ -39,7 +39,7 @@ export default {
 export const handlers: Handlers = {
   ...calendlyHandlers,
   'https://api.calendly.com/event_types/AAAAAAAAAAAAAAAA': {
-    GET: () => ({
+    GET: async () => ({
       json: getEventTypeResponse,
     }),
   },

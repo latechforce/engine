@@ -13,7 +13,8 @@ export type PathStep = {
 
 export type PathsStep = {
   type: 'paths'
-  createdAt: string
+  startedAt: string
+  finishedAt?: string
   schema: Omit<SplitIntoPathsFilterActionSchema, 'params'>
   paths: PathStep[]
 }

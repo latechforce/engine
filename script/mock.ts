@@ -2,7 +2,7 @@ import { setupServer } from 'msw/node'
 import { http, HttpResponse } from 'msw'
 import { mock } from 'bun:test'
 
-type Handler = () => { json: object; status?: number }
+type Handler = () => Promise<{ json: object; status?: number }>
 
 export type Handlers = {
   [key: string]: {
@@ -24,7 +24,7 @@ const mockGoogleApis = (handlers: Handlers) => {
               return 'https://mock-auth-url'
             }
             async getToken() {
-              return handlers['https://oauth2.googleapis.com/token']?.POST?.()?.json
+              return (await handlers['https://oauth2.googleapis.com/token']?.POST?.())?.json
             }
             setCredentials() {}
             on() {}
@@ -34,7 +34,8 @@ const mockGoogleApis = (handlers: Handlers) => {
           return {
             userinfo: {
               get: async () => {
-                return handlers['https://www.googleapis.com/oauth2/v2/userinfo']?.GET?.()?.json
+                return (await handlers['https://www.googleapis.com/oauth2/v2/userinfo']?.GET?.())
+                  ?.json
               },
             },
           }
@@ -44,8 +45,11 @@ const mockGoogleApis = (handlers: Handlers) => {
             users: {
               messages: {
                 send: async () => {
-                  return handlers['https://www.googleapis.com/gmail/v1/users/me/messages']?.POST?.()
-                    ?.json
+                  return (
+                    await handlers[
+                      'https://www.googleapis.com/gmail/v1/users/me/messages'
+                    ]?.POST?.()
+                  )?.json
                 },
               },
             },
@@ -56,9 +60,11 @@ const mockGoogleApis = (handlers: Handlers) => {
             spreadsheets: {
               values: {
                 append: async () => {
-                  return handlers[
-                    'https://sheets.googleapis.com/v4/spreadsheets/1234567890/values/Sheet1!A1:append'
-                  ]?.POST?.()?.json
+                  return (
+                    await handlers[
+                      'https://sheets.googleapis.com/v4/spreadsheets/1234567890/values/Sheet1!A1:append'
+                    ]?.POST?.()
+                  )?.json
                 },
               },
             },
@@ -69,12 +75,12 @@ const mockGoogleApis = (handlers: Handlers) => {
   })
 }
 
-export const mockServer = (handlers: Handlers) => {
+export const mockServer = async (handlers: Handlers) => {
   const serverHandlers = []
   mockGoogleApis(handlers)
   for (const [endpoint, methods] of Object.entries(handlers)) {
     for (const [method, response] of Object.entries(methods)) {
-      const { json, status = 200 } = response()
+      const { json, status = 200 } = await response()
       switch (method) {
         case 'GET':
           serverHandlers.push(http.get(endpoint, () => HttpResponse.json(json, { status })))

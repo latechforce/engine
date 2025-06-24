@@ -43,7 +43,7 @@ export class Run {
     if (pathSegments.length < 2) {
       this.steps.push({
         type: 'action',
-        createdAt: new Date().toISOString(),
+        startedAt: new Date().toISOString(),
         schema,
         input,
         output: undefined,
@@ -61,7 +61,7 @@ export class Run {
         if (segments.length < 2) {
           path.actions.push({
             type: 'action',
-            createdAt: new Date().toISOString(),
+            startedAt: new Date().toISOString(),
             schema,
             input,
             output: undefined,
@@ -80,7 +80,7 @@ export class Run {
   startActionPathsStep(schema: SplitIntoPathsFilterActionSchema, paths: PathStep[]) {
     this.steps.push({
       type: 'paths',
-      createdAt: new Date().toISOString(),
+      startedAt: new Date().toISOString(),
       schema: {
         name: schema.name,
         service: schema.service,
@@ -159,6 +159,7 @@ export class Run {
   successActionStep(actionPath: string, output: Record<string, unknown>) {
     const step = this.getActionOrPathsStepOrThrow(actionPath)
     if ('output' in step) step.output = output
+    step.finishedAt = new Date().toISOString()
     this._updatedAt = new Date()
   }
 
@@ -166,6 +167,7 @@ export class Run {
     if (this._status === 'playing') {
       const step = this.getActionOrPathsStepOrThrow(actionPath)
       if ('output' in step) step.output = result
+      step.finishedAt = new Date().toISOString()
       this._updatedAt = new Date()
       this._status = 'filtered'
     }
@@ -174,7 +176,10 @@ export class Run {
   stopActionStep(actionPath: string, error: IntegrationError | ServiceError) {
     if (this._status === 'playing' || this._status === 'filtered') {
       const step = this.getActionOrPathsStep(actionPath)
-      if (step && 'error' in step) step.error = error
+      if (step) {
+        if ('error' in step) step.error = error
+        step.finishedAt = new Date().toISOString()
+      }
       this._updatedAt = new Date()
       this._status = 'stopped'
     }

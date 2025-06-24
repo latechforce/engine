@@ -41,7 +41,7 @@ export default {
 export const handlers: Handlers = {
   ...googleHandlers,
   'https://www.googleapis.com/gmail/v1/users/me/messages': {
-    POST: () => ({
+    POST: async () => ({
       json: { data: sendEmailResponse },
     }),
   },
