@@ -29,17 +29,17 @@ const RecordForm = () => {
 
   const mutation = useMutation({
     mutationFn: async (values: Record<string, string | File>) => {
-      await client.tables[':tableId'][':recordId'].form.$patch({
+      const response = await client.tables[':tableId'][':recordId'].form.$patch({
         param: { tableId, recordId },
         form: values,
       })
+      if (response.status !== 200) {
+        throw new Error('Failed to update record')
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recordData', tableId, recordId] })
       toast.success(`Record updated successfully`)
-    },
-    onError: (error) => {
-      toast.error(error.message)
     },
   })
 

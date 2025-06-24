@@ -1,5 +1,6 @@
 // Third-party imports
 import { useForm, type AnyFieldApi } from '@tanstack/react-form'
+import { useState } from 'react'
 
 // Feature imports
 import type { InputDto } from '../../../features/form/application/dto/input.dto'
@@ -11,6 +12,7 @@ import { Button } from '../ui/button.ui'
 import { Textarea } from '../ui/textarea.ui'
 import { Checkbox } from '../ui/checkbox.ui'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select.ui'
+import { AlertDestructive } from './alert.component'
 
 function FormInfo({ formField }: { formField: AnyFieldApi }) {
   return (
@@ -138,6 +140,8 @@ type FormProps = {
 }
 
 export function Form({ inputs, onSubmit, submitLabel = 'Submit' }: FormProps) {
+  const [submissionError, setSubmissionError] = useState<string | null>(null)
+
   const form = useForm({
     defaultValues: inputs.reduce((acc: Record<string, string | File>, input) => {
       if ('defaultValue' in input) {
@@ -146,7 +150,14 @@ export function Form({ inputs, onSubmit, submitLabel = 'Submit' }: FormProps) {
       return acc
     }, {}),
     onSubmit: async ({ value }: { value: Record<string, string | File> }) => {
-      await onSubmit(value)
+      try {
+        setSubmissionError(null)
+        await onSubmit(value)
+      } catch (error) {
+        setSubmissionError(
+          error instanceof Error ? error.message : 'An error occurred during submission'
+        )
+      }
     },
   })
 
@@ -188,6 +199,14 @@ export function Form({ inputs, onSubmit, submitLabel = 'Submit' }: FormProps) {
               />
             )
           })}
+          {submissionError && (
+            <div className="mb-4">
+              <AlertDestructive
+                title="Submission failed"
+                description={submissionError}
+              />
+            </div>
+          )}
         </div>
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}

@@ -37,17 +37,21 @@ const FormDataPage = () => {
       })
       if (response.status === 201) {
         setIsSubmitted(true)
+      } else {
+        const data = await response.json()
+        throw new Error('error' in data ? String(data.error) : 'Failed to submit form')
       }
     } else if (action.startsWith('/api/automations/')) {
       const automationIdOrPath = action.replace('/api/automations/', '')
-      const response = await client.automations[':automationIdOrPath'].form[':formId'].$post(
-        {
-          param: { automationIdOrPath, formId: form.id.toString() },
-          form: values,
-        },
-      )
+      const response = await client.automations[':automationIdOrPath'].form[':formId'].$post({
+        param: { automationIdOrPath, formId: form.id.toString() },
+        form: values,
+      })
       if (response.status === 200) {
         setIsSubmitted(true)
+      } else {
+        const data = await response.json()
+        throw new Error('error' in data ? String(data.error) : 'Failed to submit form')
       }
     } else if (action.startsWith('http')) {
       const response = await fetch(action, {
@@ -59,6 +63,8 @@ const FormDataPage = () => {
       })
       if (response.status === 200) {
         setIsSubmitted(true)
+      } else {
+        throw new Error(response.statusText || 'Failed to submit form')
       }
     }
   }

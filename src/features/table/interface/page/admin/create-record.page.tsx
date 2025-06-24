@@ -28,7 +28,11 @@ const RecordForm = () => {
         param: { tableId },
         form: values,
       })
-      return await response.json()
+      const data = await response.json()
+      if (response.status !== 201) {
+        throw new Error('Failed to create record')
+      }
+      return data
     },
     onSuccess: (data) => {
       if ('record' in data) {
@@ -36,9 +40,6 @@ const RecordForm = () => {
         navigate({ to: `/admin/tables/${tableId}/records/${data.record.id}` })
         toast.success(`Record created successfully`)
       }
-    },
-    onError: (error) => {
-      toast.error(error.message)
     },
   })
 
