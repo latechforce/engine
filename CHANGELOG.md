@@ -1,3 +1,12 @@
+# [0.60.0](https://github.com/latechforce/engine/compare/v0.59.4...v0.60.0) (2025-06-24)
+
+
+### Features
+
+* **action:** should create a record from an automation ([4032c43](https://github.com/latechforce/engine/commit/4032c43d173a35b2708a71b2e50ea35de6701cf8)) — Thomas JEANNEAU
+* **automation:** should run parallel automations with same integration actions in a queue with 2 seconds apart ([f9f0e1c](https://github.com/latechforce/engine/commit/f9f0e1c1184b047c2349f65ba26c3c4265cb6e7a)) — Thomas JEANNEAU
+* **template:** should fill a template with the current date in ISO format ([92ddb8b](https://github.com/latechforce/engine/commit/92ddb8b17d76600dbe5e2343fc29b71e64886acd)) — Thomas JEANNEAU
+
 ## [0.59.4](https://github.com/latechforce/engine/compare/v0.59.3...v0.59.4) (2025-06-23)
 
 
