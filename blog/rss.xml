@@ -4,10 +4,26 @@
         <title>LTF Engine Blog</title>
         <link>https://engine.latechforce.com/blog</link>
         <description>LTF Engine Blog</description>
-        <lastBuildDate>Mon, 23 Jun 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 24 Jun 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Release 0.60.0]]></title>
+            <link>https://engine.latechforce.com/blog/release-0-60-0</link>
+            <guid>https://engine.latechforce.com/blog/release-0-60-0</guid>
+            <pubDate>Tue, 24 Jun 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Changelog for version 0.60.0]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-60-0"><p class="before-truncate"> 0.60.0   Features  * action: should create a record from an automation (4032c43) — Thomas JEANNEAU * automation: should run parallel automations with same integration actions in a queue with 2 seconds apart (f9f0e1c) — Thomas JEANNEAU * template: should fill a template with the current date in ISO ...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0600"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-60-0">0.60.0</a><a href="https://engine.latechforce.com/blog/release-0-60-0#0600" class="hash-link" aria-label="Direct link to 0.60.0" title="Direct link to 0.60.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-60-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li><strong>action:</strong> should create a record from an automation (<a href="https://github.com/latechforce/engine/commit/4032c43d173a35b2708a71b2e50ea35de6701cf8" target="_blank" rel="noopener noreferrer">4032c43</a>) — Thomas JEANNEAU</li>
+<li><strong>automation:</strong> should run parallel automations with same integration actions in a queue with 2 seconds apart (<a href="https://github.com/latechforce/engine/commit/f9f0e1c1184b047c2349f65ba26c3c4265cb6e7a" target="_blank" rel="noopener noreferrer">f9f0e1c</a>) — Thomas JEANNEAU</li>
+<li><strong>template:</strong> should fill a template with the current date in ISO format (<a href="https://github.com/latechforce/engine/commit/92ddb8b17d76600dbe5e2343fc29b71e64886acd" target="_blank" rel="noopener noreferrer">92ddb8b</a>) — Thomas JEANNEAU</li>
+</ul>]]></content:encoded>
+            <category>Release</category>
+        </item>
         <item>
             <title><![CDATA[Fix 0.59.4]]></title>
             <link>https://engine.latechforce.com/blog/fix-0-59-4</link>

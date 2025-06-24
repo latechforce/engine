@@ -1774,6 +1774,79 @@
               ]
             }
           ]
+        },
+        {
+          "title": "Database",
+          "description": "The Database action is an action that is performed by the automation",
+          "anyOf": [
+            {
+              "title": "Create record",
+              "description": "Create a record in a database table",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string",
+                  "const": "database"
+                },
+                "action": {
+                  "type": "string",
+                  "const": "create-record"
+                },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "table": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    },
+                    "fields": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string"
+                      },
+                      "additionalProperties": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "number"
+                          },
+                          {
+                            "type": "boolean"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "table",
+                    "fields"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "name",
+                "service",
+                "action",
+                "params"
+              ],
+              "additionalProperties": false
+            }
+          ]
         }
       ]
     },
