@@ -218,7 +218,6 @@ const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
             value={path.schema.name}
           >
             <CollapsibleStepCard
-              key={index}
               title={`1. ${path.schema.name}`}
               status="success"
               description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
@@ -243,7 +242,7 @@ const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
             <StepsCards
               run={run}
               steps={path.actions}
-              startNumber={index}
+              startNumber={1}
             />
           </TabsContent>
         ))}
