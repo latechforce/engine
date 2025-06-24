@@ -1,3 +1,16 @@
+# [0.61.0](https://github.com/latechforce/engine/compare/v0.60.0...v0.61.0) (2025-06-24)
+
+
+### Bug Fixes
+
+* open forms in a new page ([18ef5de](https://github.com/latechforce/engine/commit/18ef5debc660ca92f24d1e8e8f1468b0172663f8)) — Thomas JEANNEAU
+* run number step ui ([97af4a4](https://github.com/latechforce/engine/commit/97af4a42b2842f63ae002dfa4cef39366a6f9532)) — Thomas JEANNEAU
+
+
+### Features
+
+* **form:** should display an error when the form is submitted ([d9366a1](https://github.com/latechforce/engine/commit/d9366a18ebb856c71991d70e02afd45d432b9ae8)) — Thomas JEANNEAU
+
 # [0.60.0](https://github.com/latechforce/engine/compare/v0.59.4...v0.60.0) (2025-06-24)
 
 
