@@ -19,8 +19,8 @@ export class QueueService {
         // If there's a recorded start time, and we're under 1s since then, wait
         if (lastStart !== undefined) {
           const diff = now - lastStart
-          if (diff < 1000) {
-            await new Promise((r) => setTimeout(r, 1000 - diff))
+          if (diff < 1100) {
+            await new Promise((r) => setTimeout(r, 1100 - diff))
           }
         }
 

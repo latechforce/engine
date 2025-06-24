@@ -34,6 +34,9 @@ export class TemplateService {
       if (match) return match[1]
       return null
     })
+    Handlebars.registerHelper('currentDateTime', function () {
+      return new Date().toISOString()
+    })
   }
 
   fill(template: string, data = {}): string | Record<string, unknown> | number | boolean | null {
