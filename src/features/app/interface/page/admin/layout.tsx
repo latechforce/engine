@@ -76,6 +76,7 @@ function SidebarLayout({ children, breadcrumbs = [] }: LayoutProps) {
         title: form.name,
         url: `/forms/${form.path}`,
         icon: FileText,
+        newPage: true,
       })),
     })
   }

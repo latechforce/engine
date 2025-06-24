@@ -29,6 +29,7 @@ export type SidebarItem = {
   title: string
   url: string
   icon: React.ElementType
+  newPage?: boolean
 }
 
 export type SidebarGroup = {
@@ -84,7 +85,10 @@ export function Sidebar({ title, description, groups, startPath, ...props }: Sid
                           : window.location.pathname.startsWith(item.url)
                       }
                     >
-                      <Link to={item.url}>
+                      <Link
+                        to={item.url}
+                        target={item.newPage ? '_blank' : undefined}
+                      >
                         <item.icon />
                         <span>{item.title}</span>
                       </Link>
