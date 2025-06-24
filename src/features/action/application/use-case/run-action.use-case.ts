@@ -8,6 +8,7 @@ import type { RunFilterUseCase } from './run-filter.use-case'
 import type { ActionSchema } from '../../domain/schema/action.schema'
 import type { IRunRepository } from '../../../run/domain/repository-interface/run-repository.interface'
 import type { PathStep } from '../../../run/domain/value-object.ts/paths-step.value-object'
+import { toRecordDto } from '../../../table/application/dto/record.dto'
 
 @injectable()
 export class RunActionUseCase {
@@ -99,6 +100,25 @@ export class RunActionUseCase {
               run.startActionPathsStep(action, pathsSteps)
               await this.runRepository.update(run)
               data = paths
+              break
+            }
+            default: {
+              const _exhaustiveCheck: never = action
+              throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+            }
+          }
+          break
+        }
+        case 'database': {
+          switch (action.action) {
+            case 'create-record': {
+              const { table: tableNameOrId, fields } = await fillInputData(action.params)
+              const table = app.findTable(tableNameOrId)
+              if (!table) {
+                throw new Error(`Table not found: ${tableNameOrId}`)
+              }
+              const record = await this.actionRepository.database(table).create(fields)
+              data = toRecordDto(record, table)
               break
             }
             default: {

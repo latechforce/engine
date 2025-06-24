@@ -16,3 +16,27 @@ test('should return a list of automations', async ({ startExampleApp }) => {
   expect(automations[0]?.updatedAt).toBeDefined()
   expect(automations[0]?.active).toBe(true)
 })
+
+test.skip('should run parallel automations with same actions in a queue', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({
+    test,
+    filter: 'paths-with-same-actions',
+    loggedOnAdmin: true,
+  })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-paths', {
+    data: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  expect(response.status()).toBe(200)
+  const { data } = await response.json()
+  expect(data.path1.success).toBe(true)
+  expect(data.path2.success).toBe(true)
+})

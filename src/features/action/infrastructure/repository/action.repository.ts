@@ -34,6 +34,8 @@ import type { ConditionsSchema } from '../../domain/schema/condition'
 import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 import type { IConnectionRepository } from '../../../connection/domain/repository-interface/connection-repository.interface'
 import type { ITokenRepository } from '../../../connection/domain/repository-interface/token-repository.interface'
+import type { FieldValue } from '../../../table/domain/object-value/field-value.object-value'
+import type { Table } from '../../../table/domain/entity/table.entity'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -74,9 +76,9 @@ export class ActionRepository implements IActionRepository {
   }
 
   code(app: App, inputData: { [key: string]: string } = {}) {
-    const table: TableContext = <T extends Fields>(name: string) => {
-      const table = app.findTable(name)
-      if (!table) throw new Error(`Table "${name}" not found`)
+    const table: TableContext = <T extends Fields>(nameOrId: string | number) => {
+      const table = app.findTable(nameOrId)
+      if (!table) throw new Error(`Table "${nameOrId}" not found`)
       return {
         exists: async (id: string) => await this.recordRepository.exists(table, id),
         create: async (fields: T) => {
@@ -176,6 +178,16 @@ export class ActionRepository implements IActionRepository {
         fetch(url, { ...options, method: 'POST', body: JSON.stringify(body ?? {}) }).then((res) =>
           res.json()
         ),
+    }
+  }
+
+  database(table: Table) {
+    return {
+      create: async (fields: { [key: string]: FieldValue }) => {
+        const record = new Record(fields)
+        await this.recordRepository.create(table, record)
+        return record
+      },
     }
   }
 

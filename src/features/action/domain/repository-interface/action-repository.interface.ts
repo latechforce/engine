@@ -3,28 +3,37 @@ import type { IntegrationActionSchema } from '../../../../integrations/action.sc
 import type { ActionResult } from '../value-object/action-result.value-object'
 import type { IntegrationError } from '../value-object/integration-error.value-object'
 import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { Table } from '../../../table/domain/entity/table.entity'
+import type { FieldValue } from '../../../table/domain/object-value/field-value.object-value'
+import type { Record } from '../../../table/domain/entity/record.entity'
 
 export type IActionRepository = {
   log: {
     debug: (message: string) => void
     error: (message: string) => void
   }
-  validateSchemaTemplate: (schema: Record<string, unknown>) => void
-  fillSchema: <T extends Record<string, unknown>>(schema: T, data?: Record<string, unknown>) => T
+  validateSchemaTemplate: (schema: { [key: string]: unknown }) => void
+  fillSchema: <T extends { [key: string]: unknown }>(
+    schema: T,
+    data?: { [key: string]: unknown }
+  ) => T
   code: (
     app: App,
-    inputData?: Record<string, string>
+    inputData?: { [key: string]: string }
   ) => {
     lint: (code: string) => Promise<string | undefined>
-    runJavascript: (code: string) => Promise<Record<string, unknown>>
-    runTypescript: (code: string) => Promise<Record<string, unknown>>
+    runJavascript: (code: string) => Promise<{ [key: string]: unknown }>
+    runTypescript: (code: string) => Promise<{ [key: string]: unknown }>
   }
   http: (
     url: string,
     options?: RequestInit
   ) => {
-    get: () => Promise<Record<string, unknown>>
-    post: (body?: Record<string, unknown>) => Promise<Record<string, unknown>>
+    get: () => Promise<{ [key: string]: unknown }>
+    post: (body?: { [key: string]: unknown }) => Promise<{ [key: string]: unknown }>
+  }
+  database: (table: Table) => {
+    create: (fields: { [key: string]: FieldValue }) => Promise<Record>
   }
   runIntegration: (
     schema: IntegrationActionSchema,
