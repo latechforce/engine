@@ -30,7 +30,14 @@ export class GoogleGmailActionIntegration {
     switch (this.actionSchema.action) {
       case 'send-email': {
         const { to, subject, html } = this.actionSchema.params
-        const messageParts = [`To: ${to}`, `Subject: ${subject}`, '', html]
+        const messageParts = [
+          `To: ${to}`,
+          `Subject: ${subject}`,
+          'Content-Type: text/html; charset=UTF-8',
+          'MIME-Version: 1.0',
+          '',
+          html,
+        ]
         const message = messageParts.join('\n')
         const encodedMessage = Buffer.from(message)
           .toString('base64')
