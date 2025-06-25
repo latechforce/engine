@@ -1,3 +1,11 @@
+## [0.61.1](https://github.com/latechforce/engine/compare/v0.61.0...v0.61.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* **bucket:** should throw an error if there are duplicate bucket ids ([5190baa](https://github.com/latechforce/engine/commit/5190baae18242b54be2721aa50dedbb6fe4b5056)) — Thomas JEANNEAU
+* **template:** should fill a template with the current local date in ISO format ([84e6756](https://github.com/latechforce/engine/commit/84e67561cc5dd985815d4b66f406a2c948952844)) — Thomas JEANNEAU
+
 # [0.61.0](https://github.com/latechforce/engine/compare/v0.60.0...v0.61.0) (2025-06-24)
 
 
