@@ -48,7 +48,7 @@ export class SetupTriggerUseCase {
                     {
                       type: 'trigger',
                       schema: trigger,
-                      output: toRecordDto(record, table),
+                      output: toRecordDto(record),
                     },
                   ])
                   await this.runRepository.create(run)
@@ -71,7 +71,7 @@ export class SetupTriggerUseCase {
                     {
                       type: 'trigger',
                       schema: trigger,
-                      output: toRecordDto(record, table),
+                      output: toRecordDto(record),
                     },
                   ])
                   await this.runRepository.create(run)

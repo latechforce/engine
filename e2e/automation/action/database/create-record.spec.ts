@@ -15,7 +15,6 @@ test('should create a record from an automation', async ({ startExampleApp }) =>
     createdAt: expect.any(String),
     updatedAt: expect.any(String),
     archivedAt: null,
-    primaryFieldValue: 'John Doe',
     fields: {
       name: 'John Doe',
     },
@@ -28,7 +27,6 @@ test('should create a record from an automation', async ({ startExampleApp }) =>
     createdAt: expect.any(String),
     updatedAt: expect.any(String),
     archivedAt: null,
-    primaryFieldValue: 'John Doe',
     fields: {
       name: 'John Doe',
     },

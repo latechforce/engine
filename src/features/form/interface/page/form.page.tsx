@@ -12,6 +12,7 @@ import type { GetFormDto } from '../../application/dto/get-form.dto'
 import { Suspense, useState } from 'react'
 import { FormSkeleton } from '../../../../shared/interface/ui/form.ui'
 import type { ErrorDto } from '../../../../shared/application/dto/error.dto'
+import { Button } from '../../../../shared/interface/ui/button.ui'
 
 const FormDataPage = () => {
   const { path } = formRoute.useParams()
@@ -73,6 +74,12 @@ const FormDataPage = () => {
     return (
       <div className="p-8 text-center">
         <TypographyH3>{form.successMessage ?? 'Thank you for your submission'}</TypographyH3>
+        <Button
+          onClick={() => setIsSubmitted(false)}
+          className="mt-4"
+        >
+          New submission
+        </Button>
       </div>
     )
   }

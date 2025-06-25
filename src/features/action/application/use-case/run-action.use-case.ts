@@ -118,7 +118,7 @@ export class RunActionUseCase {
                 throw new Error(`Table not found: ${tableNameOrId}`)
               }
               const record = await this.actionRepository.database(table).create(fields)
-              data = toRecordDto(record, table)
+              data = toRecordDto(record)
               break
             }
             default: {

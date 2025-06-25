@@ -33,7 +33,7 @@ export class UpdateMultipleRecordsUseCase {
       table,
       body.records.map((record) => record.id)
     )
-    return toListRecordsDto(records, table)
+    return toListRecordsDto(records)
   }
 
   validateUpdateMultipleRecordBody(table: Table, body: unknown): body is MultipleUpdateRecordBody {

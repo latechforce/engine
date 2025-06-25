@@ -86,7 +86,7 @@ export class CreateRecordUseCase {
     } else {
       const records = data.records.map((record) => new RecordEntity(record.fields))
       await this.recordRepository.createMany(table, records)
-      return toListRecordsDto(records, table)
+      return toListRecordsDto(records)
     }
   }
 

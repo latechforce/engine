@@ -197,7 +197,7 @@ type PathsStepCardProps = {
 const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
   return (
     <CollapsibleStepCard
-      title={`${number}. Paths`}
+      title={`${number}. ${step.schema.name}`}
       status="success"
       description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
     >
