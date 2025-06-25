@@ -19,6 +19,8 @@ export default {
           name: 'params',
           params: {
             code: String(async function (context: CodeContext) {
+              const tables = context.bucket('tables')
+              const attachments = await tables.list()
               const pictures = context.bucket('pictures')
               await pictures.upload('picture.jpg', new Uint8Array([1, 2, 3]))
               const data = await pictures.download('picture.jpg')
@@ -29,6 +31,7 @@ export default {
                 data,
                 list,
                 object,
+                attachments,
               }
             }),
           },

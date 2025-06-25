@@ -106,6 +106,7 @@ test('should run a TypeScript code with buckets', async ({ startExampleApp }) =>
   expect(data.object.contentType).toBe('image/jpeg')
   expect(data.object.createdAt).toBeDefined()
   expect(data.object.updatedAt).toBeDefined()
+  expect(data.attachments.length).toBe(0)
 })
 
 test('should run a TypeScript code that return an array', async ({ startExampleApp }) => {

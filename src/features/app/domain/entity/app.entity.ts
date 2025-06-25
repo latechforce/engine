@@ -17,6 +17,13 @@ export class App {
     public readonly schema: AppSchemaValidated,
     public readonly env: Env
   ) {
+    schema.buckets = [
+      {
+        id: 0,
+        name: 'tables',
+      },
+      ...schema.buckets,
+    ]
     const automationNames = new Set<string>()
     for (const automation of this.schema.automations) {
       if (automationNames.has(automation.name)) {
@@ -105,9 +112,6 @@ export class App {
     }
     const bucketIds = new Set<number>()
     for (const bucket of this.schema.buckets) {
-      if (bucket.id === 0) {
-        throw new Error(`Bucket id cannot be 0, it is reserved for the tables bucket.`)
-      }
       if (bucketIds.has(bucket.id)) {
         throw new Error(`Duplicate bucket id: ${bucket.id}`)
       }

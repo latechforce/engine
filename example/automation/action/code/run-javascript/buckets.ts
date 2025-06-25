@@ -20,6 +20,8 @@ export default {
           params: {
             // @ts-expect-error - CodeContext is not defined in JavaScript
             code: String(async function (context) {
+              const tables = context.bucket('tables')
+              const attachments = await tables.list()
               const pictures = context.bucket('pictures')
               await pictures.upload('picture.jpg', new Uint8Array([1, 2, 3]))
               const data = await pictures.download('picture.jpg')
@@ -30,6 +32,7 @@ export default {
                 data,
                 list,
                 object,
+                attachments,
               }
             }),
           },

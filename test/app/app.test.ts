@@ -469,12 +469,16 @@ describe('start', () => {
     expect(call).toThrow('Duplicate automation id: 1')
   })
 
-  it('should throw an error if there is a table id of 0', async () => {
+  it('should throw an error if there are duplicate bucket names', async () => {
     const schema: AppSchema = {
       buckets: [
         {
-          id: 0,
-          name: 'table',
+          id: 1,
+          name: 'bucket',
+        },
+        {
+          id: 2,
+          name: 'bucket',
         },
       ],
     }
@@ -483,7 +487,28 @@ describe('start', () => {
     const call = () => new App().start(schema)
 
     // THEN
-    expect(call).toThrow('Bucket id cannot be 0, it is reserved for the tables bucket.')
+    expect(call).toThrow('Duplicate bucket name: bucket')
+  })
+
+  it('should throw an error if there are duplicate bucket ids', async () => {
+    const schema: AppSchema = {
+      buckets: [
+        {
+          id: 1,
+          name: 'bucket',
+        },
+        {
+          id: 1,
+          name: 'bucket 2',
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Duplicate bucket id: 1')
   })
 
   it('should throw an error if there is no primary field', async () => {
