@@ -4,6 +4,7 @@ export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.string().default('3000'),
   BASE_URL: z.string().optional(),
+  TIMEZONE: z.string().default('UTC'),
   LOG_LEVEL: z.enum(['silent', 'error', 'info', 'http', 'debug']).default('http'),
   DATABASE_PROVIDER: z.enum(['postgres', 'sqlite']).default('sqlite'),
   DATABASE_URL: z.string().default('./data/sqlite.db'),

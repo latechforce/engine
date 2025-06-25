@@ -3,6 +3,8 @@ import { inject, injectable } from 'inversify'
 import TYPES from '../../application/di/types'
 import { LoggerService } from './logger.service'
 import type { EnvService } from './env.service'
+import { TZDate } from '@date-fns/tz'
+import { format } from 'date-fns'
 
 @injectable()
 export class TemplateService {
@@ -35,7 +37,7 @@ export class TemplateService {
       return null
     })
     Handlebars.registerHelper('currentDateTime', function () {
-      return new Date().toISOString()
+      return format(TZDate.tz(env.get('TIMEZONE')), "yyyy-MM-dd'T'HH:mm:ss")
     })
   }
 

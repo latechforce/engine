@@ -2,14 +2,20 @@ import { beforeEach, describe, expect, it } from 'bun:test'
 import { TemplateService } from '../../../../src/shared/infrastructure/service/template.service'
 import { registerDependencies } from '../../../../src/shared/infrastructure/di/container'
 import TYPES from '../../../../src/shared/application/di/types'
+import { TZDate } from '@date-fns/tz'
+import { format } from 'date-fns'
+import type { EnvService } from '../../../../src/shared/infrastructure/service/env.service'
 
 describe('TemplateService', () => {
   let templateService: TemplateService
+  let envService: EnvService
 
   beforeEach(async () => {
     process.env.PORT = '3000'
+    process.env.TIMEZONE = 'Europe/Paris'
     const container = await registerDependencies({}, {} as any)
     templateService = container.get<TemplateService>(TYPES.Service.Template)
+    envService = container.get<EnvService>(TYPES.Service.Env)
   })
 
   it('should fill a template', () => {
@@ -132,9 +138,11 @@ describe('TemplateService', () => {
     })
   })
 
-  it('should fill a template with the current date in ISO format', () => {
+  it('should fill a template with the current local date in ISO format', () => {
     const template = '{{currentDateTime}}'
     const filledTemplate = templateService.fill(template)
-    expect(filledTemplate).toBe(new Date().toISOString())
+    expect(filledTemplate).toBe(
+      format(TZDate.tz(envService.get('TIMEZONE')), "yyyy-MM-dd'T'HH:mm:ss")
+    )
   })
 })
