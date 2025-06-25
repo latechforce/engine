@@ -9,14 +9,19 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Fix 0.61.1]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-61-1</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-61-1</guid>
+            <title><![CDATA[Fix 0.61.2]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-61-2</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-61-2</guid>
             <pubDate>Wed, 25 Jun 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.61.1]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-61-1"><p class="before-truncate"> 0.61.1   Bug Fixes  * bucket: should throw an error if there are duplicate bucket ids (5190baa) — Thomas JEANNEAU * template: should fill a template with the current local date in ISO format (84e6756) — Thomas JEANNEAU...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0611"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-61-1">0.61.1</a><a href="https://engine.latechforce.com/blog/fix-0-61-1#0611" class="hash-link" aria-label="Direct link to 0.61.1" title="Direct link to 0.61.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-61-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+            <description><![CDATA[Changelog for version 0.61.2]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-61-2"><p class="before-truncate"> 0.61.2   Bug Fixes  * gmail: send email with html body (ff2f2c2) — Thomas JEANNEAU   0.61.1   Bug Fixes  * bucket: should throw an error if there are duplicate bucket ids (5190baa) — Thomas JEANNEAU * template: should fill a template with the current local date in ISO format (84e6756) — Thomas JEAN...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0612"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-61-2">0.61.2</a><a href="https://engine.latechforce.com/blog/fix-0-61-2#0612" class="hash-link" aria-label="Direct link to 0.61.2" title="Direct link to 0.61.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-61-2#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li><strong>gmail:</strong> send email with html body (<a href="https://github.com/latechforce/engine/commit/ff2f2c2018b00878eff1310857753b8ee754052c" target="_blank" rel="noopener noreferrer">ff2f2c2</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0611">0.61.1<a href="https://engine.latechforce.com/blog/fix-0-61-2#0611" class="hash-link" aria-label="Direct link to 0.61.1" title="Direct link to 0.61.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-61-2#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>bucket:</strong> should throw an error if there are duplicate bucket ids (<a href="https://github.com/latechforce/engine/commit/5190baae18242b54be2721aa50dedbb6fe4b5056" target="_blank" rel="noopener noreferrer">5190baa</a>) — Thomas JEANNEAU</li>
 <li><strong>template:</strong> should fill a template with the current local date in ISO format (<a href="https://github.com/latechforce/engine/commit/84e67561cc5dd985815d4b66f406a2c948952844" target="_blank" rel="noopener noreferrer">84e6756</a>) — Thomas JEANNEAU</li>
