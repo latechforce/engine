@@ -13,6 +13,8 @@ export class AirtableIntegration {
   private getTokenHeader() {
     return {
       Authorization: `Bearer ${this.accessToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     }
   }
 
@@ -28,9 +30,13 @@ export class AirtableIntegration {
     notificationUrl: string
     specification: WebhookSpecification
   }): Promise<CreateWebhookResponse> {
+    const { baseId, notificationUrl, specification } = body
     return await ky
-      .post(this.baseUrl + `/v0/bases/${body.baseId}/webhooks`, {
-        json: body,
+      .post(this.baseUrl + `/v0/bases/${baseId}/webhooks`, {
+        json: {
+          notificationUrl,
+          specification,
+        },
         headers: this.getTokenHeader(),
       })
       .json<CreateWebhookResponse>()
