@@ -1,3 +1,10 @@
+## [0.62.2](https://github.com/latechforce/engine/compare/v0.62.1...v0.62.2) (2025-06-26)
+
+
+### Bug Fixes
+
+* **airtable:** fix createWebhook ([5e47eca](https://github.com/latechforce/engine/commit/5e47eca0c5646bb9ec59cf1357a1fdac26a109cd)) — Thomas JEANNEAU
+
 ## [0.62.1](https://github.com/latechforce/engine/compare/v0.62.0...v0.62.1) (2025-06-26)
 
 
