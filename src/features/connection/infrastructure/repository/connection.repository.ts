@@ -4,7 +4,7 @@ import type { IConnectionRepository } from '../../domain/repository-interface/co
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 import type { Token } from '../../domain/value-object/token.value-object'
 import { toConnectionIntegration } from '../../../../integrations/connection'
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { Connection } from '../../domain/entity/connection.entity'
 import type { ConnectionStatus } from '../../domain/value-object/connection-status.value-object'
 import type { ConnectionDatabaseService } from '../service/database.service'
 import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
@@ -32,12 +32,12 @@ export class ConnectionRepository implements IConnectionRepository {
     return this.env.get('BASE_URL') + '/api/connections/auth'
   }
 
-  getAuthorizationUrl(connection: ConnectionSchema): string {
+  getAuthorizationUrl(connection: Connection): string {
     const integration = toConnectionIntegration(connection, this.redirectUri)
     return integration.getAuthorizationUrl()
   }
 
-  async getAccessTokenFromCode(connection: ConnectionSchema, code: string): Promise<Token> {
+  async getAccessTokenFromCode(connection: Connection, code: string): Promise<Token> {
     const integration = toConnectionIntegration(connection, this.redirectUri)
     return integration.getAccessTokenFromCode(code)
   }

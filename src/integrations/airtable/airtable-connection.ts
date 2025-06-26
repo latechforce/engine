@@ -27,14 +27,15 @@ export class AirtableConnectionIntegration {
 
   constructor(
     private readonly schema: AirtableConnectionSchema,
-    private readonly redirectUri: string
+    private readonly redirectUri: string,
+    private readonly state: string
   ) {
     this.codeVerifier = this.generateCodeVerifier()
   }
 
   getAuthorizationUrl() {
     const codeChallenge = this.generateCodeChallenge(this.codeVerifier)
-    return `${this.authBaseUrl}/oauth2/v1/authorize?client_id=${this.schema.clientId}&response_type=code&redirect_uri=${this.redirectUri}&scope=${this.scope.join(' ')}&state=${JSON.stringify({ id: this.schema.id })}&code_challenge=${codeChallenge}&code_challenge_method=S256`
+    return `${this.authBaseUrl}/oauth2/v1/authorize?client_id=${this.schema.clientId}&response_type=code&redirect_uri=${this.redirectUri}&scope=${this.scope.join(' ')}&state=${this.state}&code_challenge=${codeChallenge}&code_challenge_method=S256`
   }
 
   async getAccessToken(body: Record<string, string>): Promise<Token> {
@@ -68,6 +69,7 @@ export class AirtableConnectionIntegration {
       code,
       redirect_uri: this.redirectUri,
       code_verifier: this.codeVerifier,
+      client_id: this.schema.clientId,
     })
   }
 

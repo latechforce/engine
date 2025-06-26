@@ -3,7 +3,7 @@ import { LinkedInAdsConnectionIntegration } from './linkedin/ads/linkedin-ads-co
 import { FacebookLeadAdsConnectionIntegration } from './facebook/lead-ads/facebook-lead-ads-connection'
 import { GoogleConnectionIntegration } from './google/google-connection'
 import { AirtableConnectionIntegration } from './airtable/airtable-connection'
-import type { ConnectionSchema } from './connection.schema'
+import type { Connection } from '../features/connection/domain/entity/connection.entity'
 
 export type ConnectionIntegration =
   | CalendlyConnectionIntegration
@@ -16,7 +16,7 @@ export type ConnectionIntegration =
 const integrationCache = new Map<number, ConnectionIntegration>()
 
 export const toConnectionIntegration = (
-  connection: ConnectionSchema,
+  connection: Connection,
   redirectUri: string
 ): ConnectionIntegration => {
   // Check if we already have a cached instance
@@ -25,38 +25,55 @@ export const toConnectionIntegration = (
     return cachedIntegration
   }
 
-  const redirectUriWithState = redirectUri + '?state=' + JSON.stringify({ id: connection.id })
+  const redirectUriWithState = redirectUri + '?state=' + connection.state
 
   // Create new instance if not cached
   let integration: ConnectionIntegration
-  switch (connection.service) {
+  switch (connection.schema.service) {
     case 'calendly':
-      integration = new CalendlyConnectionIntegration(connection, redirectUriWithState)
+      integration = new CalendlyConnectionIntegration(connection.schema, redirectUriWithState)
       break
     case 'airtable':
-      integration = new AirtableConnectionIntegration(connection, redirectUriWithState)
+      integration = new AirtableConnectionIntegration(
+        connection.schema,
+        redirectUri,
+        connection.state
+      )
       break
     case 'google-sheets':
-      integration = new GoogleConnectionIntegration(connection, redirectUri, [
-        'https://www.googleapis.com/auth/spreadsheets',
-        'https://www.googleapis.com/auth/drive.file',
-      ])
+      integration = new GoogleConnectionIntegration(
+        connection.schema,
+        redirectUri,
+        connection.state,
+        [
+          'https://www.googleapis.com/auth/spreadsheets',
+          'https://www.googleapis.com/auth/drive.file',
+        ]
+      )
       break
     case 'google-gmail':
-      integration = new GoogleConnectionIntegration(connection, redirectUri, [
-        'https://www.googleapis.com/auth/gmail.send',
-        'https://www.googleapis.com/auth/gmail.readonly',
-        'https://www.googleapis.com/auth/gmail.modify',
-      ])
+      integration = new GoogleConnectionIntegration(
+        connection.schema,
+        redirectUri,
+        connection.state,
+        [
+          'https://www.googleapis.com/auth/gmail.send',
+          'https://www.googleapis.com/auth/gmail.readonly',
+          'https://www.googleapis.com/auth/gmail.modify',
+        ]
+      )
       break
     case 'facebook-lead-ads':
-      integration = new FacebookLeadAdsConnectionIntegration(connection, redirectUriWithState)
+      integration = new FacebookLeadAdsConnectionIntegration(
+        connection.schema,
+        redirectUriWithState
+      )
       break
     case 'linkedin-ads':
-      integration = new LinkedInAdsConnectionIntegration(connection, redirectUriWithState)
+      integration = new LinkedInAdsConnectionIntegration(connection.schema, redirectUriWithState)
       break
     default: {
-      const _exhaustiveCheck: never = connection
+      const _exhaustiveCheck: never = connection.schema
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
     }
   }

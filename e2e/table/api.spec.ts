@@ -4,7 +4,7 @@ test('should not create a record from a POST request with missing required field
   startExampleApp,
 }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/required', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/required', loggedOnAdmin: true })
   const text = 'John'
 
   // WHEN
@@ -22,7 +22,7 @@ test('should not create a record from a POST request with missing required field
 
 test('should create a record from a POST request', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/index', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/index', loggedOnAdmin: true })
   const text = 'John'
 
   // WHEN
@@ -47,7 +47,7 @@ test('should not create multiple records from a POST request with missing requir
   startExampleApp,
 }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/required', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/required', loggedOnAdmin: true })
 
   // WHEN
   const response = await page.request.post('/api/tables/Users', {
@@ -71,7 +71,7 @@ test('should not create multiple records from a POST request with missing requir
 
 test('should create multiple records from a POST request', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/index', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/index', loggedOnAdmin: true })
 
   // WHEN
   const response = await page.request.post('/api/tables/Users', {
@@ -107,7 +107,7 @@ test('should create multiple records from a POST request', async ({ startExample
 
 test('should read a record from a GET request', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/index', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/index', loggedOnAdmin: true })
   const text = 'John'
   const postResponse = await page.request.post('/api/tables/Users', {
     data: {
@@ -134,7 +134,7 @@ test('should read a record from a GET request', async ({ startExampleApp }) => {
 
 test('should list records from a GET request', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/index', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/index', loggedOnAdmin: true })
   await page.request.post('/api/tables/Users', {
     data: {
       records: [
@@ -171,7 +171,7 @@ test('should list records from a GET request', async ({ startExampleApp }) => {
 
 test('should update a record from a PATCH request', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/index', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/index', loggedOnAdmin: true })
   const text = 'John'
   const postResponse = await page.request.post('/api/tables/Users', {
     data: {
@@ -202,7 +202,7 @@ test('should update a record from a PATCH request', async ({ startExampleApp }) 
 
 test('should update multiple records from a PATCH request', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/index', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/index', loggedOnAdmin: true })
   const postResponse = await page.request.post('/api/tables/Users', {
     data: {
       records: [
@@ -255,7 +255,7 @@ test('should update multiple records from a PATCH request', async ({ startExampl
 
 test('should delete a record from a DELETE request', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/index', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/index', loggedOnAdmin: true })
   const text = 'John'
   const postResponse = await page.request.post('/api/tables/Users', {
     data: {
@@ -278,7 +278,7 @@ test('should delete a record from a DELETE request', async ({ startExampleApp })
 
 test('should delete multiple records from a DELETE request', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, filter: 'table/index', loggedOnAdmin: true })
+  const { page } = await startExampleApp({ test, filter: '/table/index', loggedOnAdmin: true })
   const postResponse = await page.request.post('/api/tables/Users', {
     data: {
       records: [

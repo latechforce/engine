@@ -15,11 +15,10 @@ export class AuthenticateConnectionUseCase {
   ) {}
 
   async execute(app: App, code?: string, state?: string) {
-    const { id } = JSON.parse(state || '{}')
-    if (!id || !code) {
-      throw new HttpError('Missing id or code', 400)
+    if (!state || !code) {
+      throw new HttpError('Missing state or code', 400)
     }
-    const connection = app.connections.find((connection) => connection.id === Number(id))
+    const connection = app.findConnection(state)
     if (!connection) {
       throw new HttpError('Connection not found', 404)
     }

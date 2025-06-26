@@ -20,9 +20,9 @@ export type ListWebhooksResponse = {
 }
 
 export type CreateWebhookResponse = {
-  expirationTime: '2023-01-20T00:00:00.000Z'
-  id: 'ach00000000000000'
-  macSecretBase64: 'someBase64MacSecret'
+  expirationTime: string
+  id: string
+  macSecretBase64: string
 }
 
 export type WebhookSpecification = {

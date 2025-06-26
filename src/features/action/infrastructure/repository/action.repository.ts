@@ -31,7 +31,7 @@ import type { IObjectRepository } from '../../../bucket/domain/repository-interf
 import { Object } from '../../../bucket/domain/entity/object.entity'
 import { toObjectDto } from '../../../bucket/application/dto/object.dto'
 import type { ConditionsSchema } from '../../domain/schema/condition'
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { Connection } from '../../../connection/domain/entity/connection.entity'
 import type { IConnectionRepository } from '../../../connection/domain/repository-interface/connection-repository.interface'
 import type { ITokenRepository } from '../../../connection/domain/repository-interface/token-repository.interface'
 import type { FieldValue } from '../../../table/domain/object-value/field-value.object-value'
@@ -196,7 +196,7 @@ export class ActionRepository implements IActionRepository {
 
   async runIntegration(
     schema: IntegrationActionSchema,
-    connection: ConnectionSchema
+    connection: Connection
   ): Promise<ActionResult<IntegrationError>> {
     try {
       const integration = toActionIntegration(

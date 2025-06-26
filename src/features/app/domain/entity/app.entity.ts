@@ -2,14 +2,14 @@ import type { AppSchemaValidated } from '../schema/app.schema'
 import type { Env } from '../../../../shared/domain/value-object/env.value-object'
 import { Automation } from '../../../automation/domain/entity/automation.entity'
 import { Table } from '../../../table/domain/entity/table.entity'
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
 import { Form } from '../../../form/domain/entity/form.entity'
 import { Bucket } from '../../../bucket/domain/entity/bucket.entity'
+import { Connection } from '../../../connection/domain/entity/connection.entity'
 
 export class App {
   public readonly automations: Automation[]
   public readonly tables: Table[]
-  public readonly connections: ConnectionSchema[]
+  public readonly connections: Connection[]
   public readonly forms: Form[]
   public readonly buckets: Bucket[]
 
@@ -117,7 +117,7 @@ export class App {
       }
       bucketIds.add(bucket.id)
     }
-    this.connections = this.schema.connections
+    this.connections = this.schema.connections.map((connection) => new Connection(connection))
     this.automations = this.schema.automations.map(
       (automation) => new Automation(automation, this.connections)
     )
@@ -161,9 +161,12 @@ export class App {
     )
   }
 
-  findConnection(nameOrId: string | number): ConnectionSchema | undefined {
+  findConnection(nameOrStateOrId: string | number): Connection | undefined {
     return this.connections.find(
-      (connection) => connection.id === Number(nameOrId) || connection.name === String(nameOrId)
+      (connection) =>
+        connection.id === Number(nameOrStateOrId) ||
+        connection.name === String(nameOrStateOrId) ||
+        connection.state === String(nameOrStateOrId)
     )
   }
 }

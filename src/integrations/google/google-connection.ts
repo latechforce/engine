@@ -13,6 +13,7 @@ export class GoogleConnectionIntegration {
   constructor(
     private readonly connection: GoogleConnectionSchema,
     redirectUri: string,
+    private readonly state: string,
     private readonly scope: string[]
   ) {
     this.oauth2Client = new google.auth.OAuth2(
@@ -33,7 +34,7 @@ export class GoogleConnectionIntegration {
         'https://www.googleapis.com/auth/userinfo.email',
         ...this.scope,
       ],
-      state: JSON.stringify({ id: this.connection.id }),
+      state: this.state,
       code_challenge_method: CodeChallengeMethod.S256,
       code_challenge: codeChallenge,
     })

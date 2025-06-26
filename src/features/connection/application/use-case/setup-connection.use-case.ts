@@ -1,6 +1,6 @@
 import TYPES from '../di/types'
 import { injectable, inject } from 'inversify'
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { Connection } from '../../domain/entity/connection.entity'
 import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 import type { ITokenRepository } from '../../domain/repository-interface/token-repository.interface'
 
@@ -13,7 +13,7 @@ export class SetupConnectionUseCase {
     private readonly tokenRepository: ITokenRepository
   ) {}
 
-  async execute(connection: ConnectionSchema) {
+  async execute(connection: Connection) {
     this.connectionRepository.debug(`setup "${connection.name}"`)
     let status = await this.connectionRepository.status.get(connection.id)
     if (!status) {

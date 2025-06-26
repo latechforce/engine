@@ -6,7 +6,7 @@ import { addSeconds, isAfter } from 'date-fns'
 import TYPES from '../../../../shared/application/di/types'
 
 // Connection domain imports
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { Connection } from '../../domain/entity/connection.entity'
 import type { Token } from '../../domain/value-object/token.value-object'
 import type { ITokenRepository } from '../../domain/repository-interface/token-repository.interface'
 
@@ -24,7 +24,7 @@ export class TokenRepository implements ITokenRepository {
     private readonly connectionRepository: IConnectionRepository
   ) {}
 
-  async onNewRefreshToken(connection: ConnectionSchema, callback: (token: Token) => Promise<void>) {
+  async onNewRefreshToken(connection: Connection, callback: (token: Token) => Promise<void>) {
     const integration = toConnectionIntegration(connection, this.connectionRepository.redirectUri)
     if (!('onNewRefreshToken' in integration)) {
       return
@@ -32,7 +32,7 @@ export class TokenRepository implements ITokenRepository {
     integration.onNewRefreshToken(callback)
   }
 
-  async getAccessToken(connection: ConnectionSchema): Promise<Token | undefined> {
+  async getAccessToken(connection: Connection): Promise<Token | undefined> {
     const token = await this.get(connection.id)
     if (!token) return undefined
     if (!this.isTokenValid(token)) {
@@ -62,7 +62,7 @@ export class TokenRepository implements ITokenRepository {
     return token
   }
 
-  async check(connection: ConnectionSchema): Promise<boolean> {
+  async check(connection: Connection): Promise<boolean> {
     const integration = toConnectionIntegration(connection, this.connectionRepository.redirectUri)
     const token = await this.getAccessToken(connection)
     return integration.checkConnection(token)

@@ -1,4 +1,4 @@
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { Connection } from '../../../connection/domain/entity/connection.entity'
 import type { AutomationSchema } from '../schema/automation.schema'
 import type { ActionSchema } from '../../../action/domain/schema/action.schema'
 import type { TriggerSchema } from '../../../trigger/domain/schema/trigger.schema'
@@ -9,7 +9,7 @@ export class Automation {
 
   constructor(
     public readonly schema: AutomationSchema,
-    public readonly connections: ConnectionSchema[]
+    public readonly connections: Connection[]
   ) {
     const { trigger } = schema
     this.validateActionsSchema(schema.actions)
@@ -48,7 +48,7 @@ export class Automation {
   private getAccount(nameOrId: string | number, service: string) {
     return this.connections.find(
       (connection) =>
-        (connection.id === nameOrId || connection.name === nameOrId) &&
+        (connection.id === Number(nameOrId) || connection.name === String(nameOrId)) &&
         connection.service === service
     )
   }

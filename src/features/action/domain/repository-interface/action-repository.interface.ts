@@ -2,7 +2,7 @@ import type { App } from '../../../app/domain/entity/app.entity'
 import type { IntegrationActionSchema } from '../../../../integrations/action.schema'
 import type { ActionResult } from '../value-object/action-result.value-object'
 import type { IntegrationError } from '../value-object/integration-error.value-object'
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { Connection } from '../../../connection/domain/entity/connection.entity'
 import type { Table } from '../../../table/domain/entity/table.entity'
 import type { FieldValue } from '../../../table/domain/object-value/field-value.object-value'
 import type { Record } from '../../../table/domain/entity/record.entity'
@@ -37,6 +37,6 @@ export type IActionRepository = {
   }
   runIntegration: (
     schema: IntegrationActionSchema,
-    connection: ConnectionSchema
+    connection: Connection
   ) => Promise<ActionResult<IntegrationError>>
 }

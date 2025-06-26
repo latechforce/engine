@@ -10,7 +10,7 @@ import { toTriggerIntegration } from '../../../../integrations/trigger'
 import type { SchemaService } from '../../../../shared/infrastructure/service/validator.service'
 import type { TemplateService } from '../../../../shared/infrastructure/service/template.service'
 import type { IntegrationTriggerSchema } from '../../../../integrations/trigger.schema'
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { Connection } from '../../../../features/connection/domain/entity/connection.entity'
 import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
 import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 
@@ -49,7 +49,7 @@ export class TriggerRepository implements ITriggerRepository {
 
   async setupIntegration(
     trigger: IntegrationTriggerSchema,
-    connection: ConnectionSchema,
+    connection: Connection,
     automation: Automation
   ): Promise<void> {
     try {
@@ -61,6 +61,10 @@ export class TriggerRepository implements ITriggerRepository {
       const integration = toTriggerIntegration(trigger, automation.schema.id)
       const token = await this.tokenRepository.getAccessToken(connection)
       if (token) await integration.setupTrigger(token, url)
+      this.onCronTime('0 0 * * *', this.env.get('TIMEZONE'), async () => {
+        const token = await this.tokenRepository.getAccessToken(connection)
+        if (token) await integration.setupTrigger(token, url)
+      })
     } catch (error) {
       if (error instanceof HTTPError) {
         const result = {

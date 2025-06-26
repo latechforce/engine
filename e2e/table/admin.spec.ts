@@ -2,7 +2,7 @@ import { expect, test } from '@/e2e/fixtures'
 
 test('should return the admin tables page', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
 
   // WHEN
   await page.goto('/admin/tables')
@@ -13,7 +13,7 @@ test('should return the admin tables page', async ({ startExampleApp }) => {
 
 test('should list tables', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
 
   // WHEN
   await page.goto('/admin/tables')
@@ -25,7 +25,7 @@ test('should list tables', async ({ startExampleApp }) => {
 
 test('should list table records', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
   await page.request.post('/api/tables/Users', {
     data: {
       records: [
@@ -47,7 +47,7 @@ test('should list table records', async ({ startExampleApp }) => {
 
 test('should search table records', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
   await page.request.post('/api/tables/Users', {
     data: {
       records: [
@@ -68,7 +68,7 @@ test('should search table records', async ({ startExampleApp }) => {
 
 test('should open and display a table record', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
   const response = await page.request.post('/api/tables/1', {
     data: {
       records: [{ fields: { 'First name': 'John', 'Last name': 'Doe' } }],
@@ -89,7 +89,7 @@ test('should open and display a table record', async ({ startExampleApp }) => {
 
 test('should create a table record', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
 
   // WHEN
   await page.goto('/admin/tables')
@@ -107,7 +107,7 @@ test('should create a table record', async ({ startExampleApp }) => {
 
 test('should create a table record with required fields', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/required' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/required' })
 
   // WHEN
   await page.goto('/admin/tables')
@@ -125,7 +125,7 @@ test('should create a table record with required fields', async ({ startExampleA
 
 test('should update a table record', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
   const response = await page.request.post('/api/tables/1', {
     data: {
       records: [{ fields: { 'First name': 'John', 'Last name': 'Doe' } }],
@@ -152,7 +152,7 @@ test('should update a table record', async ({ startExampleApp }) => {
 
 test('should delete a table record', async ({ startExampleApp }) => {
   // GIVEN
-  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: 'table/index' })
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
   await page.request.post('/api/tables/1', {
     data: {
       records: [{ fields: { 'First name': 'John', 'Last name': 'Doe' } }],
