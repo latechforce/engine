@@ -83,8 +83,8 @@ function SidebarLayout({ children, breadcrumbs = [] }: LayoutProps) {
 
   if (admin.automations.length > 0) {
     items[0]?.items.push({
-      title: 'Runs',
-      url: '/admin/runs',
+      title: 'Automation History',
+      url: '/admin/automation-history',
       icon: History,
     })
     items.push({

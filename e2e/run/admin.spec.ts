@@ -6,7 +6,7 @@ test('should search and filter automation runs', async ({ startExampleApp }) => 
   await page.request.post('/api/automations/run-typescript')
 
   // WHEN
-  await page.goto('/admin/runs')
+  await page.goto('/admin/automation-history')
   await page.getByRole('textbox', { name: 'Search' }).fill('run-typescript')
 
   // THEN
@@ -23,7 +23,7 @@ test('should search and filter automation runs based on steps data', async ({
   await page.request.post('/api/automations/run-typescript')
 
   // WHEN
-  await page.goto('/admin/runs')
+  await page.goto('/admin/automation-history')
   await page.getByRole('textbox', { name: 'Search' }).fill('Hello, world!')
 
   // THEN
@@ -50,7 +50,7 @@ test('should open and display an automation run', async ({ startExampleApp }) =>
   const { runId } = await response.json()
 
   // WHEN
-  await page.goto('/admin/runs')
+  await page.goto('/admin/automation-history')
   await page.getByRole('row', { name: 'run-typescript' }).click()
   await page.waitForURL(`/admin/automations/1/runs/${runId}`)
 

@@ -30,7 +30,12 @@ export const columns: ColumnDef<RunDto>[] = [
   },
 ]
 
-export const RunsDataTable = ({ runs }: ListRunsDto) => {
+export type SearchProps = {
+  value: string
+  onChange: (value: string) => void
+}
+
+export const RunsDataTable = ({ runs, search }: ListRunsDto & { search?: SearchProps }) => {
   const navigate = useNavigate()
   return (
     <DataTable
@@ -42,6 +47,7 @@ export const RunsDataTable = ({ runs }: ListRunsDto) => {
           params: { automationId: row.automationId, runId: row.id },
         })
       }}
+      search={search}
     />
   )
 }

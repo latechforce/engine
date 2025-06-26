@@ -13,6 +13,10 @@ export class RunDatabaseService {
     return this.database.schema
   }
 
+  get provider() {
+    return this.database.provider
+  }
+
   get run() {
     if (this.database.provider === 'postgres') {
       const schema = this.database.postgresSchema

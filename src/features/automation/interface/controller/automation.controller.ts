@@ -37,10 +37,10 @@ export class AutomationController {
     return c.text('OK')
   }
 
-  static async get(c: Context<HonoType>, data: { automationId: string }) {
+  static async get(c: Context<HonoType>, data: { automationId: string; query?: string }) {
     const app = c.get('app')
     const getAutomationUseCase = c.get('getAutomationUseCase')
-    const getAutomationDto = await getAutomationUseCase.execute(app, data.automationId)
+    const getAutomationDto = await getAutomationUseCase.execute(app, data.automationId, data.query)
     return c.json(getAutomationDto)
   }
 }

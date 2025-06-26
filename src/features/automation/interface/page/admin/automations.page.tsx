@@ -111,7 +111,7 @@ const AutomationsDataTable = () => {
 
 const AutomationsPage = () => {
   return (
-    <Layout breadcrumbs={[{ title: 'Automations', url: '/admin/automations' }]}>
+    <Layout breadcrumbs={[{ title: 'Automations', url: automationsAdminRoute.fullPath }]}>
       <div className="container mx-auto max-w-4xl p-6">
         <TypographyH3 className="mb-4">Automations</TypographyH3>
         <Suspense fallback={<TableSkeleton />}>

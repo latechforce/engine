@@ -1,8 +1,8 @@
 import { createRoute, Link, useParams } from '@tanstack/react-router'
 import Layout from '../../../../app/interface/page/admin/layout'
-import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { keepPreviousData, queryOptions, useQuery } from '@tanstack/react-query'
 import { client } from '../../../../../shared/interface/lib/client.lib'
-import { Suspense } from 'react'
+import { useState } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { adminRoute } from '../../../../app/interface/page/router'
 import {
@@ -16,20 +16,35 @@ import { setStatusMutation } from '../../mutations/set-status.mutation'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
 import { PencilIcon } from 'lucide-react'
+import { runsAdminRoute } from '../../../../run/interface/page/admin/runs.page'
 
-const automationQueryOptions = (automationId: string) =>
+const automationQueryOptions = (automationId: string, query?: string) =>
   queryOptions<GetAutomationDto>({
-    queryKey: ['automationData', automationId],
+    queryKey: ['automationData', automationId, query],
     queryFn: () =>
       client.automations[':automationId'].runs
-        .$get({ param: { automationId } })
+        .$get({
+          param: { automationId },
+          query: { q: query },
+        })
         .then((res) => res.json()),
+    placeholderData: keepPreviousData,
   })
 
 const AutomationDataTable = () => {
+  const [searchQuery, setSearchQuery] = useState('')
   const { automationId } = useParams({ from: '/admin/automations/$automationId' })
-  const { data } = useSuspenseQuery(automationQueryOptions(automationId))
-  return <RunsDataTable runs={data.runs} />
+  const { data } = useQuery(automationQueryOptions(automationId, searchQuery))
+  if (!data) return <TableSkeleton />
+  return (
+    <RunsDataTable
+      runs={data.runs}
+      search={{
+        value: searchQuery,
+        onChange: setSearchQuery,
+      }}
+    />
+  )
 }
 
 const AutomationPage = () => {
@@ -39,8 +54,8 @@ const AutomationPage = () => {
   return (
     <Layout
       breadcrumbs={[
-        { title: 'Automations', url: '/admin/automations' },
-        { title: data?.automation.name ?? '...', url: '/admin/automations/' + automationId },
+        { title: 'Automation History', url: runsAdminRoute.fullPath },
+        { title: data?.automation.name ?? '...', url: automationAdminRoute.fullPath },
       ]}
     >
       <div className="container mx-auto max-w-4xl p-6">
@@ -76,9 +91,7 @@ const AutomationPage = () => {
             <TypographyP>{data.automation.description}</TypographyP>
           </div>
         )}
-        <Suspense fallback={<TableSkeleton />}>
-          <AutomationDataTable />
-        </Suspense>
+        <AutomationDataTable />
       </div>
     </Layout>
   )

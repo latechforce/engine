@@ -9,7 +9,6 @@ import {
 } from '@tanstack/react-table'
 import { cn } from '../lib/utils.lib'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table.ui'
-import { Input } from '../ui/input.ui'
 import { Button } from '../ui/button.ui'
 import {
   DropdownMenu,
@@ -17,6 +16,8 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu.ui'
+import { DebouncedInput } from './debounce-input.component'
+import { Input } from '../ui/input.ui'
 
 type Action<TData> = {
   label: string
@@ -43,6 +44,10 @@ type DataTableProps<TData, TValue> = {
   onRowClick?: (row: TData) => void
   verticalSeparator?: boolean
   fullPage?: boolean
+  search?: {
+    value: string
+    onChange: (value: string) => void
+  }
 }
 
 const globalFilterFn = <TData,>(row: Row<TData>, _: string, filterValue: string) => {
@@ -62,6 +67,7 @@ export function DataTable<TData, TValue>({
   onRowClick,
   verticalSeparator = false,
   fullPage = false,
+  search,
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
   const [rowSelection, setRowSelection] = useState({})
@@ -70,7 +76,7 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
+    getFilteredRowModel: search ? undefined : getFilteredRowModel(),
     columnResizeMode,
     enableColumnResizing: true,
     onRowSelectionChange: setRowSelection,
@@ -80,7 +86,7 @@ export function DataTable<TData, TValue>({
         right: ['actions-column'],
       },
     },
-    globalFilterFn,
+    globalFilterFn: search ? undefined : globalFilterFn,
     state: {
       rowSelection,
     },
@@ -94,12 +100,21 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className={cn('flex items-center', fullPage ? 'p-2' : 'pb-4')}>
-        <Input
-          placeholder="Search..."
-          value={table.getState().globalFilter ?? ''}
-          onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-          className="mr-4 max-w-sm"
-        />
+        {search ? (
+          <DebouncedInput
+            placeholder="Search..."
+            value={search.value}
+            onChange={(value) => search.onChange(String(value))}
+            className="mr-4 max-w-sm"
+          />
+        ) : (
+          <Input
+            placeholder="Search..."
+            value={table.getState().globalFilter ?? ''}
+            onChange={(e) => table.setGlobalFilter(String(e.target.value))}
+            className="mr-4 max-w-sm"
+          />
+        )}
         <div className="ml-auto flex items-center gap-2">
           {actions.map((action) => {
             if ('actions' in action) {

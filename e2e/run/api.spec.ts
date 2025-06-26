@@ -37,3 +37,129 @@ test('should return a run by id', async ({ startExampleApp }) => {
   expect(run.status).toBe('success')
   expect(steps).toBeDefined()
 })
+
+test('should return a list of runs filtered by search on status', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({
+    test,
+    filter: 'automation/multiple',
+    loggedOnAdmin: true,
+  })
+  await page.request.post('/api/automations/run-success')
+  await page.request.post('/api/automations/run-failure')
+  await page.request.post('/api/automations/run-success')
+
+  // WHEN
+  const response = await page.request.get('/api/runs?q=success')
+
+  // THEN
+  const { runs }: ListRunsDto = await response.json()
+  expect(runs.length).toBe(2)
+})
+
+test('should return a list of runs filtered by automation id and search on status', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({
+    test,
+    filter: 'automation/multiple',
+    loggedOnAdmin: true,
+  })
+  await page.request.post('/api/automations/run-success')
+  await page.request.post('/api/automations/run-failure')
+  await page.request.post('/api/automations/run-success')
+
+  // WHEN
+  const response = await page.request.get('/api/automations/1/runs?q=success')
+
+  // THEN
+  const { runs }: ListRunsDto = await response.json()
+  expect(runs.length).toBe(2)
+})
+
+test('should return a list of runs filtered by search on run id', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({
+    test,
+    filter: 'automation/multiple',
+    loggedOnAdmin: true,
+  })
+  const { runId } = await page.request
+    .post('/api/automations/run-success')
+    .then((res) => res.json())
+  await page.request.post('/api/automations/run-failure')
+  await page.request.post('/api/automations/run-success')
+
+  // WHEN
+  const response = await page.request.get(`/api/runs?q=${runId}`)
+
+  // THEN
+  const { runs }: ListRunsDto = await response.json()
+  expect(runs.length).toBe(1)
+})
+
+test('should return a list of runs filtered by automation id and search on run id', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({
+    test,
+    filter: 'automation/multiple',
+    loggedOnAdmin: true,
+  })
+  const { runId } = await page.request
+    .post('/api/automations/run-success')
+    .then((res) => res.json())
+  await page.request.post('/api/automations/run-failure')
+  await page.request.post('/api/automations/run-success')
+
+  // WHEN
+  const response = await page.request.get(`/api/automations/1/runs?q=${runId}`)
+
+  // THEN
+  const { runs }: ListRunsDto = await response.json()
+  expect(runs.length).toBe(1)
+})
+
+test('should return a list of runs filtered by search on steps content', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({
+    test,
+    filter: 'automation/multiple',
+    loggedOnAdmin: true,
+  })
+  await page.request.post('/api/automations/run-success')
+  await page.request.post('/api/automations/run-failure')
+  await page.request.post('/api/automations/run-success')
+
+  // WHEN
+  const response = await page.request.get(`/api/runs?q=Hello, world!`)
+
+  // THEN
+  const { runs }: ListRunsDto = await response.json()
+  expect(runs.length).toBe(2)
+})
+
+test('should return a list of runs filtered by automation id and search on steps content', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({
+    test,
+    filter: 'automation/multiple',
+    loggedOnAdmin: true,
+  })
+  await page.request.post('/api/automations/run-success')
+  await page.request.post('/api/automations/run-failure')
+  await page.request.post('/api/automations/run-success')
+
+  // WHEN
+  const response = await page.request.get(`/api/automations/1/runs?q=Hello, world!`)
+
+  // THEN
+  const { runs }: ListRunsDto = await response.json()
+  expect(runs.length).toBe(2)
+})

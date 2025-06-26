@@ -4,6 +4,7 @@ import { AutomationController } from './controller/automation.controller'
 import {
   automationPostFormValidator,
   automationPostJsonValidator,
+  getAutomationsQueryValidator,
   setStatusValidator,
 } from './middleware/automation.middleware'
 import { authRequiredMiddleware } from '../../user/interface/middleware/auth.middleware'
@@ -35,9 +36,10 @@ export const automationRoutes = new Hono<HonoType>()
       active: c.req.valid('json').active,
     })
   )
-  .get('/:automationId/runs', authRequiredMiddleware, (c) =>
+  .get('/:automationId/runs', authRequiredMiddleware, getAutomationsQueryValidator, (c) =>
     AutomationController.get(c, {
       automationId: c.req.param('automationId'),
+      query: c.req.query('q'),
     })
   )
 

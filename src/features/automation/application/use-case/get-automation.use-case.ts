@@ -15,7 +15,7 @@ export class GetAutomationUseCase {
     private readonly runRepository: IRunRepository
   ) {}
 
-  async execute(app: App, automationId: string): Promise<GetAutomationDto> {
+  async execute(app: App, automationId: string, query?: string): Promise<GetAutomationDto> {
     const automation = app.findAutomation(automationId)
     if (!automation) {
       throw new HttpError('Automation not found', 404)
@@ -24,7 +24,7 @@ export class GetAutomationUseCase {
     if (!status) {
       throw new HttpError('Automation status not found', 404)
     }
-    const runs = await this.runRepository.listByAutomationId(automation.schema.id)
+    const runs = await this.runRepository.listByAutomationId(automation.schema.id, query)
     return toGetAutomationDto(automation, status, runs)
   }
 }

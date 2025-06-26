@@ -11,8 +11,8 @@ export class ListRunsUseCase {
     private readonly runRepository: IRunRepository
   ) {}
 
-  async execute(app: App): Promise<ListRunsDto> {
-    const runs = await this.runRepository.list()
+  async execute(app: App, query?: string): Promise<ListRunsDto> {
+    const runs = await this.runRepository.list(query ?? undefined)
     return toListRunsDto(runs, app.automations)
   }
 }

@@ -39,6 +39,8 @@ import {
   CollapsibleTrigger,
 } from '../../../../../shared/interface/ui/collapsible.ui'
 import { ChevronsUpDown } from 'lucide-react'
+import { runsAdminRoute } from './runs.page'
+import { automationAdminRoute } from '../../../../automation/interface/page/admin/automation.page'
 
 const runQueryOptions = (runId: string) =>
   queryOptions<GetRunDto>({
@@ -348,14 +350,14 @@ const RunPage = () => {
   return (
     <Layout
       breadcrumbs={[
-        { title: 'Automations', url: '/admin/automations' },
+        { title: 'Automation History', url: runsAdminRoute.fullPath },
         {
           title: data?.run.automationName ?? '...',
-          url: '/admin/automations/' + data?.run.automationId,
+          url: automationAdminRoute.fullPath,
         },
         {
           title: 'Run ' + format(new Date(data?.run.createdAt ?? ''), 'dd/MM/yyyy HH:mm:ss'),
-          url: '/admin/runs/' + data?.run.id,
+          url: runAdminRoute.fullPath,
         },
       ]}
     >

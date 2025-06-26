@@ -8,7 +8,6 @@ export type RunDto = {
   updatedAt: string
   automationId: string
   automationName: string
-  steps: string
 }
 
 export function toRunDto(run: Run, automation: Automation): RunDto {
@@ -19,6 +18,5 @@ export function toRunDto(run: Run, automation: Automation): RunDto {
     updatedAt: run.updatedAt.toISOString(),
     automationId: automation.schema.id.toString(),
     automationName: automation.schema.name,
-    steps: JSON.stringify(run.steps),
   }
 }
