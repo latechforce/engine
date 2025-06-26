@@ -27,9 +27,11 @@ export default {
           action: 'send-email',
           account: 'Gmail',
           params: {
+            name: 'John Doe',
             to: 'test@test.com',
             subject: 'Test',
-            html: `Test`,
+            html: `<p>Test</p>`,
+            text: 'Test',
           },
         },
       ],

@@ -29,15 +29,73 @@ export class GoogleGmailActionIntegration {
     const gmail = google.gmail({ version: 'v1', auth: this.oauth2Client })
     switch (this.actionSchema.action) {
       case 'send-email': {
-        const { to, subject, html } = this.actionSchema.params
-        const messageParts = [
-          `To: ${to}`,
-          `Subject: ${subject}`,
-          'Content-Type: text/html; charset=UTF-8',
-          'MIME-Version: 1.0',
-          '',
-          html,
-        ]
+        const { from, name, to, cc, bcc, subject, html, text } = this.actionSchema.params
+
+        // Construct the From field with custom name if provided
+        let fromField = from || 'me'
+        if (name && from) {
+          fromField = `"${name}" <${from}>`
+        } else if (name) {
+          // If only name is provided, we need to get the user's email from Gmail
+          const profile = await gmail.users.getProfile({ userId: 'me' })
+          const userEmail = profile.data.emailAddress
+          fromField = `"${name}" <${userEmail}>`
+        }
+
+        // Helper function to format email addresses
+        const formatEmails = (emails: string | string[] | undefined): string | undefined => {
+          if (!emails) return undefined
+          return Array.isArray(emails) ? emails.join(', ') : emails
+        }
+
+        // Generate boundary for multipart message
+        const boundary = `boundary_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`
+
+        let messageParts: string[]
+
+        if (text && html) {
+          // Multipart alternative message with both text and HTML
+          messageParts = [
+            `From: ${fromField}`,
+            `To: ${formatEmails(to)}`,
+            ...(cc ? [`Cc: ${formatEmails(cc)}`] : []),
+            ...(bcc ? [`Bcc: ${formatEmails(bcc)}`] : []),
+            `Subject: ${subject}`,
+            `MIME-Version: 1.0`,
+            `Content-Type: multipart/alternative; boundary="${boundary}"`,
+            '',
+            `--${boundary}`,
+            'Content-Type: text/plain; charset=UTF-8',
+            'Content-Transfer-Encoding: 7bit',
+            '',
+            text,
+            '',
+            `--${boundary}`,
+            'Content-Type: text/html; charset=UTF-8',
+            'Content-Transfer-Encoding: 7bit',
+            '',
+            html,
+            '',
+            `--${boundary}--`,
+          ]
+        } else {
+          // Single part message (HTML only or text only)
+          const contentType = text ? 'text/plain' : 'text/html'
+          const content = text || html
+
+          messageParts = [
+            `From: ${fromField}`,
+            `To: ${formatEmails(to)}`,
+            ...(cc ? [`Cc: ${formatEmails(cc)}`] : []),
+            ...(bcc ? [`Bcc: ${formatEmails(bcc)}`] : []),
+            `Subject: ${subject}`,
+            `Content-Type: ${contentType}; charset=UTF-8`,
+            'MIME-Version: 1.0',
+            '',
+            content,
+          ]
+        }
+
         const message = messageParts.join('\n')
         const encodedMessage = Buffer.from(message)
           .toString('base64')
