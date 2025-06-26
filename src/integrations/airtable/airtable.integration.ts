@@ -13,8 +13,6 @@ export class AirtableIntegration {
   private getTokenHeader() {
     return {
       Authorization: `Bearer ${this.accessToken}`,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
     }
   }
 

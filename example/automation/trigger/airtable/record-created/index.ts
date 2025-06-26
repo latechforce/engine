@@ -18,8 +18,8 @@ export default {
         event: 'record-created',
         account: 'Airtable',
         params: {
-          baseId: 'appr2OtIBz5y0n1QD',
-          tableId: 'tblLcwbEUvbzVqVJi',
+          baseId: 'app123',
+          tableId: 'tbl123',
         },
       },
       actions: [],
