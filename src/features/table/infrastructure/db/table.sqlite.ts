@@ -2,8 +2,8 @@ import { integer, sqliteTable, text, primaryKey, foreignKey } from 'drizzle-orm/
 
 export const table = sqliteTable('table', {
   id: integer('id').primaryKey(),
-  name: text('name').notNull().unique(),
-  slug: text('slug').notNull().unique(),
+  name: text('name').notNull(),
+  slug: text('slug').notNull(),
   created_at: integer('created_at', { mode: 'timestamp' }).notNull(),
   updated_at: integer('updated_at', { mode: 'timestamp' }).notNull(),
 })
@@ -15,8 +15,8 @@ export const field = sqliteTable(
     table_id: integer('table_id')
       .notNull()
       .references(() => table.id, { onDelete: 'cascade' }),
-    name: text('name').notNull().unique(),
-    slug: text('slug').notNull().unique(),
+    name: text('name').notNull(),
+    slug: text('slug').notNull(),
     type: text('type', {
       enum: [
         'single-line-text',
