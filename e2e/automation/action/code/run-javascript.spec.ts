@@ -1,4 +1,5 @@
 import { expect, test } from '@/e2e/fixtures'
+import type { ListRunsDto } from '../../../../src/features/run/application/dto/list-runs.dto'
 
 test('should run a JavaScript code', async ({ startExampleApp }) => {
   // GIVEN
@@ -143,4 +144,19 @@ test('should run a JavaScript code that return an array', async ({ startExampleA
       })
     }
   }
+})
+
+test('should filter a JavaScript code that return an empty array', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'empty-array', test, loggedOnAdmin: true })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-javascript')
+  const { data } = await response.json()
+
+  // THEN
+  expect(data).toEqual([])
+  const runsResponse = await page.request.get('/api/runs')
+  const { runs }: ListRunsDto = await runsResponse.json()
+  expect(runs[0]!.status).toBe('filtered')
 })

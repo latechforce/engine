@@ -149,16 +149,25 @@ type ActionStepCardProps = {
 }
 
 const ActionStepCard = ({ step, number }: ActionStepCardProps) => {
-  const status =
-    step.schema.service === 'filter' && step.schema.action === 'only-continue-if'
-      ? step.output?.canContinue === true
+  const isFillter =
+    (step.schema.service === 'filter' &&
+      step.schema.action === 'only-continue-if' &&
+      step.output?.canContinue === false) ||
+    (step.schema.service === 'code' &&
+      step.schema.action === 'run-javascript' &&
+      Array.isArray(step.output) &&
+      step.output.length === 0) ||
+    (step.schema.service === 'code' &&
+      step.schema.action === 'run-typescript' &&
+      Array.isArray(step.output) &&
+      step.output.length === 0)
+  const status = isFillter
+    ? 'filtered'
+    : step.error
+      ? 'stopped'
+      : step.output
         ? 'success'
-        : 'filtered'
-      : step.error
-        ? 'stopped'
-        : step.output
-          ? 'success'
-          : 'playing'
+        : 'playing'
   return (
     <CollapsibleStepCard
       key={number}

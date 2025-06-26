@@ -108,6 +108,10 @@ export class RunAutomationUseCase {
     }
 
     if (Array.isArray(data)) {
+      if (data.length === 0) {
+        await this.filter(run, actionPath, data)
+        return false
+      }
       for (let i = 0; i < data.length; i++) {
         const item = { ...data[i], index: i + 1 }
         if (i === 0) {

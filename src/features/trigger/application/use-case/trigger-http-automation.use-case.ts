@@ -222,7 +222,7 @@ export class TriggerHttpAutomationUseCase {
               break
             }
             case 'filtered':
-              resolve({ data: { canContinue: false }, ...successResponse })
+              resolve({ data: run.getLastActionStepData(), ...successResponse })
               break
             default: {
               const _exhaustiveCheck: never = run.status
