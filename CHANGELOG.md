@@ -1,3 +1,11 @@
+## [0.61.4](https://github.com/latechforce/engine/compare/v0.61.3...v0.61.4) (2025-06-26)
+
+
+### Bug Fixes
+
+* **action:** should filter a JavaScript code that return an empty array ([c64dab5](https://github.com/latechforce/engine/commit/c64dab58bf4c35cbec7e26e163bebbb2172cff7f)) — Thomas JEANNEAU
+* **gmail:** can add name, cc and bcc in email ([1c584f7](https://github.com/latechforce/engine/commit/1c584f73e77ec4eaf988f8d3c0f0ef28fe5b7ae0)) — Thomas JEANNEAU
+
 ## [0.61.3](https://github.com/latechforce/engine/compare/v0.61.2...v0.61.3) (2025-06-26)
 
 
