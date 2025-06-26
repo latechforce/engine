@@ -1,3 +1,11 @@
+## [0.61.3](https://github.com/latechforce/engine/compare/v0.61.2...v0.61.3) (2025-06-26)
+
+
+### Bug Fixes
+
+* **run:** should return a list of runs filtered by search on automation name ([205be47](https://github.com/latechforce/engine/commit/205be477def15eb94e94ef575f2d23583e941684)) — Thomas JEANNEAU
+* **run:** should return a list of runs filtered by search on steps content ([34ec71b](https://github.com/latechforce/engine/commit/34ec71b6ecfc27a960c00cf52f279e792de770ab)) — Thomas JEANNEAU
+
 ## [0.61.2](https://github.com/latechforce/engine/compare/v0.61.1...v0.61.2) (2025-06-25)
 
 
