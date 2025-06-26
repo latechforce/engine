@@ -8,36 +8,41 @@
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Fix 0.62.1]]></title>
-        <id>https://engine.latechforce.com/blog/fix-0-62-1</id>
-        <link href="https://engine.latechforce.com/blog/fix-0-62-1"/>
+        <title type="html"><![CDATA[Fix 0.62.2]]></title>
+        <id>https://engine.latechforce.com/blog/fix-0-62-2</id>
+        <link href="https://engine.latechforce.com/blog/fix-0-62-2"/>
         <updated>2025-06-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.62.1]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-62-1"><p class="before-truncate"> 0.62.1   Bug Fixes  * table: fix sqlite schema (144030d) — Thomas JEANNEAU   0.62.0   Features  * airtable: should connect to airtable (79903af) — Thomas JEANNEAU * airtable: should trigger an automation when a airtable record is created (6cea525) — Thomas JEANNEAU   0.61.5   Bug Fixes  * action: a...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0621"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-62-1">0.62.1</a><a href="https://engine.latechforce.com/blog/fix-0-62-1#0621" class="hash-link" aria-label="Direct link to 0.62.1" title="Direct link to 0.62.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+        <summary type="html"><![CDATA[Changelog for version 0.62.2]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-62-2"><p class="before-truncate"> 0.62.2   Bug Fixes  * airtable: fix createWebhook (5e47eca) — Thomas JEANNEAU   0.62.1   Bug Fixes  * table: fix sqlite schema (144030d) — Thomas JEANNEAU   0.62.0   Features  * airtable: should connect to airtable (79903af) — Thomas JEANNEAU * airtable: should trigger an automation when a airtable...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0622"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-62-2">0.62.2</a><a href="https://engine.latechforce.com/blog/fix-0-62-2#0622" class="hash-link" aria-label="Direct link to 0.62.2" title="Direct link to 0.62.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-2#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li><strong>airtable:</strong> fix createWebhook (<a href="https://github.com/latechforce/engine/commit/5e47eca0c5646bb9ec59cf1357a1fdac26a109cd" target="_blank" rel="noopener noreferrer">5e47eca</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0621">0.62.1<a href="https://engine.latechforce.com/blog/fix-0-62-2#0621" class="hash-link" aria-label="Direct link to 0.62.1" title="Direct link to 0.62.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-2#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>table:</strong> fix sqlite schema (<a href="https://github.com/latechforce/engine/commit/144030d2f610a479de9b32496fad244ec8504f98" target="_blank" rel="noopener noreferrer">144030d</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0620">0.62.0<a href="https://engine.latechforce.com/blog/fix-0-62-1#0620" class="hash-link" aria-label="Direct link to 0.62.0" title="Direct link to 0.62.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-62-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0620">0.62.0<a href="https://engine.latechforce.com/blog/fix-0-62-2#0620" class="hash-link" aria-label="Direct link to 0.62.0" title="Direct link to 0.62.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-62-2#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li><strong>airtable:</strong> should connect to airtable (<a href="https://github.com/latechforce/engine/commit/79903af1eed75980dae0db872dd5058f9ee4b7ab" target="_blank" rel="noopener noreferrer">79903af</a>) — Thomas JEANNEAU</li>
 <li><strong>airtable:</strong> should trigger an automation when a airtable record is created (<a href="https://github.com/latechforce/engine/commit/6cea525cb73ced216ec5036f7de5da3a1b1bae2b" target="_blank" rel="noopener noreferrer">6cea525</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0615">0.61.5<a href="https://engine.latechforce.com/blog/fix-0-62-1#0615" class="hash-link" aria-label="Direct link to 0.61.5" title="Direct link to 0.61.5">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-1#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0615">0.61.5<a href="https://engine.latechforce.com/blog/fix-0-62-2#0615" class="hash-link" aria-label="Direct link to 0.61.5" title="Direct link to 0.61.5">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-2#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>action:</strong> allow email in variables in gmail config (<a href="https://github.com/latechforce/engine/commit/3e7330737f7d13c35a7e3cc76a8dd0408f269187" target="_blank" rel="noopener noreferrer">3e73307</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0614">0.61.4<a href="https://engine.latechforce.com/blog/fix-0-62-1#0614" class="hash-link" aria-label="Direct link to 0.61.4" title="Direct link to 0.61.4">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-1#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0614">0.61.4<a href="https://engine.latechforce.com/blog/fix-0-62-2#0614" class="hash-link" aria-label="Direct link to 0.61.4" title="Direct link to 0.61.4">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-3">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-2#bug-fixes-3" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>action:</strong> should filter a JavaScript code that return an empty array (<a href="https://github.com/latechforce/engine/commit/c64dab58bf4c35cbec7e26e163bebbb2172cff7f" target="_blank" rel="noopener noreferrer">c64dab5</a>) — Thomas JEANNEAU</li>
 <li><strong>gmail:</strong> can add name, cc and bcc in email (<a href="https://github.com/latechforce/engine/commit/1c584f73e77ec4eaf988f8d3c0f0ef28fe5b7ae0" target="_blank" rel="noopener noreferrer">1c584f7</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0613">0.61.3<a href="https://engine.latechforce.com/blog/fix-0-62-1#0613" class="hash-link" aria-label="Direct link to 0.61.3" title="Direct link to 0.61.3">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-3">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-1#bug-fixes-3" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0613">0.61.3<a href="https://engine.latechforce.com/blog/fix-0-62-2#0613" class="hash-link" aria-label="Direct link to 0.61.3" title="Direct link to 0.61.3">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-4">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-62-2#bug-fixes-4" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li><strong>run:</strong> should return a list of runs filtered by search on automation name (<a href="https://github.com/latechforce/engine/commit/205be477def15eb94e94ef575f2d23583e941684" target="_blank" rel="noopener noreferrer">205be47</a>) — Thomas JEANNEAU</li>
 <li><strong>run:</strong> should return a list of runs filtered by search on steps content (<a href="https://github.com/latechforce/engine/commit/34ec71b6ecfc27a960c00cf52f279e792de770ab" target="_blank" rel="noopener noreferrer">34ec71b</a>) — Thomas JEANNEAU</li>
