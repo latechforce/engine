@@ -1,3 +1,10 @@
+## [0.62.1](https://github.com/latechforce/engine/compare/v0.62.0...v0.62.1) (2025-06-26)
+
+
+### Bug Fixes
+
+* **table:** fix sqlite schema ([144030d](https://github.com/latechforce/engine/commit/144030d2f610a479de9b32496fad244ec8504f98)) — Thomas JEANNEAU
+
 # [0.62.0](https://github.com/latechforce/engine/compare/v0.61.5...v0.62.0) (2025-06-26)
 
 
