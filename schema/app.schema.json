@@ -1745,9 +1745,7 @@
                       "type": "object",
                       "properties": {
                         "from": {
-                          "type": "string",
-                          "format": "email",
-                          "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                          "type": "string"
                         },
                         "name": {
                           "type": "string"
@@ -1755,16 +1753,12 @@
                         "to": {
                           "anyOf": [
                             {
-                              "type": "string",
-                              "format": "email",
-                              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                              "type": "string"
                             },
                             {
                               "type": "array",
                               "items": {
-                                "type": "string",
-                                "format": "email",
-                                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                "type": "string"
                               }
                             }
                           ]
@@ -1772,16 +1766,12 @@
                         "cc": {
                           "anyOf": [
                             {
-                              "type": "string",
-                              "format": "email",
-                              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                              "type": "string"
                             },
                             {
                               "type": "array",
                               "items": {
-                                "type": "string",
-                                "format": "email",
-                                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                "type": "string"
                               }
                             }
                           ]
@@ -1789,16 +1779,12 @@
                         "bcc": {
                           "anyOf": [
                             {
-                              "type": "string",
-                              "format": "email",
-                              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                              "type": "string"
                             },
                             {
                               "type": "array",
                               "items": {
-                                "type": "string",
-                                "format": "email",
-                                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                                "type": "string"
                               }
                             }
                           ]
