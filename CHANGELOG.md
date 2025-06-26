@@ -1,3 +1,10 @@
+## [0.61.5](https://github.com/latechforce/engine/compare/v0.61.4...v0.61.5) (2025-06-26)
+
+
+### Bug Fixes
+
+* **action:** allow email in variables in gmail config ([3e73307](https://github.com/latechforce/engine/commit/3e7330737f7d13c35a7e3cc76a8dd0408f269187)) — Thomas JEANNEAU
+
 ## [0.61.4](https://github.com/latechforce/engine/compare/v0.61.3...v0.61.4) (2025-06-26)
 
 
