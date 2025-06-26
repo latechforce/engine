@@ -1,3 +1,11 @@
+# [0.62.0](https://github.com/latechforce/engine/compare/v0.61.5...v0.62.0) (2025-06-26)
+
+
+### Features
+
+* **airtable:** should connect to airtable ([79903af](https://github.com/latechforce/engine/commit/79903af1eed75980dae0db872dd5058f9ee4b7ab)) — Thomas JEANNEAU
+* **airtable:** should trigger an automation when a airtable record is created ([6cea525](https://github.com/latechforce/engine/commit/6cea525cb73ced216ec5036f7de5da3a1b1bae2b)) — Thomas JEANNEAU
+
 ## [0.61.5](https://github.com/latechforce/engine/compare/v0.61.4...v0.61.5) (2025-06-26)
 
 
