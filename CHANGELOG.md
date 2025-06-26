@@ -1,3 +1,10 @@
+## [0.61.2](https://github.com/latechforce/engine/compare/v0.61.1...v0.61.2) (2025-06-25)
+
+
+### Bug Fixes
+
+* **gmail:** send email with html body ([ff2f2c2](https://github.com/latechforce/engine/commit/ff2f2c2018b00878eff1310857753b8ee754052c)) — Thomas JEANNEAU
+
 ## [0.61.1](https://github.com/latechforce/engine/compare/v0.61.0...v0.61.1) (2025-06-25)
 
 
