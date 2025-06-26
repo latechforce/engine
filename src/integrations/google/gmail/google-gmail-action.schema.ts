@@ -9,11 +9,11 @@ const sendEmailGoogleGmailActionSchema = baseGoogleGmailActionSchema
   .extend({
     action: z.literal('send-email'),
     params: z.object({
-      from: z.email().optional(),
+      from: z.string().optional(),
       name: z.string().optional(),
-      to: z.email().or(z.array(z.email())),
-      cc: z.email().or(z.array(z.email())).optional(),
-      bcc: z.email().or(z.array(z.email())).optional(),
+      to: z.string().or(z.array(z.string())),
+      cc: z.string().or(z.array(z.string())).optional(),
+      bcc: z.string().or(z.array(z.string())).optional(),
       subject: z.string(),
       html: z.string(),
       text: z.string().optional(),
