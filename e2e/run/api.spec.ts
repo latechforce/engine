@@ -163,3 +163,24 @@ test('should return a list of runs filtered by automation id and search on steps
   const { runs }: ListRunsDto = await response.json()
   expect(runs.length).toBe(2)
 })
+
+test('should return a list of runs filtered by search on automation name', async ({
+  startExampleApp,
+}) => {
+  // GIVEN
+  const { page } = await startExampleApp({
+    test,
+    filter: 'automation/multiple',
+    loggedOnAdmin: true,
+  })
+  await page.request.post('/api/automations/run-success')
+  await page.request.post('/api/automations/run-failure')
+  await page.request.post('/api/automations/run-success')
+
+  // WHEN
+  const response = await page.request.get(`/api/runs?q=run-failure-automation`)
+
+  // THEN
+  const { runs }: ListRunsDto = await response.json()
+  expect(runs.length).toBe(1)
+})

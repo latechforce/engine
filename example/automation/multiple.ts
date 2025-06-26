@@ -32,7 +32,7 @@ export default {
     },
     {
       id: 2,
-      name: 'run-failure',
+      name: 'run-failure-automation',
       trigger: {
         service: 'http',
         event: 'post',

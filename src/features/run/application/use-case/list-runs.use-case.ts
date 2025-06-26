@@ -12,7 +12,10 @@ export class ListRunsUseCase {
   ) {}
 
   async execute(app: App, query?: string): Promise<ListRunsDto> {
-    const runs = await this.runRepository.list(query ?? undefined)
+    const automationsFiltered = app.automations
+      .filter((automation) => automation.schema.name.includes(query ?? ''))
+      .map((automation) => automation.schema.id)
+    const runs = await this.runRepository.list(query, automationsFiltered)
     return toListRunsDto(runs, app.automations)
   }
 }

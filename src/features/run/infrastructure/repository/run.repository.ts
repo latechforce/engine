@@ -3,7 +3,7 @@ import TYPES from '../../../../shared/application/di/types'
 import type { IRunRepository } from '../../domain/repository-interface/run-repository.interface'
 import { Run } from '../../domain/entity/run.entity'
 import type { RunDatabaseService } from '../service/database.service'
-import { desc, eq, or, and, like, sql } from 'drizzle-orm'
+import { desc, eq, or, and, like, sql, inArray } from 'drizzle-orm'
 import { EventEmitter } from 'events'
 
 @injectable()
@@ -54,7 +54,7 @@ export class RunRepository implements IRunRepository {
     this.updateListeners.push(listener)
   }
 
-  private whereQuery(query?: string) {
+  private whereQuery(query?: string, automationsIdsFiltered: number[] = []) {
     if (!query) return undefined
     const q = `%${query}%`
     const isPostgres = this.database.provider === 'postgres'
@@ -62,13 +62,16 @@ export class RunRepository implements IRunRepository {
     return or(
       like(schema.id, q),
       like(schema.status, q),
-      isPostgres ? sql`${schema.steps}::text ILIKE ${q}` : like(schema.steps, q)
+      isPostgres ? sql`${schema.steps}::text ILIKE ${q}` : like(schema.steps, q),
+      ...(automationsIdsFiltered.length > 0
+        ? [inArray(schema.automation_id, automationsIdsFiltered)]
+        : [])
     )
   }
 
-  async list(query?: string): Promise<Run[]> {
+  async list(query?: string, automationsIdsFiltered: number[] = []): Promise<Run[]> {
     const runs = await this.database.run.list({
-      where: this.whereQuery(query),
+      where: this.whereQuery(query, automationsIdsFiltered),
       orderBy: desc(this.database.schema.run.created_at),
     })
     return runs.map((run) => this.toEntity(run))
