@@ -23,7 +23,7 @@ export class GoogleConnectionIntegration {
     this.codeVerifier = this.generateCodeVerifier()
   }
 
-  getAuthorizationUrl(id: number) {
+  getAuthorizationUrl() {
     const codeChallenge = this.generateCodeChallenge(this.codeVerifier)
     return this.oauth2Client.generateAuthUrl({
       access_type: 'offline',
@@ -33,7 +33,7 @@ export class GoogleConnectionIntegration {
         'https://www.googleapis.com/auth/userinfo.email',
         ...this.scope,
       ],
-      state: JSON.stringify({ id }),
+      state: JSON.stringify({ id: this.connection.id }),
       code_challenge_method: CodeChallengeMethod.S256,
       code_challenge: codeChallenge,
     })

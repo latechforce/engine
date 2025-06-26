@@ -34,7 +34,7 @@ export class ConnectionRepository implements IConnectionRepository {
 
   getAuthorizationUrl(connection: ConnectionSchema): string {
     const integration = toConnectionIntegration(connection, this.redirectUri)
-    return integration.getAuthorizationUrl(connection.id)
+    return integration.getAuthorizationUrl()
   }
 
   async getAccessTokenFromCode(connection: ConnectionSchema, code: string): Promise<Token> {

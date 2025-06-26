@@ -1,3 +1,4 @@
+import { AirtableTriggerIntegration } from './airtable/airtable-trigger'
 import { CalendlyTriggerIntegration } from './calendly/calendly-trigger'
 import type { IntegrationTriggerSchema } from './trigger.schema'
 
@@ -5,6 +6,8 @@ export const toTriggerIntegration = (trigger: IntegrationTriggerSchema, automati
   switch (trigger.service) {
     case 'calendly':
       return new CalendlyTriggerIntegration(trigger, automationId)
+    case 'airtable':
+      return new AirtableTriggerIntegration(trigger, automationId)
     case 'facebook-lead-ads':
       throw new Error('Facebook Lead Ads integration not implemented')
     case 'linkedin-ads':

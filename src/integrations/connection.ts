@@ -2,10 +2,12 @@ import { CalendlyConnectionIntegration } from './calendly/calendly-connection'
 import { LinkedInAdsConnectionIntegration } from './linkedin/ads/linkedin-ads-connection'
 import { FacebookLeadAdsConnectionIntegration } from './facebook/lead-ads/facebook-lead-ads-connection'
 import { GoogleConnectionIntegration } from './google/google-connection'
+import { AirtableConnectionIntegration } from './airtable/airtable-connection'
 import type { ConnectionSchema } from './connection.schema'
 
 export type ConnectionIntegration =
   | CalendlyConnectionIntegration
+  | AirtableConnectionIntegration
   | LinkedInAdsConnectionIntegration
   | FacebookLeadAdsConnectionIntegration
   | GoogleConnectionIntegration
@@ -30,6 +32,9 @@ export const toConnectionIntegration = (
   switch (connection.service) {
     case 'calendly':
       integration = new CalendlyConnectionIntegration(connection, redirectUriWithState)
+      break
+    case 'airtable':
+      integration = new AirtableConnectionIntegration(connection, redirectUriWithState)
       break
     case 'google-sheets':
       integration = new GoogleConnectionIntegration(connection, redirectUri, [
