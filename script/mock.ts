@@ -52,6 +52,11 @@ const mockGoogleApis = (handlers: Handlers) => {
                   )?.json
                 },
               },
+              getProfile: async () => {
+                return (
+                  await handlers['https://www.googleapis.com/gmail/v1/users/me/profile']?.GET?.()
+                )?.json
+              },
             },
           }
         },

@@ -22,4 +22,11 @@ export const handlers: Handlers = {
       },
     }),
   },
+  'https://www.googleapis.com/gmail/v1/users/me/profile': {
+    GET: async () => ({
+      json: {
+        data: { emailAddress: 'mock@google.com' },
+      },
+    }),
+  },
 }
