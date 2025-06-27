@@ -3,6 +3,7 @@ import type { IntegrationActionSchema } from './action.schema'
 import { GoogleGmailActionIntegration } from './google/gmail/google-gmail-action'
 import { GoogleSheetsActionIntegration } from './google/sheets/google-sheets-action'
 import type { ConnectionSchema } from './connection.schema'
+import { AirtableActionIntegration } from './airtable/airtable-action'
 
 export const toActionIntegration = (
   action: IntegrationActionSchema,
@@ -12,6 +13,8 @@ export const toActionIntegration = (
   switch (action.service) {
     case 'calendly':
       return new CalendlyActionIntegration(action)
+    case 'airtable':
+      return new AirtableActionIntegration(action)
     case 'google-sheets':
       if (connection.service !== 'google-sheets') {
         throw new Error('Connection and action services do not match')

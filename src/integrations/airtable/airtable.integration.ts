@@ -3,6 +3,7 @@ import type {
   CreateWebhookResponse,
   ListWebhooksResponse,
   WebhookSpecification,
+  ListWebhookPayloadsResponse,
 } from './airtable.types'
 
 export class AirtableIntegration {
@@ -21,6 +22,22 @@ export class AirtableIntegration {
       headers: this.getTokenHeader(),
     })
     return response.json<ListWebhooksResponse>()
+  }
+
+  async listWebhookPayloads({
+    baseId,
+    webhookId,
+  }: {
+    baseId: string
+    webhookId: string
+  }): Promise<ListWebhookPayloadsResponse> {
+    const response = await ky.get(
+      this.baseUrl + `/v0/bases/${baseId}/webhooks/${webhookId}/payloads`,
+      {
+        headers: this.getTokenHeader(),
+      }
+    )
+    return response.json<ListWebhookPayloadsResponse>()
   }
 
   async createWebhook(body: {

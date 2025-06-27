@@ -1,6 +1,7 @@
 import type {
   ListWebhooksResponse,
   CreateWebhookResponse,
+  ListWebhookPayloadsResponse,
 } from '../../src/integrations/airtable/airtable.types'
 
 export const listWebhooksResponse: ListWebhooksResponse = {
@@ -22,6 +23,28 @@ export const listWebhooksResponse: ListWebhooksResponse = {
           },
         },
       },
+    },
+  ],
+}
+
+export const listWebhookPayloadsResponse: ListWebhookPayloadsResponse = {
+  cursor: 1,
+  mightHaveMore: false,
+  payloads: [
+    {
+      actionMetadata: {
+        source: 'airtable',
+        sourceMetadata: {
+          user: {
+            email: 'test@test.com',
+            id: '123',
+            permissionLevel: 'create',
+          },
+        },
+      },
+      baseTransactionNumber: 1,
+      payloadFormat: 'json',
+      timestamp: '2023-01-20T00:00:00.000Z',
     },
   ],
 }

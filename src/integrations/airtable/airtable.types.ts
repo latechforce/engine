@@ -19,6 +19,26 @@ export type ListWebhooksResponse = {
   }[]
 }
 
+export type ListWebhookPayloadsResponse = {
+  cursor: number
+  mightHaveMore: boolean
+  payloads: {
+    actionMetadata: {
+      source: string
+      sourceMetadata: {
+        user: {
+          email: string
+          id: string
+          permissionLevel: 'create' | 'read' | 'update' | 'delete' // adjust based on allowed values
+        }
+      }
+    }
+    baseTransactionNumber: number
+    payloadFormat: string
+    timestamp: string
+  }[]
+}
+
 export type CreateWebhookResponse = {
   expirationTime: string
   id: string
