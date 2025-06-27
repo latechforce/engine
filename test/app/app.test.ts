@@ -554,4 +554,67 @@ describe('start', () => {
       'Table must have a single-line-text, long-text, url, email or phone-number field as primary field'
     )
   })
+
+  it('should throw an error if a trigger account is not found', async () => {
+    const schema: AppSchema = {
+      automations: [
+        {
+          id: 1,
+          name: 'automation-1',
+          trigger: {
+            account: 'airtable',
+            service: 'airtable',
+            event: 'record-created',
+            params: {
+              baseId: 'baseId',
+              tableId: 'tableId',
+            },
+          },
+          actions: [],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Account "airtable" not found for trigger "airtable/record-created"')
+  })
+
+  it('should throw an error if a action account is not found', async () => {
+    const schema: AppSchema = {
+      automations: [
+        {
+          id: 1,
+          name: 'automation-1',
+          trigger: {
+            service: 'http',
+            event: 'post',
+            params: {
+              path: '/automation',
+            },
+          },
+          actions: [
+            {
+              name: 'action',
+              service: 'airtable',
+              action: 'list-webhook-payloads',
+              account: 'airtable',
+              params: {
+                baseId: 'baseId',
+                webhookId: 'webhookId',
+              },
+            },
+          ],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Account "airtable" not found for action "airtable/list-webhook-payloads"')
+  })
 })

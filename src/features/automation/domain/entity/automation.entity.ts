@@ -21,6 +21,16 @@ export class Automation {
         )
       }
     }
+    for (const action of schema.actions) {
+      if ('account' in action) {
+        const actionConnection = this.getAccount(action.account, action.service)
+        if (!actionConnection) {
+          throw new Error(
+            `Account "${action.account}" not found for action "${action.service}/${action.action}"`
+          )
+        }
+      }
+    }
     this.trigger = trigger
     this.actions = schema.actions
   }
