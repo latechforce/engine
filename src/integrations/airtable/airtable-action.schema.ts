@@ -11,6 +11,8 @@ const listWebhookPayloadsAirtableActionSchema = baseAirtableActionSchema
     params: z.object({
       baseId: z.string(),
       webhookId: z.string(),
+      cursor: z.number().optional(),
+      limit: z.number().optional(),
     }),
   })
   .meta({

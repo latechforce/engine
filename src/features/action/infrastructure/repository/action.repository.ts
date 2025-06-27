@@ -31,12 +31,13 @@ import type { IObjectRepository } from '../../../bucket/domain/repository-interf
 import { Object } from '../../../bucket/domain/entity/object.entity'
 import { toObjectDto } from '../../../bucket/application/dto/object.dto'
 import type { ConditionsSchema } from '../../domain/schema/condition'
-import type { Connection } from '../../../connection/domain/entity/connection.entity'
+import { Connection } from '../../../connection/domain/entity/connection.entity'
 import type { IConnectionRepository } from '../../../connection/domain/repository-interface/connection-repository.interface'
 import type { ITokenRepository } from '../../../connection/domain/repository-interface/token-repository.interface'
 import type { FieldValue } from '../../../table/domain/object-value/field-value.object-value'
 import type { Table } from '../../../table/domain/entity/table.entity'
 import type { QueueService } from '../service/queue.service'
+import type { ActionContext } from '../service/code.service'
 
 @injectable()
 export class ActionRepository implements IActionRepository {
@@ -162,10 +163,16 @@ export class ActionRepository implements IActionRepository {
       debug: (message: string) => this.logger.child('code-action').debug(message),
       error: (message: string) => this.logger.child('code-action').error(message),
     }
+    const action: ActionContext = async (schema: IntegrationActionSchema) => {
+      const connection = app.findConnection(schema.account)
+      if (!connection) throw new Error(`Connection "${schema.account}" not found`)
+      return this.runIntegration(schema, connection)
+    }
     const service: ServiceContext = {
       log,
       table,
       bucket,
+      action,
     }
     return {
       lint: (code: string) => this.codeService.lint(code, inputData, service),

@@ -27,14 +27,22 @@ export class AirtableIntegration {
   async listWebhookPayloads({
     baseId,
     webhookId,
+    cursor,
+    limit,
   }: {
     baseId: string
     webhookId: string
+    cursor?: number
+    limit?: number
   }): Promise<ListWebhookPayloadsResponse> {
+    const searchParams: Record<string, string> = {}
+    if (cursor !== undefined) searchParams.cursor = String(cursor)
+    if (limit !== undefined) searchParams.limit = String(limit)
     const response = await ky.get(
       this.baseUrl + `/v0/bases/${baseId}/webhooks/${webhookId}/payloads`,
       {
         headers: this.getTokenHeader(),
+        searchParams,
       }
     )
     return response.json<ListWebhookPayloadsResponse>()

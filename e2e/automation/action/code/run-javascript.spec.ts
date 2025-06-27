@@ -1,5 +1,6 @@
 import { expect, test } from '@/e2e/fixtures'
 import type { ListRunsDto } from '../../../../src/features/run/application/dto/list-runs.dto'
+import { connectTo } from '@/e2e/steps'
 
 test('should run a JavaScript code', async ({ startExampleApp }) => {
   // GIVEN
@@ -159,4 +160,17 @@ test('should filter a JavaScript code that return an empty array', async ({ star
   const runsResponse = await page.request.get('/api/runs')
   const { runs }: ListRunsDto = await runsResponse.json()
   expect(runs[0]!.status).toBe('filtered')
+})
+
+test('should run a JavaScript code with actions', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'actions', test, loggedOnAdmin: true })
+
+  // WHEN
+  await connectTo('airtable', page)
+  const response = await page.request.post('/api/automations/run-javascript')
+  const { data } = await response.json()
+
+  // THEN
+  expect(data.data.cursor).toBe(1)
 })

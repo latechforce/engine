@@ -7,6 +7,9 @@ import type { Fields } from '../../../table/domain/object-value/fields.object-va
 import type { Record } from '../../../table/domain/entity/record.entity'
 import type { ObjectDto } from '../../../bucket/application/dto/object.dto'
 import type { ConditionsSchema } from '../../domain/schema/condition'
+import type { ActionResult } from '../../domain/value-object/action-result.value-object'
+import type { IntegrationError } from '../../domain/value-object/integration-error.value-object'
+import type { IntegrationActionSchema } from '../../../../integrations/action.schema'
 
 export type TableContext = <T extends Fields>(
   name: string
@@ -36,10 +39,15 @@ export type LogContext = {
   error: (message: string) => void
 }
 
+export type ActionContext = (
+  schema: IntegrationActionSchema
+) => Promise<ActionResult<IntegrationError>>
+
 export type ServiceContext = {
   log: LogContext
   table: TableContext
   bucket: BucketContext
+  action: ActionContext
 }
 
 export type CodeContext<T = {}, E = {}> = {
@@ -47,6 +55,7 @@ export type CodeContext<T = {}, E = {}> = {
   externals: E
   table: TableContext
   bucket: BucketContext
+  action: ActionContext
   log: LogContext
 }
 
@@ -74,7 +83,7 @@ export class CodeService {
   constructor(private readonly externals: { [key: string]: unknown }) {}
 
   private buildCode(code: string) {
-    return `(${code})({ externals, inputData, table, bucket, log })`
+    return `(${code})({ externals, inputData, table, bucket, log, action })`
   }
 
   private getContext(inputData: { [key: string]: unknown }, service: ServiceContext) {

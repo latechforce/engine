@@ -9,10 +9,12 @@ export class AirtableActionIntegration {
     const airtable = new AirtableIntegration(token.access_token)
     switch (this.schema.action) {
       case 'list-webhook-payloads': {
-        const { baseId, webhookId } = this.schema.params
+        const { baseId, webhookId, cursor, limit } = this.schema.params
         return airtable.listWebhookPayloads({
           baseId,
           webhookId,
+          cursor,
+          limit,
         })
       }
       default: {
