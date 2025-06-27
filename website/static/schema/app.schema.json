@@ -1731,6 +1731,64 @@
               ]
             },
             {
+              "title": "Airtable",
+              "description": "The Airtable action is a action that is used to interact with the Airtable API",
+              "anyOf": [
+                {
+                  "title": "List Webhook Subscriptions",
+                  "description": "The Calendly list webhook subscriptions action is a action that lists the webhook subscriptions for a given organization",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "account": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "service": {
+                      "type": "string",
+                      "const": "airtable"
+                    },
+                    "action": {
+                      "type": "string",
+                      "const": "list-webhook-payloads"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "baseId": {
+                          "type": "string"
+                        },
+                        "webhookId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "baseId",
+                        "webhookId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "account",
+                    "service",
+                    "action",
+                    "params"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            {
               "title": "Google Sheets",
               "description": "The Google Sheets action is a action that is used to interact with the Google Sheets API",
               "anyOf": [
