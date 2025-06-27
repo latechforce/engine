@@ -143,7 +143,7 @@
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-boundaries": "^5.0.1",
     "eslint-plugin-prettier": "^5.5.1",
-    "msw": "2.3.1",
+    "msw": "2.10.2",
     "prettier": "^3.6.1",
     "prettier-plugin-tailwindcss": "^0.6.13",
     "semantic-release": "^24.2.5",
