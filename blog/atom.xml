@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://engine.latechforce.com/blog</id>
     <title>LTF Engine Blog</title>
-    <updated>2025-06-26T00:00:00.000Z</updated>
+    <updated>2025-06-27T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://engine.latechforce.com/blog"/>
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 0.63.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-63-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-63-0"/>
+        <updated>2025-06-27T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Changelog for version 0.63.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-63-0"><p class="before-truncate"> 0.63.0   Features  * airtable: should run a airtable list webhook payloads action (56199c4) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0630"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-63-0">0.63.0</a><a href="https://engine.latechforce.com/blog/release-0-63-0#0630" class="hash-link" aria-label="Direct link to 0.63.0" title="Direct link to 0.63.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-63-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li><strong>airtable:</strong> should run a airtable list webhook payloads action (<a href="https://github.com/latechforce/engine/commit/56199c4be3b0c7bd37505f3fcb12b2e9ae32b500" target="_blank" rel="noopener noreferrer">56199c4</a>) — Thomas JEANNEAU</li>
+</ul>]]></content>
+        <category label="Release" term="Release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Fix 0.62.2]]></title>
         <id>https://engine.latechforce.com/blog/fix-0-62-2</id>
