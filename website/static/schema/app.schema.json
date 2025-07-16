@@ -1768,6 +1768,12 @@
                         },
                         "webhookId": {
                           "type": "string"
+                        },
+                        "cursor": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
                         }
                       },
                       "required": [

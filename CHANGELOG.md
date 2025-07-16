@@ -1,3 +1,15 @@
+# [0.64.0](https://github.com/latechforce/engine/compare/v0.63.0...v0.64.0) (2025-06-27)
+
+
+### Bug Fixes
+
+* **app:** should throw an error if a action account is not found ([3d036d2](https://github.com/latechforce/engine/commit/3d036d20111d3ff8bfea1458a067f1fd5b3950e7)) — Thomas JEANNEAU
+
+
+### Features
+
+* **action:** should run a TypeScript code with actions ([78525c9](https://github.com/latechforce/engine/commit/78525c993c11b31a953fb238d15f0251cffa37f1)) — Thomas JEANNEAU
+
 # [0.63.0](https://github.com/latechforce/engine/compare/v0.62.2...v0.63.0) (2025-06-27)
 
 
