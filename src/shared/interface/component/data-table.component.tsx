@@ -128,7 +128,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div>
+    <div className={cn('flex flex-col', fullPage ? 'h-full' : '')}>
       <div className={cn('flex items-center', fullPage ? 'p-2' : 'pb-4')}>
         {search ? (
           <DebouncedInput
@@ -195,73 +195,88 @@ export function DataTable<TData, TValue>({
           })}
         </div>
       </div>
-      <div className={cn(fullPage ? 'border-y' : 'rounded-md border')}>
-        <Table>
-          <TableHeader className={cn(fullPage ? 'bg-muted' : '')}>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      style={{ width: header.getSize() }}
-                      className={verticalSeparator ? 'border-border border-r' : ''}
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                      <div
-                        onMouseDown={header.getResizeHandler()}
-                        onTouchStart={header.getResizeHandler()}
-                        className={`resizer ${header.column.getIsResizing() ? 'isResizing' : ''}`}
-                      />
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                  className={onRowClick ? 'hover:bg-muted/50 cursor-pointer' : 'hover:bg-muted/50'}
-                  onClick={() => onRowClick?.(row.original)}
-                >
-                  {row.getVisibleCells().map((cell) => {
+      <div
+        className={cn(
+          'flex-1',
+          fullPage ? 'min-h-0 overflow-hidden border-y' : 'rounded-md border'
+        )}
+      >
+        <div className={cn('h-full', fullPage ? 'overflow-auto' : '')}>
+          <Table
+            className={cn(fullPage ? 'border-b' : '')}
+            fullHeight={fullPage}
+          >
+            <TableHeader className={cn(fullPage ? 'bg-muted' : '')}>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
                     return (
-                      <TableCell
-                        key={cell.id}
-                        style={{
-                          width: cell.column.getSize(),
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                        }}
+                      <TableHead
+                        key={header.id}
+                        style={{ width: header.getSize() }}
                         className={verticalSeparator ? 'border-border border-r' : ''}
                       >
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                        <div
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                          className={`resizer ${header.column.getIsResizing() ? 'isResizing' : ''}`}
+                        />
+                      </TableHead>
                     )
                   })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 border-r text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && 'selected'}
+                    className={
+                      onRowClick ? 'hover:bg-muted/50 cursor-pointer' : 'hover:bg-muted/50'
+                    }
+                    onClick={() => onRowClick?.(row.original)}
+                  >
+                    {row.getVisibleCells().map((cell) => {
+                      return (
+                        <TableCell
+                          key={cell.id}
+                          style={{
+                            width: cell.column.getSize(),
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                          }}
+                          className={verticalSeparator ? 'border-border border-r' : ''}
+                        >
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </TableCell>
+                      )
+                    })}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 border-r text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
-      <DataTablePagination table={table} />
+      <DataTablePagination
+        table={table}
+        fullPage={fullPage}
+      />
     </div>
   )
 }

@@ -3,14 +3,16 @@ import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-r
 
 import { Button } from '../ui/button.ui'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select.ui'
+import { cn } from '../lib/utils.lib'
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
+  fullPage?: boolean
 }
 
-export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
+export function DataTablePagination<TData>({ table, fullPage }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-between pt-4">
+    <div className={cn('flex items-center justify-between pt-4', fullPage ? 'p-2' : 'pt-4')}>
       <div className="text-muted-foreground flex-1 text-sm">
         {table.getFilteredSelectedRowModel().rows.length} of{' '}
         {table.getFilteredRowModel().rows.length} row(s) selected.
