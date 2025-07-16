@@ -2,7 +2,7 @@ import { createRoute, Link, useParams } from '@tanstack/react-router'
 import Layout from '../../../../app/interface/page/admin/layout'
 import { keepPreviousData, queryOptions, useQuery } from '@tanstack/react-query'
 import { client } from '../../../../../shared/interface/lib/client.lib'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import { adminRoute } from '../../../../app/interface/page/router'
 import {
@@ -44,13 +44,22 @@ const automationQueryOptions = (
     placeholderData: keepPreviousData,
   })
 
-const AutomationDataTable = () => {
+const AutomationDataTable = ({ automationId }: { automationId: string }) => {
   const [search, setSearch] = useState('')
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   })
-  const { automationId } = useParams({ from: '/admin/automations/$automationId' })
+
+  // Reset pagination and search when automationId changes
+  useEffect(() => {
+    setSearch('')
+    setPagination({
+      pageIndex: 0,
+      pageSize: 10,
+    })
+  }, [automationId])
+
   const { data } = useQuery(
     automationQueryOptions(automationId, {
       search: search,
@@ -121,7 +130,7 @@ const AutomationPage = () => {
             <TypographyP>{data.automation.description}</TypographyP>
           </div>
         )}
-        <AutomationDataTable />
+        <AutomationDataTable automationId={automationId} />
       </div>
     </Layout>
   )

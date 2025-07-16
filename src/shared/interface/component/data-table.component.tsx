@@ -276,6 +276,7 @@ export function DataTable<TData, TValue>({
       <DataTablePagination
         table={table}
         fullPage={fullPage}
+        canSelectRows={actions.length > 0}
       />
     </div>
   )
