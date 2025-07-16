@@ -14,4 +14,5 @@ export type IConnectionRepository = {
     get: (id: number) => Promise<ConnectionStatus | undefined>
     listByIds: (ids: number[]) => Promise<ConnectionStatus[]>
   }
+  sendDisconnectedEmail: (connection: Connection) => Promise<void>
 }

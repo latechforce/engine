@@ -10,4 +10,7 @@ export type Env = {
   AUTH_ADMIN_PASSWORD: string
   AUTH_ADMIN_NAME: string
   AUTH_SECRET: string
+  RESEND_API_KEY?: string
+  RESEND_EMAIL_FROM: string
+  SUPPORT_EMAILS: string
 }

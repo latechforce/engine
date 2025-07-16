@@ -32,6 +32,9 @@ export class SetupConnectionUseCase {
     const connected = await this.tokenRepository.check(connection)
     if (connected !== status.connected) {
       await this.connectionRepository.status.setConnected(status.id, connected)
+      if (!connected) {
+        await this.connectionRepository.sendDisconnectedEmail(connection)
+      }
     }
     this.connectionRepository.debug(
       `"${connection.name}" is ${connected ? 'connected' : 'disconnected'}`

@@ -12,6 +12,9 @@ export const envSchema = z.object({
   AUTH_ADMIN_PASSWORD: z.string().default('admin'),
   AUTH_ADMIN_NAME: z.string().default('admin'),
   AUTH_SECRET: z.string().default('secret'),
+  RESEND_API_KEY: z.string().optional(),
+  RESEND_EMAIL_FROM: z.string().default('onboarding@resend.dev'),
+  SUPPORT_EMAILS: z.string().default('thomas.jeanneau@latechforce.com'),
 })
 
 export type EnvSchemaValidated = z.infer<typeof envSchema>

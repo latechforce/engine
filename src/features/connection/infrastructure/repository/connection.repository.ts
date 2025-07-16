@@ -8,6 +8,7 @@ import type { Connection } from '../../domain/entity/connection.entity'
 import type { ConnectionStatus } from '../../domain/value-object/connection-status.value-object'
 import type { ConnectionDatabaseService } from '../service/database.service'
 import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
+import type { EmailService } from '../../../../shared/infrastructure/service/email.service'
 
 @injectable()
 export class ConnectionRepository implements IConnectionRepository {
@@ -17,7 +18,9 @@ export class ConnectionRepository implements IConnectionRepository {
     @inject(TYPES.Connection.Service.Database)
     private readonly database: ConnectionDatabaseService,
     @inject(TYPES.Service.Env)
-    private readonly env: EnvService
+    private readonly env: EnvService,
+    @inject(TYPES.Service.Email)
+    private readonly emailService: EmailService
   ) {}
 
   debug(message: string) {
@@ -79,6 +82,16 @@ export class ConnectionRepository implements IConnectionRepository {
           updatedAt: status.updated_at,
         }))
       },
+    }
+  }
+
+  async sendDisconnectedEmail(connection: Connection): Promise<void> {
+    const supportEmails = this.env.get('SUPPORT_EMAILS')
+    const baseUrl = this.env.get('BASE_URL')
+    if (supportEmails) {
+      const subject = `Connection "${connection.name}" of service "${connection.service}" has been disconnected`
+      const text = `You can reconnect to the connection "${connection.name}" by clicking on the following link: ${baseUrl}/admin/connections`
+      await this.emailService.sendEmail(supportEmails.split(','), subject, text)
     }
   }
 }

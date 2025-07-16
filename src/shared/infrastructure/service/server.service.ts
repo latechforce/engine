@@ -122,9 +122,7 @@ export class ServerService {
           PUT: this.app.fetch,
           DELETE: this.app.fetch,
         },
-        '/*': {
-          GET: index,
-        },
+        '/*': index,
       },
       port: Number(this.env.get('PORT')),
       development: this.env.get('NODE_ENV') !== 'production',

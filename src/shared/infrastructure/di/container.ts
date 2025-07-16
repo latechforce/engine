@@ -9,6 +9,7 @@ import { ServerService, type HonoType } from '../service/server.service'
 import { DatabaseService } from '../service/database.service'
 import { SchemaService } from '../service/validator.service'
 import { TemplateService } from '../service/template.service'
+import { EmailService } from '../service/email.service'
 import { HonoContext } from './context'
 import TYPES from '../../application/di/types'
 
@@ -40,6 +41,7 @@ export async function registerDependencies(
   container.bind<DatabaseService>(TYPES.Service.Database).to(DatabaseService).inSingletonScope()
   container.bind<SchemaService>(TYPES.Service.Schema).to(SchemaService).inSingletonScope()
   container.bind<TemplateService>(TYPES.Service.Template).to(TemplateService).inSingletonScope()
+  container.bind<EmailService>(TYPES.Service.Email).to(EmailService).inSingletonScope()
 
   // Register dependencies
   registerUserDependencies(container)

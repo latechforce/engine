@@ -28,6 +28,7 @@ const TYPES = {
     Database: Symbol.for('DatabaseService'),
     Schema: Symbol.for('SchemaService'),
     Template: Symbol.for('TemplateService'),
+    Email: Symbol.for('EmailService'),
   },
   Hono: {
     Context: Symbol.for('HonoContext'),
