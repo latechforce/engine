@@ -60,13 +60,13 @@ const AutomationDataTable = ({ automationId }: { automationId: string }) => {
     })
   }, [automationId])
 
-  const { data } = useQuery(
-    automationQueryOptions(automationId, {
-      search: search,
-      pageIndex: pagination.pageIndex,
-      pageSize: pagination.pageSize,
-    })
-  )
+  const params = {
+    search: search,
+    pageIndex: pagination.pageIndex,
+    pageSize: pagination.pageSize,
+  }
+
+  const { data } = useQuery(automationQueryOptions(automationId, params))
   if (!data) return <TableSkeleton />
   return (
     <RunsDataTable
@@ -82,6 +82,7 @@ const AutomationDataTable = ({ automationId }: { automationId: string }) => {
         rowCount: data.pagination.rowCount,
         onPaginationChange: setPagination,
       }}
+      queryKey={['automationData', automationId, params]}
     />
   )
 }

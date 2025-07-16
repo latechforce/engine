@@ -28,6 +28,7 @@ type Action<TData> = {
   onClick: (rows: Row<TData>[]) => void
   variant?: 'outline' | 'default' | 'destructive'
   activeOnSelectedRows?: boolean
+  disabled?: boolean
 }
 
 type DropdownActions<TData> = {
@@ -182,9 +183,10 @@ export function DataTable<TData, TValue>({
                   variant={action.variant}
                   onClick={() => action.onClick(table.getFilteredSelectedRowModel().rows)}
                   disabled={
-                    action.activeOnSelectedRows
+                    action.disabled ||
+                    (action.activeOnSelectedRows
                       ? table.getFilteredSelectedRowModel().rows.length === 0
-                      : false
+                      : false)
                   }
                 >
                   {action.icon}
@@ -205,6 +207,7 @@ export function DataTable<TData, TValue>({
           <Table
             className={cn(fullPage ? 'border-b' : '')}
             fullHeight={fullPage}
+            scrollable={fullPage}
           >
             <TableHeader className={cn(fullPage ? 'bg-muted' : '')}>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -239,7 +242,6 @@ export function DataTable<TData, TValue>({
                     className={
                       onRowClick ? 'hover:bg-muted/50 cursor-pointer' : 'hover:bg-muted/50'
                     }
-                    onClick={() => onRowClick?.(row.original)}
                   >
                     {row.getVisibleCells().map((cell) => {
                       return (
@@ -252,6 +254,9 @@ export function DataTable<TData, TValue>({
                             whiteSpace: 'nowrap',
                           }}
                           className={verticalSeparator ? 'border-border border-r' : ''}
+                          onClick={() =>
+                            cell.column.id !== 'select' ? onRowClick?.(row.original) : undefined
+                          }
                         >
                           {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>

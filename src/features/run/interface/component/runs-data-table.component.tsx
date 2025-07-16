@@ -8,8 +8,38 @@ import type {
   DataTablePaginationProps,
   DataTableSearchProps,
 } from '../../../../shared/interface/component/data-table.component'
+import { Checkbox } from '../../../../shared/interface/ui/checkbox.ui'
+import { RotateCcw } from 'lucide-react'
+import { client } from '../../../../shared/interface/lib/client.lib'
+import { useMutation, type QueryKey } from '@tanstack/react-query'
+import { queryClient } from '../../../../shared/interface/lib/query.lib'
+import { toast } from 'sonner'
+import type { ReplayedRunsDto } from '../../application/dto/replay-runs-dto'
 
 export const columns: ColumnDef<RunDto>[] = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+        className="cursor-pointer"
+      />
+    ),
+    size: 30,
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: 'status',
     header: 'Status',
@@ -21,7 +51,7 @@ export const columns: ColumnDef<RunDto>[] = [
   {
     accessorKey: 'automationName',
     header: 'Automation',
-    size: 446,
+    size: 416,
   },
   {
     accessorKey: 'createdAt',
@@ -37,10 +67,27 @@ type RunsDataTableProps = {
   runs: RunDto[]
   search?: DataTableSearchProps
   pagination?: DataTablePaginationProps
+  queryKey: QueryKey
 }
 
-export const RunsDataTable = ({ runs, search, pagination }: RunsDataTableProps) => {
+export const RunsDataTable = ({ runs, search, pagination, queryKey }: RunsDataTableProps) => {
   const navigate = useNavigate()
+
+  const replayRunsMutation = useMutation({
+    mutationFn: async (rowsIds: string[]) => {
+      const response = await client.runs.replay.$post({
+        json: {
+          ids: rowsIds,
+        },
+      })
+      return await response.json()
+    },
+    onSuccess: (data: ReplayedRunsDto) => {
+      queryClient.invalidateQueries({ queryKey })
+      toast.success(`${data.replayed.length} runs replayed`)
+    },
+  })
+
   return (
     <DataTable
       columns={columns}
@@ -53,6 +100,18 @@ export const RunsDataTable = ({ runs, search, pagination }: RunsDataTableProps) 
       }}
       search={search}
       pagination={pagination}
+      actions={[
+        {
+          label: 'Replay run(s)',
+          icon: <RotateCcw />,
+          variant: 'outline',
+          activeOnSelectedRows: true,
+          disabled: replayRunsMutation.isPending,
+          onClick: async (rows) => {
+            replayRunsMutation.mutate(rows.map((row) => row.original.id))
+          },
+        },
+      ]}
     />
   )
 }

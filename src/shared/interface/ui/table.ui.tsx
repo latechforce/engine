@@ -3,15 +3,20 @@ import * as React from 'react'
 import { cn } from '../lib/utils.lib'
 import { Skeleton } from './skeleton.ui'
 
-function Table({
-  className,
-  fullHeight,
-  ...props
-}: React.ComponentProps<'table'> & { fullHeight?: boolean }) {
+type TableProps = React.ComponentProps<'table'> & {
+  fullHeight?: boolean
+  scrollable?: boolean
+}
+
+function Table({ className, fullHeight, scrollable, ...props }: TableProps) {
   return (
     <div
       data-slot="table-container"
-      className={cn('relative w-full overflow-x-auto', fullHeight && 'h-full')}
+      className={cn(
+        'relative w-full overflow-x-auto',
+        fullHeight && 'h-full',
+        scrollable && 'overflow-y-auto'
+      )}
     >
       <table
         data-slot="table"

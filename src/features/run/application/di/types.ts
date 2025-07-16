@@ -4,6 +4,7 @@ const TYPES = {
   UseCase: {
     ListRuns: Symbol.for('ListRunsUseCase'),
     GetRun: Symbol.for('GetRunUseCase'),
+    ReplayRuns: Symbol.for('ReplayRunsUseCase'),
   },
   Service: {
     Database: Symbol.for('RunDatabaseService'),

@@ -16,4 +16,11 @@ export class RunController {
     const getRunDto = await getRunUseCase.execute(app, data.runId)
     return c.json(getRunDto)
   }
+
+  static async replay(c: Context<HonoType>, data: { ids: string[] }) {
+    const app = c.get('app')
+    const replayRunsUseCase = c.get('replayRunsUseCase')
+    const replayedRunsDto = await replayRunsUseCase.execute(app, data.ids)
+    return c.json(replayedRunsDto)
+  }
 }

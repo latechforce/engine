@@ -39,13 +39,12 @@ const AllRunsDataTable = () => {
     pageIndex: 0,
     pageSize: 10,
   })
-  const { data } = useQuery(
-    runsQueryOptions({
-      search: search,
-      pageIndex: pagination.pageIndex,
-      pageSize: pagination.pageSize,
-    })
-  )
+  const params = {
+    search: search,
+    pageIndex: pagination.pageIndex,
+    pageSize: pagination.pageSize,
+  }
+  const { data } = useQuery(runsQueryOptions(params))
   if (!data) return <TableSkeleton />
   return (
     <RunsDataTable
@@ -61,6 +60,7 @@ const AllRunsDataTable = () => {
         rowCount: data.pagination.rowCount,
         onPaginationChange: setPagination,
       }}
+      queryKey={['runsData', params]}
     />
   )
 }

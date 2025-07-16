@@ -8,3 +8,9 @@ export const getRunsQuerySchema = z.object({
 })
 
 export const getRunsQueryValidator = zValidator('query', getRunsQuerySchema)
+
+export const getRunsReplayJsonSchema = z.object({
+  ids: z.array(z.string()),
+})
+
+export const getRunsReplayJsonValidator = zValidator('json', getRunsReplayJsonSchema)
