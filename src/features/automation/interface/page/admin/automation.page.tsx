@@ -17,31 +17,61 @@ import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
 import { PencilIcon } from 'lucide-react'
 import { runsAdminRoute } from '../../../../run/interface/page/admin/runs.page'
+import type { ListRunsParams } from '../../../../run/domain/repository-interface/run-repository.interface'
+import type { PaginationState } from '@tanstack/react-table'
 
-const automationQueryOptions = (automationId: string, query?: string) =>
+const automationQueryOptions = (
+  automationId: string,
+  params: ListRunsParams = {
+    search: '',
+    pageIndex: 0,
+    pageSize: 10,
+  }
+) =>
   queryOptions<GetAutomationDto>({
-    queryKey: ['automationData', automationId, query],
+    queryKey: ['automationData', automationId, params],
     queryFn: () =>
       client.automations[':automationId'].runs
         .$get({
           param: { automationId },
-          query: { q: query },
+          query: {
+            search: params.search,
+            pageIndex: params.pageIndex.toString(),
+            pageSize: params.pageSize.toString(),
+          },
         })
         .then((res) => res.json()),
     placeholderData: keepPreviousData,
   })
 
 const AutomationDataTable = () => {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [search, setSearch] = useState('')
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
   const { automationId } = useParams({ from: '/admin/automations/$automationId' })
-  const { data } = useQuery(automationQueryOptions(automationId, searchQuery))
+  const { data } = useQuery(
+    automationQueryOptions(automationId, {
+      search: search,
+      pageIndex: pagination.pageIndex,
+      pageSize: pagination.pageSize,
+    })
+  )
   if (!data) return <TableSkeleton />
   return (
     <RunsDataTable
       runs={data.runs}
       search={{
-        value: searchQuery,
-        onChange: setSearchQuery,
+        value: search,
+        onChange: setSearch,
+      }}
+      pagination={{
+        pageIndex: pagination.pageIndex,
+        pageSize: pagination.pageSize,
+        pageCount: data.pagination.pageCount,
+        rowCount: data.pagination.rowCount,
+        onPaginationChange: setPagination,
       }}
     />
   )
@@ -55,25 +85,25 @@ const AutomationPage = () => {
     <Layout
       breadcrumbs={[
         { title: 'Automation History', url: runsAdminRoute.fullPath },
-        { title: data?.automation.name ?? '...', url: automationAdminRoute.fullPath },
+        { title: data?.automation?.name ?? '...', url: automationAdminRoute.fullPath },
       ]}
     >
       <div className="container mx-auto max-w-4xl p-6">
         <div className="flex items-center justify-between">
-          <TypographyH3 className="mb-4">{data?.automation.name ?? '...'}</TypographyH3>
+          <TypographyH3 className="mb-4">{data?.automation?.name ?? '...'}</TypographyH3>
           <div className="flex items-center gap-2">
             <TypographySmall>
-              Automation is <strong>{data?.automation.active ? 'ON' : 'OFF'}</strong>
+              Automation is <strong>{data?.automation?.active ? 'ON' : 'OFF'}</strong>
             </TypographySmall>
             <Switch
-              checked={data?.automation.active}
+              checked={data?.automation?.active}
               onCheckedChange={() => {
                 if (data?.automation) {
                   mutation.mutate(data.automation)
                 }
               }}
             />
-            {data?.automation.editUrl && (
+            {data?.automation?.editUrl && (
               <Link
                 to={data.automation.editUrl}
                 target="_blank"
@@ -86,7 +116,7 @@ const AutomationPage = () => {
             )}
           </div>
         </div>
-        {data?.automation.description && (
+        {data?.automation?.description && (
           <div className="flex items-center justify-between">
             <TypographyP>{data.automation.description}</TypographyP>
           </div>

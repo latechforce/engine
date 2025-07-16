@@ -1,5 +1,6 @@
 import type { Context } from 'hono'
 import type { HonoType } from '../../../../shared/infrastructure/service'
+import type { ListRunsParams } from '../../../run/domain/repository-interface/run-repository.interface'
 
 export class AutomationController {
   static async list(c: Context<HonoType>) {
@@ -37,10 +38,10 @@ export class AutomationController {
     return c.text('OK')
   }
 
-  static async get(c: Context<HonoType>, data: { automationId: string; query?: string }) {
+  static async get(c: Context<HonoType>, data: { automationId: string; params: ListRunsParams }) {
     const app = c.get('app')
     const getAutomationUseCase = c.get('getAutomationUseCase')
-    const getAutomationDto = await getAutomationUseCase.execute(app, data.automationId, data.query)
+    const getAutomationDto = await getAutomationUseCase.execute(app, data.automationId, data.params)
     return c.json(getAutomationDto)
   }
 }

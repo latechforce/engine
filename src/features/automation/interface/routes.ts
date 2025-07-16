@@ -39,7 +39,11 @@ export const automationRoutes = new Hono<HonoType>()
   .get('/:automationId/runs', authRequiredMiddleware, getAutomationsQueryValidator, (c) =>
     AutomationController.get(c, {
       automationId: c.req.param('automationId'),
-      query: c.req.query('q'),
+      params: {
+        search: c.req.query('search') || '',
+        pageIndex: Number(c.req.query('pageIndex') || 0),
+        pageSize: Number(c.req.query('pageSize') || 10),
+      },
     })
   )
 

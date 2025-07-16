@@ -1,11 +1,12 @@
 import type { Context } from 'hono'
 import type { HonoType } from '../../../../shared/infrastructure/service'
+import type { ListRunsParams } from '../../domain/repository-interface/run-repository.interface'
 
 export class RunController {
-  static async list(c: Context<HonoType>, data: { query?: string }) {
+  static async list(c: Context<HonoType>, params: ListRunsParams) {
     const app = c.get('app')
     const listRunsUseCase = c.get('listRunsUseCase')
-    const listRunsDto = await listRunsUseCase.execute(app, data.query)
+    const listRunsDto = await listRunsUseCase.execute(app, params)
     return c.json(listRunsDto)
   }
 

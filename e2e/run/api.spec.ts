@@ -50,7 +50,7 @@ test('should return a list of runs filtered by search on status', async ({ start
   await page.request.post('/api/automations/run-success')
 
   // WHEN
-  const response = await page.request.get('/api/runs?q=success')
+  const response = await page.request.get('/api/runs?search=success')
 
   // THEN
   const { runs }: ListRunsDto = await response.json()
@@ -71,7 +71,7 @@ test('should return a list of runs filtered by automation id and search on statu
   await page.request.post('/api/automations/run-success')
 
   // WHEN
-  const response = await page.request.get('/api/automations/1/runs?q=success')
+  const response = await page.request.get('/api/automations/1/runs?search=success')
 
   // THEN
   const { runs }: ListRunsDto = await response.json()
@@ -92,7 +92,7 @@ test('should return a list of runs filtered by search on run id', async ({ start
   await page.request.post('/api/automations/run-success')
 
   // WHEN
-  const response = await page.request.get(`/api/runs?q=${runId}`)
+  const response = await page.request.get(`/api/runs?search=${runId}`)
 
   // THEN
   const { runs }: ListRunsDto = await response.json()
@@ -115,7 +115,7 @@ test('should return a list of runs filtered by automation id and search on run i
   await page.request.post('/api/automations/run-success')
 
   // WHEN
-  const response = await page.request.get(`/api/automations/1/runs?q=${runId}`)
+  const response = await page.request.get(`/api/automations/1/runs?search=${runId}`)
 
   // THEN
   const { runs }: ListRunsDto = await response.json()
@@ -136,7 +136,7 @@ test('should return a list of runs filtered by search on steps content', async (
   await page.request.post('/api/automations/run-success')
 
   // WHEN
-  const response = await page.request.get(`/api/runs?q=Hello, world!`)
+  const response = await page.request.get(`/api/runs?search=Hello, world!`)
 
   // THEN
   const { runs }: ListRunsDto = await response.json()
@@ -157,7 +157,7 @@ test('should return a list of runs filtered by automation id and search on steps
   await page.request.post('/api/automations/run-success')
 
   // WHEN
-  const response = await page.request.get(`/api/automations/1/runs?q=Hello, world!`)
+  const response = await page.request.get(`/api/automations/1/runs?search=Hello, world!`)
 
   // THEN
   const { runs }: ListRunsDto = await response.json()
@@ -178,7 +178,7 @@ test('should return a list of runs filtered by search on automation name', async
   await page.request.post('/api/automations/run-success')
 
   // WHEN
-  const response = await page.request.get(`/api/runs?q=run-failure-automation`)
+  const response = await page.request.get(`/api/runs?search=run-failure-automation`)
 
   // THEN
   const { runs }: ListRunsDto = await response.json()

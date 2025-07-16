@@ -2,11 +2,23 @@ import type { Automation } from '../../../../features/automation/domain/entity/a
 import type { Run } from '../../domain/entity/run.entity'
 import { toRunDto, type RunDto } from './run.dto'
 
-export type ListRunsDto = {
-  runs: RunDto[]
+export type PaginationDto = {
+  pageIndex: number
+  pageSize: number
+  pageCount: number
+  rowCount: number
 }
 
-export function toListRunsDto(runs: Run[], automations: Automation[]): ListRunsDto {
+export type ListRunsDto = {
+  runs: RunDto[]
+  pagination: PaginationDto
+}
+
+export function toListRunsDto(
+  runs: Run[],
+  automations: Automation[],
+  pagination: PaginationDto
+): ListRunsDto {
   return {
     runs: runs.map((run) => {
       const automation = automations.find(
@@ -17,5 +29,6 @@ export function toListRunsDto(runs: Run[], automations: Automation[]): ListRunsD
       }
       return toRunDto(run, automation)
     }),
+    pagination,
   }
 }

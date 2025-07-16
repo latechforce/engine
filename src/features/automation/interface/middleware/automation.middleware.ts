@@ -18,7 +18,9 @@ export const automationPostFormSchema = z.record(z.string(), z.string().or(z.ins
 export const automationPostFormValidator = zValidator('form', automationPostFormSchema)
 
 export const getAutomationsQuerySchema = z.object({
-  q: z.string().optional(),
+  search: z.string().optional(),
+  pageIndex: z.string().optional(),
+  pageSize: z.string().optional(),
 })
 
 export const getAutomationsQueryValidator = zValidator('query', getAutomationsQuerySchema)

@@ -1,6 +1,6 @@
 import { inject } from 'inversify'
 import TYPES from '../../../../shared/application/di/types'
-import { eq } from 'drizzle-orm'
+import { eq, count, SQL } from 'drizzle-orm'
 import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 
 export class RunDatabaseService {
@@ -28,6 +28,10 @@ export class RunDatabaseService {
         get: async (id: string) => db.query.run.findFirst({ where: eq(schema.run.id, id) }),
         list: async (options?: Parameters<typeof db.query.run.findMany>[0]) =>
           db.query.run.findMany(options),
+        count: async (where?: SQL<unknown>) => {
+          const result = await db.select({ count: count() }).from(schema.run).where(where)
+          return result[0]?.count || 0
+        },
         delete: async (id: string) => db.delete(schema.run).where(eq(schema.run.id, id)),
       }
     } else {
@@ -40,6 +44,10 @@ export class RunDatabaseService {
         get: async (id: string) => db.query.run.findFirst({ where: eq(schema.run.id, id) }),
         list: async (options?: Parameters<typeof db.query.run.findMany>[0]) =>
           db.query.run.findMany(options),
+        count: async (where?: SQL<unknown>) => {
+          const result = await db.select({ count: count() }).from(schema.run).where(where)
+          return result[0]?.count || 0
+        },
         delete: async (id: string) => db.delete(schema.run).where(eq(schema.run.id, id)),
       }
     }

@@ -8,29 +8,58 @@ import type { ListRunsDto } from '../../../application/dto/list-runs.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
 import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
 import { RunsDataTable } from '../../component/runs-data-table.component'
+import type { PaginationState } from '@tanstack/react-table'
+import type { ListRunsParams } from '../../../domain/repository-interface/run-repository.interface'
 
-const runsQueryOptions = (query?: string) =>
+const runsQueryOptions = (
+  params: ListRunsParams = {
+    search: '',
+    pageIndex: 0,
+    pageSize: 10,
+  }
+) =>
   queryOptions<ListRunsDto>({
-    queryKey: ['runsData', query],
+    queryKey: ['runsData', params],
     queryFn: () =>
       client.runs
         .$get({
-          query: { q: query },
+          query: {
+            search: params.search,
+            pageIndex: params.pageIndex.toString(),
+            pageSize: params.pageSize.toString(),
+          },
         })
         .then((res) => res.json()),
     placeholderData: keepPreviousData,
   })
 
 const AllRunsDataTable = () => {
-  const [searchQuery, setSearchQuery] = useState('')
-  const { data } = useQuery(runsQueryOptions(searchQuery))
+  const [search, setSearch] = useState('')
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+  const { data } = useQuery(
+    runsQueryOptions({
+      search: search,
+      pageIndex: pagination.pageIndex,
+      pageSize: pagination.pageSize,
+    })
+  )
   if (!data) return <TableSkeleton />
   return (
     <RunsDataTable
       runs={data.runs}
       search={{
-        value: searchQuery,
-        onChange: setSearchQuery,
+        value: search,
+        onChange: setSearch,
+      }}
+      pagination={{
+        pageIndex: pagination.pageIndex,
+        pageSize: pagination.pageSize,
+        pageCount: data.pagination.pageCount,
+        rowCount: data.pagination.rowCount,
+        onPaginationChange: setPagination,
       }}
     />
   )

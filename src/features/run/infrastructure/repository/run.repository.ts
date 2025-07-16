@@ -1,6 +1,9 @@
 import { inject, injectable } from 'inversify'
 import TYPES from '../../../../shared/application/di/types'
-import type { IRunRepository } from '../../domain/repository-interface/run-repository.interface'
+import type {
+  IRunRepository,
+  ListRunsParams,
+} from '../../domain/repository-interface/run-repository.interface'
 import { Run } from '../../domain/entity/run.entity'
 import type { RunDatabaseService } from '../service/database.service'
 import { desc, eq, or, and, like, sql, inArray } from 'drizzle-orm'
@@ -54,9 +57,9 @@ export class RunRepository implements IRunRepository {
     this.updateListeners.push(listener)
   }
 
-  private whereQuery(query?: string, automationsIdsFiltered: number[] = []) {
-    if (!query) return undefined
-    const q = `%${query}%`
+  private whereQuery(search?: string, automationsIdsFiltered: number[] = []) {
+    if (!search) return undefined
+    const q = `%${search}%`
     const isPostgres = this.database.provider === 'postgres'
     const schema = this.database.schema.run
     return or(
@@ -69,20 +72,37 @@ export class RunRepository implements IRunRepository {
     )
   }
 
-  async list(query?: string, automationsIdsFiltered: number[] = []): Promise<Run[]> {
+  async list(params: ListRunsParams, automationsIdsFiltered: number[] = []) {
+    const whereClause = this.whereQuery(params.search, automationsIdsFiltered)
+    const totalCount = await this.database.run.count(whereClause)
     const runs = await this.database.run.list({
-      where: this.whereQuery(query, automationsIdsFiltered),
+      where: whereClause,
       orderBy: desc(this.database.schema.run.created_at),
+      limit: params.pageSize,
+      offset: params.pageIndex * params.pageSize,
     })
-    return runs.map((run) => this.toEntity(run))
+    return {
+      runs: runs.map((run) => this.toEntity(run)),
+      totalCount,
+    }
   }
 
-  async listByAutomationId(automationId: number, query?: string): Promise<Run[]> {
+  async listByAutomationId(automationId: number, params: ListRunsParams) {
+    const whereClause = and(
+      eq(this.database.schema.run.automation_id, automationId),
+      this.whereQuery(params.search)
+    )
+    const totalCount = await this.database.run.count(whereClause)
     const runs = await this.database.run.list({
-      where: and(eq(this.database.schema.run.automation_id, automationId), this.whereQuery(query)),
+      where: whereClause,
       orderBy: desc(this.database.schema.run.created_at),
+      limit: params.pageSize,
+      offset: params.pageIndex * params.pageSize,
     })
-    return runs.map((run) => this.toEntity(run))
+    return {
+      runs: runs.map((run) => this.toEntity(run)),
+      totalCount,
+    }
   }
 
   async get(id: string): Promise<Run | undefined> {

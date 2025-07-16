@@ -4,7 +4,10 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { format } from 'date-fns'
 import { DataTable } from '../../../../shared/interface/component/data-table.component'
 import { RunStatus } from './status.component'
-import type { ListRunsDto } from '../../application/dto/list-runs.dto'
+import type {
+  DataTablePaginationProps,
+  DataTableSearchProps,
+} from '../../../../shared/interface/component/data-table.component'
 
 export const columns: ColumnDef<RunDto>[] = [
   {
@@ -30,12 +33,13 @@ export const columns: ColumnDef<RunDto>[] = [
   },
 ]
 
-export type SearchProps = {
-  value: string
-  onChange: (value: string) => void
+type RunsDataTableProps = {
+  runs: RunDto[]
+  search?: DataTableSearchProps
+  pagination?: DataTablePaginationProps
 }
 
-export const RunsDataTable = ({ runs, search }: ListRunsDto & { search?: SearchProps }) => {
+export const RunsDataTable = ({ runs, search, pagination }: RunsDataTableProps) => {
   const navigate = useNavigate()
   return (
     <DataTable
@@ -48,6 +52,7 @@ export const RunsDataTable = ({ runs, search }: ListRunsDto & { search?: SearchP
         })
       }}
       search={search}
+      pagination={pagination}
     />
   )
 }
