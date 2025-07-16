@@ -86,12 +86,10 @@ export class ConnectionRepository implements IConnectionRepository {
   }
 
   async sendDisconnectedEmail(connection: Connection): Promise<void> {
-    const supportEmails = this.env.get('SUPPORT_EMAILS')
     const baseUrl = this.env.get('BASE_URL')
-    if (supportEmails) {
-      const subject = `Connection "${connection.name}" of service "${connection.service}" has been disconnected`
-      const text = `You can reconnect to the connection "${connection.name}" by clicking on the following link: ${baseUrl}/admin/connections`
-      await this.emailService.sendEmail(supportEmails.split(','), subject, text)
-    }
+    const subject = `Connection "${connection.name}" of service "${connection.service}" has been disconnected`
+    const text = `You can reconnect to the connection "${connection.name}" by clicking on the following link: ${baseUrl}/admin/connections`
+    this.debug(`Sending alert email to support: ${subject}`)
+    await this.emailService.sendSupportEmail(subject, text)
   }
 }

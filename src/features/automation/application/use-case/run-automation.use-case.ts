@@ -80,6 +80,7 @@ export class RunAutomationUseCase {
         this.error(message)
         run.stopActionStep('execution', error)
         await this.runRepository.update(run)
+        await this.automationRepository.sendAlertEmail(run, automation, message)
       } else {
         throw error
       }
@@ -98,7 +99,7 @@ export class RunAutomationUseCase {
     const { data, error } = await this.runActionUseCase.execute(app, action, run, actionPath)
 
     if (error) {
-      await this.stop(run, actionPath, error)
+      await this.stop(run, automation, actionPath, error)
       return false
     }
 
@@ -138,16 +139,23 @@ export class RunAutomationUseCase {
     return true
   }
 
-  private async stop(run: Run, actionPath: string, error: IntegrationError | ServiceError) {
+  private async stop(
+    run: Run,
+    automation: Automation,
+    actionPath: string,
+    error: IntegrationError | ServiceError
+  ) {
+    const message = `action "${actionPath}" stopped with error: ${error.message}`
+    this.error(message)
     run.stopActionStep(actionPath, error)
     await this.runRepository.update(run)
-    this.info(`action "${actionPath}" stopped with error: ${error.message}`)
+    await this.automationRepository.sendAlertEmail(run, automation, message)
   }
 
   private async filter(run: Run, actionPath: string, data: Record<string, unknown>) {
+    this.info(`action "${actionPath}" filtered`)
     run.filterActionStep(actionPath, data)
     await this.runRepository.update(run)
-    this.info(`action "${actionPath}" filtered`)
   }
 
   private async executePaths(

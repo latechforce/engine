@@ -4,9 +4,13 @@ import type { IAutomationRepository } from '../../domain/repository-interface/au
 import { inject, injectable } from 'inversify'
 import type { RouteConfig } from '@hono/zod-openapi'
 import type { ServerService } from '../../../../shared/infrastructure/service'
+import type { EmailService } from '../../../../shared/infrastructure/service'
+import type { EnvService } from '../../../../shared/infrastructure/service'
 import type { AutomationDatabaseService } from '../service/database.service'
 import type { AutomationStatus } from '../../domain/value-object/automation-status.value-object'
 import type { AutomationSchema } from '../../domain/schema/automation.schema'
+import type { Automation } from '../../domain/entity/automation.entity'
+import type { Run } from '../../../run/domain/entity/run.entity'
 
 @injectable()
 export class AutomationRepository implements IAutomationRepository {
@@ -16,7 +20,11 @@ export class AutomationRepository implements IAutomationRepository {
     @inject(TYPES.Service.Server)
     private readonly server: ServerService,
     @inject(TYPES.Automation.Service.Database)
-    private readonly database: AutomationDatabaseService
+    private readonly database: AutomationDatabaseService,
+    @inject(TYPES.Service.Email)
+    private readonly email: EmailService,
+    @inject(TYPES.Service.Env)
+    private readonly env: EnvService
   ) {}
 
   debug(message: string) {
@@ -82,5 +90,13 @@ export class AutomationRepository implements IAutomationRepository {
         }))
       },
     }
+  }
+
+  async sendAlertEmail(run: Run, automation: Automation, message: string) {
+    const baseUrl = this.env.get('BASE_URL')
+    const subject = `Automation "${automation.schema.name}" failed: ${message}`
+    const text = `You can see the run for "${automation.schema.name}" in the admin panel: ${baseUrl}/admin/automations/${automation.schema.id}/runs/${run.id}`
+    this.debug(`Sending alert email to support: ${subject}`)
+    await this.email.sendSupportEmail(subject, text)
   }
 }
