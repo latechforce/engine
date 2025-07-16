@@ -42,14 +42,18 @@ export class FacebookLeadAdsConnectionIntegration {
     return this.getToken(longLivedResponse)
   }
 
-  async getAccessTokenFromCurrentToken(currentToken: string): Promise<Token> {
-    const response = await this.getAccessToken({
-      grant_type: 'fb_exchange_token',
-      fb_exchange_token: currentToken,
-      client_id: this.schema.clientId,
-      client_secret: this.schema.clientSecret,
-    })
-    return this.getToken(response)
+  async getAccessTokenFromCurrentToken(currentToken: string): Promise<Token | undefined> {
+    try {
+      const response = await this.getAccessToken({
+        grant_type: 'fb_exchange_token',
+        fb_exchange_token: currentToken,
+        client_id: this.schema.clientId,
+        client_secret: this.schema.clientSecret,
+      })
+      return this.getToken(response)
+    } catch {
+      return undefined
+    }
   }
 
   async checkConnection(token?: Token): Promise<boolean> {

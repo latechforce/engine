@@ -49,13 +49,17 @@ export class GoogleConnectionIntegration {
     return token
   }
 
-  async getAccessTokenFromRefreshToken(refreshToken: string): Promise<Token> {
-    this.oauth2Client.setCredentials({
-      refresh_token: refreshToken,
-    })
-    const { credentials } = await this.oauth2Client.refreshAccessToken()
-    const token = this.getTokenFromGoogle(credentials)
-    return token
+  async getAccessTokenFromRefreshToken(refreshToken: string): Promise<Token | undefined> {
+    try {
+      this.oauth2Client.setCredentials({
+        refresh_token: refreshToken,
+      })
+      const { credentials } = await this.oauth2Client.refreshAccessToken()
+      const token = this.getTokenFromGoogle(credentials)
+      return token
+    } catch {
+      return undefined
+    }
   }
 
   async checkConnection(token?: Token): Promise<boolean> {

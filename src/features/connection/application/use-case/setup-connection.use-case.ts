@@ -30,7 +30,9 @@ export class SetupConnectionUseCase {
       await this.tokenRepository.update(token)
     })
     const connected = await this.tokenRepository.check(connection)
-    await this.connectionRepository.status.setConnected(status.id, connected)
+    if (connected !== status.connected) {
+      await this.connectionRepository.status.setConnected(status.id, connected)
+    }
     this.connectionRepository.debug(
       `"${connection.name}" is ${connected ? 'connected' : 'disconnected'}`
     )

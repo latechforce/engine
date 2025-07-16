@@ -16,11 +16,6 @@
       "import": "./src/index.ts",
       "require": "./src/index.ts",
       "types": "./src/types.ts"
-    },
-    "./mocks": {
-      "import": "./src/mocks/index.ts",
-      "require": "./src/mocks/index.ts",
-      "types": "./src/mocks/index.ts"
     }
   },
   "repository": {
