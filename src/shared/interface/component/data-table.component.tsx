@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import type { ColumnDef, ColumnResizeMode } from '@tanstack/react-table'
+import { useEffect, useState } from 'react'
+import type { ColumnDef, ColumnResizeMode, Updater } from '@tanstack/react-table'
 import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   useReactTable,
   type Row,
 } from '@tanstack/react-table'
@@ -18,6 +19,20 @@ import {
 } from '../ui/dropdown-menu.ui'
 import { DebouncedInput } from './debounce-input.component'
 import { Input } from '../ui/input.ui'
+import { DataTablePagination } from './data-table-pagination.component'
+
+export type PaginationState = {
+  pageIndex: number
+  pageSize: number
+}
+
+export type PaginationTableState = {
+  pagination: PaginationState
+}
+
+export type PaginationInitialTableState = {
+  pagination?: Partial<PaginationState>
+}
 
 type Action<TData> = {
   label: string
@@ -48,6 +63,12 @@ type DataTableProps<TData, TValue> = {
     value: string
     onChange: (value: string) => void
   }
+  pagination?: {
+    pageIndex: number
+    pageSize: number
+    pageCount: number
+    onPaginationChange: (updaterOrValue: Updater<PaginationState> | PaginationState) => void
+  }
 }
 
 const globalFilterFn = <TData,>(row: Row<TData>, _: string, filterValue: string) => {
@@ -68,15 +89,21 @@ export function DataTable<TData, TValue>({
   verticalSeparator = false,
   fullPage = false,
   search,
+  pagination,
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
   const [rowSelection, setRowSelection] = useState({})
+  const [paginationState, setPaginationState] = useState<PaginationState>({
+    pageIndex: pagination ? pagination.pageIndex : 0,
+    pageSize: pagination ? pagination.pageSize : 10,
+  })
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: search ? undefined : getFilteredRowModel(),
+    getPaginationRowModel: pagination ? undefined : getPaginationRowModel(),
     columnResizeMode,
     enableColumnResizing: true,
     onRowSelectionChange: setRowSelection,
@@ -89,13 +116,24 @@ export function DataTable<TData, TValue>({
     globalFilterFn: search ? undefined : globalFilterFn,
     state: {
       rowSelection,
+      pagination: paginationState,
     },
     defaultColumn: {
       size: 200,
       minSize: 20,
       maxSize: 500,
     },
+    pageCount: pagination ? pagination.pageCount : undefined,
+    manualPagination: pagination ? true : false,
+    onPaginationChange: pagination ? pagination.onPaginationChange : setPaginationState,
   })
+
+  useEffect(() => {
+    if (pagination) {
+      table.setPageIndex(pagination.pageIndex)
+      table.setPageSize(pagination.pageSize)
+    }
+  }, [pagination, table])
 
   return (
     <div>
@@ -231,6 +269,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination table={table} />
     </div>
   )
 }
