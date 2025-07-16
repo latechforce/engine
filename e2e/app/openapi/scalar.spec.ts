@@ -31,9 +31,7 @@ test('should display the API request body', async ({ startExampleApp }) => {
   await page.goto('/openapi/scalar')
 
   // THEN
-  await expect(
-    page.getByRole('listitem').filter({ hasText: 'nameType:string required' })
-  ).toBeVisible()
+  await expect(page.getByText('nameType: string required')).toBeVisible()
 })
 
 test('should display the API 200 response', async ({ startExampleApp }) => {
