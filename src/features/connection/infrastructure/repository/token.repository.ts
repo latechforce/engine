@@ -45,12 +45,6 @@ export class TokenRepository implements ITokenRepository {
             : undefined
           break
         }
-        case 'long-live-token': {
-          newToken = token.access_token
-            ? await integration.getAccessTokenFromCurrentToken(token.access_token)
-            : undefined
-          break
-        }
       }
       if (!newToken) {
         await this.connectionRepository.status.setConnected(connection.id, false)

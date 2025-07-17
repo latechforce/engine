@@ -1,5 +1,4 @@
 import { CalendlyConnectionIntegration } from './calendly/calendly-connection'
-import { FacebookLeadAdsConnectionIntegration } from './facebook/lead-ads/facebook-lead-ads-connection'
 import { GoogleConnectionIntegration } from './google/google-connection'
 import { AirtableConnectionIntegration } from './airtable/airtable-connection'
 import type { Connection } from '../features/connection/domain/entity/connection.entity'
@@ -7,7 +6,6 @@ import type { Connection } from '../features/connection/domain/entity/connection
 export type ConnectionIntegration =
   | CalendlyConnectionIntegration
   | AirtableConnectionIntegration
-  | FacebookLeadAdsConnectionIntegration
   | GoogleConnectionIntegration
 
 // Cache to store integration instances
@@ -59,12 +57,6 @@ export const toConnectionIntegration = (
           'https://www.googleapis.com/auth/gmail.readonly',
           'https://www.googleapis.com/auth/gmail.modify',
         ]
-      )
-      break
-    case 'facebook-lead-ads':
-      integration = new FacebookLeadAdsConnectionIntegration(
-        connection.schema,
-        redirectUriWithState
       )
       break
     default: {
