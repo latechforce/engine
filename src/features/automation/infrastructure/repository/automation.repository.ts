@@ -96,7 +96,7 @@ export class AutomationRepository implements IAutomationRepository {
     const baseUrl = this.env.get('BASE_URL')
     const subject = `Automation "${automation.schema.name}" failed: ${message}`
     const text = `You can see the run for "${automation.schema.name}" in the admin panel: ${baseUrl}/admin/automations/${automation.schema.id}/runs/${run.id}`
-    this.debug(`Sending alert email to support: ${subject}`)
+    this.debug(`sending alert email to support: ${subject}`)
     await this.email.sendSupportEmail(subject, text)
   }
 }

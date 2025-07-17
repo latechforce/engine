@@ -38,8 +38,8 @@ export class RunAutomationUseCase {
         if (path.actions.length > 0) {
           for (const action of path.actions) {
             const actionPath = pathName + '.' + action.name
-            if (run.isStepSucceed(actionPath)) {
-              this.debug(`action "${actionPath}" has already been run`)
+            if (run.isStepExecutedWithSuccess(actionPath)) {
+              this.debug(`action "${actionPath}" has already been successfully run`)
               continue
             }
             const shouldContinue = await this.runAction(app, run, automation, action, pathName)
@@ -57,8 +57,8 @@ export class RunAutomationUseCase {
           await this.runRepository.update(run)
         } else {
           for (const action of automation.actions) {
-            if (run.isStepSucceed(action.name)) {
-              this.debug(`action "${action.name}" has already been run`)
+            if (run.isStepExecutedWithSuccess(action.name)) {
+              this.debug(`action "${action.name}" has already been successfully run`)
               continue
             }
             const shouldContinue = await this.runAction(app, run, automation, action)

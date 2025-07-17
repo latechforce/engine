@@ -4,10 +4,11 @@ import type {
   IRunRepository,
   ListRunsParams,
 } from '../../domain/repository-interface/run-repository.interface'
-import { Run } from '../../domain/entity/run.entity'
+import { Run, type RunStatus } from '../../domain/entity/run.entity'
 import type { RunDatabaseService } from '../service/database.service'
 import { desc, eq, or, and, like, sql, inArray } from 'drizzle-orm'
 import { EventEmitter } from 'events'
+import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 
 @injectable()
 export class RunRepository implements IRunRepository {
@@ -16,6 +17,8 @@ export class RunRepository implements IRunRepository {
   private updateListeners: ((run: Run) => Promise<void>)[] = []
 
   constructor(
+    @inject(TYPES.Service.Logger)
+    private readonly logger: LoggerService,
     @inject(TYPES.Run.Service.Database)
     private readonly database: RunDatabaseService
   ) {
@@ -25,6 +28,10 @@ export class RunRepository implements IRunRepository {
     this.eventEmitter.on('updated', async (run: Run) => {
       await Promise.all(this.updateListeners.map((listener) => listener(run)))
     })
+  }
+
+  debug(message: string) {
+    this.logger.child('run-repository').debug(message)
   }
 
   async create(run: Run) {
@@ -85,6 +92,17 @@ export class RunRepository implements IRunRepository {
       runs: runs.map((run) => this.toEntity(run)),
       totalCount,
     }
+  }
+
+  async listAllByIdsAndStatus(ids: string[], status: RunStatus) {
+    const runs = await this.database.run.list({
+      where: and(
+        inArray(this.database.schema.run.id, ids),
+        eq(this.database.schema.run.status, status)
+      ),
+      orderBy: desc(this.database.schema.run.created_at),
+    })
+    return runs.map((run) => this.toEntity(run))
   }
 
   async listByAutomationId(automationId: number, params: ListRunsParams) {

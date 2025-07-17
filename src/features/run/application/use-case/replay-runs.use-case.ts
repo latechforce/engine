@@ -2,22 +2,31 @@ import type { IRunRepository } from '../../domain/repository-interface/run-repos
 import { inject, injectable } from 'inversify'
 import TYPES from '../../../../shared/application/di/types'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
-import type { IAutomationRepository } from '../../../automation/domain/repository-interface/automation-repository.interface'
 import type { ReplayedRunsDto } from '../dto/replay-runs-dto'
+import type { RunAutomationUseCase } from '../../../automation/application/use-case/run-automation.use-case'
+import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 
 @injectable()
 export class ReplayRunsUseCase {
   constructor(
     @inject(TYPES.Run.Repository)
     private readonly runRepository: IRunRepository,
-    @inject(TYPES.Automation.Repository)
-    private readonly automationRepository: IAutomationRepository
+    @inject(TYPES.Automation.UseCase.Run)
+    private readonly runAutomationUseCase: RunAutomationUseCase
   ) {}
 
-  async execute(app: App, ids: string[]): Promise<ReplayedRunsDto> {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+  async execute(app: App, runIds: string[]): Promise<ReplayedRunsDto> {
+    const runs = await this.runRepository.listAllByIdsAndStatus(runIds, 'stopped')
+    for (const run of runs) {
+      this.runRepository.debug(`replaying run "${run.id}"`)
+      const automation = app.findAutomation(run.automation_id)
+      if (!automation) {
+        throw new HttpError('Automation not found', 404)
+      }
+      await this.runAutomationUseCase.execute(app, run, automation)
+    }
     return {
-      replayed: ids,
+      replayed: runs.map((run) => run.id),
     }
   }
 }

@@ -89,7 +89,7 @@ export class ConnectionRepository implements IConnectionRepository {
     const baseUrl = this.env.get('BASE_URL')
     const subject = `Connection "${connection.name}" of service "${connection.service}" has been disconnected`
     const text = `You can reconnect to the connection "${connection.name}" by clicking on the following link: ${baseUrl}/admin/connections`
-    this.debug(`Sending alert email to support: ${subject}`)
+    this.debug(`sending alert email to support: ${subject}`)
     await this.emailService.sendSupportEmail(subject, text)
   }
 }

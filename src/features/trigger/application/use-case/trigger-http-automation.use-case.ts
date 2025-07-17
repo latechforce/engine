@@ -197,7 +197,7 @@ export class TriggerHttpAutomationUseCase {
               if (
                 lastAction &&
                 lastAction.schema.name === responseActionSchema?.name &&
-                run.isStepSucceed(lastAction.schema.name)
+                run.isStepExecuted(lastAction.schema.name)
               ) {
                 const { body } = run.getLastActionStepData()
                 if (body) {

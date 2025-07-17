@@ -7,12 +7,14 @@ import type { ActionOrPathsStep } from '../value-object.ts/step.value-object'
 import type { PathStep } from '../value-object.ts/paths-step.value-object'
 import type { SplitIntoPathsFilterActionSchema } from '../../../../features/action/domain/schema/filter/split-into-paths.schema'
 
+export type RunStatus = 'playing' | 'success' | 'stopped' | 'filtered'
+
 export class Run {
   constructor(
     public readonly automation_id: number,
     public readonly steps: Steps,
     public readonly form_id: number | null = null,
-    private _status: 'playing' | 'success' | 'stopped' | 'filtered' = 'playing',
+    private _status: RunStatus = 'playing',
     public readonly id: string = crypto.randomUUID(),
     public readonly createdAt: Date = new Date(),
     private _updatedAt: Date = new Date()
@@ -149,9 +151,18 @@ export class Run {
     }
   }
 
-  isStepSucceed(actionPath: string) {
+  isStepExecuted(actionPath: string) {
     const step = this.getActionOrPathsStep(actionPath)
     if (!step) return false
+    if ('output' in step) return !!step.output
+    if ('error' in step) return !!step.error
+    return true
+  }
+
+  isStepExecutedWithSuccess(actionPath: string) {
+    const step = this.getActionOrPathsStep(actionPath)
+    if (!step) return false
+    if ('error' in step) return !step.error
     if ('output' in step) return !!step.output
     return true
   }

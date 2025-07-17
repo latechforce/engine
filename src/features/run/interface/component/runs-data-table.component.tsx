@@ -51,7 +51,7 @@ export const columns: ColumnDef<RunDto>[] = [
   {
     accessorKey: 'automationName',
     header: 'Automation',
-    size: 416,
+    size: 415,
   },
   {
     accessorKey: 'createdAt',
@@ -77,7 +77,7 @@ export const RunsDataTable = ({ runs, search, pagination, queryKey }: RunsDataTa
     mutationFn: async (rowsIds: string[]) => {
       const response = await client.runs.replay.$post({
         json: {
-          ids: rowsIds,
+          runIds: rowsIds,
         },
       })
       return await response.json()
