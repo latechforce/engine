@@ -1,3 +1,10 @@
+## [0.66.1](https://github.com/latechforce/engine/compare/v0.66.0...v0.66.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* **table:** fix postgres view schema ([311193a](https://github.com/latechforce/engine/commit/311193ab797a60f368b9aa0fe291cc3af742819e)) — Thomas JEANNEAU
+
 # [0.66.0](https://github.com/latechforce/engine/compare/v0.65.0...v0.66.0) (2025-07-17)
 
 
