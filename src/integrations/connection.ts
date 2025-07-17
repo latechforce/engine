@@ -1,5 +1,4 @@
 import { CalendlyConnectionIntegration } from './calendly/calendly-connection'
-import { LinkedInAdsConnectionIntegration } from './linkedin/ads/linkedin-ads-connection'
 import { FacebookLeadAdsConnectionIntegration } from './facebook/lead-ads/facebook-lead-ads-connection'
 import { GoogleConnectionIntegration } from './google/google-connection'
 import { AirtableConnectionIntegration } from './airtable/airtable-connection'
@@ -8,7 +7,6 @@ import type { Connection } from '../features/connection/domain/entity/connection
 export type ConnectionIntegration =
   | CalendlyConnectionIntegration
   | AirtableConnectionIntegration
-  | LinkedInAdsConnectionIntegration
   | FacebookLeadAdsConnectionIntegration
   | GoogleConnectionIntegration
 
@@ -68,9 +66,6 @@ export const toConnectionIntegration = (
         connection.schema,
         redirectUriWithState
       )
-      break
-    case 'linkedin-ads':
-      integration = new LinkedInAdsConnectionIntegration(connection.schema, redirectUriWithState)
       break
     default: {
       const _exhaustiveCheck: never = connection.schema

@@ -22,7 +22,7 @@ test('should run a response http action with body from a post request', async ({
 
   // WHEN
   const response = await page.request.post('/api/automations/response')
-  const { data } = await response.json()
+  const data = await response.json()
 
   // THEN
   expect(data).toEqual({ message: 'Hello, world!' })
@@ -36,7 +36,7 @@ test('should run a response http action with body from a get request', async ({
 
   // WHEN
   const response = await page.request.get('/api/automations/response')
-  const { data } = await response.json()
+  const data = await response.json()
 
   // THEN
   expect(data).toEqual({ message: 'Hello, world!' })
@@ -61,7 +61,7 @@ test('should run a response http action with previous action', async ({ startExa
 
   // WHEN
   const response = await page.request.post('/api/automations/response')
-  const { data } = await response.json()
+  const data = await response.json()
 
   // THEN
   expect(data).toEqual({ message: 'Hello world!' })

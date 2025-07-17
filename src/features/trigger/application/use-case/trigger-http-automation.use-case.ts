@@ -201,7 +201,7 @@ export class TriggerHttpAutomationUseCase {
               ) {
                 const { body } = run.getLastActionStepData()
                 if (body) {
-                  resolve({ data: body, ...successResponse })
+                  resolve(body)
                 } else {
                   resolve(successResponse)
                 }

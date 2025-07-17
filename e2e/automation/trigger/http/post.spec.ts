@@ -78,7 +78,7 @@ test('should trigger an automation with a valid object body', async ({ startExam
   })
 
   // THEN
-  const { data } = await response.json()
+  const data = await response.json()
   expect(data.message).toBe('Hello, John Doe!')
 })
 
@@ -103,9 +103,9 @@ test('should trigger an automation with a valid array body', async ({ startExamp
 
   // THEN
   const { data } = await response.json()
-  expect(data[0].data.message).toBe('Hello, John Doe!')
-  expect(data[1].data.message).toBe('Hello, Jane Dae!')
-  expect(data[2].data.message).toBe('Hello, Jacob Doe!')
+  expect(data[0].message).toBe('Hello, John Doe!')
+  expect(data[1].message).toBe('Hello, Jane Dae!')
+  expect(data[2].message).toBe('Hello, Jacob Doe!')
 })
 
 test('should trigger an automation with a valid array body and respond immediately', async ({
@@ -148,6 +148,6 @@ test('should trigger an automation with form data', async ({ startExampleApp }) 
   })
 
   // THEN
-  const { data } = await response.json()
+  const data = await response.json()
   expect(data.message).toBe('Hello, John Doe!')
 })

@@ -10,8 +10,6 @@ export const toTriggerIntegration = (trigger: IntegrationTriggerSchema, automati
       return new AirtableTriggerIntegration(trigger, automationId)
     case 'facebook-lead-ads':
       throw new Error('Facebook Lead Ads integration not implemented')
-    case 'linkedin-ads':
-      throw new Error('LinkedIn Ads integration not implemented')
     default: {
       const _exhaustiveCheck: never = trigger
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

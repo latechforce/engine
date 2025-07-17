@@ -51,7 +51,7 @@ const FormDataPage = () => {
       if (response.status === 200) {
         setIsSubmitted(true)
       } else {
-        const data = await response.json()
+        const data = (await response.json()) as { error: string }
         throw new Error('error' in data ? String(data.error) : 'Failed to submit form')
       }
     } else if (action.startsWith('http')) {
