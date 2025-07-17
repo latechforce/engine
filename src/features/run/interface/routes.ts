@@ -9,6 +9,7 @@ export const runRoutes = new Hono<HonoType>()
       search: c.req.query('search') || '',
       pageIndex: Number(c.req.query('pageIndex') || 0),
       pageSize: Number(c.req.query('pageSize') || 10),
+      status: c.req.query('status') || 'all',
     })
   )
   .get('/:runId', (c) => RunController.get(c, { runId: c.req.param('runId') }))

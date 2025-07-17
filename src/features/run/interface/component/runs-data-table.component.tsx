@@ -63,14 +63,26 @@ export const columns: ColumnDef<RunDto>[] = [
   },
 ]
 
+export type RunsDataTableStatusProps = {
+  value: string
+  onChange: (value: string) => void
+}
+
 type RunsDataTableProps = {
   runs: RunDto[]
   search?: DataTableSearchProps
   pagination?: DataTablePaginationProps
+  status?: RunsDataTableStatusProps
   queryKey: QueryKey
 }
 
-export const RunsDataTable = ({ runs, search, pagination, queryKey }: RunsDataTableProps) => {
+export const RunsDataTable = ({
+  runs,
+  search,
+  pagination,
+  queryKey,
+  status,
+}: RunsDataTableProps) => {
   const navigate = useNavigate()
 
   const replayRunsMutation = useMutation({
@@ -100,6 +112,26 @@ export const RunsDataTable = ({ runs, search, pagination, queryKey }: RunsDataTa
       }}
       search={search}
       pagination={pagination}
+      filters={
+        status
+          ? [
+              {
+                type: 'select',
+                value: 'status',
+                defaultValue: status.value,
+                options: [
+                  { label: 'All statuses', value: 'all' },
+                  { label: 'Success', value: 'success' },
+                  { label: 'Stopped', value: 'stopped' },
+                  { label: 'Filtered', value: 'filtered' },
+                ],
+                onChange: (value) => {
+                  status.onChange(value)
+                },
+              },
+            ]
+          : []
+      }
       actions={[
         {
           label: 'Replay run(s)',

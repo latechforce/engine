@@ -43,6 +43,7 @@ export const automationRoutes = new Hono<HonoType>()
         search: c.req.query('search') || '',
         pageIndex: Number(c.req.query('pageIndex') || 0),
         pageSize: Number(c.req.query('pageSize') || 10),
+        status: c.req.query('status') || 'all',
       },
     })
   )

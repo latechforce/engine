@@ -4,6 +4,7 @@ export type ListRunsParams = {
   search: string
   pageIndex: number
   pageSize: number
+  status: string
 }
 
 export type IRunRepository = {

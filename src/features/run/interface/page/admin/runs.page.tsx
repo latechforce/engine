@@ -16,6 +16,7 @@ const runsQueryOptions = (
     search: '',
     pageIndex: 0,
     pageSize: 10,
+    status: 'all',
   }
 ) =>
   queryOptions<ListRunsDto>({
@@ -27,6 +28,7 @@ const runsQueryOptions = (
             search: params.search,
             pageIndex: params.pageIndex.toString(),
             pageSize: params.pageSize.toString(),
+            status: params.status,
           },
         })
         .then((res) => res.json()),
@@ -39,10 +41,12 @@ const AllRunsDataTable = () => {
     pageIndex: 0,
     pageSize: 10,
   })
+  const [status, setStatus] = useState('all')
   const params = {
     search: search,
     pageIndex: pagination.pageIndex,
     pageSize: pagination.pageSize,
+    status: status,
   }
   const { data } = useQuery(runsQueryOptions(params))
   if (!data) return <TableSkeleton />
@@ -59,6 +63,10 @@ const AllRunsDataTable = () => {
         pageCount: data.pagination.pageCount,
         rowCount: data.pagination.rowCount,
         onPaginationChange: setPagination,
+      }}
+      status={{
+        value: status,
+        onChange: setStatus,
       }}
       queryKey={['runsData', params]}
     />

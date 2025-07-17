@@ -21,6 +21,7 @@ export const getAutomationsQuerySchema = z.object({
   search: z.string().optional(),
   pageIndex: z.string().optional(),
   pageSize: z.string().optional(),
+  status: z.string().optional(),
 })
 
 export const getAutomationsQueryValidator = zValidator('query', getAutomationsQuerySchema)

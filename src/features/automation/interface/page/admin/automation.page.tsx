@@ -26,6 +26,7 @@ const automationQueryOptions = (
     search: '',
     pageIndex: 0,
     pageSize: 10,
+    status: 'all',
   }
 ) =>
   queryOptions<GetAutomationDto>({
@@ -38,6 +39,7 @@ const automationQueryOptions = (
             search: params.search,
             pageIndex: params.pageIndex.toString(),
             pageSize: params.pageSize.toString(),
+            status: params.status,
           },
         })
         .then((res) => res.json()),
@@ -50,20 +52,22 @@ const AutomationDataTable = ({ automationId }: { automationId: string }) => {
     pageIndex: 0,
     pageSize: 10,
   })
+  const [status, setStatus] = useState<ListRunsParams['status']>('all')
 
-  // Reset pagination and search when automationId changes
   useEffect(() => {
     setSearch('')
     setPagination({
       pageIndex: 0,
       pageSize: 10,
     })
+    setStatus('all')
   }, [automationId])
 
   const params = {
     search: search,
     pageIndex: pagination.pageIndex,
     pageSize: pagination.pageSize,
+    status: status,
   }
 
   const { data } = useQuery(automationQueryOptions(automationId, params))
@@ -81,6 +85,10 @@ const AutomationDataTable = ({ automationId }: { automationId: string }) => {
         pageCount: data.pagination.pageCount,
         rowCount: data.pagination.rowCount,
         onPaginationChange: setPagination,
+      }}
+      status={{
+        value: status,
+        onChange: setStatus,
       }}
       queryKey={['automationData', automationId, params]}
     />

@@ -21,6 +21,7 @@ import {
 import { DebouncedInput } from './debounce-input.component'
 import { Input } from '../ui/input.ui'
 import { DataTablePagination } from './data-table-pagination.component'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select.ui'
 
 type Action<TData> = {
   label: string
@@ -54,9 +55,18 @@ export type DataTablePaginationProps = {
   onPaginationChange: (updaterOrValue: Updater<PaginationState> | PaginationState) => void
 }
 
+export type DataTableFilterProps = {
+  type: 'select'
+  value: string
+  defaultValue: string
+  options: { label: string; value: string }[]
+  onChange: (value: string) => void
+}
+
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
+  filters?: DataTableFilterProps[]
   actions?: Actions<TData>
   onRowClick?: (row: TData) => void
   verticalSeparator?: boolean
@@ -84,6 +94,7 @@ export function DataTable<TData, TValue>({
   fullPage = false,
   search,
   pagination,
+  filters,
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
   const [rowSelection, setRowSelection] = useState({})
@@ -146,6 +157,36 @@ export function DataTable<TData, TValue>({
             className="mr-4 max-w-sm"
           />
         )}
+        {filters?.map((filter) => {
+          switch (filter.type) {
+            case 'select':
+              return (
+                <Select
+                  key={filter.value}
+                  value={filter.defaultValue}
+                  onValueChange={(value) => {
+                    filter.onChange(value)
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a filter" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {filter.options.map((option) => (
+                      <SelectItem
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )
+            default:
+              break
+          }
+        })}
         <div className="ml-auto flex items-center gap-2">
           {actions.map((action) => {
             if ('actions' in action) {

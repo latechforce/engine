@@ -80,7 +80,12 @@ export class RunRepository implements IRunRepository {
   }
 
   async list(params: ListRunsParams, automationsIdsFiltered: number[] = []) {
-    const whereClause = this.whereQuery(params.search, automationsIdsFiltered)
+    const whereClause = ['success', 'stopped', 'filtered'].includes(params.status)
+      ? and(
+          eq(this.database.schema.run.status, params.status as RunStatus),
+          this.whereQuery(params.search, automationsIdsFiltered)
+        )
+      : this.whereQuery(params.search, automationsIdsFiltered)
     const totalCount = await this.database.run.count(whereClause)
     const runs = await this.database.run.list({
       where: whereClause,
@@ -108,7 +113,12 @@ export class RunRepository implements IRunRepository {
   async listByAutomationId(automationId: number, params: ListRunsParams) {
     const whereClause = and(
       eq(this.database.schema.run.automation_id, automationId),
-      this.whereQuery(params.search)
+      ['success', 'stopped', 'filtered'].includes(params.status)
+        ? and(
+            eq(this.database.schema.run.status, params.status as RunStatus),
+            this.whereQuery(params.search)
+          )
+        : this.whereQuery(params.search)
     )
     const totalCount = await this.database.run.count(whereClause)
     const runs = await this.database.run.list({
