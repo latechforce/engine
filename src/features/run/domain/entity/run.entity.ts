@@ -17,7 +17,8 @@ export class Run {
     private _status: RunStatus = 'playing',
     public readonly id: string = crypto.randomUUID(),
     public readonly createdAt: Date = new Date(),
-    private _updatedAt: Date = new Date()
+    private _updatedAt: Date = new Date(),
+    private _toReplay: boolean = false
   ) {}
 
   get status() {
@@ -26,6 +27,10 @@ export class Run {
 
   get updatedAt() {
     return this._updatedAt
+  }
+
+  get toReplay() {
+    return this._toReplay
   }
 
   clone(): Run {
@@ -38,6 +43,16 @@ export class Run {
       this.createdAt,
       this._updatedAt
     )
+  }
+
+  replay() {
+    this._toReplay = true
+  }
+
+  replaying() {
+    this._status = 'playing'
+    this._updatedAt = new Date()
+    this._toReplay = false
   }
 
   startActionStep(actionPath: string, schema: ActionSchema, input: Record<string, unknown>) {
@@ -165,6 +180,48 @@ export class Run {
     if ('error' in step) return !step.error
     if ('output' in step) return !!step.output
     return true
+  }
+
+  removeStep(actionPath: string) {
+    const pathSegments = actionPath.split('.')
+    if (pathSegments.length < 2) {
+      // Remove from main steps array
+      const actionName = pathSegments[0]!
+      const stepIndex = this.steps.findIndex((step, index) => {
+        // Skip trigger step (index 0)
+        if (index === 0) return false
+        return ('input' in step || 'paths' in step) && step.schema.name === actionName
+      })
+
+      if (stepIndex !== -1) {
+        this.steps.splice(stepIndex, 1)
+        this._updatedAt = new Date()
+      }
+    } else {
+      // Remove from path
+      const [actionName, pathName, ...segments] = pathSegments
+      const step = this.getActionOrPathsStep(actionName!)
+
+      if (step && 'paths' in step) {
+        const path = step.paths.find((path) => path.schema.name === pathName)
+        if (path) {
+          if (segments.length < 2) {
+            // Remove action from this path
+            const actionNameInPath = segments[0]!
+            const actionIndex = path.actions.findIndex(
+              (action) => action.schema.name === actionNameInPath
+            )
+            if (actionIndex !== -1) {
+              path.actions.splice(actionIndex, 1)
+              this._updatedAt = new Date()
+            }
+          } else {
+            // Recursively remove from nested path
+            this.removeStep(segments.join('.'))
+          }
+        }
+      }
+    }
   }
 
   successActionStep(actionPath: string, output: Record<string, unknown>) {

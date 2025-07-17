@@ -41,6 +41,8 @@ export class RunAutomationUseCase {
             if (run.isStepExecutedWithSuccess(actionPath)) {
               this.debug(`action "${actionPath}" has already been successfully run`)
               continue
+            } else {
+              run.removeStep(action.name)
             }
             const shouldContinue = await this.runAction(app, run, automation, action, pathName)
             if (!shouldContinue) break
@@ -60,6 +62,8 @@ export class RunAutomationUseCase {
             if (run.isStepExecutedWithSuccess(action.name)) {
               this.debug(`action "${action.name}" has already been successfully run`)
               continue
+            } else {
+              run.removeStep(action.name)
             }
             const shouldContinue = await this.runAction(app, run, automation, action)
             if (!shouldContinue) break

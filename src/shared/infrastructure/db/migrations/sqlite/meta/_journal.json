@@ -15,6 +15,13 @@
       "when": 1750980223031,
       "tag": "0001_last_the_hunter",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1752745593132,
+      "tag": "0002_fast_bullseye",
+      "breakpoints": true
     }
   ]
 }

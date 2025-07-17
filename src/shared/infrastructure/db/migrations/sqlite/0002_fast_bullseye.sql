@@ -1,0 +1,1 @@
+ALTER TABLE `run` ADD `to_replay` integer DEFAULT false NOT NULL;

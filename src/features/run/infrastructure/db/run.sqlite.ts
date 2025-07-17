@@ -9,4 +9,5 @@ export const run = sqliteTable('run', {
   steps: text('steps', { mode: 'json' }).$type<Steps>().notNull(),
   created_at: integer('created_at', { mode: 'timestamp' }).notNull(),
   updated_at: integer('updated_at', { mode: 'timestamp' }).notNull(),
+  to_replay: integer('to_replay', { mode: 'boolean' }).notNull().default(false),
 })

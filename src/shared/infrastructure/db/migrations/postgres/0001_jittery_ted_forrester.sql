@@ -1,0 +1,1 @@
+ALTER TABLE "run" ADD COLUMN "to_replay" boolean DEFAULT false NOT NULL;

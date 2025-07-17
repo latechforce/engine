@@ -56,6 +56,7 @@ export class RunRepository implements IRunRepository {
       status: run.status,
       steps: run.steps,
       updated_at: run.updatedAt,
+      to_replay: run.toReplay,
     })
     this.eventEmitter.emit('updated', run)
   }

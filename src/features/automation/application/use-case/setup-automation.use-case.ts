@@ -54,6 +54,13 @@ export class SetupAutomationUseCase {
         await this.runAutomationUseCase.execute(app, run, automation)
       }
     })
+    this.runRepository.onUpdate(async (run: Run) => {
+      if (run.automation_id === automation.schema.id && run.toReplay) {
+        run.replaying()
+        await this.runRepository.update(run)
+        await this.runAutomationUseCase.execute(app, run, automation)
+      }
+    })
 
     // Build OpenAPI routes
     const { trigger } = automation
