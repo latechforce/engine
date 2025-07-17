@@ -1,3 +1,15 @@
+# [0.66.0](https://github.com/latechforce/engine/compare/v0.65.0...v0.66.0) (2025-07-17)
+
+
+### Bug Fixes
+
+* **Run:** fix replaying error ([489dcfb](https://github.com/latechforce/engine/commit/489dcfbb4cde9046f84372ab59c1a59e8ccf7018)) — Thomas JEANNEAU
+
+
+### Features
+
+* **Run:** can filter run by status ([8328ff9](https://github.com/latechforce/engine/commit/8328ff9e57eae1055f4b2fa51dd70cc1dbddfc03)) — Thomas JEANNEAU
+
 # [0.65.0](https://github.com/latechforce/engine/compare/v0.64.0...v0.65.0) (2025-07-17)
 
 
