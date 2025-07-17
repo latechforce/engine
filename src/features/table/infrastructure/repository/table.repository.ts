@@ -42,12 +42,12 @@ export class TableRepository implements ITableRepository {
             .map((f) => {
               if (f.schema.type === 'checkbox') {
                 if (provider === 'postgres') {
-                  return `BOOL_OR(CASE WHEN f.slug = '${f.slug}' THEN rf.value = 'true' ELSE false END) AS "${f.slug}"`
+                  return `BOOL_OR(CASE WHEN f.slug = '${f.slug}' AND f.table_id = ${table.schema.id} THEN rf.value = 'true' ELSE false END) AS "${f.slug}"`
                 }
                 // SQLite doesn't have a direct boolean type, so we'll use 1/0
-                return `MAX(CASE WHEN f.slug = '${f.slug}' THEN CASE WHEN rf.value = 'true' THEN 1 ELSE 0 END END) AS "${f.slug}"`
+                return `MAX(CASE WHEN f.slug = '${f.slug}' AND f.table_id = ${table.schema.id} THEN CASE WHEN rf.value = 'true' THEN 1 ELSE 0 END END) AS "${f.slug}"`
               }
-              return `MAX(CASE WHEN f.slug = '${f.slug}' THEN rf.value END) AS "${f.slug}"`
+              return `MAX(CASE WHEN f.slug = '${f.slug}' AND f.table_id = ${table.schema.id} THEN rf.value END) AS "${f.slug}"`
             })
             .join(',\n  ')
           const query = `
@@ -60,7 +60,7 @@ export class TableRepository implements ITableRepository {
               ${columnsSql}
             FROM record r
             JOIN record_field rf ON r.id = rf.record_id
-            JOIN table_field f ON rf.table_field_id = f.id
+            JOIN table_field f ON rf.table_field_id = f.id AND f.table_id = r.table_id
             WHERE r.table_id = ${table.schema.id}
             GROUP BY r.id, r.created_at, r.updated_at;
           `
