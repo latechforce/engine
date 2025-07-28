@@ -94,7 +94,7 @@
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.3",
     "eslint": "^9.31.0",
-    "googleapis": "^150.0.1",
+    "googleapis": "^154.0.0",
     "handlebars": "^4.7.8",
     "hono": "^4.8.5",
     "inversify": "^7.6.1",
