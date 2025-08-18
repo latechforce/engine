@@ -10,6 +10,7 @@ import TYPES from '../../application/di/types'
 import { ListConnectionsUseCase } from '../../application/use-case/list-connections.use-case'
 import { AuthenticateConnectionUseCase } from '../../application/use-case/authenticate-connection.use-case'
 import { SetupConnectionUseCase } from '../../application/use-case/setup-connection.use-case'
+import { DisconnectConnectionUseCase } from '../../application/use-case/disconnect-connection.use-case'
 
 // Connection infrastructure imports
 import { ConnectionRepository } from '../repository/connection.repository'
@@ -37,6 +38,10 @@ export function registerConnectionDependencies(container: Container) {
   container
     .bind<SetupConnectionUseCase>(TYPES.UseCase.Setup)
     .to(SetupConnectionUseCase)
+    .inSingletonScope()
+  container
+    .bind<DisconnectConnectionUseCase>(TYPES.UseCase.Disconnect)
+    .to(DisconnectConnectionUseCase)
     .inSingletonScope()
 
   // Register services

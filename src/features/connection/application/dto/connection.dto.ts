@@ -2,6 +2,7 @@ import type { ConnectionSchema } from '../../../../integrations/connection.schem
 import type { ConnectionStatus } from '../../domain/value-object/connection-status.value-object'
 
 export type ConnectionDto = {
+  id: number
   name: string
   service: string
   connected: boolean
@@ -16,6 +17,7 @@ export function toConnectionDto(
   authorizationUrl?: string
 ): ConnectionDto {
   return {
+    id: connection.id,
     name: connection.name,
     service: connection.service,
     authorizationUrl,

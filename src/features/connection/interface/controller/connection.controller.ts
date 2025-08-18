@@ -15,4 +15,11 @@ export class ConnectionController {
     const html = await authenticateConnectionUseCase.execute(app, data.code, data.state)
     return c.html(html)
   }
+
+  static async disconnect(c: Context<HonoType>, data: { id: string }) {
+    const app = c.get('app')
+    const disconnectConnectionUseCase = c.get('disconnectConnectionUseCase')
+    const connectionDto = await disconnectConnectionUseCase.execute(app, data.id)
+    return c.json(connectionDto)
+  }
 }

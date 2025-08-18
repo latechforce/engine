@@ -15,5 +15,10 @@ export const connectionRoutes = new Hono<HonoType>()
       code: c.req.query('code'),
     })
   )
+  .post('/:id/disconnect', (c) =>
+    ConnectionController.disconnect(c, {
+      id: c.req.param('id'),
+    })
+  )
 
 export type ConnectionType = typeof connectionRoutes

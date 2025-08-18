@@ -8,6 +8,7 @@ const TYPES = {
     List: Symbol.for('ListConnectionsUseCase'),
     Authenticate: Symbol.for('AuthenticateConnectionUseCase'),
     Setup: Symbol.for('SetupConnectionUseCase'),
+    Disconnect: Symbol.for('DisconnectConnectionUseCase'),
   },
   Service: {
     Database: Symbol.for('ConnectionDatabaseService'),

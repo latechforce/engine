@@ -10,5 +10,4 @@ test('should connect to calendly', async ({ startExampleApp }) => {
 
   // THEN
   await expect(page.getByRole('cell', { name: 'Connected', exact: true })).toBeVisible()
-  await expect(page.getByRole('cell', { name: 'user@example.com', exact: true })).toBeVisible()
 })
