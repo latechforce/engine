@@ -22,10 +22,10 @@ export class CalendlyTriggerIntegration {
           scope,
           user,
         })
-        const webhookSubscription = webhookSubscriptions.collection.find((subscription) =>
+        const alreadyExists = webhookSubscriptions.collection.find((subscription) =>
           subscription.callback_url.endsWith(this.automationId.toString())
         )
-        if (!webhookSubscription) {
+        if (!alreadyExists) {
           await calendly.createWebhookSubscription({
             url,
             events: ['invitee.created'],

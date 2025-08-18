@@ -49,6 +49,9 @@ export class AuthService {
         enabled: true,
       },
       plugins: [admin()],
+      telemetry: {
+        enabled: false,
+      },
     })
   }
 
