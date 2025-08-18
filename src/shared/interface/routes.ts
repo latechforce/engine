@@ -27,9 +27,9 @@ export const apiRoutes = new Hono<HonoType>()
   .route('/automations', automationRoutes)
   .route('/tables', tableRoutes)
   .route('/forms', formRoutes)
+  .route('/connections', connectionRoutes)
   .use(authRequiredMiddleware)
   .route('/runs', runRoutes)
-  .route('/connections', connectionRoutes)
   .route('/buckets', bucketRoutes)
 
 export type ApiType = typeof apiRoutes

@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '../../../../../shared/interface/ui/dropdown-menu.ui'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
-import { Link, MoreVertical, Unlink } from 'lucide-react'
+import { Copy, Link, MoreVertical, Unlink } from 'lucide-react'
 import { Suspense, useEffect } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListConnectionsDto } from '../../../application/dto/list-connections.dto'
@@ -112,21 +112,38 @@ const ConnectionsDataTable = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {row.original.authorizationUrl ? (
-                <DropdownMenuItem
-                  onClick={() =>
-                    window.open(row.original.authorizationUrl, 'oauthPopup', 'width=500,height=600')
-                  }
-                >
-                  {row.original.connected ? 'Reconnect account' : 'Connect account'}
-                </DropdownMenuItem>
-              ) : null}
+              {row.original.authorizationUrl
+                ? [
+                    <DropdownMenuItem
+                      onClick={() =>
+                        window.open(
+                          row.original.authorizationUrl,
+                          'oauthPopup',
+                          'width=500,height=600'
+                        )
+                      }
+                    >
+                      <Link />
+                      {row.original.connected ? 'Reconnect account' : 'Connect account'}
+                    </DropdownMenuItem>,
+                    <DropdownMenuItem
+                      onClick={() => {
+                        navigator.clipboard.writeText(row.original.authorizationUrl!)
+                        toast.success('Shareable connection link copied to clipboard')
+                      }}
+                    >
+                      <Copy />
+                      Copy shareable connection link
+                    </DropdownMenuItem>,
+                  ]
+                : null}
               {row.original.connected ? (
                 <DropdownMenuItem
                   onClick={() => {
                     disconnectConnectionMutation.mutate(row.original.id)
                   }}
                 >
+                  <Unlink />
                   Disconnect account
                 </DropdownMenuItem>
               ) : null}

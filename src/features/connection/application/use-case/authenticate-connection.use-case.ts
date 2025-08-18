@@ -45,7 +45,7 @@ export class AuthenticateConnectionUseCase {
               window.opener.postMessage('oauth:success', '*')
               window.close()
             } else {
-              document.body.innerText = 'You can close this window.'
+              document.body.innerText = 'Connection successful! You can close this window.'
             }
           </script>
         </body>
