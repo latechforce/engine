@@ -2,6 +2,7 @@ import { CalendlyConnectionIntegration } from './calendly/calendly-connection'
 import { GoogleConnectionIntegration } from './google/google-connection'
 import { AirtableConnectionIntegration } from './airtable/airtable-connection'
 import { LinkedinConnectionIntegration } from './linkedin/linkedin-connection'
+import { FacebookConnectionIntegration } from './facebook/facebook-connection'
 import type { Connection } from '../features/connection/domain/entity/connection.entity'
 
 export type ConnectionIntegration =
@@ -9,6 +10,7 @@ export type ConnectionIntegration =
   | AirtableConnectionIntegration
   | GoogleConnectionIntegration
   | LinkedinConnectionIntegration
+  | FacebookConnectionIntegration
 
 // Cache to store integration instances
 const integrationCache = new Map<number, ConnectionIntegration>()
@@ -40,6 +42,9 @@ export const toConnectionIntegration = (
       break
     case 'linkedin':
       integration = new LinkedinConnectionIntegration(connection.schema, redirectUri)
+      break
+    case 'facebook':
+      integration = new FacebookConnectionIntegration(connection.schema, redirectUri)
       break
     case 'google-sheets':
       integration = new GoogleConnectionIntegration(

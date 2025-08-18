@@ -5,6 +5,7 @@ import { GoogleSheetsActionIntegration } from './google/sheets/google-sheets-act
 import type { ConnectionSchema } from './connection.schema'
 import { AirtableActionIntegration } from './airtable/airtable-action'
 import { LinkedinActionIntegration } from './linkedin/linkedin-action'
+import { FacebookActionIntegration } from './facebook/facebook-action'
 
 export const toActionIntegration = (
   action: IntegrationActionSchema,
@@ -31,6 +32,11 @@ export const toActionIntegration = (
         throw new Error('Connection and action services do not match')
       }
       return new GoogleGmailActionIntegration(action, connection, redirectUri)
+    case 'facebook':
+      if (connection.service !== 'facebook') {
+        throw new Error('Connection and action services do not match')
+      }
+      return new FacebookActionIntegration(action)
     default: {
       const _exhaustiveCheck: never = action
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

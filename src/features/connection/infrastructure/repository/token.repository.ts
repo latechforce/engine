@@ -45,6 +45,14 @@ export class TokenRepository implements ITokenRepository {
             : undefined
           break
         }
+        case 'short-lived-token': {
+          newToken = await integration.getAccessTokenFromShortLivedToken(token.access_token)
+          break
+        }
+        default: {
+          const _exhaustiveCheck: never = integration
+          throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
+        }
       }
       if (!newToken) {
         await this.connectionRepository.status.setConnected(connection.id, false)

@@ -4,6 +4,7 @@ import { googleSheetsActionSchema } from './google/sheets/google-sheets-action.s
 import { googleGmailActionSchema } from './google/gmail/google-gmail-action.schema'
 import { airtableActionSchema } from './airtable/airtable-action.schema'
 import { linkedinActionSchema } from './linkedin/linkedin-action.schema'
+import { facebookActionSchema } from './facebook/facebook-action.schema'
 
 export const integrationActionSchema = z.union([
   calendlyActionSchema,
@@ -11,6 +12,7 @@ export const integrationActionSchema = z.union([
   googleSheetsActionSchema,
   googleGmailActionSchema,
   linkedinActionSchema,
+  facebookActionSchema,
 ])
 
 export type IntegrationActionSchema = z.infer<typeof integrationActionSchema>
