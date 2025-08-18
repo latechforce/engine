@@ -1,0 +1,1 @@
+ALTER TABLE `connection_status` ADD `email` text;

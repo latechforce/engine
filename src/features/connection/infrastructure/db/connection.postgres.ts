@@ -3,6 +3,7 @@ import { pgTable, text, timestamp, integer, boolean } from 'drizzle-orm/pg-core'
 export const connection_status = pgTable('connection_status', {
   id: integer('id').primaryKey(),
   connected: boolean('connected').notNull(),
+  email_used: text('email_used'),
   created_at: timestamp('created_at').notNull(),
   updated_at: timestamp('updated_at').notNull(),
 })

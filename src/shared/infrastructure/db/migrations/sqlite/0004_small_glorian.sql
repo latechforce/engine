@@ -1,0 +1,1 @@
+ALTER TABLE `connection_status` RENAME COLUMN "email" TO "email_used";

@@ -10,7 +10,7 @@ export type IConnectionRepository = {
   getAccessTokenFromCode: (connection: Connection, code: string) => Promise<Token>
   status: {
     create: (status: ConnectionStatus) => Promise<void>
-    setConnected: (id: number, connected: boolean) => Promise<void>
+    setConnected: (id: number, connected: boolean, emailUsed?: string) => Promise<void>
     get: (id: number) => Promise<ConnectionStatus | undefined>
     listByIds: (ids: number[]) => Promise<ConnectionStatus[]>
   }

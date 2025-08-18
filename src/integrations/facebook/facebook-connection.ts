@@ -66,7 +66,7 @@ export class FacebookConnectionIntegration {
     })
   }
 
-  async checkConnection(token?: Token): Promise<boolean> {
+  async check(token?: Token): Promise<boolean> {
     if (!token) return false
     try {
       await ky.get(this.graphUrl + '/me', {
@@ -78,5 +78,15 @@ export class FacebookConnectionIntegration {
     } catch {
       return false
     }
+  }
+
+  async getEmail(token: Token): Promise<string> {
+    const response = await ky.get(this.graphUrl + '/me?fields=email', {
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    })
+    const data = await response.json<{ email?: string }>()
+    return data.email ?? ''
   }
 }

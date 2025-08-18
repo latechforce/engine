@@ -80,7 +80,7 @@ export class AirtableConnectionIntegration {
     })
   }
 
-  async checkConnection(token?: Token): Promise<boolean> {
+  async check(token?: Token): Promise<boolean> {
     if (!token) return false
     try {
       await ky.get(this.baseUrl + '/v0/meta/whoami', {
@@ -92,6 +92,16 @@ export class AirtableConnectionIntegration {
     } catch {
       return false
     }
+  }
+
+  async getEmail(token: Token): Promise<string> {
+    const response = await ky.get(this.baseUrl + '/v0/meta/whoami', {
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    })
+    const data = await response.json<{ email?: string; user?: { email?: string } }>()
+    return data.email ?? data.user?.email ?? ''
   }
 
   private generateCodeVerifier() {

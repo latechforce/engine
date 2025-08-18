@@ -18,22 +18,9 @@ import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListConnectionsDto } from '../../../application/dto/list-connections.dto'
 import { adminRoute } from '../../../../app/interface/page/router'
 import { TypographyH3 } from '../../../../../shared/interface/ui/typography.ui'
+import { format } from 'date-fns'
 
 const columns: ColumnDef<ConnectionDto>[] = [
-  {
-    accessorKey: 'name',
-    header: 'Name',
-    size: 396,
-  },
-  {
-    accessorKey: 'service',
-    header: 'Service',
-    size: 150,
-    cell: ({ row }) => {
-      const words = row.original.service.split('-')
-      return words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
-    },
-  },
   {
     accessorKey: 'connected',
     header: 'Status',
@@ -48,7 +35,43 @@ const columns: ColumnDef<ConnectionDto>[] = [
         </div>
       )
     },
-    size: 200,
+    meta: { fitContent: true },
+    minSize: 140,
+  },
+  {
+    accessorKey: 'name',
+    header: 'Name',
+    // Fill remaining space
+    meta: { fill: true },
+    minSize: 200,
+  },
+  {
+    accessorKey: 'service',
+    header: 'Service',
+    meta: { fitContent: true },
+    minSize: 120,
+    cell: ({ row }) => {
+      const words = row.original.service.split('-')
+      return words.map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    },
+  },
+  {
+    accessorKey: 'email_used',
+    header: 'Email used',
+    meta: { fitContent: true },
+    minSize: 160,
+    cell: ({ row }) => {
+      return <div>{row.original.email_used ?? 'N/A'}</div>
+    },
+  },
+  {
+    accessorKey: 'updatedAt',
+    header: 'Updated at',
+    meta: { fitContent: true },
+    minSize: 150,
+    cell: ({ row }) => {
+      return <div>{format(row.original.updatedAt, 'dd/MM/yyyy HH:mm')}</div>
+    },
   },
   {
     id: 'actions',
@@ -78,7 +101,8 @@ const columns: ColumnDef<ConnectionDto>[] = [
         </DropdownMenu>
       )
     },
-    size: 100,
+    meta: { fitContent: true },
+    minSize: 80,
   },
 ]
 
@@ -88,6 +112,7 @@ const ConnectionsDataTable = () => {
     <DataTable
       columns={columns}
       data={data.connections}
+      columnPinning={{ right: ['service', 'email_used', 'updatedAt', 'actions'] }}
     />
   )
 }
@@ -112,7 +137,7 @@ const ConnectionsPage = () => {
         { title: 'Connections', url: '/admin/connections' },
       ]}
     >
-      <div className="container mx-auto max-w-4xl p-6">
+      <div className="container mx-auto p-6">
         <TypographyH3 className="mb-4">Connections</TypographyH3>
         <Suspense fallback={<TableSkeleton />}>
           <ConnectionsDataTable />

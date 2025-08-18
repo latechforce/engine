@@ -6,9 +6,10 @@ import { Skeleton } from './skeleton.ui'
 type TableProps = React.ComponentProps<'table'> & {
   fullHeight?: boolean
   scrollable?: boolean
+  layout?: 'fixed' | 'auto'
 }
 
-function Table({ className, fullHeight, scrollable, ...props }: TableProps) {
+function Table({ className, fullHeight, scrollable, layout = 'fixed', ...props }: TableProps) {
   return (
     <div
       data-slot="table-container"
@@ -20,7 +21,11 @@ function Table({ className, fullHeight, scrollable, ...props }: TableProps) {
     >
       <table
         data-slot="table"
-        className={cn('min-w-max table-fixed caption-bottom text-sm', className)}
+        className={cn(
+          'min-w-max caption-bottom text-sm',
+          layout === 'fixed' ? 'table-fixed' : 'table-auto',
+          className
+        )}
         {...props}
       />
     </div>

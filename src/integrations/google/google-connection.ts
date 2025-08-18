@@ -62,7 +62,7 @@ export class GoogleConnectionIntegration {
     }
   }
 
-  async checkConnection(token?: Token): Promise<boolean> {
+  async check(token?: Token): Promise<boolean> {
     if (!token) return false
     try {
       const expiry_date = token.created_at.getTime() + (token.expires_in || 0) * 1000
@@ -81,6 +81,22 @@ export class GoogleConnectionIntegration {
     } catch {
       return false
     }
+  }
+
+  async getEmail(token: Token): Promise<string> {
+    const expiry_date = token.created_at.getTime() + (token.expires_in || 0) * 1000
+    this.oauth2Client.setCredentials({
+      access_token: token.access_token,
+      refresh_token: token.refresh_token,
+      expiry_date,
+      token_type: token.token_type,
+    })
+    const oauth2 = google.oauth2({
+      auth: this.oauth2Client,
+      version: 'v2',
+    })
+    const { data } = await oauth2.userinfo.get()
+    return data.email ?? ''
   }
 
   onNewRefreshToken(callback: (token: Token) => void) {

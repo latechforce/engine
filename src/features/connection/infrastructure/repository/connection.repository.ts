@@ -55,9 +55,10 @@ export class ConnectionRepository implements IConnectionRepository {
           updated_at: status.updatedAt,
         })
       },
-      setConnected: async (id: number, connected: boolean) => {
+      setConnected: async (id: number, connected: boolean, email?: string) => {
         await this.database.connection_status.update(id, {
           connected,
+          email_used: email,
           updated_at: new Date(),
         })
       },
@@ -69,6 +70,7 @@ export class ConnectionRepository implements IConnectionRepository {
         return {
           id: status.id,
           connected: status.connected,
+          email_used: status.email_used || undefined,
           createdAt: status.created_at,
           updatedAt: status.updated_at,
         }
@@ -78,6 +80,7 @@ export class ConnectionRepository implements IConnectionRepository {
         return statuses.map((status) => ({
           id: status.id,
           connected: status.connected,
+          email_used: status.email_used || undefined,
           createdAt: status.created_at,
           updatedAt: status.updated_at,
         }))

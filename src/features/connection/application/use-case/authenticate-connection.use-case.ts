@@ -31,7 +31,8 @@ export class AuthenticateConnectionUseCase {
       await this.tokenRepository.create(token)
     }
     const isValid = await this.tokenRepository.check(connection)
-    await this.connectionRepository.status.setConnected(connection.id, isValid)
+    const emailUsed = await this.tokenRepository.getEmail(connection)
+    await this.connectionRepository.status.setConnected(connection.id, isValid, emailUsed)
     if (!isValid) {
       throw new HttpError('Invalid token', 401)
     }

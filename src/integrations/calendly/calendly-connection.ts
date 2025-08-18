@@ -1,6 +1,7 @@
 import ky from 'ky'
 import type { Token } from '../../features/connection/domain/value-object/token.value-object'
 import type { CalendlyConnectionSchema } from './calendly-connection.schema'
+import type { GetCurrentUserResponse } from './calendly.types'
 
 type CalendlyToken = {
   token_type: string
@@ -66,7 +67,7 @@ export class CalendlyConnectionIntegration {
     })
   }
 
-  async checkConnection(token?: Token): Promise<boolean> {
+  async check(token?: Token): Promise<boolean> {
     if (!token) return false
     try {
       await ky.get(this.baseUrl + '/users/me', {
@@ -78,5 +79,15 @@ export class CalendlyConnectionIntegration {
     } catch {
       return false
     }
+  }
+
+  async getEmail(token: Token): Promise<string> {
+    const response = await ky.get(this.baseUrl + '/users/me', {
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    })
+    const data = await response.json<GetCurrentUserResponse>()
+    return data.resource.email
   }
 }

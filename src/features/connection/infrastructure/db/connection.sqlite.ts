@@ -3,6 +3,7 @@ import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 export const connection_status = sqliteTable('connection_status', {
   id: integer('id').primaryKey(),
   connected: integer('connected', { mode: 'boolean' }).notNull(),
+  email_used: text('email_used'),
   created_at: integer('created_at', { mode: 'timestamp' }).notNull(),
   updated_at: integer('updated_at', { mode: 'timestamp' }).notNull(),
 })

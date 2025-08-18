@@ -3,6 +3,7 @@ import type { Token } from '../value-object/token.value-object'
 
 export type ITokenRepository = {
   check: (connection: Connection) => Promise<boolean>
+  getEmail: (connection: Connection) => Promise<string>
   create: (token: Token) => Promise<void>
   update: (token: Token) => Promise<void>
   get: (id: number) => Promise<Token | undefined>

@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import type { ColumnDef, ColumnResizeMode, Updater } from '@tanstack/react-table'
+import type {
+  ColumnDef,
+  ColumnResizeMode,
+  Updater,
+  ColumnPinningState,
+} from '@tanstack/react-table'
 import {
   flexRender,
   getCoreRowModel,
@@ -73,6 +78,7 @@ type DataTableProps<TData, TValue> = {
   fullPage?: boolean
   search?: DataTableSearchProps
   pagination?: DataTablePaginationProps
+  columnPinning?: ColumnPinningState
 }
 
 const globalFilterFn = <TData,>(row: Row<TData>, _: string, filterValue: string) => {
@@ -95,6 +101,7 @@ export function DataTable<TData, TValue>({
   search,
   pagination,
   filters,
+  columnPinning,
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
   const [rowSelection, setRowSelection] = useState({})
@@ -113,10 +120,7 @@ export function DataTable<TData, TValue>({
     enableColumnResizing: true,
     onRowSelectionChange: setRowSelection,
     initialState: {
-      columnPinning: {
-        left: ['expand-column'],
-        right: ['actions-column'],
-      },
+      columnPinning: columnPinning ?? { left: ['expand-column'], right: ['actions-column'] },
     },
     globalFilterFn: search ? undefined : globalFilterFn,
     state: {
@@ -254,11 +258,27 @@ export function DataTable<TData, TValue>({
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
+                    // If a column sets meta.fitContent, avoid forcing width so the browser can
+                    // size the column to its content, and apply a tiny base width to bias layout.
+                    type ColumnMeta = { fitContent?: boolean; fill?: boolean }
+                    const fitContent = (header.column.columnDef as { meta?: ColumnMeta })?.meta
+                      ?.fitContent
+                    const fill = (header.column.columnDef as { meta?: ColumnMeta })?.meta?.fill
+                    const minSize = (header.column.columnDef as { minSize?: number })?.minSize
                     return (
                       <TableHead
                         key={header.id}
-                        style={{ width: header.getSize() }}
-                        className={verticalSeparator ? 'border-border border-r' : ''}
+                        style={
+                          fitContent
+                            ? { width: 'max-content', minWidth: minSize }
+                            : fill
+                              ? { width: 'auto', minWidth: minSize }
+                              : { width: header.getSize(), minWidth: minSize }
+                        }
+                        className={cn(
+                          verticalSeparator ? 'border-border border-r' : '',
+                          fill ? 'w-full' : ''
+                        )}
                       >
                         {header.isPlaceholder
                           ? null
@@ -285,16 +305,25 @@ export function DataTable<TData, TValue>({
                     }
                   >
                     {row.getVisibleCells().map((cell) => {
+                      type ColumnMeta = { fitContent?: boolean; fill?: boolean }
+                      const fitContent = (cell.column.columnDef as { meta?: ColumnMeta })?.meta
+                        ?.fitContent
+                      const fill = (cell.column.columnDef as { meta?: ColumnMeta })?.meta?.fill
+                      const minSize = (cell.column.columnDef as { minSize?: number })?.minSize
                       return (
                         <TableCell
                           key={cell.id}
                           style={{
-                            width: cell.column.getSize(),
+                            width: fitContent ? '1%' : fill ? 'auto' : cell.column.getSize(),
+                            minWidth: minSize,
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             whiteSpace: 'nowrap',
                           }}
-                          className={verticalSeparator ? 'border-border border-r' : ''}
+                          className={cn(
+                            verticalSeparator ? 'border-border border-r' : '',
+                            fill ? 'w-full' : ''
+                          )}
                           onClick={() =>
                             cell.column.id !== 'select' ? onRowClick?.(row.original) : undefined
                           }

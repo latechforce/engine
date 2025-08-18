@@ -67,7 +67,14 @@ export class TokenRepository implements ITokenRepository {
   async check(connection: Connection): Promise<boolean> {
     const integration = toConnectionIntegration(connection, this.connectionRepository.redirectUri)
     const token = await this.getAccessToken(connection)
-    return integration.checkConnection(token)
+    return integration.check(token)
+  }
+
+  async getEmail(connection: Connection): Promise<string> {
+    const integration = toConnectionIntegration(connection, this.connectionRepository.redirectUri)
+    const token = await this.getAccessToken(connection)
+    if (!token) throw new Error('Token not found')
+    return integration.getEmail(token)
   }
 
   async create(token: Token) {

@@ -73,7 +73,7 @@ export class LinkedinConnectionIntegration {
     })
   }
 
-  async checkConnection(token?: Token): Promise<boolean> {
+  async check(token?: Token): Promise<boolean> {
     if (!token) return false
     try {
       await ky.get(this.baseUrl + '/v2/me', {
@@ -85,5 +85,20 @@ export class LinkedinConnectionIntegration {
     } catch {
       return false
     }
+  }
+
+  async getEmail(token: Token): Promise<string> {
+    const response = await ky.get(
+      this.baseUrl + '/v2/emailAddress?q=members&projection=(elements*(handle~))',
+      {
+        headers: {
+          Authorization: `Bearer ${token.access_token}`,
+        },
+      }
+    )
+    const data = await response.json<{
+      elements?: Array<{ 'handle~'?: { emailAddress?: string } }>
+    }>()
+    return data.elements?.[0]?.['handle~']?.emailAddress ?? ''
   }
 }

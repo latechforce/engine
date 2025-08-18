@@ -5,7 +5,9 @@ export type ConnectionDto = {
   name: string
   service: string
   connected: boolean
+  email_used?: string
   authorizationUrl?: string
+  updatedAt: string
 }
 
 export function toConnectionDto(
@@ -18,5 +20,7 @@ export function toConnectionDto(
     service: connection.service,
     authorizationUrl,
     connected: status.connected,
+    updatedAt: status.updatedAt.toISOString(),
+    email_used: status.email_used,
   }
 }
