@@ -288,8 +288,12 @@ export class Run {
   getErrorMessage() {
     const getError = (steps: ActionOrPathsStep[]) => {
       for (const step of steps) {
-        if ('error' in step) return step.error
-        if ('paths' in step) return getError(step.paths.flatMap((path) => path.actions))
+        if ('paths' in step) {
+          return getError(step.paths.flatMap((path) => path.actions))
+        }
+        if ('error' in step && step.error !== undefined) {
+          return step.error
+        }
       }
     }
     const [, ...actions] = this.steps

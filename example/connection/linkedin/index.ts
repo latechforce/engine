@@ -31,4 +31,9 @@ export const handlers: Handlers = {
       json: { id: 'urn:li:person:000000' },
     }),
   },
+  'https://api.linkedin.com/v2/emailAddress': {
+    GET: async () => ({
+      json: { elements: [{ handle: { emailAddress: 'test@test.com' } }] },
+    }),
+  },
 }
