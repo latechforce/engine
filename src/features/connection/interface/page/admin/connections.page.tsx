@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '../../../../../shared/interface/ui/dropdown-menu.ui'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
-import { Copy, Link, MoreVertical, Unlink } from 'lucide-react'
+import { ClipboardCopy, Link, MoreVertical, Unlink } from 'lucide-react'
 import { Suspense, useEffect } from 'react'
 import { TableSkeleton } from '../../../../../shared/interface/ui/table.ui'
 import type { ListConnectionsDto } from '../../../application/dto/list-connections.dto'
@@ -132,7 +132,7 @@ const ConnectionsDataTable = () => {
                         toast.success('Shareable connection link copied to clipboard')
                       }}
                     >
-                      <Copy />
+                      <ClipboardCopy />
                       Copy shareable connection link
                     </DropdownMenuItem>,
                   ]

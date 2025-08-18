@@ -53,3 +53,20 @@ test('should run a split into paths paths action before another action', async (
   const { data } = await response.json()
   expect(data.success).toBe(true)
 })
+
+test('should run a split into paths paths action with an error', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, filter: 'error' })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/run-paths', {
+    data: {
+      name: 'John Doe',
+    },
+  })
+
+  // THEN
+  const { data } = await response.json()
+  expect(data.path1.success).toBe(true)
+  expect(data.path2).toBeUndefined()
+})

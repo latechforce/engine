@@ -9,14 +9,23 @@ type RunStatusProps = {
 
 export const getStatusBorderColor = (status: RunDto['status']) => {
   switch (status) {
-    case 'success':
-      return 'border-green-700'
     case 'stopped':
       return 'border-red-700'
     case 'filtered':
       return 'border-gray-500'
     case 'playing':
       return 'border-blue-700'
+  }
+}
+
+export const getStatusBackground = (status: RunDto['status']) => {
+  switch (status) {
+    case 'stopped':
+      return 'bg-red-50'
+    case 'filtered':
+      return 'bg-gray-50'
+    case 'playing':
+      return 'bg-blue-50'
   }
 }
 

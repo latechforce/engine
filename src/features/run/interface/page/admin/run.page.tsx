@@ -27,10 +27,10 @@ import { type ActionStep } from '../../../domain/value-object.ts/action-step.val
 import type { RunDto } from '../../../application/dto/run.dto'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
-import { PencilIcon, ArrowDown } from 'lucide-react'
+import { PencilIcon, ArrowDown, Filter, CheckCircle, XCircle, Play } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 import { setStatusMutation } from '../../../../automation/interface/mutations/set-status.mutation'
-import { RunStatus } from '../../component/status.component'
+import { getStatusBorderColor, RunStatus } from '../../component/status.component'
 import type { TriggerStep } from '../../../domain/value-object.ts/trigger-step.value-object'
 import type { PathsStep } from '../../../domain/value-object.ts/paths-step.value-object'
 import {
@@ -38,9 +38,10 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '../../../../../shared/interface/ui/collapsible.ui'
-import { ChevronsUpDown } from 'lucide-react'
+import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react'
 import { runsAdminRoute } from './runs.page'
 import { automationAdminRoute } from '../../../../automation/interface/page/admin/automation.page'
+import { cn } from '../../../../../shared/interface/lib/utils.lib'
 
 const runQueryOptions = (runId: string) =>
   queryOptions<GetRunDto>({
@@ -82,12 +83,13 @@ const CollapsibleStepCard = ({
   children,
 }: CollapsibleStepCardProps) => {
   const [isOpen, setIsOpen] = useState(false)
+  const borderColor = getStatusBorderColor(status)
   return (
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      <Card className="mt-4 gap-0 p-0">
+      <Card className={cn('mt-4 gap-0 p-0', borderColor)}>
         <CollapsibleTrigger
           asChild
           className="gap-0"
@@ -106,7 +108,7 @@ const CollapsibleStepCard = ({
                 size="icon"
                 className="size-8"
               >
-                <ChevronsUpDown />
+                {isOpen ? <ChevronsDownUp /> : <ChevronsUpDown />}
                 <span className="sr-only">Toggle</span>
               </Button>
             </CardAction>
@@ -148,8 +150,8 @@ type ActionStepCardProps = {
   number: number
 }
 
-const ActionStepCard = ({ step, number }: ActionStepCardProps) => {
-  const isFillter =
+const isStepFiltered = (step: ActionStep) => {
+  return (
     (step.schema.service === 'filter' &&
       step.schema.action === 'only-continue-if' &&
       step.output?.canContinue === false) ||
@@ -161,13 +163,17 @@ const ActionStepCard = ({ step, number }: ActionStepCardProps) => {
       step.schema.action === 'run-typescript' &&
       Array.isArray(step.output) &&
       step.output.length === 0)
-  const status = isFillter
+  )
+}
+
+const ActionStepCard = ({ step, number }: ActionStepCardProps) => {
+  const status = isStepFiltered(step)
     ? 'filtered'
     : step.error
       ? 'stopped'
-      : step.output
-        ? 'success'
-        : 'playing'
+      : !step.output
+        ? 'playing'
+        : 'success'
   return (
     <CollapsibleStepCard
       key={number}
@@ -205,11 +211,28 @@ type PathsStepCardProps = {
   number: number
 }
 
+const ArrowDownIcon = () => {
+  return (
+    <div className="mt-4 flex justify-center">
+      <ArrowDown className="text-muted-foreground h-6 w-6" />
+    </div>
+  )
+}
+
 const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
+  const status =
+    step.paths.every((path) => path.output.canContinue === false) ||
+    step.paths.some((path) => path.actions.some((action) => isStepFiltered(action)))
+      ? 'filtered'
+      : step.paths.some((path) => path.actions.some((action) => action.error))
+        ? 'stopped'
+        : step.paths.some((path) => path.actions.some((action) => !action.output))
+          ? 'playing'
+          : 'success'
   return (
     <CollapsibleStepCard
       title={`${number}. ${step.schema.name}`}
-      status="success"
+      status={status}
       description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
     >
       <Tabs defaultValue={step.paths[0]!.schema.name}>
@@ -219,6 +242,16 @@ const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
               key={index}
               value={path.schema.name}
             >
+              {path.output.canContinue === false ||
+              path.actions.some((action) => isStepFiltered(action)) ? (
+                <Filter />
+              ) : path.actions.some((action) => action.error) ? (
+                <XCircle />
+              ) : path.actions.some((action) => !action.output) ? (
+                <Play />
+              ) : (
+                <CheckCircle />
+              )}{' '}
               {path.schema.name}
             </TabsTrigger>
           ))}
@@ -230,7 +263,7 @@ const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
           >
             <CollapsibleStepCard
               title={`1. ${path.schema.name}`}
-              status="success"
+              status={path.output.canContinue === false ? 'filtered' : 'success'}
               description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
             >
               <Tabs defaultValue="output">
@@ -250,6 +283,7 @@ const PathsStepCard = ({ run, step, number }: PathsStepCardProps) => {
                 </TabsContent>
               </Tabs>
             </CollapsibleStepCard>
+            {path.actions.length > 0 && <ArrowDownIcon />}
             <StepsCards
               run={run}
               steps={path.actions}
@@ -297,11 +331,7 @@ const StepsCards = ({ run, steps, startNumber = 0 }: StepCardProps) => {
         return (
           <div key={index}>
             {stepElement}
-            {index < steps.length - 1 && (
-              <div className="mt-4 flex justify-center">
-                <ArrowDown className="text-muted-foreground h-6 w-6" />
-              </div>
-            )}
+            {index < steps.length - 1 && <ArrowDownIcon />}
           </div>
         )
       })}

@@ -136,6 +136,16 @@ export class RunAutomationUseCase {
       await this.runRepository.update(run)
       if (action.service === 'filter' && action.action === 'split-into-paths') {
         await this.executePaths(app, run, automation, action, data, pathName)
+        const step = run.getActionOrPathsStep(actionPath)
+        if (step && step.type === 'paths') {
+          if (step.paths.every((path) => path.output.canContinue === false)) {
+            await this.filter(run, actionPath, data)
+            return false
+          }
+          if (step.paths.some((path) => path.actions.some((action) => action.error))) {
+            return false
+          }
+        }
       }
       this.info(`action "${action.name}" succeeded`)
     }
