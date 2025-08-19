@@ -12,7 +12,7 @@ export type ITriggerRepository = {
     trigger: IntegrationTriggerSchema,
     connection: ConnectionSchema,
     automation: Automation
-  ): Promise<boolean>
+  ): Promise<undefined | { error: string }>
   fillTemplateObject(template: Record<string, unknown>, data: object): Record<string, unknown>
   fillTriggerWithEnv(trigger: IntegrationTriggerSchema): IntegrationTriggerSchema
   validateData(schema: JSONSchemaSchema, data: unknown): boolean

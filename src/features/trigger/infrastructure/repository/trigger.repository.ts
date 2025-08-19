@@ -55,7 +55,7 @@ export class TriggerRepository implements ITriggerRepository {
     trigger: IntegrationTriggerSchema,
     connection: Connection,
     automation: Automation
-  ): Promise<boolean> {
+  ) {
     try {
       let baseUrl = this.env.get('BASE_URL')
       if (baseUrl.includes('localhost')) {
@@ -69,8 +69,8 @@ export class TriggerRepository implements ITriggerRepository {
         const token = await this.tokenRepository.getAccessToken(connection)
         if (token) await integration.setupTrigger(token, url)
       })
-      return true
     } catch (error) {
+      let message = ''
       if (error instanceof HTTPError) {
         const result = {
           automation: automation.schema.name,
@@ -80,12 +80,15 @@ export class TriggerRepository implements ITriggerRepository {
           response: await error.response.json(),
         }
         this.logger.error(JSON.stringify(result, null, 2))
+        message = error.message
       } else if (error instanceof Error) {
         this.logger.error(error.message)
+        message = error.message
       } else {
         this.logger.error(String(error))
+        message = String(error)
       }
-      return false
+      return { error: message }
     }
   }
 }

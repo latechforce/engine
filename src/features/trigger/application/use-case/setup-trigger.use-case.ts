@@ -24,7 +24,7 @@ export class SetupTriggerUseCase {
     private readonly automationRepository: IAutomationRepository
   ) {}
 
-  async execute(app: App, automation: Automation) {
+  async execute(app: App, automation: Automation): Promise<undefined | { error: string }> {
     this.triggerRepository.log.debug(`setup trigger for "${automation.schema.name}"`)
     const { trigger } = automation
     const status = await this.automationRepository.status.get(automation.schema.id)
@@ -36,16 +36,14 @@ export class SetupTriggerUseCase {
           throw new Error(`Connection "${trigger.account}" not found`)
         }
         const filledTrigger = this.triggerRepository.fillTriggerWithEnv(trigger)
-        const success = await this.triggerRepository.setupIntegration(
+        const result = await this.triggerRepository.setupIntegration(
           filledTrigger,
           connection,
           automation
         )
-        if (!success) {
+        if (result?.error) {
           await this.automationRepository.status.setActive(automation.schema.id, false)
-          this.triggerRepository.log.debug(
-            `failed to setup integration for "${automation.schema.name}", automation is now inactive`
-          )
+          return { error: result.error }
         }
       } else {
         switch (trigger.service) {

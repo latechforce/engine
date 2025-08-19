@@ -34,7 +34,10 @@ export class AutomationController {
   static async setStatus(c: Context<HonoType>, data: { automationId: string; active: boolean }) {
     const app = c.get('app')
     const setStatusUseCase = c.get('setStatusUseCase')
-    await setStatusUseCase.execute(app, data.automationId, data.active)
+    const result = await setStatusUseCase.execute(app, data.automationId, data.active)
+    if (result?.error) {
+      return c.json({ error: result.error }, 400)
+    }
     return c.text('OK')
   }
 

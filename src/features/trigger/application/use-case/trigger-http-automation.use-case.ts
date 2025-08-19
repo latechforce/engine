@@ -209,7 +209,7 @@ export class TriggerHttpAutomationUseCase {
               break
             }
             case 'stopped': {
-              reject(new TriggerError(run.getErrorMessage() || 'Unknown error', 500))
+              reject(new TriggerError(run.getErrorMessage() || 'Unknown error in automation', 400))
               break
             }
             case 'success': {

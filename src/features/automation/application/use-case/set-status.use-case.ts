@@ -14,14 +14,21 @@ export class SetStatusUseCase {
     private readonly setupTriggerUseCase: SetupTriggerUseCase
   ) {}
 
-  async execute(app: App, automationId: string, active: boolean): Promise<void> {
+  async execute(
+    app: App,
+    automationId: string,
+    active: boolean
+  ): Promise<undefined | { error: string }> {
     const automation = app.findAutomation(automationId)
     if (!automation) {
       throw new HttpError('Automation not found', 404)
     }
     await this.automationRepository.status.setActive(automation.schema.id, active)
-    if (active) {
-      await this.setupTriggerUseCase.execute(app, automation)
+    if (active === true) {
+      const result = await this.setupTriggerUseCase.execute(app, automation)
+      if (result?.error) {
+        return { error: result.error }
+      }
     }
   }
 }
