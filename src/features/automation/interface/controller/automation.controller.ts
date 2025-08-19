@@ -28,7 +28,17 @@ export class AutomationController {
       data.body,
       data.formId
     )
-    return c.json(triggerHttpAutomationDto)
+    if (triggerHttpAutomationDto.headers) {
+      const body =
+        typeof triggerHttpAutomationDto.body === 'string'
+          ? triggerHttpAutomationDto.body
+          : JSON.stringify(triggerHttpAutomationDto.body)
+      return new Response(body, {
+        status: 200,
+        headers: triggerHttpAutomationDto.headers,
+      })
+    }
+    return c.json(triggerHttpAutomationDto.body)
   }
 
   static async setStatus(c: Context<HonoType>, data: { automationId: string; active: boolean }) {

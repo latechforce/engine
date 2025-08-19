@@ -66,3 +66,17 @@ test('should run a response http action with previous action', async ({ startExa
   // THEN
   expect(data).toEqual({ message: 'Hello world!' })
 })
+
+test('should run a response http action with headers', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ filter: 'headers', test })
+
+  // WHEN
+  const response = await page.request.post('/api/automations/response')
+
+  // THEN
+  expect(response.headers()).toMatchObject({
+    'content-type': 'text/plain',
+  })
+  expect(await response.text()).toBe('Hello, world!')
+})

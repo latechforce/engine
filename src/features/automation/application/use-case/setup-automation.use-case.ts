@@ -78,7 +78,9 @@ export class SetupAutomationUseCase {
 
     const response =
       responseAction && responseAction.params?.body
-        ? this.generateJsonSchema(responseAction.params.body)
+        ? typeof responseAction.params.body === 'string'
+          ? { type: 'string' }
+          : this.generateJsonSchema(responseAction.params.body)
         : undefined
 
     const method = trigger.event === 'get' ? 'get' : 'post'

@@ -6,7 +6,8 @@ export const responseHttpActionSchema = baseHttpActionSchema
     action: z.literal('response'),
     params: z
       .object({
-        body: z.record(z.string(), z.unknown()).optional(),
+        headers: z.record(z.string(), z.string()).optional(),
+        body: z.union([z.record(z.string(), z.unknown()), z.string()]).optional(),
       })
       .optional(),
   })

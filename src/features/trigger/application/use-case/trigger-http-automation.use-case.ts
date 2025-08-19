@@ -40,8 +40,10 @@ export class TriggerHttpAutomationUseCase {
         )
       }
       return {
-        data: responses,
-        success: true,
+        body: {
+          data: responses,
+          success: true,
+        },
       }
     } else {
       return this.triggerWithObjectBody(app, automationIdOrPath, request, body, formId)
@@ -179,7 +181,7 @@ export class TriggerHttpAutomationUseCase {
       (trigger.event === 'get' && trigger.params?.respondImmediately) ||
       trigger.service !== 'http'
     ) {
-      return { success: true, runId: initRun?.id }
+      return { body: { success: true, runId: initRun?.id } }
     }
     if (!initRun) {
       throw new TriggerError('Automation is not active', 403)
@@ -199,11 +201,11 @@ export class TriggerHttpAutomationUseCase {
                 lastAction.schema.name === responseActionSchema?.name &&
                 run.isStepExecuted(lastAction.schema.name)
               ) {
-                const { body } = run.getLastActionStepData()
+                const { body, headers } = run.getLastActionStepData()
                 if (body) {
-                  resolve(body)
+                  resolve({ body, headers: headers as Record<string, string> | undefined })
                 } else {
-                  resolve(successResponse)
+                  resolve({ body: successResponse })
                 }
               }
               break
@@ -215,14 +217,16 @@ export class TriggerHttpAutomationUseCase {
             case 'success': {
               const lastAction = run.getLastActionStep()
               if (lastAction) {
-                resolve({ data: run.getLastActionStepData(), ...successResponse })
+                resolve({
+                  body: { data: run.getLastActionStepData(), ...successResponse },
+                })
               } else {
-                resolve(successResponse)
+                resolve({ body: successResponse })
               }
               break
             }
             case 'filtered':
-              resolve({ data: run.getLastActionStepData(), ...successResponse })
+              resolve({ body: { data: run.getLastActionStepData(), ...successResponse } })
               break
             default: {
               const _exhaustiveCheck: never = run.status
