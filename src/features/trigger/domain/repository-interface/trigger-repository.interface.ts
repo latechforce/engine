@@ -12,8 +12,9 @@ export type ITriggerRepository = {
     trigger: IntegrationTriggerSchema,
     connection: ConnectionSchema,
     automation: Automation
-  ): Promise<void>
+  ): Promise<boolean>
   fillTemplateObject(template: Record<string, unknown>, data: object): Record<string, unknown>
+  fillTriggerWithEnv(trigger: IntegrationTriggerSchema): IntegrationTriggerSchema
   validateData(schema: JSONSchemaSchema, data: unknown): boolean
   onCronTime(expression: string, timeZone: string, callback: () => Promise<void>): void
 }

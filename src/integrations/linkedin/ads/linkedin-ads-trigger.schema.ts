@@ -1,8 +1,8 @@
 import { z } from 'zod/v4'
-import { baseIntegrationTriggerSchema } from '../../features/trigger/domain/schema/base.integration'
+import { baseIntegrationTriggerSchema } from '../../../features/trigger/domain/schema/base.integration'
 
 export const baseLinkedinTriggerSchema = baseIntegrationTriggerSchema.extend({
-  service: z.literal('linkedin'),
+  service: z.literal('linkedin-ads'),
 })
 
 export const newLeadGenFormResponseLinkedinTriggerSchema = baseLinkedinTriggerSchema
@@ -22,9 +22,11 @@ export const newLeadGenFormResponseLinkedinTriggerSchema = baseLinkedinTriggerSc
     description: 'Triggered when a new LinkedIn Lead Gen Form response is created',
   })
 
-export const linkedinTriggerSchema = z.union([newLeadGenFormResponseLinkedinTriggerSchema]).meta({
-  title: 'LinkedIn',
-  description: 'The LinkedIn trigger is triggered by LinkedIn lead events',
-})
+export const linkedinAdsTriggerSchema = z
+  .union([newLeadGenFormResponseLinkedinTriggerSchema])
+  .meta({
+    title: 'LinkedIn Ads',
+    description: 'The LinkedIn Ads trigger is triggered by LinkedIn lead events',
+  })
 
-export type LinkedinTriggerSchema = z.infer<typeof linkedinTriggerSchema>
+export type LinkedinAdsTriggerSchema = z.infer<typeof linkedinAdsTriggerSchema>

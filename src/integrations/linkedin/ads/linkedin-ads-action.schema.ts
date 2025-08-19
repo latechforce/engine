@@ -1,8 +1,8 @@
 import { z } from 'zod/v4'
-import { baseIntegrationActionSchema } from '../../features/action/domain/schema/base.integration'
+import { baseIntegrationActionSchema } from '../../../features/action/domain/schema/base.integration'
 
 const baseLinkedinActionSchema = baseIntegrationActionSchema.extend({
-  service: z.literal('linkedin'),
+  service: z.literal('linkedin-ads'),
 })
 
 const createLeadSubscriptionLinkedinActionSchema = baseLinkedinActionSchema
@@ -31,11 +31,11 @@ const listLeadSubscriptionsLinkedinActionSchema = baseLinkedinActionSchema
     description: 'Lists LinkedIn lead notification subscriptions for an organization.',
   })
 
-export const linkedinActionSchema = z
+export const linkedinAdsActionSchema = z
   .union([createLeadSubscriptionLinkedinActionSchema, listLeadSubscriptionsLinkedinActionSchema])
   .meta({
-    title: 'LinkedIn',
-    description: 'Actions to interact with LinkedIn APIs',
+    title: 'LinkedIn Ads',
+    description: 'Actions to interact with LinkedIn Ads APIs',
   })
 
-export type LinkedinActionSchema = z.infer<typeof linkedinActionSchema>
+export type LinkedinAdsActionSchema = z.infer<typeof linkedinAdsActionSchema>

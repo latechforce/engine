@@ -43,6 +43,10 @@ export class TriggerRepository implements ITriggerRepository {
     return this.template.fillObject(template, data)
   }
 
+  fillTriggerWithEnv(trigger: IntegrationTriggerSchema): IntegrationTriggerSchema {
+    return this.template.fillObject(trigger, {})
+  }
+
   onCronTime(expression: string, timeZone: string, callback: () => Promise<void>): void {
     new CronJob(expression, callback, null, true, timeZone)
   }
@@ -51,7 +55,7 @@ export class TriggerRepository implements ITriggerRepository {
     trigger: IntegrationTriggerSchema,
     connection: Connection,
     automation: Automation
-  ): Promise<void> {
+  ): Promise<boolean> {
     try {
       let baseUrl = this.env.get('BASE_URL')
       if (baseUrl.includes('localhost')) {
@@ -65,6 +69,7 @@ export class TriggerRepository implements ITriggerRepository {
         const token = await this.tokenRepository.getAccessToken(connection)
         if (token) await integration.setupTrigger(token, url)
       })
+      return true
     } catch (error) {
       if (error instanceof HTTPError) {
         const result = {
@@ -75,14 +80,12 @@ export class TriggerRepository implements ITriggerRepository {
           response: await error.response.json(),
         }
         this.logger.error(JSON.stringify(result, null, 2))
-        throw new Error(result.message)
       } else if (error instanceof Error) {
         this.logger.error(error.message)
-        throw new Error(error.message)
       } else {
         this.logger.error(String(error))
-        throw new Error('Unknown error')
       }
+      return false
     }
   }
 }

@@ -1,7 +1,7 @@
 import type { AppSchema } from '@/types'
-import linkedinConnection from '@/example/connection/linkedin'
+import linkedinConnection from '@/example/connection/linkedin/ads'
 import type { Handlers } from '@/script/mock'
-import { handlers as linkedinHandlers } from '../../../../connection/linkedin'
+import { handlers as linkedinHandlers } from '../../../../../connection/linkedin'
 
 export const inGuides = false
 
@@ -22,8 +22,8 @@ export default {
       actions: [
         {
           name: 'list-lead-notification-subscriptions',
-          account: 'LinkedIn',
-          service: 'linkedin',
+          account: 'LinkedIn Ads',
+          service: 'linkedin-ads',
           action: 'list-lead-notification-subscriptions',
           params: {
             organizationId: '5622087',

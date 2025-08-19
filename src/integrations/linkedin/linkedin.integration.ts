@@ -12,20 +12,20 @@ export class LinkedinIntegration {
   private getHeaders() {
     return {
       Authorization: `Bearer ${this.accessToken}`,
-      'LinkedIn-Version': '202405',
+      'LinkedIn-Version': '202508',
       'Content-Type': 'application/json',
+      'X-Restli-Protocol-Version': '2.0.0',
     }
   }
 
   async listLeadNotificationSubscriptions(params: {
-    organizationUrn: string
+    organizationId: string
   }): Promise<ListLeadNotificationSubscriptionsResponse> {
-    const query = new URLSearchParams({
-      q: 'owners',
-      owners: params.organizationUrn,
-    })
+    const urn = `urn:li:organization:${params.organizationId}`
+    const encodedUrn = encodeURIComponent(urn)
+    const query = `q=criteria&owner=(value:(organization:${encodedUrn}))&leadType=(leadType:SPONSORED)`
     return await ky
-      .get(this.baseUrl + '/rest/leadNotifications?' + query.toString(), {
+      .get(this.baseUrl + '/rest/leadNotifications?' + query, {
         headers: this.getHeaders(),
       })
       .json<ListLeadNotificationSubscriptionsResponse>()
@@ -33,13 +33,13 @@ export class LinkedinIntegration {
 
   async createLeadNotificationSubscription(params: {
     webhook: string
-    organizationUrn: string
+    organizationId: string
     leadType?: 'SPONSORED'
   }): Promise<GetLeadNotificationSubscriptionResponse> {
     const body = {
       webhook: params.webhook,
       owner: {
-        organization: params.organizationUrn,
+        organization: `urn:li:organization:${params.organizationId}`,
       },
       leadType: params.leadType ?? 'SPONSORED',
     }
@@ -50,7 +50,7 @@ export class LinkedinIntegration {
       })
       .json<GetLeadNotificationSubscriptionResponse>()
     const list = await this.listLeadNotificationSubscriptions({
-      organizationUrn: params.organizationUrn,
+      organizationId: params.organizationId,
     })
     const response = list.results.find((r) => r.webhook === params.webhook)
     if (!response) {

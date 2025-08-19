@@ -12,7 +12,7 @@ export type IAutomationRepository = {
   status: {
     create: (status: AutomationStatus) => Promise<void>
     updateSchema: (id: number, schema: AutomationSchema) => Promise<void>
-    setActive: (id: number, connected: boolean) => Promise<void>
+    setActive: (id: number, active: boolean) => Promise<void>
     get: (id: number) => Promise<AutomationStatus | undefined>
     listByIds: (ids: number[]) => Promise<AutomationStatus[]>
   }

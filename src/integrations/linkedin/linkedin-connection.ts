@@ -1,4 +1,4 @@
-import ky from 'ky'
+import ky, { HTTPError } from 'ky'
 import type { Token } from '../../features/connection/domain/value-object/token.value-object'
 import type { LinkedinConnectionSchema } from './linkedin-connection.schema'
 
@@ -14,7 +14,8 @@ export class LinkedinConnectionIntegration {
 
   constructor(
     private readonly schema: LinkedinConnectionSchema,
-    private readonly redirectUri: string
+    private readonly redirectUri: string,
+    private readonly scope: string[]
   ) {}
 
   getAuthorizationUrl() {
@@ -23,33 +24,45 @@ export class LinkedinConnectionIntegration {
       client_id: this.schema.clientId,
       redirect_uri: this.redirectUri,
       state: String(this.schema.id),
-      scope: [
-        'r_liteprofile',
-        'r_emailaddress',
-        'rw_organization_admin',
-        'r_organization_social',
-        'w_organization_social',
-        'w_member_social',
-      ].join(' '),
+      scope: ['openid', 'profile', 'email', ...this.scope].join(' '),
     })
     return `${this.authBaseUrl}/oauth/v2/authorization?${params.toString()}`
   }
 
   async getAccessToken(body: Record<string, string>): Promise<Token> {
     const { id, clientId, clientSecret } = this.schema
-    const response = await ky
-      .post(`${this.authBaseUrl}/oauth/v2/accessToken`, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
+    let response: LinkedinToken
+    try {
+      console.log(
+        new URLSearchParams({
           client_id: clientId,
           client_secret: clientSecret,
           redirect_uri: this.redirectUri,
           ...body,
-        }),
-      })
-      .json<LinkedinToken>()
+        })
+      )
+      response = await ky
+        .post(`${this.authBaseUrl}/oauth/v2/accessToken`, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            client_id: clientId,
+            client_secret: clientSecret,
+            redirect_uri: this.redirectUri,
+            ...body,
+          }),
+        })
+        .json<LinkedinToken>()
+    } catch (error) {
+      if (error instanceof HTTPError) {
+        const errorBody = await error.response.text()
+        throw new Error(
+          `LinkedIn accessToken request failed: ${error.response.status} ${error.response.statusText} - ${errorBody}`
+        )
+      }
+      throw error
+    }
     return {
       id,
       token_type: 'Bearer',
@@ -88,17 +101,12 @@ export class LinkedinConnectionIntegration {
   }
 
   async getEmail(token: Token): Promise<string> {
-    const response = await ky.get(
-      this.baseUrl + '/v2/emailAddress?q=members&projection=(elements*(handle~))',
-      {
-        headers: {
-          Authorization: `Bearer ${token.access_token}`,
-        },
-      }
-    )
-    const data = await response.json<{
-      elements?: Array<{ 'handle~'?: { emailAddress?: string } }>
-    }>()
-    return data.elements?.[0]?.['handle~']?.emailAddress ?? ''
+    const response = await ky.get(this.baseUrl + '/v2/userinfo', {
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    })
+    const data = await response.json<{ email: string }>()
+    return data.email
   }
 }

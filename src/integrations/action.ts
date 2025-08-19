@@ -4,7 +4,7 @@ import { GoogleGmailActionIntegration } from './google/gmail/google-gmail-action
 import { GoogleSheetsActionIntegration } from './google/sheets/google-sheets-action'
 import type { ConnectionSchema } from './connection.schema'
 import { AirtableActionIntegration } from './airtable/airtable-action'
-import { LinkedinActionIntegration } from './linkedin/linkedin-action'
+import { LinkedinAdsActionIntegration } from './linkedin/ads/linkedin-ads-action'
 import { FacebookActionIntegration } from './facebook/facebook-action'
 
 export const toActionIntegration = (
@@ -17,11 +17,11 @@ export const toActionIntegration = (
       return new CalendlyActionIntegration(action)
     case 'airtable':
       return new AirtableActionIntegration(action)
-    case 'linkedin':
-      if (connection.service !== 'linkedin') {
+    case 'linkedin-ads':
+      if (connection.service !== 'linkedin-ads') {
         throw new Error('Connection and action services do not match')
       }
-      return new LinkedinActionIntegration(action)
+      return new LinkedinAdsActionIntegration(action)
     case 'google-sheets':
       if (connection.service !== 'google-sheets') {
         throw new Error('Connection and action services do not match')

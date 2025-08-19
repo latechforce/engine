@@ -1,7 +1,7 @@
 import type { AppSchema } from '@/types'
-import linkedinConnection from '@/example/connection/linkedin'
+import linkedinConnection from '@/example/connection/linkedin/ads'
 import type { Handlers } from '@/script/mock'
-import { handlers as linkedinHandlers } from '../../../../connection/linkedin'
+import { handlers as linkedinHandlers } from '../../../../../connection/linkedin'
 
 export const inGuides = false
 
@@ -13,11 +13,11 @@ export default {
       id: 1,
       name: 'linkedin-new-lead',
       trigger: {
-        service: 'linkedin',
+        service: 'linkedin-ads',
         event: 'new-lead-gen-form-response',
-        account: 'LinkedIn',
+        account: 'LinkedIn Ads',
         params: {
-          organizationId: '5622087',
+          organizationId: '{{env "LINKEDIN_ORGANIZATION_ID" "5622087"}}',
         },
       },
       actions: [],

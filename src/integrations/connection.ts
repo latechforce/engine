@@ -40,8 +40,15 @@ export const toConnectionIntegration = (
         connection.state
       )
       break
-    case 'linkedin':
-      integration = new LinkedinConnectionIntegration(connection.schema, redirectUri)
+    case 'linkedin-ads':
+      integration = new LinkedinConnectionIntegration(connection.schema, redirectUri, [
+        'r_liteprofile',
+        'r_events',
+        'r_ads',
+        'r_organization_admin',
+        'r_marketing_leadgen_automation',
+        'r_ads_leadgen_automation',
+      ])
       break
     case 'facebook':
       integration = new FacebookConnectionIntegration(connection.schema, redirectUri)
