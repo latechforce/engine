@@ -1,7 +1,7 @@
 import type { AppSchema } from '@/types'
-import facebookConnection from '@/example/connection/facebook'
+import facebookConnection from '@/example/connection/facebook/ads'
 import type { Handlers } from '@/script/mock'
-import { handlers as facebookHandlers } from '../../../../connection/facebook'
+import { handlers as facebookHandlers } from '../../../../../connection/facebook/ads'
 
 export const inGuides = false
 
@@ -13,9 +13,9 @@ export default {
       id: 1,
       name: 'facebook-new-lead',
       trigger: {
-        service: 'facebook',
+        service: 'facebook-ads',
         event: 'new-lead',
-        account: 'Facebook',
+        account: 'Facebook Ads',
         params: {
           pageId: '123456789',
           appId: '123456789',

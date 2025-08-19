@@ -1,8 +1,8 @@
-import type { Token } from '../../features/connection/domain/value-object/token.value-object'
-import type { FacebookActionSchema } from './facebook-action.schema'
-import { FacebookIntegration } from './facebook.integration'
+import type { Token } from '../../../features/connection/domain/value-object/token.value-object'
+import type { FacebookActionSchema } from './facebook-ads-action.schema'
+import { FacebookIntegration } from '../facebook.integration'
 
-export class FacebookActionIntegration {
+export class FacebookAdsActionIntegration {
   constructor(private readonly schema: FacebookActionSchema) {}
 
   async runAction(token: Token): Promise<Record<string, unknown>> {

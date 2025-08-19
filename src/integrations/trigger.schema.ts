@@ -2,14 +2,14 @@ import { z } from 'zod/v4'
 import { calendlyTriggerSchema } from './calendly/calendly-trigger.schema'
 import { airtableTriggerSchema } from './airtable/airtable-trigger.schema'
 import { linkedinAdsTriggerSchema } from './linkedin/ads/linkedin-ads-trigger.schema'
-import { facebookTriggerSchema } from './facebook/facebook-trigger.schema'
+import { facebookAdsTriggerSchema } from './facebook/ads/facebook-ads-trigger.schema'
 
 export const integrationTriggerSchema = z
   .union([
     calendlyTriggerSchema,
     airtableTriggerSchema,
     linkedinAdsTriggerSchema,
-    facebookTriggerSchema,
+    facebookAdsTriggerSchema,
   ])
   .meta({
     title: 'Integration Trigger',

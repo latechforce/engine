@@ -14,7 +14,8 @@ export class FacebookConnectionIntegration {
 
   constructor(
     private readonly schema: FacebookConnectionSchema,
-    private readonly redirectUri: string
+    private readonly redirectUri: string,
+    private readonly scope: string[]
   ) {}
 
   getAuthorizationUrl() {
@@ -23,7 +24,7 @@ export class FacebookConnectionIntegration {
       redirect_uri: this.redirectUri,
       response_type: 'code',
       state: String(this.schema.id),
-      scope: ['pages_show_list', 'pages_manage_ads', 'leads_retrieval'].join(','),
+      scope: ['email', ...this.scope].join(','),
     })
     return `${this.authBaseUrl}/dialog/oauth?${params.toString()}`
   }

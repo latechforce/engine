@@ -1,8 +1,8 @@
 import { z } from 'zod/v4'
-import { baseIntegrationActionSchema } from '../../features/action/domain/schema/base.integration'
+import { baseIntegrationActionSchema } from '../../../features/action/domain/schema/base.integration'
 
 const baseFacebookActionSchema = baseIntegrationActionSchema.extend({
-  service: z.literal('facebook'),
+  service: z.literal('facebook-ads'),
 })
 
 const listAppSubscriptionsFacebookActionSchema = baseFacebookActionSchema
@@ -18,8 +18,8 @@ const listAppSubscriptionsFacebookActionSchema = baseFacebookActionSchema
   })
 
 export const facebookActionSchema = z.union([listAppSubscriptionsFacebookActionSchema]).meta({
-  title: 'Facebook',
-  description: 'Actions to interact with Facebook APIs',
+  title: 'Facebook Ads',
+  description: 'Actions to interact with Facebook Ads APIs',
 })
 
 export type FacebookActionSchema = z.infer<typeof facebookActionSchema>

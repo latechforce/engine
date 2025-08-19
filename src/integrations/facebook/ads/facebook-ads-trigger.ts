@@ -1,10 +1,10 @@
-import type { Token } from '../../features/connection/domain/value-object/token.value-object'
-import type { FacebookTriggerSchema } from './facebook-trigger.schema'
-import { FacebookIntegration } from './facebook.integration'
+import type { Token } from '../../../features/connection/domain/value-object/token.value-object'
+import type { FacebookAdsTriggerSchema } from './facebook-ads-trigger.schema'
+import { FacebookIntegration } from '../facebook.integration'
 
-export class FacebookTriggerIntegration {
+export class FacebookAdsTriggerIntegration {
   constructor(
-    private readonly schema: FacebookTriggerSchema,
+    private readonly schema: FacebookAdsTriggerSchema,
     private readonly automationId: number
   ) {}
 

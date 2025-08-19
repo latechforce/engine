@@ -50,8 +50,16 @@ export const toConnectionIntegration = (
         'r_ads_leadgen_automation',
       ])
       break
-    case 'facebook':
-      integration = new FacebookConnectionIntegration(connection.schema, redirectUri)
+    case 'facebook-ads':
+      integration = new FacebookConnectionIntegration(connection.schema, redirectUri, [
+        'ads_management',
+        'ads_read',
+        'business_management',
+        'pages_manage_ads',
+        'pages_read_engagement',
+        'pages_show_list',
+        'leads_retrieval',
+      ])
       break
     case 'google-sheets':
       integration = new GoogleConnectionIntegration(

@@ -4,8 +4,8 @@ export * from './index'
 export const inGuides = false
 
 export default {
-  name: 'Start with a LinkedIn connection',
-  description: 'App with a LinkedIn connection',
+  name: 'Start with a LinkedIn Ads connection',
+  description: 'App with a LinkedIn Ads connection',
   connections: [
     {
       id: 1,

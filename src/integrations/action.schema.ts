@@ -4,7 +4,7 @@ import { googleSheetsActionSchema } from './google/sheets/google-sheets-action.s
 import { googleGmailActionSchema } from './google/gmail/google-gmail-action.schema'
 import { airtableActionSchema } from './airtable/airtable-action.schema'
 import { linkedinAdsActionSchema } from './linkedin/ads/linkedin-ads-action.schema'
-import { facebookActionSchema } from './facebook/facebook-action.schema'
+import { facebookActionSchema } from './facebook/ads/facebook-ads-action.schema'
 
 export const integrationActionSchema = z.union([
   calendlyActionSchema,

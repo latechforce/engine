@@ -2,7 +2,7 @@ import { AirtableTriggerIntegration } from './airtable/airtable-trigger'
 import { CalendlyTriggerIntegration } from './calendly/calendly-trigger'
 import type { IntegrationTriggerSchema } from './trigger.schema'
 import { LinkedinAdsTriggerIntegration } from './linkedin/ads/linkedin-ads-trigger'
-import { FacebookTriggerIntegration } from './facebook/facebook-trigger'
+import { FacebookAdsTriggerIntegration } from './facebook/ads/facebook-ads-trigger'
 
 export const toTriggerIntegration = (trigger: IntegrationTriggerSchema, automationId: number) => {
   switch (trigger.service) {
@@ -12,8 +12,8 @@ export const toTriggerIntegration = (trigger: IntegrationTriggerSchema, automati
       return new AirtableTriggerIntegration(trigger, automationId)
     case 'linkedin-ads':
       return new LinkedinAdsTriggerIntegration(trigger, automationId)
-    case 'facebook':
-      return new FacebookTriggerIntegration(trigger, automationId)
+    case 'facebook-ads':
+      return new FacebookAdsTriggerIntegration(trigger, automationId)
     default: {
       const _exhaustiveCheck: never = trigger
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)
