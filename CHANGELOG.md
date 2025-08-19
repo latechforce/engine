@@ -1,3 +1,10 @@
+## [0.67.1](https://github.com/latechforce/engine/compare/v0.67.0...v0.67.1) (2025-08-19)
+
+
+### Bug Fixes
+
+* should run a response http action with headers ([78d45b5](https://github.com/latechforce/engine/commit/78d45b590089e24b102a1eb68f86e0f751c0406b)) — Thomas JEANNEAU
+
 # [0.67.0](https://github.com/latechforce/engine/compare/v0.66.1...v0.67.0) (2025-08-19)
 
 
