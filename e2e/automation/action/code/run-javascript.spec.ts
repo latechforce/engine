@@ -41,7 +41,7 @@ test('should return an error when the code throw an error', async ({ startExampl
   const response = await page.request.post('/api/automations/run-javascript')
 
   // THEN
-  expect(response.status()).toBe(500)
+  expect(response.status()).toBe(400)
   const { error } = await response.json()
   expect(error).toEqual('This is a test error')
 })

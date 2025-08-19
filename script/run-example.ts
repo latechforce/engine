@@ -41,8 +41,10 @@ async function findMatchingFiles(dir: string): Promise<string[]> {
   return matches
 }
 
-const tunnel = await ngrok.forward({ addr: 3000, authtoken: process.env.NGROK_AUTHTOKEN })
-process.env.BASE_URL = tunnel.url() ?? 'http://localhost:3000'
+if (process.env.MOCK !== '*') {
+  const tunnel = await ngrok.forward({ addr: 3000, authtoken: process.env.NGROK_AUTHTOKEN })
+  process.env.BASE_URL = tunnel.url() ?? 'http://localhost:3000'
+}
 
 if (searchTerm) {
   const matchingFiles = await findMatchingFiles(examplesDir)

@@ -1,6 +1,6 @@
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
-import type { ListAppSubscriptionsResponse } from '../../../../src/integrations/facebook/facebook.types'
+import type { ListAppSubscriptionsResponse } from '../../../../../src/integrations/facebook/facebook.types'
 
 test('should run a facebook list app subscriptions action', async ({ startExampleApp }) => {
   // GIVEN
