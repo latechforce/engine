@@ -248,7 +248,7 @@ describe('start', () => {
     expect(call).toThrow('Duplicate form path: /form')
   })
 
-  it('should throw an error if there are duplicate trigger paths', async () => {
+  it('should throw an error if there are duplicate trigger paths with same event', async () => {
     const schema: AppSchema = {
       automations: [
         {
@@ -283,6 +283,43 @@ describe('start', () => {
 
     // THEN
     expect(call).toThrow('Duplicate trigger path: /automation')
+  })
+
+  it('should not throw an error if there are duplicate trigger paths with different events', async () => {
+    const schema: AppSchema = {
+      automations: [
+        {
+          id: 1,
+          name: 'automation-1',
+          trigger: {
+            service: 'http',
+            event: 'post',
+            params: {
+              path: '/automation',
+            },
+          },
+          actions: [],
+        },
+        {
+          id: 2,
+          name: 'automation-2',
+          trigger: {
+            service: 'http',
+            event: 'get',
+            params: {
+              path: '/automation',
+            },
+          },
+          actions: [],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).not.toThrow()
   })
 
   it('should throw an error if there are duplicate field names', async () => {
