@@ -1,3 +1,10 @@
+## [0.67.2](https://github.com/latechforce/engine/compare/v0.67.1...v0.67.2) (2025-08-19)
+
+
+### Bug Fixes
+
+* should not throw an error if there are duplicate trigger paths with different events ([6471231](https://github.com/latechforce/engine/commit/6471231f8c5d5510a3ca586620fde253440bc61d)) — Thomas JEANNEAU
+
 ## [0.67.1](https://github.com/latechforce/engine/compare/v0.67.0...v0.67.1) (2025-08-19)
 
 
