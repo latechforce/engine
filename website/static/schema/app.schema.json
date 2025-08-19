@@ -1439,12 +1439,28 @@
                 "params": {
                   "type": "object",
                   "properties": {
-                    "body": {
+                    "headers": {
                       "type": "object",
                       "propertyNames": {
                         "type": "string"
                       },
-                      "additionalProperties": {}
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "body": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
                     }
                   },
                   "additionalProperties": false
