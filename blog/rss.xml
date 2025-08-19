@@ -9,26 +9,31 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Fix 0.67.1]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-67-1</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-67-1</guid>
+            <title><![CDATA[Fix 0.67.2]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-67-2</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-67-2</guid>
             <pubDate>Tue, 19 Aug 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.67.1]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-67-1"><p class="before-truncate"> 0.67.1   Bug Fixes  * should run a response http action with headers (78d45b5) — Thomas JEANNEAU   0.67.0   Bug Fixes  * add better status management on run ui (9c55a3a) — Thomas JEANNEAU * disable automation if trigger failed to setup (9f967bc) — Thomas JEANNEAU * setup trigger when automation is ...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0671"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-67-1">0.67.1</a><a href="https://engine.latechforce.com/blog/fix-0-67-1#0671" class="hash-link" aria-label="Direct link to 0.67.1" title="Direct link to 0.67.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-67-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+            <description><![CDATA[Changelog for version 0.67.2]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-67-2"><p class="before-truncate"> 0.67.2   Bug Fixes  * should not throw an error if there are duplicate trigger paths with different events (6471231) — Thomas JEANNEAU   0.67.1   Bug Fixes  * should run a response http action with headers (78d45b5) — Thomas JEANNEAU   0.67.0   Bug Fixes  * add better status management on run ui (9...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0672"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-67-2">0.67.2</a><a href="https://engine.latechforce.com/blog/fix-0-67-2#0672" class="hash-link" aria-label="Direct link to 0.67.2" title="Direct link to 0.67.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-67-2#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>should not throw an error if there are duplicate trigger paths with different events (<a href="https://github.com/latechforce/engine/commit/6471231f8c5d5510a3ca586620fde253440bc61d" target="_blank" rel="noopener noreferrer">6471231</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0671">0.67.1<a href="https://engine.latechforce.com/blog/fix-0-67-2#0671" class="hash-link" aria-label="Direct link to 0.67.1" title="Direct link to 0.67.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-67-2#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>should run a response http action with headers (<a href="https://github.com/latechforce/engine/commit/78d45b590089e24b102a1eb68f86e0f751c0406b" target="_blank" rel="noopener noreferrer">78d45b5</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0670">0.67.0<a href="https://engine.latechforce.com/blog/fix-0-67-1#0670" class="hash-link" aria-label="Direct link to 0.67.0" title="Direct link to 0.67.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-67-1#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0670">0.67.0<a href="https://engine.latechforce.com/blog/fix-0-67-2#0670" class="hash-link" aria-label="Direct link to 0.67.0" title="Direct link to 0.67.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-67-2#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>add better status management on run ui (<a href="https://github.com/latechforce/engine/commit/9c55a3ab218e333eef3d85a92fbf266bf533b4a3" target="_blank" rel="noopener noreferrer">9c55a3a</a>) — Thomas JEANNEAU</li>
 <li>disable automation if trigger failed to setup (<a href="https://github.com/latechforce/engine/commit/9f967bc700ea2649e07147140255663e2de4f496" target="_blank" rel="noopener noreferrer">9f967bc</a>) — Thomas JEANNEAU</li>
 <li>setup trigger when automation is set active (<a href="https://github.com/latechforce/engine/commit/bdc98b9af05d7b79aa2625eacce844abe58677be" target="_blank" rel="noopener noreferrer">bdc98b9</a>) — Thomas JEANNEAU</li>
 <li>show error when start an automation with a failed setup trigger (<a href="https://github.com/latechforce/engine/commit/4d12bb41a47360e561c3879ef3cbe8fcd1753676" target="_blank" rel="noopener noreferrer">4d12bb4</a>) — Thomas JEANNEAU</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-67-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-67-2#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li>add facebook ads scopes (<a href="https://github.com/latechforce/engine/commit/ec3443cc55b374ca498183e756a7c637358d482c" target="_blank" rel="noopener noreferrer">ec3443c</a>) — Thomas JEANNEAU</li>
 <li>add Facebook integration (<a href="https://github.com/latechforce/engine/commit/d279d79b67e881d46fe19a2c3095655f98e4747a" target="_blank" rel="noopener noreferrer">d279d79</a>) — Thomas JEANNEAU</li>
