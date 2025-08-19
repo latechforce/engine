@@ -33,11 +33,16 @@ export class TriggerHttpAutomationUseCase {
     formId?: string
   ): Promise<ResponseDto> {
     if (Array.isArray(body)) {
-      const responses: ResponseDto[] = []
+      const responses: ResponseDto['body'][] = []
       for (const item of body) {
-        responses.push(
-          await this.triggerWithObjectBody(app, automationIdOrPath, request, item, formId)
+        const { body: responseBody } = await this.triggerWithObjectBody(
+          app,
+          automationIdOrPath,
+          request,
+          item,
+          formId
         )
+        responses.push(responseBody)
       }
       return {
         body: {
