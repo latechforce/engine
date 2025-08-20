@@ -1,5 +1,3 @@
-import TYPES from '../../../../shared/application/di/types'
-import { inject, injectable } from 'inversify'
 import type { SchemaService } from '../../../../shared/infrastructure/service/validator.service'
 import type {
   IRecordRepository,
@@ -17,16 +15,13 @@ import type { RecordRow } from '../../domain/object-value/record-row.object-valu
 import type { ConditionsSchema } from '../../../action/domain/schema/condition'
 import { EventEmitter } from 'events'
 
-@injectable()
 export class RecordRepository implements IRecordRepository {
   private eventEmitter = new EventEmitter()
   private createListeners: ((record: RecordRow) => Promise<void>)[] = []
   private updateListeners: ((record: RecordRow) => Promise<void>)[] = []
 
   constructor(
-    @inject(TYPES.Service.Schema)
     private readonly validator: SchemaService,
-    @inject(TYPES.Table.Service.Database)
     private readonly database: TableDatabaseService
   ) {
     this.eventEmitter.on('created', async (record: RecordRow) => {

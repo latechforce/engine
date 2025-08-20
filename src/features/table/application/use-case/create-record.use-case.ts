@@ -1,5 +1,3 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../../../../shared/application/di/types'
 import type { App } from '../../../app/domain/entity/app.entity'
 import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 import { Record as RecordEntity } from '../../domain/entity/record.entity'
@@ -12,12 +10,9 @@ import type { Fields } from '../../domain/object-value/fields.object-value'
 import { Object as ObjectEntity } from '../../../bucket/domain/entity/object.entity'
 import type { IObjectRepository } from '../../../bucket/domain/repository-interface/object-repository.interface'
 
-@injectable()
 export class CreateRecordUseCase {
   constructor(
-    @inject(TYPES.Table.Repository.Record)
     private readonly recordRepository: IRecordRepository,
-    @inject(TYPES.Bucket.Repository.Object)
     private readonly objectRepository: IObjectRepository
   ) {}
 

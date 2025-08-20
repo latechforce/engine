@@ -1,5 +1,3 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../../../../shared/application/di/types'
 import { and, eq, SQL } from 'drizzle-orm'
 import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 import { Kysely, PostgresDialect, type Dialect, ExpressionWrapper } from 'kysely'
@@ -34,16 +32,12 @@ type DatabaseRecordField<I, S> = Base<I, string> & {
   get(id: string): Promise<S | undefined>
 }
 
-@injectable()
 export class TableDatabaseService {
   private readonly databaseView: Kysely<{
     [key: string]: ViewRow
   }>
 
-  constructor(
-    @inject(TYPES.Service.Database)
-    private readonly database: DatabaseService
-  ) {
+  constructor(private readonly database: DatabaseService) {
     let dialect: Dialect
     if (database.provider === 'postgres') {
       dialect = new PostgresDialect({

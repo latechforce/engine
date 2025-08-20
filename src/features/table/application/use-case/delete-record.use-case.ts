@@ -1,16 +1,10 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../di/types'
 import type { App } from '../../../app/domain/entity/app.entity'
 import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 import type { IRecordRepository } from '../../domain/repository-interface/record-repository.interface'
 import type { DeleteRecordDto } from '../dto/delete-record.dto'
 
-@injectable()
 export class DeleteRecordUseCase {
-  constructor(
-    @inject(TYPES.Repository.Record)
-    private readonly recordRepository: IRecordRepository
-  ) {}
+  constructor(private readonly recordRepository: IRecordRepository) {}
 
   async execute(app: App, tableId: string, recordId: string): Promise<DeleteRecordDto> {
     const table = app.findTable(tableId)

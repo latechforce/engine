@@ -1,5 +1,3 @@
-import TYPES from '../di/types'
-import { injectable, inject } from 'inversify'
 import type { Table } from '../../domain/entity/table.entity'
 import type {
   ITableRepository,
@@ -8,12 +6,8 @@ import type {
 import { join } from 'path'
 import { z } from 'zod'
 
-@injectable()
 export class SetupTableUseCase {
-  constructor(
-    @inject(TYPES.Repository.Table)
-    private readonly tableRepository: ITableRepository
-  ) {}
+  constructor(private readonly tableRepository: ITableRepository) {}
 
   async execute(table: Table) {
     const { schema, fields } = table

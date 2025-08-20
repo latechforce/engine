@@ -1,9 +1,7 @@
-import TYPES from '../../../../shared/application/di/types'
 import type {
   ITableRepository,
   TableTransaction,
 } from '../../domain/repository-interface/table-repository.interface'
-import { inject, injectable } from 'inversify'
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 import type { TableDatabaseService } from '../service/database.service'
 import type { Table } from '../../domain/entity/table.entity'
@@ -13,14 +11,10 @@ import type { RouteConfig } from '@hono/zod-openapi'
 import type { ServerService } from '../../../../shared/infrastructure/service/server.service'
 import type { TableFieldRow } from '../../domain/object-value/table-field-row.object-value'
 
-@injectable()
 export class TableRepository implements ITableRepository {
   constructor(
-    @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Service.Server)
     private readonly server: ServerService,
-    @inject(TYPES.Table.Service.Database)
     private readonly database: TableDatabaseService
   ) {}
 
