@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Form",
+  "description": "The form is a collection of inputs",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number"
+    },
+    "path": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "inputs": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "title": "Input",
+        "description": "The input is a input of a form",
+        "anyOf": [
+          {
+            "title": "Text Input",
+            "description": "The text input is a input that can contain a text",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "defaultValue": {
+                "type": "string"
+              },
+              "placeholder": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "single-line-text",
+                  "long-text",
+                  "phone-number",
+                  "email",
+                  "url"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "title": "Checkbox Input",
+            "description": "The checkbox input is a input that can contain a checkbox",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "defaultValue": {
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string",
+                "const": "checkbox"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "title": "Select Input",
+            "description": "The select input is a input that can contain a select",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "defaultValue": {
+                "type": "string"
+              },
+              "placeholder": {
+                "type": "string"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "label": {
+                      "type": "string"
+                    },
+                    "value": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "label",
+                    "value"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "single-select"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "options",
+              "type"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "title": "Attachment Input",
+            "description": "The attachment input is a input that can contain a attachment",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "required": {
+                "type": "boolean"
+              },
+              "accept": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "const": "single-attachment"
+              }
+            },
+            "required": [
+              "name",
+              "type"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "successMessage": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "path",
+    "action",
+    "name",
+    "inputs"
+  ],
+  "additionalProperties": false
+}

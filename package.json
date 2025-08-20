@@ -9,13 +9,19 @@
   "author": "Thomas JEANNEAU",
   "license": "Fair Use License",
   "files": [
-    "src/**/*"
+    "src/**/*",
+    "schema/**/*"
   ],
   "exports": {
     ".": {
       "import": "./src/index.ts",
       "require": "./src/index.ts",
       "types": "./src/types.ts"
+    },
+    "./schema/*": {
+      "import": "./schema/*.ts",
+      "require": "./schema/*.ts",
+      "types": "./schema/*.ts"
     }
   },
   "repository": {
@@ -34,8 +40,7 @@
     "format": "prettier --write .",
     "example": "bun --watch run script/run-example.ts",
     "website": "cd website && bun start",
-    "build:module": "bun run script/build-module.ts",
-    "build:types": "bun run script/build-types.ts",
+    "build:schemas": "bun run script/build-schemas.ts",
     "build:schema": "bun run script/website/build-schema.ts",
     "build:test-report": "bun run script/website/build-test-report.ts",
     "build:blog": "bun run script/website/build-blog.ts",
@@ -77,8 +82,8 @@
     "@scalar/hono-api-reference": "^0.9.13",
     "@sentry/bun": "^9.46.0",
     "@tanstack/react-form": "^1.19.2",
-    "@tanstack/react-query": "^5.85.4",
-    "@tanstack/react-query-devtools": "^5.85.4",
+    "@tanstack/react-query": "^5.85.5",
+    "@tanstack/react-query-devtools": "^5.85.5",
     "@tanstack/react-router": "^1.131.27",
     "@tanstack/react-router-devtools": "^1.131.27",
     "@tanstack/react-start": "^1.131.27",
@@ -120,7 +125,7 @@
   "devDependencies": {
     "@better-auth/cli": "^1.3.7",
     "@ngrok/ngrok": "^1.5.2",
-    "@playwright/test": "^1.54.2",
+    "@playwright/test": "^1.55.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",

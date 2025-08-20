@@ -79,6 +79,9 @@ jobs:
       - name: Install project dependencies
         run: bun install
 
+      - name: Build schemas
+        run: bun run build:schemas
+
       - name: Create and publish release
         run: bunx semantic-release
 
