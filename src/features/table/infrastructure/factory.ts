@@ -1,6 +1,7 @@
 import { SimpleContainer } from '../../../shared/infrastructure/di/simple-container'
 import type { LoggerService } from '../../../shared/infrastructure/service/logger.service'
 import type { ServerService } from '../../../shared/infrastructure/service/server.service'
+import type { DatabaseService } from '../../../shared/infrastructure/service/database.service'
 import type { SchemaService } from '../../../shared/infrastructure/service/validator.service'
 import type { IObjectRepository } from '../../bucket/domain/repository-interface/object-repository.interface'
 
@@ -51,9 +52,10 @@ export function createTableServices(container: SimpleContainer): TableServices {
   const server = container.get<ServerService>('server')
   const validator = container.get<SchemaService>('validator')
   const objectRepository = container.get<IObjectRepository>('objectRepository')
+  const databaseService = container.get<DatabaseService>('database')
 
   // Create database service
-  const database = new TableDatabaseService()
+  const database = new TableDatabaseService(databaseService)
 
   // Create repositories
   const tableRepository = new TableRepository(logger, server, database)
