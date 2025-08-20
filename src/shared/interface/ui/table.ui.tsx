@@ -22,7 +22,7 @@ function Table({ className, fullHeight, scrollable, layout = 'fixed', ...props }
       <table
         data-slot="table"
         className={cn(
-          'min-w-max caption-bottom text-sm',
+          'w-full caption-bottom text-sm',
           layout === 'fixed' ? 'table-fixed' : 'table-auto',
           className
         )}

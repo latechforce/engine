@@ -110,6 +110,11 @@ export function DataTable<TData, TValue>({
     pageSize: 10,
   })
 
+  const hasColumnsWithFill = columns.some((column) => {
+    type ColumnMeta = { fill?: boolean }
+    return (column as { meta?: ColumnMeta })?.meta?.fill
+  })
+
   const table = useReactTable({
     data,
     columns,
@@ -253,6 +258,7 @@ export function DataTable<TData, TValue>({
             className={cn(fullPage ? 'border-b' : '')}
             fullHeight={fullPage}
             scrollable={fullPage}
+            layout={hasColumnsWithFill ? 'auto' : 'fixed'}
           >
             <TableHeader className={cn(fullPage ? 'bg-muted' : '')}>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -272,7 +278,7 @@ export function DataTable<TData, TValue>({
                           fitContent
                             ? { width: 'max-content', minWidth: minSize }
                             : fill
-                              ? { width: 'auto', minWidth: minSize }
+                              ? { minWidth: minSize }
                               : { width: header.getSize(), minWidth: minSize }
                         }
                         className={cn(
@@ -314,7 +320,7 @@ export function DataTable<TData, TValue>({
                         <TableCell
                           key={cell.id}
                           style={{
-                            width: fitContent ? '1%' : fill ? 'auto' : cell.column.getSize(),
+                            width: fitContent ? '1%' : fill ? undefined : cell.column.getSize(),
                             minWidth: minSize,
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
