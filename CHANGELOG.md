@@ -1,3 +1,11 @@
+## [0.67.3](https://github.com/latechforce/engine/compare/v0.67.2...v0.67.3) (2025-08-20)
+
+
+### Bug Fixes
+
+* add schema to export in package ([3f4ff30](https://github.com/latechforce/engine/commit/3f4ff30fef71996eab978d218f7aff51b1836848)) — Thomas JEANNEAU
+* improve column width consistency across browsers in data table ([d3a55a2](https://github.com/latechforce/engine/commit/d3a55a2a64ea629318ac8b9c2f1380032a0610d1)) — Thomas JEANNEAU
+
 ## [0.67.2](https://github.com/latechforce/engine/compare/v0.67.1...v0.67.2) (2025-08-19)
 
 
