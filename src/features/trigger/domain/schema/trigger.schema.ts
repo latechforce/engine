@@ -2,7 +2,7 @@ import { z } from 'zod/v4'
 import { httpTriggerSchema } from './http'
 import { databaseTriggerSchema } from './database'
 import { scheduleTriggerSchema } from './schedule'
-import { integrationTriggerSchema } from '../../../../integrations/trigger.schema'
+import { integrationTriggerSchema } from '../../../../shared/integrations/core/trigger.schema'
 
 export const triggerSchema = z
   .union([

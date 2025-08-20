@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { ConnectionSchema } from '../../../../shared/integrations/core/connection.schema'
 
 export class Connection {
   public state: string

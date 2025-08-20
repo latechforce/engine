@@ -1,6 +1,6 @@
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
-import type { ListLeadNotificationSubscriptionsResponse } from '../../../../../src/integrations/linkedin/linkedin.types'
+import type { ListLeadNotificationSubscriptionsResponse } from '../../../../../src/shared/integrations/social/linkedin/linkedin.types'
 
 test('should run a linkedin list lead notification subscriptions action', async ({
   startExampleApp,

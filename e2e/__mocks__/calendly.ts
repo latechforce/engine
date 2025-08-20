@@ -4,7 +4,7 @@ import type {
   GetCurrentUserResponse,
   WebhookPayload,
   GetEventTypeResponse,
-} from '../../src/integrations/calendly/calendly.types'
+} from '../../src/shared/integrations/productivity/calendly/calendly.types'
 
 export const webhookPayloadInviteCreated: WebhookPayload = {
   created_at: '2020-11-23T17:51:19.000000Z',

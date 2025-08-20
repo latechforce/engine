@@ -1,4 +1,4 @@
-import type { SendEmailResponse } from '../../../src/integrations/google/gmail/google-gmail.types'
+import type { SendEmailResponse } from '../../../src/shared/integrations/communication/google/gmail/google-gmail.types'
 
 export const sendEmailResponse: SendEmailResponse = {
   id: '123',

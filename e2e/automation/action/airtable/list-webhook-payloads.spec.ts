@@ -1,7 +1,7 @@
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
 import { listWebhookPayloadsResponse } from '@/e2e/__mocks__/airtable'
-import type { ListWebhookPayloadsResponse } from '../../../../src/integrations/airtable/airtable.types'
+import type { ListWebhookPayloadsResponse } from '../../../../src/shared/integrations/productivity/airtable/airtable.types'
 
 test('should run a airtable list webhook payloads action', async ({ startExampleApp }) => {
   // GIVEN

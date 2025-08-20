@@ -1,6 +1,6 @@
 import type { JSONSchemaSchema } from '../../../../shared/domain/schema/json-schema.schema'
-import type { IntegrationTriggerSchema } from '../../../../integrations/trigger.schema'
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { IntegrationTriggerSchema } from '../../../../shared/integrations/core/trigger.schema'
+import type { ConnectionSchema } from '../../../../shared/integrations/core/connection.schema'
 import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 
 export type ITriggerRepository = {

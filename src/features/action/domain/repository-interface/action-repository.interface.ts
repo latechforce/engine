@@ -1,5 +1,5 @@
 import type { App } from '../../../app/domain/entity/app.entity'
-import type { IntegrationActionSchema } from '../../../../integrations/action.schema'
+import type { IntegrationActionSchema } from '../../../../shared/integrations/core/action.schema'
 import type { ActionResult } from '../value-object/action-result.value-object'
 import type { IntegrationError } from '../value-object/integration-error.value-object'
 import type { Connection } from '../../../connection/domain/entity/connection.entity'

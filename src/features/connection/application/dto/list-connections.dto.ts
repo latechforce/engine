@@ -1,4 +1,4 @@
-import type { ConnectionSchema } from '../../../../integrations/connection.schema'
+import type { ConnectionSchema } from '../../../../shared/integrations/core/connection.schema'
 import type { ConnectionStatus } from '../../domain/value-object/connection-status.value-object'
 import { toConnectionDto, type ConnectionDto } from './connection.dto'
 

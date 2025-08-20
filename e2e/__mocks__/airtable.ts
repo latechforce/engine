@@ -2,7 +2,7 @@ import type {
   ListWebhooksResponse,
   CreateWebhookResponse,
   ListWebhookPayloadsResponse,
-} from '../../src/integrations/airtable/airtable.types'
+} from '../../src/shared/integrations/productivity/airtable/airtable.types'
 
 export const listWebhooksResponse: ListWebhooksResponse = {
   webhooks: [

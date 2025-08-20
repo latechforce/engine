@@ -1,7 +1,7 @@
 import { expect, test } from '@/e2e/fixtures'
 import { connectTo } from '@/e2e/steps'
 import { getEventTypeResponse, webhookPayloadInviteCreated } from '@/e2e/__mocks__/calendly'
-import type { GetEventTypeResponse } from '../../../../src/integrations/calendly/calendly.types'
+import type { GetEventTypeResponse } from '../../../../src/shared/integrations/productivity/calendly/calendly.types'
 import type { RunDto } from '../../../../src/features/run/application/dto/run.dto'
 
 test('should run a calendly get event type action', async ({ startExampleApp }) => {

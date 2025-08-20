@@ -1,4 +1,4 @@
-import type { AppendValuesResponse } from '../../../src/integrations/google/sheets/google-sheets.types'
+import type { AppendValuesResponse } from '../../../src/shared/integrations/communication/google/sheets/google-sheets.types'
 
 export const appendValuesResponse: AppendValuesResponse = {
   spreadsheetId: '123',

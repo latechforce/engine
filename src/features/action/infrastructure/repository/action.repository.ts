@@ -19,14 +19,14 @@ import type {
   ServiceContext,
   TableContext,
 } from '../service/code.service'
-import { toActionIntegration } from '../../../../integrations/action'
+import { toActionIntegration } from '../../../../shared/integrations/core/action'
 
 // Connection domain imports
 import type { Fields } from '../../../table/domain/object-value/fields.object-value'
 import type { IRecordRepository } from '../../../table/domain/repository-interface/record-repository.interface'
 import type { App } from '../../../app/domain/entity/app.entity'
 import { Record } from '../../../table/domain/entity/record.entity'
-import type { IntegrationActionSchema } from '../../../../integrations/action.schema'
+import type { IntegrationActionSchema } from '../../../../shared/integrations/core/action.schema'
 import type { IObjectRepository } from '../../../bucket/domain/repository-interface/object-repository.interface'
 import { Object } from '../../../bucket/domain/entity/object.entity'
 import { toObjectDto } from '../../../bucket/application/dto/object.dto'

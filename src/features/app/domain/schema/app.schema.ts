@@ -1,7 +1,7 @@
 import { z } from 'zod/v4'
 import { automationSchema } from '../../../automation/domain/schema/automation.schema'
 import { tableSchema } from '../../../table/domain/schema/table.schema'
-import { connectionSchema } from '../../../../integrations/connection.schema'
+import { connectionSchema } from '../../../../shared/integrations/core/connection.schema'
 import { formSchema } from '../../../form/domain/schema/form.schema'
 import { bucketSchema } from '../../../bucket/domain/schema/bucket.schema'
 

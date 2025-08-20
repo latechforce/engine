@@ -1,1 +1,1 @@
-export * from '../../../../integrations/connection.schema'
+export * from '../../../../shared/integrations/core/connection.schema'

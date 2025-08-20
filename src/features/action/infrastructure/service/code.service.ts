@@ -9,7 +9,7 @@ import type { ObjectDto } from '../../../bucket/application/dto/object.dto'
 import type { ConditionsSchema } from '../../domain/schema/condition'
 import type { ActionResult } from '../../domain/value-object/action-result.value-object'
 import type { IntegrationError } from '../../domain/value-object/integration-error.value-object'
-import type { IntegrationActionSchema } from '../../../../integrations/action.schema'
+import type { IntegrationActionSchema } from '../../../../shared/integrations/core/action.schema'
 
 export type TableContext = <T extends Fields>(
   name: string

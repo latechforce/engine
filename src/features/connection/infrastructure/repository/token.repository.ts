@@ -12,7 +12,7 @@ import type { ITokenRepository } from '../../domain/repository-interface/token-r
 
 // Connection infrastructure imports
 import type { ConnectionDatabaseService } from '../service/database.service'
-import { toConnectionIntegration } from '../../../../integrations/connection'
+import { toConnectionIntegration } from '../../../../shared/integrations/core/connection'
 import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 
 @injectable()

@@ -3,7 +3,7 @@ import { httpActionSchema } from './http'
 import { codeActionSchema } from './code'
 import { filterActionSchema } from './filter'
 import { databaseActionSchema } from './database'
-import { integrationActionSchema } from '../../../../integrations/action.schema'
+import { integrationActionSchema } from '../../../../shared/integrations/core/action.schema'
 
 export const actionSchema = z
   .union([
