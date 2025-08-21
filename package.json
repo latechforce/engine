@@ -69,6 +69,7 @@
     "build:blog": "bun run script/website/build-blog.ts",
     "build:guides": "bun run script/website/build-guides.ts",
     "build": "bun run build:schema && bun run build:test-report && bun run build:blog && bun run build:guides",
+    "generate:feature": "bun run script/generate-feature.ts",
     "test": "bun test --bail",
     "test:watch": "bun test --watch",
     "test:snapshot": "bun test --update-snapshots",
