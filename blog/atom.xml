@@ -2,11 +2,26 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://engine.latechforce.com/blog</id>
     <title>LTF Engine Blog</title>
-    <updated>2025-08-20T00:00:00.000Z</updated>
+    <updated>2025-08-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://engine.latechforce.com/blog"/>
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Fix 0.67.4]]></title>
+        <id>https://engine.latechforce.com/blog/fix-0-67-4</id>
+        <link href="https://engine.latechforce.com/blog/fix-0-67-4"/>
+        <updated>2025-08-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Changelog for version 0.67.4]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-67-4"><p class="before-truncate"> 0.67.4   Bug Fixes  * Complete Phase 1 - Table feature DI migration with working e2e tests (f0aafe5) — Thomas JEANNEAU * correct JSON schema exports in npm package (4987253) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0674"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-67-4">0.67.4</a><a href="https://engine.latechforce.com/blog/fix-0-67-4#0674" class="hash-link" aria-label="Direct link to 0.67.4" title="Direct link to 0.67.4">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-67-4#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>Complete Phase 1 - Table feature DI migration with working e2e tests (<a href="https://github.com/latechforce/engine/commit/f0aafe574f04aade9009dc4a374699b199cb51e4" target="_blank" rel="noopener noreferrer">f0aafe5</a>) — Thomas JEANNEAU</li>
+<li>correct JSON schema exports in npm package (<a href="https://github.com/latechforce/engine/commit/4987253cba77122d1f13a9d614257105a83035c3" target="_blank" rel="noopener noreferrer">4987253</a>) — Thomas JEANNEAU</li>
+</ul>]]></content>
+        <category label="Fix" term="Fix"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Fix 0.67.3]]></title>
         <id>https://engine.latechforce.com/blog/fix-0-67-3</id>
