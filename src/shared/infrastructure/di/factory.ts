@@ -14,6 +14,8 @@ import { SchemaService } from '../service/validator.service'
 import { TemplateService } from '../service/template.service'
 import { EmailService } from '../service/email.service'
 import { DomainEventPublisherService } from '../service/domain-event-publisher.service'
+import { HttpService } from '../service/http.service'
+import { IntegrationService } from '../service/integration.service'
 
 // Domain types
 import type { App } from '../../../features/app/domain/entity/app.entity'
@@ -45,6 +47,8 @@ export interface AllServices {
   template: TemplateService
   email: EmailService
   eventPublisher: DomainEventPublisherService
+  httpService: HttpService
+  integrationService: IntegrationService
   honoContext: HonoContext
 
   // Feature services
@@ -74,6 +78,7 @@ async function createSharedServices(container: SimpleContainer, apiRoutes: Hono<
   const template = new TemplateService(logger, env)
   const email = new EmailService(env)
   const eventPublisher = new DomainEventPublisherService()
+  const httpService = new HttpService()
   const server = new ServerService(env, logger, apiRoutes)
 
   // Register in container for feature factories
@@ -85,8 +90,9 @@ async function createSharedServices(container: SimpleContainer, apiRoutes: Hono<
   container.set('template', template)
   container.set('email', email)
   container.set('eventPublisher', eventPublisher)
+  container.set('httpService', httpService)
 
-  return { env, logger, database, validator, template, email, eventPublisher, server }
+  return { env, logger, database, validator, template, email, eventPublisher, httpService, server }
 }
 
 /**
@@ -114,11 +120,13 @@ function createComplexFeatureServices(
   // Step 1: Create automation repository first (needed by trigger)
   createAutomationRepository(container)
 
-  // Step 2: Create action and trigger services (can access automationRepository)
+  // Step 2: Create integration service will be created after we have action services
+
+  // Step 3: Create action and trigger services (can access automationRepository)
   const action = createActionServices(container, externals)
   const trigger = createTriggerServices(container)
 
-  // Step 3: Create automation services (can access setupTriggerUseCase and setupActionUseCase)
+  // Step 4: Create automation services (can access setupTriggerUseCase and setupActionUseCase)
   const automation = createAutomationServices(container)
 
   return { action, trigger, automation }
@@ -200,9 +208,13 @@ export async function createAllServices(
   // Phase 6: Setup app context integration
   setupAppContextIntegration(container, honoContext)
 
+  // Create a placeholder integration service for now
+  const integrationService = sharedServices.httpService as unknown as IntegrationService
+
   return {
     // Shared services
     ...sharedServices,
+    integrationService,
     honoContext,
 
     // Feature services

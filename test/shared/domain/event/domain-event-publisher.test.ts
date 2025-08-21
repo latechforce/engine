@@ -12,14 +12,14 @@ describe('DomainEventPublisher', () => {
   beforeEach(() => {
     publisher = new DomainEventPublisherService()
     handledEvents = []
-    
+
     mockHandler = {
       canHandle: (event: DomainEvent) => event.eventType === 'record-created',
       handle: async (event: DomainEvent) => {
         handledEvents.push(event)
-      }
+      },
     }
-    
+
     publisher.registerHandler(mockHandler)
   })
 
@@ -27,7 +27,7 @@ describe('DomainEventPublisher', () => {
     const event = new RecordCreatedEvent('table-1', {
       tableId: 'table-1',
       recordId: 'record-1',
-      fields: { name: 'Test Record' }
+      fields: { name: 'Test Record' },
     })
 
     await publisher.publish(event)
@@ -43,13 +43,13 @@ describe('DomainEventPublisher', () => {
       new RecordCreatedEvent('table-1', {
         tableId: 'table-1',
         recordId: 'record-1',
-        fields: { name: 'Test Record 1' }
+        fields: { name: 'Test Record 1' },
       }),
       new RecordCreatedEvent('table-1', {
         tableId: 'table-1',
         recordId: 'record-2',
-        fields: { name: 'Test Record 2' }
-      })
+        fields: { name: 'Test Record 2' },
+      }),
     ]
 
     await publisher.publishMany(events)
@@ -58,12 +58,12 @@ describe('DomainEventPublisher', () => {
     expect(handledEvents[0]?.payload).toEqual({
       tableId: 'table-1',
       recordId: 'record-1',
-      fields: { name: 'Test Record 1' }
+      fields: { name: 'Test Record 1' },
     })
     expect(handledEvents[1]?.payload).toEqual({
       tableId: 'table-1',
       recordId: 'record-2',
-      fields: { name: 'Test Record 2' }
+      fields: { name: 'Test Record 2' },
     })
   })
 
@@ -71,8 +71,14 @@ describe('DomainEventPublisher', () => {
     const unhandledHandler: IDomainEventHandler = {
       canHandle: () => false,
       handle: async () => {
-        handledEvents.push({ aggregateId: 'test', aggregateType: 'test', eventType: 'unhandled', payload: {}, occurredOn: new Date() })
-      }
+        handledEvents.push({
+          aggregateId: 'test',
+          aggregateType: 'test',
+          eventType: 'unhandled',
+          payload: {},
+          occurredOn: new Date(),
+        })
+      },
     }
 
     const publisher2 = new DomainEventPublisherService()
@@ -81,7 +87,7 @@ describe('DomainEventPublisher', () => {
     const event = new RecordCreatedEvent('table-1', {
       tableId: 'table-1',
       recordId: 'record-1',
-      fields: { name: 'Test Record' }
+      fields: { name: 'Test Record' },
     })
 
     await publisher2.publish(event)
