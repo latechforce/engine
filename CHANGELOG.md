@@ -1,3 +1,11 @@
+## [0.67.4](https://github.com/latechforce/engine/compare/v0.67.3...v0.67.4) (2025-08-21)
+
+
+### Bug Fixes
+
+* Complete Phase 1 - Table feature DI migration with working e2e tests ([f0aafe5](https://github.com/latechforce/engine/commit/f0aafe574f04aade9009dc4a374699b199cb51e4)) — Thomas JEANNEAU
+* correct JSON schema exports in npm package ([4987253](https://github.com/latechforce/engine/commit/4987253cba77122d1f13a9d614257105a83035c3)) — Thomas JEANNEAU
+
 ## [0.67.3](https://github.com/latechforce/engine/compare/v0.67.2...v0.67.3) (2025-08-20)
 
 
