@@ -1,32 +1,27 @@
 // External dependencies
 import { createLogger, format, transports, type Logger } from 'winston'
-import { injectable, inject, unmanaged } from 'inversify'
 
 // Internal dependencies
-import TYPES from '../../application/di/types'
 import { EnvService } from './env.service'
 
-@injectable()
 export class LoggerService {
   public logger: Logger
 
   constructor(
-    @inject(TYPES.Service.Env)
-    private readonly env: EnvService,
-    @unmanaged()
+    private readonly env?: EnvService,
     private readonly childLogger?: Logger
   ) {
     if (this.childLogger) {
       this.logger = this.childLogger
     } else {
       this.logger = createLogger({
-        level: this.env.get('LOG_LEVEL'),
-        silent: this.env.get('LOG_LEVEL') === 'silent',
+        level: this.env?.get('LOG_LEVEL') || 'info',
+        silent: this.env?.get('LOG_LEVEL') === 'silent',
         format: format.combine(
           format.colorize(),
           format.timestamp(),
           format.printf(({ timestamp, level, message, name }) => {
-            if (this.env.get('NODE_ENV') === 'production') {
+            if (this.env?.get('NODE_ENV') === 'production') {
               return `[${level}${name ? `: ${name}` : ''}]: ${message}`
             }
             return `${timestamp} [${level}${name ? `: ${name}` : ''}] ${message}`

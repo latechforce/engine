@@ -1,7 +1,5 @@
-import { injectable, inject } from 'inversify'
 import { join } from 'path'
 import { z } from 'zod'
-import TYPES from '../../../../shared/application/di/types'
 import type { SetupActionUseCase } from '../../../action/application/use-case/setup-action.use-case'
 import type { IRunRepository } from '../../../run/domain/repository-interface/run-repository.interface'
 import { type Run } from '../../../run/domain/entity/run.entity'
@@ -13,18 +11,16 @@ import type { SchemaObject } from 'ajv'
 import type { App } from '../../../app/domain/entity/app.entity'
 import type { ResponseHttpActionSchema } from '../../../action/domain/schema/http/response.schema'
 
-@injectable()
 export class SetupAutomationUseCase {
   constructor(
-    @inject(TYPES.Run.Repository)
     private readonly runRepository: IRunRepository,
-    @inject(TYPES.Trigger.UseCase.Setup)
+
     private readonly setupTriggerUseCase: SetupTriggerUseCase,
-    @inject(TYPES.Action.UseCase.Setup)
+
     private readonly setupActionUseCase: SetupActionUseCase,
-    @inject(TYPES.Automation.UseCase.Run)
+
     private readonly runAutomationUseCase: RunAutomationUseCase,
-    @inject(TYPES.Automation.Repository)
+
     private readonly automationRepository: IAutomationRepository
   ) {}
 

@@ -1,16 +1,10 @@
 import type { App } from '../../../../features/app/domain/entity/app.entity'
-import { inject, injectable } from 'inversify'
-import TYPES from '../di/types'
 import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 import type { IObjectRepository } from '../../domain/repository-interface/object-repository.interface'
 import { Object } from '../../domain/entity/object.entity'
 
-@injectable()
 export class DownloadObjectUseCase {
-  constructor(
-    @inject(TYPES.Repository.Object)
-    private readonly objectRepository: IObjectRepository
-  ) {}
+  constructor(private readonly objectRepository: IObjectRepository) {}
 
   async execute(app: App, bucketId: string, key: string): Promise<Object> {
     const bucket = app.findBucket(bucketId)

@@ -3,7 +3,6 @@ import { Hono, type Context, type Handler, type MiddlewareHandler } from 'hono'
 import { prettyJSON } from 'hono/pretty-json'
 import { secureHeaders } from 'hono/secure-headers'
 import { trimTrailingSlash } from 'hono/trailing-slash'
-import { inject, injectable } from 'inversify'
 import { Scalar } from '@scalar/hono-api-reference'
 import { OpenAPIHono, createRoute, type RouteConfig } from '@hono/zod-openapi'
 import type { HTTPResponseError } from 'hono/types'
@@ -15,7 +14,6 @@ import type { App } from '../../../features/app/domain/entity/app.entity'
 import type { HonoContextType } from '../di/context'
 
 // Internal services and constants
-import TYPES from '../../application/di/types'
 import type { EnvService } from './env.service'
 import type { LoggerService } from './logger.service'
 import index from '../index.html'
@@ -25,18 +23,14 @@ import { join } from 'path'
 
 export type HonoType = { Variables: HonoContextType }
 
-@injectable()
 export class ServerService {
   private server: Bun.Server | null = null
   private readonly app: Hono<HonoType>
   private readonly openapi: OpenAPIHono<HonoType>
 
   constructor(
-    @inject(TYPES.Service.Env)
     private readonly env: EnvService,
-    @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Hono.Routes)
     private readonly apiRoutes: Hono<HonoType>
   ) {
     this.logger = this.logger.child('server-service')

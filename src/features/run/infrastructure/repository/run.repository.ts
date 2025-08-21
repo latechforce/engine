@@ -1,5 +1,3 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../../../../shared/application/di/types'
 import type {
   IRunRepository,
   ListRunsParams,
@@ -10,16 +8,14 @@ import { desc, eq, or, and, like, sql, inArray } from 'drizzle-orm'
 import { EventEmitter } from 'events'
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 
-@injectable()
 export class RunRepository implements IRunRepository {
   private eventEmitter = new EventEmitter()
   private createListeners: ((run: Run) => Promise<void>)[] = []
   private updateListeners: ((run: Run) => Promise<void>)[] = []
 
   constructor(
-    @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Run.Service.Database)
+
     private readonly database: RunDatabaseService
   ) {
     this.eventEmitter.on('created', async (run: Run) => {

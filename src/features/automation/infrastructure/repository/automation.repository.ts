@@ -1,7 +1,5 @@
-import TYPES from '../../../../shared/application/di/types'
 import type { LoggerService } from '../../../../shared/infrastructure/service'
 import type { IAutomationRepository } from '../../domain/repository-interface/automation-repository.interface'
-import { inject, injectable } from 'inversify'
 import type { RouteConfig } from '@hono/zod-openapi'
 import type { ServerService } from '../../../../shared/infrastructure/service'
 import type { EmailService } from '../../../../shared/infrastructure/service'
@@ -12,18 +10,16 @@ import type { AutomationSchema } from '../../domain/schema/automation.schema'
 import type { Automation } from '../../domain/entity/automation.entity'
 import type { Run } from '../../../run/domain/entity/run.entity'
 
-@injectable()
 export class AutomationRepository implements IAutomationRepository {
   constructor(
-    @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Service.Server)
+
     private readonly server: ServerService,
-    @inject(TYPES.Automation.Service.Database)
+
     private readonly database: AutomationDatabaseService,
-    @inject(TYPES.Service.Email)
+
     private readonly email: EmailService,
-    @inject(TYPES.Service.Env)
+
     private readonly env: EnvService
   ) {}
 

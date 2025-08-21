@@ -1,6 +1,4 @@
-import { inject, injectable } from 'inversify'
 import type { Context } from 'hono'
-import TYPES from '../../application/di/types'
 import type { UploadObjectUseCase } from '../../application/use-case/upload-object.use-case'
 import type { DownloadObjectUseCase } from '../../application/use-case/download-object.use-case'
 import type { DeleteObjectUseCase } from '../../application/use-case/delete-object.use-case'
@@ -13,16 +11,14 @@ export type BucketHonoContextType = {
   listObjectsUseCase: ListObjectsUseCase
 }
 
-@injectable()
 export class BucketHonoContext {
   constructor(
-    @inject(TYPES.UseCase.UploadObject)
     private readonly uploadObjectUseCase: UploadObjectUseCase,
-    @inject(TYPES.UseCase.DownloadObject)
+
     private readonly downloadObjectUseCase: DownloadObjectUseCase,
-    @inject(TYPES.UseCase.DeleteObject)
+
     private readonly deleteObjectUseCase: DeleteObjectUseCase,
-    @inject(TYPES.UseCase.ListObjects)
+
     private readonly listObjectsUseCase: ListObjectsUseCase
   ) {}
 

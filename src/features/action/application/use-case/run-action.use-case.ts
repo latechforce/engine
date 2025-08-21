@@ -1,5 +1,3 @@
-import TYPES from '../../../../shared/application/di/types'
-import { injectable, inject } from 'inversify'
 import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
 import type { Run } from '../../../run/domain/entity/run.entity'
 import type { ActionResult } from '../../domain/value-object/action-result.value-object'
@@ -10,14 +8,10 @@ import type { IRunRepository } from '../../../run/domain/repository-interface/ru
 import type { PathStep } from '../../../run/domain/value-object.ts/paths-step.value-object'
 import { toRecordDto } from '../../../table/application/dto/record.dto'
 
-@injectable()
 export class RunActionUseCase {
   constructor(
-    @inject(TYPES.Action.Repository)
     private readonly actionRepository: IActionRepository,
-    @inject(TYPES.Action.UseCase.RunFilter)
     private readonly runFilterUseCase: RunFilterUseCase,
-    @inject(TYPES.Run.Repository)
     private readonly runRepository: IRunRepository
   ) {}
 

@@ -1,9 +1,7 @@
 // Third-party imports
-import { inject, injectable } from 'inversify'
 import { addSeconds, isAfter } from 'date-fns'
 
 // Shared imports
-import TYPES from '../../../../shared/application/di/types'
 
 // Connection domain imports
 import type { Connection } from '../../domain/entity/connection.entity'
@@ -15,12 +13,10 @@ import type { ConnectionDatabaseService } from '../service/database.service'
 import { toConnectionIntegration } from '../../../../shared/integrations/core/connection'
 import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 
-@injectable()
 export class TokenRepository implements ITokenRepository {
   constructor(
-    @inject(TYPES.Connection.Service.Database)
     private readonly database: ConnectionDatabaseService,
-    @inject(TYPES.Connection.Repository.Connection)
+
     private readonly connectionRepository: IConnectionRepository
   ) {}
 

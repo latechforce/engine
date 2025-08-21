@@ -1,15 +1,9 @@
 import type { App } from '../../../../features/app/domain/entity/app.entity'
-import { inject, injectable } from 'inversify'
-import TYPES from '../di/types'
 import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 import type { IObjectRepository } from '../../domain/repository-interface/object-repository.interface'
 
-@injectable()
 export class DeleteObjectUseCase {
-  constructor(
-    @inject(TYPES.Repository.Object)
-    private readonly objectRepository: IObjectRepository
-  ) {}
+  constructor(private readonly objectRepository: IObjectRepository) {}
 
   async execute(app: App, bucketId: string, key: string): Promise<string> {
     const bucket = app.findBucket(bucketId)

@@ -1,14 +1,8 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../../../../shared/application/di/types'
 import { and, eq } from 'drizzle-orm'
 import { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 
-@injectable()
 export class BucketDatabaseService {
-  constructor(
-    @inject(TYPES.Service.Database)
-    private readonly database: DatabaseService
-  ) {}
+  constructor(private readonly database: DatabaseService) {}
 
   get bucket() {
     if (this.database.provider === 'postgres') {

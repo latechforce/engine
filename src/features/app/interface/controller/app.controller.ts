@@ -5,18 +5,14 @@ import type { HonoType } from '../routes'
 import type { ValidateResult } from '../../domain/value-object/validate-result.value-object'
 
 // Dependencies
-import { inject } from 'inversify'
 
 // Local imports
-import TYPES from '../../../../shared/application/di/types'
 import type { StartAppUseCase } from '../../application/use-case/start-app.use-case'
 import type { ValidateAppUseCase } from '../../application/use-case/validate-app.use-case'
 
 export class AppController {
   constructor(
-    @inject(TYPES.App.UseCase.Validate)
     private readonly validateAppUseCase: ValidateAppUseCase,
-    @inject(TYPES.App.UseCase.Start)
     private readonly startAppUseCase: StartAppUseCase
   ) {}
 

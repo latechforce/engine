@@ -1,10 +1,8 @@
 // Third-party imports
 import './instrument'
-import 'reflect-metadata'
 
 // Relative imports
 import { registerDependencies } from './shared/infrastructure/di/container'
-import TYPES from './shared/application/di/types'
 import { apiRoutes } from './shared/interface/routes'
 import { AppController } from './features/app/interface/controller/app.controller'
 
@@ -18,9 +16,8 @@ export default class App {
   constructor(private readonly options: Options = {}) {}
 
   private async getAppController(externals: Record<string, unknown> = {}) {
-    const container = await registerDependencies(externals, apiRoutes)
-    container.bind<AppController>(TYPES.App.Controller).to(AppController).inSingletonScope()
-    return container.get<AppController>(TYPES.App.Controller)
+    const services = await registerDependencies(externals, apiRoutes)
+    return new AppController(services.app.useCases.validate, services.app.useCases.start)
   }
 
   async validate(unknownSchema: unknown = {}) {

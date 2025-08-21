@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from 'bun:test'
 import { TemplateService } from '../../../../src/shared/infrastructure/service/template.service'
 import { registerDependencies } from '../../../../src/shared/infrastructure/di/container'
-import TYPES from '../../../../src/shared/application/di/types'
 import { TZDate } from '@date-fns/tz'
 import { format } from 'date-fns'
 import type { EnvService } from '../../../../src/shared/infrastructure/service/env.service'
@@ -14,8 +13,8 @@ describe('TemplateService', () => {
     process.env.PORT = '3000'
     process.env.TIMEZONE = 'Europe/Paris'
     const container = await registerDependencies({}, {} as any)
-    templateService = container.get<TemplateService>(TYPES.Service.Template)
-    envService = container.get<EnvService>(TYPES.Service.Env)
+    templateService = container.template
+    envService = container.env
   })
 
   it('should fill a template', () => {

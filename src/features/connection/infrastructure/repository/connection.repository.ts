@@ -1,5 +1,3 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../../../../shared/application/di/types'
 import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 import type { Token } from '../../domain/value-object/token.value-object'
@@ -10,16 +8,14 @@ import type { ConnectionDatabaseService } from '../service/database.service'
 import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
 import type { EmailService } from '../../../../shared/infrastructure/service/email.service'
 
-@injectable()
 export class ConnectionRepository implements IConnectionRepository {
   constructor(
-    @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Connection.Service.Database)
+
     private readonly database: ConnectionDatabaseService,
-    @inject(TYPES.Service.Env)
+
     private readonly env: EnvService,
-    @inject(TYPES.Service.Email)
+
     private readonly emailService: EmailService
   ) {}
 

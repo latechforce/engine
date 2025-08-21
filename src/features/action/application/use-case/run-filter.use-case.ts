@@ -1,8 +1,6 @@
 import type { ConditionsSchema } from '../../domain/schema/condition'
 import type { Run } from '../../../run/domain/entity/run.entity'
-import { injectable } from 'inversify'
 
-@injectable()
 export class RunFilterUseCase {
   constructor() {}
 

@@ -1,4 +1,3 @@
-import { injectable } from 'inversify'
 import vm from 'node:vm'
 import ts from 'typescript'
 import { ESLint } from 'eslint'
@@ -78,7 +77,6 @@ const globals = {
   File: global.File,
 }
 
-@injectable()
 export class CodeService {
   constructor(private readonly externals: { [key: string]: unknown }) {}
 

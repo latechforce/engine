@@ -1,17 +1,13 @@
 import Handlebars from 'handlebars'
-import { inject, injectable } from 'inversify'
-import TYPES from '../../application/di/types'
 import { LoggerService } from './logger.service'
 import type { EnvService } from './env.service'
 import { TZDate } from '@date-fns/tz'
 import { format } from 'date-fns'
 
-@injectable()
 export class TemplateService {
   constructor(
-    @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Service.Env)
+
     env: EnvService
   ) {
     this.logger = this.logger.child('template-service')

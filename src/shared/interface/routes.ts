@@ -12,11 +12,11 @@ import {
   authRequiredMiddleware,
 } from '../../features/user/interface/middleware/auth.middleware'
 import { appRoutes } from '../../features/app/interface/routes'
+import { tableRoutes } from '../../features/table/interface/routes'
 import { runRoutes } from '../../features/run/interface/routes'
 import { automationRoutes } from '../../features/automation/interface/routes'
 import { connectionRoutes } from '../../features/connection/interface/routes'
 import { formRoutes } from '../../features/form/interface/routes'
-import { tableRoutes } from '../../features/table/interface/routes'
 import { bucketRoutes } from '../../features/bucket/interface/routes'
 
 export const apiRoutes = new Hono<HonoType>()
@@ -24,11 +24,11 @@ export const apiRoutes = new Hono<HonoType>()
   .use(authMiddleware)
   .use('*', corsMiddleware)
   .route('/', appRoutes)
-  .route('/automations', automationRoutes)
   .route('/tables', tableRoutes)
+  .route('/automations', automationRoutes)
   .route('/forms', formRoutes)
-  .route('/connections', connectionRoutes)
   .use(authRequiredMiddleware)
+  .route('/connections', connectionRoutes)
   .route('/runs', runRoutes)
   .route('/buckets', bucketRoutes)
 

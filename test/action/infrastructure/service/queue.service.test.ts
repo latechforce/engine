@@ -1,6 +1,5 @@
 import { beforeEach, describe, expect, it } from 'bun:test'
 import { registerDependencies } from '../../../../src/shared/infrastructure/di/container'
-import TYPES from '../../../../src/shared/application/di/types'
 import type { QueueService } from '../../../../src/features/action/infrastructure/service/queue.service'
 import { differenceInSeconds } from 'date-fns'
 
@@ -9,7 +8,7 @@ describe('QueueService', () => {
 
   beforeEach(async () => {
     const container = await registerDependencies({}, {} as any)
-    queueService = container.get<QueueService>(TYPES.Action.Service.Queue)
+    queueService = container.action.services.queue
   })
 
   it('should wait for a job to finish', async () => {

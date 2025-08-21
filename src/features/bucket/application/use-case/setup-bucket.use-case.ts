@@ -1,17 +1,11 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../di/types'
 import type { IBucketRepository } from '../../domain/repository-interface/bucket-repository.interface'
 import type { Bucket } from '../../domain/entity/bucket.entity'
 import { join } from 'path'
 import { z } from 'zod'
 import { listObjectsDto } from '../dto/list-objects.dto'
 
-@injectable()
 export class SetupBucketUseCase {
-  constructor(
-    @inject(TYPES.Repository.Bucket)
-    private readonly bucketRepository: IBucketRepository
-  ) {}
+  constructor(private readonly bucketRepository: IBucketRepository) {}
 
   async execute(bucket: Bucket) {
     const exists = await this.bucketRepository.exists(bucket)

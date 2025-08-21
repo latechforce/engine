@@ -1,13 +1,8 @@
-import { inject } from 'inversify'
-import TYPES from '../../../../shared/application/di/types'
 import { eq, count, SQL } from 'drizzle-orm'
 import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 
 export class RunDatabaseService {
-  constructor(
-    @inject(TYPES.Service.Database)
-    private readonly database: DatabaseService
-  ) {}
+  constructor(private readonly database: DatabaseService) {}
 
   get schema() {
     return this.database.schema

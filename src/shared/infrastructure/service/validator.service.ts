@@ -1,8 +1,6 @@
 import Ajv from 'ajv'
 import type { SchemaObject } from 'ajv'
-import { injectable } from 'inversify'
 
-@injectable()
 export class SchemaService {
   private ajv: Ajv
 

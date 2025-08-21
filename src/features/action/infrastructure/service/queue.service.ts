@@ -1,8 +1,5 @@
-import { injectable } from 'inversify'
-
 type Job<T> = () => Promise<T>
 
-@injectable()
 export class QueueService {
   private readonly queue: Map<string, Promise<void>> = new Map()
   private readonly lastStartTime: Map<string, number> = new Map()

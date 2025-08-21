@@ -1,5 +1,3 @@
-import TYPES from '../../../../shared/application/di/types'
-import { injectable, inject } from 'inversify'
 import { App } from '../../domain/entity/app.entity'
 import type { IAppRepository } from '../../domain/repository-interface/app-repository.interface'
 import type { SetupAutomationUseCase } from '../../../automation/application/use-case/setup-automation.use-case'
@@ -9,21 +7,18 @@ import type { SetupConnectionUseCase } from '../../../connection/application/use
 import type { SetupBucketUseCase } from '../../../bucket/application/use-case/setup-bucket.use-case'
 import type { ConnectionSchema } from '../../../../shared/integrations/core/connection.schema'
 
-@injectable()
+// eslint-disable-next-line
+import type { SimpleContainer } from '../../../../shared/infrastructure/di/simple-container'
+
 export class StartAppUseCase {
   constructor(
-    @inject(TYPES.App.Repository)
     private readonly appRepository: IAppRepository,
-    @inject(TYPES.Automation.UseCase.Setup)
     private readonly setupAutomationUseCase: SetupAutomationUseCase,
-    @inject(TYPES.Table.UseCase.Setup)
     private readonly setupTableUseCase: SetupTableUseCase,
-    @inject(TYPES.Connection.UseCase.Setup)
     private readonly setupConnectionUseCase: SetupConnectionUseCase,
-    @inject(TYPES.App.UseCase.Validate)
     private readonly validateAppUseCase: ValidateAppUseCase,
-    @inject(TYPES.Bucket.UseCase.Setup)
-    private readonly setupBucketUseCase: SetupBucketUseCase
+    private readonly setupBucketUseCase: SetupBucketUseCase,
+    private readonly container: SimpleContainer
   ) {}
 
   async execute(unknownSchema: unknown): Promise<App> {
@@ -39,6 +34,10 @@ export class StartAppUseCase {
     })
     const app = new App(schema, env)
     await this.appRepository.setup(app)
+
+    // Setup app context in Hono
+    const setupAppContext = this.container.get<(app: App) => void>('setupAppContext')
+    setupAppContext(app)
     for (const connection of app.connections) {
       await this.setupConnectionUseCase.execute(connection)
     }

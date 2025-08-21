@@ -23,6 +23,8 @@ import { SetupTableUseCase } from '../application/use-case/setup-table.use-case'
 
 // Context
 import { TableHonoContext } from './di/context'
+import { ObjectRepository } from '../../bucket/infrastructure/repository/object.repository'
+import { BucketDatabaseService } from '../../bucket/infrastructure/service/database.service'
 
 export interface TableServices {
   repositories: {
@@ -51,15 +53,16 @@ export function createTableServices(container: SimpleContainer): TableServices {
   const logger = container.get<LoggerService>('logger')
   const server = container.get<ServerService>('server')
   const validator = container.get<SchemaService>('validator')
-  const objectRepository = container.get<IObjectRepository>('objectRepository')
   const databaseService = container.get<DatabaseService>('database')
 
   // Create database service
   const database = new TableDatabaseService(databaseService)
+  const bucketDatabase = new BucketDatabaseService(databaseService)
 
   // Create repositories
   const tableRepository = new TableRepository(logger, server, database)
   const recordRepository = new RecordRepository(validator, database)
+  const objectRepository = new ObjectRepository(bucketDatabase)
 
   // Create use cases
   const setupUseCase = new SetupTableUseCase(tableRepository)
@@ -71,6 +74,8 @@ export function createTableServices(container: SimpleContainer): TableServices {
   const deleteRecordUseCase = new DeleteRecordUseCase(recordRepository)
   const deleteMultipleRecordsUseCase = new DeleteMultipleRecordsUseCase(recordRepository)
   const listTablesUseCase = new ListTablesUseCase()
+
+  container.set('recordRepository', recordRepository)
 
   // Create context
   const context = new TableHonoContext(

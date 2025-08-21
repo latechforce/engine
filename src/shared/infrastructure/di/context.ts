@@ -1,8 +1,6 @@
 import type { EnvService } from '../service/env.service'
 import type { LoggerService } from '../service/logger.service'
-import { inject, injectable } from 'inversify'
 import type { ServerService } from '../service/server.service'
-import TYPES from '../../application/di/types'
 import type {
   AppHonoContext,
   AppHonoContextType,
@@ -54,32 +52,19 @@ export type HonoContextType = {
   TriggerHonoContextType &
   BucketHonoContextType
 
-@injectable()
 export class HonoContext {
   constructor(
-    @inject(TYPES.Service.Server)
     private readonly server: ServerService,
-    @inject(TYPES.Service.Env)
     private readonly env: EnvService,
-    @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.App.HonoContext)
     private readonly appContext: AppHonoContext,
-    @inject(TYPES.User.HonoContext)
     private readonly userContext: UserHonoContext,
-    @inject(TYPES.Automation.HonoContext)
     private readonly automationContext: AutomationHonoContext,
-    @inject(TYPES.Connection.HonoContext)
     private readonly connectionContext: ConnectionHonoContext,
-    @inject(TYPES.Form.HonoContext)
     private readonly formContext: FormHonoContext,
-    @inject(TYPES.Run.HonoContext)
     private readonly runContext: RunHonoContext,
-    @inject(TYPES.Table.HonoContext)
     private readonly tableContext: TableHonoContext,
-    @inject(TYPES.Trigger.HonoContext)
     private readonly triggerContext: TriggerHonoContext,
-    @inject(TYPES.Bucket.HonoContext)
     private readonly bucketContext: BucketHonoContext
   ) {}
 

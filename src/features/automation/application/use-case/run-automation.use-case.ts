@@ -1,5 +1,3 @@
-import { injectable, inject } from 'inversify'
-import TYPES from '../../../../shared/application/di/types'
 import type { RunActionUseCase } from '../../../action/application/use-case/run-action.use-case'
 import type { IRunRepository } from '../../../run/domain/repository-interface/run-repository.interface'
 import { Run } from '../../../run/domain/entity/run.entity'
@@ -10,18 +8,16 @@ import type { IntegrationError, ServiceError } from '../../../action/domain/valu
 import type { SplitIntoPathsFilterActionSchema } from '../../../action/domain/schema/filter/split-into-paths.schema'
 import type { ActionSchema } from '../../../action/domain/schema/action.schema'
 
-@injectable()
 export class RunAutomationUseCase {
   debug: (message: string) => void
   info: (message: string) => void
   error: (message: string) => void
 
   constructor(
-    @inject(TYPES.Automation.Repository)
     private readonly automationRepository: IAutomationRepository,
-    @inject(TYPES.Run.Repository)
+
     private readonly runRepository: IRunRepository,
-    @inject(TYPES.Action.UseCase.Run)
+
     private readonly runActionUseCase: RunActionUseCase
   ) {
     this.debug = (message: string) => this.automationRepository.debug(message)

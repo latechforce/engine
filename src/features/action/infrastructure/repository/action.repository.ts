@@ -1,9 +1,7 @@
 // Third-party imports
-import { inject, injectable } from 'inversify'
 import { HTTPError } from 'ky'
 
 // Shared imports
-import TYPES from '../../../../shared/application/di/types'
 import type { LoggerService, TemplateService } from '../../../../shared/infrastructure/service'
 
 // Action domain imports
@@ -39,24 +37,22 @@ import type { Table } from '../../../table/domain/entity/table.entity'
 import type { QueueService } from '../service/queue.service'
 import type { ActionContext } from '../service/code.service'
 
-@injectable()
 export class ActionRepository implements IActionRepository {
   constructor(
-    @inject(TYPES.Action.Service.Code)
     private readonly codeService: CodeService,
-    @inject(TYPES.Service.Template)
+
     private readonly templateService: TemplateService,
-    @inject(TYPES.Service.Logger)
+
     private readonly logger: LoggerService,
-    @inject(TYPES.Table.Repository.Record)
+
     private readonly recordRepository: IRecordRepository,
-    @inject(TYPES.Bucket.Repository.Object)
+
     private readonly objectRepository: IObjectRepository,
-    @inject(TYPES.Connection.Repository.Connection)
+
     private readonly connectionRepository: IConnectionRepository,
-    @inject(TYPES.Connection.Repository.Token)
+
     private readonly tokenRepository: ITokenRepository,
-    @inject(TYPES.Action.Service.Queue)
+
     private readonly queueService: QueueService
   ) {}
 

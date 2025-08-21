@@ -1,15 +1,9 @@
-import TYPES from '../../../../shared/application/di/types'
-import { injectable, inject } from 'inversify'
 import type { IActionRepository } from '../../domain/repository-interface/action-repository.interface'
 import type { App } from '../../../app/domain/entity/app.entity'
 import type { ActionSchema } from '../../domain/schema/action.schema'
 
-@injectable()
 export class SetupActionUseCase {
-  constructor(
-    @inject(TYPES.Action.Repository)
-    private readonly actionRepository: IActionRepository
-  ) {}
+  constructor(private readonly actionRepository: IActionRepository) {}
 
   async execute(app: App, action: ActionSchema) {
     this.actionRepository.log.debug(`setup "${action.name}"`)

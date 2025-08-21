@@ -1,9 +1,7 @@
-import { injectable } from 'inversify'
 import { toGetFormDto, type GetFormDto } from '../dto/get-form.dto'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
 import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 
-@injectable()
 export class GetFormUseCase {
   constructor() {}
 

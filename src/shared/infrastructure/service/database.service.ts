@@ -1,12 +1,10 @@
 // External dependencies
-import { inject } from 'inversify'
 import { drizzle as drizzlePostgres } from 'drizzle-orm/node-postgres'
 import { migrate as migratePostgres } from 'drizzle-orm/node-postgres/migrator'
 import { drizzle as drizzleSqlite } from 'drizzle-orm/bun-sqlite'
 import { migrate as migrateSqlite } from 'drizzle-orm/bun-sqlite/migrator'
 
 // Internal imports
-import TYPES from '../../application/di/types'
 import type { EnvService } from './env.service'
 import type { LoggerService } from './logger.service'
 import * as postgresSchema from '../db/schema/postgres'
@@ -25,9 +23,8 @@ export class DatabaseService {
   public readonly url: string
 
   constructor(
-    @inject(TYPES.Service.Env)
     private readonly env: EnvService,
-    @inject(TYPES.Service.Logger)
+
     private readonly logger: LoggerService
   ) {
     this.logger = this.logger.child('database-service')

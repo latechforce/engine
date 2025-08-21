@@ -1,16 +1,10 @@
 import type { IRunRepository } from '../../domain/repository-interface/run-repository.interface'
-import { inject, injectable } from 'inversify'
-import TYPES from '../di/types'
 import { toListRunsDto, type ListRunsDto } from '../dto/list-runs.dto'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
 import type { ListRunsParams } from '../../domain/repository-interface/run-repository.interface'
 
-@injectable()
 export class ListRunsUseCase {
-  constructor(
-    @inject(TYPES.Repository)
-    private readonly runRepository: IRunRepository
-  ) {}
+  constructor(private readonly runRepository: IRunRepository) {}
 
   async execute(app: App, params: ListRunsParams): Promise<ListRunsDto> {
     const automationsFiltered = app.automations

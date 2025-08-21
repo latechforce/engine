@@ -1,16 +1,10 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../../application/di/types'
 import type { BucketDatabaseService } from '../service/database.service'
 import type { IObjectRepository } from '../../domain/repository-interface/object-repository.interface'
 import { Object } from '../../domain/entity/object.entity'
 import mime from 'mime-types'
 
-@injectable()
 export class ObjectRepository implements IObjectRepository {
-  constructor(
-    @inject(TYPES.Service.Database)
-    private readonly database: BucketDatabaseService
-  ) {}
+  constructor(private readonly database: BucketDatabaseService) {}
 
   getMimeType(fileName: string): string {
     const mimeType = mime.lookup(fileName)

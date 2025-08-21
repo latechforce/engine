@@ -1,6 +1,4 @@
-import { inject, injectable } from 'inversify'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
-import TYPES from '../di/types'
 import type { IConnectionRepository } from '../../domain/repository-interface/connection-repository.interface'
 import {
   toListConnectionsDto,
@@ -8,12 +6,8 @@ import {
   type ListConnectionsDtoItem,
 } from '../dto/list-connections.dto'
 
-@injectable()
 export class ListConnectionsUseCase {
-  constructor(
-    @inject(TYPES.Repository.Connection)
-    private readonly connectionRepository: IConnectionRepository
-  ) {}
+  constructor(private readonly connectionRepository: IConnectionRepository) {}
 
   async execute(app: App): Promise<ListConnectionsDto> {
     const connections: ListConnectionsDtoItem[] = []

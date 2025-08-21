@@ -1,12 +1,10 @@
 // Third-party imports
-import { inject, injectable } from 'inversify'
 import { betterAuth, type Session, type User } from 'better-auth'
 import { admin } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { eq } from 'drizzle-orm'
 
 // Shared imports
-import TYPES from '../../../../shared/application/di/types'
 import type { DatabaseService } from '../../../../shared/infrastructure/service/database.service'
 import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
@@ -17,18 +15,16 @@ export type AuthType = {
   session: Session | null
 }
 
-@injectable()
 export class AuthService {
   public auth
 
   constructor(
-    @inject(TYPES.Service.Env)
     private readonly env: EnvService,
-    @inject(TYPES.Service.Logger)
+
     private readonly logger: LoggerService,
-    @inject(TYPES.Service.Database)
+
     private readonly database: DatabaseService,
-    @inject(TYPES.Service.Server)
+
     private readonly server: ServerService
   ) {
     this.logger = this.logger.child('auth-service')

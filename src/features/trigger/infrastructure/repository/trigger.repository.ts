@@ -1,8 +1,6 @@
-import { inject, injectable } from 'inversify'
 import { HTTPError } from 'ky'
 import type { SchemaObject } from 'ajv'
 import { CronJob } from 'cron'
-import TYPES from '../../../../shared/application/di/types'
 import type { LoggerService } from '../../../../shared/infrastructure/service/logger.service'
 import type { ITokenRepository } from '../../../../features/connection/domain/repository-interface/token-repository.interface'
 import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
@@ -14,18 +12,16 @@ import type { Connection } from '../../../../features/connection/domain/entity/c
 import type { EnvService } from '../../../../shared/infrastructure/service/env.service'
 import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 
-@injectable()
 export class TriggerRepository implements ITriggerRepository {
   constructor(
-    @inject(TYPES.Service.Logger)
     private readonly logger: LoggerService,
-    @inject(TYPES.Service.Schema)
+
     private readonly validator: SchemaService,
-    @inject(TYPES.Service.Template)
+
     private readonly template: TemplateService,
-    @inject(TYPES.Connection.Repository.Token)
+
     private readonly tokenRepository: ITokenRepository,
-    @inject(TYPES.Service.Env)
+
     private readonly env: EnvService
   ) {}
 

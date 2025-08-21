@@ -1,16 +1,12 @@
-import { inject, injectable } from 'inversify'
 import type { App } from '../../../app/domain/entity/app.entity'
-import TYPES from '../../../../shared/application/di/types'
 import type { IAutomationRepository } from '../../domain/repository-interface/automation-repository.interface'
 import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 import type { SetupTriggerUseCase } from '../../../../features/trigger/application/use-case/setup-trigger.use-case'
 
-@injectable()
 export class SetStatusUseCase {
   constructor(
-    @inject(TYPES.Automation.Repository)
     private readonly automationRepository: IAutomationRepository,
-    @inject(TYPES.Trigger.UseCase.Setup)
+
     private readonly setupTriggerUseCase: SetupTriggerUseCase
   ) {}
 

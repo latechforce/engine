@@ -1,5 +1,3 @@
-import { inject, injectable } from 'inversify'
-import TYPES from '../../../../shared/application/di/types'
 import { Run } from '../../../../features/run/domain/entity/run.entity'
 import type { IRunRepository } from '../../../../features/run/domain/repository-interface/run-repository.interface'
 import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
@@ -12,16 +10,14 @@ import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 import type { IObjectRepository } from '../../../../features/bucket/domain/repository-interface/object-repository.interface'
 import type { IAutomationRepository } from '../../../../features/automation/domain/repository-interface/automation-repository.interface'
 
-@injectable()
 export class TriggerHttpAutomationUseCase {
   constructor(
-    @inject(TYPES.Trigger.Repository)
     private readonly triggerRepository: ITriggerRepository,
-    @inject(TYPES.Run.Repository)
+
     private readonly runRepository: IRunRepository,
-    @inject(TYPES.Bucket.Repository.Object)
+
     private readonly objectRepository: IObjectRepository,
-    @inject(TYPES.Automation.Repository)
+
     private readonly automationRepository: IAutomationRepository
   ) {}
 

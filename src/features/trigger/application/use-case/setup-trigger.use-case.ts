@@ -1,8 +1,6 @@
-import { injectable, inject } from 'inversify'
 import type { Automation } from '../../../../features/automation/domain/entity/automation.entity'
 import type { App } from '../../../../features/app/domain/entity/app.entity'
 import type { ITriggerRepository } from '../../domain/repository-interface/trigger-repository.interface'
-import TYPES from '../../../../shared/application/di/types'
 import type { RecordRow } from '../../../../features/table/domain/object-value/record-row.object-value'
 import type { IRecordRepository } from '../../../../features/table/domain/repository-interface/record-repository.interface'
 import { Run } from '../../../../features/run/domain/entity/run.entity'
@@ -11,16 +9,14 @@ import { toRecordDto } from '../../../../features/table/application/dto/record.d
 import type { IAutomationRepository } from '../../../../features/automation/domain/repository-interface/automation-repository.interface'
 import { TriggerError } from '../../domain/entity/trigger-error.entity'
 
-@injectable()
 export class SetupTriggerUseCase {
   constructor(
-    @inject(TYPES.Trigger.Repository)
     private readonly triggerRepository: ITriggerRepository,
-    @inject(TYPES.Run.Repository)
+
     private readonly runRepository: IRunRepository,
-    @inject(TYPES.Table.Repository.Record)
+
     private readonly recordRepository: IRecordRepository,
-    @inject(TYPES.Automation.Repository)
+
     private readonly automationRepository: IAutomationRepository
   ) {}
 
