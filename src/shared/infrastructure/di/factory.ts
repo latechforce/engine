@@ -16,6 +16,8 @@ import { EmailService } from '../service/email.service'
 import { DomainEventPublisherService } from '../service/domain-event-publisher.service'
 import { HttpService } from '../service/http.service'
 import { IntegrationService } from '../service/integration.service'
+import { AirtableAntiCorruptionLayer } from '../../domain/anti-corruption/airtable-anti-corruption-layer'
+import { GoogleSheetsAntiCorruptionLayer } from '../../domain/anti-corruption/google-sheets-anti-corruption-layer'
 
 // Domain types
 import type { App } from '../../../features/app/domain/entity/app.entity'
@@ -49,6 +51,8 @@ export interface AllServices {
   eventPublisher: DomainEventPublisherService
   httpService: HttpService
   integrationService: IntegrationService
+  airtableACL: AirtableAntiCorruptionLayer
+  googleSheetsACL: GoogleSheetsAntiCorruptionLayer
   honoContext: HonoContext
 
   // Feature services
@@ -81,6 +85,10 @@ async function createSharedServices(container: SimpleContainer, apiRoutes: Hono<
   const httpService = new HttpService()
   const server = new ServerService(env, logger, apiRoutes)
 
+  // Create anti-corruption layers
+  const airtableACL = new AirtableAntiCorruptionLayer(logger)
+  const googleSheetsACL = new GoogleSheetsAntiCorruptionLayer(logger)
+
   // Register in container for feature factories
   container.set('env', env)
   container.set('logger', logger)
@@ -91,8 +99,22 @@ async function createSharedServices(container: SimpleContainer, apiRoutes: Hono<
   container.set('email', email)
   container.set('eventPublisher', eventPublisher)
   container.set('httpService', httpService)
+  container.set('airtableACL', airtableACL)
+  container.set('googleSheetsACL', googleSheetsACL)
 
-  return { env, logger, database, validator, template, email, eventPublisher, httpService, server }
+  return {
+    env,
+    logger,
+    database,
+    validator,
+    template,
+    email,
+    eventPublisher,
+    httpService,
+    server,
+    airtableACL,
+    googleSheetsACL,
+  }
 }
 
 /**
