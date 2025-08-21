@@ -4,6 +4,7 @@ import type { ServerService } from '../../../shared/infrastructure/service/serve
 import type { DatabaseService } from '../../../shared/infrastructure/service/database.service'
 import type { SchemaService } from '../../../shared/infrastructure/service/validator.service'
 import type { IObjectRepository } from '../../bucket/domain/repository-interface/object-repository.interface'
+import type { IDomainEventPublisher } from '../../../shared/domain/event/domain-event-publisher.interface'
 
 // Infrastructure
 import { TableRepository } from './repository/table.repository'
@@ -54,6 +55,7 @@ export function createTableServices(container: SimpleContainer): TableServices {
   const server = container.get<ServerService>('server')
   const validator = container.get<SchemaService>('validator')
   const databaseService = container.get<DatabaseService>('database')
+  const eventPublisher = container.get<IDomainEventPublisher>('eventPublisher')
 
   // Create database service
   const database = new TableDatabaseService(databaseService)
@@ -66,12 +68,20 @@ export function createTableServices(container: SimpleContainer): TableServices {
 
   // Create use cases
   const setupUseCase = new SetupTableUseCase(tableRepository)
-  const createRecordUseCase = new CreateRecordUseCase(recordRepository, objectRepository)
+  const createRecordUseCase = new CreateRecordUseCase(
+    recordRepository,
+    objectRepository,
+    eventPublisher
+  )
   const readRecordUseCase = new ReadRecordUseCase(recordRepository)
   const listRecordsUseCase = new ListRecordsUseCase(recordRepository)
-  const updateRecordUseCase = new UpdateRecordUseCase(recordRepository, objectRepository)
+  const updateRecordUseCase = new UpdateRecordUseCase(
+    recordRepository,
+    objectRepository,
+    eventPublisher
+  )
   const updateMultipleRecordsUseCase = new UpdateMultipleRecordsUseCase(recordRepository)
-  const deleteRecordUseCase = new DeleteRecordUseCase(recordRepository)
+  const deleteRecordUseCase = new DeleteRecordUseCase(recordRepository, eventPublisher)
   const deleteMultipleRecordsUseCase = new DeleteMultipleRecordsUseCase(recordRepository)
   const listTablesUseCase = new ListTablesUseCase()
 
@@ -131,7 +141,8 @@ export function createRecordRepository(
 
 export function createCreateRecordUseCase(
   recordRepository: RecordRepository,
-  objectRepository: IObjectRepository
+  objectRepository: IObjectRepository,
+  eventPublisher: IDomainEventPublisher
 ): CreateRecordUseCase {
-  return new CreateRecordUseCase(recordRepository, objectRepository)
+  return new CreateRecordUseCase(recordRepository, objectRepository, eventPublisher)
 }

@@ -1,0 +1,19 @@
+import type { DomainEvent } from '../../../../shared/domain/event/domain-event.interface'
+import type { Fields } from '../object-value/fields.object-value'
+
+export class RecordDeletedEvent implements DomainEvent {
+  public readonly aggregateType = 'table'
+  public readonly eventType = 'record-deleted'
+  public readonly occurredOn: Date
+
+  constructor(
+    public readonly aggregateId: string,
+    public readonly payload: {
+      tableId: string
+      recordId: string
+      deletedFields: Fields
+    }
+  ) {
+    this.occurredOn = new Date()
+  }
+}

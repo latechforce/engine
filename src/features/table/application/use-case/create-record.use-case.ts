@@ -9,11 +9,14 @@ import { toListRecordsDto, type ListRecordsDto } from '../dto/list-records.dto'
 import type { Fields } from '../../domain/object-value/fields.object-value'
 import { Object as ObjectEntity } from '../../../bucket/domain/entity/object.entity'
 import type { IObjectRepository } from '../../../bucket/domain/repository-interface/object-repository.interface'
+import type { IDomainEventPublisher } from '../../../../shared/domain/event/domain-event-publisher.interface'
+import { RecordCreatedEvent } from '../../domain/event/record-created.event'
 
 export class CreateRecordUseCase {
   constructor(
     private readonly recordRepository: IRecordRepository,
-    private readonly objectRepository: IObjectRepository
+    private readonly objectRepository: IObjectRepository,
+    private readonly eventPublisher: IDomainEventPublisher
   ) {}
 
   async execute(
@@ -77,10 +80,32 @@ export class CreateRecordUseCase {
     if ('fields' in data) {
       const record = new RecordEntity(data.fields)
       await this.recordRepository.create(table, record)
+
+      // Emit domain event
+      await this.eventPublisher.publish(
+        new RecordCreatedEvent(table.schema.id.toString(), {
+          tableId: table.schema.id.toString(),
+          recordId: record.id,
+          fields: record.fields,
+        })
+      )
+
       return toGetRecordDto(record, table)
     } else {
       const records = data.records.map((record) => new RecordEntity(record.fields))
       await this.recordRepository.createMany(table, records)
+
+      // Emit domain events for multiple records
+      const events = records.map(
+        (record) =>
+          new RecordCreatedEvent(table.schema.id.toString(), {
+            tableId: table.schema.id.toString(),
+            recordId: record.id,
+            fields: record.fields,
+          })
+      )
+      await this.eventPublisher.publishMany(events)
+
       return toListRecordsDto(records)
     }
   }

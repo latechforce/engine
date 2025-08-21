@@ -13,6 +13,7 @@ import { DatabaseService } from '../service/database.service'
 import { SchemaService } from '../service/validator.service'
 import { TemplateService } from '../service/template.service'
 import { EmailService } from '../service/email.service'
+import { DomainEventPublisherService } from '../service/domain-event-publisher.service'
 
 // Domain types
 import type { App } from '../../../features/app/domain/entity/app.entity'
@@ -43,6 +44,7 @@ export interface AllServices {
   validator: SchemaService
   template: TemplateService
   email: EmailService
+  eventPublisher: DomainEventPublisherService
   honoContext: HonoContext
 
   // Feature services
@@ -71,6 +73,7 @@ async function createSharedServices(container: SimpleContainer, apiRoutes: Hono<
   const validator = new SchemaService()
   const template = new TemplateService(logger, env)
   const email = new EmailService(env)
+  const eventPublisher = new DomainEventPublisherService()
   const server = new ServerService(env, logger, apiRoutes)
 
   // Register in container for feature factories
@@ -81,8 +84,9 @@ async function createSharedServices(container: SimpleContainer, apiRoutes: Hono<
   container.set('validator', validator)
   container.set('template', template)
   container.set('email', email)
+  container.set('eventPublisher', eventPublisher)
 
-  return { env, logger, database, validator, template, email, server }
+  return { env, logger, database, validator, template, email, eventPublisher, server }
 }
 
 /**

@@ -7,12 +7,14 @@ import type { Table } from '../../domain/entity/table.entity'
 import type { Fields } from '../../domain/object-value/fields.object-value'
 import { Object as ObjectEntity } from '../../../bucket/domain/entity/object.entity'
 import type { IObjectRepository } from '../../../bucket/domain/repository-interface/object-repository.interface'
+import type { IDomainEventPublisher } from '../../../../shared/domain/event/domain-event-publisher.interface'
+import { RecordUpdatedEvent } from '../../domain/event/record-updated.event'
 
 export class UpdateRecordUseCase {
   constructor(
     private readonly recordRepository: IRecordRepository,
-
-    private readonly objectRepository: IObjectRepository
+    private readonly objectRepository: IObjectRepository,
+    private readonly eventPublisher: IDomainEventPublisher
   ) {}
 
   async execute(
@@ -75,11 +77,29 @@ export class UpdateRecordUseCase {
       throw new HttpError('Invalid record', 400)
     }
     await Promise.all(objects.map((object) => this.objectRepository.create(object)))
+
+    // Get the existing record before update to compare fields
+    const existingRecord = await this.recordRepository.read(table, recordId)
+    if (!existingRecord) {
+      throw new HttpError('Record not found', 404)
+    }
+
     await this.recordRepository.update(recordId, data.fields)
     const record = await this.recordRepository.read(table, recordId)
     if (!record) {
       throw new HttpError('Record not found', 404)
     }
+
+    // Emit domain event
+    await this.eventPublisher.publish(
+      new RecordUpdatedEvent(table.schema.id.toString(), {
+        tableId: table.schema.id.toString(),
+        recordId: record.id,
+        fields: record.fields,
+        previousFields: existingRecord.fields,
+      })
+    )
+
     return toGetRecordDto(record, table)
   }
 
