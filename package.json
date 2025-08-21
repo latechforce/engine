@@ -18,10 +18,33 @@
       "require": "./src/index.ts",
       "types": "./src/types.ts"
     },
-    "./schema/*": {
-      "import": "./schema/*.ts",
-      "require": "./schema/*.ts",
-      "types": "./schema/*.ts"
+    "./schema/app.schema.json": {
+      "import": "./schema/app.schema.json",
+      "require": "./schema/app.schema.json"
+    },
+    "./schema/automation.schema.json": {
+      "import": "./schema/automation.schema.json",
+      "require": "./schema/automation.schema.json"
+    },
+    "./schema/table.schema.json": {
+      "import": "./schema/table.schema.json",
+      "require": "./schema/table.schema.json"
+    },
+    "./schema/connection.schema.json": {
+      "import": "./schema/connection.schema.json",
+      "require": "./schema/connection.schema.json"
+    },
+    "./schema/form.schema.json": {
+      "import": "./schema/form.schema.json",
+      "require": "./schema/form.schema.json"
+    },
+    "./schema/bucket.schema.json": {
+      "import": "./schema/bucket.schema.json",
+      "require": "./schema/bucket.schema.json"
+    },
+    "./schema": {
+      "import": "./schema",
+      "require": "./schema"
     }
   },
   "repository": {
