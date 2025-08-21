@@ -8,19 +8,31 @@
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Fix 0.67.4]]></title>
-        <id>https://engine.latechforce.com/blog/fix-0-67-4</id>
-        <link href="https://engine.latechforce.com/blog/fix-0-67-4"/>
+        <title type="html"><![CDATA[Release 0.68.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-68-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-68-0"/>
         <updated>2025-08-21T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.67.4]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-67-4"><p class="before-truncate"> 0.67.4   Bug Fixes  * Complete Phase 1 - Table feature DI migration with working e2e tests (f0aafe5) — Thomas JEANNEAU * correct JSON schema exports in npm package (4987253) — Thomas JEANNEAU...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0674"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-67-4">0.67.4</a><a href="https://engine.latechforce.com/blog/fix-0-67-4#0674" class="hash-link" aria-label="Direct link to 0.67.4" title="Direct link to 0.67.4">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-67-4#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+        <summary type="html"><![CDATA[Changelog for version 0.68.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-68-0"><p class="before-truncate"> 0.68.0   Bug Fixes  * add bucket schema type export (46ffff2) — Thomas JEANNEAU    Features  * implement Phase 1 domain events system and aggregate boundaries (847c980) — Thomas JEANNEAU * implement Phase 2 repository decomposition and shared kernel (204270b) — Thomas JEANNEAU * implement Phase 3 a...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0680"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-68-0">0.68.0</a><a href="https://engine.latechforce.com/blog/release-0-68-0#0680" class="hash-link" aria-label="Direct link to 0.68.0" title="Direct link to 0.68.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-68-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>add bucket schema type export (<a href="https://github.com/latechforce/engine/commit/46ffff29889ee0714748df7a5af69df505483252" target="_blank" rel="noopener noreferrer">46ffff2</a>) — Thomas JEANNEAU</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-68-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>implement Phase 1 domain events system and aggregate boundaries (<a href="https://github.com/latechforce/engine/commit/847c98072d1f270fb6dd527efe52090e42e4b7d4" target="_blank" rel="noopener noreferrer">847c980</a>) — Thomas JEANNEAU</li>
+<li>implement Phase 2 repository decomposition and shared kernel (<a href="https://github.com/latechforce/engine/commit/204270b4d5efd2733838c5d230ea36a83e7fbcc0" target="_blank" rel="noopener noreferrer">204270b</a>) — Thomas JEANNEAU</li>
+<li>implement Phase 3 anti-corruption layers and architecture testing (<a href="https://github.com/latechforce/engine/commit/17a35a2eeeafd741831e67e051149d26b23422c0" target="_blank" rel="noopener noreferrer">17a35a2</a>) — Thomas JEANNEAU</li>
+<li>implement Phase 4 enhanced developer experience tooling (<a href="https://github.com/latechforce/engine/commit/cbe64d2bd9f0ca36f01a33ebb5cfca28028df785" target="_blank" rel="noopener noreferrer">cbe64d2</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0674">0.67.4<a href="https://engine.latechforce.com/blog/release-0-68-0#0674" class="hash-link" aria-label="Direct link to 0.67.4" title="Direct link to 0.67.4">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-68-0#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>Complete Phase 1 - Table feature DI migration with working e2e tests (<a href="https://github.com/latechforce/engine/commit/f0aafe574f04aade9009dc4a374699b199cb51e4" target="_blank" rel="noopener noreferrer">f0aafe5</a>) — Thomas JEANNEAU</li>
 <li>correct JSON schema exports in npm package (<a href="https://github.com/latechforce/engine/commit/4987253cba77122d1f13a9d614257105a83035c3" target="_blank" rel="noopener noreferrer">4987253</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
-        <category label="Fix" term="Fix"/>
+        <category label="Release" term="Release"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Fix 0.67.3]]></title>
