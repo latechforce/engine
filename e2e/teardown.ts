@@ -5,7 +5,7 @@ async function globalTeardown() {
   // They will be reused in subsequent test runs for faster execution
   // SQLite template is kept in tmp/e2e_template.db
   // PostgreSQL template is kept in the container as e2e_template_db
-  
+
   if (container) {
     await container.stop()
   }

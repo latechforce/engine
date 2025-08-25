@@ -1,9 +1,6 @@
 import { join } from 'path'
 import fs from 'fs'
 import { spawn } from 'child_process'
-import { promisify } from 'util'
-
-const execAsync = promisify(spawn)
 
 const TEMPLATE_SQLITE_PATH = join(process.cwd(), 'tmp', 'e2e_template.db')
 

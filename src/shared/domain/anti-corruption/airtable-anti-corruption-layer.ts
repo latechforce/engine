@@ -74,14 +74,28 @@ export class AirtableAntiCorruptionLayer extends BaseAntiCorruptionLayer<
   validateExternal(data: unknown): data is ListWebhooksResponse['webhooks'][0] {
     if (!data || typeof data !== 'object') return false
 
-    const webhook = data as Record<string, unknown>
+    const webhook = data as {
+      id?: unknown
+      isHookEnabled?: unknown
+      areNotificationsEnabled?: unknown
+      specification?: {
+        options?: {
+          filters?: {
+            dataTypes?: unknown
+          }
+        }
+      }
+    }
     return (
       typeof webhook.id === 'string' &&
       typeof webhook.isHookEnabled === 'boolean' &&
       typeof webhook.areNotificationsEnabled === 'boolean' &&
-      webhook.specification &&
-      webhook.specification.options &&
-      webhook.specification.options.filters &&
+      webhook.specification !== undefined &&
+      typeof webhook.specification === 'object' &&
+      webhook.specification.options !== undefined &&
+      typeof webhook.specification.options === 'object' &&
+      webhook.specification.options.filters !== undefined &&
+      typeof webhook.specification.options.filters === 'object' &&
       Array.isArray(webhook.specification.options.filters.dataTypes)
     )
   }

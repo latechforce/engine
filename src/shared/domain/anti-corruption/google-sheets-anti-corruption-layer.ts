@@ -60,14 +60,26 @@ export class GoogleSheetsAntiCorruptionLayer extends BaseAntiCorruptionLayer<
   validateExternal(data: unknown): data is AppendValuesResponse {
     if (!data || typeof data !== 'object') return false
 
-    const response = data as Record<string, unknown>
+    const response = data as {
+      spreadsheetId?: unknown
+      tableRange?: unknown
+      updates?: {
+        updatedCells?: unknown
+        updatedColumns?: unknown
+        updatedData?: {
+          values?: unknown
+        }
+      }
+    }
     return (
       typeof response.spreadsheetId === 'string' &&
       typeof response.tableRange === 'string' &&
-      response.updates &&
+      response.updates !== undefined &&
+      typeof response.updates === 'object' &&
       typeof response.updates.updatedCells === 'number' &&
       typeof response.updates.updatedColumns === 'number' &&
-      response.updates.updatedData &&
+      response.updates.updatedData !== undefined &&
+      typeof response.updates.updatedData === 'object' &&
       Array.isArray(response.updates.updatedData.values)
     )
   }

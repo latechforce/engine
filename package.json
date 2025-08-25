@@ -60,6 +60,7 @@
   "homepage": "https://github.com/latechforce/engine#readme",
   "scripts": {
     "lint": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "example": "bun --watch run script/run-example.ts",
     "website": "cd website && bun start",
@@ -81,6 +82,9 @@
     "db:generate:postgres": "drizzle-kit generate --config config/drizzle-postgres.config.ts",
     "db:generate:sqlite": "drizzle-kit generate --config config/drizzle-sqlite.config.ts",
     "db:generate": "bun run db:generate:postgres && bun run db:generate:sqlite",
+    "db:migrate:postgres": "drizzle-kit migrate --config config/drizzle-postgres.config.ts",
+    "db:migrate:sqlite": "drizzle-kit migrate --config config/drizzle-sqlite.config.ts",
+    "db:migrate": "bun run db:migrate:postgres && bun run db:migrate:sqlite",
     "auth:generate:postgres": "bunx --bun @better-auth/cli generate --output src/infrastructure/db/schema/postgres/auth.ts --config config/better-auth-postgres.config.ts --y",
     "auth:generate:sqlite": "bunx --bun @better-auth/cli generate --output src/infrastructure/db/schema/sqlite/auth.ts --config config/better-auth-sqlite.config.ts --y",
     "auth:generate": "bun run auth:generate:postgres && bun run auth:generate:sqlite",
