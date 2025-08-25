@@ -1,5 +1,7 @@
 import { PostgreSqlContainer, type StartedPostgreSqlContainer } from '@testcontainers/postgresql'
 import { createServer } from 'http'
+import { createTemplateDatabase } from './template-database'
+import { createSqliteTemplateDatabase } from './template-database-sqlite'
 
 export let container: StartedPostgreSqlContainer
 export let testServer: ReturnType<typeof createServer>
@@ -12,6 +14,17 @@ async function globalSetup() {
   process.env.POSTGRES_PORT = container.getPort().toString()
   process.env.POSTGRES_USERNAME = container.getUsername()
   process.env.POSTGRES_PASSWORD = container.getPassword()
+
+  // Create PostgreSQL template database with migrations
+  await createTemplateDatabase({
+    host: container.getHost(),
+    port: container.getPort(),
+    user: container.getUsername(),
+    password: container.getPassword(),
+  })
+
+  // Create SQLite template database with migrations
+  await createSqliteTemplateDatabase()
 
   // Test server
   testServer = createServer(async (req, res) => {

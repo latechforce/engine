@@ -7,6 +7,8 @@ import fs from 'fs'
 import { join } from 'path'
 import { randomBytes, randomUUID } from 'crypto'
 import { Client } from 'pg'
+import { cloneTemplateDatabase } from './template-database'
+import { cloneSqliteTemplateDatabase } from './template-database-sqlite'
 
 // Function to strip ANSI color codes
 function stripAnsiCodes(str: string): string {
@@ -69,23 +71,27 @@ async function getExampleFileFilter(
 
 function createDatabaseSqliteUrl() {
   const id = randomBytes(10).toString('base64url').slice(0, 10)
-  return join(process.cwd(), 'tmp', `sqlite-${id}.db`)
+  const dbPath = join(process.cwd(), 'tmp', `sqlite-${id}.db`)
+
+  // Clone from template for faster database creation
+  cloneSqliteTemplateDatabase(dbPath)
+
+  return dbPath
 }
 
 async function createDatabase() {
   const dbName = `testdb_${randomUUID().replace(/-/g, '')}`
 
-  const client = new Client({
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    user: process.env.POSTGRES_USERNAME,
-    password: process.env.POSTGRES_PASSWORD,
-    database: 'postgres', // connect to default db to create a new one
-  })
-
-  await client.connect()
-  await client.query(`CREATE DATABASE "${dbName}"`)
-  await client.end()
+  // Use template cloning for faster database creation
+  await cloneTemplateDatabase(
+    {
+      host: process.env.POSTGRES_HOST!,
+      port: Number(process.env.POSTGRES_PORT),
+      user: process.env.POSTGRES_USERNAME!,
+      password: process.env.POSTGRES_PASSWORD!,
+    },
+    dbName
+  )
 
   return dbName
 }
@@ -97,6 +103,7 @@ export const test = base.extend<StartAppFixture>({
     let page: Page | undefined
     let env: EnvSchema = {}
     let url: string | undefined
+    let createdDbName: string | undefined
 
     const startExampleApp = async (options: {
       filter?: string
@@ -117,8 +124,8 @@ export const test = base.extend<StartAppFixture>({
       }
 
       if (testInfo.project.name.includes('postgres') || env.DATABASE_PROVIDER === 'postgres') {
-        const dbName = await createDatabase()
-        env.DATABASE_URL = `postgres://${process.env.POSTGRES_USERNAME}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${dbName}`
+        createdDbName = await createDatabase()
+        env.DATABASE_URL = `postgres://${process.env.POSTGRES_USERNAME}:${process.env.POSTGRES_PASSWORD}@${process.env.POSTGRES_HOST}:${process.env.POSTGRES_PORT}/${createdDbName}`
         env.DATABASE_PROVIDER = 'postgres'
       } else if (!env.DATABASE_URL) {
         env.DATABASE_URL = createDatabaseSqliteUrl()
@@ -206,6 +213,25 @@ export const test = base.extend<StartAppFixture>({
     if (env.DATABASE_URL && env.DATABASE_PROVIDER === 'sqlite') {
       if (fs.existsSync(env.DATABASE_URL)) {
         fs.unlinkSync(env.DATABASE_URL)
+      }
+    }
+
+    // Clean up Postgres test database
+    if (createdDbName && env.DATABASE_PROVIDER === 'postgres') {
+      const client = new Client({
+        host: process.env.POSTGRES_HOST,
+        port: Number(process.env.POSTGRES_PORT),
+        user: process.env.POSTGRES_USERNAME,
+        password: process.env.POSTGRES_PASSWORD,
+        database: 'postgres',
+      })
+
+      try {
+        await client.connect()
+        await client.query(`DROP DATABASE IF EXISTS "${createdDbName}"`)
+        await client.end()
+      } catch (error) {
+        console.error(`Failed to drop test database ${createdDbName}:`, error)
       }
     }
   },
