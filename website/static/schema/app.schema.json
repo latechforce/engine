@@ -392,19 +392,23 @@
                             "properties": {
                               "organizationId": {
                                 "title": "LinkedIn Organization ID",
+                                "description": "Required for non-sponsored lead forms",
+                                "type": "string"
+                              },
+                              "sponsoredAccountId": {
+                                "title": "LinkedIn Sponsored Account ID",
+                                "description": "Required for sponsored lead forms (leadType: SPONSORED)",
                                 "type": "string"
                               },
                               "leadType": {
                                 "default": "SPONSORED",
+                                "description": "Type of lead form. SPONSORED requires sponsoredAccountId",
                                 "type": "string",
                                 "enum": [
                                   "SPONSORED"
                                 ]
                               }
                             },
-                            "required": [
-                              "organizationId"
-                            ],
                             "additionalProperties": false
                           }
                         },
@@ -450,10 +454,17 @@
                             "properties": {
                               "pageId": {
                                 "title": "Facebook Page ID",
+                                "description": "The ID of the Facebook page with lead forms",
                                 "type": "string"
                               },
                               "appId": {
                                 "title": "Facebook App ID",
+                                "description": "Your Facebook App ID from the developer console",
+                                "type": "string"
+                              },
+                              "verifyToken": {
+                                "title": "Webhook Verify Token",
+                                "description": "Security token for webhook verification (auto-generated if not provided)",
                                 "type": "string"
                               }
                             },
