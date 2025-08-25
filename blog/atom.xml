@@ -2,11 +2,30 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://engine.latechforce.com/blog</id>
     <title>LTF Engine Blog</title>
-    <updated>2025-08-21T00:00:00.000Z</updated>
+    <updated>2025-08-25T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://engine.latechforce.com/blog"/>
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 0.69.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-69-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-69-0"/>
+        <updated>2025-08-25T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Changelog for version 0.69.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-69-0"><p class="before-truncate"> 0.69.0   Bug Fixes  * facebook: complete overhaul of Facebook Lead Ads webhook implementation (da6beef) — Thomas JEANNEAU * linkedin: support sponsored account for lead notifications (ef98c8e) — Thomas JEANNEAU    Features  * e2e: implement template database system for faster test execution (bc0f05...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0690"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-69-0">0.69.0</a><a href="https://engine.latechforce.com/blog/release-0-69-0#0690" class="hash-link" aria-label="Direct link to 0.69.0" title="Direct link to 0.69.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-69-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li><strong>facebook:</strong> complete overhaul of Facebook Lead Ads webhook implementation (<a href="https://github.com/latechforce/engine/commit/da6beefa29a8af2c900494c983797e4582635fd5" target="_blank" rel="noopener noreferrer">da6beef</a>) — Thomas JEANNEAU</li>
+<li><strong>linkedin:</strong> support sponsored account for lead notifications (<a href="https://github.com/latechforce/engine/commit/ef98c8e3192b2c75eb97502c31a480b679413229" target="_blank" rel="noopener noreferrer">ef98c8e</a>) — Thomas JEANNEAU</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-69-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li><strong>e2e:</strong> implement template database system for faster test execution (<a href="https://github.com/latechforce/engine/commit/bc0f05c090c15aa8a76658559246b148b5d4bae7" target="_blank" rel="noopener noreferrer">bc0f05c</a>) — Thomas JEANNEAU</li>
+</ul>]]></content>
+        <category label="Release" term="Release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Release 0.68.0]]></title>
         <id>https://engine.latechforce.com/blog/release-0-68-0</id>
@@ -532,20 +551,6 @@
 <li>should run a post http action with env headers (<a href="https://github.com/latechforce/engine/commit/95c3795bdeba1f94e49778808241f9b5ea3303f5" target="_blank" rel="noopener noreferrer">95c3795</a>) — Thomas JEANNEAU</li>
 <li>should run a post http action with headers (<a href="https://github.com/latechforce/engine/commit/b5353dd18d8d7528a15e54a951f059847855bf0e" target="_blank" rel="noopener noreferrer">b5353dd</a>) — Thomas JEANNEAU</li>
 <li>should trigger an automation when a calendly invite is created (<a href="https://github.com/latechforce/engine/commit/55420a3987596f79c39fe4fd936a3b41cea1ab83" target="_blank" rel="noopener noreferrer">55420a3</a>) — Thomas JEANNEAU</li>
-</ul>]]></content>
-        <category label="Release" term="Release"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Release 0.47.0]]></title>
-        <id>https://engine.latechforce.com/blog/release-0-47-0</id>
-        <link href="https://engine.latechforce.com/blog/release-0-47-0"/>
-        <updated>2025-05-22T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.47.0]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-47-0"><p class="before-truncate"> 0.47.0   Features  - package: publish new architecture (8866011) — Thomas JEANNEAU...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0470"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-47-0">0.47.0</a><a href="https://engine.latechforce.com/blog/release-0-47-0#0470" class="hash-link" aria-label="Direct link to 0.47.0" title="Direct link to 0.47.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-47-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
-<ul>
-<li><strong>package:</strong> publish new architecture (<a href="https://github.com/latechforce/engine/commit/8866011aa1b768cbfd36f7ba4a41ba8587b7bc03" target="_blank" rel="noopener noreferrer">8866011</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
         <category label="Release" term="Release"/>
     </entry>
