@@ -8,14 +8,35 @@ export const baseLinkedinTriggerSchema = baseIntegrationTriggerSchema.extend({
 export const newLeadGenFormResponseLinkedinTriggerSchema = baseLinkedinTriggerSchema
   .extend({
     event: z.literal('new-lead-gen-form-response'),
-    params: z.object({
-      organizationId: z.string().meta({
-        title: 'LinkedIn Organization ID',
-      }),
-      leadType: z.enum(['SPONSORED']).optional().meta({
-        default: 'SPONSORED',
-      }),
-    }),
+    params: z
+      .object({
+        organizationId: z.string().optional().meta({
+          title: 'LinkedIn Organization ID',
+          description: 'Required for non-sponsored lead forms',
+        }),
+        sponsoredAccountId: z.string().optional().meta({
+          title: 'LinkedIn Sponsored Account ID',
+          description: 'Required for sponsored lead forms (leadType: SPONSORED)',
+        }),
+        leadType: z.enum(['SPONSORED']).optional().meta({
+          default: 'SPONSORED',
+          description: 'Type of lead form. SPONSORED requires sponsoredAccountId',
+        }),
+      })
+      .refine(
+        (data) => {
+          // If leadType is SPONSORED, sponsoredAccountId is required
+          // Otherwise, organizationId is required
+          if (data.leadType === 'SPONSORED') {
+            return !!data.sponsoredAccountId
+          }
+          return !!data.organizationId
+        },
+        {
+          message:
+            'SPONSORED leadType requires sponsoredAccountId, other types require organizationId',
+        }
+      ),
   })
   .meta({
     title: 'New Lead Gen Form Response',

@@ -12,15 +12,31 @@ export class LinkedinAdsTriggerIntegration {
     const client = new LinkedinIntegration(token.access_token)
     switch (this.schema.event) {
       case 'new-lead-gen-form-response': {
-        const { organizationId, leadType } = this.schema.params
+        const { organizationId, sponsoredAccountId, leadType } = this.schema.params
+        const actualLeadType = leadType ?? 'SPONSORED'
+
+        // Determine which ID to use for checking existing subscriptions
+        const checkId = actualLeadType === 'SPONSORED' ? sponsoredAccountId : organizationId
+        if (!checkId) {
+          throw new Error(
+            actualLeadType === 'SPONSORED'
+              ? 'sponsoredAccountId is required for SPONSORED lead type'
+              : 'organizationId is required for non-SPONSORED lead type'
+          )
+        }
+
         // Check if a subscription with this webhook already exists
-        const existing = await client.listLeadNotificationSubscriptions({ organizationId })
+        const existing = await client.listLeadNotificationSubscriptions({
+          organizationId: checkId,
+          sponsoredAccountId: actualLeadType === 'SPONSORED' ? checkId : undefined,
+        })
         const alreadyExists = existing.results?.some((s) => s.webhook === url)
         if (!alreadyExists) {
           await client.createLeadNotificationSubscription({
             webhook: url,
             organizationId,
-            leadType: leadType ?? 'SPONSORED',
+            sponsoredAccountId,
+            leadType: actualLeadType,
           })
         }
         break
