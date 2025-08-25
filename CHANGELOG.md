@@ -1,3 +1,16 @@
+# [0.69.0](https://github.com/latechforce/engine/compare/v0.68.0...v0.69.0) (2025-08-25)
+
+
+### Bug Fixes
+
+* **facebook:** complete overhaul of Facebook Lead Ads webhook implementation ([da6beef](https://github.com/latechforce/engine/commit/da6beefa29a8af2c900494c983797e4582635fd5)) — Thomas JEANNEAU
+* **linkedin:** support sponsored account for lead notifications ([ef98c8e](https://github.com/latechforce/engine/commit/ef98c8e3192b2c75eb97502c31a480b679413229)) — Thomas JEANNEAU
+
+
+### Features
+
+* **e2e:** implement template database system for faster test execution ([bc0f05c](https://github.com/latechforce/engine/commit/bc0f05c090c15aa8a76658559246b148b5d4bae7)) — Thomas JEANNEAU
+
 # [0.68.0](https://github.com/latechforce/engine/compare/v0.67.4...v0.68.0) (2025-08-21)
 
 
