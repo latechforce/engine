@@ -9,8 +9,18 @@ export const newLeadFacebookAdsTriggerSchema = baseFacebookAdsTriggerSchema
   .extend({
     event: z.literal('new-lead'),
     params: z.object({
-      pageId: z.string().meta({ title: 'Facebook Page ID' }),
-      appId: z.string().meta({ title: 'Facebook App ID' }),
+      pageId: z.string().meta({
+        title: 'Facebook Page ID',
+        description: 'The ID of the Facebook page with lead forms',
+      }),
+      appId: z.string().meta({
+        title: 'Facebook App ID',
+        description: 'Your Facebook App ID from the developer console',
+      }),
+      verifyToken: z.string().optional().meta({
+        title: 'Webhook Verify Token',
+        description: 'Security token for webhook verification (auto-generated if not provided)',
+      }),
     }),
   })
   .meta({

@@ -3,6 +3,8 @@ export type PageSubscription = {
   link: string
   name: string
   id: string
+  subscribed_fields?: string[]
+  tasks?: string[]
 }
 
 export type ListPageSubscriptionsResponse = {
@@ -10,6 +12,10 @@ export type ListPageSubscriptionsResponse = {
 }
 
 export type SubscribePageToLeadgenResponse = {
+  success: boolean
+}
+
+export type CreateAppSubscriptionResponse = {
   success: boolean
 }
 

@@ -3,6 +3,7 @@ import type {
   ListPageSubscriptionsResponse,
   SubscribePageToLeadgenResponse,
   ListAppSubscriptionsResponse,
+  CreateAppSubscriptionResponse,
 } from './facebook.types'
 
 export class FacebookIntegration {
@@ -40,25 +41,28 @@ export class FacebookIntegration {
     object?: 'page'
     fields?: string[]
     verify_token?: string
-  }): Promise<{ success: boolean }> {
+  }): Promise<CreateAppSubscriptionResponse> {
     const body = new URLSearchParams()
     body.set('object', params.object ?? 'page')
     body.set('callback_url', params.callback_url)
+    body.set('access_token', this.accessToken)
+
     if (params.fields && params.fields.length > 0) {
       body.set('fields', params.fields.join(','))
     }
     if (params.verify_token) {
       body.set('verify_token', params.verify_token)
     }
+
+    // Facebook requires access_token in the body for this endpoint
     return await ky
       .post(`${this.graphUrl}/${params.appId}/subscriptions`, {
         headers: {
-          ...this.getHeaders(),
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body,
       })
-      .json<{ success: boolean }>()
+      .json<CreateAppSubscriptionResponse>()
   }
 
   async listAppSubscriptions(appId: string): Promise<ListAppSubscriptionsResponse> {
@@ -67,5 +71,17 @@ export class FacebookIntegration {
         headers: this.getHeaders(),
       })
       .json<ListAppSubscriptionsResponse>()
+  }
+
+  async isPageSubscribedToLeadGen(pageId: string): Promise<boolean> {
+    try {
+      const response = await this.listPageSubscriptions(pageId)
+      // Check if any app has leadgen in subscribed_fields
+      return response.data.some(
+        (subscription) => subscription.subscribed_fields?.includes('leadgen') ?? false
+      )
+    } catch {
+      return false
+    }
   }
 }
