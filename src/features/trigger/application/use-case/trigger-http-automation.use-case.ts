@@ -38,6 +38,19 @@ export class TriggerHttpAutomationUseCase {
       const applicationId = url.searchParams.get('applicationId')
 
       if (challengeCode) {
+        console.log('[LinkedIn Webhook Validation] Starting validation process', {
+          challengeCode,
+          applicationId,
+          automationIdOrPath,
+          requestUrl: request.url,
+          availableConnections: app.connections.map((c) => ({
+            id: c.id,
+            service: c.service,
+            hasClientSecret: !!c.clientSecret,
+            clientIdSample: c.clientId ? c.clientId.substring(0, 10) + '...' : 'none',
+          })),
+        })
+
         // Get the automation to find the LinkedIn connection and client secret
         const automation = app.automations.find(({ schema }) => {
           if (schema.id === Number(automationIdOrPath)) return true
@@ -51,7 +64,15 @@ export class TriggerHttpAutomationUseCase {
           return false
         })
 
+        console.log('[LinkedIn Webhook Validation] Found automation:', {
+          found: !!automation,
+          automationName: automation?.schema.name,
+          triggerService: automation?.schema.trigger.service,
+          hasAccount: automation && 'account' in automation.schema.trigger,
+        })
+
         let challengeResponse = challengeCode // Default fallback
+        let secretUsed = 'none'
 
         // If we have a LinkedIn automation with a connection, compute proper HMAC
         if (
@@ -61,31 +82,57 @@ export class TriggerHttpAutomationUseCase {
         ) {
           const linkedinTrigger = automation.schema.trigger
           const connection = app.connections.find((conn) => conn.id === linkedinTrigger.account)
+          console.log('[LinkedIn Webhook Validation] LinkedIn automation connection:', {
+            accountId: linkedinTrigger.account,
+            connectionFound: !!connection,
+            hasClientSecret: !!connection?.clientSecret,
+            connectionService: connection?.service,
+          })
           if (connection?.clientSecret) {
             // Compute HMAC-SHA256(challengeCode, clientSecret) and return as hex
             challengeResponse = createHmac('sha256', connection.clientSecret)
               .update(challengeCode)
               .digest('hex')
+            secretUsed = 'linkedin-connection'
           }
         } else if (applicationId) {
           // Handle parent-child application scenario - look for connection by applicationId
           const connection = app.connections.find(
             (conn) => conn.service === 'linkedin-ads' && conn.clientId === applicationId
           )
+          console.log('[LinkedIn Webhook Validation] Using applicationId:', {
+            applicationId,
+            connectionFound: !!connection,
+            hasClientSecret: !!connection?.clientSecret,
+          })
           if (connection?.clientSecret) {
             challengeResponse = createHmac('sha256', connection.clientSecret)
               .update(challengeCode)
               .digest('hex')
+            secretUsed = 'applicationId-connection'
           }
         }
 
-        return {
+        console.log('[LinkedIn Webhook Validation] Computed response:', {
+          secretUsed,
+          challengeResponseLength: challengeResponse.length,
+          challengeResponseSample: challengeResponse.substring(0, 10) + '...',
+        })
+
+        const response = {
           body: {
             challengeCode,
             challengeResponse,
           },
           headers: { 'Content-Type': 'application/json' },
         }
+
+        console.log('[LinkedIn Webhook Validation] Returning response:', {
+          body: response.body,
+          headers: response.headers,
+        })
+
+        return response
       }
 
       // Facebook webhook validation

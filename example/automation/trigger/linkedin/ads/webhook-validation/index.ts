@@ -18,6 +18,7 @@ export default {
         account: 'LinkedIn Ads',
         params: {
           organizationId: '{{env "LINKEDIN_ORGANIZATION_ID" "5622087"}}',
+          sponsoredAccountId: '{{env "LINKEDIN_SPONSORED_ACCOUNT_ID" "1234567890"}}',
         },
       },
       actions: [],
