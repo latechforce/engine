@@ -1,3 +1,11 @@
+## [0.70.1](https://github.com/latechforce/engine/compare/v0.70.0...v0.70.1) (2025-08-26)
+
+
+### Bug Fixes
+
+* implement proper HMAC-SHA256 validation for LinkedIn webhook ([3015808](https://github.com/latechforce/engine/commit/301580825fb8a9d49806f00be615071274e6552d)) — Thomas JEANNEAU
+* update Facebook webhook validation tests for plain text response ([d16a51e](https://github.com/latechforce/engine/commit/d16a51ea4fd41ae4624480fd19195580d5da999b)) — Thomas JEANNEAU
+
 # [0.70.0](https://github.com/latechforce/engine/compare/v0.69.0...v0.70.0) (2025-08-26)
 
 
