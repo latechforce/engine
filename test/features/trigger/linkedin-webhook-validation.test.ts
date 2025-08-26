@@ -2,10 +2,27 @@ import { describe, expect, it, beforeEach } from 'bun:test'
 import { TriggerHttpAutomationUseCase } from '../../../src/features/trigger/application/use-case/trigger-http-automation.use-case'
 import { App } from '../../../src/features/app/domain/entity/app.entity'
 import type { AppSchema } from '../../../src/types'
+import type { AppSchemaValidated } from '../../../src/features/app/domain/schema/app.schema'
+import type { Env } from '../../../src/shared/domain/value-object/env.value-object'
 
 describe('LinkedIn Webhook Validation', () => {
   let useCase: TriggerHttpAutomationUseCase
   let app: App
+  const mockEnv: Env = {
+    NODE_ENV: 'test',
+    PORT: '3000',
+    BASE_URL: 'http://localhost:3000',
+    TIMEZONE: 'UTC',
+    LOG_LEVEL: 'silent',
+    DATABASE_PROVIDER: 'sqlite',
+    DATABASE_URL: ':memory:',
+    AUTH_ADMIN_EMAIL: 'admin@test.com',
+    AUTH_ADMIN_PASSWORD: 'password',
+    AUTH_ADMIN_NAME: 'Test Admin',
+    AUTH_SECRET: 'test-secret',
+    RESEND_EMAIL_FROM: 'noreply@test.com',
+    SUPPORT_EMAILS: 'support@test.com',
+  }
 
   beforeEach(() => {
     // Create mock repositories
@@ -18,11 +35,21 @@ describe('LinkedIn Webhook Validation', () => {
 
     const mockRunRepository = {
       create: async (run: any) => {
-        run.id = Math.floor(Math.random() * 10000)
-        return run
+        const mockRun = { ...run, id: Math.floor(Math.random() * 10000), status: 'success' }
+        // Immediately trigger completion for tests
+        setTimeout(() => {
+          if (mockRunRepository.updateCallback) {
+            mockRunRepository.updateCallback(mockRun)
+          }
+        }, 1)
+        return mockRun
       },
-      onUpdate: (_callback: any) => {
-        // Don't set up callback for GET requests - they complete immediately
+      onUpdate: (callback: any) => {
+        mockRunRepository.updateCallback = callback
+      },
+      updateCallback: null as any,
+      replay: async (_runIds: string[]) => {
+        return { replayed: [] }
       },
     }
 
@@ -45,19 +72,29 @@ describe('LinkedIn Webhook Validation', () => {
   })
 
   it('should respond with challengeCode and challengeResponse for LinkedIn GET webhook validation', async () => {
-    // GIVEN - LinkedIn automation
+    // GIVEN - LinkedIn automation with proper connection
     const appSchema: AppSchema = {
       name: 'Test App',
+      version: '1.0.0',
+      description: 'Test app',
       buckets: [],
-      connections: [],
+      connections: [
+        {
+          id: 123456,
+          service: 'linkedin-ads',
+          name: 'LinkedIn Test Connection',
+          clientId: 'test-client-id',
+          clientSecret: 'test-client-secret',
+        },
+      ],
       tables: [],
       forms: [],
-      pages: [],
       automations: [
         {
           id: 1,
           name: 'linkedin-webhook',
           trigger: {
+            account: 123456,
             service: 'linkedin-ads',
             event: 'new-lead-gen-form-response',
             params: {
@@ -68,7 +105,7 @@ describe('LinkedIn Webhook Validation', () => {
         },
       ],
     }
-    app = new App(appSchema)
+    app = new App(appSchema as AppSchemaValidated, mockEnv)
 
     const challengeCode = 'test-challenge-abc123'
     const request = new Request(
@@ -81,7 +118,7 @@ describe('LinkedIn Webhook Validation', () => {
     const body = {}
 
     // WHEN
-    const response = await useCase.execute(app, '1', request, body)
+    const response = await useCase.execute(app, '1', request, body, undefined)
 
     // THEN
     expect(response.body).toHaveProperty('challengeCode', challengeCode)
@@ -93,11 +130,12 @@ describe('LinkedIn Webhook Validation', () => {
     // GIVEN - HTTP automation that LinkedIn uses
     const appSchema: AppSchema = {
       name: 'Test App',
+      version: '1.0.0',
+      description: 'Test app',
       buckets: [],
       connections: [],
       tables: [],
       forms: [],
-      pages: [],
       automations: [
         {
           id: 2,
@@ -113,7 +151,7 @@ describe('LinkedIn Webhook Validation', () => {
         },
       ],
     }
-    app = new App(appSchema)
+    app = new App(appSchema as AppSchemaValidated, mockEnv)
 
     const challengeCode = 'http-challenge-xyz789'
     const request = new Request(
@@ -126,7 +164,7 @@ describe('LinkedIn Webhook Validation', () => {
     const body = {}
 
     // WHEN
-    const response = await useCase.execute(app, 'webhook', request, body)
+    const response = await useCase.execute(app, 'webhook', request, body, undefined)
 
     // THEN
     expect(response.body).toHaveProperty('challengeCode', challengeCode)
@@ -138,16 +176,26 @@ describe('LinkedIn Webhook Validation', () => {
     // GIVEN
     const appSchema: AppSchema = {
       name: 'Test App',
+      version: '1.0.0',
+      description: 'Test app',
       buckets: [],
-      connections: [],
+      connections: [
+        {
+          id: 123456,
+          service: 'linkedin-ads',
+          name: 'LinkedIn Test Connection',
+          clientId: 'test-client-id',
+          clientSecret: 'test-client-secret',
+        },
+      ],
       tables: [],
       forms: [],
-      pages: [],
       automations: [
         {
           id: 3,
           name: 'linkedin-webhook',
           trigger: {
+            account: 123456,
             service: 'linkedin-ads',
             event: 'new-lead-gen-form-response',
             params: {
@@ -158,7 +206,7 @@ describe('LinkedIn Webhook Validation', () => {
         },
       ],
     }
-    app = new App(appSchema)
+    app = new App(appSchema as AppSchemaValidated, mockEnv)
 
     const request = new Request('http://localhost/api/automations/3/trigger', {
       method: 'POST',
@@ -175,7 +223,7 @@ describe('LinkedIn Webhook Validation', () => {
     }
 
     // WHEN
-    const response = await useCase.execute(app, '3', request, leadData)
+    const response = await useCase.execute(app, '3', request, leadData, undefined)
 
     // THEN
     expect(response.body).toHaveProperty('success', true)
@@ -187,11 +235,12 @@ describe('LinkedIn Webhook Validation', () => {
     // GIVEN
     const appSchema: AppSchema = {
       name: 'Test App',
+      version: '1.0.0',
+      description: 'Test app',
       buckets: [],
       connections: [],
       tables: [],
       forms: [],
-      pages: [],
       automations: [
         {
           id: 4,
@@ -201,13 +250,14 @@ describe('LinkedIn Webhook Validation', () => {
             event: 'get',
             params: {
               path: '/webhook',
+              respondImmediately: true,
             },
           },
           actions: [],
         },
       ],
     }
-    app = new App(appSchema)
+    app = new App(appSchema as AppSchemaValidated, mockEnv)
 
     const request = new Request('http://localhost/api/automations/webhook', {
       method: 'GET',
@@ -216,7 +266,7 @@ describe('LinkedIn Webhook Validation', () => {
     const body = {}
 
     // WHEN
-    const response = await useCase.execute(app, 'webhook', request, body)
+    const response = await useCase.execute(app, 'webhook', request, body, undefined)
 
     // THEN
     expect(response.body).toHaveProperty('success', true)

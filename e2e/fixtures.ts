@@ -24,7 +24,7 @@ type StartAppFixture = {
     env?: Record<string, string>
     debug?: boolean
     test: typeof test
-  }) => Promise<{ page: Page; env: EnvSchema }>
+  }) => Promise<{ page: Page; env: EnvSchema; url: string }>
 }
 
 function getCallerFile(): string {
@@ -111,7 +111,7 @@ export const test = base.extend<StartAppFixture>({
       env?: Partial<EnvSchema>
       debug?: boolean
       test: typeof test
-    }): Promise<{ page: Page; env: EnvSchema }> => {
+    }): Promise<{ page: Page; env: EnvSchema; url: string }> => {
       const { filter, loggedOnAdmin = false, debug = process.env.LOG_LEVEL === 'debug' } = options
       env = { ...env, ...options.env }
 
@@ -195,7 +195,7 @@ export const test = base.extend<StartAppFixture>({
         })
       }
 
-      return { page: page!, env }
+      return { page: page!, env, url: url! }
     }
 
     // Provide the fixture value

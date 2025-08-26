@@ -148,7 +148,8 @@ export class RunRepository implements IRunRepository {
       run.status,
       run.id,
       run.created_at,
-      run.updated_at
+      run.updated_at,
+      run.to_replay
     )
   }
 }

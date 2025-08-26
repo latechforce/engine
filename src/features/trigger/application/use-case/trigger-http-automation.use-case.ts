@@ -71,7 +71,28 @@ export class TriggerHttpAutomationUseCase {
           headers: { 'Content-Type': 'application/json' },
         }
       }
-      // Continue processing normal GET requests without validation params
+      // Process normal GET requests
+      if (Array.isArray(body)) {
+        // Handle array body for GET requests (similar to POST)
+        const responses: ResponseDto['body'][] = []
+        for (const item of body) {
+          const { body: responseBody } = await this.triggerWithObjectBody(
+            app,
+            automationIdOrPath,
+            request,
+            item,
+            formId
+          )
+          responses.push(responseBody)
+        }
+        return {
+          body: {
+            data: responses,
+            success: true,
+          },
+        }
+      }
+      return this.triggerWithObjectBody(app, automationIdOrPath, request, body, formId)
     }
     if (Array.isArray(body)) {
       const responses: ResponseDto['body'][] = []

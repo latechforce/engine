@@ -322,9 +322,12 @@ export function DataTable<TData, TValue>({
                           style={{
                             width: fitContent ? '1%' : fill ? undefined : cell.column.getSize(),
                             minWidth: minSize,
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
+                            // Don't apply text overflow styles to checkbox cells
+                            ...(cell.column.id !== 'select' && {
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap',
+                            }),
                           }}
                           className={cn(
                             verticalSeparator ? 'border-border border-r' : '',
