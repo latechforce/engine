@@ -9,23 +9,29 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Release 0.70.0]]></title>
-            <link>https://engine.latechforce.com/blog/release-0-70-0</link>
-            <guid>https://engine.latechforce.com/blog/release-0-70-0</guid>
+            <title><![CDATA[Fix 0.70.1]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-70-1</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-70-1</guid>
             <pubDate>Tue, 26 Aug 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.70.0]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-70-0"><p class="before-truncate"> 0.70.0   Bug Fixes  * correct refetchInterval callback parameter in run page query options (512adba) — Thomas JEANNEAU    Features  * add e2e tests for run replay functionality and update documentation (1ce28c1) — Thomas JEANNEAU * implement webhook validation for LinkedIn and Facebook Lead Ads (13...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0700"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-70-0">0.70.0</a><a href="https://engine.latechforce.com/blog/release-0-70-0#0700" class="hash-link" aria-label="Direct link to 0.70.0" title="Direct link to 0.70.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-70-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+            <description><![CDATA[Changelog for version 0.70.1]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-70-1"><p class="before-truncate"> 0.70.1   Bug Fixes  * implement proper HMAC-SHA256 validation for LinkedIn webhook (3015808) — Thomas JEANNEAU * update Facebook webhook validation tests for plain text response (d16a51e) — Thomas JEANNEAU   0.70.0   Bug Fixes  * correct refetchInterval callback parameter in run page query options ...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0701"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-70-1">0.70.1</a><a href="https://engine.latechforce.com/blog/fix-0-70-1#0701" class="hash-link" aria-label="Direct link to 0.70.1" title="Direct link to 0.70.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-70-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>implement proper HMAC-SHA256 validation for LinkedIn webhook (<a href="https://github.com/latechforce/engine/commit/301580825fb8a9d49806f00be615071274e6552d" target="_blank" rel="noopener noreferrer">3015808</a>) — Thomas JEANNEAU</li>
+<li>update Facebook webhook validation tests for plain text response (<a href="https://github.com/latechforce/engine/commit/d16a51ea4fd41ae4624480fd19195580d5da999b" target="_blank" rel="noopener noreferrer">d16a51e</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0700">0.70.0<a href="https://engine.latechforce.com/blog/fix-0-70-1#0700" class="hash-link" aria-label="Direct link to 0.70.0" title="Direct link to 0.70.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-70-1#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>correct refetchInterval callback parameter in run page query options (<a href="https://github.com/latechforce/engine/commit/512adba6b6d1dc48372b8513e15f3220b368a51b" target="_blank" rel="noopener noreferrer">512adba</a>) — Thomas JEANNEAU</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-70-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-70-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li>add e2e tests for run replay functionality and update documentation (<a href="https://github.com/latechforce/engine/commit/1ce28c124df8022884087e427f335984da6d4dd2" target="_blank" rel="noopener noreferrer">1ce28c1</a>) — Thomas JEANNEAU</li>
 <li>implement webhook validation for LinkedIn and Facebook Lead Ads (<a href="https://github.com/latechforce/engine/commit/132681d8f0531def14186c5ecc763fa410cbf46a" target="_blank" rel="noopener noreferrer">132681d</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
-            <category>Release</category>
+            <category>Fix</category>
         </item>
         <item>
             <title><![CDATA[Release 0.69.0]]></title>
