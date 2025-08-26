@@ -6,5 +6,6 @@ export type ResponseDto = {
         runId?: string
       }
     | object
+    | string
   headers?: Record<string, string>
 }

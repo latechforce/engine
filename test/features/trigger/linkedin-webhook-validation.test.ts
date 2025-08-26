@@ -4,6 +4,7 @@ import { App } from '../../../src/features/app/domain/entity/app.entity'
 import type { AppSchema } from '../../../src/types'
 import type { AppSchemaValidated } from '../../../src/features/app/domain/schema/app.schema'
 import type { Env } from '../../../src/shared/domain/value-object/env.value-object'
+import { createHmac } from 'crypto'
 
 describe('LinkedIn Webhook Validation', () => {
   let useCase: TriggerHttpAutomationUseCase
@@ -73,6 +74,7 @@ describe('LinkedIn Webhook Validation', () => {
 
   it('should respond with challengeCode and challengeResponse for LinkedIn GET webhook validation', async () => {
     // GIVEN - LinkedIn automation with proper connection
+    const clientSecret = 'test-client-secret'
     const appSchema: AppSchema = {
       name: 'Test App',
       version: '1.0.0',
@@ -84,7 +86,7 @@ describe('LinkedIn Webhook Validation', () => {
           service: 'linkedin-ads',
           name: 'LinkedIn Test Connection',
           clientId: 'test-client-id',
-          clientSecret: 'test-client-secret',
+          clientSecret,
         },
       ],
       tables: [],
@@ -108,6 +110,10 @@ describe('LinkedIn Webhook Validation', () => {
     app = new App(appSchema as AppSchemaValidated, mockEnv)
 
     const challengeCode = 'test-challenge-abc123'
+    const expectedChallengeResponse = createHmac('sha256', clientSecret)
+      .update(challengeCode)
+      .digest('hex')
+    
     const request = new Request(
       `http://localhost/api/automations/1/trigger?challengeCode=${challengeCode}`,
       {
@@ -122,7 +128,7 @@ describe('LinkedIn Webhook Validation', () => {
 
     // THEN
     expect(response.body).toHaveProperty('challengeCode', challengeCode)
-    expect(response.body).toHaveProperty('challengeResponse') // Should be HMAC but for now just echo
+    expect(response.body).toHaveProperty('challengeResponse', expectedChallengeResponse)
     expect(response.headers?.['Content-Type']).toBe('application/json')
   })
 
@@ -229,6 +235,66 @@ describe('LinkedIn Webhook Validation', () => {
     expect(response.body).toHaveProperty('success', true)
     expect(response.body).toHaveProperty('runId')
     expect(response.body).not.toHaveProperty('challengeCode')
+  })
+
+  it('should handle LinkedIn validation with applicationId parameter', async () => {
+    // GIVEN - LinkedIn validation with applicationId for parent-child apps
+    const clientId = 'test-application-id'
+    const clientSecret = 'parent-app-secret'
+    const appSchema: AppSchema = {
+      name: 'Test App',
+      version: '1.0.0',
+      description: 'Test app',
+      buckets: [],
+      connections: [
+        {
+          id: 789012,
+          service: 'linkedin-ads',
+          name: 'LinkedIn Parent App Connection',
+          clientId,
+          clientSecret,
+        },
+      ],
+      tables: [],
+      forms: [],
+      automations: [
+        {
+          id: 5,
+          name: 'http-webhook',
+          trigger: {
+            service: 'http',
+            event: 'post',
+            params: {
+              path: '/webhook',
+            },
+          },
+          actions: [],
+        },
+      ],
+    }
+    app = new App(appSchema as AppSchemaValidated, mockEnv)
+
+    const challengeCode = 'parent-app-challenge-xyz'
+    const expectedChallengeResponse = createHmac('sha256', clientSecret)
+      .update(challengeCode)
+      .digest('hex')
+
+    const request = new Request(
+      `http://localhost/api/automations/webhook?challengeCode=${challengeCode}&applicationId=${clientId}`,
+      {
+        method: 'GET',
+      }
+    )
+
+    const body = {}
+
+    // WHEN
+    const response = await useCase.execute(app, 'webhook', request, body, undefined)
+
+    // THEN
+    expect(response.body).toHaveProperty('challengeCode', challengeCode)
+    expect(response.body).toHaveProperty('challengeResponse', expectedChallengeResponse)
+    expect(response.headers?.['Content-Type']).toBe('application/json')
   })
 
   it('should handle normal GET request without challengeCode', async () => {

@@ -9,6 +9,7 @@ import { Object as ObjectEntity } from '../../../../features/bucket/domain/entit
 import { HttpError } from '../../../../shared/domain/entity/http-error.entity'
 import type { IObjectRepository } from '../../../../features/bucket/domain/repository-interface/object-repository.interface'
 import type { IAutomationRepository } from '../../../../features/automation/domain/repository-interface/automation-repository.interface'
+import { createHmac } from 'crypto'
 
 export class TriggerHttpAutomationUseCase {
   constructor(
@@ -34,13 +35,54 @@ export class TriggerHttpAutomationUseCase {
 
       // LinkedIn webhook validation
       const challengeCode = url.searchParams.get('challengeCode')
+      const applicationId = url.searchParams.get('applicationId')
+
       if (challengeCode) {
-        // For now, return challengeCode without HMAC validation
-        // TODO: Implement HMAC-SHA256 validation with client secret
+        // Get the automation to find the LinkedIn connection and client secret
+        const automation = app.automations.find(({ schema }) => {
+          if (schema.id === Number(automationIdOrPath)) return true
+          if (schema.trigger.service === 'http') {
+            if (schema.trigger.event === 'post' && request.method === 'POST') {
+              return schema.trigger.params.path.replace(/^\//, '') === automationIdOrPath
+            } else if (schema.trigger.event === 'get' && request.method === 'GET') {
+              return schema.trigger.params.path.replace(/^\//, '') === automationIdOrPath
+            }
+          }
+          return false
+        })
+
+        let challengeResponse = challengeCode // Default fallback
+
+        // If we have a LinkedIn automation with a connection, compute proper HMAC
+        if (
+          automation?.schema.trigger.service === 'linkedin-ads' &&
+          'account' in automation.schema.trigger &&
+          automation.schema.trigger.account
+        ) {
+          const linkedinTrigger = automation.schema.trigger
+          const connection = app.connections.find((conn) => conn.id === linkedinTrigger.account)
+          if (connection?.clientSecret) {
+            // Compute HMAC-SHA256(challengeCode, clientSecret) and return as hex
+            challengeResponse = createHmac('sha256', connection.clientSecret)
+              .update(challengeCode)
+              .digest('hex')
+          }
+        } else if (applicationId) {
+          // Handle parent-child application scenario - look for connection by applicationId
+          const connection = app.connections.find(
+            (conn) => conn.service === 'linkedin-ads' && conn.clientId === applicationId
+          )
+          if (connection?.clientSecret) {
+            challengeResponse = createHmac('sha256', connection.clientSecret)
+              .update(challengeCode)
+              .digest('hex')
+          }
+        }
+
         return {
           body: {
             challengeCode,
-            challengeResponse: challengeCode, // This should be HMAC-SHA256(challengeCode, clientSecret)
+            challengeResponse,
           },
           headers: { 'Content-Type': 'application/json' },
         }
@@ -58,7 +100,7 @@ export class TriggerHttpAutomationUseCase {
         // Facebook expects plain text response with just the challenge value
         // Using a special response format that will be handled by the HTTP layer
         return {
-          body: { __rawResponse: hubChallenge } as Record<string, unknown>, // Special format for plain text response
+          body: hubChallenge, // Special format for plain text response
           headers: { 'Content-Type': 'text/plain' },
         }
       }
