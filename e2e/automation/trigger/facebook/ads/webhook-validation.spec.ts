@@ -22,8 +22,8 @@ test.describe('Facebook webhook validation', () => {
     expect(validationResponse.ok()).toBeTruthy()
     expect(validationResponse.status()).toBe(200)
     // Note: The actual response format may need adjustment based on how the HTTP layer handles __rawResponse
-    const responseBody = await validationResponse.json()
-    expect(responseBody.__rawResponse || responseBody).toBe(hubChallenge)
+    const responseBody = await validationResponse.text()
+    expect(responseBody).toBe(hubChallenge)
 
     // Verify the content-type is text/plain
     const contentType = validationResponse.headers()['content-type']
@@ -123,7 +123,7 @@ test.describe('Facebook webhook validation', () => {
     // THEN - Should respond with the hub.challenge
     expect(validationResponse.ok()).toBeTruthy()
     expect(validationResponse.status()).toBe(200)
-    const responseBody = await validationResponse.json()
-    expect(responseBody.__rawResponse || responseBody).toBe(hubChallenge)
+    const responseBody = await validationResponse.text()
+    expect(responseBody).toBe(hubChallenge)
   })
 })
