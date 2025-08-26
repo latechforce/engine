@@ -1,3 +1,16 @@
+# [0.70.0](https://github.com/latechforce/engine/compare/v0.69.0...v0.70.0) (2025-08-26)
+
+
+### Bug Fixes
+
+* correct refetchInterval callback parameter in run page query options ([512adba](https://github.com/latechforce/engine/commit/512adba6b6d1dc48372b8513e15f3220b368a51b)) — Thomas JEANNEAU
+
+
+### Features
+
+* add e2e tests for run replay functionality and update documentation ([1ce28c1](https://github.com/latechforce/engine/commit/1ce28c124df8022884087e427f335984da6d4dd2)) — Thomas JEANNEAU
+* implement webhook validation for LinkedIn and Facebook Lead Ads ([132681d](https://github.com/latechforce/engine/commit/132681d8f0531def14186c5ecc763fa410cbf46a)) — Thomas JEANNEAU
+
 # [0.69.0](https://github.com/latechforce/engine/compare/v0.68.0...v0.69.0) (2025-08-25)
 
 
