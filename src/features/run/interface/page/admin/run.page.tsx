@@ -1,4 +1,4 @@
-import { queryOptions, useQuery, useSuspenseQuery } from '@tanstack/react-query'
+import { queryOptions, useQuery, useSuspenseQuery, useMutation } from '@tanstack/react-query'
 import { type GetRunDto } from '../../../application/dto/get-run.dto'
 import { client } from '../../../../../shared/interface/lib/client.lib'
 import Layout from '../../../../app/interface/page/admin/layout'
@@ -27,7 +27,7 @@ import { type ActionStep } from '../../../domain/value-object.ts/action-step.val
 import type { RunDto } from '../../../application/dto/run.dto'
 import { Switch } from '../../../../../shared/interface/ui/switch.ui'
 import { Button } from '../../../../../shared/interface/ui/button.ui'
-import { PencilIcon, ArrowDown, Filter, CheckCircle, XCircle, Play } from 'lucide-react'
+import { PencilIcon, ArrowDown, Filter, CheckCircle, XCircle, Play, RotateCcw } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 import { setStatusMutation } from '../../../../automation/interface/mutations/set-status.mutation'
 import { getStatusBorderColor, RunStatus } from '../../component/status.component'
@@ -42,11 +42,17 @@ import { ChevronsDownUp, ChevronsUpDown } from 'lucide-react'
 import { runsAdminRoute } from './runs.page'
 import { automationAdminRoute } from '../../../../automation/interface/page/admin/automation.page'
 import { cn } from '../../../../../shared/interface/lib/utils.lib'
+import { queryClient } from '../../../../../shared/interface/lib/query.lib'
+import { toast } from 'sonner'
 
 const runQueryOptions = (runId: string) =>
   queryOptions<GetRunDto>({
     queryKey: ['runData', runId],
     queryFn: () => client.runs[':runId'].$get({ param: { runId } }).then((res) => res.json()),
+    refetchInterval: (query) => {
+      // Refetch every 500ms if the run is playing, otherwise don't refetch automatically
+      return query.state.data?.run?.status === 'playing' ? 500 : false
+    },
   })
 
 type StepCardProps = {
@@ -62,7 +68,7 @@ type TriggerStepCardProps = {
 }
 
 type CollapsibleStepCardProps = {
-  title: string
+  title: React.ReactNode
   status: RunDto['status']
   description: string
   children: React.ReactNode
@@ -82,7 +88,7 @@ const CollapsibleStepCard = ({
   description,
   children,
 }: CollapsibleStepCardProps) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(status === 'stopped')
   const borderColor = getStatusBorderColor(status)
   return (
     <Collapsible
@@ -175,33 +181,54 @@ const ActionStepCard = ({ step, number }: ActionStepCardProps) => {
         ? 'playing'
         : 'success'
   return (
-    <CollapsibleStepCard
-      key={number}
-      title={`${number}. ${step.schema.name} - ${step.schema.service} / ${step.schema.action}`}
-      status={status}
-      description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
-    >
-      <Tabs defaultValue={step.error ? 'error' : 'output'}>
-        <TabsList>
-          <TabsTrigger value="schema">Schema</TabsTrigger>
-          <TabsTrigger value="input">Input Data</TabsTrigger>
-          {!step.error && <TabsTrigger value="output">Output Data</TabsTrigger>}
-          {step.error && <TabsTrigger value="error">Error</TabsTrigger>}
-        </TabsList>
-        <TabsContent value="schema">
-          <JsonViewer data={step.schema} />
-        </TabsContent>
-        <TabsContent value="input">
-          <JsonViewer data={step.input} />
-        </TabsContent>
-        <TabsContent value="output">
-          <JsonViewer data={step.output ?? {}} />
-        </TabsContent>
-        <TabsContent value="error">
-          <JsonViewer data={step.error ?? {}} />
-        </TabsContent>
-      </Tabs>
-    </CollapsibleStepCard>
+    <div data-testid={step.error ? 'failed-step' : undefined}>
+      <div
+        data-testid={`step-status-${step.schema.name}`}
+        data-status={status}
+      >
+        <CollapsibleStepCard
+          key={number}
+          title={
+            <div>
+              <span>{`${number}. ${step.schema.name} - ${step.schema.service} / ${step.schema.action}`}</span>
+              {status === 'playing' && (
+                <div
+                  data-testid="current-step"
+                  className="text-muted-foreground mt-1 text-sm"
+                >
+                  Executing step: {step.schema.name}
+                </div>
+              )}
+            </div>
+          }
+          status={status}
+          description={format(new Date(step.startedAt), 'dd/MM/yyyy HH:mm:ss')}
+        >
+          <Tabs defaultValue={step.error ? 'error' : 'output'}>
+            <TabsList>
+              <TabsTrigger value="schema">Schema</TabsTrigger>
+              <TabsTrigger value="input">Input Data</TabsTrigger>
+              {!step.error && <TabsTrigger value="output">Output Data</TabsTrigger>}
+              {step.error && <TabsTrigger value="error">Error</TabsTrigger>}
+            </TabsList>
+            <TabsContent value="schema">
+              <JsonViewer data={step.schema} />
+            </TabsContent>
+            <TabsContent value="input">
+              <JsonViewer data={step.input} />
+            </TabsContent>
+            <TabsContent value="output">
+              <JsonViewer data={step.output ?? {}} />
+            </TabsContent>
+            <TabsContent value="error">
+              <div data-testid="error-details">
+                <JsonViewer data={step.error ?? {}} />
+              </div>
+            </TabsContent>
+          </Tabs>
+        </CollapsibleStepCard>
+      </div>
+    </div>
   )
 }
 
@@ -343,14 +370,65 @@ const RunDataPage = () => {
   const { runId } = useParams({ from: '/admin/automations/$automationId/runs/$runId' })
   const { data } = useSuspenseQuery(runQueryOptions(runId))
   const mutation = setStatusMutation('runData')
+
+  // Helper function to find the first error in steps
+  const getFirstError = () => {
+    const actionSteps = data.steps.slice(1) // Skip trigger step
+    for (const step of actionSteps) {
+      if (step.type === 'action' && step.error) {
+        return step.error
+      }
+      if (step.type === 'paths') {
+        for (const path of step.paths) {
+          for (const action of path.actions) {
+            if (action.error) {
+              return action.error
+            }
+          }
+        }
+      }
+    }
+    return null
+  }
+
+  const firstError = getFirstError()
+
+  const replayRunMutation = useMutation({
+    mutationFn: async () => {
+      const response = await client.runs.replay.$post({
+        json: {
+          runIds: [runId],
+        },
+      })
+      return await response.json()
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['runData', runId] })
+      // Refetch the run data immediately to get updated status
+      queryClient.refetchQueries({ queryKey: ['runData', runId] })
+      toast.success('Run replayed successfully')
+    },
+  })
   return (
     <div>
       <div className="mb-4 flex items-center justify-between">
         <TypographyH3 className="flex items-center gap-6">
-          <RunStatus status={data.run.status} />
+          <div data-testid="run-status">
+            <RunStatus status={data.run.status} />
+          </div>
           <span>{data.run.automationName}</span>
         </TypographyH3>
         <div className="flex items-center gap-2">
+          {data.run.status === 'stopped' && (
+            <Button
+              onClick={() => replayRunMutation.mutate()}
+              disabled={replayRunMutation.isPending}
+              variant="outline"
+            >
+              <RotateCcw className="h-4 w-4" />
+              Replay Run
+            </Button>
+          )}
           <TypographySmall>
             Automation is <strong>{data.automation.active ? 'ON' : 'OFF'}</strong>
           </TypographySmall>
@@ -375,6 +453,16 @@ const RunDataPage = () => {
           )}
         </div>
       </div>
+      {firstError && data.run.status === 'stopped' && (
+        <div className="border-destructive/50 bg-destructive/10 mb-4 rounded-md border p-4">
+          <div
+            data-testid="error-message"
+            className="text-destructive"
+          >
+            {firstError.message}
+          </div>
+        </div>
+      )}
       <StepsCards
         run={data.run}
         steps={data.steps}
