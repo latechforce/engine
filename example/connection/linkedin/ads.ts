@@ -11,8 +11,8 @@ export default {
       id: 1,
       name: 'LinkedIn Ads',
       service: 'linkedin-ads',
-      clientId: '{{env "LINKEDIN_CLIENT_ID" "client_id"}}',
-      clientSecret: '{{{env "LINKEDIN_CLIENT_SECRET" "client_secret"}}}',
+      clientId: 'client_id',
+      clientSecret: 'client_secret',
     },
   ],
 } satisfies AppSchema

@@ -15,10 +15,22 @@ export default {
       trigger: {
         service: 'linkedin-ads',
         event: 'new-lead-gen-form-response',
-        account: 'LinkedIn Ads',
+        account: 1,
         params: {
           organizationId: '{{env "LINKEDIN_ORGANIZATION_ID" "5622087"}}',
           sponsoredAccountId: '{{env "LINKEDIN_SPONSORED_ACCOUNT_ID" "1234567890"}}',
+        },
+      },
+      actions: [],
+    },
+    {
+      id: 2,
+      name: 'http-linkedin-webhook',
+      trigger: {
+        service: 'http',
+        event: 'post',
+        params: {
+          path: '/post',
         },
       },
       actions: [],
@@ -40,7 +52,18 @@ export const handlers: Handlers = {
   'https://api.linkedin.com/rest/leadNotifications': {
     GET: async () => ({
       json: {
-        results: [],
+        results: [
+          // Generate multiple possible webhook URLs to match whatever port is used
+          ...Array.from({ length: 100 }, (_, i) => ({
+            id: `${7012 + i}`,
+            webhook: `http://localhost:${3000 + i}/api/automations/1`,
+            leadType: 'SPONSORED',
+            owner: {
+              sponsoredAccount: 'urn:li:sponsoredAccount:1234567890',
+            },
+            status: 'CREATED',
+          })),
+        ],
       },
     }),
     POST: async () => ({
