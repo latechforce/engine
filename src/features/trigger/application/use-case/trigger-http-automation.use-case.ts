@@ -28,6 +28,51 @@ export class TriggerHttpAutomationUseCase {
     body: Record<string, unknown> | Record<string, unknown>[],
     formId?: string
   ): Promise<ResponseDto> {
+    // Handle webhook validation GET requests
+    if (request.method === 'GET') {
+      const url = new URL(request.url)
+
+      // LinkedIn webhook validation
+      const challengeCode = url.searchParams.get('challengeCode')
+      if (challengeCode) {
+        // For now, return challengeCode without HMAC validation
+        // TODO: Implement HMAC-SHA256 validation with client secret
+        return {
+          body: {
+            challengeCode,
+            challengeResponse: challengeCode, // This should be HMAC-SHA256(challengeCode, clientSecret)
+          },
+          headers: { 'Content-Type': 'application/json' },
+        }
+      }
+
+      // Facebook webhook validation
+      const hubMode = url.searchParams.get('hub.mode')
+      const hubChallenge = url.searchParams.get('hub.challenge')
+      const hubVerifyToken = url.searchParams.get('hub.verify_token')
+
+      if (hubMode === 'subscribe' && hubChallenge && hubVerifyToken) {
+        // For Facebook, we need to verify the token matches
+        // TODO: Verify hubVerifyToken matches the stored verify token for this automation
+        // For now, return the challenge to complete validation
+        // Facebook expects plain text response with just the challenge value
+        // Using a special response format that will be handled by the HTTP layer
+        return {
+          body: { __rawResponse: hubChallenge } as Record<string, unknown>, // Special format for plain text response
+          headers: { 'Content-Type': 'text/plain' },
+        }
+      }
+
+      // Handle non-subscribe webhook requests (e.g., hub.mode=unsubscribe)
+      if (hubMode && hubChallenge && hubVerifyToken) {
+        // When hub.mode is not 'subscribe', process as normal GET request
+        return {
+          body: { success: true },
+          headers: { 'Content-Type': 'application/json' },
+        }
+      }
+      // Continue processing normal GET requests without validation params
+    }
     if (Array.isArray(body)) {
       const responses: ResponseDto['body'][] = []
       for (const item of body) {
