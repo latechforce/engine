@@ -1,3 +1,10 @@
+## [0.71.1](https://github.com/latechforce/engine/compare/v0.71.0...v0.71.1) (2025-08-29)
+
+
+### Bug Fixes
+
+* correct schema path in release config and refactor build-schemas script ([43d2b39](https://github.com/latechforce/engine/commit/43d2b39e82862e7734177e84acaa6bd43ab5d1a1)) — Thomas JEANNEAU
+
 # [0.71.0](https://github.com/latechforce/engine/compare/v0.70.1...v0.71.0) (2025-08-29)
 
 
