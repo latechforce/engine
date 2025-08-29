@@ -1,3 +1,15 @@
+# [0.71.0](https://github.com/latechforce/engine/compare/v0.70.1...v0.71.0) (2025-08-29)
+
+
+### Bug Fixes
+
+* correct LinkedIn webhook validation implementation ([7e576f9](https://github.com/latechforce/engine/commit/7e576f991c9bd5b39605718e40753a63a335d168)) — Thomas JEANNEAU
+
+
+### Features
+
+* merge metadata schema into app schema and configure semantic-release build ([b48a575](https://github.com/latechforce/engine/commit/b48a5755aebda80ea5e1e6a4e1937697b5b88ec4)) — Thomas JEANNEAU
+
 ## [0.70.1](https://github.com/latechforce/engine/compare/v0.70.0...v0.70.1) (2025-08-26)
 
 
