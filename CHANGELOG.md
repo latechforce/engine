@@ -1,3 +1,10 @@
+# [0.72.0](https://github.com/latechforce/engine/compare/v0.71.1...v0.72.0) (2025-08-29)
+
+
+### Features
+
+* add comprehensive React JSON Schema Form metadata to all schemas ([541fcba](https://github.com/latechforce/engine/commit/541fcbaf38b1c9a61ac21975521815ce3769eb3b)) — Thomas JEANNEAU
+
 ## [0.71.1](https://github.com/latechforce/engine/compare/v0.71.0...v0.71.1) (2025-08-29)
 
 
