@@ -113,7 +113,7 @@ describe('LinkedIn Webhook Validation', () => {
     const expectedChallengeResponse = createHmac('sha256', clientSecret)
       .update(challengeCode)
       .digest('hex')
-    
+
     const request = new Request(
       `http://localhost/api/automations/1/trigger?challengeCode=${challengeCode}`,
       {

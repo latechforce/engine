@@ -170,7 +170,7 @@ export const test = base.extend<StartAppFixture>({
           })
 
           if (proc?.stderr) {
-            proc.stderr.on('data', (data) => {
+            proc.stderr.on('data', (data): void => {
               if (!data.includes('[Better Auth]')) {
                 reject(stripAnsiCodes(data.toString()))
               }
