@@ -1,20 +1,65 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "App",
-  "version": "0.71.1",
+  "title": "Application Configuration",
+  "description": "Complete configuration for your application including metadata, data models, automations, and integrations",
+  "version": "0.72.0",
   "type": "object",
   "properties": {
     "name": {
+      "description": "The name of your application",
+      "title": "Application Name",
+      "examples": [
+        "My E-commerce App",
+        "Customer Portal",
+        "Admin Dashboard"
+      ],
+      "placeholder": "Enter your application name",
       "default": "My app",
       "type": "string",
       "minLength": 3
     },
     "description": {
+      "description": "A brief description of what your application does",
+      "title": "Application Description",
+      "examples": [
+        "A platform for managing customer orders",
+        "Internal tool for data analytics"
+      ],
+      "placeholder": "Describe your application purpose",
+      "uiSchema": {
+        "ui:widget": "textarea",
+        "ui:rows": 3
+      },
       "default": "My app description",
       "type": "string",
       "minLength": 1
     },
     "icon": {
+      "description": "The icon that represents your application",
+      "title": "Application Icon",
+      "enumNames": [
+        "Shopping Cart",
+        "Chart Bar",
+        "Users",
+        "File Text",
+        "Calendar",
+        "Mail",
+        "Database",
+        "Cloud",
+        "Shield",
+        "Globe",
+        "Play Circle",
+        "Settings",
+        "Briefcase",
+        "Heart",
+        "Book",
+        "Dollar Sign",
+        "Truck",
+        "Home",
+        "Zap",
+        "Package"
+      ],
+      "placeholder": "Select an icon",
       "default": "globe",
       "type": "string",
       "enum": [
@@ -41,6 +86,23 @@
       ]
     },
     "color": {
+      "description": "The primary color theme for your application",
+      "title": "Theme Color",
+      "enumNames": [
+        "Blue",
+        "Emerald",
+        "Violet",
+        "Amber",
+        "Red",
+        "Cyan",
+        "Pink",
+        "Indigo",
+        "Lime",
+        "Orange",
+        "Teal",
+        "Purple"
+      ],
+      "placeholder": "Select a color theme",
       "default": "blue",
       "type": "string",
       "enum": [
@@ -59,43 +121,111 @@
       ]
     },
     "appVersion": {
+      "description": "The version of your application following semantic versioning",
+      "title": "Application Version",
+      "examples": [
+        "1.0.0",
+        "2.1.3",
+        "0.5.0-beta"
+      ],
+      "placeholder": "1.0.0",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[a-zA-Z0-9]+)?$",
       "default": "1.0.0",
       "type": "string",
       "minLength": 5
     },
     "schemaVersion": {
+      "description": "The version of the schema format being used",
+      "title": "Schema Version",
+      "examples": [
+        "latest",
+        "1.0.0",
+        "2.0.0"
+      ],
+      "placeholder": "latest",
+      "readOnly": true,
       "default": "latest",
       "type": "string",
       "minLength": 5
     },
     "automations": {
+      "description": "List of automation workflows that define business logic and integrations",
+      "title": "Automations",
+      "uiSchema": {
+        "ui:ArrayFieldTemplate": "collapsible",
+        "ui:options": {
+          "orderable": true,
+          "removable": true,
+          "addable": true
+        }
+      },
       "default": [],
       "type": "array",
       "items": {
-        "title": "Automation",
-        "description": "The automation is a set of actions that are triggered by a trigger",
-        "version": "0.71.1",
+        "title": "Automation Workflow",
+        "description": "A workflow that executes a series of actions when triggered by specific events or conditions",
+        "version": "0.72.0",
         "type": "object",
         "properties": {
           "id": {
+            "description": "Unique identifier for the automation",
+            "title": "Automation ID",
+            "readOnly": true,
+            "examples": [
+              1,
+              2,
+              100
+            ],
             "type": "integer",
             "exclusiveMinimum": 0,
             "maximum": 9007199254740991
           },
           "name": {
+            "description": "Name of the automation workflow",
+            "title": "Automation Name",
+            "placeholder": "Enter automation name",
+            "examples": [
+              "Send Welcome Email",
+              "Process Order",
+              "Sync Customer Data"
+            ],
             "type": "string",
             "minLength": 3
           },
           "description": {
+            "description": "Detailed description of what this automation does",
+            "title": "Description",
+            "placeholder": "Describe what this automation does",
+            "examples": [
+              "Sends a welcome email when a new user signs up",
+              "Processes incoming orders and updates inventory"
+            ],
+            "uiSchema": {
+              "ui:widget": "textarea",
+              "ui:rows": 2
+            },
             "type": "string"
           },
           "editUrl": {
+            "description": "URL to edit this automation in an external tool",
+            "title": "Edit URL",
+            "placeholder": "https://example.com/automations/edit/123",
+            "examples": [
+              "https://zapier.com/app/editor/123456",
+              "https://make.com/scenario/edit/789"
+            ],
+            "uiSchema": {
+              "ui:widget": "uri"
+            },
             "type": "string",
             "format": "uri"
           },
           "trigger": {
             "title": "Trigger",
-            "description": "The trigger is the event that triggers the automation",
+            "description": "The event or condition that starts this automation",
+            "uiSchema": {
+              "ui:widget": "trigger-selector"
+            },
             "anyOf": [
               {
                 "title": "HTTP",
@@ -541,6 +671,16 @@
             ]
           },
           "actions": {
+            "description": "Sequence of actions to execute when triggered",
+            "title": "Actions",
+            "uiSchema": {
+              "ui:ArrayFieldTemplate": "collapsible",
+              "ui:options": {
+                "orderable": true,
+                "removable": true,
+                "addable": true
+              }
+            },
             "default": [],
             "type": "array",
             "items": {
@@ -558,23 +698,64 @@
       }
     },
     "tables": {
+      "description": "Database tables that store your application data",
+      "title": "Data Tables",
+      "uiSchema": {
+        "ui:ArrayFieldTemplate": "collapsible",
+        "ui:options": {
+          "orderable": true,
+          "removable": true,
+          "addable": true
+        }
+      },
       "default": [],
       "type": "array",
       "items": {
-        "title": "Table",
-        "description": "The table is a collection of fields",
-        "version": "0.71.1",
+        "title": "Data Table",
+        "description": "A database table definition with its fields and structure",
+        "version": "0.72.0",
         "type": "object",
         "properties": {
           "id": {
+            "description": "Unique identifier for the table",
+            "title": "Table ID",
+            "readOnly": true,
+            "examples": [
+              1,
+              2,
+              100
+            ],
             "type": "integer",
             "exclusiveMinimum": 0,
             "maximum": 9007199254740991
           },
           "name": {
-            "type": "string"
+            "description": "Name of the database table",
+            "title": "Table Name",
+            "placeholder": "Enter table name",
+            "examples": [
+              "users",
+              "products",
+              "orders",
+              "customers"
+            ],
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "help": "Use lowercase letters, numbers, and underscores. Must start with a letter.",
+            "type": "string",
+            "minLength": 1
           },
           "fields": {
+            "description": "List of fields/columns in this table",
+            "title": "Table Fields",
+            "minItems": 1,
+            "uiSchema": {
+              "ui:ArrayFieldTemplate": "collapsible",
+              "ui:options": {
+                "orderable": true,
+                "removable": true,
+                "addable": true
+              }
+            },
             "default": [],
             "type": "array",
             "items": {
@@ -729,33 +910,114 @@
       }
     },
     "forms": {
+      "description": "User interface forms for data collection and interaction",
+      "title": "Forms",
+      "uiSchema": {
+        "ui:ArrayFieldTemplate": "collapsible",
+        "ui:options": {
+          "orderable": true,
+          "removable": true,
+          "addable": true
+        }
+      },
       "default": [],
       "type": "array",
       "items": {
-        "title": "Form",
-        "description": "The form is a collection of inputs",
-        "version": "0.71.1",
+        "title": "User Form",
+        "description": "A form for collecting user input with customizable fields and actions",
+        "version": "0.72.0",
         "type": "object",
         "properties": {
           "id": {
-            "type": "number"
+            "description": "Unique identifier for the form",
+            "title": "Form ID",
+            "readOnly": true,
+            "examples": [
+              1,
+              2,
+              100
+            ],
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
           },
           "path": {
-            "type": "string"
+            "description": "URL path where the form is accessible",
+            "title": "Form Path",
+            "placeholder": "/contact",
+            "examples": [
+              "/contact",
+              "/signup",
+              "/feedback",
+              "/order"
+            ],
+            "pattern": "^/[a-z0-9-/]*$",
+            "help": "Must start with / and use lowercase letters, numbers, hyphens",
+            "type": "string",
+            "minLength": 1
           },
           "action": {
-            "type": "string"
+            "description": "API endpoint or action to handle form submission",
+            "title": "Submit Action",
+            "placeholder": "/api/submit-form",
+            "examples": [
+              "/api/contact",
+              "/api/register",
+              "https://api.example.com/form"
+            ],
+            "help": "The endpoint that will process the form data",
+            "type": "string",
+            "minLength": 1
           },
           "name": {
-            "type": "string"
+            "description": "Internal name for the form",
+            "title": "Form Name",
+            "placeholder": "Enter form name",
+            "examples": [
+              "Contact Form",
+              "Registration Form",
+              "Feedback Survey"
+            ],
+            "type": "string",
+            "minLength": 1
           },
           "title": {
+            "description": "Display title shown to users",
+            "title": "Display Title",
+            "placeholder": "Form title visible to users",
+            "examples": [
+              "Contact Us",
+              "Create Your Account",
+              "We Value Your Feedback"
+            ],
             "type": "string"
           },
           "description": {
+            "description": "Help text or instructions for the form",
+            "title": "Form Description",
+            "placeholder": "Describe the purpose of this form",
+            "examples": [
+              "Fill out this form to get in touch with our team",
+              "Please provide your details to create an account"
+            ],
+            "uiSchema": {
+              "ui:widget": "textarea",
+              "ui:rows": 2
+            },
             "type": "string"
           },
           "inputs": {
+            "description": "List of form fields for user input",
+            "title": "Form Fields",
+            "minItems": 1,
+            "uiSchema": {
+              "ui:ArrayFieldTemplate": "collapsible",
+              "ui:options": {
+                "orderable": true,
+                "removable": true,
+                "addable": true
+              }
+            },
             "default": [],
             "type": "array",
             "items": {
@@ -924,6 +1186,18 @@
             }
           },
           "successMessage": {
+            "description": "Message displayed after successful form submission",
+            "title": "Success Message",
+            "placeholder": "Thank you for your submission!",
+            "examples": [
+              "Thank you! We will get back to you soon.",
+              "Your account has been created successfully!",
+              "Form submitted successfully."
+            ],
+            "uiSchema": {
+              "ui:widget": "textarea",
+              "ui:rows": 2
+            },
             "type": "string"
           }
         },
@@ -938,12 +1212,30 @@
       }
     },
     "connections": {
+      "description": "External service connections and API integrations",
+      "title": "Connections",
+      "uiSchema": {
+        "ui:ArrayFieldTemplate": "collapsible",
+        "ui:options": {
+          "orderable": true,
+          "removable": true,
+          "addable": true
+        }
+      },
       "default": [],
       "type": "array",
       "items": {
-        "title": "Connection",
-        "description": "The connection is a connection to an external service",
-        "version": "0.71.1",
+        "description": "Connect your application to external services like Calendly, Airtable, Google, LinkedIn, or Facebook",
+        "title": "Service Connection",
+        "discriminator": "type",
+        "uiSchema": {
+          "ui:widget": "connection-selector",
+          "ui:options": {
+            "showIcon": true,
+            "groupBy": "category"
+          }
+        },
+        "version": "0.72.0",
         "anyOf": [
           {
             "title": "Calendly",
@@ -1151,20 +1443,53 @@
       }
     },
     "buckets": {
+      "description": "Storage buckets for files and media assets",
+      "title": "Storage Buckets",
+      "uiSchema": {
+        "ui:ArrayFieldTemplate": "collapsible",
+        "ui:options": {
+          "orderable": true,
+          "removable": true,
+          "addable": true
+        }
+      },
       "default": [],
       "type": "array",
       "items": {
-        "title": "Bucket",
-        "version": "0.71.1",
+        "title": "Storage Bucket",
+        "description": "A storage container for organizing and managing files and media assets",
+        "version": "0.72.0",
         "type": "object",
         "properties": {
           "id": {
+            "description": "Unique identifier for the storage bucket",
+            "title": "Bucket ID",
+            "readOnly": true,
+            "examples": [
+              0,
+              1,
+              2,
+              100
+            ],
             "type": "integer",
             "minimum": 0,
             "maximum": 9007199254740991
           },
           "name": {
-            "type": "string"
+            "description": "Name of the storage bucket for organizing files",
+            "title": "Bucket Name",
+            "placeholder": "my-bucket-name",
+            "examples": [
+              "user-uploads",
+              "product-images",
+              "documents",
+              "media-assets"
+            ],
+            "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
+            "help": "Use lowercase letters, numbers, and hyphens. Must start and end with a letter or number.",
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 63
           }
         },
         "required": [
