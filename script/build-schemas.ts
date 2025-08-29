@@ -14,40 +14,22 @@ import { z } from 'zod/v4'
 const schemaPath = join(__dirname, '..', 'schema', pkg.version)
 
 if (!fs.existsSync(schemaPath)) {
-  fs.mkdirSync(schemaPath)
+  fs.mkdirSync(schemaPath, { recursive: true })
 }
 
-fs.writeFileSync(
-  join(schemaPath, 'app.schema.json'),
-  JSON.stringify(z.toJSONSchema(appSchema), null, 2)
-)
+const schemas = [
+  { name: 'app', schema: appSchema },
+  { name: 'metadata', schema: metadataSchema },
+  { name: 'automation', schema: automationSchema },
+  { name: 'table', schema: tableSchema },
+  { name: 'connection', schema: connectionSchema },
+  { name: 'form', schema: formSchema },
+  { name: 'bucket', schema: bucketSchema },
+]
 
-fs.writeFileSync(
-  join(schemaPath, 'metadata.schema.json'),
-  JSON.stringify(z.toJSONSchema(metadataSchema), null, 2)
-)
-
-fs.writeFileSync(
-  join(schemaPath, 'automation.schema.json'),
-  JSON.stringify(z.toJSONSchema(automationSchema), null, 2)
-)
-
-fs.writeFileSync(
-  join(schemaPath, 'table.schema.json'),
-  JSON.stringify(z.toJSONSchema(tableSchema), null, 2)
-)
-
-fs.writeFileSync(
-  join(schemaPath, 'connection.schema.json'),
-  JSON.stringify(z.toJSONSchema(connectionSchema), null, 2)
-)
-
-fs.writeFileSync(
-  join(schemaPath, 'form.schema.json'),
-  JSON.stringify(z.toJSONSchema(formSchema), null, 2)
-)
-
-fs.writeFileSync(
-  join(schemaPath, 'bucket.schema.json'),
-  JSON.stringify(z.toJSONSchema(bucketSchema), null, 2)
-)
+schemas.forEach(({ name, schema }) => {
+  const filePath = join(schemaPath, `${name}.schema.json`)
+  const jsonSchema = z.toJSONSchema(schema)
+  fs.writeFileSync(filePath, JSON.stringify(jsonSchema, null, 2))
+  console.log(`Write ${filePath}`)
+})
