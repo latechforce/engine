@@ -15,9 +15,19 @@ export const connectionSchema = z
     linkedinConnectionSchema,
     facebookConnectionSchema,
   ])
+  .describe('Configuration for connecting to external services and APIs')
   .meta({
-    title: 'Connection',
-    description: 'The connection is a connection to an external service',
+    title: 'Service Connection',
+    description:
+      'Connect your application to external services like Calendly, Airtable, Google, LinkedIn, or Facebook',
+    discriminator: 'type',
+    uiSchema: {
+      'ui:widget': 'connection-selector',
+      'ui:options': {
+        showIcon: true,
+        groupBy: 'category',
+      },
+    },
     version: pkg.version,
   })
 

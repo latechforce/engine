@@ -10,15 +10,67 @@ import { metadataSchema } from './metadata.schema'
 
 export const appSchema = metadataSchema
   .extend({
-    automations: z.array(automationSchema).default([]),
-    tables: z.array(tableSchema).default([]),
-    forms: z.array(formSchema).default([]),
-    connections: z.array(connectionSchema).default([]),
-    buckets: z.array(bucketSchema).default([]),
+    automations: z
+      .array(automationSchema)
+      .default([])
+      .describe('List of automation workflows that define business logic and integrations')
+      .meta({
+        title: 'Automations',
+        uiSchema: {
+          'ui:ArrayFieldTemplate': 'collapsible',
+          'ui:options': { orderable: true, removable: true, addable: true },
+        },
+      }),
+    tables: z
+      .array(tableSchema)
+      .default([])
+      .describe('Database tables that store your application data')
+      .meta({
+        title: 'Data Tables',
+        uiSchema: {
+          'ui:ArrayFieldTemplate': 'collapsible',
+          'ui:options': { orderable: true, removable: true, addable: true },
+        },
+      }),
+    forms: z
+      .array(formSchema)
+      .default([])
+      .describe('User interface forms for data collection and interaction')
+      .meta({
+        title: 'Forms',
+        uiSchema: {
+          'ui:ArrayFieldTemplate': 'collapsible',
+          'ui:options': { orderable: true, removable: true, addable: true },
+        },
+      }),
+    connections: z
+      .array(connectionSchema)
+      .default([])
+      .describe('External service connections and API integrations')
+      .meta({
+        title: 'Connections',
+        uiSchema: {
+          'ui:ArrayFieldTemplate': 'collapsible',
+          'ui:options': { orderable: true, removable: true, addable: true },
+        },
+      }),
+    buckets: z
+      .array(bucketSchema)
+      .default([])
+      .describe('Storage buckets for files and media assets')
+      .meta({
+        title: 'Storage Buckets',
+        uiSchema: {
+          'ui:ArrayFieldTemplate': 'collapsible',
+          'ui:options': { orderable: true, removable: true, addable: true },
+        },
+      }),
   })
   .strict()
   .meta({
-    title: 'App',
+    title: 'Application Configuration',
+    description:
+      'Complete configuration for your application including metadata, data models, automations, and integrations',
     version: pkg.version,
   })
 
