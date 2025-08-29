@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Table",
   "description": "The table is a collection of fields",
+  "version": "0.70.1",
   "type": "object",
   "properties": {
     "id": {

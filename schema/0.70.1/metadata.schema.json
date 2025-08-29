@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Metadata",
+  "version": "0.70.1",
+  "type": "object",
+  "properties": {
+    "name": {
+      "default": "My app",
+      "type": "string",
+      "minLength": 3
+    },
+    "description": {
+      "default": "My app description",
+      "type": "string",
+      "minLength": 1
+    },
+    "icon": {
+      "default": "globe",
+      "type": "string",
+      "enum": [
+        "shopping-cart",
+        "chart-bar",
+        "users",
+        "file-text",
+        "calendar",
+        "mail",
+        "database",
+        "cloud",
+        "shield",
+        "globe",
+        "play-circle",
+        "settings",
+        "briefcase",
+        "heart",
+        "book",
+        "dollar-sign",
+        "truck",
+        "home",
+        "zap",
+        "package"
+      ]
+    },
+    "color": {
+      "default": "blue",
+      "type": "string",
+      "enum": [
+        "blue",
+        "emerald",
+        "violet",
+        "amber",
+        "red",
+        "cyan",
+        "pink",
+        "indigo",
+        "lime",
+        "orange",
+        "teal",
+        "purple"
+      ]
+    },
+    "appVersion": {
+      "default": "1.0.0",
+      "type": "string",
+      "minLength": 5
+    },
+    "schemaVersion": {
+      "default": "latest",
+      "type": "string",
+      "minLength": 5
+    }
+  },
+  "required": [
+    "name",
+    "description",
+    "icon",
+    "color",
+    "appVersion",
+    "schemaVersion"
+  ],
+  "additionalProperties": false
+}

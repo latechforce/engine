@@ -77,7 +77,7 @@ describe('LinkedIn Webhook Validation', () => {
     const clientSecret = 'test-client-secret'
     const appSchema: AppSchema = {
       name: 'Test App',
-      version: '1.0.0',
+      appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
       connections: [
@@ -136,7 +136,7 @@ describe('LinkedIn Webhook Validation', () => {
     // GIVEN - HTTP automation that LinkedIn uses
     const appSchema: AppSchema = {
       name: 'Test App',
-      version: '1.0.0',
+      appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
       connections: [],
@@ -182,7 +182,7 @@ describe('LinkedIn Webhook Validation', () => {
     // GIVEN
     const appSchema: AppSchema = {
       name: 'Test App',
-      version: '1.0.0',
+      appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
       connections: [
@@ -243,7 +243,7 @@ describe('LinkedIn Webhook Validation', () => {
     const clientSecret = 'parent-app-secret'
     const appSchema: AppSchema = {
       name: 'Test App',
-      version: '1.0.0',
+      appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
       connections: [
@@ -301,7 +301,7 @@ describe('LinkedIn Webhook Validation', () => {
     // GIVEN
     const appSchema: AppSchema = {
       name: 'Test App',
-      version: '1.0.0',
+      appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
       connections: [],

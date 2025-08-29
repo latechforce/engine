@@ -1,5 +1,6 @@
 // Third-party imports
 import { z } from 'zod/v4'
+import pkg from 'package.json'
 
 // Form domain imports
 import { inputSchema } from './input'
@@ -18,6 +19,7 @@ export const formSchema = z
   .meta({
     title: 'Form',
     description: 'The form is a collection of inputs',
+    version: pkg.version,
   })
 
 export type FormSchema = z.infer<typeof formSchema>

@@ -1,15 +1,15 @@
 import { z } from 'zod/v4'
+import pkg from 'package.json'
+
 import { automationSchema } from '../../../automation/domain/schema/automation.schema'
 import { tableSchema } from '../../../table/domain/schema/table.schema'
 import { connectionSchema } from '../../../../shared/integrations/core/connection.schema'
 import { formSchema } from '../../../form/domain/schema/form.schema'
 import { bucketSchema } from '../../../bucket/domain/schema/bucket.schema'
+import { metadataSchema } from './metadata.schema'
 
-export const appSchema = z
-  .object({
-    name: z.string().trim().min(3).default('My app'),
-    version: z.string().trim().min(1).default('1.0.0'),
-    description: z.string().trim().min(1).default('My app description'),
+export const appSchema = metadataSchema
+  .extend({
     automations: z.array(automationSchema).default([]),
     tables: z.array(tableSchema).default([]),
     forms: z.array(formSchema).default([]),
@@ -19,6 +19,7 @@ export const appSchema = z
   .strict()
   .meta({
     title: 'App',
+    version: pkg.version,
   })
 
 export type AppSchemaValidated = z.infer<typeof appSchema>

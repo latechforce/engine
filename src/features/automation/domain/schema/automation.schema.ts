@@ -1,5 +1,6 @@
 // Third-party imports
 import { z } from 'zod/v4'
+import pkg from 'package.json'
 
 // Action domain imports
 import { actionSchema } from '../../../action/domain/schema/action.schema'
@@ -20,6 +21,7 @@ export const automationSchema = z
   .meta({
     title: 'Automation',
     description: 'The automation is a set of actions that are triggered by a trigger',
+    version: pkg.version,
   })
 
 export type AutomationSchema = z.infer<typeof automationSchema>

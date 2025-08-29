@@ -12,7 +12,7 @@ export function toGetAppMetadataDto(app: App): GetAppMetadataDto {
   return {
     app: {
       name: app.schema.name,
-      version: app.schema.version,
+      version: app.schema.appVersion,
       description: app.schema.description,
     },
   }

@@ -75,7 +75,7 @@ export class ServerService {
       openapi: '3.0.0',
       info: {
         title: app.schema.name,
-        version: app.schema.version,
+        version: app.schema.appVersion,
         description: app.schema.description,
       },
       servers: [

@@ -11,12 +11,12 @@ describe('start', () => {
     expect(app.schema.name).toBe('My app')
   })
 
-  it('should have the default version', async () => {
+  it('should have the default appVersion', async () => {
     // WHEN
     const app = await new App().start()
 
     // THEN
-    expect(app.schema.version).toBe('1.0.0')
+    expect(app.schema.appVersion).toBe('1.0.0')
   })
 
   it('should have the default description', async () => {
@@ -37,12 +37,12 @@ describe('start with metadata', () => {
     expect(app.schema.name).toBe('App with metadata')
   })
 
-  it('should have a version', async () => {
+  it('should have a appVersion', async () => {
     // WHEN
     const app = await new App().start(metadata)
 
     // THEN
-    expect(app.schema.version).toBe('1.0.0')
+    expect(app.schema.appVersion).toBe('1.0.0')
   })
 
   it('should have a description', async () => {

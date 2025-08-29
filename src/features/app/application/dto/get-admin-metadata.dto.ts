@@ -30,7 +30,7 @@ export function toGetAdminMetadataDto(app: App, status: AutomationStatus[]): Get
   return {
     admin: {
       name: app.schema.name,
-      version: app.schema.version,
+      version: app.schema.appVersion,
       tables: app.schema.tables.map((table) => ({
         id: table.id,
         name: table.name,
