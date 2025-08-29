@@ -8,27 +8,32 @@
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Fix 0.71.1]]></title>
-        <id>https://engine.latechforce.com/blog/fix-0-71-1</id>
-        <link href="https://engine.latechforce.com/blog/fix-0-71-1"/>
+        <title type="html"><![CDATA[Release 0.72.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-72-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-72-0"/>
         <updated>2025-08-29T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.71.1]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-71-1"><p class="before-truncate"> 0.71.1   Bug Fixes  * correct schema path in release config and refactor build-schemas script (43d2b39) — Thomas JEANNEAU   0.71.0   Bug Fixes  * correct LinkedIn webhook validation implementation (7e576f9) — Thomas JEANNEAU    Features  * merge metadata schema into app schema and configure semanti...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0711"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-71-1">0.71.1</a><a href="https://engine.latechforce.com/blog/fix-0-71-1#0711" class="hash-link" aria-label="Direct link to 0.71.1" title="Direct link to 0.71.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-71-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+        <summary type="html"><![CDATA[Changelog for version 0.72.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-72-0"><p class="before-truncate"> 0.72.0   Features  * add comprehensive React JSON Schema Form metadata to all schemas (541fcba) — Thomas JEANNEAU   0.71.1   Bug Fixes  * correct schema path in release config and refactor build-schemas script (43d2b39) — Thomas JEANNEAU   0.71.0   Bug Fixes  * correct LinkedIn webhook validation i...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0720"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-72-0">0.72.0</a><a href="https://engine.latechforce.com/blog/release-0-72-0#0720" class="hash-link" aria-label="Direct link to 0.72.0" title="Direct link to 0.72.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-72-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>add comprehensive React JSON Schema Form metadata to all schemas (<a href="https://github.com/latechforce/engine/commit/541fcbaf38b1c9a61ac21975521815ce3769eb3b" target="_blank" rel="noopener noreferrer">541fcba</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0711">0.71.1<a href="https://engine.latechforce.com/blog/release-0-72-0#0711" class="hash-link" aria-label="Direct link to 0.71.1" title="Direct link to 0.71.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-72-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>correct schema path in release config and refactor build-schemas script (<a href="https://github.com/latechforce/engine/commit/43d2b39e82862e7734177e84acaa6bd43ab5d1a1" target="_blank" rel="noopener noreferrer">43d2b39</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0710">0.71.0<a href="https://engine.latechforce.com/blog/fix-0-71-1#0710" class="hash-link" aria-label="Direct link to 0.71.0" title="Direct link to 0.71.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-71-1#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0710">0.71.0<a href="https://engine.latechforce.com/blog/release-0-72-0#0710" class="hash-link" aria-label="Direct link to 0.71.0" title="Direct link to 0.71.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-72-0#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>correct LinkedIn webhook validation implementation (<a href="https://github.com/latechforce/engine/commit/7e576f991c9bd5b39605718e40753a63a335d168" target="_blank" rel="noopener noreferrer">7e576f9</a>) — Thomas JEANNEAU</li>
 </ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-71-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features-1">Features<a href="https://engine.latechforce.com/blog/release-0-72-0#features-1" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li>merge metadata schema into app schema and configure semantic-release build (<a href="https://github.com/latechforce/engine/commit/b48a5755aebda80ea5e1e6a4e1937697b5b88ec4" target="_blank" rel="noopener noreferrer">b48a575</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
-        <category label="Fix" term="Fix"/>
+        <category label="Release" term="Release"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Fix 0.70.1]]></title>
