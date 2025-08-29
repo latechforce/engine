@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "App",
+  "version": "0.71.0",
   "type": "object",
   "properties": {
     "name": {
@@ -8,15 +9,64 @@
       "type": "string",
       "minLength": 3
     },
-    "version": {
-      "default": "1.0.0",
-      "type": "string",
-      "minLength": 1
-    },
     "description": {
       "default": "My app description",
       "type": "string",
       "minLength": 1
+    },
+    "icon": {
+      "default": "globe",
+      "type": "string",
+      "enum": [
+        "shopping-cart",
+        "chart-bar",
+        "users",
+        "file-text",
+        "calendar",
+        "mail",
+        "database",
+        "cloud",
+        "shield",
+        "globe",
+        "play-circle",
+        "settings",
+        "briefcase",
+        "heart",
+        "book",
+        "dollar-sign",
+        "truck",
+        "home",
+        "zap",
+        "package"
+      ]
+    },
+    "color": {
+      "default": "blue",
+      "type": "string",
+      "enum": [
+        "blue",
+        "emerald",
+        "violet",
+        "amber",
+        "red",
+        "cyan",
+        "pink",
+        "indigo",
+        "lime",
+        "orange",
+        "teal",
+        "purple"
+      ]
+    },
+    "appVersion": {
+      "default": "1.0.0",
+      "type": "string",
+      "minLength": 5
+    },
+    "schemaVersion": {
+      "default": "latest",
+      "type": "string",
+      "minLength": 5
     },
     "automations": {
       "default": [],
@@ -24,6 +74,7 @@
       "items": {
         "title": "Automation",
         "description": "The automation is a set of actions that are triggered by a trigger",
+        "version": "0.71.0",
         "type": "object",
         "properties": {
           "id": {
@@ -512,6 +563,7 @@
       "items": {
         "title": "Table",
         "description": "The table is a collection of fields",
+        "version": "0.71.0",
         "type": "object",
         "properties": {
           "id": {
@@ -682,6 +734,7 @@
       "items": {
         "title": "Form",
         "description": "The form is a collection of inputs",
+        "version": "0.71.0",
         "type": "object",
         "properties": {
           "id": {
@@ -890,6 +943,7 @@
       "items": {
         "title": "Connection",
         "description": "The connection is a connection to an external service",
+        "version": "0.71.0",
         "anyOf": [
           {
             "title": "Calendly",
@@ -1100,6 +1154,8 @@
       "default": [],
       "type": "array",
       "items": {
+        "title": "Bucket",
+        "version": "0.71.0",
         "type": "object",
         "properties": {
           "id": {
@@ -1121,8 +1177,11 @@
   },
   "required": [
     "name",
-    "version",
     "description",
+    "icon",
+    "color",
+    "appVersion",
+    "schemaVersion",
     "automations",
     "tables",
     "forms",

@@ -2,11 +2,29 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://engine.latechforce.com/blog</id>
     <title>LTF Engine Blog</title>
-    <updated>2025-08-26T00:00:00.000Z</updated>
+    <updated>2025-08-29T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://engine.latechforce.com/blog"/>
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 0.71.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-71-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-71-0"/>
+        <updated>2025-08-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Changelog for version 0.71.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-71-0"><p class="before-truncate"> 0.71.0   Bug Fixes  * correct LinkedIn webhook validation implementation (7e576f9) — Thomas JEANNEAU    Features  * merge metadata schema into app schema and configure semantic-release build (b48a575) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0710"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-71-0">0.71.0</a><a href="https://engine.latechforce.com/blog/release-0-71-0#0710" class="hash-link" aria-label="Direct link to 0.71.0" title="Direct link to 0.71.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-71-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>correct LinkedIn webhook validation implementation (<a href="https://github.com/latechforce/engine/commit/7e576f991c9bd5b39605718e40753a63a335d168" target="_blank" rel="noopener noreferrer">7e576f9</a>) — Thomas JEANNEAU</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-71-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>merge metadata schema into app schema and configure semantic-release build (<a href="https://github.com/latechforce/engine/commit/b48a5755aebda80ea5e1e6a4e1937697b5b88ec4" target="_blank" rel="noopener noreferrer">b48a575</a>) — Thomas JEANNEAU</li>
+</ul>]]></content>
+        <category label="Release" term="Release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Fix 0.70.1]]></title>
         <id>https://engine.latechforce.com/blog/fix-0-70-1</id>
@@ -512,48 +530,6 @@
 <li><strong>action:</strong> should run an does-not-exist filter action that returns true (<a href="https://github.com/latechforce/engine/commit/1b9570a6af18ea67780f26f08ad13e1ed95f0905" target="_blank" rel="noopener noreferrer">1b9570a</a>) — Thomas JEANNEAU</li>
 <li><strong>action:</strong> should run an exists filter action that returns true (<a href="https://github.com/latechforce/engine/commit/9b9996d25d23ea5d5ebed874e174afc63fa90f7d" target="_blank" rel="noopener noreferrer">9b9996d</a>) — Thomas JEANNEAU</li>
 <li><strong>action:</strong> should run an or filter action that returns false (<a href="https://github.com/latechforce/engine/commit/b87a945b63967a296debeb5dd23bc7371fedf009" target="_blank" rel="noopener noreferrer">b87a945</a>) — Thomas JEANNEAU</li>
-</ul>]]></content>
-        <category label="Release" term="Release"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Release 0.49.0]]></title>
-        <id>https://engine.latechforce.com/blog/release-0-49-0</id>
-        <link href="https://engine.latechforce.com/blog/release-0-49-0"/>
-        <updated>2025-06-01T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.49.0]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-49-0"><p class="before-truncate"> 0.49.0   Features  * admin: should list table records (d1ea1e7) — Thomas JEANNEAU * admin: should search table records (2eba2fe) — Thomas JEANNEAU * bucket: should upload a file (6e99fe2) — Thomas JEANNEAU * code: should run a TypeScript code with tables (efa764d) — Thomas JEANNEAU * form: should c...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0490"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-49-0">0.49.0</a><a href="https://engine.latechforce.com/blog/release-0-49-0#0490" class="hash-link" aria-label="Direct link to 0.49.0" title="Direct link to 0.49.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-49-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
-<ul>
-<li><strong>admin:</strong> should list table records (<a href="https://github.com/latechforce/engine/commit/d1ea1e7f06de53f7a0bbc6a84ad1a19ec8e17177" target="_blank" rel="noopener noreferrer">d1ea1e7</a>) — Thomas JEANNEAU</li>
-<li><strong>admin:</strong> should search table records (<a href="https://github.com/latechforce/engine/commit/2eba2fe6415f900b2e7cba85b153613472dc5862" target="_blank" rel="noopener noreferrer">2eba2fe</a>) — Thomas JEANNEAU</li>
-<li><strong>bucket:</strong> should upload a file (<a href="https://github.com/latechforce/engine/commit/6e99fe266d124b8d7b2bf1826b2ae566ea90cbac" target="_blank" rel="noopener noreferrer">6e99fe2</a>) — Thomas JEANNEAU</li>
-<li><strong>code:</strong> should run a TypeScript code with tables (<a href="https://github.com/latechforce/engine/commit/efa764df146d1a402308fb800a1db0d15d032583" target="_blank" rel="noopener noreferrer">efa764d</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should create a record with a checkbox input (<a href="https://github.com/latechforce/engine/commit/5b76a705bdcb22ebefea40de119427d2e6e63a08" target="_blank" rel="noopener noreferrer">5b76a70</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should create a record with a email input (<a href="https://github.com/latechforce/engine/commit/ba99f9aab39e85200a3cf0f079401928ebd4d6fa" target="_blank" rel="noopener noreferrer">ba99f9a</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should create a record with a long text input (<a href="https://github.com/latechforce/engine/commit/bee2f276134641e282320463ae80dd3293874b11" target="_blank" rel="noopener noreferrer">bee2f27</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should create a record with a phone number input (<a href="https://github.com/latechforce/engine/commit/3e3663015e0af73088a656e58f3aebd99bf0a36f" target="_blank" rel="noopener noreferrer">3e36630</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should create a record with a single attachment input (<a href="https://github.com/latechforce/engine/commit/8e83b38b9d330d7292a76e7099111113b8c633e9" target="_blank" rel="noopener noreferrer">8e83b38</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should create a record with a single line text input (<a href="https://github.com/latechforce/engine/commit/7547fc8a513cd5adc6e1a2dcf09bc61f18509ec9" target="_blank" rel="noopener noreferrer">7547fc8</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should create a record with a single select input (<a href="https://github.com/latechforce/engine/commit/9bf942659890c5301d16b9bcc3c5978f2136ed07" target="_blank" rel="noopener noreferrer">9bf9426</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should create a record with a url input (<a href="https://github.com/latechforce/engine/commit/025b89b88a96ebb4e94bb0fd2e7f0bd8116c75bf" target="_blank" rel="noopener noreferrer">025b89b</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should display a form with a checkbox input (<a href="https://github.com/latechforce/engine/commit/e921609b1b5d14f0438c355402029518d980511d" target="_blank" rel="noopener noreferrer">e921609</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should display a form with a single attachment input (<a href="https://github.com/latechforce/engine/commit/cf2fd78f32feff24aa28c953da8dd14b27236830" target="_blank" rel="noopener noreferrer">cf2fd78</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should display a form with a single-select input (<a href="https://github.com/latechforce/engine/commit/9c1ccc3f8e36c46bdbf55c38b6fb38a54a804237" target="_blank" rel="noopener noreferrer">9c1ccc3</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should display a form with inputs (<a href="https://github.com/latechforce/engine/commit/8b01e1ccb6caec984f18213b9d4a509ddfe76c83" target="_blank" rel="noopener noreferrer">8b01e1c</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should display email, single-line-text, long-text, url and phone inputs (<a href="https://github.com/latechforce/engine/commit/c1034d44922fc7c3eecf5631f44d2fab34efeec9" target="_blank" rel="noopener noreferrer">c1034d4</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should list forms (<a href="https://github.com/latechforce/engine/commit/1e8486e9f9c66a37901dfaf74315940237d14463" target="_blank" rel="noopener noreferrer">1e8486e</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should open a form in a new page (<a href="https://github.com/latechforce/engine/commit/1ac6bca3ddd71e04071c388e6a1ca706db1171de" target="_blank" rel="noopener noreferrer">1ac6bca</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should return a list of forms (<a href="https://github.com/latechforce/engine/commit/40ae851382430f9b7d1e86d8999d47275148f0b2" target="_blank" rel="noopener noreferrer">40ae851</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should run an automation when a form with a single line text input is submitted (<a href="https://github.com/latechforce/engine/commit/9f7c53280058a1f0fcb15b17a9b98c201933d8c3" target="_blank" rel="noopener noreferrer">9f7c532</a>) — Thomas JEANNEAU</li>
-<li>should run a calendly list webhook subscriptions action (<a href="https://github.com/latechforce/engine/commit/906f8503de8f9373b1e9a615adee89bfe06ec243" target="_blank" rel="noopener noreferrer">906f850</a>) — Thomas JEANNEAU</li>
-<li><strong>table:</strong> should create a record from API (<a href="https://github.com/latechforce/engine/commit/2d36c989c8ba9f2fdaf5d62eb25754b632399e42" target="_blank" rel="noopener noreferrer">2d36c98</a>) — Thomas JEANNEAU</li>
-<li><strong>table:</strong> should create multiple records from a POST request (<a href="https://github.com/latechforce/engine/commit/3a0e33ff52ce0dea5733f470380e6aff596ed527" target="_blank" rel="noopener noreferrer">3a0e33f</a>) — Thomas JEANNEAU</li>
-<li><strong>table:</strong> should delete multiple records from a DELETE request (<a href="https://github.com/latechforce/engine/commit/be6edb596558a4655691c769e015297657215b39" target="_blank" rel="noopener noreferrer">be6edb5</a>) — Thomas JEANNEAU</li>
-<li><strong>table:</strong> should list records from a GET request (<a href="https://github.com/latechforce/engine/commit/629137ae78ad314b3e35c960309553bc57750337" target="_blank" rel="noopener noreferrer">629137a</a>) — Thomas JEANNEAU</li>
-<li><strong>table:</strong> should read a record from a GET request (<a href="https://github.com/latechforce/engine/commit/74812a3e3ee846752b75757f8346468cd6366d8c" target="_blank" rel="noopener noreferrer">74812a3</a>) — Thomas JEANNEAU</li>
-<li><strong>table:</strong> should update a record from a PATCH request (<a href="https://github.com/latechforce/engine/commit/4179ed68335d029a3b2dc272844c60afeeb9d6b4" target="_blank" rel="noopener noreferrer">4179ed6</a>) — Thomas JEANNEAU</li>
-<li><strong>table:</strong> should update multiple records from a PATCH request (<a href="https://github.com/latechforce/engine/commit/78361852e792be50679d3d84839ba1eb8a4a0074" target="_blank" rel="noopener noreferrer">7836185</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
         <category label="Release" term="Release"/>
     </entry>
