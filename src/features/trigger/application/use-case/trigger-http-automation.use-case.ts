@@ -81,7 +81,7 @@ export class TriggerHttpAutomationUseCase {
           automation.schema.trigger.account
         ) {
           const linkedinTrigger = automation.schema.trigger
-          const connection = app.connections.find((conn) => conn.id === linkedinTrigger.account)
+          const connection = app.findConnection(linkedinTrigger.account)
           console.log('[LinkedIn Webhook Validation] LinkedIn automation connection:', {
             accountId: linkedinTrigger.account,
             connectionFound: !!connection,
@@ -94,42 +94,6 @@ export class TriggerHttpAutomationUseCase {
               .update(challengeCode)
               .digest('hex')
             secretUsed = 'linkedin-connection'
-          }
-        } else if (applicationId) {
-          // For HTTP triggers or other scenarios with applicationId
-          // Look for LinkedIn connection by applicationId to use for HMAC computation
-          const connection = app.connections.find(
-            (conn) => conn.service === 'linkedin-ads' && conn.clientId === applicationId
-          )
-          console.log('[LinkedIn Webhook Validation] Using applicationId:', {
-            applicationId,
-            connectionFound: !!connection,
-            hasClientSecret: !!connection?.clientSecret,
-          })
-          if (connection?.clientSecret) {
-            challengeResponse = createHmac('sha256', connection.clientSecret)
-              .update(challengeCode)
-              .digest('hex')
-            secretUsed = 'applicationId-connection'
-          }
-        } else if (automation?.schema.trigger.service === 'http') {
-          // For HTTP triggers without applicationId that might be LinkedIn webhooks
-          // Try to find any LinkedIn connection to use for HMAC computation
-          const linkedinConnection = app.connections.find((conn) => conn.service === 'linkedin-ads')
-          console.log(
-            '[LinkedIn Webhook Validation] HTTP trigger fallback to LinkedIn connection:',
-            {
-              automationName: automation.schema.name,
-              connectionFound: !!linkedinConnection,
-              hasClientSecret: !!linkedinConnection?.clientSecret,
-            }
-          )
-          if (linkedinConnection?.clientSecret) {
-            // Compute HMAC-SHA256(challengeCode, clientSecret) and return as hex
-            challengeResponse = createHmac('sha256', linkedinConnection.clientSecret)
-              .update(challengeCode)
-              .digest('hex')
-            secretUsed = 'http-linkedin-fallback'
           }
         }
 
