@@ -1,3 +1,10 @@
+## [0.72.1](https://github.com/latechforce/engine/compare/v0.72.0...v0.72.1) (2025-08-30)
+
+
+### Bug Fixes
+
+* package export ([f5950f5](https://github.com/latechforce/engine/commit/f5950f54dd2b260fa3aba7b3cc1b7c4798f325aa)) — Thomas JEANNEAU
+
 # [0.72.0](https://github.com/latechforce/engine/compare/v0.71.1...v0.72.0) (2025-08-29)
 
 
