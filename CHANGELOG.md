@@ -1,3 +1,15 @@
+# [0.73.0](https://github.com/latechforce/engine/compare/v0.72.2...v0.73.0) (2025-08-30)
+
+
+### Bug Fixes
+
+* linkedin webhook triggger ([56b5e19](https://github.com/latechforce/engine/commit/56b5e19e3f873b6c423ef19e34e2ca8a5edb3c8c)) — Thomas JEANNEAU
+
+
+### Features
+
+* add Notion integration ([b600e27](https://github.com/latechforce/engine/commit/b600e27008f039156cd480f27cb2c9e4f058975b)) — Thomas JEANNEAU
+
 ## [0.72.2](https://github.com/latechforce/engine/compare/v0.72.1...v0.72.2) (2025-08-30)
 
 
