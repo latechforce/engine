@@ -1,5 +1,5 @@
 import { z } from 'zod/v4'
-import pkg from 'package.json'
+import pkg from '../../../../../package.json'
 
 export const bucketSchema = z
   .object({

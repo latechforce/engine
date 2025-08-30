@@ -1,5 +1,5 @@
 import { z } from 'zod/v4'
-import pkg from 'package.json'
+import pkg from '../../../../package.json'
 
 import { calendlyConnectionSchema } from '../productivity/calendly/calendly-connection.schema'
 import { googleConnectionSchema } from '../communication/google/google-connection.schema'

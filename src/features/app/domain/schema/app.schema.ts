@@ -1,5 +1,5 @@
 import { z } from 'zod/v4'
-import pkg from 'package.json'
+import pkg from '../../../../../package.json'
 
 import { automationSchema } from '../../../automation/domain/schema/automation.schema'
 import { tableSchema } from '../../../table/domain/schema/table.schema'

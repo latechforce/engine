@@ -1,6 +1,6 @@
 // Third-party imports
 import { z } from 'zod/v4'
-import pkg from 'package.json'
+import pkg from '../../../../../package.json'
 
 // Table domain imports
 import { fieldSchema } from './field'
