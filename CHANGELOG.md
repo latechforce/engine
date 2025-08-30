@@ -1,3 +1,10 @@
+## [0.72.2](https://github.com/latechforce/engine/compare/v0.72.1...v0.72.2) (2025-08-30)
+
+
+### Bug Fixes
+
+* package path ([ce09d39](https://github.com/latechforce/engine/commit/ce09d392ba22229e22015bbae8da4d500d8da2a4)) — Thomas JEANNEAU
+
 ## [0.72.1](https://github.com/latechforce/engine/compare/v0.72.0...v0.72.1) (2025-08-30)
 
 
