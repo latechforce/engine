@@ -9,14 +9,19 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Fix 0.72.1]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-72-1</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-72-1</guid>
+            <title><![CDATA[Fix 0.72.2]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-72-2</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-72-2</guid>
             <pubDate>Sat, 30 Aug 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.72.1]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-72-1"><p class="before-truncate"> 0.72.1   Bug Fixes  * package export (f5950f5) — Thomas JEANNEAU...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0721"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-72-1">0.72.1</a><a href="https://engine.latechforce.com/blog/fix-0-72-1#0721" class="hash-link" aria-label="Direct link to 0.72.1" title="Direct link to 0.72.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-72-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+            <description><![CDATA[Changelog for version 0.72.2]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-72-2"><p class="before-truncate"> 0.72.2   Bug Fixes  * package path (ce09d39) — Thomas JEANNEAU   0.72.1   Bug Fixes  * package export (f5950f5) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0722"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-72-2">0.72.2</a><a href="https://engine.latechforce.com/blog/fix-0-72-2#0722" class="hash-link" aria-label="Direct link to 0.72.2" title="Direct link to 0.72.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-72-2#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>package path (<a href="https://github.com/latechforce/engine/commit/ce09d392ba22229e22015bbae8da4d500d8da2a4" target="_blank" rel="noopener noreferrer">ce09d39</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0721">0.72.1<a href="https://engine.latechforce.com/blog/fix-0-72-2#0721" class="hash-link" aria-label="Direct link to 0.72.1" title="Direct link to 0.72.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-72-2#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>package export (<a href="https://github.com/latechforce/engine/commit/f5950f54dd2b260fa3aba7b3cc1b7c4798f325aa" target="_blank" rel="noopener noreferrer">f5950f5</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
