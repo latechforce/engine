@@ -9,23 +9,32 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Fix 0.72.2]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-72-2</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-72-2</guid>
+            <title><![CDATA[Release 0.73.0]]></title>
+            <link>https://engine.latechforce.com/blog/release-0-73-0</link>
+            <guid>https://engine.latechforce.com/blog/release-0-73-0</guid>
             <pubDate>Sat, 30 Aug 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.72.2]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-72-2"><p class="before-truncate"> 0.72.2   Bug Fixes  * package path (ce09d39) — Thomas JEANNEAU   0.72.1   Bug Fixes  * package export (f5950f5) — Thomas JEANNEAU...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0722"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-72-2">0.72.2</a><a href="https://engine.latechforce.com/blog/fix-0-72-2#0722" class="hash-link" aria-label="Direct link to 0.72.2" title="Direct link to 0.72.2">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-72-2#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+            <description><![CDATA[Changelog for version 0.73.0]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-73-0"><p class="before-truncate"> 0.73.0   Bug Fixes  * linkedin webhook triggger (56b5e19) — Thomas JEANNEAU    Features  * add Notion integration (b600e27) — Thomas JEANNEAU   0.72.2   Bug Fixes  * package path (ce09d39) — Thomas JEANNEAU   0.72.1   Bug Fixes  * package export (f5950f5) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0730"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-73-0">0.73.0</a><a href="https://engine.latechforce.com/blog/release-0-73-0#0730" class="hash-link" aria-label="Direct link to 0.73.0" title="Direct link to 0.73.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-73-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>linkedin webhook triggger (<a href="https://github.com/latechforce/engine/commit/56b5e19e3f873b6c423ef19e34e2ca8a5edb3c8c" target="_blank" rel="noopener noreferrer">56b5e19</a>) — Thomas JEANNEAU</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-73-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>add Notion integration (<a href="https://github.com/latechforce/engine/commit/b600e27008f039156cd480f27cb2c9e4f058975b" target="_blank" rel="noopener noreferrer">b600e27</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0722">0.72.2<a href="https://engine.latechforce.com/blog/release-0-73-0#0722" class="hash-link" aria-label="Direct link to 0.72.2" title="Direct link to 0.72.2">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-73-0#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>package path (<a href="https://github.com/latechforce/engine/commit/ce09d392ba22229e22015bbae8da4d500d8da2a4" target="_blank" rel="noopener noreferrer">ce09d39</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0721">0.72.1<a href="https://engine.latechforce.com/blog/fix-0-72-2#0721" class="hash-link" aria-label="Direct link to 0.72.1" title="Direct link to 0.72.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-72-2#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0721">0.72.1<a href="https://engine.latechforce.com/blog/release-0-73-0#0721" class="hash-link" aria-label="Direct link to 0.72.1" title="Direct link to 0.72.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-73-0#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
 <ul>
 <li>package export (<a href="https://github.com/latechforce/engine/commit/f5950f54dd2b260fa3aba7b3cc1b7c4798f325aa" target="_blank" rel="noopener noreferrer">f5950f5</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
-            <category>Fix</category>
+            <category>Release</category>
         </item>
         <item>
             <title><![CDATA[Release 0.72.0]]></title>
