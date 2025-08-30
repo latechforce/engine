@@ -45,6 +45,11 @@ export class TokenRepository implements ITokenRepository {
           newToken = await integration.getAccessTokenFromShortLivedToken(token.access_token)
           break
         }
+        case 'bearer': {
+          // Bearer tokens don't expire and don't need refresh
+          newToken = token
+          break
+        }
         default: {
           const _exhaustiveCheck: never = integration
           throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

@@ -6,6 +6,7 @@ import type { ConnectionSchema } from './connection.schema'
 import { AirtableActionIntegration } from '../productivity/airtable/airtable-action'
 import { LinkedinAdsActionIntegration } from '../social/linkedin/ads/linkedin-ads-action'
 import { FacebookAdsActionIntegration } from '../social/facebook/ads/facebook-ads-action'
+import { NotionActionIntegration } from '../productivity/notion/notion-action'
 
 export const toActionIntegration = (
   action: IntegrationActionSchema,
@@ -37,6 +38,8 @@ export const toActionIntegration = (
         throw new Error('Connection and action services do not match')
       }
       return new FacebookAdsActionIntegration(action)
+    case 'notion':
+      return new NotionActionIntegration(action)
     default: {
       const _exhaustiveCheck: never = action
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

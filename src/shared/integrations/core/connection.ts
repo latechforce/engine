@@ -4,6 +4,7 @@ import { AirtableConnectionIntegration } from '../productivity/airtable/airtable
 import { LinkedinConnectionIntegration } from '../social/linkedin/linkedin-connection'
 import { FacebookConnectionIntegration } from '../social/facebook/facebook-connection'
 import type { Connection } from '../../../features/connection/domain/entity/connection.entity'
+import { NotionConnectionIntegration } from '../productivity/notion/notion-connection'
 
 export type ConnectionIntegration =
   | CalendlyConnectionIntegration
@@ -11,6 +12,7 @@ export type ConnectionIntegration =
   | GoogleConnectionIntegration
   | LinkedinConnectionIntegration
   | FacebookConnectionIntegration
+  | NotionConnectionIntegration
 
 // Cache to store integration instances
 const integrationCache = new Map<number, ConnectionIntegration>()
@@ -82,6 +84,13 @@ export const toConnectionIntegration = (
           'https://www.googleapis.com/auth/gmail.readonly',
           'https://www.googleapis.com/auth/gmail.modify',
         ]
+      )
+      break
+    case 'notion':
+      integration = new NotionConnectionIntegration(
+        connection.schema,
+        redirectUri,
+        connection.state
       )
       break
     default: {
