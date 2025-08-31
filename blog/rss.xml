@@ -4,10 +4,25 @@
         <title>LTF Engine Blog</title>
         <link>https://engine.latechforce.com/blog</link>
         <description>LTF Engine Blog</description>
-        <lastBuildDate>Sat, 30 Aug 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 31 Aug 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Fix 0.73.1]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-73-1</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-73-1</guid>
+            <pubDate>Sun, 31 Aug 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Changelog for version 0.73.1]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-73-1"><p class="before-truncate"> 0.73.1   Bug Fixes  * linkedin webhook trigger (6c54098) — Thomas JEANNEAU * linkedin webhook trigger (75ecfba) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0731"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-73-1">0.73.1</a><a href="https://engine.latechforce.com/blog/fix-0-73-1#0731" class="hash-link" aria-label="Direct link to 0.73.1" title="Direct link to 0.73.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-73-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>linkedin webhook trigger (<a href="https://github.com/latechforce/engine/commit/6c5409806803780b5f4a5644fd4d15df44e359d4" target="_blank" rel="noopener noreferrer">6c54098</a>) — Thomas JEANNEAU</li>
+<li>linkedin webhook trigger (<a href="https://github.com/latechforce/engine/commit/75ecfba930ba7ed004cc2ae39b7b816578fd1418" target="_blank" rel="noopener noreferrer">75ecfba</a>) — Thomas JEANNEAU</li>
+</ul>]]></content:encoded>
+            <category>Fix</category>
+        </item>
         <item>
             <title><![CDATA[Release 0.73.0]]></title>
             <link>https://engine.latechforce.com/blog/release-0-73-0</link>
@@ -510,29 +525,6 @@
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-54-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li><strong>automation:</strong> should run an automation when a record is created (<a href="https://github.com/latechforce/engine/commit/91a7f0f0a939d3661e17144eddc1d5fdbc67eb70" target="_blank" rel="noopener noreferrer">91a7f0f</a>) — Thomas JEANNEAU</li>
-</ul>]]></content:encoded>
-            <category>Fix</category>
-        </item>
-        <item>
-            <title><![CDATA[Fix 0.53.1]]></title>
-            <link>https://engine.latechforce.com/blog/fix-0-53-1</link>
-            <guid>https://engine.latechforce.com/blog/fix-0-53-1</guid>
-            <pubDate>Thu, 05 Jun 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.53.1]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-53-1"><p class="before-truncate"> 0.53.1   Bug Fixes  * remove broken import (701a971) — Thomas JEANNEAU   0.53.0   Features  * automation: should disable an automation (cadaca4) — Thomas JEANNEAU * automation: should list automations on admin page (253c870) — Thomas JEANNEAU * automation: should open and display an automation run ...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0531"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-53-1">0.53.1</a><a href="https://engine.latechforce.com/blog/fix-0-53-1#0531" class="hash-link" aria-label="Direct link to 0.53.1" title="Direct link to 0.53.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-53-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
-<ul>
-<li>remove broken import (<a href="https://github.com/latechforce/engine/commit/701a971aa26ecf239545db5832f18186842a6665" target="_blank" rel="noopener noreferrer">701a971</a>) — Thomas JEANNEAU</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0530">0.53.0<a href="https://engine.latechforce.com/blog/fix-0-53-1#0530" class="hash-link" aria-label="Direct link to 0.53.0" title="Direct link to 0.53.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-53-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
-<ul>
-<li><strong>automation:</strong> should disable an automation (<a href="https://github.com/latechforce/engine/commit/cadaca4fd9c1205570861218f633c95632c7a4c3" target="_blank" rel="noopener noreferrer">cadaca4</a>) — Thomas JEANNEAU</li>
-<li><strong>automation:</strong> should list automations on admin page (<a href="https://github.com/latechforce/engine/commit/253c870042d9ee2007d580b1d2533381e40a4fef" target="_blank" rel="noopener noreferrer">253c870</a>) — Thomas JEANNEAU</li>
-<li><strong>automation:</strong> should open and display an automation run (<a href="https://github.com/latechforce/engine/commit/fa44771d8b1e238035b8a43e96b9346bd07e4c91" target="_blank" rel="noopener noreferrer">fa44771</a>) — Thomas JEANNEAU</li>
-<li><strong>automation:</strong> should open the edit url (<a href="https://github.com/latechforce/engine/commit/b61329576376bde7153bdb27c0c8ef95d3cad4c7" target="_blank" rel="noopener noreferrer">b613295</a>) — Thomas JEANNEAU</li>
-<li><strong>automation:</strong> should search and filter automation runs (<a href="https://github.com/latechforce/engine/commit/7aaecc45618e59edc1d4d391da407a76a96204d4" target="_blank" rel="noopener noreferrer">7aaecc4</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
             <category>Fix</category>
         </item>
