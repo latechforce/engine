@@ -1,3 +1,11 @@
+## [0.73.1](https://github.com/latechforce/engine/compare/v0.73.0...v0.73.1) (2025-08-31)
+
+
+### Bug Fixes
+
+* linkedin webhook trigger ([6c54098](https://github.com/latechforce/engine/commit/6c5409806803780b5f4a5644fd4d15df44e359d4)) — Thomas JEANNEAU
+* linkedin webhook trigger ([75ecfba](https://github.com/latechforce/engine/commit/75ecfba930ba7ed004cc2ae39b7b816578fd1418)) — Thomas JEANNEAU
+
 # [0.73.0](https://github.com/latechforce/engine/compare/v0.72.2...v0.73.0) (2025-08-30)
 
 
