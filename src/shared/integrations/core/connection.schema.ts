@@ -7,6 +7,7 @@ import { airtableConnectionSchema } from '../productivity/airtable/airtable-conn
 import { facebookConnectionSchema } from '../social/facebook/facebook-connection.schema'
 import { linkedinConnectionSchema } from '../social/linkedin/linkedin-connection.schema'
 import { notionConnectionSchema } from '../productivity/notion/notion-connection.schema'
+import { qontoConnectionSchema } from '../financial/qonto/qonto-connection.schema'
 
 export const connectionSchema = z
   .union([
@@ -16,6 +17,7 @@ export const connectionSchema = z
     linkedinConnectionSchema,
     facebookConnectionSchema,
     notionConnectionSchema,
+    qontoConnectionSchema,
   ])
   .describe('Configuration for connecting to external services and APIs')
   .meta({

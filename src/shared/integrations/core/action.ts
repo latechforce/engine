@@ -7,6 +7,7 @@ import { AirtableActionIntegration } from '../productivity/airtable/airtable-act
 import { LinkedinAdsActionIntegration } from '../social/linkedin/ads/linkedin-ads-action'
 import { FacebookAdsActionIntegration } from '../social/facebook/ads/facebook-ads-action'
 import { NotionActionIntegration } from '../productivity/notion/notion-action'
+import { QontoActionIntegration } from '../financial/qonto/qonto-action'
 
 export const toActionIntegration = (
   action: IntegrationActionSchema,
@@ -40,6 +41,8 @@ export const toActionIntegration = (
       return new FacebookAdsActionIntegration(action)
     case 'notion':
       return new NotionActionIntegration(action)
+    case 'qonto':
+      return new QontoActionIntegration(action)
     default: {
       const _exhaustiveCheck: never = action
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

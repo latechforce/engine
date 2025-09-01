@@ -5,6 +5,7 @@ import { LinkedinConnectionIntegration } from '../social/linkedin/linkedin-conne
 import { FacebookConnectionIntegration } from '../social/facebook/facebook-connection'
 import type { Connection } from '../../../features/connection/domain/entity/connection.entity'
 import { NotionConnectionIntegration } from '../productivity/notion/notion-connection'
+import { QontoConnectionIntegration } from '../financial/qonto/qonto-connection'
 
 export type ConnectionIntegration =
   | CalendlyConnectionIntegration
@@ -13,6 +14,7 @@ export type ConnectionIntegration =
   | LinkedinConnectionIntegration
   | FacebookConnectionIntegration
   | NotionConnectionIntegration
+  | QontoConnectionIntegration
 
 // Cache to store integration instances
 const integrationCache = new Map<number, ConnectionIntegration>()
@@ -92,6 +94,9 @@ export const toConnectionIntegration = (
         redirectUri,
         connection.state
       )
+      break
+    case 'qonto':
+      integration = new QontoConnectionIntegration(connection.schema, redirectUri, connection.state)
       break
     default: {
       const _exhaustiveCheck: never = connection.schema
