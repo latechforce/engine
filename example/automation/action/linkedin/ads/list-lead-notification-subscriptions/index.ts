@@ -40,7 +40,7 @@ export const handlers: Handlers = {
   'https://api.linkedin.com/rest/leadNotifications': {
     GET: async () => ({
       json: {
-        results: [
+        elements: [
           {
             owner: { organization: 'urn:li:organization:5622087' },
             id: 7012,

@@ -14,7 +14,7 @@ test('should run a linkedin list lead notification subscriptions action', async 
 
   // THEN
   const { data }: { data: ListLeadNotificationSubscriptionsResponse } = await response.json()
-  expect(Array.isArray(data.results)).toBe(true)
-  expect(data.results.length).toBeGreaterThanOrEqual(1)
-  expect(data.results[0]?.owner.organization).toBe('urn:li:organization:5622087')
+  expect(Array.isArray(data.elements)).toBe(true)
+  expect(data.elements?.length).toBeGreaterThanOrEqual(1)
+  expect(data.elements?.[0]?.owner.organization).toBe('urn:li:organization:5622087')
 })

@@ -30,7 +30,7 @@ export class LinkedinAdsTriggerIntegration {
           organizationId: checkId,
           sponsoredAccountId: actualLeadType === 'SPONSORED' ? checkId : undefined,
         })
-        const alreadyExists = existing.results?.some((s) => s.webhook === url)
+        const alreadyExists = existing.elements.some((s) => s.webhook === url)
         if (!alreadyExists) {
           await client.createLeadNotificationSubscription({
             webhook: url,

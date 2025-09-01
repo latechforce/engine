@@ -93,10 +93,9 @@ export class LinkedinIntegration {
       organizationId: params.organizationId,
       sponsoredAccountId: params.sponsoredAccountId,
     })
-    console.log('LinkedIn API list response:', JSON.stringify(listResponse, null, 2))
 
     // LinkedIn API might return either 'results' or 'elements' array
-    const subscriptions = listResponse?.results || listResponse?.elements || []
+    const subscriptions = listResponse.elements || []
 
     // Check if we have a valid array of subscriptions
     if (!Array.isArray(subscriptions)) {

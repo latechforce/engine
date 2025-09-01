@@ -37,17 +37,24 @@ export class TriggerHttpAutomationUseCase {
       const challengeCode = url.searchParams.get('challengeCode')
 
       if (challengeCode) {
-        console.log('[LinkedIn Webhook Validation] Starting validation process', {
-          challengeCode,
-          automationIdOrPath,
-          requestUrl: request.url,
-          availableConnections: app.connections.map((c) => ({
-            id: c.id,
-            service: c.service,
-            hasClientSecret: !!c.clientSecret,
-            clientIdSample: c.clientId ? c.clientId.substring(0, 10) + '...' : 'none',
-          })),
-        })
+        this.triggerRepository.log.debug(
+          '[LinkedIn Webhook Validation] Starting validation process ' +
+            JSON.stringify(
+              {
+                challengeCode,
+                automationIdOrPath,
+                requestUrl: request.url,
+                availableConnections: app.connections.map((c) => ({
+                  id: c.id,
+                  service: c.service,
+                  hasClientSecret: !!c.clientSecret,
+                  clientIdSample: c.clientId ? c.clientId.substring(0, 10) + '...' : 'none',
+                })),
+              },
+              null,
+              2
+            )
+        )
 
         // For LinkedIn webhook validation, compute HMAC-SHA256(challengeCode, clientSecret)
         // Try to find a LinkedIn connection with a client secret
@@ -66,12 +73,15 @@ export class TriggerHttpAutomationUseCase {
           return false
         })
 
-        console.log('[LinkedIn Webhook Validation] Found automation:', {
-          found: !!automation,
-          automationName: automation?.schema.name,
-          triggerService: automation?.schema.trigger.service,
-          hasAccount: automation && 'account' in automation.schema.trigger,
-        })
+        this.triggerRepository.log.debug(
+          '[LinkedIn Webhook Validation] Found automation: ' +
+            JSON.stringify({
+              found: !!automation,
+              automationName: automation?.schema.name,
+              triggerService: automation?.schema.trigger.service,
+              hasAccount: automation && 'account' in automation.schema.trigger,
+            })
+        )
 
         // Find LinkedIn connection - either from automation or any available
         let connection = null
@@ -82,22 +92,28 @@ export class TriggerHttpAutomationUseCase {
         ) {
           // Get connection from LinkedIn automation
           connection = app.findConnection(automation.schema.trigger.account)
-          console.log('[LinkedIn Webhook Validation] LinkedIn automation connection:', {
-            accountId: automation.schema.trigger.account,
-            connectionFound: !!connection,
-            hasClientSecret: !!connection?.clientSecret,
-            connectionService: connection?.service,
-          })
+          this.triggerRepository.log.debug(
+            '[LinkedIn Webhook Validation] LinkedIn automation connection: ' +
+              JSON.stringify({
+                accountId: automation.schema.trigger.account,
+                connectionFound: !!connection,
+                hasClientSecret: !!connection?.clientSecret,
+                connectionService: connection?.service,
+              })
+          )
         }
 
         // If no connection from automation, find any LinkedIn connection
         if (!connection) {
           connection = app.connections.find((c) => c.service === 'linkedin-ads')
           if (connection) {
-            console.log('[LinkedIn Webhook Validation] Using first LinkedIn connection found:', {
-              connectionId: connection.id,
-              hasClientSecret: !!connection.clientSecret,
-            })
+            this.triggerRepository.log.debug(
+              '[LinkedIn Webhook Validation] Using first LinkedIn connection found: ' +
+                JSON.stringify({
+                  connectionId: connection.id,
+                  hasClientSecret: !!connection.clientSecret,
+                })
+            )
           }
         }
 
@@ -119,21 +135,27 @@ export class TriggerHttpAutomationUseCase {
           }
 
           challengeResponse = createHmac('sha256', secretToUse).update(challengeCode).digest('hex')
-          console.log('[LinkedIn Webhook Validation] HMAC computed:', {
-            hasSecret: true,
-            secretUsed: connection.service,
-          })
+          this.triggerRepository.log.debug(
+            '[LinkedIn Webhook Validation] HMAC computed: ' +
+              JSON.stringify({
+                hasSecret: true,
+                secretUsed: connection.service,
+              })
+          )
         } else {
-          console.log(
+          this.triggerRepository.log.debug(
             '[LinkedIn Webhook Validation] No client secret found, using challenge code as response'
           )
         }
 
-        console.log('[LinkedIn Webhook Validation] Returning response:', {
-          challengeCode,
-          challengeResponseLength: challengeResponse.length,
-          isHMAC: challengeResponse !== challengeCode,
-        })
+        this.triggerRepository.log.debug(
+          '[LinkedIn Webhook Validation] Returning response: ' +
+            JSON.stringify({
+              challengeCode,
+              challengeResponseLength: challengeResponse.length,
+              isHMAC: challengeResponse !== challengeCode,
+            })
+        )
 
         const response = {
           body: {
