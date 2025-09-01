@@ -2,11 +2,29 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://engine.latechforce.com/blog</id>
     <title>LTF Engine Blog</title>
-    <updated>2025-08-31T00:00:00.000Z</updated>
+    <updated>2025-09-01T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://engine.latechforce.com/blog"/>
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 0.74.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-74-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-74-0"/>
+        <updated>2025-09-01T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Changelog for version 0.74.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-74-0"><p class="before-truncate"> 0.74.0   Bug Fixes  * handle LinkedIn API response variations in lead notification subscriptions (b05c7e5) — Thomas JEANNEAU    Features  * add Qonto integration with create client and create invoice actions (971b3eb) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0740"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-74-0">0.74.0</a><a href="https://engine.latechforce.com/blog/release-0-74-0#0740" class="hash-link" aria-label="Direct link to 0.74.0" title="Direct link to 0.74.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-74-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>handle LinkedIn API response variations in lead notification subscriptions (<a href="https://github.com/latechforce/engine/commit/b05c7e537a9f6fb033d29f8dd03c195a1a2cbbac" target="_blank" rel="noopener noreferrer">b05c7e5</a>) — Thomas JEANNEAU</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-74-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>add Qonto integration with create client and create invoice actions (<a href="https://github.com/latechforce/engine/commit/971b3ebedc1b6534beded95697c7737a29ddd1f0" target="_blank" rel="noopener noreferrer">971b3eb</a>) — Thomas JEANNEAU</li>
+</ul>]]></content>
+        <category label="Release" term="Release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Fix 0.73.1]]></title>
         <id>https://engine.latechforce.com/blog/fix-0-73-1</id>
@@ -507,24 +525,5 @@
 <li><strong>table:</strong> should update a table record (<a href="https://github.com/latechforce/engine/commit/c23b02752d80a607a4224501c85d9ffd014ef2d8" target="_blank" rel="noopener noreferrer">c23b027</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
         <category label="Release" term="Release"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Fix 0.54.1]]></title>
-        <id>https://engine.latechforce.com/blog/fix-0-54-1</id>
-        <link href="https://engine.latechforce.com/blog/fix-0-54-1"/>
-        <updated>2025-06-06T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.54.1]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-54-1"><p class="before-truncate"> 0.54.1   Bug Fixes  * automation: add log function in code action (0e610ac) — Thomas JEANNEAU   0.54.0   Features  * automation: should run an automation when a record is created (91a7f0f) — Thomas JEANNEAU...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0541"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-54-1">0.54.1</a><a href="https://engine.latechforce.com/blog/fix-0-54-1#0541" class="hash-link" aria-label="Direct link to 0.54.1" title="Direct link to 0.54.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-54-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
-<ul>
-<li><strong>automation:</strong> add log function in code action (<a href="https://github.com/latechforce/engine/commit/0e610ac51641aa9714e504666da94b7a77917043" target="_blank" rel="noopener noreferrer">0e610ac</a>) — Thomas JEANNEAU</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0540">0.54.0<a href="https://engine.latechforce.com/blog/fix-0-54-1#0540" class="hash-link" aria-label="Direct link to 0.54.0" title="Direct link to 0.54.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-54-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
-<ul>
-<li><strong>automation:</strong> should run an automation when a record is created (<a href="https://github.com/latechforce/engine/commit/91a7f0f0a939d3661e17144eddc1d5fdbc67eb70" target="_blank" rel="noopener noreferrer">91a7f0f</a>) — Thomas JEANNEAU</li>
-</ul>]]></content>
-        <category label="Fix" term="Fix"/>
     </entry>
 </feed>
