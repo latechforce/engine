@@ -1,3 +1,15 @@
+# [0.74.0](https://github.com/latechforce/engine/compare/v0.73.1...v0.74.0) (2025-09-01)
+
+
+### Bug Fixes
+
+* handle LinkedIn API response variations in lead notification subscriptions ([b05c7e5](https://github.com/latechforce/engine/commit/b05c7e537a9f6fb033d29f8dd03c195a1a2cbbac)) — Thomas JEANNEAU
+
+
+### Features
+
+* add Qonto integration with create client and create invoice actions ([971b3eb](https://github.com/latechforce/engine/commit/971b3ebedc1b6534beded95697c7737a29ddd1f0)) — Thomas JEANNEAU
+
 ## [0.73.1](https://github.com/latechforce/engine/compare/v0.73.0...v0.73.1) (2025-08-31)
 
 
