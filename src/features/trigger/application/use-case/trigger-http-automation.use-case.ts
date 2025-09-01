@@ -124,7 +124,9 @@ export class TriggerHttpAutomationUseCase {
             secretUsed: connection.service,
           })
         } else {
-          console.log('[LinkedIn Webhook Validation] No client secret found, using challenge code as response')
+          console.log(
+            '[LinkedIn Webhook Validation] No client secret found, using challenge code as response'
+          )
         }
 
         console.log('[LinkedIn Webhook Validation] Returning response:', {
