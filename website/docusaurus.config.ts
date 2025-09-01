@@ -140,11 +140,6 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://discord.gg/WzzUZ4XB',
-          label: 'Discord',
-          position: 'right',
-        },
-        {
           href: 'https://github.com/latechforce/engine',
           label: 'GitHub',
           position: 'right',
@@ -202,10 +197,6 @@ const config: Config = {
             {
               label: 'Test Report',
               to: '/test-report',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discord.gg/WzzUZ4XB',
             },
             {
               label: 'GitHub',
