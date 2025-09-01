@@ -120,7 +120,7 @@
     "tailwindcss": "^4.1.12",
     "tw-animate-css": "^1.3.7",
     "winston": "^3.17.0",
-    "zod": "^3.25.76"
+    "zod": "^4.1.5"
   },
   "devDependencies": {
     "@better-auth/cli": "^1.3.7",
