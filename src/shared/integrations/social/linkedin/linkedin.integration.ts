@@ -76,20 +76,40 @@ export class LinkedinIntegration {
       leadType: actualLeadType,
     }
 
-    await ky
+    const createResponse = await ky
       .post(this.baseUrl + '/rest/leadNotifications', {
         headers: this.getHeaders(),
         json: body,
       })
       .json<GetLeadNotificationSubscriptionResponse>()
 
-    const list = await this.listLeadNotificationSubscriptions({
+    // If the create response is valid, return it directly
+    if (createResponse && createResponse.webhook) {
+      return createResponse
+    }
+
+    // Fallback: try to find the subscription in the list
+    const listResponse = await this.listLeadNotificationSubscriptions({
       organizationId: params.organizationId,
       sponsoredAccountId: params.sponsoredAccountId,
     })
-    const response = list.results.find((r) => r.webhook === params.webhook)
+    console.log('LinkedIn API list response:', JSON.stringify(listResponse, null, 2))
+
+    // LinkedIn API might return either 'results' or 'elements' array
+    const subscriptions = listResponse?.results || listResponse?.elements || []
+
+    // Check if we have a valid array of subscriptions
+    if (!Array.isArray(subscriptions)) {
+      throw new Error(
+        `Failed to create lead notification subscription - invalid response structure from LinkedIn API. Response: ${JSON.stringify(listResponse)}`
+      )
+    }
+
+    const response = subscriptions.find((r) => r.webhook === params.webhook)
     if (!response) {
-      throw new Error('Failed to create lead notification subscription')
+      throw new Error(
+        `Failed to create lead notification subscription - subscription not found after creation. Available webhooks: ${subscriptions.map((s) => s.webhook).join(', ')}`
+      )
     }
     return response
   }
