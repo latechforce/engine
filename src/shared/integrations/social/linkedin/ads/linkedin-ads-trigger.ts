@@ -30,7 +30,35 @@ export class LinkedinAdsTriggerIntegration {
           organizationId: checkId,
           sponsoredAccountId: actualLeadType === 'SPONSORED' ? checkId : undefined,
         })
-        const alreadyExists = existing.elements.some((s) => s.webhook === url)
+
+        // Remove duplicate webhooks - keep only the first occurrence of each unique webhook
+        const webhookMap = new Map<string, (typeof existing.elements)[0]>()
+        const duplicatesToDelete: number[] = []
+
+        for (const element of existing.elements) {
+          if (element.webhook) {
+            if (webhookMap.has(element.webhook)) {
+              // This is a duplicate, mark it for deletion
+              duplicatesToDelete.push(element.id)
+            } else {
+              // First occurrence, keep it
+              webhookMap.set(element.webhook, element)
+            }
+          }
+        }
+
+        // Delete duplicate webhooks
+        for (const id of duplicatesToDelete) {
+          await client.deleteLeadNotificationSubscription(id)
+        }
+
+        // Check if current webhook already exists (after deduplication)
+        const alreadyExists =
+          webhookMap.has(url) ||
+          Array.from(webhookMap.keys()).some(
+            (webhook) => url.includes(webhook) || webhook.includes(url)
+          )
+
         if (!alreadyExists) {
           await client.createLeadNotificationSubscription({
             webhook: url,

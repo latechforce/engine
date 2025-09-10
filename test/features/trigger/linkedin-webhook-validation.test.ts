@@ -30,6 +30,7 @@ describe('LinkedIn Webhook Validation', () => {
     const mockTriggerRepository = {
       log: {
         http: () => {},
+        debug: () => {},
       },
       validateData: () => true,
     }

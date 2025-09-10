@@ -14,11 +14,8 @@ import { createHmac } from 'crypto'
 export class TriggerHttpAutomationUseCase {
   constructor(
     private readonly triggerRepository: ITriggerRepository,
-
     private readonly runRepository: IRunRepository,
-
     private readonly objectRepository: IObjectRepository,
-
     private readonly automationRepository: IAutomationRepository
   ) {}
 

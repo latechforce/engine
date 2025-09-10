@@ -29,26 +29,28 @@ const mockNotionClient = (handlers: Handlers) => {
             return response?.json
           },
           update: async () => {
-            const response = await handlers['https://api.notion.com/v1/pages/mock-page-id']?.PATCH?.()
+            const response =
+              await handlers['https://api.notion.com/v1/pages/mock-page-id']?.PATCH?.()
             return response?.json
           },
-        };
+        }
         databases = {
           query: async () => {
-            const response = await handlers['https://api.notion.com/v1/databases/mock-database-id/query']?.POST?.()
+            const response =
+              await handlers['https://api.notion.com/v1/databases/mock-database-id/query']?.POST?.()
             return response?.json
           },
-        };
+        }
         search = async () => {
-            const response = await handlers['https://api.notion.com/v1/search']?.POST?.()
-            return response?.json
-        };
+          const response = await handlers['https://api.notion.com/v1/search']?.POST?.()
+          return response?.json
+        }
         users = {
           me: async () => {
             const response = await handlers['https://api.notion.com/v1/users/me']?.GET?.()
             return response?.json
           },
-        };
+        }
       },
     }
   })

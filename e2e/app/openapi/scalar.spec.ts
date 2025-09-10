@@ -6,9 +6,9 @@ test('should display the API path', async ({ startExampleApp }) => {
 
   // WHEN
   await page.goto('/openapi/scalar')
-  await page.getByRole('link', { name: 'Automations', exact: true }).click()
 
   // THEN
+  await expect(page.getByRole('link', { name: 'Automations', exact: true })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Trigger "post"' })).toBeVisible()
 })
 

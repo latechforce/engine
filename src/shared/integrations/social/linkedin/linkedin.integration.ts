@@ -94,7 +94,7 @@ export class LinkedinIntegration {
       sponsoredAccountId: params.sponsoredAccountId,
     })
 
-    // LinkedIn API might return either 'results' or 'elements' array
+    // LinkedIn API might return 'elements' array
     const subscriptions = listResponse.elements || []
 
     // Check if we have a valid array of subscriptions
@@ -111,5 +111,11 @@ export class LinkedinIntegration {
       )
     }
     return response
+  }
+
+  async deleteLeadNotificationSubscription(subscriptionId: number): Promise<void> {
+    await ky.delete(this.baseUrl + `/rest/leadNotifications/${subscriptionId}`, {
+      headers: this.getHeaders(),
+    })
   }
 }
