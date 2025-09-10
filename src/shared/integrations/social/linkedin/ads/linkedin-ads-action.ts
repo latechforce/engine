@@ -20,6 +20,10 @@ export class LinkedinAdsActionIntegration {
         const { organizationId } = this.schema.params
         return client.listLeadNotificationSubscriptions({ organizationId })
       }
+      case 'get-lead-form-response': {
+        const { leadResponseId } = this.schema.params
+        return client.getLeadFormResponse(leadResponseId)
+      }
       default: {
         throw new Error('Unhandled LinkedIn action')
       }

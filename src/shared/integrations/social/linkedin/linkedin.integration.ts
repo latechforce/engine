@@ -2,6 +2,7 @@ import ky from 'ky'
 import type {
   GetLeadNotificationSubscriptionResponse,
   ListLeadNotificationSubscriptionsResponse,
+  GetLeadFormResponseResponse,
 } from './linkedin.types'
 
 export class LinkedinIntegration {
@@ -117,5 +118,13 @@ export class LinkedinIntegration {
     await ky.delete(this.baseUrl + `/rest/leadNotifications/${subscriptionId}`, {
       headers: this.getHeaders(),
     })
+  }
+
+  async getLeadFormResponse(leadResponseId: string): Promise<GetLeadFormResponseResponse> {
+    return await ky
+      .get(this.baseUrl + `/rest/leadFormResponses/${encodeURIComponent(leadResponseId)}`, {
+        headers: this.getHeaders(),
+      })
+      .json<GetLeadFormResponseResponse>()
   }
 }

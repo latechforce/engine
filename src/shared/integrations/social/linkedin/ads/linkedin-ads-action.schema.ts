@@ -31,8 +31,28 @@ const listLeadSubscriptionsLinkedinActionSchema = baseLinkedinActionSchema
     description: 'Lists LinkedIn lead notification subscriptions for an organization.',
   })
 
+const getLeadFormResponseLinkedinActionSchema = baseLinkedinActionSchema
+  .extend({
+    action: z.literal('get-lead-form-response'),
+    params: z.object({
+      leadResponseId: z.string().meta({
+        title: 'Lead Response ID',
+        description:
+          'The unique identifier for the lead form response (e.g., urn:li:leadFormResponse:123456)',
+      }),
+    }),
+  })
+  .meta({
+    title: 'Get Single Lead Form Response',
+    description: 'Retrieves a single LinkedIn Lead Form Response by its ID.',
+  })
+
 export const linkedinAdsActionSchema = z
-  .union([createLeadSubscriptionLinkedinActionSchema, listLeadSubscriptionsLinkedinActionSchema])
+  .union([
+    createLeadSubscriptionLinkedinActionSchema,
+    listLeadSubscriptionsLinkedinActionSchema,
+    getLeadFormResponseLinkedinActionSchema,
+  ])
   .meta({
     title: 'LinkedIn Ads',
     description: 'Actions to interact with LinkedIn Ads APIs',
