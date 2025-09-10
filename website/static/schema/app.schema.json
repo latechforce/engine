@@ -2590,6 +2590,56 @@
                     "params"
                   ],
                   "additionalProperties": false
+                },
+                {
+                  "title": "Get Single Lead Form Response",
+                  "description": "Retrieves a single LinkedIn Lead Form Response by its ID.",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "account": {
+                      "anyOf": [
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "service": {
+                      "type": "string",
+                      "const": "linkedin-ads"
+                    },
+                    "action": {
+                      "type": "string",
+                      "const": "get-lead-form-response"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "leadResponseId": {
+                          "title": "Lead Response ID",
+                          "description": "The unique identifier for the lead form response (e.g., urn:li:leadFormResponse:123456)",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "leadResponseId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "account",
+                    "service",
+                    "action",
+                    "params"
+                  ],
+                  "additionalProperties": false
                 }
               ]
             },
