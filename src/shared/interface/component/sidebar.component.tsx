@@ -22,6 +22,7 @@ import {
 import { DropdownMenuItem } from '../ui/dropdown-menu.ui'
 import { DropdownMenuContent } from '../ui/dropdown-menu.ui'
 import { DropdownMenu } from '../ui/dropdown-menu.ui'
+import { Tooltip, TooltipTrigger, TooltipContent } from '../ui/tooltip.ui'
 import { Link } from '@tanstack/react-router'
 import { authClient } from '../../../features/user/interface/lib/auth.lib'
 
@@ -64,35 +65,45 @@ export function Sidebar({ title, description, groups, startPath, ...props }: Sid
           <SidebarGroup key={group.title}>
             <SidebarGroupLabel>{group.title}</SidebarGroupLabel>
             {group.action && (
-              <Link to={group.action.url}>
-                <SidebarGroupAction
-                  title={group.action.title}
-                  className="cursor-pointer"
-                >
-                  <group.action.icon /> <span className="sr-only">{group.action.title}</span>
-                </SidebarGroupAction>
-              </Link>
+              <Tooltip delayDuration={1000}>
+                <TooltipTrigger asChild>
+                  <Link to={group.action.url}>
+                    <SidebarGroupAction
+                      title={group.action.title}
+                      className="cursor-pointer"
+                    >
+                      <group.action.icon /> <span className="sr-only">{group.action.title}</span>
+                    </SidebarGroupAction>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="right">{group.action.title}</TooltipContent>
+              </Tooltip>
             )}
             <SidebarGroupContent>
               <SidebarMenu>
                 {group.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={
-                        item.url === startPath
-                          ? window.location.pathname === startPath
-                          : window.location.pathname.startsWith(item.url)
-                      }
-                    >
-                      <Link
-                        to={item.url}
-                        target={item.newPage ? '_blank' : undefined}
-                      >
-                        <item.icon />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
+                    <Tooltip delayDuration={500}>
+                      <TooltipTrigger asChild>
+                        <SidebarMenuButton
+                          asChild
+                          isActive={
+                            item.url === startPath
+                              ? window.location.pathname === startPath
+                              : window.location.pathname.startsWith(item.url)
+                          }
+                        >
+                          <Link
+                            to={item.url}
+                            target={item.newPage ? '_blank' : undefined}
+                          >
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">{item.title}</TooltipContent>
+                    </Tooltip>
                   </SidebarMenuItem>
                 ))}
               </SidebarMenu>
