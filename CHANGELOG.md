@@ -1,3 +1,10 @@
+# [0.76.0](https://github.com/latechforce/engine/compare/v0.75.0...v0.76.0) (2025-09-10)
+
+
+### Features
+
+* add tooltips to sidebar component links ([a448462](https://github.com/latechforce/engine/commit/a448462caa04ec7586021cd7d7f4091a1cc40cbc)) — Thomas JEANNEAU
+
 # [0.75.0](https://github.com/latechforce/engine/compare/v0.74.0...v0.75.0) (2025-09-10)
 
 
