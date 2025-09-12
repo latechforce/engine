@@ -654,4 +654,54 @@ describe('start', () => {
     // THEN
     expect(call).toThrow('Account "airtable" not found for action "airtable/list-webhook-payloads"')
   })
+
+  it('should throw an error if there are duplicate page names', async () => {
+    const schema: AppSchema = {
+      pages: [
+        {
+          name: 'page',
+          path: '/page-1',
+          head: [],
+          body: [],
+        },
+        {
+          name: 'page',
+          path: '/page-2',
+          head: [],
+          body: [],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Duplicate page name: page')
+  })
+
+  it('should throw an error if there are duplicate page paths', async () => {
+    const schema: AppSchema = {
+      pages: [
+        {
+          name: 'page-1',
+          path: '/page',
+          head: [],
+          body: [],
+        },
+        {
+          name: 'page-2',
+          path: '/page',
+          head: [],
+          body: [],
+        },
+      ],
+    }
+
+    // WHEN
+    const call = () => new App().start(schema)
+
+    // THEN
+    expect(call).toThrow('Duplicate page path: /page')
+  })
 })

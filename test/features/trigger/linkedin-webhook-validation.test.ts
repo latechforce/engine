@@ -81,6 +81,7 @@ describe('LinkedIn Webhook Validation', () => {
       appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
+      pages: [],
       connections: [
         {
           id: 123456,
@@ -140,6 +141,7 @@ describe('LinkedIn Webhook Validation', () => {
       appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
+      pages: [],
       connections: [],
       tables: [],
       forms: [],
@@ -186,6 +188,7 @@ describe('LinkedIn Webhook Validation', () => {
       appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
+      pages: [],
       connections: [
         {
           id: 123456,
@@ -247,6 +250,7 @@ describe('LinkedIn Webhook Validation', () => {
       appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
+      pages: [],
       connections: [
         {
           id: 789012,
@@ -305,6 +309,7 @@ describe('LinkedIn Webhook Validation', () => {
       appVersion: '1.0.0',
       description: 'Test app',
       buckets: [],
+      pages: [],
       connections: [],
       tables: [],
       forms: [],
