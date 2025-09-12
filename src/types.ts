@@ -13,6 +13,7 @@ export type { TableSchema } from './features/table/domain/schema/table.schema'
 export type { ConnectionSchema } from './shared/integrations/core/connection.schema'
 export type { FormSchema } from './features/form/domain/schema/form.schema'
 export type { BucketSchema } from './features/bucket/domain/schema/bucket.schema'
+export type { PageSchema } from './features/page/domain/schema/page.schema'
 
 // Infrastructure types
 export type { CodeContext } from './features/action/infrastructure/service/code.service'
