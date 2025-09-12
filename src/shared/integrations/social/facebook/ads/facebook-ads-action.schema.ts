@@ -17,9 +17,25 @@ const listAppSubscriptionsFacebookActionSchema = baseFacebookActionSchema
     description: 'Lists subscriptions configured on the Facebook App',
   })
 
-export const facebookActionSchema = z.union([listAppSubscriptionsFacebookActionSchema]).meta({
-  title: 'Facebook Ads',
-  description: 'Actions to interact with Facebook Ads APIs',
-})
+const getLeadgenFacebookActionSchema = baseFacebookActionSchema
+  .extend({
+    action: z.literal('get-leadgen'),
+    params: z.object({
+      leadgenId: z
+        .string()
+        .meta({ title: 'Leadgen ID', description: 'The leadgen_id from Facebook webhook data' }),
+    }),
+  })
+  .meta({
+    title: 'Get LeadGen',
+    description: 'Retrieves lead generation data using the leadgen_id from webhook',
+  })
+
+export const facebookActionSchema = z
+  .union([listAppSubscriptionsFacebookActionSchema, getLeadgenFacebookActionSchema])
+  .meta({
+    title: 'Facebook Ads',
+    description: 'Actions to interact with Facebook Ads APIs',
+  })
 
 export type FacebookActionSchema = z.infer<typeof facebookActionSchema>

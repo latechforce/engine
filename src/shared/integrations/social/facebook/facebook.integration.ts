@@ -4,6 +4,7 @@ import type {
   SubscribePageToLeadgenResponse,
   ListAppSubscriptionsResponse,
   CreateAppSubscriptionResponse,
+  GetLeadgenDataResponse,
 } from './facebook.types'
 
 export class FacebookIntegration {
@@ -83,5 +84,13 @@ export class FacebookIntegration {
     } catch {
       return false
     }
+  }
+
+  async getLeadgenData(leadgenId: string): Promise<GetLeadgenDataResponse> {
+    return await ky
+      .get(`${this.graphUrl}/${encodeURIComponent(leadgenId)}`, {
+        headers: this.getHeaders(),
+      })
+      .json<GetLeadgenDataResponse>()
   }
 }

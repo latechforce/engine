@@ -12,6 +12,10 @@ export class FacebookAdsActionIntegration {
         const { appId } = this.schema.params
         return client.listAppSubscriptions(appId)
       }
+      case 'get-leadgen': {
+        const { leadgenId } = this.schema.params
+        return client.getLeadgenData(leadgenId)
+      }
       default: {
         throw new Error('Unhandled Facebook action')
       }

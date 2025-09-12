@@ -28,3 +28,23 @@ export type AppSubscription = {
 export type ListAppSubscriptionsResponse = {
   data: AppSubscription[]
 }
+
+export type LeadgenFieldData = {
+  name: string
+  values: string[]
+}
+
+export type GetLeadgenDataResponse = {
+  id: string
+  ad_id: string
+  form_id: string
+  field_data: LeadgenFieldData[]
+  created_time: string
+  page_id: string
+  adgroup_id: string
+  campaign_id: string
+  is_organic?: boolean
+  partner_name?: string
+  platform?: string
+  retailer_item_id?: string
+}
