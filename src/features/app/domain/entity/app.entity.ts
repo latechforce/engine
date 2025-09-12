@@ -5,6 +5,7 @@ import { Table } from '../../../table/domain/entity/table.entity'
 import { Form } from '../../../form/domain/entity/form.entity'
 import { Bucket } from '../../../bucket/domain/entity/bucket.entity'
 import { Connection } from '../../../connection/domain/entity/connection.entity'
+import { Page } from '../../../page/domain/entity/page.entity'
 
 export class App {
   public readonly automations: Automation[]
@@ -12,6 +13,7 @@ export class App {
   public readonly connections: Connection[]
   public readonly forms: Form[]
   public readonly buckets: Bucket[]
+  public readonly pages: Page[]
 
   constructor(
     public readonly schema: AppSchemaValidated,
@@ -111,6 +113,20 @@ export class App {
       }
       bucketIds.add(bucket.id)
     }
+    const pageNames = new Set<string>()
+    for (const page of this.schema.pages) {
+      if (pageNames.has(page.name)) {
+        throw new Error(`Duplicate page name: ${page.name}`)
+      }
+      pageNames.add(page.name)
+    }
+    const pagePaths = new Set<string>()
+    for (const page of this.schema.pages) {
+      if (pagePaths.has(page.path)) {
+        throw new Error(`Duplicate page path: ${page.path}`)
+      }
+      pagePaths.add(page.path)
+    }
     this.connections = this.schema.connections.map((connection) => new Connection(connection))
     this.automations = this.schema.automations.map(
       (automation) => new Automation(automation, this.connections)
@@ -118,6 +134,7 @@ export class App {
     this.tables = this.schema.tables.map((table) => new Table(table))
     this.forms = this.schema.forms.map((form) => new Form(form))
     this.buckets = this.schema.buckets.map((bucket) => new Bucket(bucket))
+    this.pages = this.schema.pages.map((page) => new Page(page))
   }
 
   url(path = ''): string {

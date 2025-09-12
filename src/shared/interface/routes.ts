@@ -18,6 +18,7 @@ import { automationRoutes } from '../../features/automation/interface/routes'
 import { connectionRoutes } from '../../features/connection/interface/routes'
 import { formRoutes } from '../../features/form/interface/routes'
 import { bucketRoutes } from '../../features/bucket/interface/routes'
+// import { pageRoutes } from '../../features/page/interface/routes' // Removed - pages now served directly by Bun server
 
 export const apiRoutes = new Hono<HonoType>()
   .use(loggerMiddleware)

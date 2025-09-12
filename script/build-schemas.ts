@@ -5,6 +5,8 @@ import { connectionSchema } from '../src/features/connection/domain/schema/conne
 import { formSchema } from '../src/features/form/domain/schema/form.schema'
 import { bucketSchema } from '../src/features/bucket/domain/schema/bucket.schema'
 import { metadataSchema } from '../src/features/app/domain/schema/metadata.schema'
+import { pageSchema } from '../src/features/page/domain/schema'
+
 import pkg from '../package.json'
 
 import fs from 'fs'
@@ -25,6 +27,7 @@ const schemas = [
   { name: 'connection', schema: connectionSchema },
   { name: 'form', schema: formSchema },
   { name: 'bucket', schema: bucketSchema },
+  { name: 'page', schema: pageSchema },
 ]
 
 schemas.forEach(({ name, schema }) => {

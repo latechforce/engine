@@ -57,6 +57,14 @@ export class AppRepository implements IAppRepository {
     await this.database.migrate()
     await this.auth.setup()
     this.server.addOpenAPIDoc(app)
+
+    // Register page routes with the server
+    for (const page of app.pages) {
+      this.server.registerPageRoute(page.path, async () => {
+        return page.generateHTML() // Currently synchronous, but wrapped in async for future SSR support
+      })
+      this.logger.info(`Registered page route: ${page.path} (${page.name})`)
+    }
   }
 
   async start() {
