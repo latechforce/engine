@@ -1,3 +1,10 @@
+## [0.78.1](https://github.com/latechforce/engine/compare/v0.78.0...v0.78.1) (2025-09-12)
+
+
+### Bug Fixes
+
+* export PageSchema ([148a960](https://github.com/latechforce/engine/commit/148a9605f7743fd98062c52fc5401294f1b8b07d)) — Thomas JEANNEAU
+
 # [0.78.0](https://github.com/latechforce/engine/compare/v0.77.0...v0.78.0) (2025-09-12)
 
 
