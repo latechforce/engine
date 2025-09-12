@@ -1,3 +1,10 @@
+# [0.77.0](https://github.com/latechforce/engine/compare/v0.76.0...v0.77.0) (2025-09-12)
+
+
+### Features
+
+* add Facebook LeadGen API integration ([2c995e4](https://github.com/latechforce/engine/commit/2c995e457e18bc4db38dfd017ceb4efd563cd3fe)) — Thomas JEANNEAU
+
 # [0.76.0](https://github.com/latechforce/engine/compare/v0.75.0...v0.76.0) (2025-09-10)
 
 
