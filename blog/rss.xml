@@ -9,25 +9,30 @@
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <item>
-            <title><![CDATA[Release 0.78.0]]></title>
-            <link>https://engine.latechforce.com/blog/release-0-78-0</link>
-            <guid>https://engine.latechforce.com/blog/release-0-78-0</guid>
+            <title><![CDATA[Fix 0.78.1]]></title>
+            <link>https://engine.latechforce.com/blog/fix-0-78-1</link>
+            <guid>https://engine.latechforce.com/blog/fix-0-78-1</guid>
             <pubDate>Fri, 12 Sep 2025 00:00:00 GMT</pubDate>
-            <description><![CDATA[Changelog for version 0.78.0]]></description>
-            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-78-0"><p class="before-truncate"> 0.78.0   Features  * add page feature with domain schema and enhanced HTML template (0396840) — Thomas JEANNEAU * complete page head elements schema and e2e tests (125ec4f) — Thomas JEANNEAU * implement direct Bun server static page serving (a23eae8) — Thomas JEANNEAU   0.77.0   Features  * add Fac...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0780"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-78-0">0.78.0</a><a href="https://engine.latechforce.com/blog/release-0-78-0#0780" class="hash-link" aria-label="Direct link to 0.78.0" title="Direct link to 0.78.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-78-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+            <description><![CDATA[Changelog for version 0.78.1]]></description>
+            <content:encoded><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-78-1"><p class="before-truncate"> 0.78.1   Bug Fixes  * export PageSchema (148a960) — Thomas JEANNEAU   0.78.0   Features  * add page feature with domain schema and enhanced HTML template (0396840) — Thomas JEANNEAU * complete page head elements schema and e2e tests (125ec4f) — Thomas JEANNEAU * implement direct Bun server static p...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0781"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-78-1">0.78.1</a><a href="https://engine.latechforce.com/blog/fix-0-78-1#0781" class="hash-link" aria-label="Direct link to 0.78.1" title="Direct link to 0.78.1">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-78-1#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>export PageSchema (<a href="https://github.com/latechforce/engine/commit/148a9605f7743fd98062c52fc5401294f1b8b07d" target="_blank" rel="noopener noreferrer">148a960</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0780">0.78.0<a href="https://engine.latechforce.com/blog/fix-0-78-1#0780" class="hash-link" aria-label="Direct link to 0.78.0" title="Direct link to 0.78.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-78-1#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li>add page feature with domain schema and enhanced HTML template (<a href="https://github.com/latechforce/engine/commit/03968403f6f4132f18a2f2abf6d052155a290dfd" target="_blank" rel="noopener noreferrer">0396840</a>) — Thomas JEANNEAU</li>
 <li>complete page head elements schema and e2e tests (<a href="https://github.com/latechforce/engine/commit/125ec4ff067dcc14bea80ba7afbb7d97bd20c317" target="_blank" rel="noopener noreferrer">125ec4f</a>) — Thomas JEANNEAU</li>
 <li>implement direct Bun server static page serving (<a href="https://github.com/latechforce/engine/commit/a23eae81015f36b63bea71c0d4b2db1275aa15e6" target="_blank" rel="noopener noreferrer">a23eae8</a>) — Thomas JEANNEAU</li>
 </ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0770">0.77.0<a href="https://engine.latechforce.com/blog/release-0-78-0#0770" class="hash-link" aria-label="Direct link to 0.77.0" title="Direct link to 0.77.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features-1">Features<a href="https://engine.latechforce.com/blog/release-0-78-0#features-1" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0770">0.77.0<a href="https://engine.latechforce.com/blog/fix-0-78-1#0770" class="hash-link" aria-label="Direct link to 0.77.0" title="Direct link to 0.77.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features-1">Features<a href="https://engine.latechforce.com/blog/fix-0-78-1#features-1" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li>add Facebook LeadGen API integration (<a href="https://github.com/latechforce/engine/commit/2c995e457e18bc4db38dfd017ceb4efd563cd3fe" target="_blank" rel="noopener noreferrer">2c995e4</a>) — Thomas JEANNEAU</li>
 </ul>]]></content:encoded>
-            <category>Release</category>
+            <category>Fix</category>
         </item>
         <item>
             <title><![CDATA[Release 0.76.0]]></title>
