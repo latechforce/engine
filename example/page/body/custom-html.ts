@@ -5,17 +5,7 @@ export default {
     {
       name: 'custom-html',
       path: '/custom-html',
-      head: [
-        {
-          type: 'title',
-          content: 'Custom HTML page',
-        },
-        {
-          type: 'meta',
-          name: 'description',
-          content: 'Custom HTML page',
-        },
-      ],
+      head: [],
       body: [
         {
           type: 'custom-html',

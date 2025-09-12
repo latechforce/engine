@@ -3,11 +3,11 @@ import { z } from 'zod/v4'
 
 export const metaHeadElementSchema = z
   .object({
-    type: z
+    tag: z
       .literal('meta')
       .describe('Type of head element')
       .meta({
-        title: 'Head Element Type',
+        title: 'Head Element Tag',
         examples: ['meta'],
       }),
     name: z

@@ -3,11 +3,11 @@ import { z } from 'zod/v4'
 
 export const titleElementSchema = z
   .object({
-    type: z
+    tag: z
       .literal('title')
       .describe('Type of head element')
       .meta({
-        title: 'Head Element Type',
+        title: 'Head Element Tag',
         examples: ['title'],
       }),
     content: z
