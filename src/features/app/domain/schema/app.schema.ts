@@ -6,10 +6,23 @@ import { tableSchema } from '../../../table/domain/schema/table.schema'
 import { connectionSchema } from '../../../../shared/integrations/core/connection.schema'
 import { formSchema } from '../../../form/domain/schema/form.schema'
 import { bucketSchema } from '../../../bucket/domain/schema/bucket.schema'
+import { pageSchema } from '../../../page/domain/schema/page.schema'
 import { metadataSchema } from './metadata.schema'
 
 export const appSchema = metadataSchema
   .extend({
+    pages: z
+      .array(pageSchema)
+      .default([])
+      .describe('List of pages in the application')
+      .meta({
+        title: 'Pages',
+        minItems: 1,
+        uiSchema: {
+          'ui:ArrayFieldTemplate': 'collapsible',
+          'ui:options': { orderable: true, removable: true, addable: true },
+        },
+      }),
     automations: z
       .array(automationSchema)
       .default([])

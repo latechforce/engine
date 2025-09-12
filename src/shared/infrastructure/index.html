@@ -1,16 +1,59 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <!-- Favicon and Icons -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/favicon.ico"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon-16x16.png"
+    />
+    <link
+      rel="manifest"
+      href="/manifest.json"
+    />
+
+    <!-- Stylesheets -->
     <link
       rel="stylesheet"
       href="tailwindcss"
     />
+
+    <!-- Module Script -->
     <script
       src="./../interface/app.tsx"
       type="module"
     ></script>
   </head>
   <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px; font-family: sans-serif">
+        <h1>JavaScript Required</h1>
+        <p>This application requires JavaScript to be enabled in your browser.</p>
+      </div>
+    </noscript>
     <div id="root"></div>
   </body>
 </html>
