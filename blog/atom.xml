@@ -8,14 +8,21 @@
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Release 0.77.0]]></title>
-        <id>https://engine.latechforce.com/blog/release-0-77-0</id>
-        <link href="https://engine.latechforce.com/blog/release-0-77-0"/>
+        <title type="html"><![CDATA[Release 0.78.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-78-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-78-0"/>
         <updated>2025-09-12T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.77.0]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-77-0"><p class="before-truncate"> 0.77.0   Features  * add Facebook LeadGen API integration (2c995e4) — Thomas JEANNEAU...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0770"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-77-0">0.77.0</a><a href="https://engine.latechforce.com/blog/release-0-77-0#0770" class="hash-link" aria-label="Direct link to 0.77.0" title="Direct link to 0.77.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-77-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+        <summary type="html"><![CDATA[Changelog for version 0.78.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-78-0"><p class="before-truncate"> 0.78.0   Features  * add page feature with domain schema and enhanced HTML template (0396840) — Thomas JEANNEAU * complete page head elements schema and e2e tests (125ec4f) — Thomas JEANNEAU * implement direct Bun server static page serving (a23eae8) — Thomas JEANNEAU   0.77.0   Features  * add Fac...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0780"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-78-0">0.78.0</a><a href="https://engine.latechforce.com/blog/release-0-78-0#0780" class="hash-link" aria-label="Direct link to 0.78.0" title="Direct link to 0.78.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-78-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>add page feature with domain schema and enhanced HTML template (<a href="https://github.com/latechforce/engine/commit/03968403f6f4132f18a2f2abf6d052155a290dfd" target="_blank" rel="noopener noreferrer">0396840</a>) — Thomas JEANNEAU</li>
+<li>complete page head elements schema and e2e tests (<a href="https://github.com/latechforce/engine/commit/125ec4ff067dcc14bea80ba7afbb7d97bd20c317" target="_blank" rel="noopener noreferrer">125ec4f</a>) — Thomas JEANNEAU</li>
+<li>implement direct Bun server static page serving (<a href="https://github.com/latechforce/engine/commit/a23eae81015f36b63bea71c0d4b2db1275aa15e6" target="_blank" rel="noopener noreferrer">a23eae8</a>) — Thomas JEANNEAU</li>
+</ul>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0770">0.77.0<a href="https://engine.latechforce.com/blog/release-0-78-0#0770" class="hash-link" aria-label="Direct link to 0.77.0" title="Direct link to 0.77.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features-1">Features<a href="https://engine.latechforce.com/blog/release-0-78-0#features-1" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
 <ul>
 <li>add Facebook LeadGen API integration (<a href="https://github.com/latechforce/engine/commit/2c995e457e18bc4db38dfd017ceb4efd563cd3fe" target="_blank" rel="noopener noreferrer">2c995e4</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
