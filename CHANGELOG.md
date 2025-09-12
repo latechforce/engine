@@ -1,3 +1,12 @@
+# [0.78.0](https://github.com/latechforce/engine/compare/v0.77.0...v0.78.0) (2025-09-12)
+
+
+### Features
+
+* add page feature with domain schema and enhanced HTML template ([0396840](https://github.com/latechforce/engine/commit/03968403f6f4132f18a2f2abf6d052155a290dfd)) — Thomas JEANNEAU
+* complete page head elements schema and e2e tests ([125ec4f](https://github.com/latechforce/engine/commit/125ec4ff067dcc14bea80ba7afbb7d97bd20c317)) — Thomas JEANNEAU
+* implement direct Bun server static page serving ([a23eae8](https://github.com/latechforce/engine/commit/a23eae81015f36b63bea71c0d4b2db1275aa15e6)) — Thomas JEANNEAU
+
 # [0.77.0](https://github.com/latechforce/engine/compare/v0.76.0...v0.77.0) (2025-09-12)
 
 
