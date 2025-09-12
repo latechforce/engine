@@ -2,11 +2,25 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://engine.latechforce.com/blog</id>
     <title>LTF Engine Blog</title>
-    <updated>2025-09-10T00:00:00.000Z</updated>
+    <updated>2025-09-12T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://engine.latechforce.com/blog"/>
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 0.77.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-77-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-77-0"/>
+        <updated>2025-09-12T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Changelog for version 0.77.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-77-0"><p class="before-truncate"> 0.77.0   Features  * add Facebook LeadGen API integration (2c995e4) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0770"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-77-0">0.77.0</a><a href="https://engine.latechforce.com/blog/release-0-77-0#0770" class="hash-link" aria-label="Direct link to 0.77.0" title="Direct link to 0.77.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-77-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>add Facebook LeadGen API integration (<a href="https://github.com/latechforce/engine/commit/2c995e457e18bc4db38dfd017ceb4efd563cd3fe" target="_blank" rel="noopener noreferrer">2c995e4</a>) — Thomas JEANNEAU</li>
+</ul>]]></content>
+        <category label="Release" term="Release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Release 0.76.0]]></title>
         <id>https://engine.latechforce.com/blog/release-0-76-0</id>
@@ -514,21 +528,5 @@
 <li>event memory leak (<a href="https://github.com/latechforce/engine/commit/ac2ab00af820b219e13edf8ae3971453ac44bdec" target="_blank" rel="noopener noreferrer">ac2ab00</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
         <category label="Fix" term="Fix"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Release 0.56.0]]></title>
-        <id>https://engine.latechforce.com/blog/release-0-56-0</id>
-        <link href="https://engine.latechforce.com/blog/release-0-56-0"/>
-        <updated>2025-06-17T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.56.0]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-56-0"><p class="before-truncate"> 0.56.0   Features  * action: add green test: should run a google gmail send email action (045a243) — Thomas JEANNEAU * action: add green test: should run a google sheets append values action (496b4fd) — Thomas JEANNEAU * action: add green test: should trigger the automation with a cron time (171670...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0560"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-56-0">0.56.0</a><a href="https://engine.latechforce.com/blog/release-0-56-0#0560" class="hash-link" aria-label="Direct link to 0.56.0" title="Direct link to 0.56.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-56-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
-<ul>
-<li><strong>action:</strong> add green test: should run a google gmail send email action (<a href="https://github.com/latechforce/engine/commit/045a2438c6ea023c4fd81fc5d3a052703fb93302" target="_blank" rel="noopener noreferrer">045a243</a>) — Thomas JEANNEAU</li>
-<li><strong>action:</strong> add green test: should run a google sheets append values action (<a href="https://github.com/latechforce/engine/commit/496b4fdd47114316bdb65f96dc04e894f792c9b5" target="_blank" rel="noopener noreferrer">496b4fd</a>) — Thomas JEANNEAU</li>
-<li><strong>action:</strong> add green test: should trigger the automation with a cron time (<a href="https://github.com/latechforce/engine/commit/171670d43a724fe8dfde8694677f2ff61d07c8dc" target="_blank" rel="noopener noreferrer">171670d</a>) — Thomas JEANNEAU</li>
-</ul>]]></content>
-        <category label="Release" term="Release"/>
     </entry>
 </feed>
