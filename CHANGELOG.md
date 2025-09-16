@@ -1,3 +1,10 @@
+# [0.79.0](https://github.com/latechforce/engine/compare/v0.78.1...v0.79.0) (2025-09-16)
+
+
+### Features
+
+* enhance Facebook Lead Ads integration with improved webhook management ([0f598df](https://github.com/latechforce/engine/commit/0f598df5319f28cd3dcece3c18b54aa02c781025)) — Thomas JEANNEAU
+
 ## [0.78.1](https://github.com/latechforce/engine/compare/v0.78.0...v0.78.1) (2025-09-12)
 
 
