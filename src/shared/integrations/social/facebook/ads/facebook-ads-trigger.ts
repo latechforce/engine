@@ -1,118 +1,93 @@
 import type { Token } from '../../../../../features/connection/domain/value-object/token.value-object'
 import type { FacebookAdsTriggerSchema } from './facebook-ads-trigger.schema'
 import { FacebookIntegration } from '../facebook.integration'
-import { randomBytes } from 'crypto'
 
 export class FacebookAdsTriggerIntegration {
-  constructor(
-    private readonly schema: FacebookAdsTriggerSchema,
-    private readonly automationId: number
-  ) {}
-
-  /**
-   * Generate a secure verify token for webhook validation
-   */
-  private generateVerifyToken(): string {
-    return randomBytes(32).toString('hex')
-  }
-
-  /**
-   * Normalize URL for comparison (Facebook may add trailing slashes or change protocol)
-   */
-  private normalizeUrl(url: string): string {
-    try {
-      const urlObj = new URL(url)
-      // Remove trailing slash and ensure https
-      return urlObj.href.replace(/\/$/, '').replace(/^http:/, 'https:')
-    } catch {
-      return url
-    }
-  }
+  constructor(private readonly schema: FacebookAdsTriggerSchema) {}
 
   async setupTrigger(token: Token, url: string) {
     const client = new FacebookIntegration(token.access_token)
 
     switch (this.schema.event) {
       case 'new-lead': {
-        const { pageId, appId, verifyToken } = this.schema.params
+        const { pageId, appId, appSecret, verifyToken } = this.schema.params
 
         try {
-          // Generate verify token if not provided
-          const actualVerifyToken = verifyToken || this.generateVerifyToken()
+          // Initialize client with app secret for app-level operations
+          const clientWithSecret = new FacebookIntegration(token.access_token, appSecret)
 
-          // Normalize the webhook URL for comparison
-          const normalizedUrl = this.normalizeUrl(url)
+          // Step 1: Get all pages the user manages
+          const pagesResponse = await client.getAccounts()
+          const pages = pagesResponse.data
 
-          // Step 1: Check and setup app-level webhook subscription
-          let appSubscriptionExists = false
-
-          try {
-            const appSubs = await client.listAppSubscriptions(appId)
-
-            // Check if webhook is already registered for 'page' object with 'leadgen' field
-            appSubscriptionExists = appSubs.data.some(
-              (sub) =>
-                sub.object === 'page' &&
-                sub.fields.includes('leadgen') &&
-                this.normalizeUrl(sub.callback_url) === normalizedUrl
-            )
-          } catch (error) {
-            // If we can't list subscriptions, assume it doesn't exist
-            console.warn(`Failed to list app subscriptions: ${error}`)
-            appSubscriptionExists = false
+          // Find the specific page and get its access token
+          const targetPage = pages.find((page) => page.id === pageId)
+          if (!targetPage || !targetPage.access_token) {
+            throw new Error(`Page ${pageId} not found or no access token available`)
           }
 
-          if (!appSubscriptionExists) {
+          // Step 2: Check existing app subscriptions to avoid duplicates
+          const existingAppSubs = await clientWithSecret.listAppSubscriptions(appId)
+
+          // Remove duplicate webhooks - keep only the first occurrence of each unique webhook
+          const webhookMap = new Map<string, (typeof existingAppSubs.data)[0]>()
+          const duplicatesToDelete: string[] = []
+
+          for (const element of existingAppSubs.data) {
+            if (element.callback_url) {
+              if (webhookMap.has(element.callback_url)) {
+                // This is a duplicate, mark it for deletion (Facebook doesn't support deletion)
+                duplicatesToDelete.push(element.callback_url)
+              } else {
+                // First occurrence, keep it
+                webhookMap.set(element.callback_url, element)
+              }
+            }
+          }
+
+          // Check if current webhook already exists (after deduplication)
+          const alreadyExists =
+            webhookMap.has(url) ||
+            Array.from(webhookMap.keys()).some(
+              (webhook) => url.includes(webhook) || webhook.includes(url)
+            )
+
+          if (!alreadyExists) {
             // Create app subscription for page leadgen events
-            await client.createAppSubscription({
+            await clientWithSecret.createAppSubscription({
               appId,
               callback_url: url,
               object: 'page',
               fields: ['leadgen'],
-              verify_token: actualVerifyToken,
+              verify_token: verifyToken,
             })
-
-            // Store verify token for later webhook verification
-            // This should be stored in your database associated with this trigger
-            // For now, we'll log it (in production, save this securely)
-            console.info(
-              `Facebook webhook verify token for automation ${this.automationId}: ${actualVerifyToken}`
-            )
           }
 
-          // Step 2: Subscribe the specific page to leadgen events
-          let pageSubscriptionExists = false
+          // Step 3: Check existing page subscriptions to avoid duplicates
+          const existingPageSubs = await client.listPageSubscriptions(pageId)
 
-          try {
-            // Check if page is already subscribed to leadgen
-            pageSubscriptionExists = await client.isPageSubscribedToLeadGen(pageId)
-          } catch (error) {
-            console.warn(`Failed to check page subscription: ${error}`)
-            pageSubscriptionExists = false
-          }
+          // Remove duplicate subscriptions - keep only leadgen subscriptions
+          const leadgenSubscriptions = existingPageSubs.data.filter((sub) =>
+            sub.subscribed_fields?.includes('leadgen')
+          )
 
-          if (!pageSubscriptionExists) {
-            // Subscribe the page to leadgen events
-            await client.subscribePageToLeadGen(pageId)
-          }
+          // Check if leadgen subscription already exists
+          const pageAlreadySubscribed = leadgenSubscriptions.length > 0
 
-          // Success - both app and page are now subscribed
-          return {
-            success: true,
-            verifyToken: actualVerifyToken,
-            message: 'Facebook Lead Ads webhook successfully configured',
+          if (!pageAlreadySubscribed) {
+            // Step 4: Subscribe the page to leadgen webhook events using page token
+            await client.subscribePageToWebhook(pageId, targetPage.access_token)
           }
+          break
         } catch (error) {
           // Proper error handling with context
           const errorMessage = error instanceof Error ? error.message : 'Unknown error'
           throw new Error(
             `Failed to setup Facebook Lead Ads webhook: ${errorMessage}. ` +
               `Please ensure you have the required permissions (leads_retrieval, pages_manage_ads) ` +
-              `and that your app is approved for Lead Ads access.`
+              `and access to the specified page.`
           )
         }
-
-        break
       }
 
       default: {

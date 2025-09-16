@@ -27,6 +27,7 @@ export default {
           action: 'list-app-subscriptions',
           params: {
             appId: '123456',
+            appSecret: 'mock-app-secret',
           },
         },
       ],

@@ -10,6 +10,7 @@ const listAppSubscriptionsFacebookActionSchema = baseFacebookActionSchema
     action: z.literal('list-app-subscriptions'),
     params: z.object({
       appId: z.string().meta({ title: 'Facebook App ID' }),
+      appSecret: z.string().meta({ title: 'Facebook App Secret' }),
     }),
   })
   .meta({

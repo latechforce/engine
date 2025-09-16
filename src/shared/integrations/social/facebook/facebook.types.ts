@@ -48,3 +48,67 @@ export type GetLeadgenDataResponse = {
   platform?: string
   retailer_item_id?: string
 }
+
+export type Account = {
+  id: string
+  name: string
+  category: string
+  tasks?: string[]
+  access_token?: string
+}
+
+export type GetAccountsResponse = {
+  data: Account[]
+  paging?: {
+    cursors?: {
+      before?: string
+      after?: string
+    }
+    next?: string
+    previous?: string
+  }
+}
+
+export type LeadgenForm = {
+  id: string
+  name: string
+  status: string
+  locale: string
+  questions: Array<{
+    key: string
+    label: string
+    type: string
+  }>
+}
+
+export type GetLeadgenFormsResponse = {
+  data: LeadgenForm[]
+  paging?: {
+    cursors?: {
+      before?: string
+      after?: string
+    }
+    next?: string
+    previous?: string
+  }
+}
+
+export type Lead = {
+  id: string
+  created_time: string
+  ad_id: string
+  form_id: string
+  field_data: LeadgenFieldData[]
+}
+
+export type GetFormLeadsResponse = {
+  data: Lead[]
+  paging?: {
+    cursors?: {
+      before?: string
+      after?: string
+    }
+    next?: string
+    previous?: string
+  }
+}

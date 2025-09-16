@@ -13,7 +13,7 @@ export const toTriggerIntegration = (trigger: IntegrationTriggerSchema, automati
     case 'linkedin-ads':
       return new LinkedinAdsTriggerIntegration(trigger, automationId)
     case 'facebook-ads':
-      return new FacebookAdsTriggerIntegration(trigger, automationId)
+      return new FacebookAdsTriggerIntegration(trigger)
     default: {
       const _exhaustiveCheck: never = trigger
       throw new Error(`Unhandled case: ${_exhaustiveCheck}`)

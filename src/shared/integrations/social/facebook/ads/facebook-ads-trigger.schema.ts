@@ -17,6 +17,10 @@ export const newLeadFacebookAdsTriggerSchema = baseFacebookAdsTriggerSchema
         title: 'Facebook App ID',
         description: 'Your Facebook App ID from the developer console',
       }),
+      appSecret: z.string().meta({
+        title: 'Facebook App Secret',
+        description: 'Your Facebook App Secret from the developer console',
+      }),
       verifyToken: z.string().optional().meta({
         title: 'Webhook Verify Token',
         description: 'Security token for webhook verification (auto-generated if not provided)',

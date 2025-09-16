@@ -5,12 +5,18 @@ import type {
   ListAppSubscriptionsResponse,
   CreateAppSubscriptionResponse,
   GetLeadgenDataResponse,
+  GetAccountsResponse,
+  GetLeadgenFormsResponse,
+  GetFormLeadsResponse,
 } from './facebook.types'
 
 export class FacebookIntegration {
   private readonly graphUrl = 'https://graph.facebook.com/v23.0'
 
-  constructor(private readonly accessToken: string) {}
+  constructor(
+    private readonly accessToken: string,
+    private readonly appSecret?: string
+  ) {}
 
   private getHeaders() {
     return {
@@ -43,10 +49,14 @@ export class FacebookIntegration {
     fields?: string[]
     verify_token?: string
   }): Promise<CreateAppSubscriptionResponse> {
+    if (!this.appSecret) {
+      throw new Error('App Secret is required for creating app subscriptions')
+    }
+
     const body = new URLSearchParams()
     body.set('object', params.object ?? 'page')
     body.set('callback_url', params.callback_url)
-    body.set('access_token', this.accessToken)
+    body.set('access_token', `${params.appId}|${this.appSecret}`)
 
     if (params.fields && params.fields.length > 0) {
       body.set('fields', params.fields.join(','))
@@ -67,9 +77,15 @@ export class FacebookIntegration {
   }
 
   async listAppSubscriptions(appId: string): Promise<ListAppSubscriptionsResponse> {
+    if (!this.appSecret) {
+      throw new Error('App Secret is required for listing app subscriptions')
+    }
+
     return await ky
       .get(`${this.graphUrl}/${appId}/subscriptions`, {
-        headers: this.getHeaders(),
+        searchParams: {
+          access_token: `${appId}|${this.appSecret}`,
+        },
       })
       .json<ListAppSubscriptionsResponse>()
   }
@@ -92,5 +108,46 @@ export class FacebookIntegration {
         headers: this.getHeaders(),
       })
       .json<GetLeadgenDataResponse>()
+  }
+
+  async getAccounts(): Promise<GetAccountsResponse> {
+    return await ky
+      .get(`${this.graphUrl}/me/accounts`, {
+        headers: this.getHeaders(),
+      })
+      .json<GetAccountsResponse>()
+  }
+
+  async getLeadgenForms(pageId: string): Promise<GetLeadgenFormsResponse> {
+    return await ky
+      .get(`${this.graphUrl}/${pageId}/leadgen_forms`, {
+        headers: this.getHeaders(),
+      })
+      .json<GetLeadgenFormsResponse>()
+  }
+
+  async getFormLeads(formId: string): Promise<GetFormLeadsResponse> {
+    return await ky
+      .get(`${this.graphUrl}/${formId}/leads`, {
+        headers: this.getHeaders(),
+      })
+      .json<GetFormLeadsResponse>()
+  }
+
+  async subscribePageToWebhook(
+    pageId: string,
+    pageAccessToken: string
+  ): Promise<SubscribePageToLeadgenResponse> {
+    return await ky
+      .post(`${this.graphUrl}/${pageId}/subscribed_apps`, {
+        json: {
+          subscribed_fields: ['leadgen'],
+          access_token: pageAccessToken,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .json<SubscribePageToLeadgenResponse>()
   }
 }

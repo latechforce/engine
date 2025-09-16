@@ -19,6 +19,7 @@ export default {
         params: {
           pageId: '123456789',
           appId: '123456789',
+          appSecret: 'mock-app-secret',
         },
       },
       actions: [],
