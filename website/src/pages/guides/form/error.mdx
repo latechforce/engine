@@ -70,7 +70,7 @@ const schema: AppSchema = {
           action: 'run-typescript',
           params: {
             code: String(function () {
-              throw new Error('This is an error message');
+              throw Error('This is an error message');
             }),
           },
         },
