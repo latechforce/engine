@@ -79,6 +79,7 @@ type DataTableProps<TData, TValue> = {
   search?: DataTableSearchProps
   pagination?: DataTablePaginationProps
   columnPinning?: ColumnPinningState
+  pageSizes?: number[]
 }
 
 const globalFilterFn = <TData,>(row: Row<TData>, _: string, filterValue: string) => {
@@ -102,12 +103,13 @@ export function DataTable<TData, TValue>({
   pagination,
   filters,
   columnPinning,
+  pageSizes = [10, 25, 50, 100, 200],
 }: DataTableProps<TData, TValue>) {
   const [columnResizeMode] = useState<ColumnResizeMode>('onChange')
   const [rowSelection, setRowSelection] = useState({})
   const [paginationState, setPaginationState] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: pageSizes[0] ?? 10,
   })
 
   const hasColumnsWithFill = columns.some((column) => {
@@ -361,6 +363,7 @@ export function DataTable<TData, TValue>({
         table={table}
         fullPage={fullPage}
         canSelectRows={actions.length > 0}
+        sizes={pageSizes}
       />
     </div>
   )

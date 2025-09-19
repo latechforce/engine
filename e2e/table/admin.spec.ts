@@ -169,3 +169,35 @@ test('should delete a table record', async ({ startExampleApp }) => {
   // THEN
   await expect(page.getByText('John')).not.toBeVisible()
 })
+
+test.fixme(
+  'should have sticky header and pagination with many rows',
+  async ({ startExampleApp }) => {
+    // GIVEN
+    const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
+
+    // Create many records to trigger scrolling
+    const records = Array.from({ length: 50 }, (_, i) => ({
+      fields: { 'First name': `User${i}`, 'Last name': `Test${i}` },
+    }))
+
+    await page.request.post('/api/tables/1', {
+      data: { records },
+    })
+
+    // WHEN
+    await page.goto('/admin/tables/1')
+
+    // Scroll down to the bottom of the table
+    await page.evaluate(() => {
+      window.scrollTo(0, document.body.scrollHeight)
+    })
+
+    // THEN
+    // Header should still be visible at the top
+    await expect(page.getByRole('cell', { name: 'First name' })).toBeInViewport()
+
+    // Pagination should still be visible at the bottom
+    await expect(page.getByText('of 50 row(s) selected.')).toBeInViewport()
+  }
+)

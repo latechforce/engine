@@ -228,6 +228,7 @@ const RecordsDataTable = () => {
           ],
         },
       ]}
+      pageSizes={[50, 100, 200]}
     />
   )
 }

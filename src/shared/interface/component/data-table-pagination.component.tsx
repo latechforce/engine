@@ -9,12 +9,14 @@ interface DataTablePaginationProps<TData> {
   table: Table<TData>
   fullPage?: boolean
   canSelectRows?: boolean
+  sizes: number[]
 }
 
 export function DataTablePagination<TData>({
   table,
   fullPage,
   canSelectRows,
+  sizes,
 }: DataTablePaginationProps<TData>) {
   return (
     <div className={cn('flex items-center justify-between pt-4', fullPage ? 'p-2' : 'pt-4')}>
@@ -39,7 +41,7 @@ export function DataTablePagination<TData>({
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
-              {[10, 25, 50, 100, 200].map((pageSize) => (
+              {sizes.map((pageSize) => (
                 <SelectItem
                   key={pageSize}
                   value={`${pageSize}`}
