@@ -1,0 +1,51 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "entry": ["src/index.ts", "script/run-example.ts"],
+  "project": [
+    "src/**/*.{ts,tsx,js,jsx}",
+    "script/**/*.{ts,tsx,js,jsx}",
+    "config/**/*.{ts,tsx,js,jsx}",
+    "!**/*.test.{ts,tsx}",
+    "!**/*.spec.{ts,tsx}",
+    "!**/*.stories.{ts,tsx}"
+  ],
+  "ignore": [
+    "dist/**",
+    "node_modules/**",
+    "tmp/**",
+    "test-results/**",
+    "website/**",
+    "example/**",
+    "schema/**"
+  ],
+  "ignoreExportsUsedInFile": true,
+  "ignoreDependencies": [],
+  "ignoreBinaries": ["tsc", "drizzle-kit", "shadcn", "semantic-release"],
+  "playwright": {
+    "entry": [
+      "playwright.config.ts",
+      "e2e/**/*.spec.ts",
+      "e2e/global-setup.ts",
+      "e2e/global-teardown.ts"
+    ]
+  },
+  "eslint": {
+    "entry": ["eslint.config.js"]
+  },
+  "prettier": {
+    "entry": ["prettier.config.js"]
+  },
+  "drizzle": {
+    "entry": [
+      "config/drizzle-postgres.config.ts",
+      "config/drizzle-sqlite.config.ts"
+    ]
+  },
+  "bun": {
+    "entry": [
+      "src/**/*.test.{ts,tsx}",
+      "e2e/global-setup.ts",
+      "e2e/global-teardown.ts"
+    ]
+  }
+}

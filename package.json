@@ -33,6 +33,7 @@
   "scripts": {
     "lint": "eslint . --fix",
     "typecheck": "tsc --noEmit",
+    "clean": "knip --fix",
     "format": "prettier --write .",
     "example": "bun --watch run script/run-example.ts",
     "website": "cd website && bun start",
@@ -65,7 +66,7 @@
   },
   "dependencies": {
     "@date-fns/tz": "^1.4.1",
-    "@eslint/js": "^9.35.0",
+    "@eslint/js": "^9.36.0",
     "@hono/zod-openapi": "^1.1.2",
     "@hono/zod-validator": "^0.7.3",
     "@notionhq/client": "^5.1.0",
@@ -82,7 +83,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@scalar/hono-api-reference": "^0.9.18",
     "@sentry/bun": "^10.12.0",
-    "@tanstack/react-form": "^1.21.2",
+    "@tanstack/react-form": "^1.21.3",
     "@tanstack/react-query": "^5.89.0",
     "@tanstack/react-query-devtools": "^5.89.0",
     "@tanstack/react-router": "^1.131.48",
@@ -99,7 +100,7 @@
     "cron": "^4.3.3",
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.5",
-    "eslint": "^9.35.0",
+    "eslint": "^9.36.0",
     "googleapis": "^159.0.0",
     "handlebars": "^4.7.8",
     "hono": "^4.9.8",
@@ -145,6 +146,7 @@
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-boundaries": "^5.0.1",
     "eslint-plugin-prettier": "^5.5.4",
+    "knip": "^5.63.1",
     "msw": "2.11.2",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
@@ -152,7 +154,7 @@
     "typescript-eslint": "^8.44.0"
   },
   "peerDependencies": {
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "engines": {
     "bun": ">=1.2.0"

@@ -25,7 +25,8 @@ Your workflow:
 - Look at similar working code in the codebase for patterns to follow
 - Implement only the minimal change needed for THIS SPECIFIC test - resist the urge to refactor or improve beyond what's necessary
 - Verify your change addresses ONLY the specific test failure provided
-- Run ONLY the specific test to verify it passes - do not run the full test suite
+- Run ONLY the specific test to verify it passes using: `bun e2e [filename of the test]`
+- If needed, run the example app to debug using: `bun example [file path of the example config file of the test used in filter]`
 
 Constraints:
 
