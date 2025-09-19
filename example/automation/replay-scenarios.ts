@@ -1,4 +1,4 @@
-import type { AppSchema } from '@/types'
+import type { AppSchema, CodeContext } from '@/types'
 
 export const inGuides = false
 
@@ -49,9 +49,12 @@ export default {
           action: 'run-typescript',
           name: 'external-api-call',
           params: {
-            code: String(function () {
+            inputData: {
+              shouldFail: process.env.SIMULATE_EXTERNAL_FAILURE ?? 'true',
+            },
+            code: String(function (context: CodeContext<{ shouldFail: string }>) {
               // Simulate external API failure that might be resolved later
-              const shouldFail = process.env.SIMULATE_EXTERNAL_FAILURE === 'true'
+              const shouldFail = context.inputData.shouldFail === 'true'
               if (shouldFail) {
                 throw new Error('External API temporarily unavailable')
               }
