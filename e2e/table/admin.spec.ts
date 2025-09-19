@@ -198,6 +198,51 @@ test.fixme(
     await expect(page.getByRole('cell', { name: 'First name' })).toBeInViewport()
 
     // Pagination should still be visible at the bottom
-    await expect(page.getByText('of 50 row(s) selected.')).toBeInViewport()
+    await expect(page.getByText('0 of 50 row(s) selected.')).toBeInViewport()
   }
 )
+
+test.fixme('should sort table records from newest to oldest', async ({ startExampleApp }) => {
+  // GIVEN
+  const { page } = await startExampleApp({ test, loggedOnAdmin: true, filter: '/table/index' })
+
+  // Create records with a delay to ensure different timestamps
+  await page.request.post('/api/tables/1', {
+    data: {
+      records: [{ fields: { 'First name': 'First', 'Last name': 'Record' } }],
+    },
+  })
+
+  // Wait a bit to ensure different creation times
+  await page.waitForTimeout(100)
+
+  await page.request.post('/api/tables/1', {
+    data: {
+      records: [{ fields: { 'First name': 'Second', 'Last name': 'Record' } }],
+    },
+  })
+
+  await page.waitForTimeout(100)
+
+  await page.request.post('/api/tables/1', {
+    data: {
+      records: [{ fields: { 'First name': 'Third', 'Last name': 'Record' } }],
+    },
+  })
+
+  // WHEN
+  await page.goto('/admin/tables/1')
+
+  // THEN
+  // Get all rows with data (excluding header)
+  const rows = page.getByRole('row').filter({ has: page.getByRole('cell', { name: /\d+\./ }) })
+
+  // Check that the first data row contains the most recently created record
+  await expect(rows.first()).toContainText('Third')
+
+  // Check that the last data row contains the first created record
+  await expect(rows.last()).toContainText('First')
+
+  // Verify the middle record is in the correct position
+  await expect(rows.nth(1)).toContainText('Second')
+})
