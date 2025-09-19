@@ -66,9 +66,9 @@
   "dependencies": {
     "@date-fns/tz": "^1.4.1",
     "@eslint/js": "^9.35.0",
-    "@hono/zod-openapi": "^0.19.10",
+    "@hono/zod-openapi": "^1.1.2",
     "@hono/zod-validator": "^0.7.2",
-    "@notionhq/client": "^4.0.2",
+    "@notionhq/client": "^5.1.0",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -120,7 +120,7 @@
     "tailwindcss": "^4.1.13",
     "tw-animate-css": "^1.3.8",
     "winston": "^3.17.0",
-    "zod": "^3.25.76"
+    "zod": "^4.1.9"
   },
   "devDependencies": {
     "@better-auth/cli": "^1.3.9",
@@ -145,7 +145,7 @@
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-boundaries": "^5.0.1",
     "eslint-plugin-prettier": "^5.5.4",
-    "msw": "2.3.1",
+    "msw": "2.11.2",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "semantic-release": "^24.2.8",
