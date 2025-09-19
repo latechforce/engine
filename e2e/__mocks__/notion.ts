@@ -21,6 +21,7 @@ export const createPageResponse: PageObjectResponse = {
   },
   archived: false,
   in_trash: false,
+  is_locked: false,
   properties: {
     Name: {
       id: 'title',

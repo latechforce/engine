@@ -4,7 +4,7 @@ import type {
   CreatePageParameters,
   UpdatePageParameters,
   GetPageParameters,
-  QueryDatabaseParameters,
+  QueryDataSourceParameters,
 } from '@notionhq/client/build/src/api-endpoints'
 import { NotionIntegration } from './notion.integration'
 
@@ -81,8 +81,8 @@ export class NotionActionIntegration {
 
       case 'list-pages': {
         const { databaseId, filter, sorts, startCursor, pageSize } = this.schema.params
-        const queryParams: QueryDatabaseParameters = {
-          database_id: databaseId,
+        const queryParams: QueryDataSourceParameters = {
+          data_source_id: databaseId,
         }
         if (filter !== undefined) queryParams.filter = filter
         if (sorts !== undefined) queryParams.sorts = sorts

@@ -4,8 +4,8 @@ import type {
   GetPageParameters,
   UpdatePageParameters,
   PageObjectResponse,
-  QueryDatabaseParameters,
-  QueryDatabaseResponse,
+  QueryDataSourceParameters,
+  QueryDataSourceResponse,
 } from '@notionhq/client/build/src/api-endpoints'
 
 export class NotionIntegration {
@@ -41,9 +41,9 @@ export class NotionIntegration {
     return response as PageObjectResponse
   }
 
-  async listPages(request: QueryDatabaseParameters): Promise<QueryDatabaseResponse> {
-    // List pages by querying a database
-    const response = await this.client.databases.query(request)
+  async listPages(request: QueryDataSourceParameters): Promise<QueryDataSourceResponse> {
+    // List pages by querying a database (now treated as a data source)
+    const response = await this.client.dataSources.query(request)
     return response
   }
 

@@ -133,5 +133,93 @@ export default {
         },
       ],
     },
+    {
+      id: 4,
+      name: 'multi-step-with-path-failure',
+      trigger: {
+        service: 'http',
+        event: 'post',
+        params: {
+          path: '/multi-step-path-failure',
+        },
+      },
+      actions: [
+        {
+          service: 'code',
+          action: 'run-typescript',
+          name: 'step-1-success',
+          params: {
+            code: String(function () {
+              return {
+                message: 'Step 1 completed successfully',
+                data: { processed: true, count: 10 },
+              }
+            }),
+          },
+        },
+        {
+          service: 'filter',
+          action: 'split-into-paths',
+          name: 'step-2-paths',
+          params: [
+            {
+              name: 'path-1',
+              filter: {
+                target: 'text',
+                operator: 'exists',
+              },
+              actions: [
+                {
+                  service: 'code',
+                  action: 'run-typescript',
+                  name: 'path-1-step-1-success',
+                  params: {
+                    code: String(function () {
+                      return {
+                        message: 'Step 1 completed successfully',
+                        data: { processed: true, count: 10 },
+                      }
+                    }),
+                  },
+                },
+              ],
+            },
+            {
+              name: 'path-2',
+              filter: {
+                target: 'text',
+                operator: 'exists',
+              },
+              actions: [
+                {
+                  service: 'code',
+                  action: 'run-typescript',
+                  name: 'path-2-step-1-success',
+                  params: {
+                    code: String(function () {
+                      return {
+                        message: 'Step 1 completed successfully',
+                        data: { processed: true, count: 10 },
+                      }
+                    }),
+                  },
+                },
+                {
+                  service: 'code',
+                  action: 'run-typescript',
+                  name: 'path-2-step-2-failure',
+                  params: {
+                    code: String(function () {
+                      // This step always fails to test partial run replay
+                      throw new Error('Step 2 always fails - database connection timeout')
+                    }),
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ],
 } satisfies AppSchema
