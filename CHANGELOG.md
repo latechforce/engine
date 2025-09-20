@@ -1,3 +1,16 @@
+# [0.80.0](https://github.com/latechforce/engine/compare/v0.79.0...v0.80.0) (2025-09-20)
+
+
+### Bug Fixes
+
+* ensure all paths execute in split-into-paths and preserve filtered status ([6fe4b89](https://github.com/latechforce/engine/commit/6fe4b89419ec880b5aff9f3a70508dbb420424ce)) — Thomas JEANNEAU
+* update Notion integration types for API v5.1.0 ([6592964](https://github.com/latechforce/engine/commit/6592964e98ae4b0cac5a1d346a0f02b03c7fbfbc)) — Thomas JEANNEAU
+
+
+### Features
+
+* add sticky table components and e2e test for pagination ([1beca56](https://github.com/latechforce/engine/commit/1beca56d436582aba62a439ca261914545f2dedb)) — Thomas JEANNEAU
+
 # [0.79.0](https://github.com/latechforce/engine/compare/v0.78.1...v0.79.0) (2025-09-16)
 
 
