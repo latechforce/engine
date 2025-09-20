@@ -2,11 +2,30 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://engine.latechforce.com/blog</id>
     <title>LTF Engine Blog</title>
-    <updated>2025-09-16T00:00:00.000Z</updated>
+    <updated>2025-09-20T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://engine.latechforce.com/blog"/>
     <subtitle>LTF Engine Blog</subtitle>
     <icon>https://engine.latechforce.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Release 0.80.0]]></title>
+        <id>https://engine.latechforce.com/blog/release-0-80-0</id>
+        <link href="https://engine.latechforce.com/blog/release-0-80-0"/>
+        <updated>2025-09-20T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Changelog for version 0.80.0]]></summary>
+        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-80-0"><p class="before-truncate"> 0.80.0   Bug Fixes  * ensure all paths execute in split-into-paths and preserve filtered status (6fe4b89) — Thomas JEANNEAU * update Notion integration types for API v5.1.0 (6592964) — Thomas JEANNEAU    Features  * add sticky table components and e2e test for pagination (1beca56) — Thomas JEANNEAU...</p>
+</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0800"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/release-0-80-0">0.80.0</a><a href="https://engine.latechforce.com/blog/release-0-80-0#0800" class="hash-link" aria-label="Direct link to 0.80.0" title="Direct link to 0.80.0">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/release-0-80-0#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
+<ul>
+<li>ensure all paths execute in split-into-paths and preserve filtered status (<a href="https://github.com/latechforce/engine/commit/6fe4b89419ec880b5aff9f3a70508dbb420424ce" target="_blank" rel="noopener noreferrer">6fe4b89</a>) — Thomas JEANNEAU</li>
+<li>update Notion integration types for API v5.1.0 (<a href="https://github.com/latechforce/engine/commit/6592964e98ae4b0cac5a1d346a0f02b03c7fbfbc" target="_blank" rel="noopener noreferrer">6592964</a>) — Thomas JEANNEAU</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/release-0-80-0#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
+<ul>
+<li>add sticky table components and e2e test for pagination (<a href="https://github.com/latechforce/engine/commit/1beca56d436582aba62a439ca261914545f2dedb" target="_blank" rel="noopener noreferrer">1beca56</a>) — Thomas JEANNEAU</li>
+</ul>]]></content>
+        <category label="Release" term="Release"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Release 0.79.0]]></title>
         <id>https://engine.latechforce.com/blog/release-0-79-0</id>
@@ -508,36 +527,6 @@
 <li><strong>connection:</strong> created_at calendly value (<a href="https://github.com/latechforce/engine/commit/0b00dba707e9f41d02ce691b5bc0c0158b9c8eee" target="_blank" rel="noopener noreferrer">0b00dba</a>) — Thomas JEANNEAU</li>
 <li><strong>connection:</strong> refresh google token on restart (<a href="https://github.com/latechforce/engine/commit/05549eb24fdb9df877d39ea831ca1cbf5f3793d8" target="_blank" rel="noopener noreferrer">05549eb</a>) — Thomas JEANNEAU</li>
 <li><strong>user:</strong> add auth required for api endpoints (<a href="https://github.com/latechforce/engine/commit/8981131b22ea0394fe2a6b3370fbc5e095184a58" target="_blank" rel="noopener noreferrer">8981131</a>) — Thomas JEANNEAU</li>
-</ul>]]></content>
-        <category label="Fix" term="Fix"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Fix 0.57.2]]></title>
-        <id>https://engine.latechforce.com/blog/fix-0-57-2</id>
-        <link href="https://engine.latechforce.com/blog/fix-0-57-2"/>
-        <updated>2025-06-20T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Changelog for version 0.57.2]]></summary>
-        <content type="html"><![CDATA[<a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-57-2"><p class="before-truncate"> 0.57.2   Bug Fixes  * connection: fix state in redirect uri (2facd8e) — Thomas JEANNEAU   0.57.1   Bug Fixes  * action: add error display (836b21c) — Thomas JEANNEAU * action: should run an is-true filter action that returns true (4571097) — Thomas JEANNEAU * form: should display a form with a path...</p>
-</a><h2 class="anchor anchorWithStickyNavbar_LWe7" id="0572"><a style="text-decoration:none;color:inherit" href="https://engine.latechforce.com/blog/fix-0-57-2">0.57.2</a><a href="https://engine.latechforce.com/blog/fix-0-57-2#0572" class="hash-link" aria-label="Direct link to 0.57.2" title="Direct link to 0.57.2">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-57-2#bug-fixes" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
-<ul>
-<li><strong>connection:</strong> fix state in redirect uri (<a href="https://github.com/latechforce/engine/commit/2facd8e840b64fc2c4178e27ca0aed4b3606331e" target="_blank" rel="noopener noreferrer">2facd8e</a>) — Thomas JEANNEAU</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0571">0.57.1<a href="https://engine.latechforce.com/blog/fix-0-57-2#0571" class="hash-link" aria-label="Direct link to 0.57.1" title="Direct link to 0.57.1">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-1">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-57-2#bug-fixes-1" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
-<ul>
-<li><strong>action:</strong> add error display (<a href="https://github.com/latechforce/engine/commit/836b21c68d24894c70278003c542c73fb5c325b3" target="_blank" rel="noopener noreferrer">836b21c</a>) — Thomas JEANNEAU</li>
-<li><strong>action:</strong> should run an is-true filter action that returns true (<a href="https://github.com/latechforce/engine/commit/45710975cf6831beb558b7ad5cf45fd43ca086db" target="_blank" rel="noopener noreferrer">4571097</a>) — Thomas JEANNEAU</li>
-<li><strong>form:</strong> should display a form with a path with no slash (<a href="https://github.com/latechforce/engine/commit/d32015eb3edf4b5cb93fc361183585fda97b7e28" target="_blank" rel="noopener noreferrer">d32015e</a>) — Thomas JEANNEAU</li>
-</ul>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="0570">0.57.0<a href="https://engine.latechforce.com/blog/fix-0-57-2#0570" class="hash-link" aria-label="Direct link to 0.57.0" title="Direct link to 0.57.0">​</a></h2>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="bug-fixes-2">Bug Fixes<a href="https://engine.latechforce.com/blog/fix-0-57-2#bug-fixes-2" class="hash-link" aria-label="Direct link to Bug Fixes" title="Direct link to Bug Fixes">​</a></h3>
-<ul>
-<li><strong>table:</strong> should create a table record with required fields (<a href="https://github.com/latechforce/engine/commit/e257567db6251a504f078f2fe8eda55ae6566818" target="_blank" rel="noopener noreferrer">e257567</a>) — Thomas JEANNEAU</li>
-</ul>
-<h3 class="anchor anchorWithStickyNavbar_LWe7" id="features">Features<a href="https://engine.latechforce.com/blog/fix-0-57-2#features" class="hash-link" aria-label="Direct link to Features" title="Direct link to Features">​</a></h3>
-<ul>
-<li><strong>run:</strong> display runs steps (<a href="https://github.com/latechforce/engine/commit/72c8f25620134059af2033363301860dbeff340b" target="_blank" rel="noopener noreferrer">72c8f25</a>) — Thomas JEANNEAU</li>
 </ul>]]></content>
         <category label="Fix" term="Fix"/>
     </entry>
