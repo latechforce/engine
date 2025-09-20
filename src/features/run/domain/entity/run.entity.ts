@@ -178,7 +178,16 @@ export class Run {
     const step = this.getActionOrPathsStep(actionPath)
     if (!step) return false
     if ('error' in step) return !step.error
-    if ('output' in step) return !!step.output
+    if ('output' in step) {
+      // For paths steps, also check if any path actions have errors
+      if ('paths' in step) {
+        const hasPathErrors = step.paths.some((path) =>
+          path.actions.some((action) => action.error)
+        )
+        if (hasPathErrors) return false
+      }
+      return !!step.output
+    }
     return true
   }
 
