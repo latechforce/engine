@@ -75,6 +75,7 @@ const globals = {
   Blob: global.Blob,
   ReadableStream: global.ReadableStream,
   File: global.File,
+  FormData: global.FormData,
 }
 
 export class CodeService {
