@@ -1,3 +1,10 @@
+## [0.80.1](https://github.com/latechforce/engine/compare/v0.80.0...v0.80.1) (2025-09-22)
+
+
+### Bug Fixes
+
+* add FormData in code service ([836f30c](https://github.com/latechforce/engine/commit/836f30cf4c21700cd49b9dcd8b7dbf0c7ed19605)) — Thomas JEANNEAU
+
 # [0.80.0](https://github.com/latechforce/engine/compare/v0.79.0...v0.80.0) (2025-09-20)
 
 
