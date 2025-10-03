@@ -4,23 +4,24 @@ import type { HonoType } from '../../infrastructure/service'
 export const loggerMiddleware: MiddlewareHandler = async (c: Context<HonoType>, next) => {
   const logger = c.get('logger')
   const { method, url } = c.req
+  const path = new URL(url).pathname
 
   if (
-    url.includes('.js') ||
-    url.includes('.css') ||
-    url.includes('.png') ||
-    url.includes('.ico') ||
-    url.includes('.json')
+    path.includes('.js') ||
+    path.includes('.css') ||
+    path.includes('.png') ||
+    path.includes('.ico') ||
+    path.includes('.json')
   ) {
     await next()
     return
   }
 
-  logger.http(`--> ${method} ${url}`)
+  logger.http(`--> ${method} ${path}`)
 
   const start = Date.now()
   await next()
   const duration = Date.now() - start
 
-  logger.http(`<-- ${method} ${url} ${c.res.status} ${duration}ms`)
+  logger.http(`<-- ${method} ${path} ${c.res.status} ${duration}ms`)
 }
