@@ -57,11 +57,11 @@ export const toConnectionIntegration = (
     case 'facebook-ads':
       integration = new FacebookConnectionIntegration(connection.schema, redirectUri, [
         'ads_management',
-        'ads_read',
         'business_management',
         'pages_manage_ads',
         'pages_read_engagement',
         'pages_show_list',
+        'pages_manage_metadata',
         'leads_retrieval',
       ])
       break

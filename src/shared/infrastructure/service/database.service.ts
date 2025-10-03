@@ -34,9 +34,6 @@ export class DatabaseService {
     if (this.provider === 'postgres') {
       this.pgPool = new Pool({
         connectionString: this.url,
-        ssl: {
-          rejectUnauthorized: false,
-        },
       })
       this.postgresDb = drizzlePostgres(this.pgPool, {
         schema: postgresSchema,
